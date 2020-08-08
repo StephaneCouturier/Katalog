@@ -1131,16 +1131,6 @@
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="label_14">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>regex</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QLabel" name="L_Regex">
                 <property name="minimumSize">
                  <size>
@@ -1149,7 +1139,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>regex</string>
                 </property>
                </widget>
               </item>

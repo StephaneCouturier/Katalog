@@ -187,7 +187,7 @@
         ui->CB_SizeUnit->hide();
         ui->LE_MinimumSize->hide();
         ui->LE_MaximumSize->hide();
-        //ui->PB_ExportResults->hide();
+        ui->L_Regex->hide();
         //ui->PB_Remove->hide();
 
         //Create
@@ -205,7 +205,7 @@
         ui->TV_Directories->hide();
 
         //Other tabs
-        //ui->tabWidget->removeTab(6);
+        ui->tabWidget->removeTab(6);
         ui->tabWidget->removeTab(5);
         ui->tabWidget->removeTab(4);
         ui->tabWidget->removeTab(3);
