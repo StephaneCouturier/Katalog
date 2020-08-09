@@ -54,7 +54,27 @@
         void MainWindow::initiateSearchValues()
         {
             //Prepare list for the Catalog selection combobox
-                QStringList displaycatalogList = catalogList;
+
+
+//                QStringList displaycatalogList = catalogList;
+
+//                //Add the option All at the beginning
+//                displaycatalogList.insert(0,"All");
+//                //Send list to the combobox
+//                fileListModel = new QStringListModel(this);
+//                fileListModel->setStringList(displaycatalogList);
+//                ui->CB_SelectCatalog->setModel(fileListModel);
+
+            //Load last search values (from settings file)
+                ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
+                ui->CB_S_TextCriteria->setCurrentText(selectedTextCriteria);
+                ui->CB_S_SearchIn->setCurrentText(selectedSearchIn);
+                ui->CB_S_FileType->setCurrentText(selectedFileType);
+        }
+        void MainWindow::refreshCatalogSelectionList()
+        {
+            //Prepare list for the Catalog selection combobox
+                QStringList displaycatalogList = catalogFileList;
 
                 //Add the option All at the beginning
                 displaycatalogList.insert(0,"All");
@@ -63,11 +83,6 @@
                 fileListModel->setStringList(displaycatalogList);
                 ui->CB_SelectCatalog->setModel(fileListModel);
 
-            //Load last search values (from settings file)
-                ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
-                ui->CB_S_TextCriteria->setCurrentText(selectedTextCriteria);
-                ui->CB_S_SearchIn->setCurrentText(selectedSearchIn);
-                ui->CB_S_FileType->setCurrentText(selectedFileType);
         }
 
         //User interactions
@@ -272,7 +287,7 @@
 
                 //Search every catalog if "All" is selected
                 if ( selectedSearchCatalog =="All"){
-                    foreach(sourceCatalog,catalogList)
+                    foreach(sourceCatalog,catalogFileList)
                             {
                                 SearchFilesInCatalog(sourceCatalog);
                             }
@@ -438,5 +453,30 @@
 
             }
         //----------------------------------------------------------------------
+        //DEV: to be replaces using the collection model as source
+        void MainWindow::LoadCatalogFileList()
+        {
+            catalogFileList.clear();
+            QStringList fileTypes;
+            fileTypes << "*.idx";
+            //Iterate in the directory to create a list of files and sort it
+            //list the file names only
+            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+            while (iterator.hasNext()){
+                //catalogList << (iterator.next());
 
+                QFile file(iterator.next());
+                //file.open(QIODevice::ReadOnly);
+                catalogFileList << file.fileName();
+
+            }
+            catalogFileList.sort();
+
+            //Define and populate a model and send it to the listView
+            //fileListModel = new QStringListModel(this);
+            //fileListModel->setStringList(catalogFileList);
+            //ui->TrV_CatalogList->setModel(fileListModel);
+
+        }
+        //----------------------------------------------------------------------
 //------------------------------------------------------------------------------------------

@@ -77,7 +77,7 @@ class MainWindow : public KXmlGuiWindow
         //Global
             //KDE
             Ui::MainWindow *ui;
-            void HideDevelopmentUIItems();
+            void hideDevelopmentUIItems();
             //KDE menus/icons
             void setupActions();
 
@@ -95,10 +95,21 @@ class MainWindow : public KXmlGuiWindow
             QStringList fileType_Video;
             QStringList fileType_Text;
             QStringList fileType_current;
-            void setFileTypes();
             QString fileTypeSelected;
+            void setFileTypes();
+
+        //TAB: Collection
+            QStringListModel catalogListModel;
+            QStringList catalogFileList;
+            QString selectedCatalogFile;
+            QString selectedCatalogName;
+            QString selectedCatalogPath;
+            void LoadCatalogFileList();
+            void LoadCatalog(QString fileName);
+            void SaveCatalog(QString newCatalogName);
 
         //TAB: Search
+            //inputs
             QString searchText;
             QString regexPattern;
             QString selectedSearchCatalog;
@@ -107,19 +118,20 @@ class MainWindow : public KXmlGuiWindow
             QString selectedSearchIn;
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
+            void initiateSearchValues();
+
+            //search
+            QString regexSearchtext;
+            QString regexFileType;
+            void SearchFiles();
+            void SearchFilesInCatalog(const QString &sourceCatalog);
+
+            //outputs
             QStringList filesFoundList;
             QStringList catalogFoundList;
             QStringListModel *catalogFoundListModel;
-            void initiateSearchValues();
-            //void refreshCatalogSelectionList();
-            void SearchFilesInCatalog(const QString &sourceCatalog);
-            void SearchFiles();
-            QString regexSearchtext;
-            QString regexFileType;
-
-            bool selectedPathOnly;
-            bool selectedNameOnly;
             QStringList searchTextList;
+            void refreshCatalogSelectionList();
 
         //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
@@ -129,15 +141,6 @@ class MainWindow : public KXmlGuiWindow
             void LoadFileSystem(QString newCatalogPath);
             void CatalogDirectory(QString newCatalogPath);
 
-        //TAB: Explore Catalogs
-            QStringListModel catalogListModel;
-            QStringList catalogList;
-            QString selectedCatalogFile;
-            QString selectedCatalogName;
-            QString selectedCatalogPath;
-            void LoadCatalogList();
-            void LoadCatalog(QString fileName);
-            void SaveCatalog(QString newCatalogName);
 
         //TESTS
             void LoadCatalogsToModel();

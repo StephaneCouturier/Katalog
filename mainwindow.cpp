@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    //Start up
         //Set up GUI
             ui->setupUi(this);
-            HideDevelopmentUIItems();
+            hideDevelopmentUIItems();
         //Set up KDE Menu/Icon actions
             setupActions();
         //Load settings
@@ -66,11 +66,13 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
     //TAB: Collection
         //Load the list of catalogs from the collection folder
-            LoadCatalogList();
-        //LoadCatalogList2();
-            initiateSearchValues();
+            LoadCatalogsToModel();
 
     //TAB: Search files
+            LoadCatalogFileList();
+        //LoadCatalogList2();
+            initiateSearchValues();
+            refreshCatalogSelectionList();
 
     //TAB: Create Catalog
         //Default path to scan

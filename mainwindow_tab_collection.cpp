@@ -61,12 +61,16 @@
             if ( dir !=""){
                 collectionFolder=dir;
                 ui->LE_CollectionFolder->setText(dir);
-                LoadCatalogList();
-                initiateSearchValues();
+
+                //initiateSearchValues();
                 saveSettings();
+                LoadCatalogFileList();
+                LoadCatalogsToModel();
+                refreshCatalogSelectionList();
             }
 
-            //Reset selected catalog values (avoid updating the last selected one for instance)
+            //Reset selected catalog values (to avoid updating the last selected one for instance)
+            //DEV: repalce by button becoming enabled once catalog is selected
             selectedCatalogFile="";
             selectedCatalogName="";
             selectedCatalogPath="";
@@ -156,8 +160,9 @@
                 if ( result ==KMessageBox::Continue){
                     QFile file (selectedCatalogFile);
                     file.moveToTrash();
-                    LoadCatalogList();
+                    LoadCatalogFileList();
                     LoadCatalogsToModel();
+                    refreshCatalogSelectionList();
                 }
              }
             else KMessageBox::information(this,i18n("Please select a catalog above first."));
@@ -251,7 +256,7 @@
         //Set up temporary lists
         QList<QString> cNames;
         QList<QString> cDateUpdates;
-        QList<QString> cNums;
+        QList<int> cNums;
         QList<QString> cSourcePaths;
         QList<QString> cCatalogFiles;
 
@@ -290,7 +295,8 @@
                     catalogSourcePathProvided = true;
                 }
                 else if (line.left(18)=="<catalogFileCount>"){
-                    QString catalogFileCount = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    QString catalogFileCountString = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    int catalogFileCount = catalogFileCountString.toInt();
                     cNums.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
@@ -304,7 +310,7 @@
             if(catalogSourcePathProvided==false)
                 cSourcePaths.append("not recorded");
             if(catalogFileCountProvided==false)
-                cNums.append("not recorded");
+                cNums.append(0);
 
             // Get infos about the file itself
             QFileInfo catalogFileInfo(catalogFile);
@@ -330,32 +336,3 @@
     }
     //----------------------------------------------------------------------
 
-    //DEV: to be removed / Load the list of catalog files
-    void MainWindow::LoadCatalogList()
-    {
-        catalogList.clear();
-        QStringList fileTypes;
-        fileTypes << "*.idx";
-        //Iterate in the directory to create a list of files and sort it
-        //list the file names only
-        QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-        while (iterator.hasNext()){
-            //catalogList << (iterator.next());
-
-            QFile file(iterator.next());
-            //file.open(QIODevice::ReadOnly);
-            catalogList << file.fileName();
-
-        }
-        catalogList.sort();
-
-        //Define and populate a model and send it to the listView
-        fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(catalogList);
-        ui->TrV_CatalogList->setModel(fileListModel);
-
-        //Refresh catalog model
-        LoadCatalogsToModel();
-
-    }
-    //----------------------------------------------------------------------

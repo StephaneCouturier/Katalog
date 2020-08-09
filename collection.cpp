@@ -61,7 +61,7 @@ QVariant Collection::data(const QModelIndex &index, int role) const
     switch (index.column()){
     case 0: return QString(catalogName[index.row()]);
     case 1: return QString(catalogDateUpdated[index.row()]);
-    case 2: return QString(catalogFileCount[index.row()]);
+    case 2: return int(catalogFileCount[index.row()]);
     case 3: return QString(catalogSourcePath[index.row()]);
     case 4: return QString(catalogFilePath[index.row()]);
     }
@@ -86,7 +86,7 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
 // Create a method to populate the model with data:
 void Collection::populateData(const QList<QString> &cNames,
                            const QList<QString> &cDateUpdated,
-                           const QList<QString> &cNums,
+                           const QList<int> &cNums,
                            const QList<QString> &cSourcePaths,
                            const QList<QString> &cCatalogFiles)
 {

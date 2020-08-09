@@ -180,7 +180,7 @@
     }
 
 //Development -------------------------------------------------------
-    void MainWindow::HideDevelopmentUIItems()
+    void MainWindow::hideDevelopmentUIItems()
     {
         //Search
         ui->L_Size->hide();

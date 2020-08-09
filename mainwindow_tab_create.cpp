@@ -215,9 +215,9 @@
         SaveCatalog(newCatalogName);
 
         //Refresh the catalog list
-        LoadCatalogList();
+        LoadCatalogFileList();
         LoadCatalogsToModel();
-        initiateSearchValues();
+        refreshCatalogSelectionList();
 
         LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
