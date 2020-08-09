@@ -48,14 +48,14 @@
 
 //Menu and Icons - Actions KDE setup ---------------------------------------
     void MainWindow::setupActions()
-{
-    KStandardAction::quit(qApp, SLOT(quit()), actionCollection());
-    //KStandardAction::open(this, SLOT(openFile()), actionCollection());
-    //KStandardAction::save(this, SLOT(saveFile()), actionCollection());
-    //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
-    //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
-    setupGUI();
-}
+    {
+        KStandardAction::quit(qApp, SLOT(quit()), actionCollection());
+        //KStandardAction::open(this, SLOT(openFile()), actionCollection());
+        //KStandardAction::save(this, SLOT(saveFile()), actionCollection());
+        //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
+        //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
+        setupGUI();
+    }
     //----------------------------------------------------------------------
     void MainWindow::newFile()
     {
@@ -151,7 +151,7 @@
                 collectionFolder = QApplication::applicationDirPath();
         }
         ui->KCB_SearchText->setEditText(settings.value("LastSearchText").toString());
-        selectedCatalog = settings.value("LastSelectedCatalog").toString();
+        selectedSearchCatalog = settings.value("LastSelectedSearchCatalog").toString();
         selectedFileType = settings.value("LastFileType").toString();
         selectedTextCriteria = settings.value("LastSearchTextCriteria").toString();
         selectedSearchIn = settings.value("LastSearchIn").toString();
@@ -163,7 +163,7 @@
         QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
         settings.setValue("LastSearchText", searchText);
-        settings.setValue("LastSelectedCatalog", selectedCatalog);
+        settings.setValue("LastSelectedSearchCatalog", selectedSearchCatalog);
         settings.setValue("LastFileType", selectedFileType);
         settings.setValue("LastSearchTextCriteria", selectedTextCriteria);
         settings.setValue("LastSearchIn", selectedSearchIn);

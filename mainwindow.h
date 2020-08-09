@@ -81,9 +81,10 @@ class MainWindow : public KXmlGuiWindow
             //KDE menus/icons
             void setupActions();
 
-           //parameters
+            //parameters
             QString fileName;
-            //DEV: replace by a value in the Katalog file
+
+            //Application settings
             QString settingsFile;
             void loadSettings();
             void saveSettings();
@@ -100,15 +101,17 @@ class MainWindow : public KXmlGuiWindow
         //TAB: Search
             QString searchText;
             QString regexPattern;
-            QString selectedCatalog;
+            QString selectedSearchCatalog;
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
             QString sourceCatalog;
+            QStringListModel catalogSelectionList;
             QStringList filesFoundList;
             QStringList catalogFoundList;
             QStringListModel *catalogFoundListModel;
-            void PopulateCatalogSelector();
+            void initiateSearchValues();
+            //void refreshCatalogSelectionList();
             void SearchFilesInCatalog(const QString &sourceCatalog);
             void SearchFiles();
             QString regexSearchtext;
@@ -118,22 +121,23 @@ class MainWindow : public KXmlGuiWindow
             bool selectedNameOnly;
             QStringList searchTextList;
 
-
-        //TAB: Create Volume Tab
+        //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
-            QString newVolumePath;
-            QString newVolumeName;
-            void LoadFileSystem(QString newVolumePath);
-            void CatalogDirectory(QString newVolumePath);
+            QString newCatalogPath;
+            QString newCatalogName;
+            void LoadFileSystem(QString newCatalogPath);
+            void CatalogDirectory(QString newCatalogPath);
 
         //TAB: Explore Catalogs
-            QStringList catalogList;
             QStringListModel catalogListModel;
-            QString selectedExploreCatalog;
+            QStringList catalogList;
+            QString selectedCatalogFile;
+            QString selectedCatalogName;
+            QString selectedCatalogPath;
             void LoadCatalogList();
             void LoadCatalog(QString fileName);
-            void SaveCatalog(QString newVolumeName);
+            void SaveCatalog(QString newCatalogName);
 
         //TESTS
             void LoadCatalogsToModel();
@@ -154,7 +158,6 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_S_ResetAll_clicked();
             void on_KCB_SearchText_returnPressed();
             void on_PB_Search_clicked();
-            void on_LE_SearchText_returnPressed();
             void on_LV_FilesFoundList_clicked(const QModelIndex &index);
             void setupFileContextMenu();
             //context menu
@@ -165,6 +168,7 @@ class MainWindow : public KXmlGuiWindow
             void contextCopyAbsolutePath();
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
+            void on_PB_ExportResults_clicked();
 
         //Create
             void on_PB_PickPath_clicked();
@@ -172,14 +176,12 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_CreateCatalog_clicked();
             void on_TV_Explorer_activated(const QModelIndex &index);
 
-        //Explore
-            void on_TV_CatalogList_activated(const QModelIndex &index);
-
+        //Collection
             void on_PB_UpdateCatalog_clicked();
             void on_PB_ViewCatalog_clicked();
             void on_PB_ExportCatalog_clicked();
             void on_PB_DeleteCatalog_clicked();
-
+            void on_TrV_CatalogList_activated(const QModelIndex &index);
             void on_LV_FileList_clicked(const QModelIndex &index);
 
         //Settings
@@ -187,15 +189,11 @@ class MainWindow : public KXmlGuiWindow
             void on_pushButton_8_clicked();
             void on_pushButton_7_clicked();
             void on_pushButton_9_clicked();
-
+            //void on_listWidget_clicked(const QModelIndex &index);
         //Tests
-            void on_TV_Catalogs_clicked(const QModelIndex &index);
-            void on_listWidget_clicked(const QModelIndex &index);
-           //void on_treeView_2_clicked(const QModelIndex &index);
 
-            void on_PB_ExportResults_clicked();
 
-            void on_treeView_2_activated(const QModelIndex &index);
+            void on_PB_EditCatalogFile_clicked();
 };
 
 

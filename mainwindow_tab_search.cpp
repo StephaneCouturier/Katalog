@@ -51,19 +51,23 @@
 
     //UI methods
         //Set up
-        void MainWindow::PopulateCatalogSelector()
+        void MainWindow::initiateSearchValues()
         {
-            //DEV: directly use the cataloglistmodel
-            fileListModel = new QStringListModel(this);
-            //Add the optin All at the beginning
-            QStringList displaycatalogList = catalogList;
-            displaycatalogList.insert(0,"All");
-            fileListModel->setStringList(displaycatalogList);
-            ui->CB_SelectCatalog->setModel(fileListModel);
-            ui->CB_SelectCatalog->setCurrentText(selectedCatalog);
-            ui->CB_S_TextCriteria->setCurrentText(selectedTextCriteria);
-            ui->CB_S_SearchIn->setCurrentText(selectedSearchIn);
-            ui->CB_S_FileType->setCurrentText(selectedFileType);
+            //Prepare list for the Catalog selection combobox
+                QStringList displaycatalogList = catalogList;
+
+                //Add the option All at the beginning
+                displaycatalogList.insert(0,"All");
+                //Send list to the combobox
+                fileListModel = new QStringListModel(this);
+                fileListModel->setStringList(displaycatalogList);
+                ui->CB_SelectCatalog->setModel(fileListModel);
+
+            //Load last search values (from settings file)
+                ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
+                ui->CB_S_TextCriteria->setCurrentText(selectedTextCriteria);
+                ui->CB_S_SearchIn->setCurrentText(selectedSearchIn);
+                ui->CB_S_FileType->setCurrentText(selectedFileType);
         }
 
         //User interactions
@@ -84,10 +88,6 @@
         {
             SearchFiles();
         }
-        void MainWindow::on_LE_SearchText_returnPressed()
-        {
-            SearchFiles();
-        }
         void MainWindow::on_LV_FilesFoundList_clicked(const QModelIndex &index)
         {
             //Get file full path
@@ -104,15 +104,9 @@
             QStringList filelist = catalogModel->stringList();
 
             //Get current selected path as default path for the dialog window
-            //QString newVolumePath = ui->LE_NewVolumePath->text();
 
             //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-            //QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new volume"),
-            //                                                newVolumePath,
-             //                                               QFileDialog::ShowDirsOnly
-             //                                               | QFileDialog::DontResolveSymlinks);
-            //Send the selected directory to LE_NewVolumePath (input line for the New Volume Path)
-            //ui->LE_NewVolumePath->setText(dir);
+
             QDateTime now = QDateTime::currentDateTime();
             QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
             QString filename = QString::fromLatin1("/search_results_%1.txt").arg(timestamp);
@@ -136,6 +130,7 @@
               KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
               exportFile.close();
         }
+
         //File Context Menu actions set up
         void MainWindow::on_LV_FilesFoundList_customContextMenuRequested(const QPoint &pos)
         {
@@ -183,6 +178,7 @@
                 //KMessageBox::information(this,"test:\n did nothing.");
             }
         }
+
         //Context Menu methods
         void MainWindow::contextOpenFile()
         {
@@ -235,7 +231,7 @@
             QString originalText = clipboard->text();
             clipboard->setText(fileNameWithoutExtension);
         }
-        //--------------------------------------------------------------------------
+        //----------------------------------------------------------------------
 
     //Search methods
         void MainWindow::SearchFiles()
@@ -244,15 +240,10 @@
                 //Clear exisitng lists of results and search variables
                     filesFoundList.clear();
                     catalogFoundList.clear();
-                    //regexSearchtext.clear();
-                    //regexFileType.clear();
-                    //regexPattern.clear();
 
                 //Get search criteria
                     //Get text to search in file names or directories
-                    //searchText = ui->LE_SearchText->text();
                     searchText = ui->KCB_SearchText->currentText();
-
 
                     //Do nothing if there is no search text
                     //DEV: message box: No text entered, do you want to list all files based on the other criteria?
@@ -264,7 +255,7 @@
                     ui->KCB_SearchText->addItem(searchText);
 
                     //Get other search criteria
-                    selectedCatalog = ui->CB_SelectCatalog->currentText();
+                    selectedSearchCatalog = ui->CB_SelectCatalog->currentText();
                     selectedTextCriteria = ui->CB_S_TextCriteria->currentText();
                     selectedSearchIn = ui->CB_S_SearchIn->currentText();
                     selectedFileType = ui->CB_S_FileType->currentText();
@@ -280,7 +271,7 @@
                 //QApplication::setOverrideCursor(Qt::WaitCursor);
 
                 //Search every catalog if "All" is selected
-                if ( selectedCatalog =="All"){
+                if ( selectedSearchCatalog =="All"){
                     foreach(sourceCatalog,catalogList)
                             {
                                 SearchFilesInCatalog(sourceCatalog);
@@ -289,8 +280,8 @@
                 //Otherwise just search the selected catalog
                 else{
                     //Search files
-                    SearchFilesInCatalog(selectedCatalog);
-                    catalogFoundList.insert(0,selectedCatalog);
+                    SearchFilesInCatalog(selectedSearchCatalog);
+                    catalogFoundList.insert(0,selectedSearchCatalog);
                     }
 
             //Process search results
@@ -447,4 +438,5 @@
 
             }
         //----------------------------------------------------------------------
-    //--------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------

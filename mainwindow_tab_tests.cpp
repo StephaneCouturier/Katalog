@@ -34,112 +34,12 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "catalog.h"
+#include "collection.h"
 
-void MainWindow::LoadCatalogsToModel()
-{
-    //Load Catalog List To Model
-
-    QList<QString> cNames;
-    QList<QString> cSourcePaths;
-    QList<QString> cDateUpdates;
-    QList<QString> cNums;
-
-    QStringList fileTypes;
-    fileTypes << "*.idx";
-    //Iterate in the directory to create a list of files and sort it
-    //list the file names only
-    QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-    while (iterator.hasNext()){
-        //catalogList << (iterator.next());
-
-        //LoadCatalogInfo(file);
-
-        // Get infos stored in the file
-
-        QFile catalogFile(iterator.next());
-        if(!catalogFile.open(QIODevice::ReadOnly)) {
-            KMessageBox::information(this,"No catalog found.");
-        }
-        //KMessageBox::information(this,"iterator"+iterator.fileName());
-
-        QTextStream textStream(&catalogFile);
-
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.left(13)=="<catalogName>"){
-                QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
-                cNames.append(catalogName);
-            }
-            else if (line.left(18)=="<catalogFileCount>"){
-                QString catalogFileCount = line.right(line.size() - line.lastIndexOf(">") - 1);
-                cNums.append(catalogFileCount);
-            }
-            else if (line.left(19)=="<catalogSourcePath>"){
-                QString catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
-                cSourcePaths.append(catalogSourcePath);
-            }
-            else
-                break;
-        }
-
-        // Get infos about the file itself
-        QFileInfo catalogFileInfo(catalogFile);
-        //cSourcePaths.append(catalogFileInfo.path());
-        //cNames.append(catalogFileInfo.fileName());
-        cDateUpdates.append(catalogFileInfo.lastModified().toString(Qt::ISODate));
-    }
-
-    // Create model
-    Catalog *catalog = new Catalog(this);
-
-    // Populate model with data
-    catalog->populateData(cNames, cSourcePaths, cDateUpdates, cNums);
-
-    // Connect model to table view
-    ui->TV_Catalogs->setModel(catalog);
-    ui->TV_Catalogs->horizontalHeader()->setStretchLastSection(true);
-
-    ui->treeView_2->setModel(catalog);
-
-
-}
-//----------------------------------------------------------------------
-void MainWindow::on_TV_Catalogs_clicked(const QModelIndex &index)
-{ //Test the click on a line
-
-    if (index.isValid()) {
-        int currentRow = index.row();
-        int currentCol = index.column();
-        //ui->treeView_2->index(currentRow,0);
-        //QString cpath = ui->treeView_2->model()->index(index.row(),0)).data().toString();
-        //QString cpath = index(index.row(),0)).data().toString();
-        //QString cellText = index.data().toString();
-
-    //KMessageBox::information(this,"test:\n"+cellText+"\n"+cpath);
-    /*QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->TV_Catalogs->model());
-    selectedCatalog = listModel->stringList().at(index.row());
-    KMessageBox::information(this,"test:\n"+selectedCatalog);*/
-    }
-}
 //----------------------------------------------------------------------
 
-/*
-void MainWindow::on_treeView_2_clicked(const QModelIndex &index)
-{
-    //Test the click on a line
-    QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->treeView_2->model());
-    selectedCatalog = listModel->stringList().at(index.row());
-    KMessageBox::information(this,"test:\n"+selectedCatalog);
-}
-*/
+//----------------------------------------------------------------------
 
-void MainWindow::on_treeView_2_activated(const QModelIndex &index)
-{
-    if (index.isValid()) {
-            QString cellText = index.data().toString();
+//----------------------------------------------------------------------
 
-    KMessageBox::information(this,"test:\n"+cellText);
-    }
-}
+//----------------------------------------------------------------------

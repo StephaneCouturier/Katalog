@@ -22,37 +22,38 @@
 /*FILE DESCRIPTION
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   catalog.cpp
+// File Name:   collection.cpp
 // Purpose:
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.6
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#include "catalog.h"
-#include "QTableView"
+#include "collection.h"
+#include "QTreeView"
 
 
-Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
+Collection::Collection(QObject *parent) : QAbstractTableModel(parent)
 {
+
 }
 
-int Catalog::rowCount(const QModelIndex &parent) const
+int Collection::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return catalogName.length();
 }
 
-int Catalog::columnCount(const QModelIndex &parent) const
+int Collection::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 4;
+    return 5;
 }
 
-QVariant Catalog::data(const QModelIndex &index, int role) const
+QVariant Collection::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || role != Qt::DisplayRole) {
         return QVariant();
@@ -62,18 +63,20 @@ QVariant Catalog::data(const QModelIndex &index, int role) const
     case 1: return QString(catalogDateUpdated[index.row()]);
     case 2: return QString(catalogFileCount[index.row()]);
     case 3: return QString(catalogSourcePath[index.row()]);
+    case 4: return QString(catalogFilePath[index.row()]);
     }
     return QVariant();
 }
 
-QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant Collection::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
         case 0: return QString("Name");
         case 1: return QString("Last update");
-        case 2: return QString("Number of Files");
+        case 2: return QString("Files");
         case 3: return QString("Source Path");
+        case 4: return QString("File path");
         }
     }
     return QVariant();
@@ -81,24 +84,22 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
 
 
 // Create a method to populate the model with data:
-void Catalog::populateData(const QList<QString> &cNames,
-                           const QList<QString> &cSourcePaths,
+void Collection::populateData(const QList<QString> &cNames,
                            const QList<QString> &cDateUpdated,
-                           const QList<QString> &cNums)
+                           const QList<QString> &cNums,
+                           const QList<QString> &cSourcePaths,
+                           const QList<QString> &cCatalogFiles)
 {
     catalogName.clear();
     catalogName = cNames;
-    catalogSourcePath.clear();
-    catalogSourcePath = cSourcePaths;
     catalogDateUpdated.clear();
     catalogDateUpdated = cDateUpdated;
     catalogFileCount.clear();
     catalogFileCount = cNums;
+    catalogSourcePath.clear();
+    catalogSourcePath = cSourcePaths;
+    catalogFilePath.clear();
+    catalogFilePath = cCatalogFiles;
+
     return;
-}
-
-
-void Catalog::LoadCatalogInfo(QString catalogFilePath)
-{
-
 }

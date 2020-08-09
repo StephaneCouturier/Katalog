@@ -120,17 +120,5 @@
         fileType_current = listModel->stringList();
     }
 
-
     //----------------------------------------------------------------------
-    //DEV: FileTypes load/export settings
-    void MainWindow::on_listWidget_clicked(const QModelIndex &index)
-    {
 
-        //Get file full path
-        QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->listWidget->model());
-        //QString fileType_selected = listModel->stringList().at(index.row());
-        //Open the file (fromLocalFile needed for spaces in file name)
-        //KMessageBox::information(this,"info:     ");
-
-        //fileType_current
-    }

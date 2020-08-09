@@ -46,13 +46,12 @@
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
-
-//TAB: Create Volume ----------------------------------------------------------------------
+//TAB: Create Catalog ----------------------------------------------------------------------
 
     //Load file system for the treeview
-    void MainWindow::LoadFileSystem(QString newVolumePath)
+    void MainWindow::LoadFileSystem(QString newCatalogPath)
     {
-            newVolumePath="/";
+            newCatalogPath="/";
          // Creates a new model
             fileSystemModel = new QFileSystemModel(this);
 
@@ -62,7 +61,7 @@
          // QFileSystemModel requires root path
             QString rootPath ="/";
             fileSystemModel->setRootPath(rootPath);
-            fileSystemModel->setRootPath(newVolumePath);
+            fileSystemModel->setRootPath(newCatalogPath);
          // Enable/Disable modifying file system
             //qfilesystemmodel->setReadOnly(true);
 
@@ -78,28 +77,29 @@
             ui->TV_Explorer->expandToDepth(1);
     }
     //----------------------------------------------------------------------
+
     //Catalog the files of a directory
-    void MainWindow::CatalogDirectory(QString newVolumePath)
+    void MainWindow::CatalogDirectory(QString newCatalogPath)
     {
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         // Get directory to catalog
-        QString directory = newVolumePath;
-        //KMessageBox::information(this,"path:\n"+newVolumePath);
+        QString directory = newCatalogPath;
+        //KMessageBox::information(this,"path:\n"+newCatalogPath);
 
         // Get the file type of catalog
         //DEV: replace by editable list of file type definition
         QStringList fileTypes;
-        if ( ui->RB_C_FileType_Image->isChecked() )
-            fileTypes=fileType_Image;
+        if      ( ui->RB_C_FileType_Image->isChecked() )
+                fileTypes = fileType_Image;
         else if ( ui->RB_C_FileType_Audio->isChecked() )
-            fileTypes=fileType_Audio;
+                fileTypes = fileType_Audio;
         else if ( ui->RB_C_FileType_Video->isChecked() )
-            fileTypes=fileType_Video;
+                fileTypes = fileType_Video;
         else if ( ui->RB_C_FileType_Text->isChecked() )
-            fileTypes=fileType_Text;
-        else fileTypes.clear();
+                fileTypes = fileType_Text;
+        else    fileTypes.clear();
 
         //Iterate in the directory to create a list of files
         QStringList filelist;
@@ -108,40 +108,39 @@
             filelist << (iterator.next());
         }
 
+        //Display and store file number
+        //Count the number of files
+        int catalogFilesNumber = filelist.count();
+        ui->L_FilesNumber->setNum(catalogFilesNumber);
+
+        //filelist.append("<catalogFileCount>"+newCatalogName);
+        filelist.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
+        filelist.prepend("<catalogSourcePath>"+newCatalogPath);
+        filelist.prepend("<catalogName>"+newCatalogName);
+        //QString text = "<catalogFileCount>"+QString::number(catalogFilesNumber);
+        //KMessageBox::information(this,"test:\n"+text);
+
         //Define and populate a model and send it to the listView
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(filelist);
-        ui->LV_FileList->setModel(fileListModel);
-
-        //Count the number of files
-        //DEV set a function (duplicate)
-        int catalogFilesNumber = fileListModel->rowCount();
-        ui->L_FilesNumber->setNum(catalogFilesNumber);
-
-        //Chang tab to show the result of the catalog creation
-        //DEV refer to the name rather than index?
-        ui->tabWidget->setCurrentIndex(0);
+        //ui->LV_FileList->setModel(fileListModel);
 
         //DEV   Stop animation
         QApplication::restoreOverrideCursor();
     }
     //----------------------------------------------------------------------
+
     //Save a catalog to a new file
-    void MainWindow::SaveCatalog(QString newVolumeName)
+    void MainWindow::SaveCatalog(QString newCatalogName)
     {
         // Get the model/data from the listview
-        QStringListModel *catalogModel = (QStringListModel*)ui->LV_FileList->model();
+        //QStringListModel *catalogModel = (QStringListModel*)ui->LV_FileList->model();
 
         // Get the file list from this model
-        QStringList filelist = catalogModel->stringList();
-        /*KMessageBox::information(this,
-                                          i18n("Info: 1")+collectionFolder
-                                            +"\n 2 "+newVolumeName
-                                            +"\n 3 "+newVolumePath+"\n 4 "+collectionFolder  +"/"+  newVolumeName + ".idx",
-                                          i18n( "Info" ) );
-        */
+        QStringList filelist = fileListModel->stringList();
+
         // Stream the list to the file
-        QFile fileOut( collectionFolder +"/"+ newVolumeName + ".idx" );
+        QFile fileOut( collectionFolder +"/"+ newCatalogName + ".idx" );
 
         // write data
 
@@ -155,65 +154,76 @@
           }
           fileOut.close();
     }
+
     //Send selected folder in the tree
     void MainWindow::on_TV_Explorer_activated(const QModelIndex &index)
-    {//Sends the selected folder in the tree for the New Volume Path)
+    {//Sends the selected folder in the tree for the New Catalog Path)
         //Get the model/data from the tree
         QFileSystemModel* pathmodel = (QFileSystemModel*)ui->TV_Explorer->model();
         //get data from the selected file/directory
         QFileInfo fileInfo = pathmodel->fileInfo(index);
         //send the path to the line edit
-        ui->LE_NewVolumePath->setText(fileInfo.filePath());
+        ui->LE_NewCatalogPath->setText(fileInfo.filePath());
     }
     //----------------------------------------------------------------------
+
     //Pick a directory from a dialog window
     void MainWindow::on_PB_PickPath_clicked()
     {
         //Get current selected path as default path for the dialog window
-        QString newVolumePath = ui->LE_NewVolumePath->text();
+        newCatalogPath = ui->LE_NewCatalogPath->text();
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new volume"),
-                                                        newVolumePath,
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
+                                                        newCatalogPath,
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
-        //Send the selected directory to LE_NewVolumePath (input line for the New Volume Path)
-        ui->LE_NewVolumePath->setText(dir);
+        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+        ui->LE_NewCatalogPath->setText(dir);
 
         //Select this directory in the treeview.
-        LoadFileSystem(newVolumePath);
+        LoadFileSystem(newCatalogPath);
     }
     //----------------------------------------------------------------------
-    //Generate the volume name from the path
+
+    //Generate the Catalog name from the path
     void MainWindow::on_PB_GenerateFromPath_clicked()
     {
-        //Just copy the volume path to the name
-        QString newVolumeName = ui->LE_NewVolumePath->text();
-        newVolumeName.replace("/","__");
-        ui->LE_NewVolumeName->setText(newVolumeName);
+        //Just copy the Catalog path to the name
+        QString newCatalogName = ui->LE_NewCatalogPath->text();
+        newCatalogName.replace("/","__");
+        ui->LE_NewCatalogName->setText(newCatalogName);
     }
     //----------------------------------------------------------------------
-    //Launch the volume catalog, save it, and show it
+
+    //Launch the cataloging, save it, and show it
     void MainWindow::on_PB_CreateCatalog_clicked()
     {
         //Get inputs
-        QString newVolumePath = ui->LE_NewVolumePath->text();
-        QString newVolumeName = ui->LE_NewVolumeName->text();
+        newCatalogPath = ui->LE_NewCatalogPath->text();
+        newCatalogName = ui->LE_NewCatalogName->text();
 
         //Catalog files
-        if (newVolumeName!="" and newVolumePath!="")
-                CatalogDirectory(newVolumePath);
+        if (newCatalogName!="" and newCatalogPath!="")
+                CatalogDirectory(newCatalogPath);
         else KMessageBox::error(this,
-                                  i18n("Please provide a name and select a path for this new volume.\n Name: ")
-                                  +newVolumeName+"\n Path: "+newVolumePath,
+                                  i18n("Please provide a name and select a path for this new catalog.\n Name: ")
+                                  +newCatalogName+"\n Path: "+newCatalogPath,
                                   i18n( "Info" ) );
 
         //Save the catalog to a new file
-        SaveCatalog(newVolumeName);
+        SaveCatalog(newCatalogName);
 
         //Refresh the catalog list
         LoadCatalogList();
-        PopulateCatalogSelector();
+        LoadCatalogsToModel();
+        initiateSearchValues();
+
+        LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
+
+        //Chang tab to show the result of the catalog creation
+        //DEV refer to the name rather than index?
+        ui->tabWidget->setCurrentIndex(0);
 
     }
     //----------------------------------------------------------------------

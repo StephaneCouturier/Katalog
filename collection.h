@@ -23,7 +23,7 @@
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.h
-// Purpose:     Class for the catalog
+// Purpose:     Class for the collection (list of catalogs)
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
@@ -32,33 +32,37 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#ifndef FILE_H
-#define FILE_H
+#ifndef CATALOG_H
+#define CATALOG_H
 
 #include <QAbstractTableModel>
-/*
-class File : public QAbstractTableModel
+#include <QTextStream>
+
+class Collection : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    File(QObject *parent = nullptr);
+    Collection(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void populateData(const QList<QString> &fileName,
-                      const QList<QString> &fileSourcePath,
-                      const QList<QString> &fileDateUpdated,
-                      const QList<QString> &fileCount);
+    void populateData(const QList<QString> &catalogName,
+                      const QList<QString> &catalogSourcePath,
+                      const QList<QString> &catalogDateUpdated,
+                      const QList<QString> &catalogFileCount,
+                      const QList<QString> &catalogFilePath);
 
 private:
-    QList<QString> fileName;
-    QList<QString> fileSourcePath;
-    QList<QString> fileDateUpdated;
-    QList<QString> fileCount;
+    QList<QString> catalogName;
+    QList<QString> catalogSourcePath;
+    QList<QString> catalogDateUpdated;
+    QList<QString> catalogFileCount;
+    QList<QString> catalogFilePath;
+
 };
-*/
-#endif // FILE_H
+
+#endif // CATALOG_H

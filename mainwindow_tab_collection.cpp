@@ -34,108 +34,134 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "collection.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QSortFilterProxyModel>
 
 #include <KMessageBox>
 #include <KLocalizedString>
 
 //TAB: Collection ----------------------------------------------------------------------
 
-    // UI set up
-
-        //Load the list of catalog files
-        void MainWindow::LoadCatalogList()
+    //Collection selection
+        void MainWindow::on_PB_SelectCollectionFolder_clicked()
         {
-            catalogList.clear();
-            QStringList fileTypes;
-            fileTypes << "*.idx";
-            //Iterate in the directory to create a list of files and sort it
-            //list the file names only
-            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
-                //catalogList << (iterator.next());
+            //Get current selected path as default path for the dialog window
+            //collectionFolder = ui->PB_SelectCollectionFolder->text();
 
-                QFile file(iterator.next());
-                //file.open(QIODevice::ReadOnly);
-                catalogList << file.fileName();
-
+            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+            QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                            collectionFolder,
+                                                            QFileDialog::ShowDirsOnly
+                                                            | QFileDialog::DontResolveSymlinks);
+            //Unless the selection was cancelled, send the selected folder, and refresh the list of catalogs
+            if ( dir !=""){
+                collectionFolder=dir;
+                ui->LE_CollectionFolder->setText(dir);
+                LoadCatalogList();
+                initiateSearchValues();
+                saveSettings();
             }
-            catalogList.sort();
 
-            //Define and populate a model and send it to the listView
-            fileListModel = new QStringListModel(this);
-            fileListModel->setStringList(catalogList);
-            ui->TV_CatalogList->setModel(fileListModel);
-
+            //Reset selected catalog values (avoid updating the last selected one for instance)
+            selectedCatalogFile="";
+            selectedCatalogName="";
+            selectedCatalogPath="";
         }
+        //----------------------------------------------------------------------
 
-        //Catalog buttons methods
+    //Catalog buttons methods
+        void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
+        {
+            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogName = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogPath = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()
         {
-            //Get catalog name
-            QFileInfo file(selectedExploreCatalog);
-            QString catalogName = file.baseName();
-            //Generate back the catalog folder path from the catalog file.
-            //WARNING: this will only work if there was no _ in the original path.
-            QString catalogPath = selectedExploreCatalog.right(selectedExploreCatalog.size() - selectedExploreCatalog.lastIndexOf("/") - 1);
-            catalogPath = catalogPath.replace("__","/");
-            catalogPath = catalogPath.replace(".idx","");
+            //Check if the updqte cqn be done, qnd inform the user otherwise
+            if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
+            KMessageBox::information(this,"It seems this catalog was imported or has an old format.\n"
+                                         "Please Edit it and make sure it has the following first 3 lines:\n\n"
+                                         "<catalogName>catalogName\n"
+                                         "<catalogSourcePath>/home/user/folder/folder\n"
+                                         "<catalogFileCount>10000\n\n"
+                                         "Copy/paste these lines and modify the value after the >:\n"
+                                         "- the catalogName must be equal to the filename, without the .idx\n"
+                                         "- the catalogSourcePath must correspond to the folder where the files should be cataloged\n"
+                                         "- the catalogFileCount number does not matter, it will be updated.\n"
+                                     );
+            return;
+            }
+            if(selectedCatalogFile == "" or selectedCatalogName == "" or selectedCatalogPath == ""){
+            KMessageBox::information(this,"Please select a catalog first (some info is missing).\nselectedCatalogFile:"
+                                     +selectedCatalogFile+"\nselectedCatalogName: "
+                                     +selectedCatalogName+"\nselectedCatalogPath: "
+                                     +selectedCatalogPath);
+            return;
+            }
 
+            newCatalogName = selectedCatalogName;
 
-            QDir dir (catalogPath);
+            QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                //KMessageBox::information(this,"path exists:\n"+catalogPath+"name:\n"+catalogName);
-
-                CatalogDirectory(catalogPath);
-                SaveCatalog(catalogName);
+                CatalogDirectory(selectedCatalogPath);
+                SaveCatalog(selectedCatalogName);
                 KMessageBox::information(this,"This catalog was updated.");
             }
             else {
-                KMessageBox::information(this,"This catalog cannot be updated. The source folder  "+catalogPath+"  does not seem to exist anymore, was renamed, or contained originally at least one _ (not supported yet).");
+                KMessageBox::information(this,"This catalog cannot be updated.\n"
+                                                "The source folder - "+selectedCatalogPath+" - was not found.\n"
+                                                "Possible reasons:\n"
+                                                "- the device is not connected and mounted\n"
+                                                "- the folder was moved or renamed"
+                                         );
 
             }
-
-            //Refresh catalog model
+            //Refresh the collection view
             LoadCatalogsToModel();
+            //Load and display the updated catalog
+            LoadCatalog(selectedCatalogFile);
 
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_ViewCatalog_clicked()
         {
-            //Start mouse cursor animation
-            //QApplication::setOverrideCursor(Qt::WaitCursor);
-            //QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->TV_CatalogList->model());
-            //selectedExploreCatalog = listModel->stringList().at(index.row());
-            //KMessageBox::information(this,"test:\n"+selectedExploreCatalog);
-
-            LoadCatalog(selectedExploreCatalog);
-            //End mouse cursor animation
-            //QApplication::restoreOverrideCursor();
+            LoadCatalog(selectedCatalogFile);
         }
+        //----------------------------------------------------------------------
+        void MainWindow::on_PB_EditCatalogFile_clicked()
+        {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_ExportCatalog_clicked()
         {
             QString link = "https://sourceforge.net/p/katalogg/tickets/";
             KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
             QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_DeleteCatalog_clicked()
         {
-            if ( selectedExploreCatalog != ""){
+            if ( selectedCatalogFile != ""){
 
                 int result = KMessageBox::warningContinueCancel(this,
-                          i18n("Do you want to delete this catalog?\n")+selectedExploreCatalog);
+                          i18n("Do you want to delete this catalog?\n")+selectedCatalogFile);
 
                 if ( result ==KMessageBox::Continue){
-                    QFile file (selectedExploreCatalog);
+                    QFile file (selectedCatalogFile);
                     file.moveToTrash();
                     LoadCatalogList();
+                    LoadCatalogsToModel();
                 }
              }
             else KMessageBox::information(this,i18n("Please select a catalog above first."));
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_LV_FileList_customContextMenuRequested(const QPoint &pos)
         {
@@ -159,36 +185,24 @@
 
             }
         }
-    //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        void MainWindow::on_PB_SelectCollectionFolder_clicked()
+    //File methods
+        void MainWindow::on_LV_FileList_clicked(const QModelIndex &index)
         {
-            //Get current selected path as default path for the dialog window
-            //collectionFolder = ui->PB_SelectCollectionFolder->text();
-
-            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-            QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                            collectionFolder,
-                                                            QFileDialog::ShowDirsOnly
-                                                            | QFileDialog::DontResolveSymlinks);
-            //Unless the selection was cancelled, send the selected folder, and refresh the list of catalogs
-            if ( dir !=""){
-                collectionFolder=dir;
-                ui->LE_CollectionFolder->setText(dir);
-                LoadCatalogList();
-                PopulateCatalogSelector();
-                saveSettings();
-            }
+            //Get file full path
+            QString fileName;
+            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FileList->model());
+            fileName = listModel->stringList().at(index.row());
+            //Open the file (fromLocalFile needed for spaces in file name)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
         }
         //----------------------------------------------------------------------
+
+
     //Load a catalog to view the files
     void MainWindow::LoadCatalog(QString fileName)
     {
-        //DEV rename LoadCatalogFiles
-        // Start animation while cataloging
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-
-
         // Create model
         QStringListModel *catalogModel;
         catalogModel = new QStringListModel(this);
@@ -199,7 +213,10 @@
         catalogFile.setFileName(fileName);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
             KMessageBox::information(this,"Please select a catalog above first.");
+            return;
         }
+        // Start animation while oprning
+        QApplication::setOverrideCursor(Qt::WaitCursor);
 
         // stream to read from file
         QStringList stringList;
@@ -210,7 +227,8 @@
             if (line.isNull())
                 break;
             else
-                stringList.append(line); // populate the stringlist
+                if (line.left(1)!="<")
+                    stringList.append(line); // populate the stringlist
         }
 
         // Populate the model
@@ -226,22 +244,118 @@
         QApplication::restoreOverrideCursor();
     }
     //----------------------------------------------------------------------
-    //Buttons
-    void MainWindow::on_TV_CatalogList_activated(const QModelIndex &index)
+
+    //Load a collection (catalogs)
+    void MainWindow::LoadCatalogsToModel()
     {
-        QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->TV_CatalogList->model());
-        selectedExploreCatalog = listModel->stringList().at(index.row());
+        //Set up temporary lists
+        QList<QString> cNames;
+        QList<QString> cDateUpdates;
+        QList<QString> cNums;
+        QList<QString> cSourcePaths;
+        QList<QString> cCatalogFiles;
+
+        //Iterate in the directory to create a list of files and sort it
+        QStringList fileTypes;
+        fileTypes << "*.idx";
+
+        QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+        while (iterator.hasNext()){
+
+            //LoadCatalogInfo(file);
+            // Get infos stored in the file
+            QFile catalogFile(iterator.next());
+            if(!catalogFile.open(QIODevice::ReadOnly)) {
+                KMessageBox::information(this,"No catalog found.");
+                return;
+            }
+            //KMessageBox::information(this,"iterator"+iterator.fileName());
+
+            QTextStream textStream(&catalogFile);
+            bool catalogNameProvided = false;
+            bool catalogSourcePathProvided = false;
+            bool catalogFileCountProvided = false;
+
+            while (true)
+            {
+                QString line = textStream.readLine();
+                if (line.left(13)=="<catalogName>"){
+                    QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cNames.append(catalogName);
+                    catalogNameProvided = true;
+                }
+                else if (line.left(19)=="<catalogSourcePath>"){
+                    QString catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cSourcePaths.append(catalogSourcePath);
+                    catalogSourcePathProvided = true;
+                }
+                else if (line.left(18)=="<catalogFileCount>"){
+                    QString catalogFileCount = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cNums.append(catalogFileCount);
+                    catalogFileCountProvided = true;
+                }
+
+                else
+                    break;
+            }
+
+            if(catalogNameProvided==false)
+                cNames.append("not recorded");
+            if(catalogSourcePathProvided==false)
+                cSourcePaths.append("not recorded");
+            if(catalogFileCountProvided==false)
+                cNums.append("not recorded");
+
+            // Get infos about the file itself
+            QFileInfo catalogFileInfo(catalogFile);
+            cDateUpdates.append(catalogFileInfo.lastModified().toString(Qt::ISODate));
+            cCatalogFiles.append(catalogFileInfo.filePath());
+        }
+
+        // Create model
+        Collection *collection = new Collection(this);
+
+        // Populate model with data
+        collection->populateData(cNames, cDateUpdates, cNums, cSourcePaths, cCatalogFiles);
+
+        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+        proxyModel->setSourceModel(collection);
+
+        // Connect model to tree/table view
+        ui->TrV_CatalogList->setModel(proxyModel);
+        ui->TrV_CatalogList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+
     }
     //----------------------------------------------------------------------
-    //Open file when clicking on the listview
-    //DEV replace by function and param
-    void MainWindow::on_LV_FileList_clicked(const QModelIndex &index)
+
+    //DEV: to be removed / Load the list of catalog files
+    void MainWindow::LoadCatalogList()
     {
-        //Get file full path
-        QString fileName;
-        QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FileList->model());
-        fileName = listModel->stringList().at(index.row());
-        //Open the file (fromLocalFile needed for spaces in file name)
-        QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+        catalogList.clear();
+        QStringList fileTypes;
+        fileTypes << "*.idx";
+        //Iterate in the directory to create a list of files and sort it
+        //list the file names only
+        QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+        while (iterator.hasNext()){
+            //catalogList << (iterator.next());
+
+            QFile file(iterator.next());
+            //file.open(QIODevice::ReadOnly);
+            catalogList << file.fileName();
+
+        }
+        catalogList.sort();
+
+        //Define and populate a model and send it to the listView
+        fileListModel = new QStringListModel(this);
+        fileListModel->setStringList(catalogList);
+        ui->TrV_CatalogList->setModel(fileListModel);
+
+        //Refresh catalog model
+        LoadCatalogsToModel();
+
     }
     //----------------------------------------------------------------------

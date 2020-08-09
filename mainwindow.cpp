@@ -39,7 +39,7 @@
 //Include other mainwindow methods
     //SETUP: Menu and Icons - Actions KDE setup
     #include "mainwindow_setup.cpp"
-    #include "catalog.cpp"
+    #include "collection.cpp"
     //TAB: Search files
     #include "mainwindow_tab_search.cpp"
     //TAB: Create Catalog
@@ -68,14 +68,14 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Load the list of catalogs from the collection folder
             LoadCatalogList();
         //LoadCatalogList2();
-            PopulateCatalogSelector();
+            initiateSearchValues();
 
     //TAB: Search files
 
-    //TAB: Create Volume
+    //TAB: Create Catalog
         //Default path to scan
             //DEV replace by a value from the collection or settings
-            ui->LE_NewVolumePath->setText("/");
+            ui->LE_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             LoadFileSystem("/");
 
@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //DEV: interface to edit
             FileTypesEditor();
             //ui->TV_Catalogs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-            ui->TV_Catalogs->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+            //ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
 
             setupFileContextMenu();
 
@@ -108,12 +108,5 @@ MainWindow::~MainWindow()
 KMessageBox::information(this,"test:\n");
 qDebug("test of qdebug");
 */
-
-
-
-
-
-
-
 
 
