@@ -113,10 +113,10 @@
         int catalogFilesNumber = filelist.count();
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
-        //filelist.append("<catalogFileCount>"+newCatalogName);
+        //filelist.append("<catalogName>"+newCatalogName);
         filelist.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
         filelist.prepend("<catalogSourcePath>"+newCatalogPath);
-        filelist.prepend("<catalogName>"+newCatalogName);
+        //filelist.prepend("<catalogName>"+newCatalogName);
         //QString text = "<catalogFileCount>"+QString::number(catalogFilesNumber);
         //KMessageBox::information(this,"test:\n"+text);
 

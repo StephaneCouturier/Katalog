@@ -180,12 +180,14 @@ class MainWindow : public KXmlGuiWindow
             void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Collection
-            void on_PB_UpdateCatalog_clicked();
             void on_PB_ViewCatalog_clicked();
+            void on_PB_UpdateCatalog_clicked();
+            void on_PB_EditCatalogFile_clicked();
             void on_PB_ExportCatalog_clicked();
             void on_PB_DeleteCatalog_clicked();
             void on_TrV_CatalogList_activated(const QModelIndex &index);
             void on_LV_FileList_clicked(const QModelIndex &index);
+            void on_PB_C_Rename_clicked();
 
         //Settings
             void on_PB_SelectCollectionFolder_clicked();
@@ -196,7 +198,7 @@ class MainWindow : public KXmlGuiWindow
         //Tests
 
 
-            void on_PB_EditCatalogFile_clicked();
+            void on_PB_C_OpenFolder_clicked();
 };
 
 

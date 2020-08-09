@@ -77,7 +77,12 @@
         }
         //----------------------------------------------------------------------
 
-    //Catalog buttons methods
+    //Catalog buttons
+        void MainWindow::on_PB_C_OpenFolder_clicked()
+        {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
         {
             selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
@@ -136,6 +141,11 @@
         void MainWindow::on_PB_ViewCatalog_clicked()
         {
             LoadCatalog(selectedCatalogFile);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_PB_C_Rename_clicked()
+        {
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_EditCatalogFile_clicked()
@@ -277,19 +287,20 @@
             //KMessageBox::information(this,"iterator"+iterator.fileName());
 
             QTextStream textStream(&catalogFile);
-            bool catalogNameProvided = false;
+            //bool catalogNameProvided = false;
             bool catalogSourcePathProvided = false;
             bool catalogFileCountProvided = false;
 
             while (true)
             {
                 QString line = textStream.readLine();
-                if (line.left(13)=="<catalogName>"){
-                    QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cNames.append(catalogName);
-                    catalogNameProvided = true;
-                }
-                else if (line.left(19)=="<catalogSourcePath>"){
+//                if (line.left(13)=="<catalogName>"){
+//                   // QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
+//                   // cNames.append(catalogName);
+//                    catalogNameProvided = true;
+//                }
+//                else
+                if (line.left(19)=="<catalogSourcePath>"){
                     QString catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
                     cSourcePaths.append(catalogSourcePath);
                     catalogSourcePathProvided = true;
@@ -300,13 +311,15 @@
                     cNums.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
-
-                else
+                else if (line.left(1)=="/")
                     break;
+                else
+                    KMessageBox::information(this,"iterator"+iterator.fileName());
+
             }
 
-            if(catalogNameProvided==false)
-                cNames.append("not recorded");
+//            if(catalogNameProvided==false)
+//                cNames.append("not recorded");
             if(catalogSourcePathProvided==false)
                 cSourcePaths.append("not recorded");
             if(catalogFileCountProvided==false)
@@ -314,8 +327,10 @@
 
             // Get infos about the file itself
             QFileInfo catalogFileInfo(catalogFile);
-            cDateUpdates.append(catalogFileInfo.lastModified().toString(Qt::ISODate));
+            cDateUpdates.append(catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
             cCatalogFiles.append(catalogFileInfo.filePath());
+            //QFile file(catalogFile);
+            cNames.append(catalogFileInfo.baseName());
         }
 
         // Create model

@@ -173,10 +173,10 @@
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
     {
-        fileType_Image<< "*.png$"<< "*.jpg$";
-        fileType_Audio<< "*.mp3$"<< "*.wav$"<< "*.ogg$";
-        fileType_Video<< "*.wmv$"<< "*.avi$"<< "*.mp4$" << "*.mkv$";
-        fileType_Text<< "*.txt$"<< "*.pdf$" << "*.idx$" << "*.html$";
+        fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
+        fileType_Audio<< "*.mp3$" << "*.wav$" << "*.ogg$";
+        fileType_Video<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
+        fileType_Text<< "*.txt$"  << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$";
     }
 
 //Development -------------------------------------------------------
@@ -198,11 +198,12 @@
         ui->RB_IncludeArchives->hide();
         ui->RB_IncludeChecksum->hide();
 
-        //Explore
+        //Collection
         ui->L_Filter->hide();
         ui->LE_TextToFilter->hide();
         ui->L_Directories->hide();
         ui->TV_Directories->hide();
+        ui->PB_C_Rename->hide();
 
         //Other tabs
         ui->tabWidget->removeTab(6);

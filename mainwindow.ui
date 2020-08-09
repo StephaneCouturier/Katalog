@@ -296,6 +296,32 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>50</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_OpenFolder">
+                <property name="text">
+                 <string>Open folder</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open"/>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -348,6 +374,16 @@
                 </property>
                 <property name="icon">
                  <iconset theme="preview"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_Rename">
+                <property name="text">
+                 <string>Rename</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit"/>
                 </property>
                </widget>
               </item>
@@ -831,20 +867,32 @@
                <property name="text">
                 <string>Audio</string>
                </property>
+               <property name="icon">
+                <iconset theme="audio-mp3"/>
+               </property>
               </item>
               <item>
                <property name="text">
                 <string>Image</string>
+               </property>
+               <property name="icon">
+                <iconset theme="image-jpeg"/>
                </property>
               </item>
               <item>
                <property name="text">
                 <string>Text</string>
                </property>
+               <property name="icon">
+                <iconset theme="text-x-plain"/>
+               </property>
               </item>
               <item>
                <property name="text">
                 <string>Video</string>
+               </property>
+               <property name="icon">
+                <iconset theme="video-mp4"/>
                </property>
               </item>
              </widget>
