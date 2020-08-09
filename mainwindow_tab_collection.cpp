@@ -284,7 +284,6 @@
                 KMessageBox::information(this,"No catalog found.");
                 return;
             }
-            //KMessageBox::information(this,"iterator"+iterator.fileName());
 
             QTextStream textStream(&catalogFile);
             //bool catalogNameProvided = false;
@@ -311,10 +310,10 @@
                     cNums.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
-                else if (line.left(1)=="/")
-                    break;
+                //else if (line.left(1)=="/")
+                    //break;
                 else
-                    KMessageBox::information(this,"iterator"+iterator.fileName());
+                    break;
 
             }
 
