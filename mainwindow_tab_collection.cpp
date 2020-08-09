@@ -95,14 +95,12 @@
             //Check if the updqte cqn be done, qnd inform the user otherwise
             if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
             KMessageBox::information(this,"It seems this catalog was imported or has an old format.\n"
-                                         "Please Edit it and make sure it has the following first 3 lines:\n\n"
-                                         "<catalogName>catalogName\n"
-                                         "<catalogSourcePath>/home/user/folder/folder\n"
+                                         "Please Edit it and make sure it has the following first 2 lines:\n\n"
+                                         "<catalogSourcePath>/folderpath\n"
                                          "<catalogFileCount>10000\n\n"
-                                         "Copy/paste these lines and modify the value after the >:\n"
-                                         "- the catalogName must be equal to the filename, without the .idx\n"
-                                         "- the catalogSourcePath must correspond to the folder where the files should be cataloged\n"
-                                         "- the catalogFileCount number does not matter, it will be updated.\n"
+                                         "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
+                                         "- the catalogSourcePath is the folder to catalog the files from.\n"
+                                         "- the catalogFileCount number does not matter as much, it can be updated.\n"
                                      );
             return;
             }
