@@ -208,6 +208,7 @@ class MainWindow : public KXmlGuiWindow
 
         //Tests
 
+            void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H

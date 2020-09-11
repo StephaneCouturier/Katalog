@@ -140,6 +140,22 @@
               exportFile.close();
         }
 
+        void MainWindow::on_TR_CatalogFoundList_clicked(const QModelIndex &index)
+        {
+            //Get file from selected row
+            QString selectedCatalogName = ui->TR_CatalogFoundList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogName = collectionFolder + "/" + selectedCatalogName;
+            ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            SearchFiles();
+            //->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            //QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            //Open the file (fromLocalFile needed for spaces in file name)
+            //QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
+            //KMessageBox::information(this,"Results exported to the collection folder:\n"+selectedCatalogName);
+
+        }
+
         //File Context Menu actions set up
         void MainWindow::on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
