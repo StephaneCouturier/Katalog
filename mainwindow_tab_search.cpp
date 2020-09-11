@@ -161,17 +161,21 @@
 
             fileContextMenu.addSeparator();
 
-            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
-            connect( menuAction3,&QAction::triggered, this, &MainWindow::contextCopyAbsolutePath);
+            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+            connect( menuAction3,&QAction::triggered, this, &MainWindow::contextCopyFolderPath);
             fileContextMenu.addAction(menuAction3);
 
-            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
-            connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithExtension);
+            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
+            connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyAbsolutePath);
             fileContextMenu.addAction(menuAction4);
 
-            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
-            connect( menuAction5,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithoutExtension);
+            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
+            connect( menuAction5,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithExtension);
             fileContextMenu.addAction(menuAction5);
+
+            QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
+            connect( menuAction6,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithoutExtension);
+            fileContextMenu.addAction(menuAction6);
 
             //fileContextMenu.addSeparator();
 
@@ -221,6 +225,15 @@
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
             clipboard->setText(selectedFile);
+        }
+        void MainWindow::contextCopyFolderPath()
+        {
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+
+            QClipboard *clipboard = QGuiApplication::clipboard();
+            QString originalText = clipboard->text();
+            clipboard->setText(selectedFileFolder);
         }
         void MainWindow::contextCopyFileNameWithExtension()
         {
@@ -336,8 +349,12 @@
                 // Connect model to tree/table view
                 ui->TrV_FilesFound->setModel(proxyModel);
                 ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-
+                //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+                ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
+                ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
+                ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
+                ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
 
                 //Count and display the number of files found
                 int numberFilesResult = searchResultsCatalog->rowCount();

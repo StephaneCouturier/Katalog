@@ -386,9 +386,13 @@
         // Connect model to tree/table view
         ui->TrV_CatalogList->setModel(proxyModel);
         ui->TrV_CatalogList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-
-
+        ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->TrV_CatalogList->header()->resizeSection(0, 300); //Name
+        ui->TrV_CatalogList->header()->resizeSection(1, 150); //Date
+        ui->TrV_CatalogList->header()->resizeSection(2, 100); //File
+        ui->TrV_CatalogList->header()->resizeSection(3, 300); //File
+        ui->TrV_CatalogList->header()->hideSection(4); //Path
+        //ui->TrV_CatalogList->header()->resizeSection(3, 300); //Path
     }
     //----------------------------------------------------------------------
 
@@ -476,7 +480,11 @@
         // Connect model to tree/table view
         ui->TrV_FileList->setModel(proxyModel);
         ui->TrV_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->TrV_FileList->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->TrV_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->TrV_FileList->header()->resizeSection(0, 600); //Name
+        ui->TrV_FileList->header()->resizeSection(1, 110); //Size
+        ui->TrV_FileList->header()->resizeSection(2, 140); //Date
+        ui->TrV_FileList->header()->resizeSection(3, 400); //Path
 
         //ui->TrV_FileList->setModel(proxyModel);
         //ui->LV_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);

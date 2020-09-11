@@ -176,7 +176,7 @@
         fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
         fileType_Audio<< "*.mp3$" << "*.wav$" << "*.ogg$";
         fileType_Video<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
-        fileType_Text<< "*.txt$"  << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$";
+        fileType_Text << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$";
     }
 
 //Development -------------------------------------------------------

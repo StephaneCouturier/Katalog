@@ -174,6 +174,7 @@ class MainWindow : public KXmlGuiWindow
             void contextOpenFile();
             void contextOpenFolder();
             void contextCopyAbsolutePath();
+            void contextCopyFolderPath();
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
             void on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos);
