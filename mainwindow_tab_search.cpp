@@ -147,13 +147,6 @@
             selectedCatalogName = collectionFolder + "/" + selectedCatalogName;
             ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
             SearchFiles();
-            //->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            //QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-            //Open the file (fromLocalFile needed for spaces in file name)
-            //QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
-            //KMessageBox::information(this,"Results exported to the collection folder:\n"+selectedCatalogName);
-
         }
 
         //File Context Menu actions set up
