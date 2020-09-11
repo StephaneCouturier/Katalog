@@ -35,6 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "collection.h"
+#include "catalog.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -49,10 +50,7 @@
     //Collection selection
         void MainWindow::on_PB_SelectCollectionFolder_clicked()
         {
-            //Get current selected path as default path for the dialog window
-            //collectionFolder = ui->PB_SelectCollectionFolder->text();
-
-            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+            //Open a dialog for the user to select the directory of the collection where catalog files are stored.
             QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
                                                             collectionFolder,
                                                             QFileDialog::ShowDirsOnly
@@ -80,6 +78,7 @@
     //Catalog buttons
         void MainWindow::on_PB_C_OpenFolder_clicked()
         {
+            //Open the selected collection folder
             QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
         }
         //----------------------------------------------------------------------
@@ -92,7 +91,9 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()
         {
-            //Check if the updqte cqn be done, qnd inform the user otherwise
+            //Update the Selected Catalog
+
+            //Check if the updqte can be done, qnd inform the user otherwise
             if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
             KMessageBox::information(this,"It seems this catalog was imported or has an old format.\n"
                                          "Please Edit it and make sure it has the following first 2 lines:\n\n"
@@ -132,13 +133,22 @@
             //Refresh the collection view
             LoadCatalogsToModel();
             //Load and display the updated catalog
-            LoadCatalog(selectedCatalogFile);
+            //LoadCatalog(selectedCatalogFile);
 
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_ViewCatalog_clicked()
         {
+            //View the files of the Selected Catalog
             LoadCatalog(selectedCatalogFile);
+            LoadFilesToModel();
+        }
+        void MainWindow::on_TrV_CatalogList_doubleClicked(const QModelIndex &index)
+        {
+            //Get file from selected row
+            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            LoadCatalog(selectedCatalogFile);
+            LoadFilesToModel();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_Rename_clicked()
@@ -176,42 +186,75 @@
             else KMessageBox::information(this,i18n("Please select a catalog above first."));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_LV_FileList_customContextMenuRequested(const QPoint &pos)
+    //File methods
+        void MainWindow::on_TrV_FileList_clicked(const QModelIndex &index)
+        {
+            //Get file from selected row
+            QString selectedFileName = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            //Open the file (fromLocalFile needed for spaces in file name)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
+
+        }
+        void MainWindow::on_TrV_FileList_customContextMenuRequested(const QPoint &pos)
         {
             // for most widgets
-            QPoint globalPos = ui->LV_FileList->mapToGlobal(pos);
-            // for QAbstractScrollArea and derived classes you would use:
+            QPoint globalPos = ui->TrV_FileList->mapToGlobal(pos);
+            // for QAbstractScrollArea and derived classes, use:
             // QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
-            QMenu myMenu;
-            //myMenu.addAction("Menu Item 1");
-            //myMenu.addAction("Menu Item 2");
-            // ...
+            QMenu fileContextMenu;
 
-            QAction* selectedItem = myMenu.exec(globalPos);
+//            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
+//            connect(menuAction1, &QAction::triggered, this, &MainWindow::contextOpenFile);
+//            fileContextMenu.addAction(menuAction1);
+
+//            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+//            connect(menuAction2, &QAction::triggered, this, &MainWindow::contextOpenFolder);
+//            fileContextMenu.addAction(menuAction2);
+
+//            fileContextMenu.addSeparator();
+
+            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
+            connect( menuAction3,&QAction::triggered, this, &MainWindow::context2CopyAbsolutePath);
+            fileContextMenu.addAction(menuAction3);
+
+//            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
+//            connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithExtension);
+//            fileContextMenu.addAction(menuAction4);
+
+//            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
+//            connect( menuAction5,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithoutExtension);
+//            fileContextMenu.addAction(menuAction5);
+
+            //fileContextMenu.addSeparator();
+
+            // TEST:  copy file to..., cut file, move file to..., trash, delete, the full Dolphin menu!
+            //QAction *menuAction30 = new QAction(QIcon::fromTheme("edit-copy"),(tr("TEST")), this);
+            //fileContextMenu.addAction(menuAction30);
+
+            QAction* selectedItem = fileContextMenu.exec(globalPos);
             if (selectedItem)
             {
-                //KMessageBox::information(this,"test:\n Copy file name to clipboard, Copy path to clipboard, Open containing folder.");
+                //something
             }
             else
             {
-                //KMessageBox::information(this,"test:\n nothing.");
-
+                //KMessageBox::information(this,"test:\n did nothing.");
             }
         }
-        //----------------------------------------------------------------------
-
-    //File methods
-        void MainWindow::on_LV_FileList_clicked(const QModelIndex &index)
+        void MainWindow::context2CopyAbsolutePath()
         {
-            //Get file full path
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FileList->model());
-            fileName = listModel->stringList().at(index.row());
-            //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+            QModelIndex index=ui->TrV_FileList->currentIndex();
+            QString selectedFileName = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileAbsolutePath = selectedFileFolder+"/"+selectedFileName;
+            QClipboard *clipboard = QGuiApplication::clipboard();
+            QString originalText = clipboard->text();
+            clipboard->setText(selectedFileAbsolutePath);
         }
         //----------------------------------------------------------------------
-
 
     //Load a catalog to view the files
     void MainWindow::LoadCatalog(QString fileName)
@@ -248,7 +291,7 @@
         catalogModel->setStringList(stringList);
 
         // Send model to the listview and view together
-        ui->LV_FileList->setModel(catalogModel);
+        //ui->TrV_FileList->setModel(catalogModel);
 
         int catalogFilesNumber = catalogModel->rowCount();
         ui->L_FilesNumber->setNum(catalogFilesNumber);
@@ -264,7 +307,7 @@
         //Set up temporary lists
         QList<QString> cNames;
         QList<QString> cDateUpdates;
-        QList<int> cNums;
+        QList<qint64> cNums;
         QList<QString> cSourcePaths;
         QList<QString> cCatalogFiles;
 
@@ -291,6 +334,7 @@
             while (true)
             {
                 QString line = textStream.readLine();
+//          commented out as the catalog name is the catalog file name
 //                if (line.left(13)=="<catalogName>"){
 //                   // QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
 //                   // cNames.append(catalogName);
@@ -348,3 +392,93 @@
     }
     //----------------------------------------------------------------------
 
+    //Load a catalog (files)
+    void MainWindow::LoadFilesToModel()
+    {
+        //Set up temporary lists
+        QList<QString> cfileNames;
+        QList<qint64> cfileSizes;
+        QList<QString> cfilePaths;
+        QList<QString> cfileDateTimes;
+
+         //Iterate in the directory to create a list of files and sort it
+        //QStringList fileTypes;
+        //fileTypes << "*.idx";
+
+        //QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+        //while (iterator.hasNext()){
+
+            // Get infos stored in the file
+            QFile catalogFile(selectedCatalogFile);
+            if(!catalogFile.open(QIODevice::ReadOnly)) {
+                KMessageBox::information(this,"No catalog found.");
+                return;
+            }
+
+            QTextStream textStream(&catalogFile);
+            //bool catalogNameProvided = false;
+
+            while (true)
+            {
+                QString line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                    if (line.left(1)!="<"){
+                        //Reminder: the double @ separates the filepath, size, and datetime
+                        //Split the string with @@ into a list
+                        QRegExp tagExp("@@");
+                        QStringList fieldList = line.split(tagExp);
+
+                        int fieldListCount = fieldList.count();
+
+                        // Get the filePath from the list:
+                        QString filePath        = fieldList[0];
+
+                        // Get the fileSize from the list if available
+                        qint64 fileSize;
+                        if (fieldListCount == 3){
+                                fileSize = fieldList[1].toLongLong();}
+                        else fileSize = 0;
+
+                        // Get the fileDateTime from the list if available
+                        QString fileDateTime;
+                        if (fieldListCount == 3){
+                                fileDateTime = fieldList[2];}
+                        else fileDateTime = "";
+
+                        //KMessageBox::information(this,"filedatetime\n"+filedatetime);
+
+                        //Get file informations
+                        QFileInfo file(filePath);
+
+                        //Append data to the lists
+                        cfileNames.append(file.fileName());
+                        cfileSizes.append(fileSize);
+                        cfilePaths.append(file.path());
+                        cfileDateTimes.append(fileDateTime); //selectedCatalogName
+
+                        //if (fieldListCount != 3)
+                            //KMessageBox::information(this,"This catalog was made with a previous version of Katalog that did not record size and date. \n If you can, update this catalog to get this information");
+
+                    }
+            }
+
+        // Create model
+        Catalog *catalog1 = new Catalog(this);
+
+        // Populate model with data
+        catalog1->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
+
+        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+        proxyModel->setSourceModel(catalog1);
+
+        // Connect model to tree/table view
+        ui->TrV_FileList->setModel(proxyModel);
+        ui->TrV_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->TrV_FileList->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+        //ui->TrV_FileList->setModel(proxyModel);
+        //ui->LV_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        //ui->LV_Files->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }

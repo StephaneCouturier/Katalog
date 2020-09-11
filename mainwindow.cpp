@@ -44,7 +44,7 @@
     #include "mainwindow_tab_search.cpp"
     //TAB: Create Catalog
     #include "mainwindow_tab_create.cpp"
-    //TAB: Explore Catalogs
+    //TAB: Collection
     #include "mainwindow_tab_collection.cpp"
     //TAB: TESTS
     //TAB: Find Duplicates
@@ -70,9 +70,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
     //TAB: Search files
             LoadCatalogFileList();
-        //LoadCatalogList2();
             initiateSearchValues();
             refreshCatalogSelectionList();
+
+            ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
     //TAB: Create Catalog
         //Default path to scan
@@ -96,8 +97,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
     //TAB: Tests
         LoadCatalogsToModel();
-
-
+        //LoadFilesToModel("");
+        //int size = get_file_size("/home/stephane/notes.txt");
+        //KMessageBox::information(this,"size: \n" + QString::number(size));
 }
 
 MainWindow::~MainWindow()

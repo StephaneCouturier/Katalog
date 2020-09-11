@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -98,382 +98,13 @@
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="T_Collection">
-       <attribute name="icon">
-        <iconset theme="view-media-playlist"/>
-       </attribute>
-       <attribute name="title">
-        <string>Collection</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="7" column="0">
-         <layout class="QHBoxLayout" name="HL_CatalogsFoldersFiles" stretch="0,0,0">
-          <property name="spacing">
-           <number>6</number>
-          </property>
-          <property name="topMargin">
-           <number>6</number>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" name="VL_CatalogList"/>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QLabel" name="L_Directories">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Directories</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="TV_Directories">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QLabel" name="L_FlieList">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
-              <property name="text">
-               <string>File List</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QListView" name="LV_FileList">
-              <property name="toolTip">
-               <string>Click to open the file</string>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
-               <widget class="QLabel" name="label_8">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>115</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Number of files:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="L_FilesNumber">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="L_Filter">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Filter</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="LE_TextToFilter">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>enter some text to filter these results</string>
-                </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0" rowspan="2">
-         <layout class="QHBoxLayout" name="HL_CatalogZone">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetFixedSize</enum>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" name="VL_CatalogACtions">
-            <item>
-             <layout class="QHBoxLayout" name="HL_ColectionFolder">
-              <item>
-               <widget class="QLabel" name="label_7">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Current collection folder</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="LE_CollectionFolder"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_SelectCollectionFolder">
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>50</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_C_OpenFolder">
-                <property name="text">
-                 <string>Open folder</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-open"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="L_CatalogList">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
-              <property name="text">
-               <string>Catalog List</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="TrV_CatalogList">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="HL_CatalogActions">
-              <item>
-               <widget class="QPushButton" name="PB_ViewCatalog">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>View</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="preview"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_C_Rename">
-                <property name="text">
-                 <string>Rename</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-edit"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_UpdateCatalog">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Update</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="media-playlist-repeat">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_EditCatalogFile">
-                <property name="text">
-                 <string>Edit</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-edit-sign"/>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>100</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_DeleteCatalog">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Delete</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="delete">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="T_SearchFiles">
        <property name="accessibleName">
         <string/>
        </property>
        <attribute name="icon">
-        <iconset theme="system-search"/>
+        <iconset theme="system-search">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Search Files</string>
@@ -585,7 +216,8 @@
                <string>Search</string>
               </property>
               <property name="icon">
-               <iconset theme="system-search"/>
+               <iconset theme="system-search">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -868,7 +500,8 @@
                 <string>Audio</string>
                </property>
                <property name="icon">
-                <iconset theme="audio-mp3"/>
+                <iconset theme="audio-mp3">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
               <item>
@@ -876,7 +509,8 @@
                 <string>Image</string>
                </property>
                <property name="icon">
-                <iconset theme="image-jpeg"/>
+                <iconset theme="image-jpeg">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
               <item>
@@ -884,7 +518,8 @@
                 <string>Text</string>
                </property>
                <property name="icon">
-                <iconset theme="text-x-plain"/>
+                <iconset theme="text-x-plain">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
               <item>
@@ -892,7 +527,8 @@
                 <string>Video</string>
                </property>
                <property name="icon">
-                <iconset theme="video-mp4"/>
+                <iconset theme="video-mp4">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
              </widget>
@@ -925,7 +561,8 @@
                <string>Reset all</string>
               </property>
               <property name="icon">
-               <iconset theme="chronometer-reset"/>
+               <iconset theme="chronometer-reset">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -1106,6 +743,9 @@
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
+                  <property name="editTriggers">
+                   <set>QAbstractItemView::NoEditTriggers</set>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1165,26 +805,15 @@
                  </layout>
                 </item>
                 <item>
-                 <widget class="QListView" name="LV_FilesFoundList">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+                 <widget class="QTreeView" name="TrV_FilesFound">
+                  <property name="editTriggers">
+                   <set>QAbstractItemView::NoEditTriggers</set>
                   </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>500</width>
-                    <height>0</height>
-                   </size>
+                  <property name="alternatingRowColors">
+                   <bool>true</bool>
                   </property>
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                   </font>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1245,7 +874,8 @@
                  <string>Export Results</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-export"/>
+                 <iconset theme="document-export">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -1312,9 +942,403 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="T_Collection">
+       <attribute name="icon">
+        <iconset theme="view-media-playlist">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Collection</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="7" column="0">
+         <layout class="QHBoxLayout" name="HL_CatalogsFoldersFiles" stretch="0,0,0">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="VL_CatalogList"/>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="L_Directories">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Directories</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeView" name="TV_Directories">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>250</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QLabel" name="L_FlieList">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(95, 95, 95);</string>
+              </property>
+              <property name="text">
+               <string>File List</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeView" name="TrV_FileList">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Click to open the file</string>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>115</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Number of files:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_FilesNumber">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_Filter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Filter</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="LE_TextToFilter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>enter some text to filter these results</string>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0" rowspan="2">
+         <layout class="QHBoxLayout" name="HL_CatalogZone">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetFixedSize</enum>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="VL_CatalogACtions">
+            <item>
+             <layout class="QHBoxLayout" name="HL_ColectionFolder">
+              <item>
+               <widget class="QLabel" name="label_7">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Current collection folder</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="LE_CollectionFolder"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_SelectCollectionFolder">
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>50</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_OpenFolder">
+                <property name="text">
+                 <string>Open folder</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="L_CatalogList">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(95, 95, 95);</string>
+              </property>
+              <property name="text">
+               <string>Catalog List</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeView" name="TrV_CatalogList">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>250</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="HL_CatalogActions">
+              <item>
+               <widget class="QPushButton" name="PB_ViewCatalog">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>View</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="preview">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_Rename">
+                <property name="text">
+                 <string>Rename</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_UpdateCatalog">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Update</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playlist-repeat">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_EditCatalogFile">
+                <property name="text">
+                 <string>Edit</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit-sign">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>100</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_DeleteCatalog">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="delete">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="T_CreateCatalog">
        <attribute name="icon">
-        <iconset theme="journal-new"/>
+        <iconset theme="journal-new">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Create Catalog</string>
@@ -1692,7 +1716,8 @@
                  <string>Generate from path</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="password-generate"/>
+                 <iconset theme="password-generate">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -1730,7 +1755,8 @@
                <string>Create Catalog</string>
               </property>
               <property name="icon">
-               <iconset theme="document-save"/>
+               <iconset theme="document-save">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1748,7 +1774,8 @@
       </widget>
       <widget class="QWidget" name="T_Settings">
        <attribute name="icon">
-        <iconset theme="settings-configure"/>
+        <iconset theme="settings-configure">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Settings</string>
@@ -1942,7 +1969,8 @@
         <bool>false</bool>
        </property>
        <attribute name="icon">
-        <iconset theme="step_object_Graph"/>
+        <iconset theme="step_object_Graph">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Statistics</string>
@@ -2002,7 +2030,8 @@
         <bool>false</bool>
        </property>
        <attribute name="icon">
-        <iconset theme="xml-node-duplicate"/>
+        <iconset theme="xml-node-duplicate">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Duplicates</string>

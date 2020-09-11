@@ -43,6 +43,9 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 
+//#include <fstream>
+//#include <filesystem>
+
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -102,27 +105,43 @@
         else    fileTypes.clear();
 
         //Iterate in the directory to create a list of files
-        QStringList filelist;
+        QStringList fileList;
         QDirIterator iterator(directory, fileTypes, QDir::Files, QDirIterator::Subdirectories);
         while (iterator.hasNext()){
-            filelist << (iterator.next());
+
+            //Get file information  (absolute path, size, datetime)
+            QString filePath = iterator.next();
+
+            qint64 fileSize;
+            QFile file(filePath);
+            //if (file.open(QIODevice::ReadOnly)){
+            fileSize = file.size();
+            //}
+            //else fileSize = 999999;
+
+            QFileInfo fileInfo(filePath);
+            QDateTime fileDate = fileInfo.lastModified();
+
+            //add the data to the list, @@ is used as a separator for now
+            fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
         }
+
+        //fileSize = get_file_size(filePath.toStdString());
+
+
 
         //Display and store file number
         //Count the number of files
-        int catalogFilesNumber = filelist.count();
+        int catalogFilesNumber = fileList.count();
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
-        filelist.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
-        filelist.prepend("<catalogSourcePath>"+newCatalogPath);
-        //filelist.prepend("<catalogName>"+newCatalogName);
-        //QString text = "<catalogFileCount>"+QString::number(catalogFilesNumber);
-        //KMessageBox::information(this,"test:\n"+text);
+        fileList.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
+        fileList.prepend("<catalogSourcePath>"+newCatalogPath);
 
         //Define and populate a model and send it to the listView
         fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(filelist);
+        fileListModel->setStringList(fileList);
         //ui->LV_FileList->setModel(fileListModel);
 
         //DEV   Stop animation
@@ -214,12 +233,19 @@
         //Save the catalog to a new file
         SaveCatalog(newCatalogName);
 
-        //Refresh the catalog list
-        LoadCatalogFileList();
+        //Refresh the catalog list for the Collection screen
         LoadCatalogsToModel();
+        //Refresh the catalog list for the combobox of the Search screen
         refreshCatalogSelectionList();
 
-        LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
+        KMessageBox::information(this,
+                                          i18n("The new catalog,has been created.\n Name:   ")
+                                          +newCatalogName+"\n Path:     "+newCatalogPath,
+                                          i18n( "Info" ) );
+
+        //Load files of the created catalog:
+        //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary
+        //LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
         //Chang tab to show the result of the catalog creation
         //DEV refer to the name rather than index?

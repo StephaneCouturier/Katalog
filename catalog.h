@@ -22,8 +22,8 @@
 /*FILE DESCRIPTION
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   collection.h
-// Purpose:     Class/model for the collection (list of catalogs)
+// File Name:   catalog.h
+// Purpose:     Class/model for the catalog (list of files)
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
@@ -32,37 +32,35 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#ifndef COLLECTION_H
-#define COLLECTION_H
+
+#ifndef CATALOG_H
+#define CATALOG_H
 
 #include <QAbstractTableModel>
 #include <QTextStream>
 
-class Collection : public QAbstractTableModel
+class Catalog : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    Collection(QObject *parent = nullptr);
+    Catalog(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void populateData(const QList<QString> &catalogName,
-                      const QList<QString> &catalogDateUpdated,
-                      const QList<qint64> &catalogFileCount,
-                      const QList<QString> &catalogSourcePath,
-                      const QList<QString> &catalogFilePath);
+    void populateFileData(const QList<QString> &fileName,
+                      const QList<qint64> &fileSize,
+                      const QList<QString> &filePath,
+                      const QList<QString> &fileDateTime);
 
 private:
-    QList<QString> catalogName;
-    QList<QString> catalogDateUpdated;
-    QList<qint64> catalogFileCount;
-    QList<QString> catalogSourcePath;
-    QList<QString> catalogFilePath;
-
+    QList<QString> fileName;
+    QList<qint64> fileSize;
+    QList<QString> filePath;
+    QList<QString> fileDateTime;
 };
 
-#endif // COLLECTION_H
+#endif // CATALOG_H

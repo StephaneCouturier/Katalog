@@ -52,6 +52,7 @@
 #include <QAbstractTableModel>
 #include <QMenu>
 #include <QClipboard>
+#include <QSortFilterProxyModel>
 
 #include <KXmlGuiWindow>
 #include <KMessageBox>
@@ -107,6 +108,8 @@ class MainWindow : public KXmlGuiWindow
             void LoadCatalogFileList();
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
+            void LoadCatalogsToModel();
+            void LoadFilesToModel();
 
         //TAB: Search
             //inputs
@@ -119,6 +122,11 @@ class MainWindow : public KXmlGuiWindow
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
             void initiateSearchValues();
+
+            QList<QString> sFileNames;
+            QList<qint64> sFileSizes;
+            QList<QString> sFilePaths;
+            QList<QString> sFileDateTimes;
 
             //search
             QString regexSearchtext;
@@ -139,11 +147,9 @@ class MainWindow : public KXmlGuiWindow
             QString newCatalogPath;
             QString newCatalogName;
             void LoadFileSystem(QString newCatalogPath);
-            void CatalogDirectory(QString newCatalogPath);
-
+            void CatalogDirectory(QString newCatalogPath);          
 
         //TESTS
-            void LoadCatalogsToModel();
             QString collectionFolder;
             void FileTypesEditor();
             QStringListModel *listModel;
@@ -161,17 +167,17 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_S_ResetAll_clicked();
             void on_KCB_SearchText_returnPressed();
             void on_PB_Search_clicked();
-            void on_LV_FilesFoundList_clicked(const QModelIndex &index);
             void setupFileContextMenu();
+            void on_PB_ExportResults_clicked();
+
             //context menu
-            void on_LV_FilesFoundList_customContextMenuRequested(const QPoint &pos);
-            void on_LV_FileList_customContextMenuRequested(const QPoint &pos);
             void contextOpenFile();
             void contextOpenFolder();
             void contextCopyAbsolutePath();
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
-            void on_PB_ExportResults_clicked();
+            void on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos);
+            void on_TrV_FilesFound_clicked(const QModelIndex &index);
 
         //Create
             void on_PB_PickPath_clicked();
@@ -180,26 +186,27 @@ class MainWindow : public KXmlGuiWindow
             void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Collection
+            void on_PB_C_OpenFolder_clicked();
             void on_PB_ViewCatalog_clicked();
             void on_PB_UpdateCatalog_clicked();
+            void on_PB_C_Rename_clicked(); //not active yet
             void on_PB_EditCatalogFile_clicked();
             void on_PB_ExportCatalog_clicked();
             void on_PB_DeleteCatalog_clicked();
             void on_TrV_CatalogList_activated(const QModelIndex &index);
-            void on_LV_FileList_clicked(const QModelIndex &index);
-            void on_PB_C_Rename_clicked();
+            void on_TrV_FileList_clicked(const QModelIndex &index);
+            void on_TrV_CatalogList_doubleClicked(const QModelIndex &index);
+            void on_TrV_FileList_customContextMenuRequested(const QPoint &pos);
+            void context2CopyAbsolutePath();
 
         //Settings
             void on_PB_SelectCollectionFolder_clicked();
             void on_pushButton_8_clicked();
             void on_pushButton_7_clicked();
             void on_pushButton_9_clicked();
-            //void on_listWidget_clicked(const QModelIndex &index);
+
         //Tests
 
-
-            void on_PB_C_OpenFolder_clicked();
 };
-
 
 #endif // MAINWINDOW_H

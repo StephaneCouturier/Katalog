@@ -134,12 +134,12 @@
 
 //Settings -----------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
-        ui->LV_FilesFoundList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect( ui->LV_FilesFoundList, SIGNAL(customContextMenuRequested(const QPoint&)),
+        ui->TrV_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect( ui->TrV_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
 
-        ui->LV_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(ui->LV_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
+        ui->TrV_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(ui->TrV_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
     }
     //----------------------------------------------------------------------
@@ -162,7 +162,7 @@
         QSettings settings(settingsFile, QSettings::NativeFormat);
         QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
-        settings.setValue("LastSearchText", searchText);
+        settings.setValue("LastSearchText", ui->KCB_SearchText->currentText());
         settings.setValue("LastSelectedSearchCatalog", selectedSearchCatalog);
         settings.setValue("LastFileType", selectedFileType);
         settings.setValue("LastSearchTextCriteria", selectedTextCriteria);

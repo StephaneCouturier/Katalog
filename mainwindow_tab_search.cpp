@@ -34,18 +34,15 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "catalog.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QSaveFile>
 #include <QFileDialog>
 
-#include <iostream>
-
 #include <KMessageBox>
 #include <KLocalizedString>
-
-#include <QDebug>
 
 //TAB: SEARCH FILES ----------------------------------------------------------------------
 
@@ -103,25 +100,21 @@
         {
             SearchFiles();
         }
-        void MainWindow::on_LV_FilesFoundList_clicked(const QModelIndex &index)
+
+        void MainWindow::on_TrV_FilesFound_clicked(const QModelIndex &index)
         {
-            //Get file full path
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName = listModel->stringList().at(index.row());
+            //Get file from selected row
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
         }
+
         void MainWindow::on_PB_ExportResults_clicked()
         {
-            //Get list of search results
-            QStringListModel *catalogModel = (QStringListModel*)ui->LV_FilesFoundList->model();
-            QStringList filelist = catalogModel->stringList();
-
-            //Get current selected path as default path for the dialog window
-
-            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-
+            //Prepare export file name
             QDateTime now = QDateTime::currentDateTime();
             QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
             QString filename = QString::fromLatin1("/search_results_%1.txt").arg(timestamp);
@@ -131,11 +124,12 @@
             //QFile exportFile(collectionFolder+"/file.txt");
 
               if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
+
                   QTextStream stream(&exportFile);
-                  for (int i = 0; i < filelist.size(); ++i)
-                    stream << filelist.at(i) << '\n';
-                    } else {
-                  std::cerr << "error opening output file\n";
+                  for (int i = 0; i < filesFoundList.size(); ++i)
+                    stream << filesFoundList.at(i) << '\n';
+                    //} else {
+                  //std::cerr << "error opening output file\n";
                   //return EXIT_FAILURE;
                 }
               //else {
@@ -147,12 +141,14 @@
         }
 
         //File Context Menu actions set up
-        void MainWindow::on_LV_FilesFoundList_customContextMenuRequested(const QPoint &pos)
+        void MainWindow::on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
+            //KMessageBox::information(this,"test.");
+
             // for most widgets
-            QPoint globalPos = ui->LV_FilesFoundList->mapToGlobal(pos);
+            QPoint globalPos = ui->TrV_FilesFound->mapToGlobal(pos);
             // for QAbstractScrollArea and derived classes you would use:
-            // QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
+            //QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
             QMenu fileContextMenu;
 
             QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
@@ -197,38 +193,41 @@
         //Context Menu methods
         void MainWindow::contextOpenFile()
         {
-            QModelIndex index=ui->LV_FilesFoundList->currentIndex();
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName = listModel->stringList().at(index.row());
-            QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();          
+            //Get filepath from selected row
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            //Open the file (fromLocalFile needed for spaces in file name)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
         }
         void MainWindow::contextOpenFolder()
         {
-            QModelIndex index=ui->LV_FilesFoundList->currentIndex();
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName = listModel->stringList().at(index.row());
-            QString folderName = fileName.left(fileName.lastIndexOf("/"));
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
             QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
         }
         void MainWindow::contextCopyAbsolutePath()
         {
-            QModelIndex index=ui->LV_FilesFoundList->currentIndex();
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName = listModel->stringList().at(index.row());
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
-            clipboard->setText(fileName);
+            clipboard->setText(selectedFile);
         }
         void MainWindow::contextCopyFileNameWithExtension()
         {
-            QModelIndex index=ui->LV_FilesFoundList->currentIndex();
-            QString fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName = listModel->stringList().at(index.row());
-            QString fileNameWithExtension = fileName.right(fileName.size() - fileName.lastIndexOf("/") - 1);
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+            QString fileNameWithExtension = selectedFileName;
 
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
@@ -236,12 +235,16 @@
         }
         void MainWindow::contextCopyFileNameWithoutExtension()
         {
-            QModelIndex index=ui->LV_FilesFoundList->currentIndex();
+            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+
+            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
             QFileInfo fileName;
-            QStringListModel* listModel= qobject_cast<QStringListModel*>(ui->LV_FilesFoundList->model());
-            fileName.setFile(listModel->stringList().at(index.row()));
+            fileName.setFile(selectedFile);
             QString fileNameWithoutExtension = fileName.baseName();
-            //.base.right(fileName.size() - fileName.lastIndexOf("/") - 1);
+
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
             clipboard->setText(fileNameWithoutExtension);
@@ -256,6 +259,13 @@
                     filesFoundList.clear();
                     catalogFoundList.clear();
 
+                    //Set up temporary lists
+                    sFileNames.clear();
+                    sFileSizes.clear();
+                    sFilePaths.clear();
+                    sFileDateTimes.clear();
+
+
                 //Get search criteria
                     //Get text to search in file names or directories
                     searchText = ui->KCB_SearchText->currentText();
@@ -265,7 +275,7 @@
                     if (searchText=="")
                         return;
 
-                    //add searchTest to a list, to retrieved it later
+                    //add searchText to a list, to retrieved it later
                     //searchTextList.insert(0,searchText);
                     ui->KCB_SearchText->addItem(searchText);
 
@@ -275,9 +285,9 @@
                     selectedSearchIn = ui->CB_S_SearchIn->currentText();
                     selectedFileType = ui->CB_S_FileType->currentText();
 
-                 // Searching "Begin With" for File name or Fodler name is not supported yet
+                 // Searching "Begin With" for File name or Folder name is not supported yet
                     if (selectedTextCriteria=="Begins With" and selectedSearchIn =="File names or Folder paths"){
-                        KMessageBox::information(this,"Searching -Begin With- with -File names or Fodler names- is not supported yet.\nPlease try a different combinaison.");
+                        KMessageBox::information(this,"Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison.");
                         return;;
                     }
 
@@ -292,16 +302,15 @@
                                 SearchFilesInCatalog(sourceCatalog);
                             }
                     }
-                //Otherwise just search the selected catalog
+                //Otherwise just search files in the selected catalog
                 else{
-                    //Search files
                     SearchFilesInCatalog(selectedSearchCatalog);
-                    catalogFoundList.insert(0,selectedSearchCatalog);
                     }
 
-            //Process search results
+            //Process search results: list of catalogs
                 //Remove duplicates so the catalogs are listed only once
                 catalogFoundList.removeDuplicates();
+
                 //Keep the catalog file name only
                 foreach(QString item, catalogFoundList){
                         int index = catalogFoundList.indexOf(item);
@@ -309,15 +318,32 @@
                         catalogFoundList[index] = dir.dirName();
                         }
 
-                //Return list of catalog in which files where found
+                //Load list of catalogs in which files where found
                 catalogFoundListModel = new QStringListModel(this);
                 catalogFoundListModel->setStringList(catalogFoundList);
                 ui->TR_CatalogFoundList->setModel(catalogFoundListModel);
 
+
+            //Process search results: list of files
+                // Create model
+                Catalog *searchResultsCatalog = new Catalog(this);
+
+                // Populate model with data
+                searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
+                QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+                proxyModel->setSourceModel(searchResultsCatalog);
+
+                // Connect model to tree/table view
+                ui->TrV_FilesFound->setModel(proxyModel);
+                ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+
                 //Count and display the number of files found
-                int numberFilesResult = fileListModel->rowCount();
+                int numberFilesResult = searchResultsCatalog->rowCount();
                 ui->L_NumberFilesResult->setNum(numberFilesResult);
 
+                //Save the search parameters to the seetings file
                 saveSettings();
 
             //Stop cursor animation
@@ -327,26 +353,52 @@
         void MainWindow::SearchFilesInCatalog(const QString &sourceCatalog)
         {
             QFile catalogFile(sourceCatalog);
-            //Generate RegularExpression = pattern to verify each file
-            //DEV: test if file path has space
-            //KMessageBox::information(this,"test:\n"+selectedSearchIn+"test:\n"+selectedTextCriteria+"test:\n"+selectedFileType);
 
             //Define how to use the search text
                 if(selectedTextCriteria == "Exact Phrase")
-                    regexSearchtext=searchText;
+                    regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
                 else if(selectedTextCriteria == "Begins With")
                     regexSearchtext="(^"+searchText+")";
                 else if(selectedTextCriteria == "Any Word")
                     regexSearchtext=searchText.replace(" ","|");
-                else if(selectedTextCriteria == "All Words")
-                    regexSearchtext="("+searchText.replace(" ",")(.*")+")";
+                else if(selectedTextCriteria == "All Words"){
+                    //regexSearchtext="(.*"+searchText.replace(" ","*)(.*")+"*)";
+
+                    QString searchTextToSplit = searchText;
+                    QString groupRegEx = "";
+                    QRegExp lineSplitExp(" ");
+                    QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
+                    int numberOfSearchWords = lineFieldList.count();
+
+                    // ^(?=.*\bjack\b)(?=.*\bjames\b).*$
+
+                    //build regex group for one word
+                    for (int i=0; i<(numberOfSearchWords); i++){
+                        groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
+
+                    //regexSearchtext="(.*"+searchText.replace(" ","*)(.*")+"*)";
+                    //(was|created|and)+.*(was|created|and)+.*(was|created|and)+.*
+                    }
+                    //groupRegEx = groupRegEx + lineFieldList[numberOfSearchWords-1] + ")";
+
+                    //repeat group for each word
+                    //QString fullRegex;
+//                    for (int i=0; i<(numberOfSearchWords); i++){
+//                        fullRegex = fullRegex + groupRegEx + "+.*";
+//                    }
+
+                    regexSearchtext = groupRegEx;// + ".*";
+                    //regexSearchtext = "^(?=.*je)(?=.*war)(?=.*star).*$";
+
+                    //regexSearchtext = "(?=.*je)(?=.*war)(?=.*star).*";
+                }
                 else {
                     regexSearchtext="";
                      }
 
                 regexPattern = regexSearchtext;
 
-            //Prepare the regexFileType
+            //Prepare the regexFileType for file types
             if(selectedFileType !="Any"){
                 //Get the list of file extension and join it into one string
                 if(selectedFileType =="Audio"){
@@ -365,56 +417,58 @@
                 //Replace the *. by .* needed for regex
                 regexFileType = regexFileType.replace("*.",".*");
                 //Add the file type expression to the regex
-                regexPattern = regexSearchtext + "(" + regexFileType + ")";
+                regexPattern = regexSearchtext  + "(" + regexFileType + ")";
 
              }
 
             //KMessageBox::information(this,"regexPattern:\n"+regexPattern);
+            //return;
+
             ui->L_Regex->setText(regexPattern);
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
+            //QRegularExpression regexFType(regexFileType, QRegularExpression::CaseInsensitiveOption);
 
-            //Search loop for all RegEx
-
-            //Open catalog file
+            //Search loop for all lines in the catalog file
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+
                 //Set up a stream from the file's data
                 QTextStream stream(&catalogFile);
                 QString line;
                 QString reducedLine;
-                //QRegularExpressionMatch match;
 
-
-                //in file path file name criteria
-                //selectedPathOnly = ui->RB_InFilePath->isChecked();
-                //selectedNameOnly = ui->RB_InFileName->isChecked();
                 //Line by Line, test if the file is matching all search criteria
-                // This tests first the search in file/path criteria, then adapts for searchtext and tiletype criteria
+                // It tests first the "search in" file/path criteria, then adapts for searchtext and filetype criteria
                 do {
                     //Get line text
                     line = stream.readLine();
                     QRegularExpressionMatch match;
+                    //QRegularExpressionMatch matchFileType;
                     QRegularExpressionMatch foldermatch;
 
+                    //Split the line text with @@ into a list
+                    QRegExp     lineSplitExp("@@");
+                    QStringList lineFieldList   = line.split(lineSplitExp);
+                    int         fieldListCount  = lineFieldList.count();
+
+                    // Get the file path from the list:
+                    QString     lineFilePath    = lineFieldList[0];
+
                     //Start by excluding lines starting with < (catalog infos)
-                    if (line.left(1)!="<"){
+                    if (lineFilePath.left(1)!="<"){
 
                         //reduce it depending on the "Search in" criteria
                         if(selectedSearchIn == "File names only")
                         {
-                            //Keep only the filename, so all characters at the right of the last occurence of / in the path.
-                            //to know the number of characters to take right:
-                            //taking the total number of characters, substract the last index position, add 1 to avoid the /
-                            reducedLine = line.right(line.size() - line.lastIndexOf("/") - 1);
+                            // Extract the file name from the lineFilePath
+                            QFileInfo file(lineFilePath);
+                            reducedLine = file.fileName();
 
-                            //KMessageBox::information(this,"test:\n"+reducedLine);
-
-                            //regexPattern = regexSearchtext + "(" + regexFileType + ")";
                             match = regex.match(reducedLine);
                         }
                         else if(selectedSearchIn == "Folder path only")
                         {
                             //Keep only the folder name, so all characters left of the last occurence of / in the path.
-                            reducedLine = line.left(line.lastIndexOf("/"));
+                            reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
                             //Check the fodler name matches the search text
                             regex.setPattern(regexSearchtext);
@@ -425,31 +479,47 @@
                             if (foldermatch.hasMatch()){
                                 regex.setPattern(regexFileType);
 
-                                match = regex.match(line);
+                                match = regex.match(lineFilePath);
                             }
                             //else return;
                             //fileTypeJoin
                         }
                         else {
-                            //regexPattern = regexSearchtext + "(" + regexFileType + ")";
-                            //KMessageBox::information(this,"test:\n"+regexPattern);
-                            match = regex.match(line);
+                            match = regex.match(lineFilePath);
                         }
+
                         //QRegularExpressionMatch match = regex.match(line);
+
                         //If the file is matching the criteria, add it and its catalog to the search results
                         if (match.hasMatch()){
-                            filesFoundList << line;
+                            filesFoundList << lineFilePath;
                             catalogFoundList.insert(0,sourceCatalog);
+
+                            //Retrieve other file info
+                            QFileInfo file(lineFilePath);
+
+                            qint64 lineFileSize;
+                            if (fieldListCount == 3){
+                                    lineFileSize = lineFieldList[1].toLongLong();}
+                            else lineFileSize = 0;
+
+                            // Get the fileDateTime from the list if available
+                            QString lineFileDatetime;
+                            if (fieldListCount == 3){
+                                    lineFileDatetime = lineFieldList[2];}
+                            else lineFileDatetime = "";
+
+                            //Populate result lists
+                            sFileNames.append(file.fileName());
+                            sFilePaths.append(file.path());
+                            sFileSizes.append(lineFileSize);
+                            sFileDateTimes.append(lineFileDatetime);
+
                         }
                     }
                 } while(!line.isNull());
             }
             else return;
-
-            //populate result lists
-            fileListModel = new QStringListModel(this);
-            fileListModel->setStringList(filesFoundList);
-            ui->LV_FilesFoundList->setModel(fileListModel);
 
             }
         //----------------------------------------------------------------------
