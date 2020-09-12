@@ -203,7 +203,7 @@
         ui->LE_TextToFilter->hide();
         ui->L_Directories->hide();
         ui->TV_Directories->hide();
-        ui->PB_C_Rename->hide();
+        //ui->PB_C_Rename->hide();
 
         //Other tabs
         ui->tabWidget->removeTab(6);

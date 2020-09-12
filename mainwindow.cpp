@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    , ui(new Ui::MainWindow)
 {
 
-   //Start up
+   //Start up interface
         //Set up GUI
             ui->setupUi(this);
             hideDevelopmentUIItems();
@@ -64,25 +64,25 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
             loadSettings();
 
-    //TAB: Collection
+    //setup tab: Collection
         //Load the list of catalogs from the collection folder
             LoadCatalogsToModel();
 
-    //TAB: Search files
+    //setup tab: Search files
             LoadCatalogFileList();
             initiateSearchValues();
             refreshCatalogSelectionList();
 
             ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
-    //TAB: Create Catalog
+    //setup tab: Create Catalog
         //Default path to scan
             //DEV replace by a value from the collection or settings
             ui->LE_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             LoadFileSystem("/");
 
-    //TAB: Settings
+    //setup tab: Settings
         //Load last collection used
             //Send collection folder to the line edit
             ui->LE_CollectionFolder->setText(collectionFolder);
@@ -90,16 +90,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             setFileTypes();
             //DEV: interface to edit
             FileTypesEditor();
-            //ui->TV_Catalogs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-            //ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-
             setupFileContextMenu();
 
     //TAB: Tests
-        LoadCatalogsToModel();
-        //LoadFilesToModel("");
-        //int size = get_file_size("/home/stephane/notes.txt");
-        //KMessageBox::information(this,"size: \n" + QString::number(size));
 }
 
 MainWindow::~MainWindow()

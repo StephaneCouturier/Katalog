@@ -78,11 +78,28 @@
                 ui->SB_MinimumSize->setValue(selectedMinimumSize);
                 ui->SB_MaximumSize->setValue(selectedMaximumSize);
                 ui->CB_SizeUnit->setCurrentText(selectedSizeUnit);
+        }
+        void MainWindow::LoadCatalogFileList()
+        {
+            catalogFileList.clear();
+            QStringList fileTypes;
+            fileTypes << "*.idx";
+            //Iterate in the directory to create a list of files and sort it
+            //list the file names only
+            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+            while (iterator.hasNext()){
+                //catalogList << (iterator.next());
 
+                QFile file(iterator.next());
+                //file.open(QIODevice::ReadOnly);
+                catalogFileList << file.fileName();
 
+            }
+            catalogFileList.sort();
         }
         void MainWindow::refreshCatalogSelectionList()
         {
+            //must be run after loading the LoadCatalogFileList();
             //Prepare list for the Catalog selection combobox
                 QStringList displaycatalogList = catalogFileList;
 
@@ -381,7 +398,6 @@
                 catalogFoundListModel->setStringList(catalogFoundList);
                 ui->TR_CatalogFoundList->setModel(catalogFoundListModel);
 
-
             //Process search results: list of files
                 // Create model
                 Catalog *searchResultsCatalog = new Catalog(this);
@@ -564,7 +580,6 @@
                                 sFilePaths.append(file.path());
                                 sFileSizes.append(lineFileSize);
                                 sFileDateTimes.append(lineFileDatetime);
-
                             }
                         }
                     }
@@ -574,24 +589,5 @@
 
             }
         //----------------------------------------------------------------------
-        //DEV: to be replaces using the collection model as source
-        void MainWindow::LoadCatalogFileList()
-        {
-            catalogFileList.clear();
-            QStringList fileTypes;
-            fileTypes << "*.idx";
-            //Iterate in the directory to create a list of files and sort it
-            //list the file names only
-            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
-                //catalogList << (iterator.next());
 
-                QFile file(iterator.next());
-                //file.open(QIODevice::ReadOnly);
-                catalogFileList << file.fileName();
-
-            }
-            catalogFileList.sort();
-        }
-        //----------------------------------------------------------------------
 //------------------------------------------------------------------------------------------

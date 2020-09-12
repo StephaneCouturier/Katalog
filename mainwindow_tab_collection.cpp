@@ -132,8 +132,6 @@
             }
             //Refresh the collection view
             LoadCatalogsToModel();
-            //Load and display the updated catalog
-            //LoadCatalog(selectedCatalogFile);
 
         }
         //----------------------------------------------------------------------
@@ -153,7 +151,28 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_Rename_clicked()
         {
-            KMessageBox::information(this,"rename");
+            //Get info from the selected catalog
+            QFileInfo selectedCatalogFileInfo(selectedCatalogFile);
+            QString currentCatalogName = selectedCatalogFileInfo.baseName();
+
+            //Display an input box with the current file name (without extension)
+            bool ok;
+            QString newCatalogName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                                 tr("Enter new catalog name:"), QLineEdit::Normal,
+                                                 currentCatalogName, &ok); //(QDir::home().dirName())
+            //generate the full new name of the
+            QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+
+            //Rename the catalog file
+            if (ok && !newCatalogName.isEmpty()){
+                //KMessageBox::information(this,"rename:\n" + selectedCatalogFile + "\n to: " +newCatalogFullName);
+                QFile::rename(selectedCatalogFile, newCatalogFullName);
+
+             //refresh catalog lists
+                LoadCatalogsToModel();
+                LoadCatalogFileList();
+                refreshCatalogSelectionList();
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_EditCatalogFile_clicked()
@@ -193,9 +212,9 @@
             QString selectedFileName = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
 
         }
         void MainWindow::on_TrV_FileList_customContextMenuRequested(const QPoint &pos)
@@ -290,9 +309,6 @@
         // Populate the model
         catalogModel->setStringList(stringList);
 
-        // Send model to the listview and view together
-        //ui->TrV_FileList->setModel(catalogModel);
-
         int catalogFilesNumber = catalogModel->rowCount();
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
@@ -334,13 +350,7 @@
             while (true)
             {
                 QString line = textStream.readLine();
-//          commented out as the catalog name is the catalog file name
-//                if (line.left(13)=="<catalogName>"){
-//                   // QString catalogName = line.right(line.size() - line.lastIndexOf(">") - 1);
-//                   // cNames.append(catalogName);
-//                    catalogNameProvided = true;
-//                }
-//                else
+
                 if (line.left(19)=="<catalogSourcePath>"){
                     QString catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
                     cSourcePaths.append(catalogSourcePath);
@@ -352,15 +362,12 @@
                     cNums.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
-                //else if (line.left(1)=="/")
-                    //break;
+
                 else
                     break;
 
             }
 
-//            if(catalogNameProvided==false)
-//                cNames.append("not recorded");
             if(catalogSourcePathProvided==false)
                 cSourcePaths.append("not recorded");
             if(catalogFileCountProvided==false)
@@ -379,7 +386,6 @@
 
         // Populate model with data
         collection->populateData(cNames, cDateUpdates, cNums, cSourcePaths, cCatalogFiles);
-
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(collection);
 
@@ -387,12 +393,11 @@
         ui->TrV_CatalogList->setModel(proxyModel);
         ui->TrV_CatalogList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
         ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->TrV_CatalogList->header()->resizeSection(0, 300); //Name
+        ui->TrV_CatalogList->header()->resizeSection(0, 350); //Name
         ui->TrV_CatalogList->header()->resizeSection(1, 150); //Date
         ui->TrV_CatalogList->header()->resizeSection(2, 100); //File
         ui->TrV_CatalogList->header()->resizeSection(3, 300); //File
         ui->TrV_CatalogList->header()->hideSection(4); //Path
-        //ui->TrV_CatalogList->header()->resizeSection(3, 300); //Path
     }
     //----------------------------------------------------------------------
 
@@ -405,67 +410,53 @@
         QList<QString> cfilePaths;
         QList<QString> cfileDateTimes;
 
-         //Iterate in the directory to create a list of files and sort it
-        //QStringList fileTypes;
-        //fileTypes << "*.idx";
+        // Get infos stored in the file
+        QFile catalogFile(selectedCatalogFile);
+        if(!catalogFile.open(QIODevice::ReadOnly)) {
+            KMessageBox::information(this,"No catalog found.");
+            return;
+        }
 
-        //QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-        //while (iterator.hasNext()){
+        QTextStream textStream(&catalogFile);
 
-            // Get infos stored in the file
-            QFile catalogFile(selectedCatalogFile);
-            if(!catalogFile.open(QIODevice::ReadOnly)) {
-                KMessageBox::information(this,"No catalog found.");
-                return;
-            }
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(1)!="<"){
+                    //Reminder: the double @ separates the filepath, size, and datetime
+                    //Split the string with @@ into a list
+                    QRegExp tagExp("@@");
+                    QStringList fieldList = line.split(tagExp);
 
-            QTextStream textStream(&catalogFile);
-            //bool catalogNameProvided = false;
+                    int fieldListCount = fieldList.count();
 
-            while (true)
-            {
-                QString line = textStream.readLine();
-                if (line.isNull())
-                    break;
-                else
-                    if (line.left(1)!="<"){
-                        //Reminder: the double @ separates the filepath, size, and datetime
-                        //Split the string with @@ into a list
-                        QRegExp tagExp("@@");
-                        QStringList fieldList = line.split(tagExp);
+                    // Get the filePath from the list:
+                    QString filePath        = fieldList[0];
 
-                        int fieldListCount = fieldList.count();
+                    // Get the fileSize from the list if available
+                    qint64 fileSize;
+                    if (fieldListCount == 3){
+                            fileSize = fieldList[1].toLongLong();}
+                    else fileSize = 0;
 
-                        // Get the filePath from the list:
-                        QString filePath        = fieldList[0];
+                    // Get the fileDateTime from the list if available
+                    QString fileDateTime;
+                    if (fieldListCount == 3){
+                            fileDateTime = fieldList[2];}
+                    else fileDateTime = "";
 
-                        // Get the fileSize from the list if available
-                        qint64 fileSize;
-                        if (fieldListCount == 3){
-                                fileSize = fieldList[1].toLongLong();}
-                        else fileSize = 0;
+                    //Get file informations
+                    QFileInfo file(filePath);
 
-                        // Get the fileDateTime from the list if available
-                        QString fileDateTime;
-                        if (fieldListCount == 3){
-                                fileDateTime = fieldList[2];}
-                        else fileDateTime = "";
-
-                        //KMessageBox::information(this,"filedatetime\n"+filedatetime);
-
-                        //Get file informations
-                        QFileInfo file(filePath);
-
-                        //Append data to the lists
-                        cfileNames.append(file.fileName());
-                        cfileSizes.append(fileSize);
-                        cfilePaths.append(file.path());
-                        cfileDateTimes.append(fileDateTime); //selectedCatalogName
-
-                        //if (fieldListCount != 3)
-                            //KMessageBox::information(this,"This catalog was made with a previous version of Katalog that did not record size and date. \n If you can, update this catalog to get this information");
-
-                    }
+                    //Append data to the lists
+                    cfileNames.append(file.fileName());
+                    cfileSizes.append(fileSize);
+                    cfilePaths.append(file.path());
+                    cfileDateTimes.append(fileDateTime); //selectedCatalogName
+                }
             }
 
         // Create model
@@ -486,7 +477,4 @@
         ui->TrV_FileList->header()->resizeSection(2, 140); //Date
         ui->TrV_FileList->header()->resizeSection(3, 400); //Path
 
-        //ui->TrV_FileList->setModel(proxyModel);
-        //ui->LV_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        //ui->LV_Files->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }

@@ -249,7 +249,7 @@
 
         //Chang tab to show the result of the catalog creation
         //DEV refer to the name rather than index?
-        ui->tabWidget->setCurrentIndex(0);
+        ui->tabWidget->setCurrentIndex(1);
 
     }
     //----------------------------------------------------------------------
