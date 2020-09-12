@@ -148,13 +148,16 @@
         QSettings settings(settingsFile, QSettings::NativeFormat);
         collectionFolder = settings.value("LastCollectionFolder").toString();
         if(collectionFolder == ""){
-                collectionFolder = QApplication::applicationDirPath();
+               collectionFolder = QApplication::applicationDirPath();
         }
         ui->KCB_SearchText->setEditText(settings.value("LastSearchText").toString());
-        selectedSearchCatalog = settings.value("LastSelectedSearchCatalog").toString();
-        selectedFileType = settings.value("LastFileType").toString();
-        selectedTextCriteria = settings.value("LastSearchTextCriteria").toString();
-        selectedSearchIn = settings.value("LastSearchIn").toString();
+        selectedSearchCatalog   = settings.value("LastSelectedSearchCatalog").toString();
+        selectedFileType        = settings.value("LastFileType").toString();
+        selectedTextCriteria    = settings.value("LastSearchTextCriteria").toString();
+        selectedSearchIn        = settings.value("LastSearchIn").toString();
+        selectedMinimumSize     = settings.value("LastMinimumSize").toLongLong();
+        selectedMaximumSize     = settings.value("LastMaximumSize").toLongLong();
+        selectedSizeUnit        = settings.value("LastSizeUnit").toString();
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
@@ -167,7 +170,9 @@
         settings.setValue("LastFileType", selectedFileType);
         settings.setValue("LastSearchTextCriteria", selectedTextCriteria);
         settings.setValue("LastSearchIn", selectedSearchIn);
-
+        settings.setValue("LastMinimumSize", selectedMinimumSize);
+        settings.setValue("LastMaximumSize", selectedMaximumSize);
+        settings.setValue("LastSizeUnit", selectedSizeUnit);
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------
@@ -176,19 +181,14 @@
         fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
         fileType_Audio<< "*.mp3$" << "*.wav$" << "*.ogg$";
         fileType_Video<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
-        fileType_Text << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$";
+        fileType_Text << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
     }
 
 //Development -------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
-        ui->L_Size->hide();
-        ui->CB_SizeUnit->hide();
-        ui->LE_MinimumSize->hide();
-        ui->LE_MaximumSize->hide();
         ui->L_Regex->hide();
-        //ui->PB_Remove->hide();
 
         //Create
         ui->LE_Tags->hide();

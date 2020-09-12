@@ -112,3 +112,5 @@ MainWindow::~MainWindow()
 KMessageBox::information(this,"test:\n");
 qDebug("test of qdebug");
 */
+
+

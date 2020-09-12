@@ -153,7 +153,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_Rename_clicked()
         {
-
+            KMessageBox::information(this,"rename");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_EditCatalogFile_clicked()

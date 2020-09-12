@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -187,6 +187,29 @@
               </property>
               <property name="modelColumn">
                <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PB_GetTextFromClipboard">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Get the text from the clipboard</string>
+              </property>
+              <property name="whatsThis">
+               <string>Get the text from the clipboard</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-paste">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -576,7 +599,7 @@
             <item>
              <widget class="QLabel" name="L_Size">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -610,6 +633,46 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="SB_MinimumSize">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>&lt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="SB_MaximumSize">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QComboBox" name="CB_SizeUnit">
               <property name="minimumSize">
                <size>
@@ -625,42 +688,12 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="LE_MinimumSize">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-               </font>
-              </property>
-              <property name="placeholderText">
-               <string>Enter minimum</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="LE_MaximumSize">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-               </font>
-              </property>
-              <property name="placeholderText">
-               <string>Enter maximum</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Minimum</enum>
+               <enum>QSizePolicy::Expanding</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>

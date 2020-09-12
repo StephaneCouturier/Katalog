@@ -119,6 +119,10 @@ class MainWindow : public KXmlGuiWindow
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
+            qint64 selectedMinimumSize;
+            qint64 selectedMaximumSize;
+            qint64 sizeMultiplier;
+            QString selectedSizeUnit;
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
             void initiateSearchValues();
@@ -209,6 +213,7 @@ class MainWindow : public KXmlGuiWindow
         //Tests
 
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
+            void on_PB_GetTextFromClipboard_clicked();
 };
 
 #endif // MAINWINDOW_H
