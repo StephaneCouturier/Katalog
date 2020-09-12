@@ -77,7 +77,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
     //setup tab: Create Catalog
         //Default path to scan
-            //DEV replace by a value from the collection or settings
             ui->LE_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             LoadFileSystem("/");
@@ -100,7 +99,7 @@ MainWindow::~MainWindow()
       delete ui;
 }
 
-//DEV usefull stuff
+//DEV useful
 /*
 KMessageBox::information(this,"test:\n");
 qDebug("test of qdebug");
