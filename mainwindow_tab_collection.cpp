@@ -87,6 +87,15 @@
             selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
             selectedCatalogName = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogPath = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+
+            //display buttons
+            ui->PB_ViewCatalog->setEnabled(true);
+            ui->PB_C_Rename->setEnabled(true);
+            ui->PB_EditCatalogFile->setEnabled(true);
+            ui->PB_UpdateCatalog->setEnabled(true);
+            ui->PB_DeleteCatalog->setEnabled(true);
+
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()

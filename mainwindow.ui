@@ -1264,7 +1264,7 @@
               <item>
                <widget class="QPushButton" name="PB_ViewCatalog">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="text">
                  <string>View</string>
@@ -1277,6 +1277,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="PB_C_Rename">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Rename</string>
                 </property>
@@ -1289,7 +1292,7 @@
               <item>
                <widget class="QPushButton" name="PB_UpdateCatalog">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="text">
                  <string>Update</string>
@@ -1308,6 +1311,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="PB_EditCatalogFile">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Edit</string>
                 </property>
@@ -1336,7 +1342,7 @@
               <item>
                <widget class="QPushButton" name="PB_DeleteCatalog">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="text">
                  <string>Delete</string>
@@ -1413,7 +1419,7 @@
                  <string notr="true">color: rgb(95, 95, 95);</string>
                 </property>
                 <property name="text">
-                 <string>Select the source path for your new catalog</string>
+                 <string>Source path for your new catalog</string>
                 </property>
                 <property name="margin">
                  <number>0</number>
@@ -1436,12 +1442,12 @@
                  <widget class="QPushButton" name="PB_PickPath">
                   <property name="maximumSize">
                    <size>
-                    <width>30</width>
+                    <width>150</width>
                     <height>16777215</height>
                    </size>
                   </property>
                   <property name="text">
-                   <string>...</string>
+                   <string>Select ...</string>
                   </property>
                  </widget>
                 </item>
@@ -1712,7 +1718,7 @@
                <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="text">
-               <string>Catalog Name</string>
+               <string>Name of the new catalog</string>
               </property>
               <property name="margin">
                <number>0</number>
