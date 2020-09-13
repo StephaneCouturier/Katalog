@@ -222,6 +222,19 @@
         newCatalogPath = ui->LE_NewCatalogPath->text();
         newCatalogName = ui->LE_NewCatalogName->text();
 
+        //check if the file already exists
+        QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
+
+        QFile file(fullCatalogPath);
+        if (file.exists()==true){
+            KMessageBox::information(this,
+                                     i18n("There is already a catalog with this name:    ")
+                                        + newCatalogName
+                                        + i18n("\nPlease choose a different name or go to Collection to rename, update, or delete the existing one."),
+                                     i18n( "Info" ) );
+            return;
+        }
+
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
                 CatalogDirectory(newCatalogPath);
