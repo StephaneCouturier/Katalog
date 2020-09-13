@@ -49,7 +49,7 @@ int Collection::rowCount(const QModelIndex &parent) const
 int Collection::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;
+    return 6;
 }
 
 QVariant Collection::data(const QModelIndex &index, int role) const
@@ -62,7 +62,9 @@ QVariant Collection::data(const QModelIndex &index, int role) const
     case 1: return QString(catalogDateUpdated[index.row()]);
     case 2: return int(catalogFileCount[index.row()]);
     case 3: return QString(catalogSourcePath[index.row()]);
-    case 4: return QString(catalogFilePath[index.row()]);
+    case 4: return QString(catalogSourcePathIsActive[index.row()]);
+    //case 4: return qint64(catalogTotalFileSize[index.row()]);
+    case 5: return QString(catalogFilePath[index.row()]);
     }
     return QVariant();
 }
@@ -75,7 +77,9 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
         case 1: return QString("Last update");
         case 2: return QString("Files");
         case 3: return QString("Source Path");
-        case 4: return QString("File path");
+        case 4: return QString("Active");
+        //case 4: return QString("Total File Size");
+        case 5: return QString("File path");
         }
     }
     return QVariant();
@@ -87,6 +91,8 @@ void Collection::populateData(const QList<QString> &cNames,
                            const QList<QString> &cDateUpdated,
                            const QList<qint64> &cNums,
                            const QList<QString> &cSourcePaths,
+                           const QList<bool> &cSourcePathIsActives,
+                           //const QList<qint64> &cTotalFileSize,
                            const QList<QString> &cCatalogFiles)
 {
     catalogName.clear();
@@ -97,6 +103,10 @@ void Collection::populateData(const QList<QString> &cNames,
     catalogFileCount = cNums;
     catalogSourcePath.clear();
     catalogSourcePath = cSourcePaths;
+    catalogSourcePathIsActive.clear();
+    catalogSourcePathIsActive = cSourcePathIsActives;
+    //catalogTotalFileSize.clear();
+    //catalogTotalFileSize = cTotalFileSize;
     catalogFilePath.clear();
     catalogFilePath = cCatalogFiles;
 

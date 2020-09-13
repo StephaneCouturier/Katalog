@@ -76,12 +76,6 @@
         //----------------------------------------------------------------------
 
     //Catalog buttons
-        void MainWindow::on_PB_C_OpenFolder_clicked()
-        {
-            //Open the selected collection folder
-            QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
-        }
-        //----------------------------------------------------------------------
         void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
         {
             selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
@@ -93,9 +87,14 @@
             ui->PB_C_Rename->setEnabled(true);
             ui->PB_EditCatalogFile->setEnabled(true);
             ui->PB_UpdateCatalog->setEnabled(true);
+            ui->PB_RecordCatalogStats->setEnabled(true);
             ui->PB_DeleteCatalog->setEnabled(true);
-
-
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_PB_C_OpenFolder_clicked()
+        {
+            //Open the selected collection folder
+            QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()
@@ -205,11 +204,29 @@
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_ExportCatalog_clicked()
+        void MainWindow::on_PB_RecordCatalogStats_clicked()
         {
-            QString link = "https://sourceforge.net/p/katalogg/tickets/";
-            KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
-            QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
+            QString statisticsFileName = "statistics.txt";
+            QString catalogFileCount = "1000";
+
+            QString statisticsLine = selectedCatalogName + "@@" + catalogFileCount;
+
+            // Stream the list to the file
+            QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+            //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
+
+            // write data
+            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                QTextStream stream(&fileOut);
+                //for (int i = 0; i < filelist.size(); ++i)
+                stream << statisticsLine << "\n";
+             // } else {
+                //std::cerr << "error opening output file\n";
+                //return EXIT_FAILURE;
+             }
+             fileOut.close();
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_DeleteCatalog_clicked()
@@ -230,6 +247,14 @@
             else KMessageBox::information(this,i18n("Please select a catalog above first."));
         }
         //----------------------------------------------------------------------
+        //DEV
+        void MainWindow::on_PB_ExportCatalog_clicked()
+        {
+            QString link = "https://sourceforge.net/p/katalogg/tickets/";
+            KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
+            QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
+        }
+
     //File methods
         void MainWindow::on_TrV_FileList_clicked(const QModelIndex &index)
         {
@@ -346,11 +371,13 @@
     void MainWindow::LoadCatalogsToModel()
     {
         //Set up temporary lists
-        QList<QString> cNames;
-        QList<QString> cDateUpdates;
-        QList<qint64> cNums;
-        QList<QString> cSourcePaths;
-        QList<QString> cCatalogFiles;
+        QList<QString>  cNames;
+        QList<QString>  cDateUpdates;
+        QList<qint64>   cNums;
+        QList<QString>  cSourcePaths;
+        QList<bool>     cSourcePathIsActives;
+        //QList<qint64> cTotalFileSize;
+        QList<QString>  cCatalogFiles;
 
         //Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
@@ -372,12 +399,14 @@
             bool catalogSourcePathProvided = false;
             bool catalogFileCountProvided = false;
 
+            QString catalogSourcePath;
+
             while (true)
             {
                 QString line = textStream.readLine();
 
                 if (line.left(19)=="<catalogSourcePath>"){
-                    QString catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
                     cSourcePaths.append(catalogSourcePath);
                     catalogSourcePathProvided = true;
                 }
@@ -398,6 +427,10 @@
             if(catalogFileCountProvided==false)
                 cNums.append(0);
 
+            //Verify if path is active (drive connected)
+            bool test = verifyCatalogPath(catalogSourcePath);
+            cSourcePathIsActives.append(test);
+
             // Get infos about the file itself
             QFileInfo catalogFileInfo(catalogFile);
             cDateUpdates.append(catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
@@ -410,7 +443,7 @@
         Collection *collection = new Collection(this);
 
         // Populate model with data
-        collection->populateData(cNames, cDateUpdates, cNums, cSourcePaths, cCatalogFiles);
+        collection->populateData(cNames, cDateUpdates, cNums, cSourcePaths, cSourcePathIsActives, /*cTotalFileSize,*/ cCatalogFiles);
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(collection);
 
@@ -420,9 +453,10 @@
         ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->TrV_CatalogList->header()->resizeSection(0, 350); //Name
         ui->TrV_CatalogList->header()->resizeSection(1, 150); //Date
-        ui->TrV_CatalogList->header()->resizeSection(2, 100); //File
-        ui->TrV_CatalogList->header()->resizeSection(3, 300); //File
-        ui->TrV_CatalogList->header()->hideSection(4); //Path
+        ui->TrV_CatalogList->header()->resizeSection(2, 100); //Files
+        ui->TrV_CatalogList->header()->resizeSection(3, 300); //Path
+        ui->TrV_CatalogList->header()->resizeSection(4, 50); //Active
+        ui->TrV_CatalogList->header()->hideSection(5); //Path
     }
     //----------------------------------------------------------------------
 
@@ -502,4 +536,12 @@
         ui->TrV_FileList->header()->resizeSection(2, 140); //Date
         ui->TrV_FileList->header()->resizeSection(3, 400); //Path
 
+    }
+
+    //Verify that the catalog path is accessible (so the related drive is mounted)
+    bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
+    {
+        QDir dir(catalogSourcePath);
+        bool status = dir.exists();
+        return status;
     }

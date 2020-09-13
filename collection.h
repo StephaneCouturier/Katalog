@@ -50,18 +50,22 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void populateData(const QList<QString> &catalogName,
-                      const QList<QString> &catalogDateUpdated,
-                      const QList<qint64> &catalogFileCount,
-                      const QList<QString> &catalogSourcePath,
-                      const QList<QString> &catalogFilePath);
+    void populateData(const QList<QString>  &catalogName,
+                      const QList<QString>  &catalogDateUpdated,
+                      const QList<qint64>   &catalogFileCount,
+                      const QList<QString>  &catalogSourcePath,
+                      const QList<bool>     &catalogSourcePathIsActive,
+                      //const QList<qint64> &catalogTotalFileSize,
+                      const QList<QString>  &catalogFilePath);
 
 private:
-    QList<QString> catalogName;
-    QList<QString> catalogDateUpdated;
-    QList<qint64> catalogFileCount;
-    QList<QString> catalogSourcePath;
-    QList<QString> catalogFilePath;
+    QList<QString>  catalogName;
+    QList<QString>  catalogDateUpdated;
+    QList<qint64>   catalogFileCount;
+    QList<QString>  catalogSourcePath;
+    QList<bool>     catalogSourcePathIsActive;
+    //QList<qint64> catalogTotalFileSize;
+    QList<QString>  catalogFilePath;
 
 };
 
