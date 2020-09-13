@@ -124,9 +124,25 @@
 
             newCatalogName = selectedCatalogName;
 
+
+
+
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
                 CatalogDirectory(selectedCatalogPath);
+
+                //Warning and choice if the result is 0 files
+                QStringList filelist = fileListModel->stringList();
+                if (filelist.count() == 2){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
+                    int result = KMessageBox::warningContinueCancel(this,
+                                        i18n("The source folder does not contains any file.\n"
+                                             "This could mean that the source is empty indeed, or that the device attached is not mounted. \n"
+                                             "Do you want to update it anyway (the catalog would then be empty)?\n"));
+                    if ( result != KMessageBox::Continue){
+                        return;
+                    }
+                }
+
                 SaveCatalog(selectedCatalogName);
                 KMessageBox::information(this,"This catalog was updated.");
             }

@@ -243,6 +243,18 @@
                                   +newCatalogName+"\n Path: "+newCatalogPath,
                                   i18n( "Info" ) );
 
+        //Check if no files where found, and let the user decide what to do
+        // Get the catalog file list
+        QStringList filelist = fileListModel->stringList();
+        if (filelist.count() == 2){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
+            int result = KMessageBox::warningContinueCancel(this,
+                                i18n("The source folder does not contains any file.\n"
+                                     "This could mean that the source is empty or the device attached is not mounted.\n"
+                                     "Do you want to save it anyway (the catalog would be empty)?\n"));
+            if ( result != KMessageBox::Continue){
+                return;
+            }
+        }
         //Save the catalog to a new file
         SaveCatalog(newCatalogName);
 
@@ -252,7 +264,7 @@
         refreshCatalogSelectionList();
 
         KMessageBox::information(this,
-                                          i18n("The new catalog,has been created.\n Name:   ")
+                                          i18n("The new catalog,has been created.\n Name:   ")+ QString::number(filelist.count())
                                           +newCatalogName+"\n Path:     "+newCatalogPath,
                                           i18n( "Info" ) );
 
