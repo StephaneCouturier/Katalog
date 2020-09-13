@@ -264,7 +264,7 @@
         refreshCatalogSelectionList();
 
         KMessageBox::information(this,
-                                          i18n("The new catalog,has been created.\n Name:   ")+ QString::number(filelist.count())
+                                          i18n("The new catalog,has been created.\n Name:   ")
                                           +newCatalogName+"\n Path:     "+newCatalogPath,
                                           i18n( "Info" ) );
 
@@ -272,9 +272,9 @@
         //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary
         //LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
-        //Chang tab to show the result of the catalog creation
-        //DEV refer to the name rather than index?
-        ui->tabWidget->setCurrentIndex(1);
+        //Change tab to show the result of the catalog creation
+        ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
+
 
     }
     //----------------------------------------------------------------------
