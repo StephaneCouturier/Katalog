@@ -78,10 +78,11 @@
     //Catalog buttons
         void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
         {
-            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedCatalogName = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogPath = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-
+            selectedCatalogFile          = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogName          = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogFileCount     = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
+            selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogTotalFileSize = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
             //display buttons
             ui->PB_ViewCatalog->setEnabled(true);
             ui->PB_C_Rename->setEnabled(true);
@@ -132,7 +133,7 @@
 
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
-                if (filelist.count() == 2){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
+                if (filelist.count() == 3){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
                     int result = KMessageBox::warningContinueCancel(this,
                                         i18n("The source folder does not contains any file.\n"
                                              "This could mean that the source is empty indeed, or that the device attached is not mounted. \n"
@@ -165,10 +166,11 @@
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_TrV_CatalogList_doubleClicked(const QModelIndex &index)
         {
             //Get file from selected row
-            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
         }
@@ -206,10 +208,15 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_RecordCatalogStats_clicked()
         {
-            QString statisticsFileName = "statistics.txt";
-            QString catalogFileCount = "1000";
+            QString statisticsFileName = "statistics.csv";
 
-            QString statisticsLine = selectedCatalogName + "@@" + catalogFileCount;
+            QString catalogFileCount = QString::number(selectedCatalogFileCount);
+            QDateTime nowDateTime = QDateTime::currentDateTime();
+
+            QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + ";"
+                                    + selectedCatalogName + ";"
+                                    + catalogFileCount + ";"
+                                    + selectedCatalogTotalFileSize;
 
             // Stream the list to the file
             QFile fileOut( collectionFolder + "/" + statisticsFileName );
@@ -259,14 +266,15 @@
         void MainWindow::on_TrV_FileList_clicked(const QModelIndex &index)
         {
             //Get file from selected row
-            QString selectedFileName = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileName   = ui->TrV_FileList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 4, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-
         }
+
+        //Context menu
         void MainWindow::on_TrV_FileList_customContextMenuRequested(const QPoint &pos)
         {
             // for most widgets
@@ -316,7 +324,7 @@
         void MainWindow::context2CopyAbsolutePath()
         {
             QModelIndex index=ui->TrV_FileList->currentIndex();
-            QString selectedFileName = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileName   = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFileAbsolutePath = selectedFileFolder+"/"+selectedFileName;
             QClipboard *clipboard = QGuiApplication::clipboard();
@@ -376,8 +384,9 @@
         QList<qint64>   cNums;
         QList<QString>  cSourcePaths;
         QList<bool>     cSourcePathIsActives;
+        QList<qint64>   cTotalFileSizes;
         //QList<qint64> cTotalFileSize;
-        QList<QString>  cCatalogFiles;
+        QList<QString>  cCatalogFilePaths;
 
         //Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
@@ -398,6 +407,7 @@
             //bool catalogNameProvided = false;
             bool catalogSourcePathProvided = false;
             bool catalogFileCountProvided = false;
+            bool catalogTotalfileSizeProvided = false;
 
             QString catalogSourcePath;
 
@@ -416,7 +426,12 @@
                     cNums.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
-
+                else if (line.left(22)=="<catalogTotalFileSize>"){
+                    QString catalogTotalFileSize = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    qint64 catalogFileCount = catalogTotalFileSize.toLongLong();
+                    cTotalFileSizes.append(catalogFileCount);
+                    catalogTotalfileSizeProvided = true;
+                }
                 else
                     break;
 
@@ -426,6 +441,8 @@
                 cSourcePaths.append("not recorded");
             if(catalogFileCountProvided==false)
                 cNums.append(0);
+            if(catalogTotalfileSizeProvided==false)
+                cTotalFileSizes.append(0);
 
             //Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
@@ -434,7 +451,7 @@
             // Get infos about the file itself
             QFileInfo catalogFileInfo(catalogFile);
             cDateUpdates.append(catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-            cCatalogFiles.append(catalogFileInfo.filePath());
+            cCatalogFilePaths.append(catalogFileInfo.filePath());
             //QFile file(catalogFile);
             cNames.append(catalogFileInfo.baseName());
         }
@@ -443,20 +460,21 @@
         Collection *collection = new Collection(this);
 
         // Populate model with data
-        collection->populateData(cNames, cDateUpdates, cNums, cSourcePaths, cSourcePathIsActives, /*cTotalFileSize,*/ cCatalogFiles);
+        collection->populateData(cCatalogFilePaths, cNames, cDateUpdates, cNums, cSourcePaths, cSourcePathIsActives, cTotalFileSizes);
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(collection);
 
         // Connect model to tree/table view
         ui->TrV_CatalogList->setModel(proxyModel);
-        ui->TrV_CatalogList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->TrV_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
         ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->TrV_CatalogList->header()->resizeSection(0, 350); //Name
-        ui->TrV_CatalogList->header()->resizeSection(1, 150); //Date
-        ui->TrV_CatalogList->header()->resizeSection(2, 100); //Files
-        ui->TrV_CatalogList->header()->resizeSection(3, 300); //Path
-        ui->TrV_CatalogList->header()->resizeSection(4, 50); //Active
-        ui->TrV_CatalogList->header()->hideSection(5); //Path
+        ui->TrV_CatalogList->header()->resizeSection(1, 350); //Name
+        ui->TrV_CatalogList->header()->resizeSection(2, 150); //Date
+        ui->TrV_CatalogList->header()->resizeSection(3, 100); //Files
+        ui->TrV_CatalogList->header()->resizeSection(4, 300); //Path
+        ui->TrV_CatalogList->header()->resizeSection(5, 50); //Active
+        ui->TrV_CatalogList->header()->resizeSection(6, 100); //TotalFileSize
+        ui->TrV_CatalogList->header()->hideSection(0); //Path
     }
     //----------------------------------------------------------------------
 
@@ -538,7 +556,7 @@
 
     }
 
-    //Verify that the catalog path is accessible (so the related drive is mounted)
+    //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
         QDir dir(catalogSourcePath);

@@ -68,14 +68,14 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Load the list of catalogs from the collection folder
             LoadCatalogsToModel();
 
-    //setup tab: Search files
+    //setup tab: Search
             LoadCatalogFileList();
             initiateSearchValues();
             refreshCatalogSelectionList();
 
             ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
-    //setup tab: Create Catalog
+    //setup tab: Create
         //Default path to scan
             ui->LE_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
@@ -104,5 +104,4 @@ MainWindow::~MainWindow()
 KMessageBox::information(this,"test:\n");
 qDebug("test of qdebug");
 */
-
 

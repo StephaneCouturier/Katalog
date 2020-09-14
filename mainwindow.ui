@@ -1324,6 +1324,36 @@
                </widget>
               </item>
               <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_RecordCatalogStats">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Record for Stats</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="step_object_Graph">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer_3">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1448,6 +1478,9 @@
                   </property>
                   <property name="text">
                    <string>Select ...</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-select"/>
                   </property>
                  </widget>
                 </item>
@@ -1811,6 +1844,67 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="T_Graphics">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="icon">
+        <iconset theme="step_object_Graph">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Statistics</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="3" column="0">
+         <widget class="KDateComboBox" name="kdatecombobox_2"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="pushButton_5">
+          <property name="text">
+           <string>Save record</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="text">
+           <string>Delete record</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="pushButton_6">
+          <property name="text">
+           <string>Open in Filelight</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Graphics</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="3">
+         <widget class="QGraphicsView" name="graphicsView"/>
+        </item>
+        <item row="1" column="0" rowspan="2" colspan="2">
+         <widget class="QListView" name="listView"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>History</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="KDateComboBox" name="kdatecombobox"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="T_Settings">
        <attribute name="icon">
         <iconset theme="settings-configure">
@@ -2000,67 +2094,6 @@
            <layout class="QHBoxLayout" name="horizontalLayout_7"/>
           </item>
          </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="T_Graphics">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <attribute name="icon">
-        <iconset theme="step_object_Graph">
-         <normaloff>.</normaloff>.</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Statistics</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>History</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" rowspan="2" colspan="2">
-         <widget class="QListView" name="listView"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>Delete record</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="pushButton_5">
-          <property name="text">
-           <string>Save record</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="KDateComboBox" name="kdatecombobox_2"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="KDateComboBox" name="kdatecombobox"/>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_6">
-          <property name="text">
-           <string>Open in Filelight</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Graphics</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0" colspan="3">
-         <widget class="QGraphicsView" name="graphicsView"/>
         </item>
        </layout>
       </widget>

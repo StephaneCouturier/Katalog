@@ -105,6 +105,8 @@ class MainWindow : public KXmlGuiWindow
             QString selectedCatalogFile;
             QString selectedCatalogName;
             QString selectedCatalogPath;
+            qint64 selectedCatalogFileCount;
+            QString selectedCatalogTotalFileSize;
             void LoadCatalogFileList();
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
@@ -120,18 +122,18 @@ class MainWindow : public KXmlGuiWindow
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
-            qint64 selectedMinimumSize;
-            qint64 selectedMaximumSize;
-            qint64 sizeMultiplier;
+            qint64  selectedMinimumSize;
+            qint64  selectedMaximumSize;
+            qint64  sizeMultiplier;
             QString selectedSizeUnit;
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
             void initiateSearchValues();
 
-            QList<QString> sFileNames;
-            QList<qint64> sFileSizes;
-            QList<QString> sFilePaths;
-            QList<QString> sFileDateTimes;
+            QList<QString>  sFileNames;
+            QList<qint64>   sFileSizes;
+            QList<QString>  sFilePaths;
+            QList<QString>  sFileDateTimes;
 
             //search
             QString regexSearchtext;

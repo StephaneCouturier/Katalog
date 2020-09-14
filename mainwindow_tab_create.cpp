@@ -43,9 +43,6 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 
-//#include <fstream>
-//#include <filesystem>
-
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -91,6 +88,8 @@
         QString directory = newCatalogPath;
         //KMessageBox::information(this,"path:\n"+newCatalogPath);
 
+        qint64 totalFileSize = 0;
+
         // Get the file type of catalog
         //DEV: replace by editable list of file type definition
         QStringList fileTypes;
@@ -119,6 +118,8 @@
             //}
             //else fileSize = 999999;
 
+            totalFileSize = totalFileSize + fileSize;
+
             QFileInfo fileInfo(filePath);
             QDateTime fileDate = fileInfo.lastModified();
 
@@ -126,18 +127,16 @@
             fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
         }
 
-        //fileSize = get_file_size(filePath.toStdString());
-
-
-
         //Display and store file number
         //Count the number of files
         int catalogFilesNumber = fileList.count();
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
+        fileList.prepend("<catalogTotalFileSize>"+QString::number(totalFileSize));
         fileList.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
         fileList.prepend("<catalogSourcePath>"+newCatalogPath);
+
 
         //Define and populate a model and send it to the listView
         fileListModel = new QStringListModel(this);
@@ -274,7 +273,6 @@
 
         //Change tab to show the result of the catalog creation
         ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
-
 
     }
     //----------------------------------------------------------------------

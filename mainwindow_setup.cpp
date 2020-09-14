@@ -199,6 +199,8 @@
         ui->RB_IncludeChecksum->hide();
 
         //Collection
+        //ui->PB_RecordCatalogStats->hide();
+
         ui->L_Filter->hide();
         ui->LE_TextToFilter->hide();
         ui->L_Directories->hide();
