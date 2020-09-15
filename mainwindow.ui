@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>878</width>
-    <height>711</height>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1340,6 +1340,13 @@
                </spacer>
               </item>
               <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="PB_RecordCatalogStats">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1480,7 +1487,8 @@
                    <string>Select ...</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-select"/>
+                   <iconset theme="edit-select">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1644,6 +1652,13 @@
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="CkB_IncludeHidden">
+                  <property name="text">
+                   <string>include Hidden files</string>
                   </property>
                  </widget>
                 </item>

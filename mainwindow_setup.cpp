@@ -192,7 +192,7 @@
 
         //Create
         ui->LE_Tags->hide();
-        ui->L_OtherOptions->hide();
+        //ui->L_OtherOptions->hide();
         ui->RB_IncludeSubDir->hide();
         ui->RB_IncludeSymblinks->hide();
         ui->RB_IncludeArchives->hide();

@@ -49,7 +49,7 @@ int Collection::rowCount(const QModelIndex &parent) const
 int Collection::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 7;
+    return 8;
 }
 
 QVariant Collection::data(const QModelIndex &index, int role) const
@@ -63,8 +63,9 @@ QVariant Collection::data(const QModelIndex &index, int role) const
     case 2: return QString(catalogDateUpdated[index.row()]);
     case 3: return int(catalogFileCount[index.row()]);
     case 4: return QString(catalogSourcePath[index.row()]);
-    case 5: return QString(catalogSourcePathIsActive[index.row()]);
+    case 5: return bool(catalogSourcePathIsActive[index.row()]);
     case 6: return qint64(catalogTotalFileSize[index.row()]);
+    case 7: return bool(catalogIncludeHidden[index.row()]);
 
     }
     return QVariant();
@@ -81,6 +82,7 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
         case 4: return QString("Source Path");
         case 5: return QString("Active");
         case 6: return QString("Total File Size");
+        case 7: return QString("includes Hidden");
         }
     }
     return QVariant();
@@ -94,7 +96,8 @@ void Collection::populateData(const QList<QString> &cCatalogFilePaths,
                               const QList<qint64>  &cNums,
                               const QList<QString> &cSourcePaths,
                               const QList<bool>    &cSourcePathIsActives,
-                              const QList<qint64>  &cTotalFileSize
+                              const QList<qint64>  &cTotalFileSize,
+                              const QList<bool>    &catalogIncludeHiddens
                               )
 {
     catalogName.clear();
@@ -111,6 +114,7 @@ void Collection::populateData(const QList<QString> &cCatalogFilePaths,
     catalogTotalFileSize = cTotalFileSize;
     catalogFilePath.clear();
     catalogFilePath = cCatalogFilePaths;
-
+    catalogIncludeHidden.clear();
+    catalogIncludeHidden = catalogIncludeHiddens;
     return;
 }

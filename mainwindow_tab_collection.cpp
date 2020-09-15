@@ -68,7 +68,7 @@
             }
 
             //Reset selected catalog values (to avoid updating the last selected one for instance)
-            //DEV: repalce by button becoming enabled once catalog is selected
+            //DEV: replace by button becoming enabled once catalog is selected
             selectedCatalogFile="";
             selectedCatalogName="";
             selectedCatalogPath="";
@@ -83,6 +83,8 @@
             selectedCatalogFileCount     = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
             selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
             selectedCatalogTotalFileSize = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedCatalogIncludeHidden = ui->TrV_CatalogList->model()->index(index.row(), 7, QModelIndex()).data().toBool();
+
             //display buttons
             ui->PB_ViewCatalog->setEnabled(true);
             ui->PB_C_Rename->setEnabled(true);
@@ -124,12 +126,9 @@
 
             newCatalogName = selectedCatalogName;
 
-
-
-
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                CatalogDirectory(selectedCatalogPath);
+                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden);
 
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
@@ -153,7 +152,6 @@
                                                 "- the device is not connected and mounted\n"
                                                 "- the folder was moved or renamed"
                                          );
-
             }
             //Refresh the collection view
             LoadCatalogsToModel();
@@ -191,13 +189,12 @@
 
             //Rename the catalog file
             if (ok && !newCatalogName.isEmpty()){
-                //KMessageBox::information(this,"rename:\n" + selectedCatalogFile + "\n to: " +newCatalogFullName);
-                QFile::rename(selectedCatalogFile, newCatalogFullName);
+                 QFile::rename(selectedCatalogFile, newCatalogFullName);
 
-             //refresh catalog lists
-                LoadCatalogsToModel();
-                LoadCatalogFileList();
-                refreshCatalogSelectionList();
+                 //refresh catalog lists
+                    LoadCatalogsToModel();
+                    LoadCatalogFileList();
+                    refreshCatalogSelectionList();
             }
         }
         //----------------------------------------------------------------------
@@ -226,11 +223,7 @@
             // write data
             if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
                 QTextStream stream(&fileOut);
-                //for (int i = 0; i < filelist.size(); ++i)
                 stream << statisticsLine << "\n";
-             // } else {
-                //std::cerr << "error opening output file\n";
-                //return EXIT_FAILURE;
              }
              fileOut.close();
 
@@ -261,6 +254,12 @@
             KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
             QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
         }
+        //----------------------------------------------------------------------
+        void MainWindow::on_pushButton_clicked()
+        {
+            getStorageInfo();
+        }
+        //----------------------------------------------------------------------
 
     //File methods
         void MainWindow::on_TrV_FileList_clicked(const QModelIndex &index)
@@ -279,8 +278,7 @@
         {
             // for most widgets
             QPoint globalPos = ui->TrV_FileList->mapToGlobal(pos);
-            // for QAbstractScrollArea and derived classes, use:
-            // QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
+
             QMenu fileContextMenu;
 
 //            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
@@ -387,6 +385,7 @@
         QList<qint64>   cTotalFileSizes;
         //QList<qint64> cTotalFileSize;
         QList<QString>  cCatalogFilePaths;
+        QList<bool>     cCatalogIncludeHiddens;
 
         //Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
@@ -408,6 +407,7 @@
             bool catalogSourcePathProvided = false;
             bool catalogFileCountProvided = false;
             bool catalogTotalfileSizeProvided = false;
+            bool catalogIncludeHiddenProvided = false;
 
             QString catalogSourcePath;
 
@@ -432,6 +432,11 @@
                     cTotalFileSizes.append(catalogFileCount);
                     catalogTotalfileSizeProvided = true;
                 }
+                else if (line.left(22)=="<catalogIncludeHidden>"){
+                    QString catalogIncludeHidden = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cCatalogIncludeHiddens.append(QVariant(catalogIncludeHidden).toBool());
+                    catalogIncludeHiddenProvided = true;
+                }
                 else
                     break;
 
@@ -443,6 +448,8 @@
                 cNums.append(0);
             if(catalogTotalfileSizeProvided==false)
                 cTotalFileSizes.append(0);
+            if(catalogIncludeHiddenProvided==false)
+                cCatalogIncludeHiddens.append(false);
 
             //Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
@@ -454,13 +461,22 @@
             cCatalogFilePaths.append(catalogFileInfo.filePath());
             //QFile file(catalogFile);
             cNames.append(catalogFileInfo.baseName());
+
         }
 
         // Create model
         Collection *collection = new Collection(this);
 
         // Populate model with data
-        collection->populateData(cCatalogFilePaths, cNames, cDateUpdates, cNums, cSourcePaths, cSourcePathIsActives, cTotalFileSizes);
+        collection->populateData(cCatalogFilePaths,
+                                 cNames,
+                                 cDateUpdates,
+                                 cNums,
+                                 cSourcePaths,
+                                 cSourcePathIsActives,
+                                 cTotalFileSizes,
+                                 cCatalogIncludeHiddens);
+
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(collection);
 
@@ -553,7 +569,6 @@
         ui->TrV_FileList->header()->resizeSection(1, 110); //Size
         ui->TrV_FileList->header()->resizeSection(2, 140); //Date
         ui->TrV_FileList->header()->resizeSection(3, 400); //Path
-
     }
 
     //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
@@ -562,4 +577,22 @@
         QDir dir(catalogSourcePath);
         bool status = dir.exists();
         return status;
+    }
+
+    void MainWindow::getStorageInfo()
+    {
+        //QStorageInfo storage = QStorageInfo::root();
+        QStorageInfo storage;
+        storage.setPath("/media/veracrypt4");
+
+        KMessageBox::information(this,"test:\n" + storage.rootPath());
+        if (storage.isReadOnly())
+            qDebug() << "isReadOnly:" << storage.isReadOnly();
+
+        KMessageBox::information(this,"test:\n" + storage.name());
+        KMessageBox::information(this,"test:\n" + storage.fileSystemType());
+        qint64 sizeTotal = storage.bytesTotal()/1024/1024;
+        qint64 sizeAvailable = storage.bytesAvailable()/1024/1024;
+        KMessageBox::information(this,"test:\n" + QString::number(sizeTotal));
+        KMessageBox::information(this,"test:\n" + QString::number(sizeAvailable));
     }

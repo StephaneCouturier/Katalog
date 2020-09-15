@@ -79,14 +79,13 @@
     //----------------------------------------------------------------------
 
     //Catalog the files of a directory
-    void MainWindow::CatalogDirectory(QString newCatalogPath)
+    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden)
     {
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         // Get directory to catalog
         QString directory = newCatalogPath;
-        //KMessageBox::information(this,"path:\n"+newCatalogPath);
 
         qint64 totalFileSize = 0;
 
@@ -103,28 +102,53 @@
                 fileTypes = fileType_Text;
         else    fileTypes.clear();
 
+        //
+        //selectedCatalogIncludeHidden
+
+        //QString hidden = "QDir::Hidden";
         //Iterate in the directory to create a list of files
         QStringList fileList;
-        QDirIterator iterator(directory, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-        while (iterator.hasNext()){
 
-            //Get file information  (absolute path, size, datetime)
-            QString filePath = iterator.next();
+        //Get list of files
+        if (includeHidden == true){
+            QDirIterator iterator(directory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
+            while (iterator.hasNext()){
 
-            qint64 fileSize;
-            QFile file(filePath);
-            //if (file.open(QIODevice::ReadOnly)){
-            fileSize = file.size();
-            //}
-            //else fileSize = 999999;
+                 //Get file information  (absolute path, size, datetime)
+                QString filePath = iterator.next();
 
-            totalFileSize = totalFileSize + fileSize;
+                qint64 fileSize;
+                QFile file(filePath);
+                //if (file.open(QIODevice::ReadOnly)){
+                fileSize = file.size();
+                totalFileSize = totalFileSize + fileSize;
 
-            QFileInfo fileInfo(filePath);
-            QDateTime fileDate = fileInfo.lastModified();
+                QFileInfo fileInfo(filePath);
+                QDateTime fileDate = fileInfo.lastModified();
 
-            //add the data to the list, @@ is used as a separator for now
-            fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                //add the data to the list, @@ is used as a separator for now
+                fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+            }
+        }
+        else{
+            QDirIterator iterator(directory, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+            while (iterator.hasNext()){
+
+                //Get file information  (absolute path, size, datetime)
+                QString filePath = iterator.next();
+
+                qint64 fileSize;
+                QFile file(filePath);
+                //if (file.open(QIODevice::ReadOnly)){
+                fileSize = file.size();
+                totalFileSize = totalFileSize + fileSize;
+
+                QFileInfo fileInfo(filePath);
+                QDateTime fileDate = fileInfo.lastModified();
+
+                //add the data to the list, @@ is used as a separator for now
+                fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+            }
         }
 
         //Display and store file number
@@ -133,6 +157,7 @@
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
+        fileList.prepend("<catalogIncludeHidden>"+QVariant(includeHidden).toString());
         fileList.prepend("<catalogTotalFileSize>"+QString::number(totalFileSize));
         fileList.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
         fileList.prepend("<catalogSourcePath>"+newCatalogPath);
@@ -221,9 +246,11 @@
         newCatalogPath = ui->LE_NewCatalogPath->text();
         newCatalogName = ui->LE_NewCatalogName->text();
 
+        //get other options
+        bool includeHidden = ui->CkB_IncludeHidden->isChecked();
+        //KMessageBox::information(this,"There\n"+QString::number(includeHidden));
         //check if the file already exists
         QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
-
         QFile file(fullCatalogPath);
         if (file.exists()==true){
             KMessageBox::information(this,
@@ -236,7 +263,7 @@
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
-                CatalogDirectory(newCatalogPath);
+                CatalogDirectory(newCatalogPath,includeHidden);
         else KMessageBox::error(this,
                                   i18n("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,
