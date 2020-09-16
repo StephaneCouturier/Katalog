@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -53,6 +53,8 @@
 #include <QMenu>
 #include <QClipboard>
 #include <QSortFilterProxyModel>
+#include <QStorageInfo>
+#include <QDebug>
 
 #include <KXmlGuiWindow>
 #include <KMessageBox>
@@ -107,6 +109,8 @@ class MainWindow : public KXmlGuiWindow
             QString selectedCatalogPath;
             qint64 selectedCatalogFileCount;
             QString selectedCatalogTotalFileSize;
+            bool selectedCatalogIncludeHidden;
+            QString selectedCatalogFileType;
             void LoadCatalogFileList();
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
@@ -154,7 +158,7 @@ class MainWindow : public KXmlGuiWindow
             QString newCatalogPath;
             QString newCatalogName;
             void LoadFileSystem(QString newCatalogPath);
-            void CatalogDirectory(QString newCatalogPath);          
+            void CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes);
 
         //TESTS
             QString collectionFolder;
@@ -206,6 +210,7 @@ class MainWindow : public KXmlGuiWindow
             void on_TrV_CatalogList_doubleClicked(const QModelIndex &index);
             void on_TrV_FileList_customContextMenuRequested(const QPoint &pos);
             void context2CopyAbsolutePath();
+            void getStorageInfo();
 
         //Settings
             void on_PB_SelectCollectionFolder_clicked();
@@ -214,10 +219,11 @@ class MainWindow : public KXmlGuiWindow
             void on_pushButton_9_clicked();
 
         //Tests
-
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
             void on_PB_GetTextFromClipboard_clicked();
             void on_PB_RecordCatalogStats_clicked();
+
+            void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

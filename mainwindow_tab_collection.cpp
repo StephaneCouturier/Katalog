@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -81,9 +81,10 @@
             selectedCatalogFile          = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogName          = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
             selectedCatalogFileCount     = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedCatalogTotalFileSize = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            selectedCatalogIncludeHidden = ui->TrV_CatalogList->model()->index(index.row(), 7, QModelIndex()).data().toBool();
+            selectedCatalogTotalFileSize = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedCatalogFileType      = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedCatalogIncludeHidden = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
 
             //display buttons
             ui->PB_ViewCatalog->setEnabled(true);
@@ -126,9 +127,22 @@
 
             newCatalogName = selectedCatalogName;
 
+            QStringList fileTypes;
+            if      ( selectedCatalogFileType == "Image")
+                                    fileTypes = fileType_Image;
+            else if ( selectedCatalogFileType == "Audio")
+                                    fileTypes = fileType_Audio;
+            else if ( selectedCatalogFileType == "Video")
+                                    fileTypes = fileType_Video;
+            else if ( selectedCatalogFileType == "Text")
+                                    fileTypes = fileType_Text;
+            else                    fileTypes.clear();
+
+            //KMessageBox::information(this,"test:\n"+selectedCatalogFileType+fileTypes.join("_"));
+
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden);
+                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes);
 
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
@@ -379,11 +393,11 @@
         //Set up temporary lists
         QList<QString>  cNames;
         QList<QString>  cDateUpdates;
-        QList<qint64>   cNums;
+        QList<qint64>   cFileCounts;
+        QList<qint64>   cTotalFileSizes;
         QList<QString>  cSourcePaths;
         QList<bool>     cSourcePathIsActives;
-        QList<qint64>   cTotalFileSizes;
-        //QList<qint64> cTotalFileSize;
+        QList<QString>  cFileTypes;
         QList<QString>  cCatalogFilePaths;
         QList<bool>     cCatalogIncludeHiddens;
 
@@ -408,6 +422,7 @@
             bool catalogFileCountProvided = false;
             bool catalogTotalfileSizeProvided = false;
             bool catalogIncludeHiddenProvided = false;
+            bool catalogFileTypeProvided = false;
 
             QString catalogSourcePath;
 
@@ -423,7 +438,7 @@
                 else if (line.left(18)=="<catalogFileCount>"){
                     QString catalogFileCountString = line.right(line.size() - line.lastIndexOf(">") - 1);
                     int catalogFileCount = catalogFileCountString.toInt();
-                    cNums.append(catalogFileCount);
+                    cFileCounts.append(catalogFileCount);
                     catalogFileCountProvided = true;
                 }
                 else if (line.left(22)=="<catalogTotalFileSize>"){
@@ -437,6 +452,11 @@
                     cCatalogIncludeHiddens.append(QVariant(catalogIncludeHidden).toBool());
                     catalogIncludeHiddenProvided = true;
                 }
+                else if (line.left(17)=="<catalogFileType>"){
+                    QString catalogFileType = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cFileTypes.append(catalogFileType);
+                    catalogFileTypeProvided = true;
+                }
                 else
                     break;
 
@@ -445,12 +465,13 @@
             if(catalogSourcePathProvided==false)
                 cSourcePaths.append("not recorded");
             if(catalogFileCountProvided==false)
-                cNums.append(0);
+                cFileCounts.append(0);
             if(catalogTotalfileSizeProvided==false)
                 cTotalFileSizes.append(0);
             if(catalogIncludeHiddenProvided==false)
                 cCatalogIncludeHiddens.append(false);
-
+            if(catalogFileTypeProvided==false)
+                cFileTypes.append("");
             //Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
             cSourcePathIsActives.append(test);
@@ -471,10 +492,11 @@
         collection->populateData(cCatalogFilePaths,
                                  cNames,
                                  cDateUpdates,
-                                 cNums,
-                                 cSourcePaths,
-                                 cSourcePathIsActives,
+                                 cFileCounts,
                                  cTotalFileSizes,
+                                 cSourcePaths,
+                                 cFileTypes,
+                                 cSourcePathIsActives,
                                  cCatalogIncludeHiddens);
 
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
@@ -487,9 +509,11 @@
         ui->TrV_CatalogList->header()->resizeSection(1, 350); //Name
         ui->TrV_CatalogList->header()->resizeSection(2, 150); //Date
         ui->TrV_CatalogList->header()->resizeSection(3, 100); //Files
-        ui->TrV_CatalogList->header()->resizeSection(4, 300); //Path
-        ui->TrV_CatalogList->header()->resizeSection(5, 50); //Active
-        ui->TrV_CatalogList->header()->resizeSection(6, 100); //TotalFileSize
+        ui->TrV_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
+        ui->TrV_CatalogList->header()->resizeSection(5, 300); //Path
+        ui->TrV_CatalogList->header()->resizeSection(6, 100); //FileType
+        ui->TrV_CatalogList->header()->resizeSection(7, 50); //Active
+
         ui->TrV_CatalogList->header()->hideSection(0); //Path
     }
     //----------------------------------------------------------------------

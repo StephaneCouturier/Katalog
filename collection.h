@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -54,9 +54,10 @@ public:
                       const QList<QString>  &catalogName,
                       const QList<QString>  &catalogDateUpdated,
                       const QList<qint64>   &catalogFileCount,
-                      const QList<QString>  &catalogSourcePath,
-                      const QList<bool>     &catalogSourcePathIsActive,
                       const QList<qint64>   &catalogTotalFileSize,
+                      const QList<QString>  &catalogSourcePath,
+                      const QList<QString>  &catalogFileType,
+                      const QList<bool>     &catalogSourcePathIsActive,
                       const QList<bool>     &catalogIncludeHidden);
 
 private:
@@ -65,6 +66,7 @@ private:
     QList<QString>  catalogDateUpdated;
     QList<qint64>   catalogFileCount;
     QList<QString>  catalogSourcePath;
+    QList<QString>  catalogFileType;
     QList<bool>     catalogSourcePathIsActive;
     QList<qint64>   catalogTotalFileSize;
     QList<bool>     catalogIncludeHidden;

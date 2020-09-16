@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -178,10 +178,11 @@
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
     {
-        fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
-        fileType_Audio<< "*.mp3$" << "*.wav$" << "*.ogg$";
-        fileType_Video<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
-        fileType_Text << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
+        fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
+        //fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
+        fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg";
+        fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm";
+        fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
     }
 
 //Development -------------------------------------------------------
@@ -200,7 +201,7 @@
 
         //Collection
         //ui->PB_RecordCatalogStats->hide();
-
+        ui->pushButton->hide();
         ui->L_Filter->hide();
         ui->LE_TextToFilter->hide();
         ui->L_Directories->hide();

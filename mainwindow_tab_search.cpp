@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -168,14 +168,8 @@
                   QTextStream stream(&exportFile);
                   for (int i = 0; i < filesFoundList.size(); ++i)
                     stream << filesFoundList.at(i) << '\n';
-                    //} else {
-                  //std::cerr << "error opening output file\n";
-                  //return EXIT_FAILURE;
                 }
-              //else {
-                //std::cerr << "error opening output file\n";
-                //return EXIT_FAILURE;
-              //}
+
               KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
               exportFile.close();
         }
@@ -333,12 +327,11 @@
                     searchText = ui->KCB_SearchText->currentText();
 
                     //Do nothing if there is no search text
-                    //DEV: message box: No text entered, do you want to list all files based on the other criteria?
                     if (searchText=="")
                         return;
+                    //DEV: message box: No text entered, do you want to list all files based on the other criteria?
 
                     //add searchText to a list, to retrieved it later
-                    //searchTextList.insert(0,searchText);
                     ui->KCB_SearchText->addItem(searchText);
 
                     //Get other search criteria
@@ -448,8 +441,6 @@
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
 
-                    // ^(?=.*\bjack\b)(?=.*\bjames\b).*$
-
                     //build regex group for one word
                     for (int i=0; i<(numberOfSearchWords); i++){
                         groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
@@ -491,7 +482,6 @@
 
             ui->L_Regex->setText(regexPattern);
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
-            //QRegularExpression regexFType(regexFileType, QRegularExpression::CaseInsensitiveOption);
 
             //Search loop for all lines in the catalog file
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
@@ -554,8 +544,7 @@
 
                                     match = regex.match(lineFilePath);
                                 }
-                                //else return;
-                                //fileTypeJoin
+
                             }
                             else {
                                 match = regex.match(lineFilePath);

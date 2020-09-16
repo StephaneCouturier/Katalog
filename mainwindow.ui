@@ -1182,7 +1182,10 @@
               <item>
                <widget class="QPushButton" name="PB_SelectCollectionFolder">
                 <property name="text">
-                 <string>...</string>
+                 <string>Select</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-select"/>
                 </property>
                </widget>
               </item>

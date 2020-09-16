@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -79,7 +79,7 @@
     //----------------------------------------------------------------------
 
     //Catalog the files of a directory
-    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden)
+    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes)
     {
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -89,33 +89,22 @@
 
         qint64 totalFileSize = 0;
 
-        // Get the file type of catalog
-        //DEV: replace by editable list of file type definition
-        QStringList fileTypes;
-        if      ( ui->RB_C_FileType_Image->isChecked() )
-                fileTypes = fileType_Image;
-        else if ( ui->RB_C_FileType_Audio->isChecked() )
-                fileTypes = fileType_Audio;
-        else if ( ui->RB_C_FileType_Video->isChecked() )
-                fileTypes = fileType_Video;
-        else if ( ui->RB_C_FileType_Text->isChecked() )
-                fileTypes = fileType_Text;
-        else    fileTypes.clear();
+        //QStringList fileType_test;
+        //fileType_test << "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
+        //fileTypes = fileType_test;
+        //KMessageBox::information(this,"test:\n"+fileTypes.join("_"));
+        //KMessageBox::information(this,"test:\n"+fileType);
 
-        //
-        //selectedCatalogIncludeHidden
-
-        //QString hidden = "QDir::Hidden";
         //Iterate in the directory to create a list of files
         QStringList fileList;
 
-        //Get list of files
         if (includeHidden == true){
             QDirIterator iterator(directory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
             while (iterator.hasNext()){
 
                  //Get file information  (absolute path, size, datetime)
                 QString filePath = iterator.next();
+                //KMessageBox::information(this,"test:\n"+filePath);
 
                 qint64 fileSize;
                 QFile file(filePath);
@@ -136,6 +125,7 @@
 
                 //Get file information  (absolute path, size, datetime)
                 QString filePath = iterator.next();
+                //KMessageBox::information(this,"test:\n"+filePath);
 
                 qint64 fileSize;
                 QFile file(filePath);
@@ -157,11 +147,11 @@
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
+        fileList.prepend("<catalogFileType>"+fileType);
         fileList.prepend("<catalogIncludeHidden>"+QVariant(includeHidden).toString());
         fileList.prepend("<catalogTotalFileSize>"+QString::number(totalFileSize));
         fileList.prepend("<catalogFileCount>"+QString::number(catalogFilesNumber));
         fileList.prepend("<catalogSourcePath>"+newCatalogPath);
-
 
         //Define and populate a model and send it to the listView
         fileListModel = new QStringListModel(this);
@@ -248,7 +238,27 @@
 
         //get other options
         bool includeHidden = ui->CkB_IncludeHidden->isChecked();
-        //KMessageBox::information(this,"There\n"+QString::number(includeHidden));
+
+        // Get the file type for the catalog
+        QStringList fileTypes;
+        QString selectedCreateFileType;
+        if      ( ui->RB_C_FileType_Image->isChecked() ){
+                fileTypes = fileType_Image;
+                selectedCreateFileType = "Image";}
+        else if ( ui->RB_C_FileType_Audio->isChecked() ){
+                fileTypes = fileType_Audio;
+                selectedCreateFileType = "Audio";}
+         else if ( ui->RB_C_FileType_Video->isChecked() ){
+                fileTypes = fileType_Video;
+                selectedCreateFileType = "Video";}
+        else if ( ui->RB_C_FileType_Text->isChecked() ){
+                fileTypes = fileType_Text;
+                selectedCreateFileType = "Text";}
+        else    fileTypes.clear();
+
+        //KMessageBox::information(this,"test:\n"+selectedCreateFileType+fileTypes.join("_"));
+
+
         //check if the file already exists
         QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
         QFile file(fullCatalogPath);
@@ -263,7 +273,7 @@
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
-                CatalogDirectory(newCatalogPath,includeHidden);
+                CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes);
         else KMessageBox::error(this,
                                   i18n("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,

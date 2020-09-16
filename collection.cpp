@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.6
+// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -49,7 +49,7 @@ int Collection::rowCount(const QModelIndex &parent) const
 int Collection::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 8;
+    return 9;
 }
 
 QVariant Collection::data(const QModelIndex &index, int role) const
@@ -62,11 +62,11 @@ QVariant Collection::data(const QModelIndex &index, int role) const
     case 1: return QString(catalogName[index.row()]);
     case 2: return QString(catalogDateUpdated[index.row()]);
     case 3: return int(catalogFileCount[index.row()]);
-    case 4: return QString(catalogSourcePath[index.row()]);
-    case 5: return bool(catalogSourcePathIsActive[index.row()]);
-    case 6: return qint64(catalogTotalFileSize[index.row()]);
-    case 7: return bool(catalogIncludeHidden[index.row()]);
-
+    case 4: return qint64(catalogTotalFileSize[index.row()]);
+    case 5: return QString(catalogSourcePath[index.row()]);
+    case 6: return QString(catalogFileType[index.row()]);
+    case 7: return bool(catalogSourcePathIsActive[index.row()]);
+    case 8: return bool(catalogIncludeHidden[index.row()]);
     }
     return QVariant();
 }
@@ -79,10 +79,11 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
         case 1: return QString("Name");
         case 2: return QString("Last update");
         case 3: return QString("Files");
-        case 4: return QString("Source Path");
-        case 5: return QString("Active");
-        case 6: return QString("Total File Size");
-        case 7: return QString("includes Hidden");
+        case 4: return QString("Total File Size");
+        case 5: return QString("Source Path");
+        case 6: return QString("File Type");
+        case 7: return QString("Active");
+        case 8: return QString("includes Hidden");
         }
     }
     return QVariant();
@@ -93,10 +94,11 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
 void Collection::populateData(const QList<QString> &cCatalogFilePaths,
                               const QList<QString> &cNames,
                               const QList<QString> &cDateUpdated,
-                              const QList<qint64>  &cNums,
-                              const QList<QString> &cSourcePaths,
-                              const QList<bool>    &cSourcePathIsActives,
+                              const QList<qint64>  &cFileCounts,
                               const QList<qint64>  &cTotalFileSize,
+                              const QList<QString> &cSourcePaths,
+                              const QList<QString> &cFileTypes,
+                              const QList<bool>    &cSourcePathIsActives,
                               const QList<bool>    &catalogIncludeHiddens
                               )
 {
@@ -105,7 +107,9 @@ void Collection::populateData(const QList<QString> &cCatalogFilePaths,
     catalogDateUpdated.clear();
     catalogDateUpdated = cDateUpdated;
     catalogFileCount.clear();
-    catalogFileCount = cNums;
+    catalogFileCount = cFileCounts;
+    catalogFileType.clear();
+    catalogFileType = cFileTypes;
     catalogSourcePath.clear();
     catalogSourcePath = cSourcePaths;
     catalogSourcePathIsActive.clear();
@@ -116,5 +120,6 @@ void Collection::populateData(const QList<QString> &cCatalogFilePaths,
     catalogFilePath = cCatalogFilePaths;
     catalogIncludeHidden.clear();
     catalogIncludeHidden = catalogIncludeHiddens;
+
     return;
 }
