@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1185,7 +1185,8 @@
                  <string>Select</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-select"/>
+                 <iconset theme="edit-select">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>

@@ -295,6 +295,7 @@
         SaveCatalog(newCatalogName);
 
         //Refresh the catalog list for the Collection screen
+        LoadCatalogFileList();
         LoadCatalogsToModel();
         //Refresh the catalog list for the combobox of the Search screen
         refreshCatalogSelectionList();
