@@ -208,7 +208,7 @@
             connect( menuAction3,&QAction::triggered, this, &MainWindow::contextCopyFolderPath);
             fileContextMenu.addAction(menuAction3);
 
-            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
+            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
             connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyAbsolutePath);
             fileContextMenu.addAction(menuAction4);
 
