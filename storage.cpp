@@ -1,13 +1,48 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "storage.h"
+/*LICENCE
+    This file is part of Katalog
 
-#include <QSortFilterProxyModel>
+    Copyright (C) 2020, the Katalog Development team
+
+    Author: Stephane Couturier (Symbioxy)
+
+    Katalog is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Katalog is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Katalog; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+/*FILE DESCRIPTION
+* /////////////////////////////////////////////////////////////////////////////
+// Application: Katalog
+// File Name:   storage.cpp
+// Purpose:
+// Description:
+// Author:      Stephane Couturier
+// Modified by: Stephane Couturier
+// Created:     2020-07-11
+// Version:     0.9
+/////////////////////////////////////////////////////////////////////////////
+*/
+
+#include "storage.h"
+//#include "mainwindow.h"
+//#include "ui_mainwindow.h"
+//#include <QSortFilterProxyModel>
 
 Storage::Storage(QObject *parent) : QAbstractTableModel(parent)
 {
 
 }
+
+// To replace existing by tree structure------------
 
 //Storage::Storage(QObject *parent): QStandardItemModel(parent)   , treeView(new QTreeView(this))
 //, standardModel(new QStandardItemModel(this))
@@ -117,37 +152,3 @@ void Storage::populateStorageData(  const QList<QString> &sNames,
 
     return;
 }
-
-//void Storage::loadStorageModel()
-//{
-//    //Set up temporary lists
-//    QList<QString>  sNames;
-//    QList<QString>  sIDs;
-//    QList<QString>   sTypes;
-
-//    //Get data
-//    QStringList fileTypes;
-//    fileTypes << "*.idx";
-
-
-//    // Create model
-//    Storage *storage = new Storage(this);
-
-//    // Populate model with data
-//    storage->populateData(sNames,
-//                          sIDs,
-//                          sTypes
-//                          );
-
-//    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-//    proxyModel->setSourceModel(storage);
-
-    // Connect model to tree/table view
-//    ui->TrV_Storage->setModel(proxyModel);
-//    ui->TrV_Storage->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-//    ui->TrV_Storage->header()->setSectionResizeMode(QHeaderView::Interactive);
-//    ui->TrV_Storage->header()->resizeSection(0, 350); //Name
-//    ui->TrV_Storage->header()->resizeSection(1, 350); //ID
-//    ui->TrV_Storage->header()->resizeSection(2, 150); //Type
-    //ui->TrV_CatalogList->header()->hideSection(0); //Path
-//}
