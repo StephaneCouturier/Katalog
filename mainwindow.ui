@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1012</width>
+    <width>1029</width>
     <height>739</height>
    </rect>
   </property>
@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -93,9 +93,6 @@
        <bool>false</bool>
       </property>
       <property name="movable">
-       <bool>false</bool>
-      </property>
-      <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
       <widget class="QWidget" name="T_SearchFiles">
@@ -2186,7 +2183,14 @@
         <item row="3" column="0">
          <layout class="QGridLayout" name="gridLayout_8">
           <item row="0" column="2">
-           <widget class="QTreeView" name="Storage_TrV"/>
+           <widget class="QTreeView" name="Storage_TrV">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -2381,7 +2385,8 @@
              <string>Create list</string>
             </property>
             <property name="icon">
-             <iconset theme="document-new"/>
+             <iconset theme="document-new">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2507,7 +2512,8 @@
              <string>Search location</string>
             </property>
             <property name="icon">
-             <iconset theme="system-search"/>
+             <iconset theme="system-search">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
