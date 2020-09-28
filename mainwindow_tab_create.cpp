@@ -115,8 +115,8 @@
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
 
-                //add the data to the list, @@ is used as a separator for now
-                fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                //add the data to the list, \t is used as a separator for now
+                fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
             }
         }
         else{
@@ -136,8 +136,8 @@
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
 
-                //add the data to the list, @@ is used as a separator for now
-                fileList << filePath + "@@" + QString::number(fileSize) + "@@" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                //add the data to the list, \t is used as a separator for now
+                fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
             }
         }
 

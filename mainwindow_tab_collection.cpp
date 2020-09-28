@@ -522,10 +522,10 @@
         }
 
         // Create model
-        Collection *collection = new Collection(this);
+        Collection *collectionModel = new Collection(this);
 
         // Populate model with data
-        collection->populateData(cCatalogFilePaths,
+        collectionModel->populateData(cCatalogFilePaths,
                                  cNames,
                                  cDateUpdates,
                                  cFileCounts,
@@ -537,11 +537,11 @@
                                  cStorages
                                  );
 
-        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-        proxyModel->setSourceModel(collection);
+        QSortFilterProxyModel *proxyCollectionModel = new QSortFilterProxyModel(this);
+        proxyCollectionModel->setSourceModel(collectionModel);
 
         // Connect model to tree/table view
-        ui->TrV_CatalogList->setModel(proxyModel);
+        ui->TrV_CatalogList->setModel(proxyCollectionModel);
         ui->TrV_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
         ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->TrV_CatalogList->header()->resizeSection(1, 300); //Name
@@ -550,8 +550,8 @@
         ui->TrV_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
         ui->TrV_CatalogList->header()->resizeSection(5, 300); //Path
         ui->TrV_CatalogList->header()->resizeSection(6, 100); //FileType
-        ui->TrV_CatalogList->header()->resizeSection(7, 50); //Active
-        ui->TrV_CatalogList->header()->resizeSection(8, 50); //Storage
+        ui->TrV_CatalogList->header()->resizeSection(7,  50); //Active
+        ui->TrV_CatalogList->header()->resizeSection(8,  50); //Storage
         ui->TrV_CatalogList->header()->hideSection(0); //Path
     }
     //----------------------------------------------------------------------
@@ -581,9 +581,8 @@
                 break;
             else
                 if (line.left(1)!="<"){
-                    //Reminder: the double @ separates the filepath, size, and datetime
-                    //Split the string with @@ into a list
-                    QRegExp tagExp("@@");
+                    //Split the string with \t into a list
+                    QRegExp tagExp("\t");
                     QStringList fieldList = line.split(tagExp);
 
                     int fieldListCount = fieldList.count();
