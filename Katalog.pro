@@ -72,12 +72,19 @@ SOURCES += \
     mainwindow_tab_create.cpp \
     mainwindow_tab_search.cpp \
     mainwindow_tab_settings.cpp \
-    mainwindow_tab_tests.cpp
+    mainwindow_tab_storage.cpp \
+    mainwindow_tab_tags.cpp \
+    mainwindow_tab_tests.cpp \
+    storage.cpp \
+    tag.cpp
 
 HEADERS += \
     catalog.h \
     collection.h \
-    mainwindow.h
+    initdb.h \
+    mainwindow.h \
+    storage.h \
+    tag.h
 
 FORMS += \
     mainwindow.ui

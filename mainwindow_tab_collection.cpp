@@ -65,6 +65,7 @@
                 LoadCatalogFileList();
                 LoadCatalogsToModel();
                 refreshCatalogSelectionList();
+                loadStorageModel();
             }
 
             //Reset selected catalog values (to avoid updating the last selected one for instance)
@@ -74,6 +75,14 @@
             selectedCatalogPath="";
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Collection_PB_Reload_clicked()
+        {
+            LoadCatalogFileList();
+            LoadCatalogsToModel();
+            refreshCatalogSelectionList();
+            loadStorageModel();
+        }
+
 
     //Catalog buttons
         void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
@@ -85,8 +94,10 @@
             selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
             selectedCatalogFileType      = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
             selectedCatalogIncludeHidden = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
+            selectedCatalogStorage       = ui->TrV_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
 
             //display buttons
+            ui->Collection_PB_Search->setEnabled(true);
             ui->PB_ViewCatalog->setEnabled(true);
             ui->PB_C_Rename->setEnabled(true);
             ui->PB_EditCatalogFile->setEnabled(true);
@@ -100,6 +111,16 @@
             //Open the selected collection folder
             QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
         }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_PB_Search_clicked()
+        {
+            //Change the selected catalog in Search tab
+            ui->CB_SelectCatalog->setCurrentText(selectedCatalogFile);
+
+            //Go to the Search tab
+            ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()
         {
@@ -142,7 +163,7 @@
 
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes);
+                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage);
 
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
@@ -177,6 +198,11 @@
             //View the files of the Selected Catalog
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
+
+            //Go to the Search tab
+            ui->L_E_CatalogName->setText(selectedCatalogName);
+            ui->L_E_CatalogPath->setText(selectedCatalogPath);
+            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
         //----------------------------------------------------------------------
         void MainWindow::on_TrV_CatalogList_doubleClicked(const QModelIndex &index)
@@ -185,6 +211,11 @@
             selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
+
+            //Go to the Search tab
+            ui->L_E_CatalogName->setText(selectedCatalogName);
+            ui->L_E_CatalogPath->setText(selectedCatalogPath);
+            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_Rename_clicked()
@@ -224,9 +255,9 @@
             QString catalogFileCount = QString::number(selectedCatalogFileCount);
             QDateTime nowDateTime = QDateTime::currentDateTime();
 
-            QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + ";"
-                                    + selectedCatalogName + ";"
-                                    + catalogFileCount + ";"
+            QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                    + selectedCatalogName + "\t"
+                                    + catalogFileCount + "\t"
                                     + selectedCatalogTotalFileSize;
 
             // Stream the list to the file
@@ -267,11 +298,6 @@
             QString link = "https://sourceforge.net/p/katalogg/tickets/";
             KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
             QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_pushButton_clicked()
-        {
-            getStorageInfo();
         }
         //----------------------------------------------------------------------
 
@@ -391,15 +417,16 @@
     void MainWindow::LoadCatalogsToModel()
     {
         //Set up temporary lists
-        QList<QString>  cNames;
-        QList<QString>  cDateUpdates;
-        QList<qint64>   cFileCounts;
-        QList<qint64>   cTotalFileSizes;
-        QList<QString>  cSourcePaths;
-        QList<bool>     cSourcePathIsActives;
-        QList<QString>  cFileTypes;
-        QList<QString>  cCatalogFilePaths;
-        QList<bool>     cCatalogIncludeHiddens;
+        QList<QString> cNames;
+        QList<QString> cDateUpdates;
+        QList<qint64>  cFileCounts;
+        QList<qint64>  cTotalFileSizes;
+        QList<QString> cSourcePaths;
+        QList<bool>    cSourcePathIsActives;
+        QList<QString> cFileTypes;
+        QList<QString> cCatalogFilePaths;
+        QList<bool>    cCatalogIncludeHiddens;
+        QList<QString> cStorages;
 
         //Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
@@ -423,6 +450,7 @@
             bool catalogTotalfileSizeProvided = false;
             bool catalogIncludeHiddenProvided = false;
             bool catalogFileTypeProvided = false;
+            bool catalogStorageProvided = false;
 
             QString catalogSourcePath;
 
@@ -457,6 +485,11 @@
                     cFileTypes.append(catalogFileType);
                     catalogFileTypeProvided = true;
                 }
+                else if (line.left(16)=="<catalogStorage>"){
+                    QString storage = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cStorages.append(storage);
+                    catalogStorageProvided = true;
+                }
                 else
                     break;
 
@@ -472,6 +505,9 @@
                 cCatalogIncludeHiddens.append(false);
             if(catalogFileTypeProvided==false)
                 cFileTypes.append("");
+            if(catalogStorageProvided==false)
+                cStorages.append("");
+
             //Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
             cSourcePathIsActives.append(test);
@@ -497,7 +533,9 @@
                                  cSourcePaths,
                                  cFileTypes,
                                  cSourcePathIsActives,
-                                 cCatalogIncludeHiddens);
+                                 cCatalogIncludeHiddens,
+                                 cStorages
+                                 );
 
         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
         proxyModel->setSourceModel(collection);
@@ -506,14 +544,14 @@
         ui->TrV_CatalogList->setModel(proxyModel);
         ui->TrV_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
         ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->TrV_CatalogList->header()->resizeSection(1, 350); //Name
+        ui->TrV_CatalogList->header()->resizeSection(1, 300); //Name
         ui->TrV_CatalogList->header()->resizeSection(2, 150); //Date
         ui->TrV_CatalogList->header()->resizeSection(3, 100); //Files
-        ui->TrV_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
+        ui->TrV_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
         ui->TrV_CatalogList->header()->resizeSection(5, 300); //Path
         ui->TrV_CatalogList->header()->resizeSection(6, 100); //FileType
         ui->TrV_CatalogList->header()->resizeSection(7, 50); //Active
-
+        ui->TrV_CatalogList->header()->resizeSection(8, 50); //Storage
         ui->TrV_CatalogList->header()->hideSection(0); //Path
     }
     //----------------------------------------------------------------------
@@ -572,7 +610,7 @@
                     cfileNames.append(file.fileName());
                     cfileSizes.append(fileSize);
                     cfilePaths.append(file.path());
-                    cfileDateTimes.append(fileDateTime); //selectedCatalogName
+                    cfileDateTimes.append(fileDateTime);
                 }
             }
 
@@ -603,20 +641,4 @@
         return status;
     }
 
-    void MainWindow::getStorageInfo()
-    {
-        //QStorageInfo storage = QStorageInfo::root();
-        QStorageInfo storage;
-        storage.setPath("/media/veracrypt4");
 
-        KMessageBox::information(this,"test:\n" + storage.rootPath());
-        if (storage.isReadOnly())
-            qDebug() << "isReadOnly:" << storage.isReadOnly();
-
-        KMessageBox::information(this,"test:\n" + storage.name());
-        KMessageBox::information(this,"test:\n" + storage.fileSystemType());
-        qint64 sizeTotal = storage.bytesTotal()/1024/1024;
-        qint64 sizeAvailable = storage.bytesAvailable()/1024/1024;
-        KMessageBox::information(this,"test:\n" + QString::number(sizeTotal));
-        KMessageBox::information(this,"test:\n" + QString::number(sizeAvailable));
-    }

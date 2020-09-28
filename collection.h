@@ -58,7 +58,8 @@ public:
                       const QList<QString>  &catalogSourcePath,
                       const QList<QString>  &catalogFileType,
                       const QList<bool>     &catalogSourcePathIsActive,
-                      const QList<bool>     &catalogIncludeHidden);
+                      const QList<bool>     &catalogIncludeHidden,
+                      const QList<QString>  &catalogStorage);
 
 private:
     QList<QString>  catalogFilePath;
@@ -70,6 +71,7 @@ private:
     QList<bool>     catalogSourcePathIsActive;
     QList<qint64>   catalogTotalFileSize;
     QList<bool>     catalogIncludeHidden;
+    QList<QString>  catalogStorage;
 };
 
 #endif // COLLECTION_H

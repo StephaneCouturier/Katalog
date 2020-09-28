@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>878</width>
+    <width>1012</width>
     <height>739</height>
    </rect>
   </property>
@@ -93,7 +93,7 @@
        <bool>false</bool>
       </property>
       <property name="movable">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -107,7 +107,7 @@
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
-        <string>Search Files</string>
+        <string>Search</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_14">
         <item>
@@ -584,7 +584,7 @@
                <string>Reset all</string>
               </property>
               <property name="icon">
-               <iconset theme="chronometer-reset">
+               <iconset theme="edit-clear-all">
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
@@ -651,6 +651,22 @@
                <number>1000</number>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QLabel" name="label_5">
@@ -984,7 +1000,314 @@
         <string>Collection</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="7" column="0">
+        <item row="2" column="0" rowspan="2">
+         <layout class="QHBoxLayout" name="HL_CatalogZone">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetFixedSize</enum>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="VL_CatalogACtions">
+            <item>
+             <layout class="QHBoxLayout" name="HL_ColectionFolder">
+              <item>
+               <widget class="QLabel" name="label_7">
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Current collection folder</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="LE_CollectionFolder"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_SelectCollectionFolder">
+                <property name="text">
+                 <string>Select</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-select">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_PB_Reload">
+                <property name="text">
+                 <string>Reload</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="view-refresh">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_OpenFolder">
+                <property name="text">
+                 <string>Open</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line">
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="HL_CatalogActions">
+              <item>
+               <widget class="QLabel" name="label_18">
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>with selected Catalog:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_PB_Search">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Search</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-search">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_ViewCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="locale">
+                 <locale language="French" country="France"/>
+                </property>
+                <property name="text">
+                 <string>Explore</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="text-x-katefilelist">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_C_Rename">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Rename</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_UpdateCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Update</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playlist-repeat">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_EditCatalogFile">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Edit</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit-sign">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_RecordCatalogStats">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Record for Stats</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="step_object_Graph">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_DeleteCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="delete">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_25">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTreeView" name="TrV_CatalogList">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>350</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="T_Explore">
+       <attribute name="icon">
+        <iconset theme="text-x-katefilelist">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Explore</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_10">
+        <item row="6" column="0">
          <layout class="QHBoxLayout" name="HL_CatalogsFoldersFiles" stretch="0,0,0">
           <property name="spacing">
            <number>6</number>
@@ -1030,6 +1353,92 @@
           </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QLabel" name="L_E_CatalogNameLabel">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Catalog Name:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_E_CatalogName">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_24">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_14">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Catalog Path:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_E_CatalogPath">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_23">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line_8">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QLabel" name="L_FlieList">
               <property name="enabled">
@@ -1157,262 +1566,6 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="0" rowspan="2">
-         <layout class="QHBoxLayout" name="HL_CatalogZone">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetFixedSize</enum>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" name="VL_CatalogACtions">
-            <item>
-             <layout class="QHBoxLayout" name="HL_ColectionFolder">
-              <item>
-               <widget class="QLabel" name="label_7">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Current collection folder</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="LE_CollectionFolder"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_SelectCollectionFolder">
-                <property name="text">
-                 <string>Select</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-select">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>50</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_C_OpenFolder">
-                <property name="text">
-                 <string>Open folder</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-open">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="L_CatalogList">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
-              <property name="text">
-               <string>Catalog List</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="TrV_CatalogList">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>250</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="HL_CatalogActions">
-              <item>
-               <widget class="QPushButton" name="PB_ViewCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>View</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="preview">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_C_Rename">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Rename</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-edit">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_UpdateCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Update</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="media-playlist-repeat">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>22</width>
-                  <height>22</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_EditCatalogFile">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Edit</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-edit-sign">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="text">
-                 <string>PushButton</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_RecordCatalogStats">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Record for Stats</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="step_object_Graph">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>100</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="PB_DeleteCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Delete</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="delete">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="T_CreateCatalog">
@@ -1421,11 +1574,11 @@
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
-        <string>Create Catalog</string>
+        <string>Create</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <layout class="QVBoxLayout" name="VL_SelectCatalogPath" stretch="0,0,0">
+         <layout class="QVBoxLayout" name="VL_SelectCatalogPath" stretch="0,0">
           <property name="leftMargin">
            <number>10</number>
           </property>
@@ -1456,19 +1609,39 @@
                   <height>0</height>
                  </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">color: rgb(95, 95, 95);</string>
                 </property>
                 <property name="text">
-                 <string>Source path for your new catalog</string>
+                 <string>1- Select Source path</string>
                 </property>
                 <property name="margin">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="HL_CatalogPathEditPick">
+               <widget class="Line" name="line_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_19">
                 <item>
                  <widget class="QLineEdit" name="LE_NewCatalogPath">
                   <property name="text">
@@ -1483,7 +1656,7 @@
                  <widget class="QPushButton" name="PB_PickPath">
                   <property name="maximumSize">
                    <size>
-                    <width>150</width>
+                    <width>100</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -1504,17 +1677,38 @@
              </layout>
             </item>
             <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <layout class="QVBoxLayout" name="VL_OptionsButton">
               <item>
-               <widget class="QLabel" name="L_empty_2">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>60</height>
-                 </size>
+               <widget class="QLabel" name="label_19">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>2- Select Content options</string>
+                </property>
+                <property name="margin">
+                 <number>6</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -1691,7 +1885,7 @@
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>include archives contents (tar, zip, rar)</string>
+                   <string>include archives contents</string>
                   </property>
                  </widget>
                 </item>
@@ -1721,25 +1915,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QLineEdit" name="LE_Tags">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>200</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="placeholderText">
-                   <string>tags</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </item>
               <item>
@@ -1757,60 +1932,222 @@
               </item>
              </layout>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="topMargin">
-             <number>15</number>
-            </property>
             <item>
-             <widget class="QLabel" name="L_CatalogName">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
-              <property name="text">
-               <string>Name of the new catalog</string>
-              </property>
-              <property name="margin">
-               <number>0</number>
+             <widget class="Line" name="line_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
               <item>
-               <widget class="QLineEdit" name="LE_NewCatalogName">
+               <widget class="QLabel" name="label_20">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
                 <property name="text">
-                 <string>NewCatalog</string>
+                 <string>3- Define &amp; Create catalog</string>
                 </property>
-                <property name="placeholderText">
-                 <string>Enter a name for your new catalog</string>
-                </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
+                <property name="margin">
+                 <number>6</number>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="PB_GenerateFromPath">
-                <property name="enabled">
-                 <bool>true</bool>
+               <widget class="Line" name="line_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_C_Storage">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Select Storage</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_16">
+                <item>
+                 <widget class="QComboBox" name="CB_C_StorageSelection">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Create_PB_AddStorage">
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Add Storage</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="drive-harddisk">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="L_CatalogName">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(95, 95, 95);</string>
+                </property>
+                <property name="text">
+                 <string>Enter Name of the new catalog</string>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLineEdit" name="LE_NewCatalogName">
+                  <property name="text">
+                   <string>NewCatalog</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Enter a name for your new catalog</string>
+                  </property>
+                  <property name="clearButtonEnabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="PB_GenerateFromPath">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Generate</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="password-generate">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>100</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PB_CreateCatalog">
                 <property name="minimumSize">
                  <size>
                   <width>300</width>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
                 <property name="text">
-                 <string>Generate from path</string>
+                 <string>Create Catalog</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="password-generate">
+                 <iconset theme="document-save">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
+                <property name="iconSize">
+                 <size>
+                  <width>49</width>
+                  <height>16</height>
+                 </size>
+                </property>
                </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>
@@ -1831,33 +2168,554 @@
               </property>
              </spacer>
             </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="T_Storage">
+       <attribute name="icon">
+        <iconset theme="drive-harddisk">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Storage</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="3" column="0">
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="2">
+           <widget class="QTreeView" name="Storage_TrV"/>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="Line" name="line_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="L_StorageCountLabel">
+            <property name="text">
+             <string>Devices:</string>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageCountValue">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_18">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceTotalLabel">
+            <property name="text">
+             <string>Total Space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceTotalValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_19">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceUsedLabel">
+            <property name="text">
+             <string>Used Space: </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceUsedValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_20">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceFreeLabel">
+            <property name="text">
+             <string>Free Space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="L_StorageSpaceFreeValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_L_SpaceUnit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>(GiB)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_17">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_CreateList">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Create list</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-new"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_Reload">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Reload</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_EditAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Edit All</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-edit-sign">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_SaveAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save All</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-save">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>with selected Storage: </string>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_New">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>New</string>
+            </property>
+            <property name="icon">
+             <iconset theme="folder-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_SearchStorage">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Search storage</string>
+            </property>
+            <property name="icon">
+             <iconset theme="system-search">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_SearchLocation">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Search location</string>
+            </property>
+            <property name="icon">
+             <iconset theme="system-search"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_CreateCatalog">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Create Catalog</string>
+            </property>
+            <property name="icon">
+             <iconset theme="journal-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_OpenFilelight">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Open in Filelight</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_Update">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Update</string>
+            </property>
+            <property name="icon">
+             <iconset theme="media-playlist-repeat">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_Delete">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Delete</string>
+            </property>
+            <property name="icon">
+             <iconset theme="delete">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_22">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="T_Tags">
+       <attribute name="icon">
+        <iconset theme="tag">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Tags</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="6" column="1">
+           <widget class="QPushButton" name="PB_TagFolder">
+            <property name="text">
+             <string>Tag the folder</string>
+            </property>
+            <property name="icon">
+             <iconset theme="tag">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>Current folders and tags</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="L_SelectTag">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>Select a tag</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="LE_TagName"/>
+          </item>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
             <item>
-             <widget class="QPushButton" name="PB_CreateCatalog">
+             <widget class="QLineEdit" name="LE_TagFolderPath"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PB_T_PickFolder">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
-                <width>300</width>
+                <width>100</width>
                 <height>0</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
               <property name="text">
-               <string>Create Catalog</string>
+               <string>Select</string>
               </property>
               <property name="icon">
-               <iconset theme="document-save">
+               <iconset theme="edit-select">
                 <normaloff>.</normaloff>.</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>49</width>
-                <height>16</height>
-               </size>
               </property>
              </widget>
             </item>
            </layout>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>Select a folder</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_16">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95)</string>
+            </property>
+            <property name="text">
+             <string>Existing tags</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QTreeView" name="TV_Explorer_2"/>
+          </item>
+          <item row="8" column="0">
+           <widget class="QTreeView" name="TrV_FolderTags"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QListView" name="LI_ExistingTags"/>
+          </item>
+          <item row="8" column="1">
+           <widget class="QPushButton" name="Tags_PB_Reload">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Reload</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -2017,7 +2875,7 @@
                 <item>
                  <widget class="QListWidget" name="listWidget">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <item>
                    <property name="text">
@@ -2058,14 +2916,14 @@
                 <item>
                  <widget class="QListView" name="listView_3">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QComboBox" name="comboBox">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -2074,7 +2932,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_8">
                     <property name="enabled">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                     <property name="text">
                      <string>Add</string>
@@ -2084,7 +2942,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_7">
                     <property name="enabled">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                     <property name="text">
                      <string>Insert</string>
@@ -2094,7 +2952,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_9">
                     <property name="enabled">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                     <property name="text">
                      <string>Delete</string>
@@ -2277,12 +3135,6 @@
          </layout>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="TESTS">
-       <attribute name="title">
-        <string>TESTS</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2"/>
       </widget>
      </widget>
     </item>

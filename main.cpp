@@ -36,6 +36,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QTranslator>
 
 #include <KAboutData>
 #include <KLocalizedString>
@@ -49,6 +50,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     KLocalizedString::setApplicationDomain("Katalog");
+
+    //QTranslator translator;
+    //translator.load("Katalog_fr_FR");
+    //app.installTranslator(&translator);
+
+    //KMessageBox::information(app,tr("Hello world!"));
 
     KAboutData aboutData(
          QStringLiteral("Katalog"),         // The program name used internally. (componentName)

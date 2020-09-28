@@ -2,9 +2,9 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR"></TS>
 <context>
-    <name>PB_LoadCatalog</name>
+    <name>PB_ViewCatalog</name>
     <message>
-        <source>Load Catalog</source>
-        <translation>Charger le catalogue</translation>
+        <source>View</source>
+        <translation>Voir</translation>
     </message>
 </context>

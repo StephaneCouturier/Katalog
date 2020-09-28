@@ -48,7 +48,7 @@ int Catalog::rowCount(const QModelIndex &parent) const
 int Catalog::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;
+    return 4;
 }
 
 QVariant Catalog::data(const QModelIndex &index, int role) const

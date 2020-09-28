@@ -178,11 +178,18 @@
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
     {
+        //Filetypes for cataloging
         fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-        //fileType_Image<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
         fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg";
         fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm";
         fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
+
+        //filetypes for searching
+        fileType_ImageS<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
+        fileType_AudioS<< "*.mp3$" << "*.wav$" << "*.ogg$";
+        fileType_VideoS<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
+        fileType_TextS << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
+
     }
 
 //Development -------------------------------------------------------
@@ -192,27 +199,40 @@
         ui->L_Regex->hide();
 
         //Create
-        ui->LE_Tags->hide();
         //ui->L_OtherOptions->hide();
         ui->RB_IncludeSubDir->hide();
         ui->RB_IncludeSymblinks->hide();
         ui->RB_IncludeArchives->hide();
         ui->RB_IncludeChecksum->hide();
 
-        //Collection
-        //ui->PB_RecordCatalogStats->hide();
-        ui->pushButton->hide();
+        //Explore
         ui->L_Filter->hide();
         ui->LE_TextToFilter->hide();
+
+        //Collection
+        //ui->PB_RecordCatalogStats->hide();
         ui->L_Directories->hide();
         ui->TV_Directories->hide();
         //ui->PB_C_Rename->hide();
 
+        //Storage
+        ui->Storage_PB_SaveAll->hide();
+
+        ui->LE_TextToFilter->hide();
+        ui->Storage_PB_New->hide();
+        ui->Storage_PB_SearchLocation->hide();
+        ui->Storage_PB_OpenFilelight->hide();
+        ui->Storage_PB_Update->hide();
+        ui->Storage_PB_Delete->hide();
+        ui->Storage_L_SpaceUnit->hide();
+
         //Other tabs
+        ui->tabWidget->removeTab(8);
+        ui->tabWidget->removeTab(7);
         ui->tabWidget->removeTab(6);
         ui->tabWidget->removeTab(5);
-        ui->tabWidget->removeTab(4);
-        ui->tabWidget->removeTab(3);
+
+        //QPushButton hello(QPushButton::tr("Hello world!"));
 
     }
     //----------------------------------------------------------------------

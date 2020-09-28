@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.1
+// Version:     0.9
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -37,18 +37,22 @@
     #include "ui_mainwindow.h"
 
 //Include other mainwindow methods
+
     //SETUP: Menu and Icons - Actions KDE setup
     #include "mainwindow_setup.cpp"
+
+    //Main objects
     #include "collection.cpp"
-    //TAB: Search files
+    #include "storage.cpp"
+
+    //TABS:
     #include "mainwindow_tab_search.cpp"
-    //TAB: Create Catalog
     #include "mainwindow_tab_create.cpp"
-    //TAB: Collection
     #include "mainwindow_tab_collection.cpp"
-    //TAB: TESTS
-    //TAB: Find Duplicates
-    //TAB: Statistiques
+    #include "mainwindow_tab_storage.cpp"
+    #include "mainwindow_tab_tags.cpp"
+    //#include "mainwindow_tab_duplicates.cpp"
+    //#include "mainwindow_tab_statistics.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    , ui(new Ui::MainWindow)
@@ -75,11 +79,23 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
             ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
+    //setup tab: Storage
+            loadStorageModel();
+
     //setup tab: Create
         //Default path to scan
             ui->LE_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             LoadFileSystem("/");
+        //Load list of Storage
+            loadStorageList();
+
+    //setup tab: Tags
+            //Default path to scan
+            ui->LE_TagFolderPath->setText("/");
+            //Always Load the file system for the treeview
+            loadFileSystemTags("/");
+            loadFolderTagModel();
 
     //setup tab: Settings
         //Load last collection used
@@ -90,8 +106,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //DEV: interface to edit
             FileTypesEditor();
             setupFileContextMenu();
-
-    //TAB: Tests
 }
 
 MainWindow::~MainWindow()
@@ -102,6 +116,7 @@ MainWindow::~MainWindow()
 //DEV useful
 /*
 KMessageBox::information(this,"test:\n");
-qDebug("test of qdebug");
 */
+
+
 

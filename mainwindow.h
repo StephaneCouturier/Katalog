@@ -97,6 +97,10 @@ class MainWindow : public KXmlGuiWindow
             QStringList fileType_Audio;
             QStringList fileType_Video;
             QStringList fileType_Text;
+            QStringList fileType_ImageS;
+            QStringList fileType_AudioS;
+            QStringList fileType_VideoS;
+            QStringList fileType_TextS;
             QStringList fileType_current;
             QString fileTypeSelected;
             void setFileTypes();
@@ -111,6 +115,7 @@ class MainWindow : public KXmlGuiWindow
             QString selectedCatalogTotalFileSize;
             bool selectedCatalogIncludeHidden;
             QString selectedCatalogFileType;
+            QString selectedCatalogStorage;
             void LoadCatalogFileList();
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
@@ -130,6 +135,7 @@ class MainWindow : public KXmlGuiWindow
             qint64  selectedMaximumSize;
             qint64  sizeMultiplier;
             QString selectedSizeUnit;
+            QString selectedTags;
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
             void initiateSearchValues();
@@ -157,8 +163,26 @@ class MainWindow : public KXmlGuiWindow
             QStringListModel *fileListModel;
             QString newCatalogPath;
             QString newCatalogName;
+            QString newCatalogStorage;
             void LoadFileSystem(QString newCatalogPath);
-            void CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes);
+            void CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage);
+            void loadStorageList();
+            QStringList storageNameList;
+
+        //TAB: Storage
+            QString storageFilePath;
+            void loadStorageModel();
+            QString selectedStorageName;
+            QString selectedStorageID;
+            QString selectedStorageType;
+            QString selectedStorageLocation;
+            QString selectedStoragePath;
+            int     selectedStorageIndexRow;
+            QStringListModel *storageListModel;
+
+        //TAB: Tags
+            void loadFileSystemTags(QString newTagFolderPath);
+            QStringListModel *tagListModel;
 
         //TESTS
             QString collectionFolder;
@@ -180,6 +204,7 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_Search_clicked();
             void setupFileContextMenu();
             void on_PB_ExportResults_clicked();
+            QString getCatalogStorageName(QString catalogFilePath);
 
             //context menu
             void contextOpenFile();
@@ -192,12 +217,16 @@ class MainWindow : public KXmlGuiWindow
             void on_TrV_FilesFound_clicked(const QModelIndex &index);
 
         //Create
+            void on_Create_PB_AddStorage_clicked();
+
             void on_PB_PickPath_clicked();
             void on_PB_GenerateFromPath_clicked();
             void on_PB_CreateCatalog_clicked();
             void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Collection
+            void on_Collection_PB_Reload_clicked();
+            void on_Collection_PB_Search_clicked();
             void on_PB_C_OpenFolder_clicked();
             void on_PB_ViewCatalog_clicked();
             void on_PB_UpdateCatalog_clicked();
@@ -210,7 +239,30 @@ class MainWindow : public KXmlGuiWindow
             void on_TrV_CatalogList_doubleClicked(const QModelIndex &index);
             void on_TrV_FileList_customContextMenuRequested(const QPoint &pos);
             void context2CopyAbsolutePath();
-            void getStorageInfo();
+
+        //Storage
+            void getStorageInfo(const QString &storagePath);
+            void on_Storage_TrV_activated(const QModelIndex &index);
+
+            void on_Storage_PB_CreateList_clicked();
+            void on_Storage_PB_Reload_clicked();
+            void on_Storage_PB_EditAll_clicked();
+            void on_Storage_PB_SaveAll_clicked();
+
+            void on_Storage_PB_New_clicked();
+            void on_Storage_PB_SearchStorage_clicked();
+            void on_Storage_PB_SearchLocation_clicked();
+            void on_Storage_PB_CreateCatalog_clicked();
+            void on_Storage_PB_OpenFilelight_clicked();
+            void on_Storage_PB_Update_clicked();
+            void on_Storage_PB_Delete_clicked();
+
+        //Tags
+            void on_Tags_PB_Reload_clicked();
+
+            void on_TV_Explorer_2_activated(const QModelIndex &index);
+            void on_PB_T_PickFolder_clicked();
+            void loadFolderTagModel();
 
         //Settings
             void on_PB_SelectCollectionFolder_clicked();
@@ -222,8 +274,10 @@ class MainWindow : public KXmlGuiWindow
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
             void on_PB_GetTextFromClipboard_clicked();
             void on_PB_RecordCatalogStats_clicked();
+            void on_PB_TagFolder_clicked();
+            void on_LI_ExistingTags_activated(const QModelIndex &index);
 
-            void on_pushButton_clicked();
+
 };
 
 #endif // MAINWINDOW_H
