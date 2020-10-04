@@ -165,7 +165,7 @@
     {
         QSettings settings(settingsFile, QSettings::NativeFormat);
         //QString sText = "N/A";
-        settings.setValue("CollectionFolder", collectionFolder);
+        settings.setValue("LastCollectionFolder", collectionFolder);
         settings.setValue("LastSearch/SearchText", ui->KCB_SearchText->currentText());
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedSearchCatalog);
         settings.setValue("LastSearch/FileType", selectedFileType);
