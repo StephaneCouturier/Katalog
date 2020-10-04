@@ -35,6 +35,7 @@
 //Include classes
     #include "mainwindow.h"
     #include "ui_mainwindow.h"
+    //#include "initdb.h"
 
 //Include other mainwindow methods
 
@@ -61,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    //Start up interface
         //Set up GUI
             ui->setupUi(this);
+
+            startSQLDB();
+
+
             hideDevelopmentUIItems();
         //Set up KDE Menu/Icon actions
             setupActions();
@@ -70,10 +75,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
 
     //setup tab: Collection
         //Load the list of catalogs from the collection folder
-            LoadCatalogsToModel();
+            loadCatalogsToModel();
 
     //setup tab: Search
-            LoadCatalogFileList();
+            //LoadCatalogFileList();
             initiateSearchValues();
             refreshCatalogSelectionList();
 
@@ -113,10 +118,10 @@ MainWindow::~MainWindow()
       delete ui;
 }
 
-//DEV useful
+//DEV
 /*
 KMessageBox::information(this,"test:\n");
 */
 
-
-
+//NOTES
+//

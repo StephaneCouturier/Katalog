@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1029</width>
-    <height>739</height>
+    <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -607,7 +607,13 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
-                <height>17</height>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="font">
@@ -631,8 +637,17 @@
             </item>
             <item>
              <widget class="QLabel" name="label_2">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
                <string>&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -640,7 +655,7 @@
              <widget class="QSpinBox" name="SB_MinimumSize">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>0</height>
                </size>
               </property>
@@ -667,8 +682,17 @@
             </item>
             <item>
              <widget class="QLabel" name="label_5">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
                <string>&lt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -676,7 +700,7 @@
              <widget class="QSpinBox" name="SB_MaximumSize">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>90</width>
                 <height>0</height>
                </size>
               </property>
@@ -699,6 +723,38 @@
                </font>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_ChB_Size">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_21">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>30</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <spacer name="horizontalSpacer_8">
@@ -2727,9 +2783,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_Graphics">
+      <widget class="QWidget" name="T_Statistics">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="icon">
         <iconset theme="step_object_Graph">
@@ -2739,13 +2795,10 @@
         <string>Statistics</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
-        <item row="3" column="0">
-         <widget class="KDateComboBox" name="kdatecombobox_2"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="pushButton_5">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Save record</string>
+           <string>History</string>
           </property>
          </widget>
         </item>
@@ -2756,12 +2809,24 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_6">
+        <item row="1" column="0" rowspan="2" colspan="2">
+         <widget class="QListView" name="listView"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="KDateComboBox" name="kdatecombobox"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="pushButton_5">
           <property name="text">
-           <string>Open in Filelight</string>
+           <string>Save record</string>
           </property>
          </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="KDateComboBox" name="kdatecombobox_2"/>
+        </item>
+        <item row="5" column="0" colspan="3">
+         <widget class="QGraphicsView" name="graphicsView"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_4">
@@ -2770,21 +2835,12 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0" colspan="3">
-         <widget class="QGraphicsView" name="graphicsView"/>
-        </item>
-        <item row="1" column="0" rowspan="2" colspan="2">
-         <widget class="QListView" name="listView"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
+        <item row="3" column="2">
+         <widget class="QPushButton" name="pushButton_6">
           <property name="text">
-           <string>History</string>
+           <string>Open in Filelight</string>
           </property>
          </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="KDateComboBox" name="kdatecombobox"/>
         </item>
        </layout>
       </widget>
@@ -2827,11 +2883,27 @@
           </item>
           <item>
            <widget class="QPlainTextEdit" name="plainTextEdit">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
             <property name="plainText">
              <string/>
             </property>
             <property name="placeholderText">
              <string>Use this to take some notes!</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableView" name="tableView_books">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>300</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -2849,6 +2921,12 @@
            <widget class="QListView" name="listView_2">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -2882,6 +2960,12 @@
                  <widget class="QListWidget" name="listWidget">
                   <property name="enabled">
                    <bool>true</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>150</height>
+                   </size>
                   </property>
                   <item>
                    <property name="text">
@@ -2923,6 +3007,12 @@
                  <widget class="QListView" name="listView_3">
                   <property name="enabled">
                    <bool>true</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>150</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
@@ -2980,9 +3070,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_FindDuplicates">
+      <widget class="QWidget" name="T_Duplicates">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="icon">
         <iconset theme="xml-node-duplicate">
@@ -3137,6 +3227,72 @@
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Test</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="4" column="1">
+           <widget class="QListView" name="test_listView"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>QListView</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>QTableView</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableView" name="test_tableView"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>QTreeView</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTreeView" name="test_treeView">
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <item>
+             <widget class="QPushButton" name="test_pb_insert">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Insert</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>

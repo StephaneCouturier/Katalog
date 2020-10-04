@@ -62,8 +62,6 @@
 
                 //initiateSearchValues();
                 saveSettings();
-                LoadCatalogFileList();
-                LoadCatalogsToModel();
                 refreshCatalogSelectionList();
                 loadStorageModel();
             }
@@ -77,8 +75,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_PB_Reload_clicked()
         {
-            LoadCatalogFileList();
-            LoadCatalogsToModel();
+            loadCatalogsToModel();
             refreshCatalogSelectionList();
             loadStorageModel();
         }
@@ -115,7 +112,7 @@
         void MainWindow::on_Collection_PB_Search_clicked()
         {
             //Change the selected catalog in Search tab
-            ui->CB_SelectCatalog->setCurrentText(selectedCatalogFile);
+            ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
 
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
@@ -189,7 +186,7 @@
                                          );
             }
             //Refresh the collection view
-            LoadCatalogsToModel();
+            loadCatalogsToModel();
 
         }
         //----------------------------------------------------------------------
@@ -237,8 +234,8 @@
                  QFile::rename(selectedCatalogFile, newCatalogFullName);
 
                  //refresh catalog lists
-                    LoadCatalogsToModel();
-                    LoadCatalogFileList();
+                    loadCatalogsToModel();
+                    //LoadCatalogFileList();
                     refreshCatalogSelectionList();
             }
         }
@@ -284,8 +281,7 @@
                 if ( result ==KMessageBox::Continue){
                     QFile file (selectedCatalogFile);
                     file.moveToTrash();
-                    LoadCatalogFileList();
-                    LoadCatalogsToModel();
+                    loadCatalogsToModel();
                     refreshCatalogSelectionList();
                 }
              }
@@ -414,7 +410,7 @@
     //----------------------------------------------------------------------
 
     //Load a collection (catalogs)
-    void MainWindow::LoadCatalogsToModel()
+    void MainWindow::loadCatalogsToModel()
     {
         //Set up temporary lists
         QList<QString> cNames;
@@ -553,6 +549,11 @@
         ui->TrV_CatalogList->header()->resizeSection(7,  50); //Active
         ui->TrV_CatalogList->header()->resizeSection(8,  50); //Storage
         ui->TrV_CatalogList->header()->hideSection(0); //Path
+
+        //Pass list of catalogs
+            catalogFileList = cNames;
+
+
     }
     //----------------------------------------------------------------------
 
@@ -632,6 +633,7 @@
         ui->TrV_FileList->header()->resizeSection(3, 400); //Path
     }
 
+    //----------------------------------------------------------------------
     //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
@@ -639,5 +641,4 @@
         bool status = dir.exists();
         return status;
     }
-
-
+    //----------------------------------------------------------------------

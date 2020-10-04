@@ -55,6 +55,7 @@
 #include <QSortFilterProxyModel>
 #include <QStorageInfo>
 #include <QDebug>
+#include <QtSql>
 
 #include <KXmlGuiWindow>
 #include <KMessageBox>
@@ -80,6 +81,12 @@ class MainWindow : public KXmlGuiWindow
         //Global
             //KDE
             Ui::MainWindow *ui;
+
+            QSqlRelationalTableModel *model;
+            QSqlRelationalTableModel *model2;
+            int authorIdx, genreIdx;
+            void startSQLDB();
+
             void hideDevelopmentUIItems();
             //KDE menus/icons
             void setupActions();
@@ -116,10 +123,9 @@ class MainWindow : public KXmlGuiWindow
             bool selectedCatalogIncludeHidden;
             QString selectedCatalogFileType;
             QString selectedCatalogStorage;
-            void LoadCatalogFileList();
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
-            void LoadCatalogsToModel();
+            void loadCatalogsToModel();
             void LoadFilesToModel();
             bool verifyCatalogPath(QString catalogSourcePath);
 
@@ -277,7 +283,7 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_TagFolder_clicked();
             void on_LI_ExistingTags_activated(const QModelIndex &index);
 
-
+            void on_test_pb_insert_clicked();
 };
 
 #endif // MAINWINDOW_H

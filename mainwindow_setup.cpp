@@ -196,7 +196,8 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
-        ui->L_Regex->hide();
+        //ui->L_Regex->hide();
+        ui->Search_ChB_Size->hide();
 
         //Create
         //ui->L_OtherOptions->hide();
@@ -228,9 +229,9 @@
 
         //Other tabs
         ui->tabWidget->removeTab(8);
-        ui->tabWidget->removeTab(7);
-        ui->tabWidget->removeTab(6);
-        ui->tabWidget->removeTab(5);
+        //ui->tabWidget->removeTab(7);
+        //ui->tabWidget->removeTab(6);
+        //ui->tabWidget->removeTab(5);
 
         //QPushButton hello(QPushButton::tr("Hello world!"));
 

@@ -303,15 +303,14 @@
         SaveCatalog(newCatalogName);
 
         //Refresh the catalog list for the Collection screen
-        LoadCatalogFileList();
-        LoadCatalogsToModel();
+        loadCatalogsToModel();
         //Refresh the catalog list for the combobox of the Search screen
         refreshCatalogSelectionList();
 
         KMessageBox::information(this,
-                                          i18n("The new catalog,has been created.\n Name:   ")
-                                          +newCatalogName+"\n Path:     "+newCatalogPath,
-                                          i18n( "Info" ) );
+                                  i18n("The new catalog,has been created.\n Name:   ")
+                                  +newCatalogName+"\n Path:     "+newCatalogPath,
+                                  i18n( "Info" ) );
 
         //Load files of the created catalog:
         //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary

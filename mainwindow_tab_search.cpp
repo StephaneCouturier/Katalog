@@ -71,42 +71,24 @@
                 ui->SB_MaximumSize->setValue(selectedMaximumSize);
                 ui->CB_SizeUnit->setCurrentText(selectedSizeUnit);
         }
-        void MainWindow::LoadCatalogFileList()
-        {
-            catalogFileList.clear();
-            QStringList fileTypes;
-            fileTypes << "*.idx";
-            //Iterate in the directory to create a list of files and sort it
-            //list the file names only
-            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
-                //catalogList << (iterator.next());
-
-                QFile file(iterator.next());
-                //file.open(QIODevice::ReadOnly);
-                catalogFileList << file.fileName();
-
-            }
-            catalogFileList.sort();
-        }
+        //----------------------------------------------------------------------
         void MainWindow::refreshCatalogSelectionList()
         {
-            //must be run after loading the LoadCatalogFileList();
-            //Prepare list for the Catalog selection combobox
-                QStringList displaycatalogList = catalogFileList;
+            //Prepare list for the Catalog selection
+            QStringList displaycatalogList = catalogFileList;
+            //catalogFileList = cNames;
 
-                //Add the option All at the beginning
-                displaycatalogList.insert(0,"All");
-                displaycatalogList.insert(1,"Selected Storage");
-                //displaycatalogList.insert(2,"Selected Location");
+            //Add the option All at the beginning
+            displaycatalogList.insert(0,"All");
+            displaycatalogList.insert(1,"Selected Storage");
+            //displaycatalogList.insert(2,"Selected Location");
 
-                //Send list to the combobox
-                fileListModel = new QStringListModel(this);
-                fileListModel->setStringList(displaycatalogList);
-                ui->CB_SelectCatalog->setModel(fileListModel);
-
+            //Send list to the combobox
+            fileListModel = new QStringListModel(this);
+            fileListModel->setStringList(displaycatalogList);
+            ui->CB_SelectCatalog->setModel(fileListModel);
         }
-
+        //----------------------------------------------------------------------
         //User interactions
         void MainWindow::on_PB_S_ResetAll_clicked()
         {
@@ -136,7 +118,6 @@
         {
             SearchFiles();
         }
-
         void MainWindow::on_TrV_FilesFound_clicked(const QModelIndex &index)
         {
             //Get file from selected row
@@ -147,7 +128,6 @@
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
             //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
         }
-
         void MainWindow::on_PB_ExportResults_clicked()
         {
             //Prepare export file name
@@ -169,16 +149,15 @@
               KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
               exportFile.close();
         }
-
         void MainWindow::on_TR_CatalogFoundList_clicked(const QModelIndex &index)
         {
             //Get file from selected row
             QString selectedCatalogName = ui->TR_CatalogFoundList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogName = collectionFolder + "/" + selectedCatalogName + ".idx";
+            //selectedCatalogPath = collectionFolder + "/" + selectedCatalogName + ".idx";
             ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
             SearchFiles();
         }
-
+        //----------------------------------------------------------------------
         //File Context Menu actions set up
         void MainWindow::on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
@@ -228,7 +207,7 @@
                 //KMessageBox::information(this,"test:\n did nothing.");
             }
         }
-
+        //----------------------------------------------------------------------
         //Context Menu methods
         void MainWindow::contextOpenFile()
         {
@@ -313,7 +292,6 @@
                     sFilePaths.clear();
                     sFileDateTimes.clear();
 
-
                 //Get search criteria
                     //Get text to search in file names or directories
                     searchText = ui->KCB_SearchText->currentText();
@@ -321,23 +299,22 @@
                     //Do nothing if there is no search text
                     if (searchText=="")
                         return;
-                    //DEV: message box: No text entered, do you want to list all files based on the other criteria?
 
                     //add searchText to a list, to retrieved it later
                     ui->KCB_SearchText->addItem(searchText);
 
                     //Get other search criteria
                     selectedSearchCatalog = ui->CB_SelectCatalog->currentText();
-                    selectedTextCriteria = ui->CB_S_TextCriteria->currentText();
-                    selectedSearchIn = ui->CB_S_SearchIn->currentText();
-                    selectedFileType = ui->CB_S_FileType->currentText();
-                    selectedMinimumSize = ui->SB_MinimumSize->value();
-                    selectedMaximumSize = ui->SB_MaximumSize->value();
-                    selectedSizeUnit = ui->CB_SizeUnit->currentText();                  
-                    //selectedTags = ui->LE_Tags->text();
+                    selectedTextCriteria  = ui->CB_S_TextCriteria->currentText();
+                    selectedSearchIn      = ui->CB_S_SearchIn->currentText();
+                    selectedFileType      = ui->CB_S_FileType->currentText();
+                    selectedMinimumSize   = ui->SB_MinimumSize->value();
+                    selectedMaximumSize   = ui->SB_MaximumSize->value();
+                    selectedSizeUnit      = ui->CB_SizeUnit->currentText();
+                    //selectedTags        = ui->LE_Tags->text();
 
-                    // user can enter size min anx max from 0 to 1000.
-                    // define a size multiplier depending on the size unit selected
+                    // User can enter size min anx max from 0 to 1000.
+                    // Define a size multiplier depending on the size unit selected
                     sizeMultiplier=1;
                     if      (selectedSizeUnit =="KiB")
                             sizeMultiplier = sizeMultiplier * 1024;
@@ -369,25 +346,21 @@
                     foreach(sourceCatalog,catalogFileList)
                             {
 
-                        //get catalog storage name
-                        QString sourceCatalogStorageName;
-                        sourceCatalogStorageName = getCatalogStorageName(sourceCatalog);
-                        //sourceCatalogStorageName = "Media2000-1";
-
+                            //get catalog storage name
+                            QString sourceCatalogStorageName;
+                            QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
+                            sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
                                 if  ( selectedStorageName == sourceCatalogStorageName )
                                 {
-                                    //KMessageBox::information(this,"source catalog:    \n"  + sourceCatalog +
-                                    //                              "\nselected storage name:  \n" + selectedStorageName +
-                                    //                              "\nsource catalog storage name:  \n" + sourceCatalogStorageName
-                                    //                         );
                                         SearchFilesInCatalog(sourceCatalog);
                                 }
                             }
-                    }
+                }
                 //Otherwise just search files in the selected catalog
                 else{
+                    //QString selectedSearchCatalogPath;
                     SearchFilesInCatalog(selectedSearchCatalog);
-                    }
+                }
 
             //Process search results: list of catalogs
                 //Remove duplicates so the catalogs are listed only once
@@ -401,7 +374,6 @@
 
                         //catalogFoundList[index] = dir.dirName();
                         catalogFoundList[index] = fileInfo.baseName();
-
                 }
 
                 //Load list of catalogs in which files where found
@@ -439,9 +411,10 @@
             //QApplication::restoreOverrideCursor();
         }
         //----------------------------------------------------------------------
-        void MainWindow::SearchFilesInCatalog(const QString &sourceCatalog)
+        void MainWindow::SearchFilesInCatalog(const QString &sourceCatalogName)
         {
-            QFile catalogFile(sourceCatalog);
+            QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
+            QFile catalogFile(sourceCatalogPath);
 
             //Define how to use the search text
                 if(selectedTextCriteria == "Exact Phrase")
@@ -451,21 +424,16 @@
                 else if(selectedTextCriteria == "Any Word")
                     regexSearchtext=searchText.replace(" ","|");
                 else if(selectedTextCriteria == "All Words"){
-                    //regexSearchtext="(.*"+searchText.replace(" ","*)(.*")+"*)";
-
                     QString searchTextToSplit = searchText;
                     QString groupRegEx = "";
                     QRegExp lineSplitExp(" ");
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
-
                     //build regex group for one word
                     for (int i=0; i<(numberOfSearchWords); i++){
                         groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
                     }
-
                     regexSearchtext = groupRegEx;
-
                 }
                 else {
                     regexSearchtext="";
@@ -493,7 +461,6 @@
                 regexFileType = regexFileType.replace("*.",".*");
                 //Add the file type expression to the regex
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
-
              }
 
             ui->L_Regex->setText(regexPattern);
@@ -508,98 +475,99 @@
                 QString reducedLine;
 
                 //Line by Line, test if the file is matching all search criteria
-                // It tests first the "search in" file/path criteria, then adapts for searchtext and filetype criteria
                 do {
-                    //Get line text
-                    line = stream.readLine();
-                    QRegularExpressionMatch match;
-                    //QRegularExpressionMatch matchFileType;
-                    QRegularExpressionMatch foldermatch;
+                    //Get line / file data
+                        line = stream.readLine();
+                        QRegularExpressionMatch match;
+                        QRegularExpressionMatch foldermatch;
+                        //QRegularExpressionMatch matchFileType;
 
-                    //Split the line text with @@ into a list
-                    QRegExp     lineSplitExp("@@");
-                    QStringList lineFieldList  = line.split(lineSplitExp);
-                    int         fieldListCount = lineFieldList.count();
+                        //Split the line text with tabulations into a list
+                        QRegExp     lineSplitExp("\t");
+                        QStringList lineFieldList  = line.split(lineSplitExp);
+                        int         fieldListCount = lineFieldList.count();
 
-                    // Get the file path and file size from the list:
-                    QString     lineFilePath   = lineFieldList[0];
-                    qint64      lineFileSize;
+                        // Get the file absolute path and the file size from this list
+                        QString     lineFilePath   = lineFieldList[0];
+
+                        // Get the FileSize from the list if available
+                        qint64      lineFileSize;
                         if (fieldListCount == 3){
                                 lineFileSize = lineFieldList[1].toLongLong();}
                         else lineFileSize = 0;
 
-                    //Start by excluding lines starting with < (catalog infos)
-                    if (lineFilePath.left(1)!="<"){
+                    //Exclude catalog metadata lines which are starting with the character <
+                        //if (lineFilePath.left(1)!="<"){continue;}
 
-                        //then only continue if the folder has a matching tag
+                    //PREDEV: continue if the folder has a matching tag
                         //selectedTags
-                        if (selectedTags == selectedTags){
+                        //if (selectedTags == selectedTags){continue;}
 
-                            //then continue only with files matching the size range
-                            if (     lineFileSize >= selectedMinimumSize * sizeMultiplier
-                                 and lineFileSize <= selectedMaximumSize * sizeMultiplier ){
+                    //continue if the file is matching the size range
+                        if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplier
+                                and lineFileSize <= selectedMaximumSize * sizeMultiplier) ){
+                                    continue;}
 
-                                //reduce it depending on the "Search in" criteria
-                                if(selectedSearchIn == "File names only")
-                                {
-                                    // Extract the file name from the lineFilePath
-                                    QFileInfo file(lineFilePath);
-                                    reducedLine = file.fileName();
+                    //Finally, verify the text search criteria
+                        //Depending on the "Search in" criteria,
+                        //reduce the abosulte path to the reaquired text string and match the search text
+                        if(selectedSearchIn == "File names only")
+                        {
+                            // Extract the file name from the lineFilePath
+                            QFileInfo file(lineFilePath);
+                            reducedLine = file.fileName();
 
-                                    match = regex.match(reducedLine);
-                                }
-                                else if(selectedSearchIn == "Folder path only")
-                                {
-                                    //Keep only the folder name, so all characters left of the last occurence of / in the path.
-                                    reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
-
-                                    //Check the fodler name matches the search text
-                                    regex.setPattern(regexSearchtext);
-
-                                    foldermatch = regex.match(reducedLine);
-
-                                    //if it does, then check that the file matches the selected file type
-                                    if (foldermatch.hasMatch()){
-                                        regex.setPattern(regexFileType);
-
-                                        match = regex.match(lineFilePath);
-                                    }
-
-                                }
-                                else {
-                                    match = regex.match(lineFilePath);
-                                }
-
-                                //If the file is matching the criteria, add it and its catalog to the search results
-                                if (match.hasMatch()){
-                                    filesFoundList << lineFilePath;
-                                    catalogFoundList.insert(0,sourceCatalog);
-
-                                    //Retrieve other file info
-                                    QFileInfo file(lineFilePath);
-
-                                    // Get the fileDateTime from the list if available
-                                    QString lineFileDatetime;
-                                    if (fieldListCount == 3){
-                                            lineFileDatetime = lineFieldList[2];}
-                                    else lineFileDatetime = "";
-
-                                    //Populate result lists
-                                    sFileNames.append(file.fileName());
-                                    sFilePaths.append(file.path());
-                                    sFileSizes.append(lineFileSize);
-                                    sFileDateTimes.append(lineFileDatetime);
-                                }
-                            }
+                            match = regex.match(reducedLine);
                         }
+                        else if(selectedSearchIn == "Folder path only")
+                        {
+                            //Keep only the folder name, so all characters left of the last occurence of / in the path.
+                            reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
+
+                            //Check the fodler name matches the search text
+                            regex.setPattern(regexSearchtext);
+
+                            foldermatch = regex.match(reducedLine);
+
+                            //if it does, then check that the file matches the selected file type
+                            if (foldermatch.hasMatch()){
+                                regex.setPattern(regexFileType);
+
+                                match = regex.match(lineFilePath);
+                            }
+
+                        }
+                        else {
+                            match = regex.match(lineFilePath);
+                        }
+
+                    //If the file is matching the criteria, add it and its catalog to the search results
+                    if (match.hasMatch()){
+                        filesFoundList << lineFilePath;
+                        catalogFoundList.insert(0,sourceCatalogName);
+
+                        //Retrieve other file info
+                        QFileInfo file(lineFilePath);
+
+                        // Get the fileDateTime from the list if available
+                        QString lineFileDatetime;
+                        if (fieldListCount == 3){
+                                lineFileDatetime = lineFieldList[2];}
+                        else lineFileDatetime = "";
+
+                        //Populate result lists
+                        sFileNames.append(file.fileName());
+                        sFilePaths.append(file.path());
+                        sFileSizes.append(lineFileSize);
+                        sFileDateTimes.append(lineFileDatetime);
                     }
+
                 } while(!line.isNull());
             }
             else return;
 
-            }
+        }
         //----------------------------------------------------------------------
-
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
             QString catalogStorageName;
@@ -646,4 +614,4 @@
             }
             return "";
         }
-//------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
