@@ -128,6 +128,7 @@ class MainWindow : public KXmlGuiWindow
             void loadCatalogsToModel();
             void LoadFilesToModel();
             bool verifyCatalogPath(QString catalogSourcePath);
+            void recordSelectedCatalogStats();
 
         //TAB: Search
             //inputs
@@ -284,6 +285,7 @@ class MainWindow : public KXmlGuiWindow
             void on_LI_ExistingTags_activated(const QModelIndex &index);
 
             void on_test_pb_insert_clicked();
+            void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H

@@ -150,29 +150,31 @@
         if(collectionFolder == ""){
                collectionFolder = QApplication::applicationDirPath();
         }
-        ui->KCB_SearchText->setEditText(settings.value("LastSearchText").toString());
-        selectedSearchCatalog   = settings.value("LastSelectedSearchCatalog").toString();
-        selectedFileType        = settings.value("LastFileType").toString();
-        selectedTextCriteria    = settings.value("LastSearchTextCriteria").toString();
-        selectedSearchIn        = settings.value("LastSearchIn").toString();
-        selectedMinimumSize     = settings.value("LastMinimumSize").toLongLong();
-        selectedMaximumSize     = settings.value("LastMaximumSize").toLongLong();
-        selectedSizeUnit        = settings.value("LastSizeUnit").toString();
+        ui->KCB_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+        selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
+        selectedFileType        = settings.value("LastSearch/FileType").toString();
+        selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
+        selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
+        selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
+        selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
+        selectedSizeUnit        = settings.value("LastSearch/SizeUnit").toString();
+        ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
     {
         QSettings settings(settingsFile, QSettings::NativeFormat);
-        QString sText = "N/A";
-        settings.setValue("LastCollectionFolder", collectionFolder);
-        settings.setValue("LastSearchText", ui->KCB_SearchText->currentText());
-        settings.setValue("LastSelectedSearchCatalog", selectedSearchCatalog);
-        settings.setValue("LastFileType", selectedFileType);
-        settings.setValue("LastSearchTextCriteria", selectedTextCriteria);
-        settings.setValue("LastSearchIn", selectedSearchIn);
-        settings.setValue("LastMinimumSize", selectedMinimumSize);
-        settings.setValue("LastMaximumSize", selectedMaximumSize);
-        settings.setValue("LastSizeUnit", selectedSizeUnit);
+        //QString sText = "N/A";
+        settings.setValue("CollectionFolder", collectionFolder);
+        settings.setValue("LastSearch/SearchText", ui->KCB_SearchText->currentText());
+        settings.setValue("LastSearch/SelectedSearchCatalog", selectedSearchCatalog);
+        settings.setValue("LastSearch/FileType", selectedFileType);
+        settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
+        settings.setValue("LastSearch/SearchIn", selectedSearchIn);
+        settings.setValue("LastSearch/MinimumSize", selectedMinimumSize);
+        settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
+        settings.setValue("LastSearch/SizeUnit", selectedSizeUnit);
+        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------
@@ -196,8 +198,7 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
-        //ui->L_Regex->hide();
-        ui->Search_ChB_Size->hide();
+        ui->L_Regex->hide();
 
         //Create
         //ui->L_OtherOptions->hide();

@@ -62,8 +62,9 @@
 
                 //initiateSearchValues();
                 saveSettings();
-                refreshCatalogSelectionList();
                 loadStorageModel();
+                loadCatalogsToModel();
+                refreshCatalogSelectionList();
             }
 
             //Reset selected catalog values (to avoid updating the last selected one for instance)
@@ -185,6 +186,10 @@
                                                 "- the folder was moved or renamed"
                                          );
             }
+
+            if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
+                recordSelectedCatalogStats();
+
             //Refresh the collection view
             loadCatalogsToModel();
 
@@ -247,28 +252,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_RecordCatalogStats_clicked()
         {
-            QString statisticsFileName = "statistics.csv";
-
-            QString catalogFileCount = QString::number(selectedCatalogFileCount);
-            QDateTime nowDateTime = QDateTime::currentDateTime();
-
-            QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                    + selectedCatalogName + "\t"
-                                    + catalogFileCount + "\t"
-                                    + selectedCatalogTotalFileSize;
-
-            // Stream the list to the file
-            QFile fileOut( collectionFolder + "/" + statisticsFileName );
-
-            //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
-
-            // write data
-            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                QTextStream stream(&fileOut);
-                stream << statisticsLine << "\n";
-             }
-             fileOut.close();
-
+            recordSelectedCatalogStats();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_DeleteCatalog_clicked()
@@ -642,3 +626,27 @@
         return status;
     }
     //----------------------------------------------------------------------
+    void MainWindow::recordSelectedCatalogStats()
+    {
+        QString statisticsFileName = "statistics.csv";
+
+        QString catalogFileCount = QString::number(selectedCatalogFileCount);
+        QDateTime nowDateTime = QDateTime::currentDateTime();
+
+        QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                + selectedCatalogName + "\t"
+                                + catalogFileCount + "\t"
+                                + selectedCatalogTotalFileSize;
+
+        // Stream the list to the file
+        QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+        //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
+
+        // write data
+        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            stream << statisticsLine << "\n";
+         }
+         fileOut.close();
+    }

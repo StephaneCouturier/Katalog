@@ -37,11 +37,20 @@
 
 #include <KMessageBox>
 #include <KLocalizedString>
+#include <QSettings>
 
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
 //Tab: SETTINGS -----------------------------------------------------------------------------
+
+void MainWindow::on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged(int arg1)
+{
+    QSettings settings(settingsFile, QSettings::NativeFormat);
+    settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
+}
+
+//Tab: SETTINGS_DEV -----------------------------------------------------------------------------
 
     void MainWindow::FileTypesEditor()
     {
