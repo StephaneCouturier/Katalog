@@ -78,14 +78,19 @@
             QStringList displaycatalogList = catalogFileList;
             //catalogFileList = cNames;
 
+            //Send list to the stats combobox (without All on Slecteed storage options)
+            fileListModel = new QStringListModel(this);
+            fileListModel->setStringList(displaycatalogList);
+            ui->Stats_CB_SelectCatalog->setModel(fileListModel);
+
             //Add the option All at the beginning
             displaycatalogList.insert(0,"All");
             displaycatalogList.insert(1,"Selected Storage");
             //displaycatalogList.insert(2,"Selected Location");
 
-            //Send list to the combobox
-            fileListModel = new QStringListModel(this);
-            fileListModel->setStringList(displaycatalogList);
+            //Send list to the search combobox (with All on Slecteed storage options)
+            //fileListModel = new QStringListModel(this);
+            //fileListModel->setStringList(displaycatalogList);
             ui->CB_SelectCatalog->setModel(fileListModel);
         }
         //----------------------------------------------------------------------

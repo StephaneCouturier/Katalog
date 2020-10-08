@@ -229,9 +229,11 @@
         ui->Storage_L_SpaceUnit->hide();
 
         //Other tabs
+        ui->tabWidget->removeTab(10);
+        ui->tabWidget->removeTab(9);
         ui->tabWidget->removeTab(8);
-        //ui->tabWidget->removeTab(7);
-        //ui->tabWidget->removeTab(6);
+        ui->tabWidget->removeTab(7);
+        ui->tabWidget->removeTab(6);
         //ui->tabWidget->removeTab(5);
 
         //QPushButton hello(QPushButton::tr("Hello world!"));

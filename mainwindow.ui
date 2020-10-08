@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1029</width>
-    <height>784</height>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1226,7 +1226,21 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Record for Stats</string>
+                 <string>Record</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="step_object_Graph">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_PB_ViewCatalogStats">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>View</string>
                 </property>
                 <property name="icon">
                  <iconset theme="step_object_Graph">
@@ -2626,9 +2640,96 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="T_Statistics">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <attribute name="icon">
+        <iconset theme="step_object_Graph">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Statistics</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="2" column="0" colspan="3">
+         <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QLabel" name="label_29">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Catalog:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="Stats_CB_SelectCatalog">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Stats_PB_OpenStatsFile">
+            <property name="text">
+             <string>Edit records</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-edit-sign"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Stats_PB_Reload">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Reload</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_21">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="T_Settings">
        <attribute name="icon">
-        <iconset theme="settings-configure"/>
+        <iconset theme="settings-configure">
+         <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
         <string>Settings</string>
@@ -2805,67 +2906,6 @@
            </widget>
           </item>
          </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="T_Statistics">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <attribute name="icon">
-        <iconset theme="step_object_Graph">
-         <normaloff>.</normaloff>.</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Statistics</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>History</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>Delete record</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" rowspan="2" colspan="2">
-         <widget class="QListView" name="listView"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="KDateComboBox" name="kdatecombobox"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="pushButton_5">
-          <property name="text">
-           <string>Save record</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="KDateComboBox" name="kdatecombobox_2"/>
-        </item>
-        <item row="5" column="0" colspan="3">
-         <widget class="QGraphicsView" name="graphicsView"/>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Graphics</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_6">
-          <property name="text">
-           <string>Open in Filelight</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -3340,9 +3380,10 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>KDateComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kdatecombobox.h</header>
+   <class>QtCharts::QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">QtCharts/QChartView&gt;
+#include &lt;QtCharts/chartsnamespace.h</header>
   </customwidget>
  </customwidgets>
  <resources>

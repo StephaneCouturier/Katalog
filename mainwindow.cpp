@@ -111,6 +111,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //DEV: interface to edit
             FileTypesEditor();
             setupFileContextMenu();
+
+     //Setup tap: Stats
+            statsLoadChart();
+            //statsLoadChart2();
 }
 
 MainWindow::~MainWindow()
@@ -125,3 +129,4 @@ KMessageBox::information(this,"test:\n");
 
 //NOTES
 //
+

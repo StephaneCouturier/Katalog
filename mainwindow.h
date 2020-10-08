@@ -232,6 +232,7 @@ class MainWindow : public KXmlGuiWindow
             void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Collection
+            void on_Collection_PB_ViewCatalogStats_clicked();
             void on_Collection_PB_Reload_clicked();
             void on_Collection_PB_Search_clicked();
             void on_PB_C_OpenFolder_clicked();
@@ -272,10 +273,18 @@ class MainWindow : public KXmlGuiWindow
             void loadFolderTagModel();
 
         //Settings
+            void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged(int arg1);
+            //DEV
             void on_PB_SelectCollectionFolder_clicked();
             void on_pushButton_8_clicked();
             void on_pushButton_7_clicked();
             void on_pushButton_9_clicked();
+
+        //Stats
+            void on_Stats_PB_OpenStatsFile_clicked();
+            void on_Stats_CB_SelectCatalog_currentIndexChanged();
+            void statsLoadChart();
+            void statsLoadChart2();
 
         //Tests
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
@@ -283,9 +292,9 @@ class MainWindow : public KXmlGuiWindow
             void on_PB_RecordCatalogStats_clicked();
             void on_PB_TagFolder_clicked();
             void on_LI_ExistingTags_activated(const QModelIndex &index);
-
             void on_test_pb_insert_clicked();
-            void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged(int arg1);
+
+            void on_Stats_PB_Reload_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -101,6 +101,7 @@
             ui->PB_EditCatalogFile->setEnabled(true);
             ui->PB_UpdateCatalog->setEnabled(true);
             ui->PB_RecordCatalogStats->setEnabled(true);
+            ui->Collection_PB_ViewCatalogStats->setEnabled(true);
             ui->PB_DeleteCatalog->setEnabled(true);
         }
         //----------------------------------------------------------------------
@@ -192,6 +193,8 @@
 
             //Refresh the collection view
             loadCatalogsToModel();
+            //Reload stats file
+            statsLoadChart();
 
         }
         //----------------------------------------------------------------------
@@ -279,6 +282,15 @@
             KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
             QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
         }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_PB_ViewCatalogStats_clicked()
+        {
+            //Collection_PB_ViewCatalogStats
+            ui->Stats_CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            //Go to the Search tab
+            ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
+        }
+
         //----------------------------------------------------------------------
 
     //File methods
