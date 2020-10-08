@@ -88,6 +88,7 @@ void MainWindow::on_Storage_PB_CreateList_clicked()
 void MainWindow::on_Storage_PB_Reload_clicked()
 {
     loadStorageModel();
+    loadStorageList();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_PB_EditAll_clicked()
@@ -317,6 +318,7 @@ void MainWindow::loadStorageModel()
     ui->Storage_PB_Reload->setEnabled(true);
     ui->Storage_PB_EditAll->setEnabled(true);
     //ui->Storage_PB_SaveAll->setEnabled(true);
+
     //Disable create button so it cannot be overwritten
     ui->Storage_PB_CreateList->setEnabled(false);
 
@@ -324,7 +326,7 @@ void MainWindow::loadStorageModel()
 }
 //----------------------------------------------------------------------
 void MainWindow::getStorageInfo(const QString &storagePath)
-{
+{//DEV, not implemented
     //QStorageInfo storage = QStorageInfo::root();
     KMessageBox::information(this,"path:\n" + storagePath);
 
