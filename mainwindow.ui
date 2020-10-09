@@ -2689,7 +2689,8 @@
              <string>Edit records</string>
             </property>
             <property name="icon">
-             <iconset theme="document-edit-sign"/>
+             <iconset theme="document-edit-sign">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2705,7 +2706,8 @@
              <string>Reload</string>
             </property>
             <property name="icon">
-             <iconset theme="view-refresh"/>
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2761,6 +2763,9 @@
            <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
             <property name="text">
              <string>Always save a new Record for Statistics when updating a Catalog</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
