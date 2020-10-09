@@ -113,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             setupFileContextMenu();
 
      //Setup tap: Stats
+            loadTypeOfData();
             statsLoadChart();
             //statsLoadChart2();
 }
@@ -129,4 +130,6 @@ KMessageBox::information(this,"test:\n");
 
 //NOTES
 //
+
+
 

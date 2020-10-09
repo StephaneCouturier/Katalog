@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="iconSize">
        <size>
@@ -2658,6 +2658,29 @@
         <item row="0" column="0" colspan="3">
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
+           <widget class="QLabel" name="label_3">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Type of data:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="Stats_comboBox_TypeOfData">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="label_29">
             <property name="minimumSize">
              <size>
@@ -2677,7 +2700,7 @@
            <widget class="QComboBox" name="Stats_CB_SelectCatalog">
             <property name="minimumSize">
              <size>
-              <width>400</width>
+              <width>300</width>
               <height>0</height>
              </size>
             </property>

@@ -240,3 +240,13 @@
 
     }
     //----------------------------------------------------------------------
+    void MainWindow::loadTypeOfData()
+    {
+        typeOfData << "Number of files" << "Total file size";
+        listModel = new QStringListModel(this);
+        listModel->setStringList(typeOfData);
+        ui->Stats_comboBox_TypeOfData->setModel(listModel);
+        ui->Stats_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
+    }
+
+

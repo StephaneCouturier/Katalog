@@ -40,24 +40,31 @@
 #include <QDesktopServices>
 
 #include <QDateTimeAxis>
-#include <QtWidgets/QMainWindow>
-#include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QLineSeries>
-#include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
+//#include <QtCharts/QChartView>
+//#include <QtCharts/QLegend>
+
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
-
+void MainWindow::on_Stats_CB_SelectCatalog_currentIndexChanged()
+{
+    statsLoadChart();
+}
+void MainWindow::on_Stats_comboBox_TypeOfData_currentIndexChanged()
+{
+    statsLoadChart();
+}
+//----------------------------------------------------------------------
 void MainWindow::on_Stats_PB_OpenStatsFile_clicked()
 {
     //KMessageBox::information(this,"test:\n");
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
     QDesktopServices::openUrl(QUrl::fromLocalFile(statisticsFilePath));
-
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Stats_PB_Reload_clicked()
@@ -65,11 +72,15 @@ void MainWindow::on_Stats_PB_Reload_clicked()
     statsLoadChart();
 }
 //----------------------------------------------------------------------
+
 void MainWindow::statsLoadChart()
 {
+    selectedTypeOfData = ui->Stats_comboBox_TypeOfData->currentText();
+
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
     QString selectedCatalogforStats = ui->Stats_CB_SelectCatalog->currentText();
-    qreal maxfiles = 0.0;
+    qreal maxValue = 0.0;
+    QString displayUnit;
     QLineSeries *series = new QLineSeries();
 
     QFile statisticsFile(statisticsFilePath);
@@ -83,14 +94,30 @@ void MainWindow::statsLoadChart()
         //if (line.startsWith("#") || line.startsWith(":"))
         //    continue;
         QStringList values = line.split("\t");
+        qint64 number = 0;
 
-        //KMessageBox::information(this,"test:\n" + values[0] + "test:\n" +values[2] );
         if ( selectedCatalogforStats  == values[1] ){
             QDateTime datetime = QDateTime::fromString(values[0],"yyyy-MM-dd hh:mm:ss");
-            series->append(datetime.toMSecsSinceEpoch(), values[2].toDouble());
-
-            if ( values[2].toDouble() > maxfiles )
-                maxfiles = values[2].toDouble();
+            if ( selectedTypeOfData == "Number of files" )
+            {
+                number = values[2].toLongLong();
+                //number = number/1000;
+                //displayUnit = "(k)";
+                series->append(datetime.toMSecsSinceEpoch(), number);
+                if ( number > maxValue )
+                    maxValue = number;
+            }
+            else if ( selectedTypeOfData == "Total file size" )
+            {
+                number = values[3].toLongLong();
+                //KMessageBox::information(this,"test:\n" + values[0] + "test:\n" +QString::number(number));
+                number = number/1024/1024;
+                displayUnit = "(MiB)";
+                series->append(datetime.toMSecsSinceEpoch(), number);
+                if ( number > maxValue )
+                    maxValue = number;
+            }
+            else return;
         }
     }
     statisticsFile.close();
@@ -98,7 +125,8 @@ void MainWindow::statsLoadChart()
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->setTitle("Number of files");
+    chart->setTitle("<p style=\"font-weight: bold; font-size: 20px;\">"
+                    +selectedTypeOfData+" "+displayUnit+"</p>");
 
     //Format axis
     QDateTimeAxis *axisX = new QDateTimeAxis;
@@ -110,8 +138,8 @@ void MainWindow::statsLoadChart()
 
     QValueAxis *axisY = new QValueAxis;
     axisY->setLabelFormat("%i");
-    axisY->setTitleText("Files count");
-    axisY->setRange(0 , maxfiles*1.1);
+    axisY->setTitleText("Total");
+    axisY->setRange(0 , maxValue*1.1);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
@@ -119,11 +147,7 @@ void MainWindow::statsLoadChart()
 
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Stats_CB_SelectCatalog_currentIndexChanged()
-{
-    statsLoadChart();
-}
-//----------------------------------------------------------------------
+
 void MainWindow::statsLoadChart2()
 {
     //![1]

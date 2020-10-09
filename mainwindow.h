@@ -187,6 +187,11 @@ class MainWindow : public KXmlGuiWindow
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
 
+        //TAB: Statistics
+            QStringList typeOfData;
+            QString selectedTypeOfData;
+            void loadTypeOfData();
+
         //TAB: Tags
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
@@ -283,8 +288,9 @@ class MainWindow : public KXmlGuiWindow
         //Stats
             void on_Stats_PB_OpenStatsFile_clicked();
             void on_Stats_CB_SelectCatalog_currentIndexChanged();
+            void on_Stats_comboBox_TypeOfData_currentIndexChanged();
             void statsLoadChart();
-            void statsLoadChart2();
+            void statsLoadChart2();//DEV
 
         //Tests
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
@@ -295,6 +301,7 @@ class MainWindow : public KXmlGuiWindow
             void on_test_pb_insert_clicked();
 
             void on_Stats_PB_Reload_clicked();
+
 };
 
 #endif // MAINWINDOW_H

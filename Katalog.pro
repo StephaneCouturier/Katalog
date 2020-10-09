@@ -72,7 +72,7 @@ SOURCES += \
     mainwindow_tab_create.cpp \
     mainwindow_tab_search.cpp \
     mainwindow_tab_settings.cpp \
-    mainwindow_tab_stats.cpp \
+    mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
     mainwindow_tab_tests.cpp \
