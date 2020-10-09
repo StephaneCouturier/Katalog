@@ -548,7 +548,7 @@
 
         //Pass list of catalogs
             catalogFileList = cNames;
-
+            catalogFileList.sort();
 
     }
     //----------------------------------------------------------------------
