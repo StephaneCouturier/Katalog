@@ -32,7 +32,7 @@
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
-QT       += core gui
+QT       += core gui charts
 QT       += sql widgets widgets
 requires(qtConfig(tableview))
 requires(qtConfig(treeview))
@@ -72,17 +72,21 @@ SOURCES += \
     mainwindow_tab_create.cpp \
     mainwindow_tab_search.cpp \
     mainwindow_tab_settings.cpp \
+    mainwindow_tab_stats.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
     mainwindow_tab_tests.cpp \
+    statistics.cpp \
     storage.cpp \
     tag.cpp
 
 HEADERS += \
     catalog.h \
     collection.h \
+    database.h \
     initdb.h \
     mainwindow.h \
+    statistics.h \
     storage.h \
     tag.h
 
