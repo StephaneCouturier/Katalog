@@ -52,8 +52,9 @@
     #include "mainwindow_tab_collection.cpp"
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
-    //#include "mainwindow_tab_duplicates.cpp"
     //#include "mainwindow_tab_statistics.cpp"
+    //#include "mainwindow_tab_duplicates.cpp"
+
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    , ui(new Ui::MainWindow)
@@ -63,14 +64,25 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Set up GUI
             ui->setupUi(this);
 
-            startSQLDB();
+        //DEV: start the database
+            //startSQLDB();
 
-
+        //hide user interface items that are not ready for use, under development.
             hideDevelopmentUIItems();
+
         //Set up KDE Menu/Icon actions
             setupActions();
+
         //Load settings
-            settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
+            //Get user home path
+            QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+            QString homePath = standardsPaths[0];
+
+            //Define Setting file path and name
+            settingsFile = homePath + "/.config/katalog_settings";
+            //settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
+
+            //load the settings
             loadSettings();
 
     //setup tab: Collection
