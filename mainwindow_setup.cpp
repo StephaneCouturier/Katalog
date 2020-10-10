@@ -213,8 +213,8 @@
 
         //Collection
         //ui->PB_RecordCatalogStats->hide();
-        ui->L_Directories->hide();
-        ui->TV_Directories->hide();
+        //ui->Explore_L_Directories->hide();
+        //ui->Explore_treeview_Directories->hide();
         //ui->PB_C_Rename->hide();
 
         //Storage
@@ -233,8 +233,6 @@
         ui->tabWidget->removeTab(9);
         ui->tabWidget->removeTab(8);
         ui->tabWidget->removeTab(7);
-        ui->tabWidget->removeTab(6);
-        //ui->tabWidget->removeTab(5);
 
         //QPushButton hello(QPushButton::tr("Hello world!"));
 
