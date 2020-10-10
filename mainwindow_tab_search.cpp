@@ -50,12 +50,12 @@
         //Set up
         void MainWindow::initiateSearchValues()
         {
-            //Prepare list for the Catalog selection combobox
-
-            ui->CB_SizeUnit->addItem(i18np("Byte", "Bytes", 1));
-            ui->CB_SizeUnit->addItem(i18n("KiB"));
-            ui->CB_SizeUnit->addItem(i18n("MiB"));
+            //Prepare list of size units for the Catalog selection combobox
+            // the first line is the one displayed by default
             ui->CB_SizeUnit->addItem(i18n("GiB"));
+            ui->CB_SizeUnit->addItem(i18n("MiB"));
+            ui->CB_SizeUnit->addItem(i18n("KiB"));
+            ui->CB_SizeUnit->addItem(i18np("Byte", "Bytes", 1));
             //ui->CB_SizeUnit->setCurrentIndex(1);
 
             //Load last search values (from settings file)
