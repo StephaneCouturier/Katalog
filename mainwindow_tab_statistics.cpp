@@ -79,7 +79,7 @@ void MainWindow::statsLoadChart()
 
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
     QString selectedCatalogforStats = ui->Stats_CB_SelectCatalog->currentText();
-    qreal maxValue = 0.0;
+    qreal maxValueGraphRange = 0.0;
     QString displayUnit;
     QLineSeries *series = new QLineSeries();
 
@@ -104,8 +104,8 @@ void MainWindow::statsLoadChart()
                 //number = number/1000;
                 //displayUnit = "(k)";
                 series->append(datetime.toMSecsSinceEpoch(), number);
-                if ( number > maxValue )
-                    maxValue = number;
+                if ( number > maxValueGraphRange )
+                    maxValueGraphRange = number;
             }
             else if ( selectedTypeOfData == "Total file size" )
             {
@@ -114,8 +114,8 @@ void MainWindow::statsLoadChart()
                 number = number/1024/1024;
                 displayUnit = "(MiB)";
                 series->append(datetime.toMSecsSinceEpoch(), number);
-                if ( number > maxValue )
-                    maxValue = number;
+                if ( number > maxValueGraphRange )
+                    maxValueGraphRange = number;
             }
             else return;
         }
@@ -125,8 +125,9 @@ void MainWindow::statsLoadChart()
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->setTitle("<p style=\"font-weight: bold; font-size: 20px;\">"
-                    +selectedTypeOfData+" "+displayUnit+"</p>");
+    chart->setTitle("<p style=\"font-weight: bold; font-size: 22px; font-color: #AAA,\">"
+                    +selectedTypeOfData+" "+displayUnit
+                    +" of <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span></p>");
 
     //Format axis
     QDateTimeAxis *axisX = new QDateTimeAxis;
@@ -139,7 +140,7 @@ void MainWindow::statsLoadChart()
     QValueAxis *axisY = new QValueAxis;
     axisY->setLabelFormat("%i");
     axisY->setTitleText("Total");
-    axisY->setRange(0 , maxValue*1.1);
+    axisY->setRange(0 , maxValueGraphRange*1.1);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
