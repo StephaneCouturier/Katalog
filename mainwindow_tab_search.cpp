@@ -74,23 +74,21 @@
         //----------------------------------------------------------------------
         void MainWindow::refreshCatalogSelectionList()
         {
-            //Prepare list for the Catalog selection
-            QStringList displaycatalogList = catalogFileList;
-            //catalogFileList = cNames;
-
-            //Send list to the stats combobox (without All on Slecteed storage options)
+            //Send list to the Statistics combobox (without All or Selected storage options)
             fileListModel = new QStringListModel(this);
-            fileListModel->setStringList(displaycatalogList);
+            fileListModel->setStringList(catalogFileList);
             ui->Stats_CB_SelectCatalog->setModel(fileListModel);
+
+            //Prepare list for the Catalog combobox
+            QStringList displaycatalogList = catalogFileList;
 
             //Add the option All at the beginning
             displaycatalogList.insert(0,"All");
             displaycatalogList.insert(1,"Selected Storage");
             //displaycatalogList.insert(2,"Selected Location");
-
-            //Send list to the search combobox (with All on Slecteed storage options)
-            //fileListModel = new QStringListModel(this);
-            //fileListModel->setStringList(displaycatalogList);
+            //catalogFileList = cNames;
+            fileListModel->setStringList(displaycatalogList);
+            //Send list to the Search combobox (with All on Slecteed storage options)
             ui->CB_SelectCatalog->setModel(fileListModel);
         }
         //----------------------------------------------------------------------
@@ -100,7 +98,7 @@
             ui->KCB_SearchText->setCurrentText("");
             ui->CB_SelectCatalog->setCurrentText("All");
             ui->CB_S_TextCriteria->setCurrentText("All Words");
-            ui->CB_S_SearchIn->setCurrentText("File or Folder names");
+            ui->CB_S_SearchIn->setCurrentText("File names or Folder paths");
             ui->CB_S_FileType->setCurrentText("Any");
             ui->SB_MinimumSize->setValue(0);
             ui->SB_MaximumSize->setValue(1000);
