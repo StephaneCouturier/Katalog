@@ -22,13 +22,13 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_explore.cpp
-// Purpose:
+// File Name:   mainwindow_tab_collection.cpp
+// Purpose:     methods for the scren Collection AND the screen Explore
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.8
+// Version:     0.9
 /////////////////////////////////////////////////////////////////////////////
 */
 

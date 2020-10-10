@@ -56,6 +56,7 @@
 #include <QStorageInfo>
 #include <QDebug>
 #include <QtSql>
+#include <QStandardPaths>
 
 #include <KXmlGuiWindow>
 #include <KMessageBox>

@@ -3,32 +3,57 @@
 
 #include <QtSql>
 
-void addCatalog(QSqlQuery &q,
-                const QString &title,
-                int year,
-                const QVariant &authorId,
-                const QVariant &genreId,
-                int rating)
-{
-    q.addBindValue(title);
-    q.addBindValue(year);
-    q.addBindValue(authorId);
-    q.addBindValue(genreId);
-    q.addBindValue(rating);
-    q.exec();
-}
+QVariant addStorage(QSqlQuery &q,
+                const int     &storageID,
+                QString storageName,
+                QString storageType,
+                QString storageLocation,
+                QString storagePath,
+                QString storageLabel,
+                QString storageFileSystem,
+                qint64  storageTotalSpace,
+                qint64  storageFreeSpace
+                )
+            {
+                q.addBindValue(storageID);
+                q.addBindValue(storageName);
+                q.addBindValue(storageType);
+                q.addBindValue(storageLocation);
+                q.addBindValue(storagePath);
+                q.addBindValue(storageLabel);
+                q.addBindValue(storageFileSystem);
+                q.addBindValue(storageTotalSpace);
+                q.addBindValue(storageFreeSpace);
+                q.exec();
+            }
 
-const auto CATALOGS_SQL = QLatin1String(R"(
-    create table catalogs(id integer primary key,
-                          title varchar,
-                          author integer,
-                          genre integer,
-                          year integer,
-                          rating integer)
+const auto STORAGE_SQL = QLatin1String(R"(
+               create  table  if not exists  storage
+               (
+                 storageID  int  primary key default 0,
+                 storageName  text  ,
+                 storageType  text  ,
+                 storageLocation  text  ,
+                 storagePath  text  ,
+                 storageLabel  text  ,
+                 storageFileSystem  text  ,
+                 storageTotalSpace  int  default 0,
+                 storageFreeSpace  int  default 0
+               )
+            )");
+
+const auto INSERT_STORAGE_SQL = QLatin1String(R"(
+    insert into storage(storageID,
+                        storageName,
+                        storageType,
+                        storageLocation,
+                        storagePath,
+                        storageLabel,
+                        storageFileSystem,
+                        storageTotalSpace,
+                        storageFreeSpace)
+                 values(?, ?, ?, ?, ?, ?, ?, ?, ?)
     )");
-
-
-
 
 
 void addBook(QSqlQuery &q, const QString &title, int year, const QVariant &authorId,
@@ -97,12 +122,29 @@ QSqlError initDb()
         return QSqlError();
 
     QSqlQuery q;
+    if (!q.exec(STORAGE_SQL))
+        return q.lastError();
     if (!q.exec(BOOKS_SQL))
         return q.lastError();
     if (!q.exec(AUTHORS_SQL))
         return q.lastError();
     if (!q.exec(GENRES_SQL))
         return q.lastError();
+
+
+    if (!q.prepare(INSERT_STORAGE_SQL))
+        return q.lastError();
+    QVariant storageId1 = addStorage(q, 33, "Maxtor_2Tb",  "tbd",  "DK-External Drives 2'5",  "/run/media/stephane/Maxtor_2Tb",  "tbd", "tbd", 1854,  180);
+    QVariant storageId3 = addStorage(q,
+                                    31,
+                                    "Maxtor_1Tb",
+                                    "tbd",
+                                    "DK-External Drives 2'5",
+                                    "/run/media/stephane/Maxtor_1Tb",
+                                    "tbd",
+                                    "tbd",
+                                    1000,
+                                    10);
 
     if (!q.prepare(INSERT_AUTHOR_SQL))
         return q.lastError();

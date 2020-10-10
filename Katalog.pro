@@ -76,7 +76,6 @@ SOURCES += \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
     mainwindow_tab_tests.cpp \
-    statistics.cpp \
     storage.cpp \
     tag.cpp
 
@@ -86,7 +85,6 @@ HEADERS += \
     database.h \
     initdb.h \
     mainwindow.h \
-    statistics.h \
     storage.h \
     tag.h
 
