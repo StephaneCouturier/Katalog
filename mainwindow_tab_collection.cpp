@@ -204,6 +204,8 @@
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
 
+            exploreLoadDirectories();
+
             //Go to the Search tab
             ui->L_E_CatalogName->setText(selectedCatalogName);
             ui->L_E_CatalogPath->setText(selectedCatalogPath);
@@ -252,6 +254,13 @@
         {
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
         }
+
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_Convert_clicked()
+        {
+            convertCatalog(selectedCatalogFile);
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_PB_RecordCatalogStats_clicked()
         {
@@ -305,63 +314,7 @@
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
         }
 
-        //Context menu
-        void MainWindow::on_TrV_FileList_customContextMenuRequested(const QPoint &pos)
-        {
-            // for most widgets
-            QPoint globalPos = ui->TrV_FileList->mapToGlobal(pos);
 
-            QMenu fileContextMenu;
-
-//            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
-//            connect(menuAction1, &QAction::triggered, this, &MainWindow::contextOpenFile);
-//            fileContextMenu.addAction(menuAction1);
-
-//            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
-//            connect(menuAction2, &QAction::triggered, this, &MainWindow::contextOpenFolder);
-//            fileContextMenu.addAction(menuAction2);
-
-//            fileContextMenu.addSeparator();
-
-            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
-            connect( menuAction3,&QAction::triggered, this, &MainWindow::context2CopyAbsolutePath);
-            fileContextMenu.addAction(menuAction3);
-
-//            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
-//            connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithExtension);
-//            fileContextMenu.addAction(menuAction4);
-
-//            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
-//            connect( menuAction5,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithoutExtension);
-//            fileContextMenu.addAction(menuAction5);
-
-            //fileContextMenu.addSeparator();
-
-            // TEST:  copy file to..., cut file, move file to..., trash, delete, the full Dolphin menu!
-            //QAction *menuAction30 = new QAction(QIcon::fromTheme("edit-copy"),(tr("TEST")), this);
-            //fileContextMenu.addAction(menuAction30);
-
-            QAction* selectedItem = fileContextMenu.exec(globalPos);
-            if (selectedItem)
-            {
-                //something
-            }
-            else
-            {
-                //KMessageBox::information(this,"test:\n did nothing.");
-            }
-        }
-        void MainWindow::context2CopyAbsolutePath()
-        {
-            QModelIndex index=ui->TrV_FileList->currentIndex();
-            QString selectedFileName   = ui->TrV_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFileAbsolutePath = selectedFileFolder+"/"+selectedFileName;
-            QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
-            clipboard->setText(selectedFileAbsolutePath);
-        }
-        //----------------------------------------------------------------------
 
     //Load a catalog to view the files
     void MainWindow::LoadCatalog(QString fileName)
@@ -661,4 +614,61 @@
             stream << statisticsLine << "\n";
          }
          fileOut.close();
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::convertCatalog(QString catalogSourcePath)
+    {
+        //select catalog file
+        //QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
+
+        //verify catalog
+        // is it .idx?
+
+        //define new catalog file = existing + _new
+        QString catalogNewPath = collectionFolder + "/temp.idx";
+
+        //read catalog file
+        QFile catalogFile(catalogSourcePath);
+        if(!catalogFile.open(QIODevice::ReadOnly)) {
+            KMessageBox::information(this,"No catalog found.");
+            return;
+        }
+        QFile fileOut(catalogNewPath);
+
+        //stream line by line
+        // Get infos stored in the file
+        QTextStream textStream(&catalogFile);
+        //QStringList lines;
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+
+            //replace @@ by \t
+            line.replace("@@", "\t");
+            //lines.append(line);
+
+            // Stream the list to the file
+
+
+            //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
+
+            //append the line to the new file
+            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                QTextStream stream(&fileOut);
+                stream << line << "\n";
+             }
+             fileOut.close();
+
+            }
+
+        //rename files
+        QString catalogFileName = catalogFile.fileName();
+        catalogFile.rename(catalogFile.fileName() + ".bak");
+        fileOut.rename(catalogFileName);
+
+        KMessageBox::information(this,"Conversion completed.\n");
+
     }

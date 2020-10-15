@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -178,9 +178,6 @@
                <font>
                 <family>Noto Sans</family>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="locale">
                <locale language="English" country="UnitedStates"/>
@@ -366,9 +363,6 @@
                 <family>Noto Sans</family>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
               <property name="text">
                <string>with</string>
               </property>
@@ -448,7 +442,7 @@
               </property>
               <property name="styleSheet">
                <string notr="true">
-background: url(:/images/img/link-h.png) no-repeat center;</string>
+background: url(:/images/img/link-h.png) repeat-x center;</string>
               </property>
               <property name="text">
                <string/>
@@ -458,7 +452,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
             <item>
              <widget class="QLabel" name="L_SearchIn">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -482,9 +476,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                <font>
                 <family>Noto Sans</family>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95)</string>
               </property>
               <property name="text">
                <string>in</string>
@@ -612,9 +603,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                 <family>Noto Sans</family>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
               <property name="text">
                <string>Catalog</string>
               </property>
@@ -711,7 +699,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>60</width>
+                <width>65</width>
                 <height>0</height>
                </size>
               </property>
@@ -726,9 +714,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                 <family>Noto Sans</family>
                </font>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
               <property name="text">
                <string>File</string>
               </property>
@@ -742,8 +727,11 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
             </item>
             <item>
              <widget class="QLabel" name="label_37">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
+              <property name="minimumSize">
+               <size>
+                <width>35</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="text">
                <string>Size</string>
@@ -752,6 +740,12 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
             </item>
             <item>
              <widget class="QLabel" name="label_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>20</width>
@@ -776,7 +770,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
              <widget class="QSpinBox" name="SB_MinimumSize">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>70</width>
                 <height>0</height>
                </size>
               </property>
@@ -786,23 +780,13 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>15</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QLabel" name="label_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>20</width>
@@ -827,7 +811,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
              <widget class="QSpinBox" name="SB_MaximumSize">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>70</width>
                 <height>0</height>
                </size>
               </property>
@@ -840,13 +824,13 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
              <widget class="QComboBox" name="CB_SizeUnit">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>65</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>90</width>
+                <width>70</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -883,8 +867,14 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>49</width>
+                <width>40</width>
                 <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -898,7 +888,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
             <item>
              <widget class="QLabel" name="L_Type">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -922,9 +912,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                <font>
                 <family>Noto Sans</family>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="text">
                <string>Type</string>
@@ -950,7 +937,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>110</width>
+                <width>90</width>
                 <height>0</height>
                </size>
               </property>
@@ -1049,9 +1036,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                     <family>Noto Sans</family>
                    </font>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(95, 95, 95);</string>
-                  </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
@@ -1108,9 +1092,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                      <font>
                       <family>Noto Sans</family>
                      </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: rgb(95, 95, 95);</string>
                     </property>
                     <property name="text">
                      <string>Files found: </string>
@@ -1483,6 +1464,19 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="Collection_pushButton_Convert">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Convert</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="format-convert-to-path"/>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer_10">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1492,7 +1486,7 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>20</width>
+                  <width>5</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -3053,13 +3047,6 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
             </property>
            </spacer>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Options</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
             <property name="text">
@@ -3085,6 +3072,13 @@ background: url(:/images/img/link-h.png) no-repeat center;</string>
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Options</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
