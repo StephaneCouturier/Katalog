@@ -188,6 +188,7 @@ class MainWindow : public KXmlGuiWindow
             QString selectedStoragePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
+            QStringList locationCatalogList;
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -219,6 +220,7 @@ class MainWindow : public KXmlGuiWindow
             void setupFileContextMenu();
             void on_PB_ExportResults_clicked();
             QString getCatalogStorageName(QString catalogFilePath);
+            void getLocationCatalogList(QString location);
 
             //context menu
             void contextOpenFile();
