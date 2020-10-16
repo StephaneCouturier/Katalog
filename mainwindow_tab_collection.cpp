@@ -100,6 +100,7 @@
             ui->PB_C_Rename->setEnabled(true);
             ui->PB_EditCatalogFile->setEnabled(true);
             ui->PB_UpdateCatalog->setEnabled(true);
+            ui->Collection_pushButton_Convert->setEnabled(true);
             ui->PB_RecordCatalogStats->setEnabled(true);
             ui->Collection_PB_ViewCatalogStats->setEnabled(true);
             ui->PB_DeleteCatalog->setEnabled(true);
