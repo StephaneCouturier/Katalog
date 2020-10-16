@@ -44,7 +44,7 @@ void MainWindow::on_Storage_PB_CreateList_clicked()
 {
 
     // Define storage file
-    storageFilePath = collectionFolder + "/" + "storage.csv";
+    //storageFilePath = collectionFolder + "/" + "storage.csv";
 
     // Create if is does not exist
     QFile newStorageFile(storageFilePath);
@@ -125,7 +125,7 @@ void MainWindow::on_Storage_TrV_activated(const QModelIndex &index)
 
     //display buttons
     ui->Storage_PB_SearchStorage->setEnabled(true);
-    //ui->Storage_PB_SearchLocation->setEnabled(true);
+    ui->Storage_PB_SearchLocation->setEnabled(true);
     ui->Storage_PB_CreateCatalog->setEnabled(true);
     //ui->PB_S_Update->setEnabled(true);
 
@@ -322,7 +322,6 @@ void MainWindow::loadStorageModel()
 
     //Disable create button so it cannot be overwritten
     ui->Storage_PB_CreateList->setEnabled(false);
-
 
 }
 //----------------------------------------------------------------------

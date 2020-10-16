@@ -199,6 +199,7 @@
     {
         //Search
         ui->L_Regex->hide();
+        //ui->HL_Location_and_Storage->hide();
 
         //Create
         //ui->L_OtherOptions->hide();
@@ -222,14 +223,14 @@
 
         ui->LE_TextToFilter->hide();
         ui->Storage_PB_New->hide();
-        ui->Storage_PB_SearchLocation->hide();
+        //ui->Storage_PB_SearchLocation->hide();
         ui->Storage_PB_OpenFilelight->hide();
         ui->Storage_PB_Update->hide();
         ui->Storage_PB_Delete->hide();
         ui->Storage_L_SpaceUnit->hide();
 
         //Other tabs
-        ui->tabWidget->removeTab(10);
+        //ui->tabWidget->removeTab(10);
         ui->tabWidget->removeTab(9);
         ui->tabWidget->removeTab(8);
         ui->tabWidget->removeTab(7);

@@ -85,7 +85,7 @@
             //Add the option All at the beginning
             displaycatalogList.insert(0,"All");
             displaycatalogList.insert(1,"Selected Storage");
-            //displaycatalogList.insert(2,"Selected Location");
+            displaycatalogList.insert(2,"Selected Location");
             //catalogFileList = cNames;
             fileListModel->setStringList(displaycatalogList);
             //Send list to the Search combobox (with All on Slecteed storage options)
@@ -359,6 +359,13 @@
                                 }
                             }
                 }
+                else if ( selectedSearchCatalog =="Selected Location"){
+                    getLocationCatalogList(selectedStorageLocation);
+                    foreach(sourceCatalog,locationCatalogList)
+                            {
+                                SearchFilesInCatalog(sourceCatalog);
+                            }
+                }
                 //Otherwise just search files in the selected catalog
                 else{
                     //QString selectedSearchCatalogPath;
@@ -616,5 +623,59 @@
                     break;
             }
             return "";
+        }
+        //------------------------------------------------------------------------------------------
+        void MainWindow::getLocationCatalogList(QString location)
+        {
+            //QString catalogStorageName;
+
+            //Define storage file
+            QFile storageFile(storageFilePath);
+
+            //Open file
+            if(!storageFile.open(QIODevice::ReadOnly)) {
+                return;
+            }
+
+            // Get list of storage matching the location
+            QTextStream textStream(&storageFile);
+            QStringList locationStorageList;
+            while (true)
+            {
+                QString line = textStream.readLine();
+                if (line.isNull())
+                    break;
+
+                //Split the string by tabulations into a list
+                QStringList fieldList = line.split('\t');
+
+                //Add to the list if the location is matching
+                if ( fieldList[3] == location){
+                    //KMessageBox::information(this,"test:\n"+ location + fieldList[0] );
+                    locationStorageList << fieldList[0];
+                }
+            }
+
+            //Get list of catalogs matching these storages
+            QString sourceStorage;
+            foreach(sourceStorage,locationStorageList)
+                    {
+
+                    foreach(sourceCatalog,catalogFileList)
+                        {
+
+                        //get catalog storage name
+                        QString sourceCatalogStorageName;
+                        QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
+                        sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
+
+                        if  ( sourceCatalogStorageName == sourceStorage )
+                            {
+                                    locationCatalogList << sourceCatalog;
+                            }
+                        }
+
+                    }
+
         }
         //------------------------------------------------------------------------------------------
