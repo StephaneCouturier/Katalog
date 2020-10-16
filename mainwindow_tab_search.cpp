@@ -105,6 +105,7 @@
             ui->CB_SizeUnit->setCurrentText("GiB");
             //ui->LE_Tags->setCurrentText("");
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_GetTextFromClipboard_clicked()
         {
             QClipboard *clipboard = QGuiApplication::clipboard();
@@ -113,14 +114,17 @@
             ui->KCB_SearchText->setCurrentText(originalText);
 
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_Search_clicked()
         {
             SearchFiles();
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_KCB_SearchText_returnPressed()
         {
             SearchFiles();
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_TrV_FilesFound_clicked(const QModelIndex &index)
         {
             //Get file from selected row
@@ -131,12 +135,13 @@
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
             //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_PB_ExportResults_clicked()
         {
             //Prepare export file name
             QDateTime now = QDateTime::currentDateTime();
             QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-            QString filename = QString::fromLatin1("/search_results_%1.txt").arg(timestamp);
+            QString filename = QString::fromLatin1("/search_results_%1.csv").arg(timestamp);
             filename=collectionFolder+filename;
             QFile exportFile(filename);
 
@@ -145,13 +150,18 @@
               if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
 
                   QTextStream stream(&exportFile);
+
                   for (int i = 0; i < filesFoundList.size(); ++i)
-                    stream << filesFoundList.at(i) << '\n';
+                    {
+                      QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t" + QString::number(sFileSizes[i]) + "\t" + sFileDateTimes[i];
+                      stream << line << '\n';
+                    }
                 }
 
               KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
               exportFile.close();
         }
+        //----------------------------------------------------------------------
         void MainWindow::on_TR_CatalogFoundList_clicked(const QModelIndex &index)
         {
             //Get file from selected row
