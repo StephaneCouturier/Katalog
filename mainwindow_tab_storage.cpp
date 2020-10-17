@@ -208,7 +208,7 @@ void MainWindow::loadStorageModel()
 {
     //Set up temporary lists
     QList<QString> sNames;
-    QList<QString> sIDs;
+    QList<int> sIDs;
     QList<QString> sTypes;
     QList<QString> sLocations;
     QList<QString> sPaths;
@@ -253,7 +253,7 @@ void MainWindow::loadStorageModel()
 
                 //Append data to the lists
                 sNames.append(fieldList[0]);
-                sIDs.append(fieldList[1]);
+                sIDs.append(fieldList[1].toInt());
                 sIcons.append(icon);
                 sTypes.append(fieldList[2]);
                 sLocations.append(fieldList[3]);
@@ -300,7 +300,7 @@ void MainWindow::loadStorageModel()
     ui->Storage_TrV->header()->resizeSection(1,  50); //Icon
     ui->Storage_TrV->header()->resizeSection(2, 175); //Name
     ui->Storage_TrV->header()->resizeSection(3,  50); //ID
-    ui->Storage_TrV->header()->resizeSection(4,  75); //Type
+    ui->Storage_TrV->header()->resizeSection(4, 100); //Type
     ui->Storage_TrV->header()->resizeSection(5, 250); //Path
     ui->Storage_TrV->header()->resizeSection(6,  75); //FS
     ui->Storage_TrV->header()->resizeSection(7,  75); //Total

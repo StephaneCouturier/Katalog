@@ -26,7 +26,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     void populateStorageData(   const QList<QString> &storageName,
-                                const QList<QString> &storageID,
+                                const QList<int> &storageID,
                                 const QList<QString> &storageType,
                                 const QList<QString> &storageLocation,
                                 const QList<QString> &storagePath,
@@ -39,7 +39,7 @@ public:
 
 private:
     QList<QString> storageName;
-    QList<QString> storageID;
+    QList<int> storageID;
     QList<QString> storageType;
     QList<QString> storageLocation;
     QList<QString> storagePath;

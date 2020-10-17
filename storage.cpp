@@ -86,7 +86,7 @@ QVariant Storage::data(const QModelIndex &index, int role) const
         case 0: return QString(storageLocation[index.row()]);
         case 1: return QIcon(storageIcon[index.row()]);
         case 2: return QString(storageName[index.row()]);
-        case 3: return QString(storageID[index.row()]);
+        case 3: return int(storageID[index.row()]);
         case 4: return QString(storageType[index.row()]);
         case 5: return QString(storagePath[index.row()]);
         case 6: return QString(storageLabel[index.row()]);
@@ -118,7 +118,7 @@ QVariant Storage::headerData(int section, Qt::Orientation orientation, int role)
 
 // Create a method to populate the model with data:
 void Storage::populateStorageData(  const QList<QString> &sNames,
-                                    const QList<QString> &sIDs,
+                                    const QList<int> &sIDs,
                                     const QList<QString> &sTypes,
                                     const QList<QString> &sLocations,
                                     const QList<QString> &sPaths,
