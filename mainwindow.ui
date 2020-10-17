@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
-    <height>785</height>
+    <width>1068</width>
+    <height>877</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -624,7 +624,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>500</width>
+                <width>200</width>
                 <height>0</height>
                </size>
               </property>
@@ -1472,7 +1472,8 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>Convert</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="format-convert-to-path"/>
+                 <iconset theme="format-convert-to-path">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -2168,6 +2169,16 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
+                 <widget class="QCheckBox" name="Create_checkBox_IncludeSymblinks">
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>follow symbolic links</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QCheckBox" name="RB_IncludeSubDir">
                   <property name="enabled">
                    <bool>false</bool>
@@ -2206,19 +2217,6 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="text">
                    <string>include checksum</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="RB_IncludeSymblinks">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>follow symblinks</string>
                   </property>
                  </widget>
                 </item>
@@ -3205,6 +3203,13 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
             </property>
            </widget>
           </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="label_test">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -3609,10 +3614,23 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
         <item row="2" column="0">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="4" column="1">
-           <widget class="QListView" name="test_listView"/>
+           <widget class="QListView" name="test_listView">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item row="2" column="1">
            <widget class="QLabel" name="label_23">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
             <property name="text">
              <string>QListView</string>
             </property>
@@ -3630,7 +3648,14 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QTableView" name="test_tableView"/>
+           <widget class="QTableView" name="test_tableView">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_28">
@@ -3641,6 +3666,12 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QTreeView" name="test_treeView">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>500</height>
+             </size>
+            </property>
             <property name="sortingEnabled">
              <bool>true</bool>
             </property>

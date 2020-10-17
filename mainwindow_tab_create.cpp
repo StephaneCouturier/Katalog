@@ -79,7 +79,7 @@
     //----------------------------------------------------------------------
 
     //Catalog the files of a directory
-    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage)
+    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage, bool includeSymblinks)
     {
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -147,12 +147,13 @@
         ui->L_FilesNumber->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
-        fileList.prepend("<catalogStorage>"       + newCatalogStorage);
-        fileList.prepend("<catalogFileType>"      + fileType);
-        fileList.prepend("<catalogIncludeHidden>" + QVariant(includeHidden).toString());
-        fileList.prepend("<catalogTotalFileSize>" + QString::number(totalFileSize));
-        fileList.prepend("<catalogFileCount>"     + QString::number(catalogFilesNumber));
-        fileList.prepend("<catalogSourcePath>"    + newCatalogPath);
+        fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
+        fileList.prepend("<catalogStorage>"         + newCatalogStorage);
+        fileList.prepend("<catalogFileType>"        + fileType);
+        fileList.prepend("<catalogIncludeHidden>"   + QVariant(includeHidden).toString());
+        fileList.prepend("<catalogTotalFileSize>"   + QString::number(totalFileSize));
+        fileList.prepend("<catalogFileCount>"       + QString::number(catalogFilesNumber));
+        fileList.prepend("<catalogSourcePath>"      + newCatalogPath);
 
         //Define and populate a model and send it to the listView
         fileListModel = new QStringListModel(this);
@@ -246,7 +247,7 @@
         newCatalogStorage = ui->CB_C_StorageSelection->currentText();
         //get other options
         bool includeHidden = ui->CkB_IncludeHidden->isChecked();
-
+        bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         // Get the file type for the catalog
         QStringList fileTypes;
         QString selectedCreateFileType;
@@ -264,9 +265,6 @@
                 selectedCreateFileType = "Text";}
         else    fileTypes.clear();
 
-        //KMessageBox::information(this,"test:\n"+selectedCreateFileType+fileTypes.join("_"));
-
-
         //check if the file already exists
         QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
         QFile file(fullCatalogPath);
@@ -281,7 +279,7 @@
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
-                CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage);
+                CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
         else KMessageBox::error(this,
                                   i18n("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,
@@ -323,15 +321,12 @@
     //----------------------------------------------------------------------
     void MainWindow::loadStorageList()
     {
-        //must be run after loading the LoadCatalogFileList();
-        //Prepare list for the Catalog selection combobox
+        //Prepare list for the Storage selection combobox
         QStringList storageNameListforCombo = storageNameList;
         storageNameListforCombo.prepend("");
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(storageNameListforCombo);
         ui->CB_C_StorageSelection->setModel(fileListModel);
-
-        //    ui->CB_C_StorageSelection->model()->setData(storageNameList);
     }
     //----------------------------------------------------------------------
 

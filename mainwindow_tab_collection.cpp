@@ -85,14 +85,15 @@
     //Catalog buttons
         void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
         {
-            selectedCatalogFile          = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogName          = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-            selectedCatalogFileCount     = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedCatalogPath          = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            selectedCatalogFileType      = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            selectedCatalogIncludeHidden = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
-            selectedCatalogStorage       = ui->TrV_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedCatalogFile             = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogName             = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogFileCount        = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
+            selectedCatalogTotalFileSize    = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogPath             = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedCatalogFileType         = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedCatalogIncludeHidden    = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
+            selectedCatalogStorage          = ui->TrV_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedCatalogIncludeSymblinks = ui->TrV_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
 
             //display buttons
             ui->Collection_PB_Search->setEnabled(true);
@@ -126,9 +127,9 @@
         {
             //Update the Selected Catalog
 
-            //Check if the updqte can be done, qnd inform the user otherwise
+            //Check if the update can be done, or inform the user otherwise
             if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
-            KMessageBox::information(this,"It seems this catalog was imported or has an old format.\n"
+            KMessageBox::information(this,"It seems this catalog was not correctly imported or has an old format.\n"
                                          "Please Edit it and make sure it has the following first 2 lines:\n\n"
                                          "<catalogSourcePath>/folderpath\n"
                                          "<catalogFileCount>10000\n\n"
@@ -159,11 +160,9 @@
                                     fileTypes = fileType_Text;
             else                    fileTypes.clear();
 
-            //KMessageBox::information(this,"test:\n"+selectedCatalogFileType+fileTypes.join("_"));
-
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage);
+                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
 
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
@@ -373,6 +372,7 @@
         QList<QString> cCatalogFilePaths;
         QList<bool>    cCatalogIncludeHiddens;
         QList<QString> cStorages;
+        QList<bool>    cIncludeSymblinks;
 
         //Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
@@ -397,6 +397,7 @@
             bool catalogIncludeHiddenProvided = false;
             bool catalogFileTypeProvided = false;
             bool catalogStorageProvided = false;
+            bool catalogIncludeProvided = false;
 
             QString catalogSourcePath;
 
@@ -436,6 +437,11 @@
                     cStorages.append(storage);
                     catalogStorageProvided = true;
                 }
+                else if (line.left(25)=="<catalogIncludeSymblinks>"){
+                    QString catalogIncludeSymblinks = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    cIncludeSymblinks.append(catalogIncludeSymblinks.toInt());
+                    catalogIncludeProvided = true;
+                }
                 else
                     break;
 
@@ -453,6 +459,8 @@
                 cFileTypes.append("");
             if(catalogStorageProvided==false)
                 cStorages.append("");
+            if(catalogIncludeProvided==false)
+                cIncludeSymblinks.append("");
 
             //Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
@@ -480,8 +488,8 @@
                                  cFileTypes,
                                  cSourcePathIsActives,
                                  cCatalogIncludeHiddens,
-                                 cStorages
-                                 );
+                                 cStorages,
+                                 cIncludeSymblinks);
 
         QSortFilterProxyModel *proxyCollectionModel = new QSortFilterProxyModel(this);
         proxyCollectionModel->setSourceModel(collectionModel);
@@ -498,8 +506,10 @@
         ui->TrV_CatalogList->header()->resizeSection(6, 100); //FileType
         ui->TrV_CatalogList->header()->resizeSection(7,  50); //Active
         ui->TrV_CatalogList->header()->resizeSection(8,  50); //Storage
+        ui->TrV_CatalogList->header()->resizeSection(9,  50); //Symblinks
+        ui->TrV_CatalogList->header()->resizeSection(10, 50); //Symblinks
         ui->TrV_CatalogList->header()->hideSection(0); //Path
-
+        ui->TrV_CatalogList->header()->hideSection(10); //Symblinks
         //Pass list of catalogs
             catalogFileList = cNames;
             catalogFileList.sort();

@@ -57,7 +57,7 @@
 #include <QDebug>
 #include <QtSql>
 #include <QStandardPaths>
-
+#include <QMessageBox>
 #include <KXmlGuiWindow>
 #include <KMessageBox>
 #include <KComboBox>
@@ -124,6 +124,7 @@ class MainWindow : public KXmlGuiWindow
             bool selectedCatalogIncludeHidden;
             QString selectedCatalogFileType;
             QString selectedCatalogStorage;
+            bool selectedCatalogIncludeSymblinks;
             void LoadCatalog(QString fileName);
             void SaveCatalog(QString newCatalogName);
             void loadCatalogsToModel();
@@ -174,7 +175,12 @@ class MainWindow : public KXmlGuiWindow
             QString newCatalogName;
             QString newCatalogStorage;
             void LoadFileSystem(QString newCatalogPath);
-            void CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage);
+            void CatalogDirectory(QString newCatalogPath,
+                                  bool includeHidden,
+                                  QString fileType,
+                                  QStringList fileTypes,
+                                  QString newCatalogStorage,
+                                  bool includeSymblinks);
             void loadStorageList();
             QStringList storageNameList;
 
