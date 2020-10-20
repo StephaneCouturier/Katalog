@@ -157,7 +157,8 @@
         selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
         selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
         selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
-        selectedSizeUnit        = settings.value("LastSearch/SizeUnit").toString();
+        selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
+        selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
         ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
     }
     //----------------------------------------------------------------------
@@ -173,7 +174,8 @@
         settings.setValue("LastSearch/SearchIn", selectedSearchIn);
         settings.setValue("LastSearch/MinimumSize", selectedMinimumSize);
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
-        settings.setValue("LastSearch/SizeUnit", selectedSizeUnit);
+        settings.setValue("LastSearch/MniSizeUnit", selectedMinSizeUnit);
+        settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
         //settings.setValue("LastSelectedCatalog", sText);
     }
@@ -202,9 +204,8 @@
         //ui->HL_Location_and_Storage->hide();
 
         //Create
-        //ui->L_OtherOptions->hide();
         ui->RB_IncludeSubDir->hide();
-        ui->RB_IncludeSymblinks->hide();
+        ui->Create_checkBox_IncludeSymblinks->hide();
         ui->RB_IncludeArchives->hide();
         ui->RB_IncludeChecksum->hide();
 
@@ -233,7 +234,7 @@
         //ui->tabWidget->removeTab(10);
         ui->tabWidget->removeTab(9);
         ui->tabWidget->removeTab(8);
-        ui->tabWidget->removeTab(7);
+        //ui->tabWidget->removeTab(7);
 
         //QPushButton hello(QPushButton::tr("Hello world!"));
 

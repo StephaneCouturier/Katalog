@@ -52,10 +52,14 @@
         {
             //Prepare list of size units for the Catalog selection combobox
             // the first line is the one displayed by default
-            ui->CB_SizeUnit->addItem(i18n("GiB"));
-            ui->CB_SizeUnit->addItem(i18n("MiB"));
-            ui->CB_SizeUnit->addItem(i18n("KiB"));
-            ui->CB_SizeUnit->addItem(i18np("Byte", "Bytes", 1));
+            ui->Search_comboBox_MinSizeUnit->addItem(i18n("GiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(i18n("MiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(i18n("KiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(i18np("Byte", "Bytes", 1));
+            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("GiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("MiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("KiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(i18np("Byte", "Bytes", 1));
             //ui->CB_SizeUnit->setCurrentIndex(1);
 
             //Load last search values (from settings file)
@@ -69,7 +73,8 @@
                 ui->CB_S_FileType->setCurrentText(selectedFileType);
                 ui->SB_MinimumSize->setValue(selectedMinimumSize);
                 ui->SB_MaximumSize->setValue(selectedMaximumSize);
-                ui->CB_SizeUnit->setCurrentText(selectedSizeUnit);
+                ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
+                ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshCatalogSelectionList()
@@ -102,7 +107,8 @@
             ui->CB_S_FileType->setCurrentText("Any");
             ui->SB_MinimumSize->setValue(0);
             ui->SB_MaximumSize->setValue(1000);
-            ui->CB_SizeUnit->setCurrentText("GiB");
+            ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
+            ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
             //ui->LE_Tags->setCurrentText("");
         }
         //----------------------------------------------------------------------
@@ -323,18 +329,26 @@
                     selectedFileType      = ui->CB_S_FileType->currentText();
                     selectedMinimumSize   = ui->SB_MinimumSize->value();
                     selectedMaximumSize   = ui->SB_MaximumSize->value();
-                    selectedSizeUnit      = ui->CB_SizeUnit->currentText();
+                    selectedMinSizeUnit   = ui->Search_comboBox_MinSizeUnit->currentText();
+                    selectedMaxSizeUnit   = ui->Search_comboBox_MaxSizeUnit->currentText();
                     //selectedTags        = ui->LE_Tags->text();
 
                     // User can enter size min anx max from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
-                    sizeMultiplier=1;
-                    if      (selectedSizeUnit =="KiB")
-                            sizeMultiplier = sizeMultiplier * 1024;
-                    else if (selectedSizeUnit =="MiB")
-                            sizeMultiplier = sizeMultiplier *1024*1024;
-                    else if (selectedSizeUnit =="GiB")
-                            sizeMultiplier = sizeMultiplier *1024*1024*1024;
+                    sizeMultiplierMin=1;
+                    if      (selectedMinSizeUnit =="KiB")
+                            sizeMultiplierMin = sizeMultiplierMin * 1024;
+                    else if (selectedMinSizeUnit =="MiB")
+                            sizeMultiplierMin = sizeMultiplierMin *1024*1024;
+                    else if (selectedMinSizeUnit =="GiB")
+                            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
+                    sizeMultiplierMax=1;
+                    if      (selectedMaxSizeUnit =="KiB")
+                            sizeMultiplierMax = sizeMultiplierMax * 1024;
+                    else if (selectedMaxSizeUnit =="MiB")
+                            sizeMultiplierMax = sizeMultiplierMax *1024*1024;
+                    else if (selectedMaxSizeUnit =="GiB")
+                            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
 
                  // Searching "Begin With" for File name or Folder name is not supported yet
                     if (selectedTextCriteria=="Begins With" and selectedSearchIn =="File names or Folder paths"){
@@ -524,8 +538,8 @@
                         //if (selectedTags == selectedTags){continue;}
 
                     //continue if the file is matching the size range
-                        if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplier
-                                and lineFileSize <= selectedMaximumSize * sizeMultiplier) ){
+                        if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
+                                and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
                                     continue;}
 
                     //Finally, verify the text search criteria

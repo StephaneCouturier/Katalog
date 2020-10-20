@@ -780,6 +780,16 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
+             <widget class="QComboBox" name="Search_comboBox_MinSizeUnit">
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLabel" name="label_5">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -821,7 +831,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="CB_SizeUnit">
+             <widget class="QComboBox" name="Search_comboBox_MaxSizeUnit">
               <property name="minimumSize">
                <size>
                 <width>65</width>

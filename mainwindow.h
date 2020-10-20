@@ -143,8 +143,10 @@ class MainWindow : public KXmlGuiWindow
             QString selectedSearchIn;
             qint64  selectedMinimumSize;
             qint64  selectedMaximumSize;
-            qint64  sizeMultiplier;
-            QString selectedSizeUnit;
+            qint64  sizeMultiplierMin;
+            qint64  sizeMultiplierMax;
+            QString selectedMinSizeUnit;
+            QString selectedMaxSizeUnit;
             QString selectedTags;
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
