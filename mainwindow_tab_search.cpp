@@ -417,22 +417,66 @@
 
             //Process search results: list of files
                 // Create model
-                Catalog *searchResultsCatalog = new Catalog(this);
+                Catalog *searchResultsCatalog = new Catalog(this);              
 
-                // Populate model with data
-                searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
-                QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                proxyModel->setSourceModel(searchResultsCatalog);
+                if ( ui->Search_checkBox_ShowFolders->isChecked()==true )
+                {
+                    //show folders only:
 
-                // Connect model to tree/table view
-                ui->TrV_FilesFound->setModel(proxyModel);
-                ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
-                ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
-                ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
-                ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
+                    // Populate model with data
+                    sFilePaths.removeDuplicates();
+                    int numberOfFolders = sFilePaths.count();
+                    sFileNames.clear();
+                    sFileSizes.clear();
+                    sFileDateTimes.clear();
+                    for (int i=0; i<numberOfFolders; i++)
+                        sFileNames <<"";
+                    for (int i=0; i<numberOfFolders; i++)
+                        sFileSizes <<0;
+                    for (int i=0; i<numberOfFolders; i++)
+                        sFileDateTimes <<"";
+
+                    searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
+                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+                    proxyModel->setSourceModel(searchResultsCatalog);
+
+                    // Connect model to tree/table view
+                    ui->TrV_FilesFound->setModel(proxyModel);
+                    ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                    //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+                    //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                    //ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
+                    //ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
+                    //ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
+                    ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
+
+                    ui->TrV_FilesFound->header()->hideSection(0);
+                    ui->TrV_FilesFound->header()->hideSection(1);
+                    ui->TrV_FilesFound->header()->hideSection(2);
+
+                    ui->Search_label_FoundTitle->setText("Folders found:");
+                }
+                else
+                {
+                    // Populate model with data
+                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
+                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+                        proxyModel->setSourceModel(searchResultsCatalog);
+
+                        // Connect model to tree/table view
+                        ui->TrV_FilesFound->setModel(proxyModel);
+                        ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                        //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+                        ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                        ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
+                        ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
+                        ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
+                        ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
+                        ui->TrV_FilesFound->header()->showSection(0);
+                        ui->TrV_FilesFound->header()->showSection(1);
+                        ui->TrV_FilesFound->header()->showSection(2);
+                        ui->Search_label_FoundTitle->setText("Files found:");
+                }
 
                 //Count and display the number of files found
                 int numberFilesResult = searchResultsCatalog->rowCount();

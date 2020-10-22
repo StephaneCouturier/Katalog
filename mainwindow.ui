@@ -1000,6 +1000,48 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_38">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background: url(:/images/img/link-h.png)  repeat-x center;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_checkBox_ShowFolders">
+              <property name="text">
+               <string>list folders only</string>
+              </property>
+              <property name="tristate">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1097,7 +1139,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_11">
                   <item>
-                   <widget class="QLabel" name="label_21">
+                   <widget class="QLabel" name="Search_label_FoundTitle">
                     <property name="font">
                      <font>
                       <family>Noto Sans</family>
