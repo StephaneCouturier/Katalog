@@ -109,6 +109,7 @@
             ui->SB_MaximumSize->setValue(1000);
             ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
             ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
+            ui->Search_checkBox_ShowFolders->setChecked(false);
             //ui->LE_Tags->setCurrentText("");
         }
         //----------------------------------------------------------------------
