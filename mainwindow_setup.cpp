@@ -41,9 +41,9 @@
 #include <QSettings>
 
 #include <KActionCollection>
-#include <KMessageBox>
+//#include <KMessageBox>
 #include <KIO/Job>
-#include <KLocalizedString>
+//#include <KLocalizedString>
 
 
 //Menu and Icons - Actions KDE setup ---------------------------------------
@@ -66,7 +66,7 @@
     //----------------------------------------------------------------------
     void MainWindow::openFile()
     {
-        QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, i18n("Open a Katalog collection"));
+        QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, ("Open a Katalog collection"));
 
         if (!fileNameFromDialog.isEmpty())
         {
@@ -86,7 +86,7 @@
     {
         if (job->error())
         {
-            KMessageBox::error(this, job->errorString());
+            QMessageBox::warning(this, "Katalog",job->errorString());
             fileName.clear();
             return;
         }
@@ -115,7 +115,7 @@
     //----------------------------------------------------------------------
     void MainWindow::saveFileAs()
     {
-        saveFileAs(QFileDialog::getSaveFileName(this, i18n("Save File As")));
+        saveFileAs(QFileDialog::getSaveFileName(this, ("Save File As")));
         ui->statusbar->showMessage(fileName);
     }
     //----------------------------------------------------------------------
