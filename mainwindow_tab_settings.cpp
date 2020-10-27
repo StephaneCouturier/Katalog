@@ -34,9 +34,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#include <KMessageBox>
-#include <KLocalizedString>
 #include <QSettings>
 
 //#include <KMessageBox>

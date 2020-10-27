@@ -40,9 +40,6 @@
 
 #include <iostream>
 
-#include <KMessageBox>
-#include <KLocalizedString>
-
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -269,31 +266,32 @@
         QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
         QFile file(fullCatalogPath);
         if (file.exists()==true){
-            KMessageBox::information(this,
-                                     i18n("There is already a catalog with this name:    ")
+            QMessageBox::information(this,
+                                     ("There is already a catalog with this name:    ")
                                         + newCatalogName
-                                        + i18n("\nPlease choose a different name or go to Collection to rename, update, or delete the existing one."),
-                                     i18n( "Info" ) );
+                                        + ("\nPlease choose a different name or go to Collection to rename, update, or delete the existing one."),
+                                     ( "Info" ) );
             return;
         }
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
                 CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
-        else KMessageBox::error(this,
-                                  i18n("Please provide a name and select a path for this new catalog.\n Name: ")
+        else QMessageBox::warning(this,
+                                  ("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,
-                                  i18n( "Info" ) );
+                                  ( "Info" ) );
 
         //Check if no files where found, and let the user decide what to do
         // Get the catalog file list
         QStringList filelist = fileListModel->stringList();
         if (filelist.count() == 5){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
-            int result = KMessageBox::warningContinueCancel(this,
-                                i18n("The source folder does not contains any file.\n"
+            int result = QMessageBox::warning(this, "Katalog - Warning",
+                                ("The source folder does not contains any file.\n"
                                      "This could mean that the source is empty or the device attached is not mounted.\n"
-                                     "Do you want to save it anyway (the catalog would be empty)?\n"));
-            if ( result != KMessageBox::Continue){
+                                     "Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
+                                              | QMessageBox::Cancel);
+            if ( result != QMessageBox::Cancel){
                 return;
             }
         }
@@ -305,10 +303,10 @@
         //Refresh the catalog list for the combobox of the Search screen
         refreshCatalogSelectionList();
 
-        KMessageBox::information(this,
-                                  i18n("The new catalog,has been created.\n Name:   ")
+        QMessageBox::information(this,
+                                  ("The new catalog,has been created.\n Name:   ")
                                   +newCatalogName+"\n Path:     "+newCatalogPath,
-                                  i18n( "Info" ) );
+                                  ( "Info" ) );
 
         //Load files of the created catalog:
         //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary

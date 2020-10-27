@@ -40,9 +40,10 @@
 #include <QDesktopServices>
 #include <QSaveFile>
 #include <QFileDialog>
+#include <QMessageBox>
 
-#include <KMessageBox>
-#include <KLocalizedString>
+//#include <KMessageBox>
+//#include <KLocalizedString>
 
 //TAB: SEARCH FILES ----------------------------------------------------------------------
 
@@ -52,14 +53,14 @@
         {
             //Prepare list of size units for the Catalog selection combobox
             // the first line is the one displayed by default
-            ui->Search_comboBox_MinSizeUnit->addItem(i18n("GiB"));
-            ui->Search_comboBox_MinSizeUnit->addItem(i18n("MiB"));
-            ui->Search_comboBox_MinSizeUnit->addItem(i18n("KiB"));
-            ui->Search_comboBox_MinSizeUnit->addItem(i18np("Byte", "Bytes", 1));
-            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("GiB"));
-            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("MiB"));
-            ui->Search_comboBox_MaxSizeUnit->addItem(i18n("KiB"));
-            ui->Search_comboBox_MaxSizeUnit->addItem(i18np("Byte", "Bytes", 1));
+            ui->Search_comboBox_MinSizeUnit->addItem("GiB");
+            ui->Search_comboBox_MinSizeUnit->addItem("MiB");
+            ui->Search_comboBox_MinSizeUnit->addItem("KiB");
+            ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
+            ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
+            ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
+            ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
+            ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
             //ui->CB_SizeUnit->setCurrentIndex(1);
 
             //Load last search values (from settings file)
@@ -165,7 +166,7 @@
                     }
                 }
 
-              KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
+              QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+exportFile.fileName());
               exportFile.close();
         }
         //----------------------------------------------------------------------
@@ -353,7 +354,7 @@
 
                  // Searching "Begin With" for File name or Folder name is not supported yet
                     if (selectedTextCriteria=="Begins With" and selectedSearchIn =="File names or Folder paths"){
-                        KMessageBox::information(this,"Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison.");
+                        QMessageBox::information(this,"Katalog","Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison.");
                         return;;
                     }
 

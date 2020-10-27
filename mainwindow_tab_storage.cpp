@@ -71,7 +71,7 @@ void MainWindow::on_Storage_PB_CreateList_clicked()
               ui->Storage_PB_EditAll->setEnabled(true);
               //ui->Storage_PB_SaveAll->setEnabled(true);
 
-              KMessageBox::information(this,"A storage file was created:\n" + newStorageFile.fileName()
+              QMessageBox::information(this,"Katalog","A storage file was created:\n" + newStorageFile.fileName()
                                        + "\nYou can edit it now.");
 
               //Disable button so it cannot be overwritten
@@ -113,7 +113,7 @@ void MainWindow::on_Storage_PB_SaveAll_clicked()
             stream << filesFoundList.at(i) << '\n';
         }
 
-      KMessageBox::information(this,"Results exported to the collection folder:\n"+exportFile.fileName());
+      QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+exportFile.fileName());
       exportFile.close();
 }
 //----------------------------------------------------------------------
@@ -176,7 +176,7 @@ void MainWindow::on_Storage_PB_OpenFilelight_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_PB_Update_clicked()
 {
-    KMessageBox::information(this,"test:\n" + QString::number(selectedStorageIndexRow));
+    QMessageBox::information(this,"Katalog","test:\n" + QString::number(selectedStorageIndexRow));
 
     //getStorageInfo(selectedStoragePath);
     //QModelIndex index;
@@ -328,21 +328,21 @@ void MainWindow::loadStorageModel()
 void MainWindow::getStorageInfo(const QString &storagePath)
 {//DEV, not implemented
     //QStorageInfo storage = QStorageInfo::root();
-    KMessageBox::information(this,"path:\n" + storagePath);
+    //KMessageBox::information(this,"path:\n" + storagePath);
 
     QStorageInfo storage;
     storage.setPath(storagePath);
 
-    KMessageBox::information(this,"test:\n" + storage.rootPath());
+    //KMessageBox::information(this,"test:\n" + storage.rootPath());
     if (storage.isReadOnly())
         qDebug() << "isReadOnly:" << storage.isReadOnly();
 
-    KMessageBox::information(this,"test:\n" + storage.name());
-    KMessageBox::information(this,"test:\n" + storage.fileSystemType());
+    //KMessageBox::information(this,"test:\n" + storage.name());
+    //KMessageBox::information(this,"test:\n" + storage.fileSystemType());
     qint64 sizeTotal = storage.bytesTotal()/1024/1024;
     qint64 sizeAvailable = storage.bytesFree()/1024/1024;
-    KMessageBox::information(this,"test:\n" + QString::number(sizeTotal));
-    KMessageBox::information(this,"test:\n" + QString::number(sizeAvailable));
+    //KMessageBox::information(this,"test:\n" + QString::number(sizeTotal));
+    //KMessageBox::information(this,"test:\n" + QString::number(sizeAvailable));
 
     //return storage.name();
 }

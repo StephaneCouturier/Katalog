@@ -59,7 +59,7 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <KXmlGuiWindow>
-#include <KMessageBox>
+//#include <KMessageBox>
 #include <KComboBox>
 
 class KJob;

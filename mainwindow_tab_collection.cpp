@@ -42,8 +42,8 @@
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
 
-#include <KMessageBox>
-#include <KLocalizedString>
+//#include <KMessageBox>
+//#include <KLocalizedString>
 
 //TAB: Collection ----------------------------------------------------------------------
 
@@ -129,7 +129,7 @@
 
             //Check if the update can be done, or inform the user otherwise
             if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
-            KMessageBox::information(this,"It seems this catalog was not correctly imported or has an old format.\n"
+            QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
                                          "Please Edit it and make sure it has the following first 2 lines:\n\n"
                                          "<catalogSourcePath>/folderpath\n"
                                          "<catalogFileCount>10000\n\n"
@@ -140,7 +140,7 @@
             return;
             }
             if(selectedCatalogFile == "" or selectedCatalogName == "" or selectedCatalogPath == ""){
-            KMessageBox::information(this,"Please select a catalog first (some info is missing).\nselectedCatalogFile:"
+            QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\nselectedCatalogFile:"
                                      +selectedCatalogFile+"\nselectedCatalogName: "
                                      +selectedCatalogName+"\nselectedCatalogPath: "
                                      +selectedCatalogPath);
@@ -167,20 +167,20 @@
                 //Warning and choice if the result is 0 files
                 QStringList filelist = fileListModel->stringList();
                 if (filelist.count() == 3){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
-                    int result = KMessageBox::warningContinueCancel(this,
-                                        i18n("The source folder does not contains any file.\n"
+                    int result = QMessageBox::warning(this,"Katalog",
+                                        ("The source folder does not contains any file.\n"
                                              "This could mean that the source is empty indeed, or that the device attached is not mounted. \n"
-                                             "Do you want to update it anyway (the catalog would then be empty)?\n"));
-                    if ( result != KMessageBox::Continue){
+                                             "Do you want to update it anyway (the catalog would then be empty)?\n"),QMessageBox::Yes | QMessageBox::Cancel);
+                    if ( result != QMessageBox::Cancel){
                         return;
                     }
                 }
 
                 SaveCatalog(selectedCatalogName);
-                KMessageBox::information(this,"This catalog was updated.");
+                QMessageBox::information(this,"Katalog","This catalog was updated.");
             }
             else {
-                KMessageBox::information(this,"This catalog cannot be updated.\n"
+                QMessageBox::information(this,"Katalog","This catalog cannot be updated.\n"
                                                 "The source folder - "+selectedCatalogPath+" - was not found.\n"
                                                 "Possible reasons:\n"
                                                 "- the device is not connected and mounted\n"
@@ -271,24 +271,24 @@
         {
             if ( selectedCatalogFile != ""){
 
-                int result = KMessageBox::warningContinueCancel(this,
-                          i18n("Do you want to delete this catalog?\n")+selectedCatalogFile);
+                int result = QMessageBox::warning(this,"Katalog",
+                          ("Do you want to delete this catalog?\n")+selectedCatalogFile,QMessageBox::Yes|QMessageBox::Cancel);
 
-                if ( result ==KMessageBox::Continue){
+                if ( result ==QMessageBox::Yes){
                     QFile file (selectedCatalogFile);
                     file.moveToTrash();
                     loadCatalogsToModel();
                     refreshCatalogSelectionList();
                 }
              }
-            else KMessageBox::information(this,i18n("Please select a catalog above first."));
+            else QMessageBox::information(this,"Katalog",("Please select a catalog above first."));
         }
         //----------------------------------------------------------------------
         //DEV
         void MainWindow::on_PB_ExportCatalog_clicked()
         {
             QString link = "https://sourceforge.net/p/katalogg/tickets/";
-            KMessageBox::information(this,"There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
+            QMessageBox::information(this,"Katalog","There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
             QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
         }
         //----------------------------------------------------------------------
@@ -328,7 +328,7 @@
         QFile catalogFile;
         catalogFile.setFileName(fileName);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
-            KMessageBox::information(this,"Please select a catalog above first.");
+            QMessageBox::information(this,"Katalog","Please select a catalog above first.");
             return;
         }
         // Start animation while oprning
@@ -385,7 +385,7 @@
             // Get infos stored in the file
             QFile catalogFile(iterator.next());
             if(!catalogFile.open(QIODevice::ReadOnly)) {
-                KMessageBox::information(this,"No catalog found.");
+                QMessageBox::information(this,"Katalog","No catalog found.");
                 return;
             }
 
@@ -529,7 +529,7 @@
         // Get infos stored in the file
         QFile catalogFile(selectedCatalogFile);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
-            KMessageBox::information(this,"No catalog found.");
+            QMessageBox::information(this,"Katalog","No catalog found.");
             return;
         }
 
@@ -642,7 +642,7 @@
         //read catalog file
         QFile catalogFile(catalogSourcePath);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
-            KMessageBox::information(this,"No catalog found.");
+            QMessageBox::information(this,"Katalog","No catalog found.");
             return;
         }
         QFile fileOut(catalogNewPath);
@@ -680,6 +680,6 @@
         catalogFile.rename(catalogFile.fileName() + ".bak");
         fileOut.rename(catalogFileName);
 
-        KMessageBox::information(this,"Conversion completed.\n");
+        QMessageBox::information(this,"Katalog","Conversion completed.\n");
 
     }

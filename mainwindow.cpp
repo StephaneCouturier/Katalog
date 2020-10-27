@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //startSQLDB();
         //DEV: test translation
             //QMessageBox(tr("Folder"));
-            ui->label_test->setText(i18n("Folder"));
+            //ui->label_test->setText(i18n("Folder"));
 
         //hide user interface items that are not ready for use, under development.
             hideDevelopmentUIItems();

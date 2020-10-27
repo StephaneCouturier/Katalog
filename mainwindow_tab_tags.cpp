@@ -38,8 +38,8 @@
 
 #include <QFileDialog>
 #include <QStandardItemModel>
-#include <KMessageBox>
-#include <KLocalizedString>
+//#include <KMessageBox>
+//#include <KLocalizedString>
 
 //Load file system for the treeview
 void MainWindow::loadFileSystemTags(QString newTagFolderPath)
@@ -109,7 +109,7 @@ void MainWindow::on_PB_TagFolder_clicked()
     QString selectedTagName   = ui->LE_TagName->text();
 
     if(selectedTagName == ""){
-        KMessageBox::information(this,"Pleas enter or select a tag for this folder.");
+        QMessageBox::information(this,"Katalog","Please enter or select a tag for this folder.");
         return;
     }
 
