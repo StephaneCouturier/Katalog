@@ -52,20 +52,20 @@
     #include "mainwindow_tab_collection.cpp"
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
-    //#include "mainwindow_tab_statistics.cpp"
-    //#include "mainwindow_tab_duplicates.cpp"
-
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
    , ui(new Ui::MainWindow)
 {
 
-   //Start up interface
+   //Set up interface globally
         //Set up GUI
             ui->setupUi(this);
 
         //DEV: start the database
             //startSQLDB();
+        //DEV: test translation
+            //QMessageBox(tr("Folder"));
+            ui->label_test->setText(i18n("Folder"));
 
         //hide user interface items that are not ready for use, under development.
             hideDevelopmentUIItems();
@@ -73,15 +73,13 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Set up KDE Menu/Icon actions
             setupActions();
 
-        //Load settings
+        //Load user settings
             //Get user home path
             QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
             QString homePath = standardsPaths[0];
-
             //Define Setting file path and name
             settingsFile = homePath + "/.config/katalog_settings";
             //settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
-
             //load the settings
             loadSettings();
 
@@ -89,14 +87,17 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Load the list of catalogs from the collection folder
             loadCatalogsToModel();
 
+    //Explore
+            exploreLoadDirectories();
+
     //setup tab: Search
-            //LoadCatalogFileList();
             initiateSearchValues();
             refreshCatalogSelectionList();
 
             ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
     //setup tab: Storage
+            storageFilePath = collectionFolder + "/" + "storage.csv";
             loadStorageModel();
 
     //setup tab: Create
@@ -139,9 +140,5 @@ MainWindow::~MainWindow()
 /*
 KMessageBox::information(this,"test:\n");
 */
-
-//NOTES
-//
-
 
 

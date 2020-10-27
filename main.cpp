@@ -42,7 +42,6 @@
 #include <KLocalizedString>
 
 #include "mainwindow.h"
-
 //#include <QTableView>
 
 int main(int argc, char *argv[])
@@ -51,30 +50,31 @@ int main(int argc, char *argv[])
 
     KLocalizedString::setApplicationDomain("Katalog");
 
-    //QTranslator translator;
-    //translator.load("Katalog_fr_FR");
-    //app.installTranslator(&translator);
-
-    //KMessageBox::information(app,tr("Hello world!"));
+    //Test translation
+    QTranslator translator;
+    translator.load(":/Katalog_fr_FR.ts");
+    //translator.load(app.applicationName() + "_" + QLocale::system().name(), ":/ts");
+    //translator->load("myApp_en.qm", ":/translation/"));
+    app.installTranslator(&translator);
 
     KAboutData aboutData(
          QStringLiteral("Katalog"),         // The program name used internally. (componentName)
          i18n("Katalog"),                   // A displayable program name string. (displayName)
-         QStringLiteral("0.6"),             // The program version string. (version)
+         QStringLiteral("0.11"),             // The program version string. (version)
          // Short description of what the app does. (shortDescription)
          i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
          KAboutLicense::GPL,// The license this code is released under
-         i18n("(c) 2020 Stephane Couturier"),// Copyright Statement (copyrightStatement = QString())
+         i18n("(c) 2020 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
          // Optional text shown in the About box.
          // Can contain any information desired. (otherText)
          i18n(""),
          // The program homepage string. (homePageAddress = QString())
-         QStringLiteral("https://sourceforge.net/projects/katalogg"),
-         // The bug report email address
+         QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
+         // The bug report address
          // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
-         QStringLiteral("https://sourceforge.net/p/katalogg/tickets/"));
+         QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
          aboutData.addAuthor(i18n("Stephane Couturier"), i18n("Creator"), QStringLiteral("contact@symbioxy.com"),
-         QStringLiteral("https://www.stephanecouturier.com/"), QStringLiteral("OSC Username"));
+         QStringLiteral("https://www.symbioxy.com/"), QStringLiteral("OSC Username"));
     KAboutData::setApplicationData(aboutData);
 
     QCommandLineParser parser;
