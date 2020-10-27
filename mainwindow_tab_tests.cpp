@@ -38,6 +38,28 @@
 #include "database.h"
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
+
+#include <QApplication>
+#include <QFile>
+#include <QTreeView>
+#include <QMessageBox>
+
+//----------------------------------------------------------------------
+//TREEMODEL
+//----------------------------------------------------------------------
+
+//Q_INIT_RESOURCE(simpletreemodel);
+
+//QFile sourceFile(":/default.txt");
+//sourceFile.open(QIODevice::ReadOnly);
+//sourceFile model(sourceFile.readAll());
+//sourceFile.close();
+
+//QTreeView view;
+
+//ui->Explore_treeview_Directories->setModel(&model);
+
+//----------------------------------------------------------------------
 //----------------------------------------------------------------------
 void MainWindow::startSQLDB()
 {
@@ -110,7 +132,7 @@ void MainWindow::startSQLDB()
 //----------------------------------------------------------------------
 void MainWindow::on_test_pb_insert_clicked()
 {
-    KMessageBox::information(this,"clicked.");
+    QMessageBox::information(this,"Katalog","clicked.");
 
 
 /*
