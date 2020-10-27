@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 =======
 # Katalog
->>>>>>> f38363d699dce1d67afe1542829dcdfb394b13fc
+
 User Documentation
 ==================
 See https://github.com/StephaneCouturier/Katalog/wiki
