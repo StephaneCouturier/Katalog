@@ -33,7 +33,7 @@
 
 #QT Libraries
 QT       += core gui charts
-QT       += sql widgets widgets
+QT       += sql widgets
 requires(qtConfig(tableview))
 requires(qtConfig(treeview))
 requires(qtConfig(listview))
@@ -78,7 +78,9 @@ SOURCES += \
     mainwindow_tab_tags.cpp \
     mainwindow_tab_tests.cpp \
     storage.cpp \
-    tag.cpp
+    tag.cpp \
+    treeitem.cpp \
+    treemodel.cpp
 
 HEADERS += \
     catalog.h \
@@ -87,12 +89,15 @@ HEADERS += \
     initdb.h \
     mainwindow.h \
     storage.h \
-    tag.h
+    tag.h \
+    treeitem.h \
+    treemodel.h
 
 FORMS += \
     mainwindow.ui
 
 TRANSLATIONS += \
+    Katalog_en_EN.ts \
     Katalog_fr_FR.ts
 
 # Default rules for deployment.
@@ -101,7 +106,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    Katalog_en_EN.ts \
     README.md
 
 RESOURCES += \
     Resources.qrc
+
