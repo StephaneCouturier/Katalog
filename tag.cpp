@@ -33,8 +33,8 @@ QVariant Tag::headerData(int section, Qt::Orientation orientation, int role) con
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
-        case 0: return QString("Folder");
-        case 1: return QString("Tag");
+        case 0: return QString(tr("Folder"));
+        case 1: return QString(tr("Tag"));
         }
     }
     return QVariant();

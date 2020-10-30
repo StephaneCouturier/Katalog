@@ -7,4 +7,5 @@
         <file>img/link-v.png</file>
         <file>img/link-tree-mid.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

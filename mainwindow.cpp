@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
             QString homePath = standardsPaths[0];
             //Define Setting file path and name
-            settingsFile = homePath + "/.config/katalog_settings";
+            settingsFile = homePath + "/.config/katalog_settings.ini";
             //settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
             //load the settings
             loadSettings();
@@ -87,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Load the list of catalogs from the collection folder
             loadCatalogsToModel();
 
-    //Explore
+    //setup tab: Explore
             exploreLoadDirectories();
 
     //setup tab: Search
@@ -140,5 +140,3 @@ MainWindow::~MainWindow()
 /*
 KMessageBox::information(this,"test:\n");
 */
-
-

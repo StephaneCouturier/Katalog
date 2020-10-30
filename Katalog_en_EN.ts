@@ -5,6 +5,6 @@
     <name>label_test</name>
     <message>
         <source>Folder</source>
-        <translation>Dossier</translation>
+        <translation>Folder</translation>
     </message>
 </context>

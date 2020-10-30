@@ -253,6 +253,7 @@ class MainWindow : public KXmlGuiWindow
             void on_Collection_PB_Reload_clicked();
             void on_Collection_PB_Search_clicked();
             void on_PB_C_OpenFolder_clicked();
+            void on_TrV_CatalogList_clicked(const QModelIndex &index);
             void on_PB_ViewCatalog_clicked();
             void on_PB_UpdateCatalog_clicked();
             void on_PB_C_Rename_clicked(); //not active yet
@@ -260,7 +261,6 @@ class MainWindow : public KXmlGuiWindow
             void on_Collection_pushButton_Convert_clicked();
             void on_PB_ExportCatalog_clicked();
             void on_PB_DeleteCatalog_clicked();
-            void on_TrV_CatalogList_activated(const QModelIndex &index);
             void on_TrV_FileList_clicked(const QModelIndex &index);
             void on_TrV_CatalogList_doubleClicked(const QModelIndex &index);
             void on_TrV_FileList_customContextMenuRequested(const QPoint &pos);
@@ -271,7 +271,7 @@ class MainWindow : public KXmlGuiWindow
 
         //Storage
             void getStorageInfo(const QString &storagePath);
-            void on_Storage_TrV_activated(const QModelIndex &index);
+            void on_Storage_TrV_clicked(const QModelIndex &index);
 
             void on_Storage_PB_CreateList_clicked();
             void on_Storage_PB_Reload_clicked();
