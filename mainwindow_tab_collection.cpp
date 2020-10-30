@@ -163,19 +163,19 @@
 
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
-                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
-
-                //Warning and choice if the result is 0 files
-                QStringList filelist = fileListModel->stringList();
-                if (filelist.count() == 3){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
-                    int result = QMessageBox::warning(this,"Katalog",
-                                        ("The source folder does not contains any file.\n"
-                                             "This could mean that the source is empty indeed, or that the device attached is not mounted. \n"
-                                             "Do you want to update it anyway (the catalog would then be empty)?\n"),QMessageBox::Yes | QMessageBox::Cancel);
-                    if ( result != QMessageBox::Cancel){
+                ///Warning and choice if the result is 0 files
+                if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+                {
+                    int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
+                                                  "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
+                                                  "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
+                    //return;
+                    if ( result == QMessageBox::Cancel){
                         return;
                     }
                 }
+
+                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
 
                 SaveCatalog(selectedCatalogName);
                 QMessageBox::information(this,"Katalog","This catalog was updated.");
@@ -184,8 +184,8 @@
                 QMessageBox::information(this,"Katalog","This catalog cannot be updated.\n"
                                                 "The source folder - "+selectedCatalogPath+" - was not found.\n"
                                                 "Possible reasons:\n"
-                                                "- the device is not connected and mounted\n"
-                                                "- the folder was moved or renamed"
+                                                "- the device is not connected and mounted,\n"
+                                                "- the source folder was moved or renamed."
                                          );
             }
 
