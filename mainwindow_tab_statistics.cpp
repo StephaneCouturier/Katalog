@@ -140,7 +140,22 @@ void MainWindow::statsLoadChart()
     QValueAxis *axisY = new QValueAxis;
     axisY->setLabelFormat("%i");
     axisY->setTitleText("Total");
-    axisY->setRange(0 , maxValueGraphRange*1.1);
+
+    //Calculate axisY max range value
+        // Example: 848 365  >  get 6 digits, get the 8 and add one, and mutliply this by 10 power of 6-1 > so max range is 900 000
+
+        //Increase max value from the statistics so the highest value is not completely at the top
+        //maxValueGraphRange = maxValueGraphRange*1.1;
+
+        //Get the number of digits
+        int maxValueGraphRangeLength = QString::number((maxValueGraphRange)).length();
+        //Get the first digit
+        QVariant maxValueGraphRangeFirst = QString::number((maxValueGraphRange)).left(1);
+
+        //Calculate the max range value
+        maxValueGraphRange = (maxValueGraphRangeFirst.toLongLong()+1) * qPow(10, maxValueGraphRangeLength-1);
+
+    axisY->setRange(0 , maxValueGraphRange);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
