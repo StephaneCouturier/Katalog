@@ -117,7 +117,7 @@ void MainWindow::on_Storage_PB_SaveAll_clicked()
       exportFile.close();
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_TrV_activated(const QModelIndex &index)
+void MainWindow::on_Storage_TrV_clicked(const QModelIndex &index)
 {
     selectedStorageName      = ui->Storage_TrV->model()->index(index.row(), 2, QModelIndex()).data().toString();
     selectedStorageLocation = ui->Storage_TrV->model()->index(index.row(), 0, QModelIndex()).data().toString();
