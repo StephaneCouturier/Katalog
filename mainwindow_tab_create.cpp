@@ -278,10 +278,10 @@
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
                 CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
-        else QMessageBox::warning(this,
+        else QMessageBox::warning(this, "Katalog",
                                   ("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,
-                                  ( "Info" ) );
+                                  ( "Ok" ) );
 
         //Check if no files where found, and let the user decide what to do
         // Get the catalog file list
@@ -304,10 +304,10 @@
         //Refresh the catalog list for the combobox of the Search screen
         refreshCatalogSelectionList();
 
-        QMessageBox::information(this,
+        QMessageBox::information(this, "Katalog",
                                   ("The new catalog,has been created.\n Name:   ")
                                   +newCatalogName+"\n Path:     "+newCatalogPath,
-                                  ( "Info" ) );
+                                  ( "Ok" ) );
 
         //Load files of the created catalog:
         //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary

@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1286,8 +1286,8 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
-                  <height>25</height>
+                  <width>125</width>
+                  <height>35</height>
                  </size>
                 </property>
                 <property name="sizeIncrement">
@@ -1308,7 +1308,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background: white url(:/images/img/Katalog40.png) no-repeat right;</string>
+                 <string notr="true">background:  white url(:/images/img/Katalog40.png) no-repeat center;</string>
                 </property>
                 <property name="locale">
                  <locale language="English" country="UnitedStates"/>
@@ -1516,20 +1516,6 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Collection_pushButton_Convert">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Convert</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="format-convert-to-path">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
                <spacer name="horizontalSpacer_10">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1588,6 +1574,20 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_pushButton_Convert">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Convert</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="format-convert-to-path">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="PB_DeleteCatalog">

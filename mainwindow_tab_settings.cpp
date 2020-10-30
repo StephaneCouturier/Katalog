@@ -43,7 +43,7 @@
 
 void MainWindow::on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged()
 {
-    QSettings settings(settingsFile, QSettings::NativeFormat);
+    QSettings settings(settingsFile, QSettings:: IniFormat);
     settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
 }
 

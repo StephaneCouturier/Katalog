@@ -577,7 +577,7 @@
                         else lineFileSize = 0;
 
                     //Exclude catalog metadata lines which are starting with the character <
-                        //if (lineFilePath.left(1)!="<"){continue;}
+                         if (lineFilePath.left(1)=="<"){continue;}
 
                     //PREDEV: continue if the folder has a matching tag
                         //selectedTags

@@ -83,7 +83,7 @@
 
 
     //Catalog buttons
-        void MainWindow::on_TrV_CatalogList_activated(const QModelIndex &index)
+        void MainWindow::on_TrV_CatalogList_clicked(const QModelIndex &index)
         {
             selectedCatalogFile             = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogName             = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
@@ -106,6 +106,7 @@
             ui->Collection_PB_ViewCatalogStats->setEnabled(true);
             ui->PB_DeleteCatalog->setEnabled(true);
         }
+
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_OpenFolder_clicked()
         {

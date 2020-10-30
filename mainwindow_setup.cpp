@@ -145,7 +145,7 @@
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
     {
-        QSettings settings(settingsFile, QSettings::NativeFormat);
+        QSettings settings(settingsFile, QSettings:: IniFormat);
         collectionFolder = settings.value("LastCollectionFolder").toString();
         if(collectionFolder == ""){
                collectionFolder = QApplication::applicationDirPath();
@@ -164,7 +164,7 @@
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
     {
-        QSettings settings(settingsFile, QSettings::NativeFormat);
+        QSettings settings(settingsFile, QSettings:: IniFormat);
         //QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
         settings.setValue("LastSearch/SearchText", ui->KCB_SearchText->currentText());
@@ -184,13 +184,13 @@
     {
         //Filetypes for cataloging
         fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-        fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg";
+        fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
         fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm";
         fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
 
         //filetypes for searching
         fileType_ImageS<< "*.png$" << "*.jpg$" << "*.gif$" << "*.xcf$" << "*.tif$" << "*.bmp$";
-        fileType_AudioS<< "*.mp3$" << "*.wav$" << "*.ogg$";
+        fileType_AudioS<< "*.mp3$" << "*.wav$" << "*.ogg$" << "*.aif$";
         fileType_VideoS<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
         fileType_TextS << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
 
