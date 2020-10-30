@@ -230,7 +230,8 @@
     {
         //Just copy the Catalog path to the name
         QString newCatalogName = ui->LE_NewCatalogPath->text();
-        newCatalogName.replace("/","__");
+        newCatalogName.replace("/","_");
+        newCatalogName.replace(":","_");
         ui->LE_NewCatalogName->setText(newCatalogName);
     }
     //----------------------------------------------------------------------
