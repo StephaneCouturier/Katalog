@@ -138,5 +138,6 @@ MainWindow::~MainWindow()
 
 //DEV
 /*
+QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */

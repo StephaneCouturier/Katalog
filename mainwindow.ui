@@ -2374,6 +2374,12 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                    <iconset theme="drive-harddisk">
                     <normaloff>.</normaloff>.</iconset>
                   </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -2439,6 +2445,12 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                   <property name="icon">
                    <iconset theme="password-generate">
                     <normaloff>.</normaloff>.</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
