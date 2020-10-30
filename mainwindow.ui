@@ -75,7 +75,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1685,6 +1685,12 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>34</height>
+               </size>
+              </property>
               <property name="text">
                <string>Directories</string>
               </property>
@@ -1713,41 +1719,6 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QLabel" name="L_FlieList">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
-              <property name="text">
-               <string>File List</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="TrV_FileList">
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Click to open the file</string>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
@@ -1835,6 +1806,28 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </spacer>
               </item>
              </layout>
+            </item>
+            <item>
+             <widget class="QTreeView" name="TrV_FileList">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Click to open the file</string>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
