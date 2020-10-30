@@ -214,7 +214,7 @@
         ui->LE_TextToFilter->hide();
 
         //Collection
-        //ui->PB_RecordCatalogStats->hide();
+        ui->Collection_pushButton_Convert->hide();
         //ui->Explore_L_Directories->hide();
         //ui->Explore_treeview_Directories->hide();
         //ui->PB_C_Rename->hide();
