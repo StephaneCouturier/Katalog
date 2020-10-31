@@ -61,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
         //Set up GUI
             ui->setupUi(this);
 
+        //Set icon fallback in case theme is not available
+            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":icons");
+
         //DEV: start the database
             //startSQLDB();
         //DEV: test translation
@@ -68,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //ui->label_test->setText(i18n("Folder"));
 
 
-            //hide user interface items that are not ready for use, under development.
+        //Hide user interface items that are not ready for use (under development).
             hideDevelopmentUIItems();
 
         //Set up KDE Menu/Icon actions

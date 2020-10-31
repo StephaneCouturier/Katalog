@@ -6,6 +6,31 @@
         <file>img/link-h.png</file>
         <file>img/link-v.png</file>
         <file>img/link-tree-mid.png</file>
+        <file>icons/configure.svg</file>
+        <file>icons/document-edit-sign.svg</file>
+        <file>icons/document-edit.svg</file>
+        <file>icons/document-export.svg</file>
+        <file>icons/document-new.svg</file>
+        <file>icons/document-open.svg</file>
+        <file>icons/document-save.svg</file>
+        <file>icons/drive-harddisk.svg</file>
+        <file>icons/edit-clear-history.svg</file>
+        <file>icons/edit-delete.svg</file>
+        <file>icons/edit-find.svg</file>
+        <file>icons/edit-paste.svg</file>
+        <file>icons/edit-select.svg</file>
+        <file>icons/folder-new.svg</file>
+        <file>icons/format-convert-to-path.svg</file>
+        <file>icons/gparted.svg</file>
+        <file>icons/journal-new.svg</file>
+        <file>icons/media-playlist-repeat.svg</file>
+        <file>icons/office-chart-line.svg</file>
+        <file>icons/tag.svg</file>
+        <file>icons/text-x-generic.svg</file>
+        <file>icons/tools-wizard.svg</file>
+        <file>icons/view-media-playlist.svg</file>
+        <file>icons/view-refresh.svg</file>
+        <file>icons/xml-node-duplicate.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

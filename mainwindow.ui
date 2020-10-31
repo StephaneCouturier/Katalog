@@ -20,9 +20,6 @@
    <iconset resource="Resources.qrc">
     <normaloff>:/images/img/Katalog_logo_64.ico</normaloff>:/images/img/Katalog_logo_64.ico</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">backrgound-color:  lightgray;</string>
-  </property>
   <property name="iconSize">
    <size>
     <width>22</width>
