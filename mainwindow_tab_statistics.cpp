@@ -111,8 +111,14 @@ void MainWindow::statsLoadChart()
             {
                 number = values[3].toLongLong();
                 //KMessageBox::information(this,"test:\n" + values[0] + "test:\n" +QString::number(number));
-                number = number/1024/1024;
-                displayUnit = "(MiB)";
+                if ( number > 2000000000 ){
+                    number = number/1024/1024/1024;
+                    displayUnit = "(GiB)";
+                }
+                else {
+                    number = number/1024/1024;
+                    displayUnit = "(MiB)";
+                }
                 series->append(datetime.toMSecsSinceEpoch(), number);
                 if ( number > maxValueGraphRange )
                     maxValueGraphRange = number;
