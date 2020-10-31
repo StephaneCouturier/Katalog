@@ -106,7 +106,7 @@
             ui->Collection_PB_ViewCatalogStats->setEnabled(true);
             ui->PB_DeleteCatalog->setEnabled(true);
         }
-
+    //Catalog buttons
         //----------------------------------------------------------------------
         void MainWindow::on_PB_C_OpenFolder_clicked()
         {

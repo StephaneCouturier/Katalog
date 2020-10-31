@@ -267,11 +267,11 @@
         QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
         QFile file(fullCatalogPath);
         if (file.exists()==true){
-            QMessageBox::information(this,
+            QMessageBox::information(this, "Katalog",
                                      ("There is already a catalog with this name:    ")
                                         + newCatalogName
                                         + ("\nPlease choose a different name or go to Collection to rename, update, or delete the existing one."),
-                                     ( "Info" ) );
+                                     ( "Ok" ) );
             return;
         }
 
