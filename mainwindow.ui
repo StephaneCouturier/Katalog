@@ -100,7 +100,7 @@
         <string/>
        </property>
        <attribute name="icon">
-        <iconset theme="system-search">
+        <iconset theme="edit-find">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
@@ -1660,7 +1660,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
       </widget>
       <widget class="QWidget" name="T_Explore">
        <attribute name="icon">
-        <iconset theme="text-x-katefilelist">
+        <iconset theme="text-x-generic">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
@@ -2904,6 +2904,9 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
             <property name="text">
              <string>Open in Filelight</string>
             </property>
+            <property name="icon">
+             <iconset theme="filelight"/>
+            </property>
            </widget>
           </item>
           <item>
@@ -2972,7 +2975,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
         <bool>true</bool>
        </property>
        <attribute name="icon">
-        <iconset theme="step_object_Graph">
+        <iconset theme="office-chart-line">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
@@ -3080,7 +3083,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
       </widget>
       <widget class="QWidget" name="T_Settings">
        <attribute name="icon">
-        <iconset theme="settings-configure">
+        <iconset theme="configure">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
@@ -3435,7 +3438,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
       </widget>
       <widget class="QWidget" name="T_Settings_Dev">
        <attribute name="icon">
-        <iconset theme="settings-configure">
+        <iconset theme="configure">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
