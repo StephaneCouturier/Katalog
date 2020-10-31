@@ -239,7 +239,7 @@
         ui->tabWidget->removeTab(8);
         ui->tabWidget->removeTab(7);
 
-        //QPushButton hello(QPushButton::tr("Hello world!"));
+        //Test translation QPushButton hello(QPushButton::tr("Hello world!"));
 
     }
     //----------------------------------------------------------------------
@@ -257,17 +257,26 @@
     {       
         //Mainwindow
         //ui->MainWindow.setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
-        ui->centralwidget->setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
+        //ui->centralwidget->setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
 
         //TabWidget
-        ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; color: #43bf0c} "));
+        //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; color: #43bf0c} "));
         //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; border: 5px solid; boder-color: #43bf0c} "));
 
         ui->tabWidget->setStyleSheet(
-              "QTabBar::tab { background: #10a2df; color: white; padding: 6px; } "
-              "QTabBar::tab:selected { background: lightgray; color: black} "
+              "QTabBar::tab { background: lightgray; color: black; padding: 6px 14px; font-weight: bold; } "
+              "QTabBar::tab:selected { background: #10a2df; color: white; } "
               "QTabWidget::pane { border: 0; } "
-              "QWidget { background: lightgray; } ");
+              "QWidget { background: #EEE; } ");
+
+        ui->PB_Search->setStyleSheet(
+              "QPushButton { background: #43bf0c; color: white; padding: 6px; } ");
+
+        ui->TrV_FilesFound->setStyleSheet(
+              "QTreeView { background: white; color: white; padding: 6px; } ");
+
+                //SB_MinimumSize
+
 
     }
 
