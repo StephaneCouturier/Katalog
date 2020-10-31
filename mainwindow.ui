@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1068</width>
+    <width>1096</width>
     <height>877</height>
    </rect>
   </property>
@@ -19,6 +19,9 @@
   <property name="windowIcon">
    <iconset resource="Resources.qrc">
     <normaloff>:/images/img/Katalog_logo_64.ico</normaloff>:/images/img/Katalog_logo_64.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">backrgound-color:  lightgray;</string>
   </property>
   <property name="iconSize">
    <size>
@@ -34,13 +37,19 @@
     <bool>false</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
     <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
      <number>0</number>
     </property>
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <property name="verticalSpacing">
+    <property name="spacing">
      <number>0</number>
     </property>
     <item row="0" column="0">
@@ -116,6 +125,12 @@
            <number>0</number>
           </property>
           <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -1057,6 +1072,20 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
               </property>
              </spacer>
             </item>
+            <item>
+             <widget class="QPushButton" name="PB_ExportResults">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Export Results</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-export">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -1247,20 +1276,6 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="PB_ExportResults">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Export Results</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-export">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
                <spacer name="horizontalSpacer_14">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -1308,7 +1323,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:  white url(:/images/img/Katalog40.png) no-repeat center;</string>
+                 <string notr="true">background:  url(:/images/img/Katalog40.png) no-repeat center;</string>
                 </property>
                 <property name="locale">
                  <locale language="English" country="UnitedStates"/>
@@ -2905,7 +2920,8 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              <string>Open in Filelight</string>
             </property>
             <property name="icon">
-             <iconset theme="filelight"/>
+             <iconset theme="filelight">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -3092,10 +3108,33 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_14">
-          <item row="3" column="0">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Options</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
            <spacer name="verticalSpacer_6">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -3115,26 +3154,13 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <spacer name="verticalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_30">
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="Settings_checkBox_UseDefaultTheme">
             <property name="text">
-             <string>Options</string>
+             <string>Use the desktop default Theme instead of Katalog's own Theme (change requires to re-start)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

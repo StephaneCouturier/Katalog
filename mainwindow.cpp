@@ -67,11 +67,12 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //QMessageBox(tr("Folder"));
             //ui->label_test->setText(i18n("Folder"));
 
-        //hide user interface items that are not ready for use, under development.
+
+            //hide user interface items that are not ready for use, under development.
             hideDevelopmentUIItems();
 
         //Set up KDE Menu/Icon actions
-            setupActions();
+            //setupActions();
 
         //Load user settings
             //Get user home path
@@ -82,6 +83,14 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
             //settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
             //load the settings
             loadSettings();
+
+    //load custom stylesheet
+                //if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
+                //if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
+
+                if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
+                    loadStyleSheet();
+                }
 
     //setup tab: Collection
         //Load the list of catalogs from the collection folder

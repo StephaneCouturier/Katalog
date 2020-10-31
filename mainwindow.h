@@ -88,6 +88,7 @@ class MainWindow : public KXmlGuiWindow
             int authorIdx, genreIdx;
             void startSQLDB();
 
+            void loadStyleSheet();
             void hideDevelopmentUIItems();
             //KDE menus/icons
             void setupActions();
@@ -295,6 +296,8 @@ class MainWindow : public KXmlGuiWindow
 
         //Settings
             void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged();
+            void on_Settings_checkBox_UseDefaultTheme_stateChanged();
+
             //DEV
             void on_PB_SelectCollectionFolder_clicked();
             void on_pushButton_8_clicked();

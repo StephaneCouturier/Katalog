@@ -160,6 +160,8 @@
         selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
         selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
         ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
+        ui->Settings_checkBox_UseDefaultTheme->setChecked(settings.value("Settings/UseDefaultDesktopTheme").toBool());
+
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
@@ -177,6 +179,7 @@
         settings.setValue("LastSearch/MniSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
+        settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_checkBox_UseDefaultTheme->isChecked());
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------
@@ -249,4 +252,22 @@
         ui->Stats_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
     }
 
+    //----------------------------------------------------------------------
+    void MainWindow::loadStyleSheet()
+    {       
+        //Mainwindow
+        //ui->MainWindow.setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
+        ui->centralwidget->setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
+
+        //TabWidget
+        ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; color: #43bf0c} "));
+        //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; border: 5px solid; boder-color: #43bf0c} "));
+
+        ui->tabWidget->setStyleSheet(
+              "QTabBar::tab { background: #10a2df; color: white; padding: 6px; } "
+              "QTabBar::tab:selected { background: lightgray; color: black} "
+              "QTabWidget::pane { border: 0; } "
+              "QWidget { background: lightgray; } ");
+
+    }
 
