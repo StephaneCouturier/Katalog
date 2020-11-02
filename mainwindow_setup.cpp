@@ -128,6 +128,8 @@
         //Explore
         ui->L_Filter->hide();
         ui->LE_TextToFilter->hide();
+        ui->Explore_label_Directories->hide();
+        ui->Explore_treeview_Directories->hide();
 
         //Collection
         ui->Collection_pushButton_Convert->hide();

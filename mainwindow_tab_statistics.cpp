@@ -22,7 +22,7 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_stats.cpp
+// File Name:   mainwindow_tab_statistics.cpp
 // Purpose:
 // Description:
 // Author:      Stephane Couturier
@@ -35,10 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <KMessageBox>
-#include <KLocalizedString>
 #include <QDesktopServices>
-
 #include <QDateTimeAxis>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
