@@ -117,11 +117,11 @@ void MainWindow::on_Storage_PB_SaveAll_clicked()
       exportFile.close();
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_TrV_clicked(const QModelIndex &index)
+void MainWindow::on_Storage_treeView_clicked(const QModelIndex &index)
 {
-    selectedStorageName      = ui->Storage_TrV->model()->index(index.row(), 2, QModelIndex()).data().toString();
-    selectedStorageLocation = ui->Storage_TrV->model()->index(index.row(), 0, QModelIndex()).data().toString();
-    selectedStoragePath      = ui->Storage_TrV->model()->index(index.row(), 5, QModelIndex()).data().toString();
+    selectedStorageName      = ui->Storage_treeView->model()->index(index.row(), 2, QModelIndex()).data().toString();
+    selectedStorageLocation = ui->Storage_treeView->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    selectedStoragePath      = ui->Storage_treeView->model()->index(index.row(), 5, QModelIndex()).data().toString();
 
     //display buttons
     ui->Storage_PB_SearchStorage->setEnabled(true);
@@ -292,20 +292,20 @@ void MainWindow::loadStorageModel()
     proxyStorageModel->setSourceModel(storageModel);
 
     // Connect model to tree/table view
-    ui->Storage_TrV->setModel(proxyStorageModel);
-    ui->Storage_TrV->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-    ui->Storage_TrV->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-    ui->Storage_TrV->header()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->Storage_TrV->header()->resizeSection(0, 200); //Location
-    ui->Storage_TrV->header()->resizeSection(1,  50); //Icon
-    ui->Storage_TrV->header()->resizeSection(2, 175); //Name
-    ui->Storage_TrV->header()->resizeSection(3,  50); //ID
-    ui->Storage_TrV->header()->resizeSection(4, 100); //Type
-    ui->Storage_TrV->header()->resizeSection(5, 250); //Path
-    ui->Storage_TrV->header()->resizeSection(6,  75); //FS
-    ui->Storage_TrV->header()->resizeSection(7,  75); //Total
-    ui->Storage_TrV->header()->resizeSection(8,  75); //Free
-    ui->Storage_TrV->header()->hideSection(1); //Path
+    ui->Storage_treeView->setModel(proxyStorageModel);
+    ui->Storage_treeView->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+    ui->Storage_treeView->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Storage_treeView->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Storage_treeView->header()->resizeSection(0, 200); //Location
+    ui->Storage_treeView->header()->resizeSection(1,  50); //Icon
+    ui->Storage_treeView->header()->resizeSection(2, 175); //Name
+    ui->Storage_treeView->header()->resizeSection(3,  50); //ID
+    ui->Storage_treeView->header()->resizeSection(4, 100); //Type
+    ui->Storage_treeView->header()->resizeSection(5, 250); //Path
+    ui->Storage_treeView->header()->resizeSection(6,  75); //FS
+    ui->Storage_treeView->header()->resizeSection(7,  75); //Total
+    ui->Storage_treeView->header()->resizeSection(8,  75); //Free
+    ui->Storage_treeView->header()->hideSection(1); //Path
 
     ui->L_StorageCountValue->setText(QString::number(storageCount));
     ui->L_StorageSpaceTotalValue->setText(QString::number(storageGrandTotal));

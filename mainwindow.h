@@ -58,7 +58,7 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QMessageBox>
-#include <KXmlGuiWindow>
+//#include <KXmlGuiWindow>
 //#include <KMessageBox>
 #include <KComboBox>
 
@@ -70,7 +70,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public KXmlGuiWindow
+class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -215,12 +215,14 @@ class MainWindow : public KXmlGuiWindow
 
     private slots:
         //Menu KDE
+            /*
             void newFile();
             void openFile();
             void saveFile();
             void saveFileAs();
             void saveFileAs(const QString &outputFileName);
             void downloadFinished(KJob* job);
+            */
 
         //Search
             void on_PB_S_ResetAll_clicked();
@@ -272,8 +274,7 @@ class MainWindow : public KXmlGuiWindow
 
         //Storage
             void getStorageInfo(const QString &storagePath);
-            void on_Storage_TrV_clicked(const QModelIndex &index);
-
+            void on_Storage_treeView_clicked(const QModelIndex &index);
             void on_Storage_PB_CreateList_clicked();
             void on_Storage_PB_Reload_clicked();
             void on_Storage_PB_EditAll_clicked();

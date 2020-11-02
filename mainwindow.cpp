@@ -53,7 +53,7 @@
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
 
-MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(parent)
    , ui(new Ui::MainWindow)
 {
 
@@ -153,3 +153,4 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
+
