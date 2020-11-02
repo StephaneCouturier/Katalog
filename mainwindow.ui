@@ -2560,7 +2560,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
         <item row="3" column="0">
          <layout class="QGridLayout" name="gridLayout_8">
           <item row="0" column="2">
-           <widget class="QTreeView" name="Storage_TrV">
+           <widget class="QTreeView" name="Storage_treeView">
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
@@ -3105,14 +3105,14 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_14">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Options</string>
+          <item row="3" column="1">
+           <widget class="Line" name="line_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="7" column="1">
            <spacer name="verticalSpacer_6">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -3125,7 +3125,41 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
-          <item row="0" column="0">
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
+            <property name="text">
+             <string>Always save a new record for Statistics after the update of a Catalog.</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="Settings_checkBox_UseDefaultTheme">
+            <property name="text">
+             <string>Use the desktop default Theme (instead of Katalog's own Theme). (Requires a re-start to take effect)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Data</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="Settings_label_Theme">
+            <property name="text">
+             <string>Theme</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
            <spacer name="verticalSpacer_7">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -3142,24 +3176,20 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
           <item row="2" column="0">
-           <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
-            <property name="text">
-             <string>Always save a new Record for Statistics when updating a Catalog</string>
+           <spacer name="horizontalSpacer_28">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="checked">
-             <bool>true</bool>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="Settings_checkBox_UseDefaultTheme">
-            <property name="text">
-             <string>Use the desktop default Theme instead of Katalog's own Theme (change requires to re-start)</string>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
             </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </item>

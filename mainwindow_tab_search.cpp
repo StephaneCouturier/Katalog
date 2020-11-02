@@ -190,11 +190,11 @@
             //QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
             QMenu fileContextMenu;
 
-            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
+            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open"),(tr("Open file")), this);
             connect(menuAction1, &QAction::triggered, this, &MainWindow::contextOpenFile);
             fileContextMenu.addAction(menuAction1);
 
-            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open"),(tr("Open folder")), this);
             connect(menuAction2, &QAction::triggered, this, &MainWindow::contextOpenFolder);
             fileContextMenu.addAction(menuAction2);
 
