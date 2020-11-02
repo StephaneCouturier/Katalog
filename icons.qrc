@@ -28,5 +28,6 @@
         <file>fallback-icons/view-media-playlist.svg</file>
         <file>fallback-icons/view-refresh.svg</file>
         <file>fallback-icons/xml-node-duplicate.svg</file>
+        <file>fallback-icons/folder-text.svg</file>
     </qresource>
 </RCC>

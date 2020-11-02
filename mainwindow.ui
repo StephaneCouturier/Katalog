@@ -1672,7 +1672,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
       </widget>
       <widget class="QWidget" name="T_Explore">
        <attribute name="icon">
-        <iconset theme="text-x-generic">
+        <iconset theme="folder-text">
          <normaloff>.</normaloff>.</iconset>
        </attribute>
        <attribute name="title">
