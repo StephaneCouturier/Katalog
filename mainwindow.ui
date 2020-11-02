@@ -159,7 +159,7 @@
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-tree-mid.png) repeat-y left;</string>
+               <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
               </property>
               <property name="text">
                <string/>
@@ -315,7 +315,7 @@
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-v.png) repeat-y left;</string>
+               <string notr="true">background: url(:/images/link-v.png) repeat-y left;</string>
               </property>
               <property name="text">
                <string/>
@@ -343,7 +343,7 @@
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-tree-end.png) no-repeat left;</string>
+               <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
               </property>
               <property name="text">
                <string/>
@@ -454,7 +454,7 @@
               </property>
               <property name="styleSheet">
                <string notr="true">
-background: url(:/images/img/link-h.png) repeat-x center;</string>
+background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="text">
                <string/>
@@ -583,7 +583,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-tree-mid.png) repeat-y left;</string>
+               <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
               </property>
               <property name="text">
                <string/>
@@ -691,7 +691,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-tree-end.png) no-repeat left;</string>
+               <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
               </property>
               <property name="text">
                <string/>
@@ -900,7 +900,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-h.png)  repeat-x center;</string>
+               <string notr="true">background: url(:/images/link-h.png)  repeat-x center;</string>
               </property>
               <property name="text">
                <string/>
@@ -1036,7 +1036,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/img/link-h.png)  repeat-x center;</string>
+               <string notr="true">background: url(:/images/link-h.png)  repeat-x center;</string>
               </property>
               <property name="text">
                <string/>
@@ -1693,20 +1693,24 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QLabel" name="Explore_L_Directories">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>34</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Directories</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_22">
+              <item>
+               <widget class="QLabel" name="Explore_label_Directories">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>34</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Directories</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="QTreeView" name="Explore_treeview_Directories">
