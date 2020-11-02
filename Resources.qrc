@@ -32,6 +32,9 @@
         <file>icons/view-refresh.svg</file>
         <file>icons/xml-node-duplicate.svg</file>
         <file>icons/edit-copy.svg</file>
+        <file>icons/audio-x-mpeg.svg</file>
+        <file>icons/image-jpeg.svg</file>
+        <file>icons/video-mp4.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

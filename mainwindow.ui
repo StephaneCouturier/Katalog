@@ -978,7 +978,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                 <string>Audio</string>
                </property>
                <property name="icon">
-                <iconset theme="audio-mp3">
+                <iconset theme="audio-x-mpeg">
                  <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
@@ -996,7 +996,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                 <string>Text</string>
                </property>
                <property name="icon">
-                <iconset theme="text-x-plain">
+                <iconset theme="text-x-generic">
                  <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
