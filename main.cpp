@@ -81,6 +81,12 @@ int main(int argc, char *argv[])
     aboutData.setupCommandLine(&parser);
     parser.process(app);
     aboutData.processCommandLine(&parser);
+
+    //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset jsut after)
+    QIcon::setThemeName( "default" );
+    //Set icon fallback in case theme is not available
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
+
     MainWindow* window = new MainWindow();
     window->show();
 

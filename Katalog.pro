@@ -110,5 +110,6 @@ DISTFILES += \
     README.md
 
 RESOURCES += \
-    Resources.qrc
+    icons.qrc \
+    images.qrc
 

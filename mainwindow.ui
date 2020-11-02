@@ -17,8 +17,8 @@
    <string>Katalog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Resources.qrc">
-    <normaloff>:/images/img/Katalog_logo_64.ico</normaloff>:/images/img/Katalog_logo_64.ico</iconset>
+   <iconset resource="images.qrc">
+    <normaloff>:/images/Katalog_logo_64.ico</normaloff>:/images/Katalog_logo_64.ico</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -1320,7 +1320,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:  url(:/images/img/Katalog40.png) no-repeat center;</string>
+                 <string notr="true">background:  url(:/images/Katalog40.png) no-repeat center;</string>
                 </property>
                 <property name="locale">
                  <locale language="English" country="UnitedStates"/>
@@ -3831,7 +3831,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>
