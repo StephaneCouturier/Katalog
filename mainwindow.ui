@@ -279,7 +279,7 @@
                <string>Search</string>
               </property>
               <property name="icon">
-               <iconset theme="system-search">
+               <iconset theme="edit-find">
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
@@ -553,7 +553,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                <string>Reset all</string>
               </property>
               <property name="icon">
-               <iconset theme="edit-clear-all">
+               <iconset theme="edit-clear-history">
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
@@ -1457,7 +1457,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>Search</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-search">
+                 <iconset theme="edit-find">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
@@ -1474,7 +1474,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>Explore</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="text-x-katefilelist">
+                 <iconset theme="folder-text">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
@@ -1552,7 +1552,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>Record</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="step_object_Graph">
+                 <iconset theme="office-chart-line">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
@@ -1566,7 +1566,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>View</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="step_object_Graph">
+                 <iconset theme="office-chart-line">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
@@ -1610,7 +1610,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                  <string>Delete</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="delete">
+                 <iconset theme="edit-delete">
                   <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
@@ -2455,7 +2455,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                    <string>Generate</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="password-generate">
+                   <iconset theme="tools-wizard">
                     <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
@@ -2485,30 +2485,63 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="PB_CreateCatalog">
-                <property name="minimumSize">
-                 <size>
-                  <width>300</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Create Catalog</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-save">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>49</width>
-                  <height>16</height>
-                 </size>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_21">
+                <item>
+                 <spacer name="horizontalSpacer_29">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>110</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="PB_CreateCatalog">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Create Catalog</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-save">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>49</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_30">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
               <item>
                <spacer name="verticalSpacer_3">
@@ -2875,7 +2908,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              <string>Search storage</string>
             </property>
             <property name="icon">
-             <iconset theme="system-search">
+             <iconset theme="edit-find">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
@@ -2889,7 +2922,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              <string>Search location</string>
             </property>
             <property name="icon">
-             <iconset theme="system-search">
+             <iconset theme="edit-find">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
@@ -2917,7 +2950,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              <string>Open in Filelight</string>
             </property>
             <property name="icon">
-             <iconset theme="filelight">
+             <iconset theme="gparted">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
@@ -2961,7 +2994,7 @@ background: url(:/images/img/link-h.png) repeat-x center;</string>
              <string>Delete</string>
             </property>
             <property name="icon">
-             <iconset theme="delete">
+             <iconset theme="edit-delete">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
