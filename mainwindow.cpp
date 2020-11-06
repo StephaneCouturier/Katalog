@@ -91,9 +91,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
                 //if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
                 //if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
 
+                //for windows, pick a windows common font.
+                #ifdef Q_OS_WIN
+                ui->tabWidget->setStyleSheet(font-family: calibri;
+                      );
+                #endif
+
+                //load custom Katalog stylesheet instead of default theme
                 if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
                     loadStyleSheet();
                 }
+
 
     //setup tab: Collection
         //Load the list of catalogs from the collection folder
