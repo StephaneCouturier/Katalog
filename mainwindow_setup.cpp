@@ -179,20 +179,19 @@
         //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; border: 5px solid; boder-color: #43bf0c} "));
 
         ui->tabWidget->setStyleSheet(
-              "QTabBar::tab { background: lightgray; color: black; padding: 6px 14px; font-weight: bold; } "
-              "QTabBar::tab:selected { background: #10a2df; color: white; } "
-              "QTabWidget::pane { border: 0; } "
-              "QWidget { background: #EEE; } ");
+              "QTabBar::tab         { background: lightgray; color: black; padding: 6px 14px; } "
+              "QTabBar::tab:selected{ background: #10a2df; color: white; font-weight: bold; } "
+              "QTabWidget::pane     { border: 0; } "
+              ); //"QWidget              { background: #EEE; } "
 
         ui->PB_Search->setStyleSheet(
-              "QPushButton { background: #43bf0c; color: white; padding: 6px; } ");
+              "QPushButton          { background: #43bf0c; color: white; padding: 6px; } ");
 
         ui->TrV_FilesFound->setStyleSheet(
-              "QTreeView { background: white; color: white; padding: 6px; } ");
+              "QTreeView            { background: white; color: white; padding: 6px; } ");
 
                 //SB_MinimumSize
-
-
+        //font-weight: bold;
     }
 
 
