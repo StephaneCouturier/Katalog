@@ -996,7 +996,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <string>Text</string>
                </property>
                <property name="icon">
-                <iconset theme="text-x-generic">
+                <iconset theme="folder-text">
                  <normaloff>.</normaloff>.</iconset>
                </property>
               </item>
@@ -1507,8 +1507,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>22</width>
-                  <height>22</height>
+                  <width>16</width>
+                  <height>16</height>
                  </size>
                 </property>
                </widget>
@@ -2608,12 +2608,162 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
-         <widget class="Line" name="line_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>with selected Storage: </string>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_New">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>New</string>
+            </property>
+            <property name="icon">
+             <iconset theme="folder-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_SearchStorage">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Search storage</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-find">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_SearchLocation">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Search location</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-find">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_CreateCatalog">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Create Catalog</string>
+            </property>
+            <property name="icon">
+             <iconset theme="journal-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_OpenFilelight">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Open in Filelight</string>
+            </property>
+            <property name="icon">
+             <iconset theme="gparted">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_Update">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Update</string>
+            </property>
+            <property name="icon">
+             <iconset theme="media-playlist-repeat">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_PB_Delete">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Delete</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-delete">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_22">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -2861,162 +3011,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_22">
-            <property name="minimumSize">
-             <size>
-              <width>150</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
-            <property name="text">
-             <string>with selected Storage: </string>
-            </property>
-            <property name="margin">
-             <number>6</number>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_New">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>New</string>
-            </property>
-            <property name="icon">
-             <iconset theme="folder-new">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_SearchStorage">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Search storage</string>
-            </property>
-            <property name="icon">
-             <iconset theme="edit-find">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_SearchLocation">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Search location</string>
-            </property>
-            <property name="icon">
-             <iconset theme="edit-find">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_CreateCatalog">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Create Catalog</string>
-            </property>
-            <property name="icon">
-             <iconset theme="journal-new">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_OpenFilelight">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Open in Filelight</string>
-            </property>
-            <property name="icon">
-             <iconset theme="gparted">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_Update">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Update</string>
-            </property>
-            <property name="icon">
-             <iconset theme="media-playlist-repeat">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_16">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_Delete">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Delete</string>
-            </property>
-            <property name="icon">
-             <iconset theme="edit-delete">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_22">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+        <item row="1" column="0">
+         <widget class="Line" name="line_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
