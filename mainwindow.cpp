@@ -98,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
                 #endif
 
                 //load custom Katalog stylesheet instead of default theme
-                if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
+                if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors" ){
                     loadStyleSheet();
                 }
 

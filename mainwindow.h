@@ -297,7 +297,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
         //Settings
             void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged();
-            void on_Settings_checkBox_UseDefaultTheme_stateChanged();
+            void on_Settings_comboBox_Theme_currentTextChanged();
 
             //DEV
             void on_PB_SelectCollectionFolder_clicked();

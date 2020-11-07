@@ -73,7 +73,7 @@
         selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
         selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
         ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
-        ui->Settings_checkBox_UseDefaultTheme->setChecked(settings.value("Settings/UseDefaultDesktopTheme").toBool());
+        ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
 
     }
     //----------------------------------------------------------------------
@@ -92,7 +92,7 @@
         settings.setValue("LastSearch/MniSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
-        settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_checkBox_UseDefaultTheme->isChecked());
+        settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------
@@ -148,6 +148,10 @@
         ui->Storage_PB_Delete->hide();
         ui->Storage_L_SpaceUnit->hide();
 
+        //Settings
+        ui->Settings_label_Theme->hide();
+        ui->Settings_comboBox_Theme->hide();
+
         //Other tabs
         ui->tabWidget->removeTab(10);
         ui->tabWidget->removeTab(9);
@@ -179,13 +183,14 @@
         //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; border: 5px solid; boder-color: #43bf0c} "));
 
         ui->tabWidget->setStyleSheet(
-              "QTabBar::tab         { background: lightgray; color: black; padding: 6px 14px; } "
-              "QTabBar::tab:selected{ background: #10a2df; color: white; font-weight: bold; } "
-              "QTabWidget::pane     { border: 0; } "
+              "QTabBar::tab         { padding: 6px 14px; background: #CCC; } "
+              "QTabBar::tab:selected{ background: #10a2df; color: white; font-weight: bold; text-decoration: none;} "
+
               ); //"QWidget              { background: #EEE; } "
+            //"QTabWidget::pane     { border: 0; } "
 
         ui->PB_Search->setStyleSheet(
-              "QPushButton          { background: #43bf0c; color: white; padding: 6px; } ");
+              "QPushButton          { background: #43bf0c; color: white; padding: 6px; font-weight: bold;} ");
 
         ui->TrV_FilesFound->setStyleSheet(
               "QTreeView            { background: white; color: white; padding: 6px; } ");
