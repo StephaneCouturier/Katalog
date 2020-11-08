@@ -47,11 +47,19 @@ void MainWindow::on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged()
     settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
 }
 
+void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
+{
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
+}
+
 void MainWindow::on_Settings_comboBox_Theme_currentTextChanged()
 {
     QSettings settings(settingsFile, QSettings:: IniFormat);
     settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
 }
+
+
 
 //Tab: SETTINGS_DEV -----------------------------------------------------------------------------
 

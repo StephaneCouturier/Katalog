@@ -161,4 +161,3 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
-

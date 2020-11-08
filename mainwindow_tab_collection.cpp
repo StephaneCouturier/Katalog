@@ -125,31 +125,41 @@
 
         //----------------------------------------------------------------------
         void MainWindow::on_PB_UpdateCatalog_clicked()
-        {
-            //Update the Selected Catalog
+        {   //UPDATE THE SELECTED CATALOG
 
             //Check if the update can be done, or inform the user otherwise
-            if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
-            QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
-                                         "Please Edit it and make sure it has the following first 2 lines:\n\n"
-                                         "<catalogSourcePath>/folderpath\n"
-                                         "<catalogFileCount>10000\n\n"
-                                         "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
-                                         "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                         "- the catalogFileCount number does not matter as much, it can be updated.\n"
-                                     );
-            return;
-            }
-            if(selectedCatalogFile == "" or selectedCatalogName == "" or selectedCatalogPath == ""){
-            QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\nselectedCatalogFile:"
-                                     +selectedCatalogFile+"\nselectedCatalogName: "
-                                     +selectedCatalogName+"\nselectedCatalogPath: "
-                                     +selectedCatalogPath);
-            return;
-            }
+                //Deal with old versions, where necessary info may have not have been available
+                if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
+                QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
+                                             "Please Edit it and make sure it has the following first 2 lines:\n\n"
+                                             "<catalogSourcePath>/folderpath\n"
+                                             "<catalogFileCount>10000\n\n"
+                                             "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
+                                             "- the catalogSourcePath is the folder to catalog the files from.\n"
+                                             "- the catalogFileCount number does not matter as much, it can be updated.\n"
+                                         );
+                return;
+                }
 
+                //Deal with other cases where some input information is missing
+                if(selectedCatalogFile == "" or selectedCatalogName == "" or selectedCatalogPath == ""){
+                QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\nselectedCatalogFile:"
+                                         +selectedCatalogFile+"\nselectedCatalogName: "
+                                         +selectedCatalogName+"\nselectedCatalogPath: "
+                                         +selectedCatalogPath);
+                return;
+                }
+
+            //BackUp the file before is the option is selected
+                if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
+                    backupCatalog(selectedCatalogFile);
+                }
+
+            //
             newCatalogName = selectedCatalogName;
 
+
+            //Define the type of files to be included
             QStringList fileTypes;
             if      ( selectedCatalogFileType == "Image")
                                     fileTypes = fileType_Image;
@@ -161,6 +171,7 @@
                                     fileTypes = fileType_Text;
             else                    fileTypes.clear();
 
+            //
             QDir dir (selectedCatalogPath);
             if (dir.exists()==true){
                 ///Warning and choice if the result is 0 files
@@ -682,5 +693,17 @@
         fileOut.rename(catalogFileName);
 
         QMessageBox::information(this,"Katalog","Conversion completed.\n");
+
+    }
+
+
+    //----------------------------------------------------------------------
+    void MainWindow::backupCatalog(QString catalogSourcePath)
+    {
+        //Copy the file to the same location, adding .bak for the new file name.
+        QFile::copy(catalogSourcePath, catalogSourcePath + ".bak");
+
+        //Inform user
+        //QMessageBox::information(this,"Katalog","Backup done.\n");
 
     }

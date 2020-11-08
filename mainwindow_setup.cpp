@@ -74,6 +74,7 @@
         selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
         ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
+        ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());
 
     }
     //----------------------------------------------------------------------
@@ -93,6 +94,7 @@
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
+        settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------

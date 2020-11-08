@@ -133,6 +133,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             bool verifyCatalogPath(QString catalogSourcePath);
             void recordSelectedCatalogStats();
             void convertCatalog(QString catalogSourcePath);
+            void backupCatalog(QString catalogSourcePath);
 
         //TAB: Search
             //inputs
@@ -297,6 +298,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
         //Settings
             void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged();
+            void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_comboBox_Theme_currentTextChanged();
 
             //DEV
