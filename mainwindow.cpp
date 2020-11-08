@@ -98,10 +98,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
                 #endif
 
                 //load custom Katalog stylesheet instead of default theme
-                if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors" ){
-                    loadStyleSheet();
+                if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors (light)" ){
+                    loadCustomTheme1();
                 }
-
 
     //setup tab: Collection
         //Load the list of catalogs from the collection folder

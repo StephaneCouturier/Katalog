@@ -151,8 +151,8 @@
         ui->Storage_L_SpaceUnit->hide();
 
         //Settings
-        ui->Settings_label_Theme->hide();
-        ui->Settings_comboBox_Theme->hide();
+        //ui->Settings_label_Theme->hide();
+        //ui->Settings_comboBox_Theme->hide();
 
         //Other tabs
         ui->tabWidget->removeTab(10);
@@ -174,8 +174,27 @@
     }
 
     //----------------------------------------------------------------------
-    void MainWindow::loadStyleSheet()
+    void MainWindow::loadCustomTheme1()
     {       
+        //Global
+        ui->tabWidget->setStyleSheet(
+              "QTabBar              { background-color: transparent; qproperty-drawBase:0;}"
+              "QTabBar::tab         { background-color: #10a2df; color: #EEE; padding: 5px 20px; }"
+              "QTabBar::tab:selected{ background-color: #eff0f1; color: #10a2df; font-weight: bold; text-decoration: none;} "
+              );
+
+        //Search Tab
+        ui->PB_Search->setStyleSheet(
+              "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
+              );
+        ui->PB_CreateCatalog->setStyleSheet(
+              "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
+              );
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::loadCustomTheme2()
+    {
         //Mainwindow
         //ui->MainWindow.setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
         //ui->centralwidget->setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
@@ -199,8 +218,8 @@
 
                 //SB_MinimumSize
         //font-weight: bold;
-    }
 
+    }
 
 /*
     //Menu and Icons - Actions KDE setup ---------------------------------------

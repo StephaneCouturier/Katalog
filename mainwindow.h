@@ -88,7 +88,8 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             int authorIdx, genreIdx;
             void startSQLDB();
 
-            void loadStyleSheet();
+            void loadCustomTheme1();
+            void loadCustomTheme2();
             void hideDevelopmentUIItems();
             //KDE menus/icons
             void setupActions();
