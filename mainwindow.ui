@@ -3168,7 +3168,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item row="2" column="1">
            <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
             <property name="text">
-             <string>Always save a new record for Statistics after the update of a Catalog.</string>
+             <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
             </property>
             <property name="checked">
              <bool>true</bool>

@@ -78,6 +78,8 @@
     //Catalog the files of a directory
     void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage, bool includeSymblinks)
     {
+        //CATALOG FILES and ADD CATALOG META-DATA to a QStringListModel > fileListModel
+
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -152,10 +154,13 @@
         fileList.prepend("<catalogFileCount>"       + QString::number(catalogFilesNumber));
         fileList.prepend("<catalogSourcePath>"      + newCatalogPath);
 
-        //Define and populate a model and send it to the listView
+        //Define and populate a model
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(fileList);
-        //ui->LV_FileList->setModel(fileListModel);
+
+        //Set this new catalog as the selected Catalog
+        selectedCatalogFileCount        = catalogFilesNumber;
+        selectedCatalogTotalFileSize    = totalFileSize;
 
         //DEV   Stop animation
         QApplication::restoreOverrideCursor();
@@ -313,8 +318,30 @@
         //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary
         //LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
+        //Add new catalog values to the statistics log, if the user has chosen this options.
+            if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true ){
+
+                //Save values
+                recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+
+                //Reload stats file to refresh values
+                statsLoadChart();
+            }
+
         //Change tab to show the result of the catalog creation
         ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
+
+        //Disable buttons to force user to select a catalog
+        //display buttons
+        ui->Collection_PB_Search->setEnabled(false);
+        ui->PB_ViewCatalog->setEnabled(false);
+        ui->PB_C_Rename->setEnabled(false);
+        ui->PB_EditCatalogFile->setEnabled(false);
+        ui->PB_UpdateCatalog->setEnabled(false);
+        ui->Collection_pushButton_Convert->setEnabled(false);
+        ui->PB_RecordCatalogStats->setEnabled(false);
+        ui->Collection_PB_ViewCatalogStats->setEnabled(false);
+        ui->PB_DeleteCatalog->setEnabled(false);
 
     }
     //----------------------------------------------------------------------

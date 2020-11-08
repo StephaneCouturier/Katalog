@@ -79,6 +79,9 @@
             loadCatalogsToModel();
             refreshCatalogSelectionList();
             loadStorageModel();
+
+            //hide buttons to force user to select a catalog before allowing any catalg action.
+            hideCatalogButtons();
         }
 
 
@@ -88,7 +91,7 @@
             selectedCatalogFile             = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogName             = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
             selectedCatalogFileCount        = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize    = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedCatalogTotalFileSize    = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
             selectedCatalogPath             = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
             selectedCatalogFileType         = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
             selectedCatalogIncludeHidden    = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
@@ -201,7 +204,7 @@
             }
 
             if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
-                recordSelectedCatalogStats();
+                recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
 
             //Refresh the collection view
             loadCatalogsToModel();
@@ -276,7 +279,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_PB_RecordCatalogStats_clicked()
         {
-            recordSelectedCatalogStats();
+            recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_PB_DeleteCatalog_clicked()
@@ -614,17 +617,17 @@
         return status;
     }
     //----------------------------------------------------------------------
-    void MainWindow::recordSelectedCatalogStats()
+    void MainWindow::recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize)
     {
+        //inputs:  (key) catalog name, (data) files count, total size
         QString statisticsFileName = "statistics.csv";
 
-        QString catalogFileCount = QString::number(selectedCatalogFileCount);
         QDateTime nowDateTime = QDateTime::currentDateTime();
 
         QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
                                 + selectedCatalogName + "\t"
-                                + catalogFileCount + "\t"
-                                + selectedCatalogTotalFileSize;
+                                + QString::number(selectedCatalogFileCount) + "\t"
+                                + QString::number(selectedCatalogTotalFileSize);
 
         // Stream the list to the file
         QFile fileOut( collectionFolder + "/" + statisticsFileName );
@@ -714,4 +717,19 @@
         //Inform user
         //QMessageBox::information(this,"Katalog","Backup done.\n");
 
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::hideCatalogButtons()
+    {
+        //display buttons
+        ui->Collection_PB_Search->setEnabled(false);
+        ui->PB_ViewCatalog->setEnabled(false);
+        ui->PB_C_Rename->setEnabled(false);
+        ui->PB_EditCatalogFile->setEnabled(false);
+        ui->PB_UpdateCatalog->setEnabled(false);
+        ui->Collection_pushButton_Convert->setEnabled(false);
+        ui->PB_RecordCatalogStats->setEnabled(false);
+        ui->Collection_PB_ViewCatalogStats->setEnabled(false);
+        ui->PB_DeleteCatalog->setEnabled(false);
     }

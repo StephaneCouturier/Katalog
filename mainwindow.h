@@ -121,7 +121,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString selectedCatalogName;
             QString selectedCatalogPath;
             qint64 selectedCatalogFileCount;
-            QString selectedCatalogTotalFileSize;
+            qint64 selectedCatalogTotalFileSize;
             bool selectedCatalogIncludeHidden;
             QString selectedCatalogFileType;
             QString selectedCatalogStorage;
@@ -131,9 +131,10 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void loadCatalogsToModel();
             void LoadFilesToModel();
             bool verifyCatalogPath(QString catalogSourcePath);
-            void recordSelectedCatalogStats();
+            void recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize);
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
+            void hideCatalogButtons();
 
         //TAB: Search
             //inputs
