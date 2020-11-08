@@ -89,7 +89,7 @@
         settings.setValue("LastSearch/SearchIn", selectedSearchIn);
         settings.setValue("LastSearch/MinimumSize", selectedMinimumSize);
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
-        settings.setValue("LastSearch/MniSizeUnit", selectedMinSizeUnit);
+        settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
