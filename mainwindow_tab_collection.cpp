@@ -700,8 +700,16 @@
     //----------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
+        QString catalogBackUpSourcePath = catalogSourcePath + ".bak";
+
+        //Verify if a bak up file already exist and remove it.
+        if (QFile::exists(catalogBackUpSourcePath))
+        {
+            QFile::remove(catalogBackUpSourcePath);
+        }
+
         //Copy the file to the same location, adding .bak for the new file name.
-        QFile::copy(catalogSourcePath, catalogSourcePath + ".bak");
+        QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
 
         //Inform user
         //QMessageBox::information(this,"Katalog","Backup done.\n");
