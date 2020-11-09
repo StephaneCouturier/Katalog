@@ -47,104 +47,54 @@
 
 //TAB: SEARCH FILES ----------------------------------------------------------------------
 
-    //UI methods
-        //Set up
-        void MainWindow::initiateSearchValues()
-        {
-            //Prepare list of size units for the Catalog selection combobox
-            // the first line is the one displayed by default
-            ui->Search_comboBox_MinSizeUnit->addItem("GiB");
-            ui->Search_comboBox_MinSizeUnit->addItem("MiB");
-            ui->Search_comboBox_MinSizeUnit->addItem("KiB");
-            ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
-            ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
-            ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
-            ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
-            ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
-            //ui->CB_SizeUnit->setCurrentIndex(1);
-
-            //Load last search values (from settings file)
-                if (selectedMaximumSize ==0)
-                    selectedMaximumSize = 1000;
-
-            //Set values
-                ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
-                ui->CB_S_TextCriteria->setCurrentText(selectedTextCriteria);
-                ui->CB_S_SearchIn->setCurrentText(selectedSearchIn);
-                ui->CB_S_FileType->setCurrentText(selectedFileType);
-                ui->SB_MinimumSize->setValue(selectedMinimumSize);
-                ui->SB_MaximumSize->setValue(selectedMaximumSize);
-                ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
-                ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::refreshCatalogSelectionList()
-        {
-            //Send list to the Statistics combobox (without All or Selected storage options)
-            fileListModel = new QStringListModel(this);
-            fileListModel->setStringList(catalogFileList);
-            ui->Stats_CB_SelectCatalog->setModel(fileListModel);
-
-            //Prepare list for the Catalog combobox
-            QStringList displaycatalogList = catalogFileList;
-
-            //Add the option All at the beginning
-            displaycatalogList.insert(0,"All");
-            displaycatalogList.insert(1,"Selected Storage");
-            displaycatalogList.insert(2,"Selected Location");
-            //catalogFileList = cNames;
-            fileListModel->setStringList(displaycatalogList);
-            //Send list to the Search combobox (with All on Slecteed storage options)
-            ui->CB_SelectCatalog->setModel(fileListModel);
-        }
         //----------------------------------------------------------------------
         //User interactions
-        void MainWindow::on_PB_S_ResetAll_clicked()
+        void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
-            ui->KCB_SearchText->setCurrentText("");
-            ui->CB_SelectCatalog->setCurrentText("All");
-            ui->CB_S_TextCriteria->setCurrentText("All Words");
-            ui->CB_S_SearchIn->setCurrentText("File names or Folder paths");
-            ui->CB_S_FileType->setCurrentText("Any");
-            ui->SB_MinimumSize->setValue(0);
-            ui->SB_MaximumSize->setValue(1000);
+            ui->Search_kcombobox_SearchText->setCurrentText("");
+            ui->Search_comboBox_SelectCatalog->setCurrentText("All");
+            ui->Search_comboBox_TextCriteria->setCurrentText("All Words");
+            ui->Search_comboBox_SearchIn->setCurrentText("File names or Folder paths");
+            ui->Search_comboBox_FileType->setCurrentText("Any");
+            ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
+            ui->Search_spinBox_MaximumSize->setValue(1000);
             ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
             ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
             ui->Search_checkBox_ShowFolders->setChecked(false);
             //ui->LE_Tags->setCurrentText("");
         }
+
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_GetTextFromClipboard_clicked()
+        void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
         {
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
             //clipboard->setText(selectedFile);
-            ui->KCB_SearchText->setCurrentText(originalText);
-
+            ui->Search_kcombobox_SearchText->setCurrentText(originalText);
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_Search_clicked()
+        void MainWindow::on_Search_pushButton_Search_clicked()
         {
             SearchFiles();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_KCB_SearchText_returnPressed()
+        void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
         {
             SearchFiles();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_TrV_FilesFound_clicked(const QModelIndex &index)
+        void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
         {
             //Get file from selected row
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
             //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_ExportResults_clicked()
+        void MainWindow::on_Search_pushButton_ExportResults_clicked()
         {
             //Prepare export file name
             QDateTime now = QDateTime::currentDateTime();
@@ -173,19 +123,19 @@
         void MainWindow::on_TR_CatalogFoundList_clicked(const QModelIndex &index)
         {
             //Get file from selected row
-            QString selectedCatalogName = ui->TR_CatalogFoundList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
             //selectedCatalogPath = collectionFolder + "/" + selectedCatalogName + ".idx";
-            ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             SearchFiles();
         }
         //----------------------------------------------------------------------
         //File Context Menu actions set up
-        void MainWindow::on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos)
+        void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
             //KMessageBox::information(this,"test.");
 
             // for most widgets
-            QPoint globalPos = ui->TrV_FilesFound->mapToGlobal(pos);
+            QPoint globalPos = ui->Search_treeView_FilesFound->mapToGlobal(pos);
             // for QAbstractScrollArea and derived classes you would use:
             //QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
             QMenu fileContextMenu;
@@ -228,33 +178,34 @@
                 //KMessageBox::information(this,"test:\n did nothing.");
             }
         }
+
         //----------------------------------------------------------------------
         //Context Menu methods
         void MainWindow::contextOpenFile()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();          
+            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
             //Get filepath from selected row
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
         }
         void MainWindow::contextOpenFolder()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
             QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
         }
         void MainWindow::contextCopyAbsolutePath()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
 
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileName =   ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
             QClipboard *clipboard = QGuiApplication::clipboard();
@@ -263,8 +214,8 @@
         }
         void MainWindow::contextCopyFolderPath()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
 
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
@@ -272,8 +223,8 @@
         }
         void MainWindow::contextCopyFileNameWithExtension()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            QString selectedFileName = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
 
             QString fileNameWithExtension = selectedFileName;
 
@@ -283,10 +234,10 @@
         }
         void MainWindow::contextCopyFileNameWithoutExtension()
         {
-            QModelIndex index=ui->TrV_FilesFound->currentIndex();
+            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
 
-            QString selectedFileName = ui->TrV_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
             QFileInfo fileName;
@@ -315,22 +266,22 @@
 
                 //Get search criteria
                     //Get text to search in file names or directories
-                    searchText = ui->KCB_SearchText->currentText();
+                    searchText = ui->Search_kcombobox_SearchText->currentText();
 
                     //Do nothing if there is no search text
                     if (searchText=="")
                         return;
 
                     //add searchText to a list, to retrieved it later
-                    ui->KCB_SearchText->addItem(searchText);
+                    ui->Search_kcombobox_SearchText->addItem(searchText);
 
                     //Get other search criteria
-                    selectedSearchCatalog = ui->CB_SelectCatalog->currentText();
-                    selectedTextCriteria  = ui->CB_S_TextCriteria->currentText();
-                    selectedSearchIn      = ui->CB_S_SearchIn->currentText();
-                    selectedFileType      = ui->CB_S_FileType->currentText();
-                    selectedMinimumSize   = ui->SB_MinimumSize->value();
-                    selectedMaximumSize   = ui->SB_MaximumSize->value();
+                    selectedSearchCatalog = ui->Search_comboBox_SelectCatalog->currentText();
+                    selectedTextCriteria  = ui->Search_comboBox_TextCriteria->currentText();
+                    selectedSearchIn      = ui->Search_comboBox_SearchIn->currentText();
+                    selectedFileType      = ui->Search_comboBox_FileType->currentText();
+                    selectedMinimumSize   = ui->Search_spinBox_FileTypeMinimumSize->value();
+                    selectedMaximumSize   = ui->Search_spinBox_MaximumSize->value();
                     selectedMinSizeUnit   = ui->Search_comboBox_MinSizeUnit->currentText();
                     selectedMaxSizeUnit   = ui->Search_comboBox_MaxSizeUnit->currentText();
                     //selectedTags        = ui->LE_Tags->text();
@@ -415,7 +366,7 @@
                 //Load list of catalogs in which files where found
                 catalogFoundListModel = new QStringListModel(this);
                 catalogFoundListModel->setStringList(catalogFoundList);
-                ui->TR_CatalogFoundList->setModel(catalogFoundListModel);
+                ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
 
             //Process search results: list of files
                 // Create model
@@ -443,18 +394,18 @@
                     proxyModel->setSourceModel(searchResultsCatalog);
 
                     // Connect model to tree/table view
-                    ui->TrV_FilesFound->setModel(proxyModel);
-                    ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                    ui->Search_treeView_FilesFound->setModel(proxyModel);
+                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
                     //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
                     //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                     //ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
                     //ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
                     //ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
-                    ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
+                    ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
 
-                    ui->TrV_FilesFound->header()->hideSection(0);
-                    ui->TrV_FilesFound->header()->hideSection(1);
-                    ui->TrV_FilesFound->header()->hideSection(2);
+                    ui->Search_treeView_FilesFound->header()->hideSection(0);
+                    ui->Search_treeView_FilesFound->header()->hideSection(1);
+                    ui->Search_treeView_FilesFound->header()->hideSection(2);
 
                     ui->Search_label_FoundTitle->setText("Folders found:");
                 }
@@ -466,23 +417,23 @@
                         proxyModel->setSourceModel(searchResultsCatalog);
 
                         // Connect model to tree/table view
-                        ui->TrV_FilesFound->setModel(proxyModel);
-                        ui->TrV_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                        ui->Search_treeView_FilesFound->setModel(proxyModel);
+                        ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
                         //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                        ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                        ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
-                        ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
-                        ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
-                        ui->TrV_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->TrV_FilesFound->header()->showSection(0);
-                        ui->TrV_FilesFound->header()->showSection(1);
-                        ui->TrV_FilesFound->header()->showSection(2);
+                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                        ui->Search_treeView_FilesFound->header()->showSection(0);
+                        ui->Search_treeView_FilesFound->header()->showSection(1);
+                        ui->Search_treeView_FilesFound->header()->showSection(2);
                         ui->Search_label_FoundTitle->setText("Files found:");
                 }
 
                 //Count and display the number of files found
                 int numberFilesResult = searchResultsCatalog->rowCount();
-                ui->L_NumberFilesResult->setNum(numberFilesResult);
+                ui->Search_label_NumberResults->setNum(numberFilesResult);
 
                 //Save the search parameters to the seetings file
                 saveSettings();
@@ -543,7 +494,7 @@
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
              }
 
-            ui->L_Regex->setText(regexPattern);
+            ui->Search_label_Regex->setText(regexPattern);
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
             //Search loop for all lines in the catalog file
@@ -749,3 +700,53 @@
 
         }
         //------------------------------------------------------------------------------------------
+        //UI methods
+            //Set up
+            void MainWindow::initiateSearchValues()
+            {
+                //Prepare list of size units for the Catalog selection combobox
+                // the first line is the one displayed by default
+                ui->Search_comboBox_MinSizeUnit->addItem("GiB");
+                ui->Search_comboBox_MinSizeUnit->addItem("MiB");
+                ui->Search_comboBox_MinSizeUnit->addItem("KiB");
+                ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
+                ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
+                ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
+                ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
+                ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
+                //ui->CB_SizeUnit->setCurrentIndex(1);
+
+                //Load last search values (from settings file)
+                    if (selectedMaximumSize ==0)
+                        selectedMaximumSize = 1000;
+
+                //Set values
+                    ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+                    ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
+                    ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
+                    ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
+                    ui->Search_spinBox_FileTypeMinimumSize->setValue(selectedMinimumSize);
+                    ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
+                    ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
+                    ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
+            }
+            //----------------------------------------------------------------------
+            void MainWindow::refreshCatalogSelectionList()
+            {
+                //Send list to the Statistics combobox (without All or Selected storage options)
+                fileListModel = new QStringListModel(this);
+                fileListModel->setStringList(catalogFileList);
+                ui->Stats_CB_SelectCatalog->setModel(fileListModel);
+
+                //Prepare list for the Catalog combobox
+                QStringList displaycatalogList = catalogFileList;
+
+                //Add the option All at the beginning
+                displaycatalogList.insert(0,"All");
+                displaycatalogList.insert(1,"Selected Storage");
+                displaycatalogList.insert(2,"Selected Location");
+                //catalogFileList = cNames;
+                fileListModel->setStringList(displaycatalogList);
+                //Send list to the Search combobox (with All on Slecteed storage options)
+                ui->Search_comboBox_SelectCatalog->setModel(fileListModel);
+            }

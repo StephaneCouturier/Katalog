@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             initiateSearchValues();
             refreshCatalogSelectionList();
 
-            ui->CB_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
     //setup tab: Storage
             storageFilePath = collectionFolder + "/" + "storage.csv";
@@ -160,3 +160,4 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
+

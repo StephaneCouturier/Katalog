@@ -228,13 +228,18 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             */
 
         //Search
-            void on_PB_S_ResetAll_clicked();
-            void on_KCB_SearchText_returnPressed();
-            void on_PB_Search_clicked();
+            void on_Search_pushButton_Search_clicked();
+            void on_Search_pushButton_ResetAll_clicked();
+            void on_Search_pushButton_ExportResults_clicked();
+            void on_Search_pushButton_PasteFromClipboard_clicked();
+            void on_Search_kcombobox_SearchText_returnPressed();
+
+            void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
+            void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
+
             void setupFileContextMenu();
-            void on_PB_ExportResults_clicked();
-            QString getCatalogStorageName(QString catalogFilePath);
             void getLocationCatalogList(QString location);
+            QString getCatalogStorageName(QString catalogFilePath);
 
             //context menu
             void contextOpenFile();
@@ -243,8 +248,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void contextCopyFolderPath();
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
-            void on_TrV_FilesFound_customContextMenuRequested(const QPoint &pos);
-            void on_TrV_FilesFound_clicked(const QModelIndex &index);
 
         //Create
             void on_Create_PB_AddStorage_clicked();
@@ -319,7 +322,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
         //Tests
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
-            void on_PB_GetTextFromClipboard_clicked();
+
             void on_PB_RecordCatalogStats_clicked();
             void on_PB_TagFolder_clicked();
             void on_LI_ExistingTags_activated(const QModelIndex &index);

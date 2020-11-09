@@ -120,7 +120,7 @@
         void MainWindow::on_Collection_PB_Search_clicked()
         {
             //Change the selected catalog in Search tab
-            ui->CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
 
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab

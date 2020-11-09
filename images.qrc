@@ -6,5 +6,9 @@
         <file>images/link-tree-end.png</file>
         <file>images/link-tree-mid.png</file>
         <file>images/link-v.png</file>
+        <file>images/link_blue/link-h.png</file>
+        <file>images/link_blue/link-tree-end.png</file>
+        <file>images/link_blue/link-tree-mid.png</file>
+        <file>images/link_blue/link-v.png</file>
     </qresource>
 </RCC>

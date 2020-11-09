@@ -111,7 +111,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_14">
         <item>
-         <layout class="QVBoxLayout" name="VL_MainLayout">
+         <layout class="QVBoxLayout" name="Search_verticalLayout_MainLayout">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -128,7 +128,7 @@
            <number>0</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="HL_SearchText">
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchText">
             <property name="topMargin">
              <number>5</number>
             </property>
@@ -136,7 +136,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_34">
+             <widget class="QLabel" name="Search_label_LinkImage1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -164,7 +164,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_SearchText">
+             <widget class="QLabel" name="Search_label_Text">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -203,7 +203,7 @@
              </widget>
             </item>
             <item>
-             <widget class="KComboBox" name="KCB_SearchText">
+             <widget class="KComboBox" name="Search_kcombobox_SearchText">
               <property name="font">
                <font>
                 <family>Noto Sans</family>
@@ -228,7 +228,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="PB_GetTextFromClipboard">
+             <widget class="QPushButton" name="Search_pushButton_PasteFromClipboard">
               <property name="maximumSize">
                <size>
                 <width>25</width>
@@ -251,7 +251,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="PB_Search">
+             <widget class="QPushButton" name="Search_pushButton_Search">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -284,7 +284,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="HL_SearchFilters">
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFilters">
             <property name="topMargin">
              <number>0</number>
             </property>
@@ -292,7 +292,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="Search_label_LinkImage2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -320,7 +320,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_36">
+             <widget class="QLabel" name="Search_label_LinkImage3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -348,7 +348,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_Crteria">
+             <widget class="QLabel" name="Search_label_With">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -384,7 +384,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="CB_S_TextCriteria">
+             <widget class="QComboBox" name="Search_comboBox_TextCriteria">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -420,7 +420,7 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_27">
+             <spacer name="Search_horizontalSpacer_01">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -436,7 +436,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_35">
+             <widget class="QLabel" name="Search_label_LinkImage4">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -459,7 +459,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_SearchIn">
+             <widget class="QLabel" name="Search_label_In">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -498,7 +498,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="CB_S_SearchIn">
+             <widget class="QComboBox" name="Search_comboBox_SearchIn">
               <property name="minimumSize">
                <size>
                 <width>190</width>
@@ -523,7 +523,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer">
+             <spacer name="Search_horizontalSpacer_02">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -539,7 +539,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="L_Regex">
+             <widget class="QLabel" name="Search_label_Regex">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -552,7 +552,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_12">
+             <spacer name="Search_horizontalSpacer_03">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -568,7 +568,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="PB_S_ResetAll">
+             <widget class="QPushButton" name="Search_pushButton_ResetAll">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -587,9 +587,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="HL_SearchCatalog">
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchCatalog">
             <item>
-             <widget class="QLabel" name="label_33">
+             <widget class="QLabel" name="Search_label_LinkImage5">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -617,7 +617,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_SelectCatalog">
+             <widget class="QLabel" name="Search_label_Catalog">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -653,7 +653,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="CB_SelectCatalog">
+             <widget class="QComboBox" name="Search_comboBox_SelectCatalog">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -674,7 +674,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_11">
+             <spacer name="Search_horizontalSpacer_04">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -692,12 +692,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="HL_FileSize">
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFile">
             <property name="topMargin">
              <number>0</number>
             </property>
+            <property name="bottomMargin">
+             <number>8</number>
+            </property>
             <item>
-             <widget class="QLabel" name="label_32">
+             <widget class="QLabel" name="Search_label_LinkImage6">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -725,7 +728,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_Size">
+             <widget class="QLabel" name="Search_label_File">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -764,7 +767,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_37">
+             <widget class="QLabel" name="Search_label_Size">
               <property name="minimumSize">
                <size>
                 <width>35</width>
@@ -777,7 +780,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="Search_label_Greater">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -805,7 +808,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="SB_MinimumSize">
+             <widget class="QSpinBox" name="Search_spinBox_FileTypeMinimumSize">
               <property name="minimumSize">
                <size>
                 <width>70</width>
@@ -828,7 +831,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="Search_label_Lower">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -856,7 +859,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="SB_MaximumSize">
+             <widget class="QSpinBox" name="Search_spinBox_MaximumSize">
               <property name="minimumSize">
                <size>
                 <width>70</width>
@@ -890,7 +893,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_26">
+             <spacer name="Search_horizontalSpacer_05">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -906,7 +909,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_31">
+             <widget class="QLabel" name="Search_label_LinkImage7">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -934,7 +937,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="L_Type">
+             <widget class="QLabel" name="Search_label_Type">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -973,7 +976,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="CB_S_FileType">
+             <widget class="QComboBox" name="Search_comboBox_FileType">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -1038,7 +1041,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_6">
+             <spacer name="Search_horizontalSpacer_06">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1054,7 +1057,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_38">
+             <widget class="QLabel" name="Search_label_LinkImage8">
               <property name="minimumSize">
                <size>
                 <width>40</width>
@@ -1080,7 +1083,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_8">
+             <spacer name="Search_horizontalSpacer_07">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1096,7 +1099,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="PB_ExportResults">
+             <widget class="QPushButton" name="Search_pushButton_ExportResults">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -1112,29 +1115,35 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="HL_SearchResult">
+           <widget class="Line" name="Search_line_SeparateResults">
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="midLineWidth">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_Results" stretch="1,3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
             <property name="topMargin">
-             <number>15</number>
+             <number>6</number>
             </property>
             <item>
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="HL_TreeAndList" stretch="1,3">
+             <layout class="QVBoxLayout" name="Search_verticalLayout_Catalogs">
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
               <item>
-               <layout class="QVBoxLayout" name="VL_Tree">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetDefaultConstraint</enum>
-                </property>
+               <layout class="QHBoxLayout" name="Search_horizontalLayout_CatalogResults">
                 <item>
-                 <widget class="QLabel" name="L_CatalogFoundList">
+                 <widget class="QLabel" name="Search_label_CatalogsWithResults">
                   <property name="font">
                    <font>
                     <family>Noto Sans</family>
@@ -1151,106 +1160,106 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                  </widget>
                 </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QListView" name="Search_listView_CatalogsFound">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                 </font>
+                </property>
+                <property name="locale">
+                 <locale language="English" country="UnitedStates"/>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="Search_verticalLayout_Files">
+              <item>
+               <layout class="QHBoxLayout" name="Search_horizontalLayout_FileResults">
                 <item>
-                 <widget class="QListView" name="TR_CatalogFoundList">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>150</width>
-                    <height>200</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
+                 <widget class="QLabel" name="Search_label_FoundTitle">
                   <property name="font">
                    <font>
                     <family>Noto Sans</family>
                    </font>
                   </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
+                  <property name="text">
+                   <string>Files found: </string>
                   </property>
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
+                  <property name="margin">
+                   <number>0</number>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="Search_label_NumberResults">
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="Search_horizontalSpacer_08">
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                   </font>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="VL_Files">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <item>
-                   <widget class="QLabel" name="Search_label_FoundTitle">
-                    <property name="font">
-                     <font>
-                      <family>Noto Sans</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Files found: </string>
-                    </property>
-                    <property name="margin">
-                     <number>0</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="L_NumberFilesResult">
-                    <property name="font">
-                     <font>
-                      <family>Noto Sans</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_5">
-                    <property name="font">
-                     <font>
-                      <family>Noto Sans</family>
-                     </font>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QTreeView" name="TrV_FilesFound">
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
-                  </property>
-                  <property name="alternatingRowColors">
-                   <bool>true</bool>
-                  </property>
-                  <property name="sortingEnabled">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QTreeView" name="Search_treeView_FilesFound">
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

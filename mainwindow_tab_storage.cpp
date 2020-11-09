@@ -144,7 +144,7 @@ void MainWindow::on_Storage_PB_SearchStorage_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->CB_SelectCatalog->setCurrentText("Selected Storage");
+    ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Storage");
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_PB_SearchLocation_clicked()
@@ -152,7 +152,7 @@ void MainWindow::on_Storage_PB_SearchLocation_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->CB_SelectCatalog->setCurrentText("Selected Location");
+    ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Location");
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_PB_CreateCatalog_clicked()

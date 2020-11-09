@@ -47,8 +47,8 @@
 
 //Settings -----------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
-        ui->TrV_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect( ui->TrV_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
+        ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
 
         ui->TrV_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -63,7 +63,7 @@
         if(collectionFolder == ""){
                collectionFolder = QApplication::applicationDirPath();
         }
-        ui->KCB_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+        ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
         selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
         selectedFileType        = settings.value("LastSearch/FileType").toString();
         selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
@@ -83,7 +83,7 @@
         QSettings settings(settingsFile, QSettings:: IniFormat);
         //QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
-        settings.setValue("LastSearch/SearchText", ui->KCB_SearchText->currentText());
+        settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedSearchCatalog);
         settings.setValue("LastSearch/FileType", selectedFileType);
         settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
@@ -118,7 +118,7 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
-        ui->L_Regex->hide();
+        ui->Search_label_Regex->hide();
         //ui->HL_Location_and_Storage->hide();
 
         //Create
@@ -184,12 +184,25 @@
               );
 
         //Search Tab
-        ui->PB_Search->setStyleSheet(
+        ui->Search_pushButton_Search->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
         ui->PB_CreateCatalog->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
+        ui->Search_line_SeparateResults->setStyleSheet(
+              "QFrame          { color: #10a2df; } "
+              );
+
+        ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage3->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage4->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage5->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage6->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage7->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage8->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+
     }
 
     //----------------------------------------------------------------------
@@ -210,10 +223,10 @@
               ); //"QWidget              { background: #EEE; } "
             //"QTabWidget::pane     { border: 0; } "
 
-        ui->PB_Search->setStyleSheet(
+        ui->Search_pushButton_Search->setStyleSheet(
               "QPushButton          { background: #43bf0c; color: white; padding: 6px; font-weight: bold;} ");
 
-        ui->TrV_FilesFound->setStyleSheet(
+        ui->Search_treeView_FilesFound->setStyleSheet(
               "QTreeView            { background: white; color: white; padding: 6px; } ");
 
                 //SB_MinimumSize
