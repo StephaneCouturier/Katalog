@@ -26,9 +26,6 @@
 // Purpose:     Class for the main window
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -58,13 +55,11 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QMessageBox>
+
+#include <KComboBox>
 //#include <KXmlGuiWindow>
 //#include <KMessageBox>
-#include <KComboBox>
-
-class KJob;
-class QTableView;
-//class KTextEdit;
+//class KJob;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -80,27 +75,21 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
     private:
         //Global
-            //KDE
+            //UI
             Ui::MainWindow *ui;
-
-            QSqlRelationalTableModel *model;
-            QSqlRelationalTableModel *model2;
-            int authorIdx, genreIdx;
-            void startSQLDB();
-
             void loadCustomTheme1();
-            void loadCustomTheme2();
             void hideDevelopmentUIItems();
-            //KDE menus/icons
-            void setupActions();
 
-            //parameters
-            QString fileName;
+            //KDE menus/icons
+            //void setupActions();
 
             //Application settings
             QString settingsFile;
             void loadSettings();
             void saveSettings();
+
+            //Parameters
+            QString fileName;
 
             //FileTypes
             QStringList fileType_Image;
@@ -132,7 +121,9 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void loadCatalogsToModel();
             void LoadFilesToModel();
             bool verifyCatalogPath(QString catalogSourcePath);
-            void recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize);
+            void recordSelectedCatalogStats(QString selectedCatalogName,
+                                            int selectedCatalogFileCount,
+                                            qint64 selectedCatalogTotalFileSize);
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
@@ -279,9 +270,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();
 
-
-            //void on_TV_Explorer_activated(const QModelIndex &index);
-
         //Explore
 
         //Storage
@@ -300,15 +288,12 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
 
-            void getStorageInfo(const QString &storagePath); //DEV
-
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectCatalog_currentIndexChanged();
             void on_Statistics_comboBox_TypeOfData_currentIndexChanged();
             void statsLoadChart();
-            void statsLoadChart2();//DEV
 
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();

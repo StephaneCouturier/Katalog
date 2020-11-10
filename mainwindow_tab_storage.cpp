@@ -84,11 +84,6 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
     }
 }
 //----------------------------------------------------------------------
-
-
-
-
-
 void MainWindow::on_Storage_pushButton_Reload_clicked()
 {
     loadStorageModel();
@@ -329,24 +324,3 @@ void MainWindow::loadStorageModel()
 
 }
 //----------------------------------------------------------------------
-void MainWindow::getStorageInfo(const QString &storagePath)
-{//DEV, not implemented
-    //QStorageInfo storage = QStorageInfo::root();
-    //KMessageBox::information(this,"path:\n" + storagePath);
-
-    QStorageInfo storage;
-    storage.setPath(storagePath);
-
-    //KMessageBox::information(this,"test:\n" + storage.rootPath());
-    if (storage.isReadOnly())
-        qDebug() << "isReadOnly:" << storage.isReadOnly();
-
-    //KMessageBox::information(this,"test:\n" + storage.name());
-    //KMessageBox::information(this,"test:\n" + storage.fileSystemType());
-    qint64 sizeTotal = storage.bytesTotal()/1024/1024;
-    qint64 sizeAvailable = storage.bytesFree()/1024/1024;
-    //KMessageBox::information(this,"test:\n" + QString::number(sizeTotal));
-    //KMessageBox::information(this,"test:\n" + QString::number(sizeAvailable));
-
-    //return storage.name();
-}

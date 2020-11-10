@@ -201,33 +201,6 @@
     }
 
     //----------------------------------------------------------------------
-    void MainWindow::loadCustomTheme2()
-    {
-        //Mainwindow
-        //ui->MainWindow.setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
-        //ui->centralwidget->setStyleSheet(QString("QTabBar::tab:selected { background: lightgray; } "));
-
-        //TabWidget
-        //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; color: #43bf0c} "));
-        //ui->tabWidget->setStyleSheet(QString("QTabBar::tab:selected { background: white; border: 5px solid; boder-color: #43bf0c} "));
-
-        ui->tabWidget->setStyleSheet(
-              "QTabBar::tab         { padding: 6px 14px; background: #CCC; } "
-              "QTabBar::tab:selected{ background: #10a2df; color: white; font-weight: bold; text-decoration: none;} "
-
-              ); //"QWidget              { background: #EEE; } "
-            //"QTabWidget::pane     { border: 0; } "
-
-        ui->Search_pushButton_Search->setStyleSheet(
-              "QPushButton          { background: #43bf0c; color: white; padding: 6px; font-weight: bold;} ");
-
-        ui->Search_treeView_FilesFound->setStyleSheet(
-              "QTreeView            { background: white; color: white; padding: 6px; } ");
-
-                //SB_MinimumSize
-        //font-weight: bold;
-
-    }
 
 /*
     //Menu and Icons - Actions KDE setup ---------------------------------------
