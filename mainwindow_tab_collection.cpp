@@ -216,7 +216,7 @@
                                          );
             }
 
-            if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
+            if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true )
                 recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
 
             //Refresh the collection view
@@ -238,7 +238,7 @@
         void MainWindow::on_Collection_pushButton_ViewCatalogStats_clicked()
         {
             //Collection_PB_ViewCatalogStats
-            ui->Stats_CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
         }

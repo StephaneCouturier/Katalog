@@ -44,7 +44,7 @@
 void MainWindow::on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged()
 {
     QSettings settings(settingsFile, QSettings:: IniFormat);
-    settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
+    settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
 }
 
 void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()

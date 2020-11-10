@@ -40,9 +40,8 @@
 //--- UI methods-------------------------------------------------------------------------------------
 //--------- Full list --------------------------------------------------
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_CreateList_clicked()
+void MainWindow::on_Storage_pushButton_CreateList_clicked()
 {
-
     // Define storage file
     //storageFilePath = collectionFolder + "/" + "storage.csv";
 
@@ -67,15 +66,15 @@ void MainWindow::on_Storage_PB_CreateList_clicked()
 
               newStorageFile.close();
 
-              ui->Storage_PB_Reload->setEnabled(true);
-              ui->Storage_PB_EditAll->setEnabled(true);
-              //ui->Storage_PB_SaveAll->setEnabled(true);
+              ui->Storage_pushButton_Reload->setEnabled(true);
+              ui->Storage_pushButton_EditAll->setEnabled(true);
+              //ui->Storage_pushButton_SaveAll->setEnabled(true);
 
               QMessageBox::information(this,"Katalog","A storage file was created:\n" + newStorageFile.fileName()
                                        + "\nYou can edit it now.");
 
               //Disable button so it cannot be overwritten
-              ui->Storage_PB_CreateList->setEnabled(false);
+              ui->Storage_pushButton_CreateList->setEnabled(false);
 
               //Even if empty, load it to the model
               loadStorageModel();
@@ -85,18 +84,23 @@ void MainWindow::on_Storage_PB_CreateList_clicked()
     }
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_Reload_clicked()
+
+
+
+
+
+void MainWindow::on_Storage_pushButton_Reload_clicked()
 {
     loadStorageModel();
     loadStorageList();
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_EditAll_clicked()
+void MainWindow::on_Storage_pushButton_EditAll_clicked()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(storageFilePath));
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_SaveAll_clicked()
+void MainWindow::on_Storage_pushButton_SaveAll_clicked()
 {
     //Prepare export file name
 
@@ -117,16 +121,16 @@ void MainWindow::on_Storage_PB_SaveAll_clicked()
       exportFile.close();
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_treeView_clicked(const QModelIndex &index)
+void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
 {
-    selectedStorageName      = ui->Storage_treeView->model()->index(index.row(), 2, QModelIndex()).data().toString();
-    selectedStorageLocation = ui->Storage_treeView->model()->index(index.row(), 0, QModelIndex()).data().toString();
-    selectedStoragePath      = ui->Storage_treeView->model()->index(index.row(), 5, QModelIndex()).data().toString();
+    selectedStorageName      = ui->Storage_treeView_StorageList->model()->index(index.row(), 2, QModelIndex()).data().toString();
+    selectedStorageLocation = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    selectedStoragePath      = ui->Storage_treeView_StorageList->model()->index(index.row(), 5, QModelIndex()).data().toString();
 
     //display buttons
-    ui->Storage_PB_SearchStorage->setEnabled(true);
-    ui->Storage_PB_SearchLocation->setEnabled(true);
-    ui->Storage_PB_CreateCatalog->setEnabled(true);
+    ui->Storage_pushButton_SearchStorage->setEnabled(true);
+    ui->Storage_pushButton_SearchLocation->setEnabled(true);
+    ui->Storage_pushButton_CreateCatalog->setEnabled(true);
     //ui->PB_S_Update->setEnabled(true);
 
     selectedStorageIndexRow = index.row();
@@ -134,12 +138,12 @@ void MainWindow::on_Storage_treeView_clicked(const QModelIndex &index)
 
 //--------- With seleted storage ---------------------------------------
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_New_clicked()
+void MainWindow::on_Storage_pushButton_New_clicked()
 {
-    //KMessageBox::information(this,"on_Storage_PB_New_clicked\n");
+    //KMessageBox::information(this,"on_Storage_pushButton_New_clicked\n");
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_SearchStorage_clicked()
+void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
 {//KMessageBox::information(this,"on_PB_S_Search_clicked\n"+ selectedStorageName);
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
@@ -147,7 +151,7 @@ void MainWindow::on_Storage_PB_SearchStorage_clicked()
     ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Storage");
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_SearchLocation_clicked()
+void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
 {
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
@@ -155,7 +159,7 @@ void MainWindow::on_Storage_PB_SearchLocation_clicked()
     ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Location");
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_CreateCatalog_clicked()
+void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
 {
     //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
     ui->Create_lineEdit_NewCatalogPath->setText(selectedStoragePath);
@@ -169,12 +173,12 @@ void MainWindow::on_Storage_PB_CreateCatalog_clicked()
 
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_OpenFilelight_clicked()
+void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
 {
-    //KMessageBox::information(this,"on_Storage_PB_OpenFilelight_clicked\n");
+    //KMessageBox::information(this,"on_Storage_pushButton_OpenFilelight_clicked\n");
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_Update_clicked()
+void MainWindow::on_Storage_pushButton_Update_clicked()
 {
     QMessageBox::information(this,"Katalog","test:\n" + QString::number(selectedStorageIndexRow));
 
@@ -194,7 +198,7 @@ void MainWindow::on_Storage_PB_Update_clicked()
 
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Storage_PB_Delete_clicked()
+void MainWindow::on_Storage_pushButton_Delete_clicked()
 {
     //ui->TrV_Storage->model()->removeRow(selectedStorageIndexRow);
     //storageListModel->removeRows(selectedStorageIndexRow,1);
@@ -292,36 +296,36 @@ void MainWindow::loadStorageModel()
     proxyStorageModel->setSourceModel(storageModel);
 
     // Connect model to tree/table view
-    ui->Storage_treeView->setModel(proxyStorageModel);
-    ui->Storage_treeView->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-    ui->Storage_treeView->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-    ui->Storage_treeView->header()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->Storage_treeView->header()->resizeSection(0, 200); //Location
-    ui->Storage_treeView->header()->resizeSection(1,  50); //Icon
-    ui->Storage_treeView->header()->resizeSection(2, 175); //Name
-    ui->Storage_treeView->header()->resizeSection(3,  50); //ID
-    ui->Storage_treeView->header()->resizeSection(4, 100); //Type
-    ui->Storage_treeView->header()->resizeSection(5, 250); //Path
-    ui->Storage_treeView->header()->resizeSection(6,  75); //FS
-    ui->Storage_treeView->header()->resizeSection(7,  75); //Total
-    ui->Storage_treeView->header()->resizeSection(8,  75); //Free
-    ui->Storage_treeView->header()->hideSection(1); //Path
+    ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
+    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Storage_treeView_StorageList->header()->resizeSection(0, 200); //Location
+    ui->Storage_treeView_StorageList->header()->resizeSection(1,  50); //Icon
+    ui->Storage_treeView_StorageList->header()->resizeSection(2, 175); //Name
+    ui->Storage_treeView_StorageList->header()->resizeSection(3,  50); //ID
+    ui->Storage_treeView_StorageList->header()->resizeSection(4, 100); //Type
+    ui->Storage_treeView_StorageList->header()->resizeSection(5, 250); //Path
+    ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
+    ui->Storage_treeView_StorageList->header()->resizeSection(7,  75); //Total
+    ui->Storage_treeView_StorageList->header()->resizeSection(8,  75); //Free
+    ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
 
-    ui->L_StorageCountValue->setText(QString::number(storageCount));
-    ui->L_StorageSpaceTotalValue->setText(QString::number(storageGrandTotal));
-    ui->L_StorageSpaceUsedValue->setText(QString::number(storageGrandUsed));
-    ui->L_StorageSpaceFreeValue->setText(QString::number(storageGrandFree));
+    ui->Storage_label_CountValue->setText(QString::number(storageCount));
+    ui->Storage_label_SpaceTotalValue->setText(QString::number(storageGrandTotal));
+    ui->Storage_label_SpaceUsedValue->setText(QString::number(storageGrandUsed));
+    ui->Storage_label_SpaceFreeValue->setText(QString::number(storageGrandFree));
 
     //Get list of storage names for Create screen
     storageNameList = sNames;
 
     //Enable buttons
-    ui->Storage_PB_Reload->setEnabled(true);
-    ui->Storage_PB_EditAll->setEnabled(true);
-    //ui->Storage_PB_SaveAll->setEnabled(true);
+    ui->Storage_pushButton_Reload->setEnabled(true);
+    ui->Storage_pushButton_EditAll->setEnabled(true);
+    //ui->Storage_pushButton_SaveAll->setEnabled(true);
 
     //Disable create button so it cannot be overwritten
-    ui->Storage_PB_CreateList->setEnabled(false);
+    ui->Storage_pushButton_CreateList->setEnabled(false);
 
 }
 //----------------------------------------------------------------------

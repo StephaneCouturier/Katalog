@@ -129,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
 
     //setup tab: Tags
             //Default path to scan
-            ui->LE_TagFolderPath->setText("/");
+            ui->Tags_lineEdit_FolderPath->setText("/");
             //Always Load the file system for the treeview
             loadFileSystemTags("/");
             loadFolderTagModel();
@@ -160,6 +160,3 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
-
-
-

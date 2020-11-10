@@ -109,8 +109,8 @@
        <attribute name="title">
         <string>Search</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_14">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0">
          <layout class="QVBoxLayout" name="Search_verticalLayout">
           <property name="spacing">
            <number>0</number>
@@ -2430,7 +2430,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_Storage">
+      <widget class="QWidget" name="tab_Storage">
        <attribute name="icon">
         <iconset theme="drive-harddisk">
          <normaloff>.</normaloff>.</iconset>
@@ -2439,24 +2439,273 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Storage</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11">
-        <item row="3" column="0">
-         <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="2">
-           <widget class="QTreeView" name="Storage_treeView">
-            <property name="alternatingRowColors">
-             <bool>true</bool>
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="Storage_horizontalLayout_Summary">
+          <item>
+           <widget class="QLabel" name="Storage_label_CountLabel">
+            <property name="text">
+             <string>Devices:</string>
             </property>
-            <property name="sortingEnabled">
-             <bool>true</bool>
+            <property name="margin">
+             <number>6</number>
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_CountValue">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Storage_horizontalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceTotalLabel">
+            <property name="text">
+             <string>Total Space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceTotalValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Storage_horizontalSpacer_02">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceUsedLabel">
+            <property name="text">
+             <string>Used Space: </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceUsedValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Storage_horizontalSpacer_03">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceFreeLabel">
+            <property name="text">
+             <string>Free Space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceFreeValue">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Storage_label_SpaceUnit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>(GiB)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Storage_horizontalSpacer_04">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_CreateList">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Create list</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_Reload">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Reload</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_EditAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Edit All</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-edit-sign">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_SaveAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save All</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-save">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Storage_horizontalSpacer_05">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </item>
+        <item row="3" column="0">
+         <widget class="QTreeView" name="Storage_treeView_StorageList">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="Line" name="Storage_line_Separate">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <layout class="QHBoxLayout" name="Storage_horizontalLayout_SelectedDevice">
           <item>
-           <widget class="QLabel" name="label_22">
+           <widget class="QLabel" name="Storage_label_WithSelectedStorage">
             <property name="minimumSize">
              <size>
               <width>150</width>
@@ -2482,7 +2731,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_New">
+           <widget class="QPushButton" name="Storage_pushButton_New">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2496,7 +2745,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_SearchStorage">
+           <widget class="QPushButton" name="Storage_pushButton_SearchStorage">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2510,7 +2759,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_SearchLocation">
+           <widget class="QPushButton" name="Storage_pushButton_SearchLocation">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2524,7 +2773,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_CreateCatalog">
+           <widget class="QPushButton" name="Storage_pushButton_CreateCatalog">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2538,7 +2787,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_OpenFilelight">
+           <widget class="QPushButton" name="Storage_pushButton_OpenFilelight">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2552,7 +2801,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_Update">
+           <widget class="QPushButton" name="Storage_pushButton_Update">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2566,7 +2815,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_16">
+           <spacer name="Storage_horizontalSpacer_06">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -2582,7 +2831,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_PB_Delete">
+           <widget class="QPushButton" name="Storage_pushButton_Delete">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2596,7 +2845,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_22">
+           <spacer name="Storage_horizontalSpacer_07">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -2609,263 +2858,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
          </layout>
-        </item>
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_14">
-          <item>
-           <widget class="QLabel" name="L_StorageCountLabel">
-            <property name="text">
-             <string>Devices:</string>
-            </property>
-            <property name="margin">
-             <number>6</number>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageCountValue">
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_18">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceTotalLabel">
-            <property name="text">
-             <string>Total Space:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceTotalValue">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_19">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceUsedLabel">
-            <property name="text">
-             <string>Used Space: </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceUsedValue">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_20">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceFreeLabel">
-            <property name="text">
-             <string>Free Space:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="L_StorageSpaceFreeValue">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Storage_L_SpaceUnit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>(GiB)</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_17">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>50</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_CreateList">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Create list</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-new">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_Reload">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Reload</string>
-            </property>
-            <property name="icon">
-             <iconset theme="view-refresh">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_EditAll">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Edit All</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-edit-sign">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_PB_SaveAll">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Save All</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-save">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_9">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="Line" name="line_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_Statistics">
+      <widget class="QWidget" name="tab_Statistics">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -2878,9 +2874,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0" colspan="3">
-         <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="Statistics_label_DataType">
             <property name="minimumSize">
              <size>
               <width>100</width>
@@ -2893,7 +2889,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="Stats_comboBox_TypeOfData">
+           <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -2903,7 +2899,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_29">
+           <widget class="QLabel" name="Statistics_label_Catalog">
             <property name="minimumSize">
              <size>
               <width>100</width>
@@ -2919,7 +2915,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="Stats_CB_SelectCatalog">
+           <widget class="QComboBox" name="Statistics_comboBox_SelectCatalog">
             <property name="minimumSize">
              <size>
               <width>300</width>
@@ -2929,7 +2925,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Stats_PB_OpenStatsFile">
+           <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
             <property name="text">
              <string>Edit records</string>
             </property>
@@ -2940,7 +2936,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Stats_PB_Reload">
+           <widget class="QPushButton" name="Statistics_pushButton_Reload">
             <property name="minimumSize">
              <size>
               <width>100</width>
@@ -2957,7 +2953,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_21">
+           <spacer name="Statistics_horizontalSpacer_01">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -2976,7 +2972,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_Settings">
+      <widget class="QWidget" name="tab_Settings">
        <attribute name="icon">
         <iconset theme="configure">
          <normaloff>.</normaloff>.</iconset>
@@ -2986,16 +2982,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_14">
+         <layout class="QGridLayout" name="Settings_gridLayout">
           <item row="1" column="1">
-           <widget class="QLabel" name="label_30">
+           <widget class="QLabel" name="Settings_label_Data">
             <property name="text">
              <string>Data</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <spacer name="horizontalSpacer_28">
+           <spacer name="Settings_horizontalSpacer_01">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -3011,7 +3007,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
           <item row="2" column="1">
-           <widget class="QCheckBox" name="Settings_ChBx_SaveRecordWhenUpdate">
+           <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
             <property name="text">
              <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
             </property>
@@ -3021,7 +3017,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <spacer name="verticalSpacer_7">
+           <spacer name="Settings_verticalSpacer_02">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -3037,7 +3033,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
           <item row="4" column="1">
-           <widget class="Line" name="line_11">
+           <widget class="Line" name="Settings_line_SeparateData">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -3058,7 +3054,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="7" column="1">
-           <spacer name="verticalSpacer_6">
+           <spacer name="Settings_verticalSpacer_01">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -3087,7 +3083,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          </layout>
         </item>
         <item row="0" column="1">
-         <spacer name="horizontalSpacer_31">
+         <spacer name="Settings_horizontalSpacer_02">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -3101,7 +3097,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_Tags">
+      <widget class="QWidget" name="tab_Tags">
        <attribute name="icon">
         <iconset theme="tag">
          <normaloff>.</normaloff>.</iconset>
@@ -3111,9 +3107,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_12">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_9">
+         <layout class="QGridLayout" name="Tags_gridLayout">
           <item row="6" column="1">
-           <widget class="QPushButton" name="PB_TagFolder">
+           <widget class="QPushButton" name="Tags_pushButton_TagFolder">
             <property name="text">
              <string>Tag the folder</string>
             </property>
@@ -3124,7 +3120,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="Tags_label_CurrentTags">
             <property name="styleSheet">
              <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
@@ -3134,7 +3130,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="L_SelectTag">
+           <widget class="QLabel" name="Tags_label_SelectTag">
             <property name="styleSheet">
              <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
@@ -3144,15 +3140,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="LE_TagName"/>
+           <widget class="QLineEdit" name="Tags_lineEdit_TagName"/>
           </item>
           <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <layout class="QHBoxLayout" name="Tags_horizontalLayout_SelectFolder">
             <item>
-             <widget class="QLineEdit" name="LE_TagFolderPath"/>
+             <widget class="QLineEdit" name="Tags_lineEdit_FolderPath"/>
             </item>
             <item>
-             <widget class="QPushButton" name="PB_T_PickFolder">
+             <widget class="QPushButton" name="Tags_pushbutton_PickFolder">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -3177,7 +3173,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_6">
+           <widget class="QLabel" name="Tags_label_SelectFolder">
             <property name="styleSheet">
              <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
@@ -3187,7 +3183,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="Tags_label_ExistingTags">
             <property name="styleSheet">
              <string notr="true">color: rgb(95, 95, 95)</string>
             </property>
@@ -3197,16 +3193,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QTreeView" name="TV_Explorer_2"/>
+           <widget class="QTreeView" name="Tags_treeview_Explorer"/>
           </item>
           <item row="8" column="0">
-           <widget class="QTreeView" name="TrV_FolderTags"/>
+           <widget class="QTreeView" name="Tags_treeView_FolderTags"/>
           </item>
           <item row="4" column="1">
-           <widget class="QListView" name="LI_ExistingTags"/>
+           <widget class="QListView" name="Tags_listView_ExistingTags"/>
           </item>
           <item row="8" column="1">
-           <widget class="QPushButton" name="Tags_PB_Reload">
+           <widget class="QPushButton" name="Tags_pushButton_Reload">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -3223,9 +3219,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QLabel" name="label_test">
+           <widget class="QLabel" name="Tags_label_Test">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Test</string>
             </property>
            </widget>
           </item>

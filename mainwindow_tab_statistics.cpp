@@ -48,23 +48,24 @@
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
-void MainWindow::on_Stats_CB_SelectCatalog_currentIndexChanged()
-{
-    statsLoadChart();
-}
-void MainWindow::on_Stats_comboBox_TypeOfData_currentIndexChanged()
+void MainWindow::on_Statistics_comboBox_SelectCatalog_currentIndexChanged()
 {
     statsLoadChart();
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Stats_PB_OpenStatsFile_clicked()
+void MainWindow::on_Statistics_comboBox_TypeOfData_currentIndexChanged()
+{
+    statsLoadChart();
+}
+//----------------------------------------------------------------------
+void MainWindow::on_Statistics_pushButton_EditStatisticsFile_clicked()
 {
     //KMessageBox::information(this,"test:\n");
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
     QDesktopServices::openUrl(QUrl::fromLocalFile(statisticsFilePath));
 }
 //----------------------------------------------------------------------
-void MainWindow::on_Stats_PB_Reload_clicked()
+void MainWindow::on_Statistics_pushButton_Reload_clicked()
 {
     statsLoadChart();
 }
@@ -72,10 +73,10 @@ void MainWindow::on_Stats_PB_Reload_clicked()
 
 void MainWindow::statsLoadChart()
 {
-    selectedTypeOfData = ui->Stats_comboBox_TypeOfData->currentText();
+    selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
 
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
-    QString selectedCatalogforStats = ui->Stats_CB_SelectCatalog->currentText();
+    QString selectedCatalogforStats = ui->Statistics_comboBox_SelectCatalog->currentText();
     qreal maxValueGraphRange = 0.0;
     QString displayUnit;
     QLineSeries *series = new QLineSeries();

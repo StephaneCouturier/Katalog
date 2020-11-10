@@ -320,7 +320,7 @@
         //LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
         //Add new catalog values to the statistics log, if the user has chosen this options.
-            if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true ){
+            if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
 
                 //Save values
                 recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);

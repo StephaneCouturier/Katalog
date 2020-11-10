@@ -234,6 +234,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Search_pushButton_PasteFromClipboard_clicked();
             void on_Search_kcombobox_SearchText_returnPressed();
 
+            void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
 
@@ -285,26 +286,37 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void exploreLoadDirectories();
 
         //Storage
-            void getStorageInfo(const QString &storagePath);
-            void on_Storage_treeView_clicked(const QModelIndex &index);
-            void on_Storage_PB_CreateList_clicked();
-            void on_Storage_PB_Reload_clicked();
-            void on_Storage_PB_EditAll_clicked();
-            void on_Storage_PB_SaveAll_clicked();
+            void on_Storage_pushButton_CreateList_clicked();
+            void on_Storage_pushButton_Reload_clicked();
+            void on_Storage_pushButton_EditAll_clicked();
+            void on_Storage_pushButton_SaveAll_clicked(); //DEV
 
-            void on_Storage_PB_New_clicked();
-            void on_Storage_PB_SearchStorage_clicked();
-            void on_Storage_PB_SearchLocation_clicked();
-            void on_Storage_PB_CreateCatalog_clicked();
-            void on_Storage_PB_OpenFilelight_clicked();
-            void on_Storage_PB_Update_clicked();
-            void on_Storage_PB_Delete_clicked();
+            void on_Storage_pushButton_New_clicked(); //DEV
+            void on_Storage_pushButton_SearchStorage_clicked();
+            void on_Storage_pushButton_SearchLocation_clicked();
+            void on_Storage_pushButton_CreateCatalog_clicked();
+            void on_Storage_pushButton_OpenFilelight_clicked(); //DEV
+            void on_Storage_pushButton_Update_clicked(); //DEV
+            void on_Storage_pushButton_Delete_clicked(); //DEV
+
+            void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
+
+            void getStorageInfo(const QString &storagePath); //DEV
+
+        //Statistics
+            void on_Statistics_pushButton_EditStatisticsFile_clicked();
+            void on_Statistics_pushButton_Reload_clicked();
+            void on_Statistics_comboBox_SelectCatalog_currentIndexChanged();
+            void on_Statistics_comboBox_TypeOfData_currentIndexChanged();
+            void statsLoadChart();
+            void statsLoadChart2();//DEV
 
         //Tags
-            void on_Tags_PB_Reload_clicked();
-
-            void on_TV_Explorer_2_activated(const QModelIndex &index);
-            void on_PB_T_PickFolder_clicked();
+            void on_Tags_pushButton_PickFolder_clicked();
+            void on_Tags_pushButton_TagFolder_clicked();
+            void on_Tags_pushButton_Reload_clicked();
+            void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
+            void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
 
         //Settings
@@ -317,19 +329,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_pushButton_7_clicked();
             void on_pushButton_9_clicked();
 
-        //Stats
-            void on_Stats_PB_OpenStatsFile_clicked();
-            void on_Stats_PB_Reload_clicked();
-            void on_Stats_CB_SelectCatalog_currentIndexChanged();
-            void on_Stats_comboBox_TypeOfData_currentIndexChanged();
-            void statsLoadChart();
-            void statsLoadChart2();//DEV
-
         //Tests
-            void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
-
-            void on_PB_TagFolder_clicked();
-            void on_LI_ExistingTags_activated(const QModelIndex &index);
             void on_test_pb_insert_clicked();
 
 

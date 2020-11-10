@@ -72,7 +72,7 @@
         selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
         selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
         selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
-        ui->Settings_ChBx_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
+        ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
         ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());
 
@@ -92,7 +92,7 @@
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
         settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
-        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked());
+        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
         //settings.setValue("LastSelectedCatalog", sText);
@@ -138,13 +138,13 @@
         //ui->PB_C_Rename->hide();
 
         //Storage
-        ui->Storage_PB_SaveAll->hide();
-        ui->Storage_PB_New->hide();
-        //ui->Storage_PB_SearchLocation->hide();
-        ui->Storage_PB_OpenFilelight->hide();
-        ui->Storage_PB_Update->hide();
-        ui->Storage_PB_Delete->hide();
-        ui->Storage_L_SpaceUnit->hide();
+        ui->Storage_pushButton_SaveAll->hide();
+        ui->Storage_pushButton_New->hide();
+        //ui->Storage_pushButton_SearchLocation->hide();
+        ui->Storage_pushButton_OpenFilelight->hide();
+        ui->Storage_pushButton_Update->hide();
+        ui->Storage_pushButton_Delete->hide();
+        ui->Storage_label_SpaceUnit->hide();
 
         //Settings
         //ui->Settings_label_Theme->hide();
@@ -165,8 +165,8 @@
         typeOfData << "Number of files" << "Total file size";
         listModel = new QStringListModel(this);
         listModel->setStringList(typeOfData);
-        ui->Stats_comboBox_TypeOfData->setModel(listModel);
-        ui->Stats_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
+        ui->Statistics_comboBox_TypeOfData->setModel(listModel);
+        ui->Statistics_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
     }
 
     //----------------------------------------------------------------------

@@ -120,7 +120,7 @@
               exportFile.close();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_TR_CatalogFoundList_clicked(const QModelIndex &index)
+        void MainWindow::on_Search_listView_CatalogsFound_clicked(const QModelIndex &index)
         {
             //Get file from selected row
             QString selectedCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
@@ -736,7 +736,7 @@
                 //Send list to the Statistics combobox (without All or Selected storage options)
                 fileListModel = new QStringListModel(this);
                 fileListModel->setStringList(catalogFileList);
-                ui->Stats_CB_SelectCatalog->setModel(fileListModel);
+                ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
 
                 //Prepare list for the Catalog combobox
                 QStringList displaycatalogList = catalogFileList;
