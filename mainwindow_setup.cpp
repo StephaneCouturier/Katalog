@@ -122,10 +122,10 @@
         //ui->HL_Location_and_Storage->hide();
 
         //Create
-        ui->RB_IncludeSubDir->hide();
+        ui->Create_checkBox_IncludeSubDir->hide();
         ui->Create_checkBox_IncludeSymblinks->hide();
-        ui->RB_IncludeArchives->hide();
-        ui->RB_IncludeChecksum->hide();
+        ui->Create_checkBox_IncludeArchives->hide();
+        ui->Create_checkBox_IncludeChecksum->hide();
 
         //Explore
         ui->Explore_label_Directories->hide();
@@ -183,7 +183,7 @@
         ui->Search_pushButton_Search->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
-        ui->PB_CreateCatalog->setStyleSheet(
+        ui->Create_pushButton_CreateCatalog->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #10a2df; } ");

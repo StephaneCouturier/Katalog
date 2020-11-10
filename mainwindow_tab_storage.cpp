@@ -158,8 +158,8 @@ void MainWindow::on_Storage_PB_SearchLocation_clicked()
 void MainWindow::on_Storage_PB_CreateCatalog_clicked()
 {
     //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-    ui->LE_NewCatalogPath->setText(selectedStoragePath);
-    ui->CB_C_StorageSelection->setCurrentText(selectedStorageName);
+    ui->Create_lineEdit_NewCatalogPath->setText(selectedStoragePath);
+    ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorageName);
 
     //Select this directory in the treeview.
     LoadFileSystem(selectedStoragePath);

@@ -98,7 +98,7 @@
       <property name="movable">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="tab_SearchFiles">
+      <widget class="QWidget" name="tab_Search">
        <property name="accessibleName">
         <string/>
        </property>
@@ -1825,7 +1825,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="T_CreateCatalog">
+      <widget class="QWidget" name="tab_Create">
        <attribute name="icon">
         <iconset theme="journal-new">
          <normaloff>.</normaloff>.</iconset>
@@ -1834,628 +1834,481 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Create</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="VL_SelectCatalogPath" stretch="0,0">
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
+        <item row="0" column="2">
+         <layout class="QVBoxLayout" name="Create_verticalLayout_2_OptionsButton">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="spacing">
+           <widget class="QLabel" name="Create_label_SelectContent">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>2- Select Content options</string>
+            </property>
+            <property name="margin">
              <number>6</number>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="Create_hline_02">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="Create_verticalLayout_includeFileType">
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
             <property name="topMargin">
-             <number>0</number>
+             <number>20</number>
+            </property>
+            <property name="rightMargin">
+             <number>20</number>
+            </property>
+            <property name="bottomMargin">
+             <number>20</number>
             </property>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_8">
-              <item>
-               <widget class="QLabel" name="L_SelectThePath">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Open Sans</family>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>1- Select Source path</string>
-                </property>
-                <property name="margin">
-                 <number>6</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_19">
-                <item>
-                 <widget class="QLineEdit" name="LE_NewCatalogPath">
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="clearButtonEnabled">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="PB_PickPath">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Select ...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="edit-select">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QTreeView" name="TV_Explorer"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="Line" name="line_3">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
+             <widget class="QLabel" name="Create_label_includeFileType">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+                <kerning>true</kerning>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(95, 95, 95);</string>
+              </property>
+              <property name="text">
+               <string>include File Type</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="VL_OptionsButton">
-              <item>
-               <widget class="QLabel" name="label_19">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>2- Select Content options</string>
-                </property>
-                <property name="margin">
-                 <number>6</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="VL_includeFileType">
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
-                </property>
-                <item>
-                 <widget class="QWidget" name="widget_2" native="true"/>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_12">
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>10</pointsize>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(95, 95, 95);</string>
-                  </property>
-                  <property name="text">
-                   <string>include File type</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="RB_C_FileType_Any">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Any</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="RB_C_FileType_Image">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Image</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="RB_C_FileType_Audio">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Audio</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="RB_C_FileType_Video">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Video</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="RB_C_FileType_Text">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Text</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="VL_includeOther">
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="L_OtherOptions">
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>10</pointsize>
-                    <kerning>true</kerning>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(95, 95, 95);</string>
-                  </property>
-                  <property name="text">
-                   <string>Other options</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="CkB_IncludeHidden">
-                  <property name="text">
-                   <string>include Hidden files</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="Create_checkBox_IncludeSymblinks">
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>follow symbolic links</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="RB_IncludeSubDir">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>include sub-folders</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="RB_IncludeArchives">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>include archives contents</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="RB_IncludeChecksum">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>include checksum</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_8">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="Line" name="line_4">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
+             <widget class="QRadioButton" name="Create_radioButton_FileType_Any">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Any</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <property name="topMargin">
-               <number>0</number>
+             <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
+              <property name="enabled">
+               <bool>true</bool>
               </property>
-              <item>
-               <widget class="QLabel" name="label_20">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>3- Define &amp; Create catalog</string>
-                </property>
-                <property name="margin">
-                 <number>6</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="L_C_Storage">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Select Storage</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_16">
-                <item>
-                 <widget class="QComboBox" name="CB_C_StorageSelection">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Create_PB_AddStorage">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Add Storage</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="drive-harddisk">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="L_CatalogName">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
-                <property name="text">
-                 <string>Enter Name of the new catalog</string>
-                </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
-                 <widget class="QLineEdit" name="LE_NewCatalogName">
-                  <property name="text">
-                   <string>NewCatalog</string>
-                  </property>
-                  <property name="placeholderText">
-                   <string>Enter a name for your new catalog</string>
-                  </property>
-                  <property name="clearButtonEnabled">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="PB_GenerateFromPath">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Generate</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="tools-wizard">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>100</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_21">
-                <item>
-                 <spacer name="horizontalSpacer_29">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>110</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="PB_CreateCatalog">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>Create Catalog</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="document-save">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_30">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Image</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Audio</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="Create_radioButton_FileType_Video">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Video</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Text</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QVBoxLayout" name="Create_verticalLayout_includeOther">
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="topMargin">
+             <number>20</number>
+            </property>
+            <property name="rightMargin">
+             <number>20</number>
+            </property>
+            <property name="bottomMargin">
+             <number>20</number>
+            </property>
             <item>
-             <spacer name="horizontalSpacer_15">
+             <widget class="QLabel" name="Create_label_OtherOptions">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+                <kerning>true</kerning>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(95, 95, 95);</string>
+              </property>
+              <property name="text">
+               <string>Other options</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Create_checkBox_IncludeHidden">
+              <property name="text">
+               <string>include Hidden files</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Create_checkBox_IncludeSymblinks">
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>follow symbolic links</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Create_checkBox_IncludeSubDir">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>include sub-folders</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Create_checkBox_IncludeArchives">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>include archives contents</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Create_checkBox_IncludeChecksum">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>include checksum</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="Create_verticalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="4">
+         <layout class="QVBoxLayout" name="Create_verticalLayout_3_DefineCreate">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="Create_label_DefineCreate">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>3- Define &amp; Create catalog</string>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="Create_hline_03">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Create_verticalSpacer_02">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Create_label_SelectStorage">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>Select Storage</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_AddStorage">
+            <item>
+             <widget class="QComboBox" name="Create_comboBox_StorageSelection">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Create_pushButton_AddStorage">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Add Storage</string>
+              </property>
+              <property name="icon">
+               <iconset theme="drive-harddisk">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="Create_verticalSpacer_03">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Create_label_CatalogName">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>Enter Name of the new catalog</string>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_Generate">
+            <item>
+             <widget class="QLineEdit" name="Create_lineEdit_NewCatalogName">
+              <property name="text">
+               <string>NewCatalog</string>
+              </property>
+              <property name="placeholderText">
+               <string>Enter a name for your new catalog</string>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Create_pushButton_GenerateFromPath">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Generate</string>
+              </property>
+              <property name="icon">
+               <iconset theme="tools-wizard">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="Create_verticalSpacer_04">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>100</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_Create">
+            <item>
+             <spacer name="Create_horizontalSpacer_01">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>130</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Create_pushButton_CreateCatalog">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Create Catalog</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-save">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Create_horizontalSpacer_02">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -2468,6 +2321,110 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
            </layout>
+          </item>
+          <item>
+           <spacer name="Create_verticalSpacer_05">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="Create_vline_01">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="Line" name="Create_vline_02">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="Create_verticalLayout_1_SelectPath">
+          <item>
+           <widget class="QLabel" name="Create_label_SelectThePath">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(95, 95, 95);</string>
+            </property>
+            <property name="text">
+             <string>1- Select Source path</string>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="Create_hline_01">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_Input">
+            <item>
+             <widget class="QLineEdit" name="Create_lineEdit_NewCatalogPath">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Create_pushButton_PickPath">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Select ...</string>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-select">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTreeView" name="Create_treeView_Explorer"/>
           </item>
          </layout>
         </item>

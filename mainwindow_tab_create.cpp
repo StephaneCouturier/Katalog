@@ -63,15 +63,15 @@
             //qfilesystemmodel->setReadOnly(true);
 
         // Attach the model to the view
-            ui->TV_Explorer->setModel(fileSystemModel);
+            ui->Create_treeView_Explorer->setModel(fileSystemModel);
 
         // Only show the tree, hidding other columns and the header row.
-            ui->TV_Explorer->setColumnWidth(0,250);
-            ui->TV_Explorer->setColumnHidden(1,true);
-            ui->TV_Explorer->setColumnHidden(2,true);
-            ui->TV_Explorer->setColumnHidden(3,true);
-            ui->TV_Explorer->setHeaderHidden(true);
-            ui->TV_Explorer->expandToDepth(1);
+            ui->Create_treeView_Explorer->setColumnWidth(0,250);
+            ui->Create_treeView_Explorer->setColumnHidden(1,true);
+            ui->Create_treeView_Explorer->setColumnHidden(2,true);
+            ui->Create_treeView_Explorer->setColumnHidden(3,true);
+            ui->Create_treeView_Explorer->setHeaderHidden(true);
+            ui->Create_treeView_Explorer->expandToDepth(1);
     }
     //----------------------------------------------------------------------
 
@@ -193,22 +193,23 @@
     }
 
     //Send selected folder in the tree
-    void MainWindow::on_TV_Explorer_activated(const QModelIndex &index)
+    void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
     {//Sends the selected folder in the tree for the New Catalog Path)
         //Get the model/data from the tree
-        QFileSystemModel* pathmodel = (QFileSystemModel*)ui->TV_Explorer->model();
+        QFileSystemModel* pathmodel = (QFileSystemModel*)ui->Create_treeView_Explorer->model();
         //get data from the selected file/directory
         QFileInfo fileInfo = pathmodel->fileInfo(index);
         //send the path to the line edit
-        ui->LE_NewCatalogPath->setText(fileInfo.filePath());
+        ui->Create_lineEdit_NewCatalogPath->setText(fileInfo.filePath());
     }
+
     //----------------------------------------------------------------------
 
     //Pick a directory from a dialog window
-    void MainWindow::on_PB_PickPath_clicked()
+    void MainWindow::on_Create_pushButton_PickPath_clicked()
     {
         //Get current selected path as default path for the dialog window
-        newCatalogPath = ui->LE_NewCatalogPath->text();
+        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
@@ -216,54 +217,54 @@
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
         //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-        ui->LE_NewCatalogPath->setText(dir);
+        ui->Create_lineEdit_NewCatalogPath->setText(dir);
 
         //Select this directory in the treeview.
         LoadFileSystem(newCatalogPath);
     }
+
     //----------------------------------------------------------------------
     //Create a storage first to select it later
-    void MainWindow::on_Create_PB_AddStorage_clicked()
+    void MainWindow::on_Create_pushButton_AddStorage_clicked()
     {
         //Change tab to show the screen to add a storage
         ui->tabWidget->setCurrentIndex(4); // tab 1 is the Collection tab
     }
-
     //----------------------------------------------------------------------
     //Generate the Catalog name from the path
-    void MainWindow::on_PB_GenerateFromPath_clicked()
+    void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()
     {
         //Just copy the Catalog path to the name
-        QString newCatalogName = ui->LE_NewCatalogPath->text();
+        QString newCatalogName = ui->Create_lineEdit_NewCatalogPath->text();
         newCatalogName.replace("/","_");
         newCatalogName.replace(":","_");
-        ui->LE_NewCatalogName->setText(newCatalogName);
+        ui->Create_lineEdit_NewCatalogName->setText(newCatalogName);
     }
     //----------------------------------------------------------------------
 
     //Launch the cataloging, save it, and show it
-    void MainWindow::on_PB_CreateCatalog_clicked()
+    void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
     {
         //Get inputs
-        newCatalogPath = ui->LE_NewCatalogPath->text();
-        newCatalogName = ui->LE_NewCatalogName->text();
-        newCatalogStorage = ui->CB_C_StorageSelection->currentText();
+        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalogName = ui->Create_lineEdit_NewCatalogName->text();
+        newCatalogStorage = ui->Create_comboBox_StorageSelection->currentText();
         //get other options
-        bool includeHidden = ui->CkB_IncludeHidden->isChecked();
+        bool includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
         bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         // Get the file type for the catalog
         QStringList fileTypes;
         QString selectedCreateFileType;
-        if      ( ui->RB_C_FileType_Image->isChecked() ){
+        if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
                 fileTypes = fileType_Image;
                 selectedCreateFileType = "Image";}
-        else if ( ui->RB_C_FileType_Audio->isChecked() ){
+        else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
                 fileTypes = fileType_Audio;
                 selectedCreateFileType = "Audio";}
-         else if ( ui->RB_C_FileType_Video->isChecked() ){
+         else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
                 fileTypes = fileType_Video;
                 selectedCreateFileType = "Video";}
-        else if ( ui->RB_C_FileType_Text->isChecked() ){
+        else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
                 fileTypes = fileType_Text;
                 selectedCreateFileType = "Text";}
         else    fileTypes.clear();
@@ -344,6 +345,7 @@
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
 
     }
+
     //----------------------------------------------------------------------
     void MainWindow::loadStorageList()
     {
@@ -352,7 +354,7 @@
         storageNameListforCombo.prepend("");
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(storageNameListforCombo);
-        ui->CB_C_StorageSelection->setModel(fileListModel);
+        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
     }
     //----------------------------------------------------------------------
 

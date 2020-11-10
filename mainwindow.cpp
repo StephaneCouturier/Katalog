@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
 
     //setup tab: Create
         //Default path to scan
-            ui->LE_NewCatalogPath->setText("/");
+            ui->Create_lineEdit_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             LoadFileSystem("/");
         //Load list of Storage
@@ -160,4 +160,6 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
+
+
 

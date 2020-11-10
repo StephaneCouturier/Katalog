@@ -249,14 +249,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
 
-        //Create
-            void on_Create_PB_AddStorage_clicked();
-
-            void on_PB_PickPath_clicked();
-            void on_PB_GenerateFromPath_clicked();
-            void on_PB_CreateCatalog_clicked();
-            void on_TV_Explorer_activated(const QModelIndex &index);
-
         //Collection
             void on_Collection_pushButton_SelectFolder_clicked();
             void on_Collection_pushButton_Reload_clicked();
@@ -278,6 +270,16 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void context2CopyAbsolutePath();
+
+        //Create
+            void on_Create_pushButton_PickPath_clicked();
+            void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
+            void on_Create_pushButton_AddStorage_clicked();
+            void on_Create_pushButton_GenerateFromPath_clicked();
+            void on_Create_pushButton_CreateCatalog_clicked();
+
+
+            //void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Explore
             void exploreLoadDirectories();
@@ -326,11 +328,9 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
         //Tests
             void on_TR_CatalogFoundList_clicked(const QModelIndex &index);
 
-            void on_PB_RecordCatalogStats_clicked();
             void on_PB_TagFolder_clicked();
             void on_LI_ExistingTags_activated(const QModelIndex &index);
             void on_test_pb_insert_clicked();
-
 
 
 };
