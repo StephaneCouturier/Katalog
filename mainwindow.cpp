@@ -137,7 +137,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
     //setup tab: Settings
         //Load last collection used
             //Send collection folder to the line edit
-            ui->LE_CollectionFolder->setText(collectionFolder);
+            ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
         //Set file types
             setFileTypes();
             //DEV: interface to edit

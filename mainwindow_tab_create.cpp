@@ -143,7 +143,7 @@
         //Display and store file number
         //Count the number of files
         int catalogFilesNumber = fileList.count();
-        ui->L_FilesNumber->setNum(catalogFilesNumber);
+        ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
@@ -333,15 +333,15 @@
 
         //Disable buttons to force user to select a catalog
         //display buttons
-        ui->Collection_PB_Search->setEnabled(false);
-        ui->PB_ViewCatalog->setEnabled(false);
-        ui->PB_C_Rename->setEnabled(false);
-        ui->PB_EditCatalogFile->setEnabled(false);
-        ui->PB_UpdateCatalog->setEnabled(false);
+        ui->Collection_pushButton_Search->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
+        ui->Collection_pushButton_Rename->setEnabled(false);
+        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
         ui->Collection_pushButton_Convert->setEnabled(false);
-        ui->PB_RecordCatalogStats->setEnabled(false);
-        ui->Collection_PB_ViewCatalogStats->setEnabled(false);
-        ui->PB_DeleteCatalog->setEnabled(false);
+        ui->Collection_pushButton_RecordCatalogStats->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
 
     }
     //----------------------------------------------------------------------

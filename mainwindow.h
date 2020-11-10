@@ -258,21 +258,25 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Collection
-            void on_Collection_PB_ViewCatalogStats_clicked();
-            void on_Collection_PB_Reload_clicked();
-            void on_Collection_PB_Search_clicked();
-            void on_PB_C_OpenFolder_clicked();
-            void on_TrV_CatalogList_clicked(const QModelIndex &index);
-            void on_PB_ViewCatalog_clicked();
-            void on_PB_UpdateCatalog_clicked();
-            void on_PB_C_Rename_clicked(); //not active yet
-            void on_PB_EditCatalogFile_clicked();
+            void on_Collection_pushButton_SelectFolder_clicked();
+            void on_Collection_pushButton_Reload_clicked();
+            void on_Collection_pushButton_OpenFolder_clicked();
+
+            void on_Collection_pushButton_Search_clicked();
+            void on_Collection_pushButton_ViewCatalog_clicked();
+            void on_Collection_pushButton_Rename_clicked();
+            void on_Collection_pushButton_UpdateCatalog_clicked();
+            void on_Collection_pushButton_EditCatalogFile_clicked();
+            void on_Collection_pushButton_RecordCatalogStats_clicked();
+            void on_Collection_pushButton_ViewCatalogStats_clicked();
             void on_Collection_pushButton_Convert_clicked();
-            void on_PB_ExportCatalog_clicked();
-            void on_PB_DeleteCatalog_clicked();
-            void on_TrV_FileList_clicked(const QModelIndex &index);
-            void on_TrV_CatalogList_doubleClicked(const QModelIndex &index);
-            void on_TrV_FileList_customContextMenuRequested(const QPoint &pos);
+            void on_Collection_pushButton_DeleteCatalog_clicked();
+
+            void on_Collection_treeView_CatalogList_clicked(const QModelIndex &index);
+            void on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index);
+
+            void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
+            void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void context2CopyAbsolutePath();
 
         //Explore
@@ -307,7 +311,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Settings_comboBox_Theme_currentTextChanged();
 
             //DEV
-            void on_PB_SelectCollectionFolder_clicked();
             void on_pushButton_8_clicked();
             void on_pushButton_7_clicked();
             void on_pushButton_9_clicked();
@@ -327,6 +330,8 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_PB_TagFolder_clicked();
             void on_LI_ExistingTags_activated(const QModelIndex &index);
             void on_test_pb_insert_clicked();
+
+
 
 };
 

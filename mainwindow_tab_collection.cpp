@@ -45,10 +45,10 @@
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
-//TAB: Collection ----------------------------------------------------------------------
+//TAB: Collection UI----------------------------------------------------------------------
 
     //Collection selection
-        void MainWindow::on_PB_SelectCollectionFolder_clicked()
+        void MainWindow::on_Collection_pushButton_SelectFolder_clicked()
         {
             //Open a dialog for the user to select the directory of the collection where catalog files are stored.
             QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
@@ -58,7 +58,7 @@
             //Unless the selection was cancelled, send the selected folder, and refresh the list of catalogs
             if ( dir !=""){
                 collectionFolder=dir;
-                ui->LE_CollectionFolder->setText(dir);
+                ui->Collection_lineEdit_CollectionFolder->setText(dir);
 
                 //initiateSearchValues();
                 saveSettings();
@@ -74,7 +74,7 @@
             selectedCatalogPath="";
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_PB_Reload_clicked()
+        void MainWindow::on_Collection_pushButton_Reload_clicked()
         {
             loadCatalogsToModel();
             refreshCatalogSelectionList();
@@ -83,41 +83,16 @@
             //hide buttons to force user to select a catalog before allowing any catalg action.
             hideCatalogButtons();
         }
-
-
-    //Catalog buttons
-        void MainWindow::on_TrV_CatalogList_clicked(const QModelIndex &index)
-        {
-            selectedCatalogFile             = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogName             = ui->TrV_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-            selectedCatalogFileCount        = ui->TrV_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize    = ui->TrV_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
-            selectedCatalogPath             = ui->TrV_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            selectedCatalogFileType         = ui->TrV_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            selectedCatalogIncludeHidden    = ui->TrV_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
-            selectedCatalogStorage          = ui->TrV_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
-            selectedCatalogIncludeSymblinks = ui->TrV_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
-
-            //display buttons
-            ui->Collection_PB_Search->setEnabled(true);
-            ui->PB_ViewCatalog->setEnabled(true);
-            ui->PB_C_Rename->setEnabled(true);
-            ui->PB_EditCatalogFile->setEnabled(true);
-            ui->PB_UpdateCatalog->setEnabled(true);
-            ui->Collection_pushButton_Convert->setEnabled(true);
-            ui->PB_RecordCatalogStats->setEnabled(true);
-            ui->Collection_PB_ViewCatalogStats->setEnabled(true);
-            ui->PB_DeleteCatalog->setEnabled(true);
-        }
-    //Catalog buttons
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_C_OpenFolder_clicked()
+        void MainWindow::on_Collection_pushButton_OpenFolder_clicked()
         {
             //Open the selected collection folder
             QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_PB_Search_clicked()
+
+    //Catalog buttons
+        void MainWindow::on_Collection_pushButton_Search_clicked()
         {
             //Change the selected catalog in Search tab
             ui->Search_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
@@ -125,9 +100,47 @@
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
         }
-
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_UpdateCatalog_clicked()
+        void MainWindow::on_Collection_pushButton_ViewCatalog_clicked()
+        {
+            //View the files of the Selected Catalog
+            LoadCatalog(selectedCatalogFile);
+            LoadFilesToModel();
+
+            exploreLoadDirectories();
+
+            //Go to the Search tab
+            ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
+            ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
+            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_Rename_clicked()
+        {
+            //Get info from the selected catalog
+            QFileInfo selectedCatalogFileInfo(selectedCatalogFile);
+            QString currentCatalogName = selectedCatalogFileInfo.baseName();
+
+            //Display an input box with the current file name (without extension)
+            bool ok;
+            QString newCatalogName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                                 tr("Enter new catalog name:"), QLineEdit::Normal,
+                                                 currentCatalogName, &ok); //(QDir::home().dirName())
+            //generate the full new name of the
+            QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+
+            //Rename the catalog file
+            if (ok && !newCatalogName.isEmpty()){
+                 QFile::rename(selectedCatalogFile, newCatalogFullName);
+
+                 //refresh catalog lists
+                    loadCatalogsToModel();
+                    //LoadCatalogFileList();
+                    refreshCatalogSelectionList();
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_UpdateCatalog_clicked()
         {   //UPDATE THE SELECTED CATALOG
 
             //Check if the update can be done, or inform the user otherwise
@@ -210,79 +223,32 @@
             loadCatalogsToModel();
             //Reload stats file
             statsLoadChart();
-
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_ViewCatalog_clicked()
-        {
-            //View the files of the Selected Catalog
-            LoadCatalog(selectedCatalogFile);
-            LoadFilesToModel();
-
-            exploreLoadDirectories();
-
-            //Go to the Search tab
-            ui->L_E_CatalogName->setText(selectedCatalogName);
-            ui->L_E_CatalogPath->setText(selectedCatalogPath);
-            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_TrV_CatalogList_doubleClicked(const QModelIndex &index)
-        {
-            //Get file from selected row
-            selectedCatalogFile = ui->TrV_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            LoadCatalog(selectedCatalogFile);
-            LoadFilesToModel();
-
-            //Go to the Search tab
-            ui->L_E_CatalogName->setText(selectedCatalogName);
-            ui->L_E_CatalogPath->setText(selectedCatalogPath);
-            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_PB_C_Rename_clicked()
-        {
-            //Get info from the selected catalog
-            QFileInfo selectedCatalogFileInfo(selectedCatalogFile);
-            QString currentCatalogName = selectedCatalogFileInfo.baseName();
-
-            //Display an input box with the current file name (without extension)
-            bool ok;
-            QString newCatalogName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                                 tr("Enter new catalog name:"), QLineEdit::Normal,
-                                                 currentCatalogName, &ok); //(QDir::home().dirName())
-            //generate the full new name of the
-            QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
-
-            //Rename the catalog file
-            if (ok && !newCatalogName.isEmpty()){
-                 QFile::rename(selectedCatalogFile, newCatalogFullName);
-
-                 //refresh catalog lists
-                    loadCatalogsToModel();
-                    //LoadCatalogFileList();
-                    refreshCatalogSelectionList();
-            }
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_PB_EditCatalogFile_clicked()
+        void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()
         {
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
         }
-
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_RecordCatalogStats_clicked()
+        {
+            recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_ViewCatalogStats_clicked()
+        {
+            //Collection_PB_ViewCatalogStats
+            ui->Stats_CB_SelectCatalog->setCurrentText(selectedCatalogName);
+            //Go to the Search tab
+            ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
+        }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_Convert_clicked()
         {
             convertCatalog(selectedCatalogFile);
         }
-
         //----------------------------------------------------------------------
-        void MainWindow::on_PB_RecordCatalogStats_clicked()
-        {
-            recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_PB_DeleteCatalog_clicked()
+        void MainWindow::on_Collection_pushButton_DeleteCatalog_clicked()
         {
             if ( selectedCatalogFile != ""){
 
@@ -299,37 +265,48 @@
             else QMessageBox::information(this,"Katalog",("Please select a catalog above first."));
         }
         //----------------------------------------------------------------------
-        //DEV
-        void MainWindow::on_PB_ExportCatalog_clicked()
-        {
-            QString link = "https://sourceforge.net/p/katalogg/tickets/";
-            QMessageBox::information(this,"Katalog","There is no export function yet.\n Please tell what you expect from it by opening a ticket on on:\n"+link);
-            QDesktopServices::openUrl(QUrl("https://sourceforge.net/p/katalogg/tickets/"));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Collection_PB_ViewCatalogStats_clicked()
-        {
-            //Collection_PB_ViewCatalogStats
-            ui->Stats_CB_SelectCatalog->setCurrentText(selectedCatalogName);
-            //Go to the Search tab
-            ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
-        }
-
-        //----------------------------------------------------------------------
 
     //File methods
-        void MainWindow::on_TrV_FileList_clicked(const QModelIndex &index)
+        void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
+        {
+            selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogFileCount        = ui->Collection_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
+            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
+            selectedCatalogPath             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedCatalogFileType         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedCatalogIncludeHidden    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
+            selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
+
+            //display buttons
+            ui->Collection_pushButton_Search->setEnabled(true);
+            ui->Collection_pushButton_ViewCatalog->setEnabled(true);
+            ui->Collection_pushButton_Rename->setEnabled(true);
+            ui->Collection_pushButton_EditCatalogFile->setEnabled(true);
+            ui->Collection_pushButton_UpdateCatalog->setEnabled(true);
+            ui->Collection_pushButton_Convert->setEnabled(true);
+            ui->Collection_pushButton_RecordCatalogStats->setEnabled(true);
+            ui->Collection_pushButton_ViewCatalogStats->setEnabled(true);
+            ui->Collection_pushButton_DeleteCatalog->setEnabled(true);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             //Get file from selected row
-            QString selectedFileName   = ui->TrV_FileList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->TrV_FileList->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            LoadCatalog(selectedCatalogFile);
+            LoadFilesToModel();
 
-            //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            //Go to the Search tab
+            ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
+            ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
+            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
+        //----------------------------------------------------------------------
 
 
+//TAB: Collection methods----------------------------------------------------------------------
 
     //Load a catalog to view the files
     void MainWindow::LoadCatalog(QString fileName)
@@ -366,13 +343,12 @@
         catalogModel->setStringList(stringList);
 
         int catalogFilesNumber = catalogModel->rowCount();
-        ui->L_FilesNumber->setNum(catalogFilesNumber);
+        ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
         //DEV   Stop animation
         QApplication::restoreOverrideCursor();
     }
     //----------------------------------------------------------------------
-
     //Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
@@ -510,28 +486,27 @@
         proxyCollectionModel->setSourceModel(collectionModel);
 
         // Connect model to tree/table view
-        ui->TrV_CatalogList->setModel(proxyCollectionModel);
-        ui->TrV_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-        ui->TrV_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->TrV_CatalogList->header()->resizeSection(1, 300); //Name
-        ui->TrV_CatalogList->header()->resizeSection(2, 150); //Date
-        ui->TrV_CatalogList->header()->resizeSection(3, 100); //Files
-        ui->TrV_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
-        ui->TrV_CatalogList->header()->resizeSection(5, 300); //Path
-        ui->TrV_CatalogList->header()->resizeSection(6, 100); //FileType
-        ui->TrV_CatalogList->header()->resizeSection(7,  50); //Active
-        ui->TrV_CatalogList->header()->resizeSection(8,  50); //Storage
-        ui->TrV_CatalogList->header()->resizeSection(9,  50); //Symblinks
-        ui->TrV_CatalogList->header()->resizeSection(10, 50); //Symblinks
-        ui->TrV_CatalogList->header()->hideSection(0); //Path
-        ui->TrV_CatalogList->header()->hideSection(10); //Symblinks
+        ui->Collection_treeView_CatalogList->setModel(proxyCollectionModel);
+        ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+        ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->Collection_treeView_CatalogList->header()->resizeSection(1, 300); //Name
+        ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
+        ui->Collection_treeView_CatalogList->header()->resizeSection(3, 100); //Files
+        ui->Collection_treeView_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
+        ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
+        ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
+        ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
+        ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //Storage
+        ui->Collection_treeView_CatalogList->header()->resizeSection(9,  50); //Symblinks
+        ui->Collection_treeView_CatalogList->header()->resizeSection(10, 50); //Symblinks
+        ui->Collection_treeView_CatalogList->header()->hideSection(0); //Path
+        ui->Collection_treeView_CatalogList->header()->hideSection(10); //Symblinks
         //Pass list of catalogs
             catalogFileList = cNames;
             catalogFileList.sort();
 
     }
     //----------------------------------------------------------------------
-
     //Load a catalog (files)
     void MainWindow::LoadFilesToModel()
     {
@@ -599,15 +574,14 @@
         proxyModel->setSourceModel(catalog1);
 
         // Connect model to tree/table view
-        ui->TrV_FileList->setModel(proxyModel);
-        ui->TrV_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->TrV_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->TrV_FileList->header()->resizeSection(0, 600); //Name
-        ui->TrV_FileList->header()->resizeSection(1, 110); //Size
-        ui->TrV_FileList->header()->resizeSection(2, 140); //Date
-        ui->TrV_FileList->header()->resizeSection(3, 400); //Path
+        ui->Explore_treeView_FileList->setModel(proxyModel);
+        ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
+        ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
+        ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
+        ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
     }
-
     //----------------------------------------------------------------------
     //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
@@ -641,7 +615,6 @@
          }
          fileOut.close();
     }
-
     //----------------------------------------------------------------------
     void MainWindow::convertCatalog(QString catalogSourcePath)
     {
@@ -698,8 +671,6 @@
         QMessageBox::information(this,"Katalog","Conversion completed.\n");
 
     }
-
-
     //----------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
@@ -718,18 +689,17 @@
         //QMessageBox::information(this,"Katalog","Backup done.\n");
 
     }
-
     //----------------------------------------------------------------------
     void MainWindow::hideCatalogButtons()
     {
-        //display buttons
-        ui->Collection_PB_Search->setEnabled(false);
-        ui->PB_ViewCatalog->setEnabled(false);
-        ui->PB_C_Rename->setEnabled(false);
-        ui->PB_EditCatalogFile->setEnabled(false);
-        ui->PB_UpdateCatalog->setEnabled(false);
+        //Display buttons
+        ui->Collection_pushButton_Search->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
+        ui->Collection_pushButton_Rename->setEnabled(false);
+        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
         ui->Collection_pushButton_Convert->setEnabled(false);
-        ui->PB_RecordCatalogStats->setEnabled(false);
-        ui->Collection_PB_ViewCatalogStats->setEnabled(false);
-        ui->PB_DeleteCatalog->setEnabled(false);
+        ui->Collection_pushButton_RecordCatalogStats->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
     }

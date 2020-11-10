@@ -51,8 +51,8 @@
         connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
 
-        ui->TrV_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(ui->TrV_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
+        ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
     }
     //----------------------------------------------------------------------
@@ -128,8 +128,6 @@
         ui->RB_IncludeChecksum->hide();
 
         //Explore
-        ui->L_Filter->hide();
-        ui->LE_TextToFilter->hide();
         ui->Explore_label_Directories->hide();
         ui->Explore_treeview_Directories->hide();
 
@@ -141,8 +139,6 @@
 
         //Storage
         ui->Storage_PB_SaveAll->hide();
-
-        ui->LE_TextToFilter->hide();
         ui->Storage_PB_New->hide();
         //ui->Storage_PB_SearchLocation->hide();
         ui->Storage_PB_OpenFilelight->hide();
@@ -190,9 +186,8 @@
         ui->PB_CreateCatalog->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
-        ui->Search_line_SeparateResults->setStyleSheet(
-              "QFrame          { color: #10a2df; } "
-              );
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #10a2df; } ");
+        ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #10a2df; } ");
 
         ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
