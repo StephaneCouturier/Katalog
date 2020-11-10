@@ -38,9 +38,6 @@
 #include "collection.h"
 #include "catalog.h"
 
-#include "treemodel.h"
-#include "treeitem.h"
-
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -50,35 +47,6 @@
 //#include <KLocalizedString>
 
 //----------------------------------------------------------------------
-void MainWindow::exploreLoadDirectories()
-{
-
-//Explore_treeview_Directories
-
-    //KMessageBox::information(this,"method read.\n");
-
-    //QString testFilePath = collectionFolder + "/" + "default.txt";
-    QString testFilePath = collectionFolder + "/" + "storage.csv";
-
-    //const QStringList headers({tr("Title"), tr("Description")});
-
-    QFile file(testFilePath);
-    file.open(QIODevice::ReadOnly);
-        //KMessageBox::information(this,"test\n");
-//    TreeModel *model = new TreeModel(headers, file.readAll());
-
-    //TreeModel treeModel(file.readAll());
-    TreeModel *treeModel = new TreeModel(file.readAll());
-
-    file.close();
-
-    //ui->Explore_treeview_Directories->setModel(treeModel);
-    ui->test_treeView->setModel(treeModel);
-    //ui->test_treeView->show();
-    //for (int column = 0; column < model->columnCount(); ++column)
-        //view->resizeColumnToContents(column);
-
-}
 
 void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
 {

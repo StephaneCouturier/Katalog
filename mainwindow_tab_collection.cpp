@@ -107,8 +107,6 @@
             LoadCatalog(selectedCatalogFile);
             LoadFilesToModel();
 
-            exploreLoadDirectories();
-
             //Go to the Search tab
             ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
             ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);

@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             loadCatalogsToModel();
 
     //setup tab: Explore
-            exploreLoadDirectories();
+
 
     //setup tab: Search
             initiateSearchValues();
@@ -140,8 +140,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
         //Set file types
             setFileTypes();
-            //DEV: interface to edit
-            FileTypesEditor();
             setupFileContextMenu();
 
      //Setup tap: Stats

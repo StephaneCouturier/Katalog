@@ -283,7 +283,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             //void on_TV_Explorer_activated(const QModelIndex &index);
 
         //Explore
-            void exploreLoadDirectories();
 
         //Storage
             void on_Storage_pushButton_CreateList_clicked();
@@ -320,18 +319,9 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void loadFolderTagModel();
 
         //Settings
-            void on_Settings_ChBx_SaveRecordWhenUpdate_stateChanged();
+            void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_comboBox_Theme_currentTextChanged();
-
-            //DEV
-            void on_pushButton_8_clicked();
-            void on_pushButton_7_clicked();
-            void on_pushButton_9_clicked();
-
-        //Tests
-            void on_test_pb_insert_clicked();
-
 
 };
 

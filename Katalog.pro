@@ -76,22 +76,15 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
-    mainwindow_tab_tests.cpp \
     storage.cpp \
-    tag.cpp \
-    treeitem.cpp \
-    treemodel.cpp
+    tag.cpp
 
 HEADERS += \
     catalog.h \
     collection.h \
-    database.h \
-    initdb.h \
     mainwindow.h \
     storage.h \
-    tag.h \
-    treeitem.h \
-    treemodel.h
+    tag.h
 
 FORMS += \
     mainwindow.ui
