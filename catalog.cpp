@@ -23,7 +23,7 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.cpp
-// Purpose:
+// Purpose:     class to crate catalogs (list of files and their attributes)
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
