@@ -161,7 +161,7 @@ void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
     ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorageName);
 
     //Select this directory in the treeview.
-    LoadFileSystem(selectedStoragePath);
+    loadFileSystem(selectedStoragePath);
 
     //Change tab to show the result of the catalog creation
     ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create Catalog tab

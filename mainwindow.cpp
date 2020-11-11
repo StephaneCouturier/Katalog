@@ -123,7 +123,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
         //Default path to scan
             ui->Create_lineEdit_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
-            LoadFileSystem("/");
+            loadFileSystem("/");
         //Load list of Storage
             loadStorageList();
 

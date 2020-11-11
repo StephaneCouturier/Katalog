@@ -107,7 +107,92 @@ void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const Q
     }
 }
 //----------------------------------------------------------------------
+//Load a catalog to view the files
+void MainWindow::loadCatalogFilesToExplore()
+{
+    // Start animation while opening
+    QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    //Set up temporary lists
+    QList<QString> cfileNames;
+    QList<qint64>  cfileSizes;
+    QList<QString> cfilePaths;
+    QList<QString> cfileDateTimes;
+
+    // Get infos stored in the file
+    QFile catalogFile(selectedCatalogFile);
+    if(!catalogFile.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this,"Katalog","No catalog found.");
+        return;
+    }
+
+    QTextStream textStream(&catalogFile);
+
+    while (true)
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+            if (line.left(1)!="<"){
+                //Split the string with \t into a list
+                QRegExp tagExp("\t");
+                QStringList fieldList = line.split(tagExp);
+
+                int fieldListCount = fieldList.count();
+
+                // Get the filePath from the list:
+                QString filePath        = fieldList[0];
+
+                // Get the fileSize from the list if available
+                qint64 fileSize;
+                if (fieldListCount == 3){
+                        fileSize = fieldList[1].toLongLong();}
+                else fileSize = 0;
+
+                // Get the fileDateTime from the list if available
+                QString fileDateTime;
+                if (fieldListCount == 3){
+                        fileDateTime = fieldList[2];}
+                else fileDateTime = "";
+
+                //Get file informations
+                QFileInfo file(filePath);
+
+                //Append data to the lists
+                cfileNames.append(file.fileName());
+                cfileSizes.append(fileSize);
+                cfilePaths.append(file.path());
+                cfileDateTimes.append(fileDateTime);
+            }
+        }
+
+    // Create model
+    Catalog *catalog = new Catalog(this);
+
+    // Populate model with data
+    catalog->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
+
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(catalog);
+
+    // Connect model to tree/table view
+    ui->Explore_treeView_FileList->setModel(proxyModel);
+    ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
+    ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
+    ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
+    ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
+
+    int catalogFilesNumber = catalog->rowCount();
+    ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
+
+    //DEV   Stop animation
+    QApplication::restoreOverrideCursor();
+}
+
+//----------------------------------------------------------------------
 void MainWindow::context2CopyAbsolutePath()
 {
     QModelIndex index=ui->Explore_treeView_FileList->currentIndex();

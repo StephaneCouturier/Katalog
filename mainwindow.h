@@ -104,30 +104,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString fileTypeSelected;
             void setFileTypes();
 
-        //TAB: Collection
-            QStringListModel catalogListModel;
-            QStringList catalogFileList;
-            QString selectedCatalogFile;
-            QString selectedCatalogName;
-            QString selectedCatalogPath;
-            qint64 selectedCatalogFileCount;
-            qint64 selectedCatalogTotalFileSize;
-            bool selectedCatalogIncludeHidden;
-            QString selectedCatalogFileType;
-            QString selectedCatalogStorage;
-            bool selectedCatalogIncludeSymblinks;
-            void LoadCatalog(QString fileName);
-            void SaveCatalog(QString newCatalogName);
-            void loadCatalogsToModel();
-            void LoadFilesToModel();
-            bool verifyCatalogPath(QString catalogSourcePath);
-            void recordSelectedCatalogStats(QString selectedCatalogName,
-                                            int selectedCatalogFileCount,
-                                            qint64 selectedCatalogTotalFileSize);
-            void convertCatalog(QString catalogSourcePath);
-            void backupCatalog(QString catalogSourcePath);
-            void hideCatalogButtons();
-
         //TAB: Search
             //inputs
             QString searchText;
@@ -155,8 +131,8 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             //search
             QString regexSearchtext;
             QString regexFileType;
-            void SearchFiles();
-            void SearchFilesInCatalog(const QString &sourceCatalog);
+            void searchFiles();
+            void searchFilesInCatalog(const QString &sourceCatalog);
 
             //outputs
             QStringList filesFoundList;
@@ -165,14 +141,40 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QStringList searchTextList;
             void refreshCatalogSelectionList();
 
+        //TAB: Collection
+            QStringListModel catalogListModel;
+            QStringList catalogFileList;
+            QString selectedCatalogFile;
+            QString selectedCatalogName;
+            QString selectedCatalogPath;
+            qint64  selectedCatalogFileCount;
+            qint64  selectedCatalogTotalFileSize;
+            bool    selectedCatalogIncludeHidden;
+            QString selectedCatalogFileType;
+            QString selectedCatalogStorage;
+            bool    selectedCatalogIncludeSymblinks;
+
+            void saveCatalogToNewFile(QString newCatalogName);
+            void loadCatalogsToModel();
+            bool verifyCatalogPath(QString catalogSourcePath);
+            void recordSelectedCatalogStats(QString selectedCatalogName,
+                                            int selectedCatalogFileCount,
+                                            qint64 selectedCatalogTotalFileSize);
+            void convertCatalog(QString catalogSourcePath);
+            void backupCatalog(QString catalogSourcePath);
+            void hideCatalogButtons();
+
+        //TAB: Explore
+            void loadCatalogFilesToExplore();
+
         //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
             QString newCatalogPath;
             QString newCatalogName;
             QString newCatalogStorage;
-            void LoadFileSystem(QString newCatalogPath);
-            void CatalogDirectory(QString newCatalogPath,
+            void loadFileSystem(QString newCatalogPath);
+            void catalogDirectory(QString newCatalogPath,
                                   bool includeHidden,
                                   QString fileType,
                                   QStringList fileTypes,
@@ -196,6 +198,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
         //TAB: Statistics
             QStringList typeOfData;
             QString selectedTypeOfData;
+            QStringListModel *listModel;
             void loadTypeOfData();
 
         //TAB: Tags
@@ -204,8 +207,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
         //TESTS
             QString collectionFolder;
-            void FileTypesEditor();
-            QStringListModel *listModel;
+
 
     private slots:
         //Menu KDE

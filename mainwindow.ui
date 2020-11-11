@@ -3148,7 +3148,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLineEdit" name="Tags_lineEdit_FolderPath"/>
             </item>
             <item>
-             <widget class="QPushButton" name="Tags_pushbutton_PickFolder">
+             <widget class="QPushButton" name="Tags_pushButton_PickFolder">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>

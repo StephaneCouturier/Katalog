@@ -75,12 +75,12 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            SearchFiles();
+            searchFiles();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
         {
-            SearchFiles();
+            searchFiles();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
@@ -122,11 +122,14 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_listView_CatalogsFound_clicked(const QModelIndex &index)
         {
+            //Refine the seach with the selction of one of the catalogs that have results
+
             //Get file from selected row
             QString selectedCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
             //selectedCatalogPath = collectionFolder + "/" + selectedCatalogName + ".idx";
             ui->Search_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
-            SearchFiles();
+            //Seach again but only on the selected catalog
+            searchFiles();
         }
         //----------------------------------------------------------------------
         //File Context Menu actions set up
@@ -251,7 +254,7 @@
         //----------------------------------------------------------------------
 
     //Search methods
-        void MainWindow::SearchFiles()
+        void MainWindow::searchFiles()
         {
             //Set up Search
                 //Clear exisitng lists of results and search variables
@@ -317,7 +320,7 @@
                 if ( selectedSearchCatalog =="All"){
                     foreach(sourceCatalog,catalogFileList)
                             {
-                                SearchFilesInCatalog(sourceCatalog);
+                                searchFilesInCatalog(sourceCatalog);
                             }
                     }
                 //Search catalogs matching the storage if "Selectd storage" is selected
@@ -332,7 +335,7 @@
                             sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
                                 if  ( selectedStorageName == sourceCatalogStorageName )
                                 {
-                                        SearchFilesInCatalog(sourceCatalog);
+                                        searchFilesInCatalog(sourceCatalog);
                                 }
                             }
                 }
@@ -340,13 +343,13 @@
                     getLocationCatalogList(selectedStorageLocation);
                     foreach(sourceCatalog,locationCatalogList)
                             {
-                                SearchFilesInCatalog(sourceCatalog);
+                                searchFilesInCatalog(sourceCatalog);
                             }
                 }
                 //Otherwise just search files in the selected catalog
                 else{
                     //QString selectedSearchCatalogPath;
-                    SearchFilesInCatalog(selectedSearchCatalog);
+                    searchFilesInCatalog(selectedSearchCatalog);
                 }
 
             //Process search results: list of catalogs
@@ -442,7 +445,7 @@
             //QApplication::restoreOverrideCursor();
         }
         //----------------------------------------------------------------------
-        void MainWindow::SearchFilesInCatalog(const QString &sourceCatalogName)
+        void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
             QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
             QFile catalogFile(sourceCatalogPath);

@@ -104,8 +104,7 @@
         void MainWindow::on_Collection_pushButton_ViewCatalog_clicked()
         {
             //View the files of the Selected Catalog
-            LoadCatalog(selectedCatalogFile);
-            LoadFilesToModel();
+            loadCatalogFilesToExplore();
 
             //Go to the Search tab
             ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
@@ -200,9 +199,9 @@
                     }
                 }
 
-                CatalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
+                catalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
 
-                SaveCatalog(selectedCatalogName);
+                saveCatalogToNewFile(selectedCatalogName);
                 QMessageBox::information(this,"Katalog","This catalog was updated.");
             }
             else {
@@ -293,8 +292,7 @@
         {
             //Get file from selected row
             selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            LoadCatalog(selectedCatalogFile);
-            LoadFilesToModel();
+            loadCatalogFilesToExplore();
 
             //Go to the Search tab
             ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
@@ -303,50 +301,8 @@
         }
         //----------------------------------------------------------------------
 
-
 //TAB: Collection methods----------------------------------------------------------------------
 
-    //Load a catalog to view the files
-    void MainWindow::LoadCatalog(QString fileName)
-    {
-        // Create model
-        QStringListModel *catalogModel;
-        catalogModel = new QStringListModel(this);
-
-        // open the file
-        //DEV: replace by kmb
-        QFile catalogFile;
-        catalogFile.setFileName(fileName);
-        if(!catalogFile.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this,"Katalog","Please select a catalog above first.");
-            return;
-        }
-        // Start animation while oprning
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-
-        // stream to read from file
-        QStringList stringList;
-        QTextStream textStream(&catalogFile);
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                if (line.left(1)!="<")
-                    stringList.append(line); // populate the stringlist
-        }
-
-        // Populate the model
-        catalogModel->setStringList(stringList);
-
-        int catalogFilesNumber = catalogModel->rowCount();
-        ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
-
-        //DEV   Stop animation
-        QApplication::restoreOverrideCursor();
-    }
-    //----------------------------------------------------------------------
     //Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
@@ -505,81 +461,7 @@
 
     }
     //----------------------------------------------------------------------
-    //Load a catalog (files)
-    void MainWindow::LoadFilesToModel()
-    {
-        //Set up temporary lists
-        QList<QString> cfileNames;
-        QList<qint64> cfileSizes;
-        QList<QString> cfilePaths;
-        QList<QString> cfileDateTimes;
 
-        // Get infos stored in the file
-        QFile catalogFile(selectedCatalogFile);
-        if(!catalogFile.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this,"Katalog","No catalog found.");
-            return;
-        }
-
-        QTextStream textStream(&catalogFile);
-
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                if (line.left(1)!="<"){
-                    //Split the string with \t into a list
-                    QRegExp tagExp("\t");
-                    QStringList fieldList = line.split(tagExp);
-
-                    int fieldListCount = fieldList.count();
-
-                    // Get the filePath from the list:
-                    QString filePath        = fieldList[0];
-
-                    // Get the fileSize from the list if available
-                    qint64 fileSize;
-                    if (fieldListCount == 3){
-                            fileSize = fieldList[1].toLongLong();}
-                    else fileSize = 0;
-
-                    // Get the fileDateTime from the list if available
-                    QString fileDateTime;
-                    if (fieldListCount == 3){
-                            fileDateTime = fieldList[2];}
-                    else fileDateTime = "";
-
-                    //Get file informations
-                    QFileInfo file(filePath);
-
-                    //Append data to the lists
-                    cfileNames.append(file.fileName());
-                    cfileSizes.append(fileSize);
-                    cfilePaths.append(file.path());
-                    cfileDateTimes.append(fileDateTime);
-                }
-            }
-
-        // Create model
-        Catalog *catalog1 = new Catalog(this);
-
-        // Populate model with data
-        catalog1->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
-
-        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-        proxyModel->setSourceModel(catalog1);
-
-        // Connect model to tree/table view
-        ui->Explore_treeView_FileList->setModel(proxyModel);
-        ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
-        ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
-        ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
-        ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
-    }
     //----------------------------------------------------------------------
     //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     bool MainWindow::verifyCatalogPath(QString catalogSourcePath)

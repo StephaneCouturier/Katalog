@@ -46,7 +46,7 @@
 //TAB: Create Catalog ----------------------------------------------------------------------
 
     //Load file system for the treeview
-    void MainWindow::LoadFileSystem(QString newCatalogPath)
+    void MainWindow::loadFileSystem(QString newCatalogPath)
     {
             newCatalogPath="/";
          // Creates a new model
@@ -76,7 +76,7 @@
     //----------------------------------------------------------------------
 
     //Catalog the files of a directory
-    void MainWindow::CatalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage, bool includeSymblinks)
+    void MainWindow::catalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage, bool includeSymblinks)
     {
         //CATALOG FILES and ADD CATALOG META-DATA to a QStringListModel > fileListModel
 
@@ -168,7 +168,7 @@
     //----------------------------------------------------------------------
 
     //Save a catalog to a new file
-    void MainWindow::SaveCatalog(QString newCatalogName)
+    void MainWindow::saveCatalogToNewFile(QString newCatalogName)
     {
         // Get the model/data from the listview
         //QStringListModel *catalogModel = (QStringListModel*)ui->LV_FileList->model();
@@ -220,7 +220,7 @@
         ui->Create_lineEdit_NewCatalogPath->setText(dir);
 
         //Select this directory in the treeview.
-        LoadFileSystem(newCatalogPath);
+        loadFileSystem(newCatalogPath);
     }
 
     //----------------------------------------------------------------------
@@ -283,7 +283,7 @@
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
-                CatalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
+                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
         else QMessageBox::warning(this, "Katalog",
                                   ("Please provide a name and select a path for this new catalog.\n Name: ")
                                   +newCatalogName+"\n Path: "+newCatalogPath,
@@ -303,7 +303,7 @@
             }
         }
         //Save the catalog to a new file
-        SaveCatalog(newCatalogName);
+        saveCatalogToNewFile(newCatalogName);
 
         //Refresh the catalog list for the Collection screen
         loadCatalogsToModel();
