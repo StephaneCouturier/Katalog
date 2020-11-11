@@ -147,6 +147,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QStringList catalogFileList;
             QString selectedCatalogFile;
             QString selectedCatalogName;
+            QString selectedCatalogDateTime;
             QString selectedCatalogPath;
             qint64  selectedCatalogFileCount;
             qint64  selectedCatalogTotalFileSize;

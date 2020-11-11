@@ -170,6 +170,9 @@
             //
             newCatalogName = selectedCatalogName;
 
+            //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
+            qint64 previousFileCount = selectedCatalogFileCount;
+            qint64 previousTotalFileSize = selectedCatalogTotalFileSize;
 
             //Define the type of files to be included
             QStringList fileTypes;
@@ -201,10 +204,21 @@
                 catalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
 
                 saveCatalogToNewFile(selectedCatalogName);
-                QMessageBox::information(this,"Katalog","This catalog was updated.");
+
+                //Prepare to report changes to the catalog
+                qint64 deltaFileCount = selectedCatalogFileCount - previousFileCount;
+                qint64 deltaTotalFileSize = selectedCatalogTotalFileSize - previousTotalFileSize;
+
+                //Inform user about the update
+                QMessageBox::information(this,"Katalog","<br/>This catalog was updated:<br/><b>" + selectedCatalogName + "</b> "
+                                         "<br/><table>"
+                                         "<tr><td>Number of files: </td><td><b>" + QString::number(selectedCatalogFileCount) + "</b></td><td>  (added: <b>" + QString::number(deltaFileCount) + "</b>)</td></tr>"
+                                         "<tr><td>Total file size: </td><td><b>" + QString::number(selectedCatalogTotalFileSize) + "</b></td><td>  (added: <b>" + QString::number(deltaTotalFileSize) + "</b>)</td></tr>"
+                                         "</table>"
+                                         ,Qt::TextFormat(Qt::RichText));
             }
             else {
-                QMessageBox::information(this,"Katalog","This catalog cannot be updated.\n"
+                QMessageBox::information(this,"Katalog","The catalog " + selectedCatalogName + " cannot be updated.\n"
                                                 "The source folder - "+selectedCatalogPath+" - was not found.\n"
                                                 "Possible reasons:\n"
                                                 "- the device is not connected and mounted,\n"
@@ -266,6 +280,7 @@
         {
             selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogDateTime         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 2, QModelIndex()).data().toString();
             selectedCatalogFileCount        = ui->Collection_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
             selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
             selectedCatalogPath             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
