@@ -3096,7 +3096,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item row="5" column="1">
            <widget class="QLabel" name="Settings_label_Theme">
             <property name="text">
-             <string>Theme</string>
+             <string>Theme (requires to restart)</string>
             </property>
            </widget>
           </item>
