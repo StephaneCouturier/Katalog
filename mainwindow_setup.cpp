@@ -59,10 +59,12 @@
     void MainWindow::loadSettings()
     {
         QSettings settings(settingsFile, QSettings:: IniFormat);
+        //Collection folder
         collectionFolder = settings.value("LastCollectionFolder").toString();
         if(collectionFolder == ""){
                collectionFolder = QApplication::applicationDirPath();
         }
+        //Last Search values
         ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
         selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
         selectedFileType        = settings.value("LastSearch/FileType").toString();
@@ -72,6 +74,15 @@
         selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
         selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
         selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
+
+        //Show or Hide ShowHideCatalogResults
+        if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
+                ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
+                ui->Search_listView_CatalogsFound->setHidden(true);
+                ui->Search_label_CatalogsWithResults->setHidden(true);
+        }
+
+        //General settings
         ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
         ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());

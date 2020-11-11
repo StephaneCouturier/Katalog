@@ -231,6 +231,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
+            void on_Search_pushButton_ShowHideCatalogResults_clicked();
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);

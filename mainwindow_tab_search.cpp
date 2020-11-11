@@ -132,6 +132,30 @@
             searchFiles();
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_ShowHideCatalogResults_clicked()
+        {
+            QString visible = ui->Search_pushButton_ShowHideCatalogResults->text();
+
+            if ( visible == "<<"){ //Hide
+                    ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
+                    ui->Search_listView_CatalogsFound->setHidden(true);
+                    ui->Search_label_CatalogsWithResults->setHidden(true);
+
+                    QSettings settings(settingsFile, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
+            }
+            else{ //Show
+                    ui->Search_pushButton_ShowHideCatalogResults->setText("<<");
+                    ui->Search_listView_CatalogsFound->setHidden(false);
+                    ui->Search_label_CatalogsWithResults->setHidden(false);
+
+                    QSettings settings(settingsFile, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
+            }
+
+        }
+
+        //----------------------------------------------------------------------
         //File Context Menu actions set up
         void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
