@@ -59,6 +59,7 @@
             QString rootPath ="/";
             fileSystemModel->setRootPath(rootPath);
             fileSystemModel->setRootPath(newCatalogPath);
+
          // Enable/Disable modifying file system
             //qfilesystemmodel->setReadOnly(true);
 
@@ -88,12 +89,6 @@
 
         qint64 totalFileSize = 0;
 
-        //QStringList fileType_test;
-        //fileType_test << "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
-        //fileTypes = fileType_test;
-        //KMessageBox::information(this,"test:\n"+fileTypes.join("_"));
-        //KMessageBox::information(this,"test:\n"+fileType);
-
         //Iterate in the directory to create a list of files
         QStringList fileList;
 
@@ -103,7 +98,6 @@
 
                  //Get file information  (absolute path, size, datetime)
                 QString filePath = iterator.next();
-                //KMessageBox::information(this,"test:\n"+filePath);
 
                 qint64 fileSize;
                 QFile file(filePath);
@@ -170,9 +164,6 @@
     //Save a catalog to a new file
     void MainWindow::saveCatalogToNewFile(QString newCatalogName)
     {
-        // Get the model/data from the listview
-        //QStringListModel *catalogModel = (QStringListModel*)ui->LV_FileList->model();
-
         // Get the file list from this model
         QStringList filelist = fileListModel->stringList();
 
@@ -314,10 +305,6 @@
                                   ("The new catalog,has been created.\n Name:   ")
                                   +newCatalogName+"\n Path:     "+newCatalogPath,
                                   ( "Ok" ) );
-
-        //Load files of the created catalog:
-        //DISABLED as it takes a long time for voluminous catalog, letting the user click View if necessary
-        //LoadCatalog( collectionFolder +"/"+ newCatalogName + ".idx");
 
         //Add new catalog values to the statistics log, if the user has chosen this options.
             if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){

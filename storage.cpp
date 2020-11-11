@@ -33,37 +33,11 @@
 */
 
 #include "storage.h"
-//#include "mainwindow.h"
-//#include "ui_mainwindow.h"
-//#include <QSortFilterProxyModel>
 
 Storage::Storage(QObject *parent) : QAbstractTableModel(parent)
 {
 
 }
-
-// To replace existing by tree structure------------
-
-//Storage::Storage(QObject *parent): QStandardItemModel(parent)   , treeView(new QTreeView(this))
-//, standardModel(new QStandardItemModel(this))
-//{
-//    QList<QStandardItem *> preparedRow = prepareRow("2' External Drives", "", "2000000");
-//    QStandardItem *item = standardModel->invisibleRootItem();
-//    // adding a row to the invisible root item produces a root element
-//    item->appendRow(preparedRow);
-
-//    QList<QStandardItem *> secondRow = prepareRow("Maxtor_1Tb1", "32", "1000000");
-//    // adding a row to an item starts a subtree
-//    preparedRow.first()->appendRow(secondRow);
-
-//    QList<QStandardItem *> thirdRow = prepareRow("Maxtor_1Tb2", "33", "1000000");
-//    // adding a row to an item starts a subtree
-//    preparedRow.first()->appendRow(thirdRow);
-
-//    //ui->TrV_Storage->setModel(standardModel);
-//    //treeView->expandAll();
-//}
-
 
 int Storage::rowCount(const QModelIndex &parent) const
 {

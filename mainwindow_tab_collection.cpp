@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.9
+// Version:     0.13
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -68,7 +68,6 @@
             }
 
             //Reset selected catalog values (to avoid updating the last selected one for instance)
-            //DEV: replace by button becoming enabled once catalog is selected
             selectedCatalogFile="";
             selectedCatalogName="";
             selectedCatalogPath="";
@@ -138,9 +137,9 @@
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_UpdateCatalog_clicked()
-        {   //UPDATE THE SELECTED CATALOG
+        {   //Update the selected catalog
 
-            //Check if the update can be done, or inform the user otherwise
+            //Check if the update can be done, or inform the user otherwise.
                 //Deal with old versions, where necessary info may have not have been available
                 if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
                 QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
@@ -234,7 +233,6 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_ViewCatalogStats_clicked()
         {
-            //Collection_PB_ViewCatalogStats
             ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
@@ -263,7 +261,7 @@
         }
         //----------------------------------------------------------------------
 
-    //File methods
+    // File methods
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
         {
             selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
@@ -276,7 +274,7 @@
             selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
 
-            //display buttons
+            // Display buttons
             ui->Collection_pushButton_Search->setEnabled(true);
             ui->Collection_pushButton_ViewCatalog->setEnabled(true);
             ui->Collection_pushButton_Rename->setEnabled(true);
@@ -290,11 +288,11 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
-            //Get file from selected row
+            // Get file from selected row
             selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             loadCatalogFilesToExplore();
 
-            //Go to the Search tab
+            // Go to the Search tab
             ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
             ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
             ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
@@ -303,10 +301,10 @@
 
 //TAB: Collection methods----------------------------------------------------------------------
 
-    //Load a collection (catalogs)
+    // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
-        //Set up temporary lists
+        // Set up temporary lists
         QList<QString> cNames;
         QList<QString> cDateUpdates;
         QList<qint64>  cFileCounts;
@@ -319,14 +317,13 @@
         QList<QString> cStorages;
         QList<bool>    cIncludeSymblinks;
 
-        //Iterate in the directory to create a list of files and sort it
+        // Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
         fileTypes << "*.idx";
 
         QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
         while (iterator.hasNext()){
 
-            //LoadCatalogInfo(file);
             // Get infos stored in the file
             QFile catalogFile(iterator.next());
             if(!catalogFile.open(QIODevice::ReadOnly)) {
@@ -335,7 +332,6 @@
             }
 
             QTextStream textStream(&catalogFile);
-            //bool catalogNameProvided = false;
             bool catalogSourcePathProvided = false;
             bool catalogFileCountProvided = false;
             bool catalogTotalfileSizeProvided = false;
@@ -407,7 +403,7 @@
             if(catalogIncludeProvided==false)
                 cIncludeSymblinks.append("");
 
-            //Verify if path is active (drive connected)
+            // Verify if path is active (drive connected)
             bool test = verifyCatalogPath(catalogSourcePath);
             cSourcePathIsActives.append(test);
 
@@ -463,7 +459,7 @@
     //----------------------------------------------------------------------
 
     //----------------------------------------------------------------------
-    //Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
+    // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
         QDir dir(catalogSourcePath);
@@ -473,7 +469,6 @@
     //----------------------------------------------------------------------
     void MainWindow::recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize)
     {
-        //inputs:  (key) catalog name, (data) files count, total size
         QString statisticsFileName = "statistics.csv";
 
         QDateTime nowDateTime = QDateTime::currentDateTime();
@@ -486,9 +481,7 @@
         // Stream the list to the file
         QFile fileOut( collectionFolder + "/" + statisticsFileName );
 
-        //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
-
-        // write data
+        // Write data
         if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
             QTextStream stream(&fileOut);
             stream << statisticsLine << "\n";
@@ -527,12 +520,6 @@
 
             //replace @@ by \t
             line.replace("@@", "\t");
-            //lines.append(line);
-
-            // Stream the list to the file
-
-
-            //KMessageBox::information(this,"test:" + statisticsLine + "\ntest:" + fileOut.fileName());
 
             //append the line to the new file
             if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {

@@ -28,25 +28,22 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.9
+// Version:     0.13
 /////////////////////////////////////////////////////////////////////////////
 */
 
-//Include classes
+//Include class headers
     #include "mainwindow.h"
     #include "ui_mainwindow.h"
-    //#include "initdb.h"
 
 //Include other mainwindow methods
 
-    //SETUP: Menu and Icons - Actions KDE setup
+    //Setup and main object classes
     #include "mainwindow_setup.cpp"
-
-    //Main objects
     #include "collection.cpp"
     #include "storage.cpp"
 
-    //TABS:
+    //Application tabs
     #include "mainwindow_tab_search.cpp"
     #include "mainwindow_tab_create.cpp"
     #include "mainwindow_tab_collection.cpp"
@@ -58,18 +55,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
 {
 
    //Set up interface globally
-        //Set up GUI
+        //Set up the User Interface
             ui->setupUi(this);
-
-        //Set icon fallback in case theme is not available
-            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":icons");
-
-        //DEV: start the database
-            //startSQLDB();
-        //DEV: test translation
-            //QMessageBox(tr("Folder"));
-            //ui->label_test->setText(i18n("Folder"));
-
 
         //Hide user interface items that are not ready for use (under development).
             hideDevelopmentUIItems();
@@ -81,26 +68,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             //Get user home path
             QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
             QString homePath = standardsPaths[0];
+
             //Define Setting file path and name
             settingsFile = homePath + "/.config/katalog_settings.ini";
-            //settingsFile = QApplication::applicationDirPath() + "/katalog_settings.ini";
+
             //load the settings
             loadSettings();
 
     //load custom stylesheet
-                //if ( ui->Settings_ChBx_SaveRecordWhenUpdate->isChecked() == true )
-                //if ( ui->Settings_checkBox_UseDefaultTheme->isChecked() == false ){
+            //for windows, pick a windows common font.
+            #ifdef Q_OS_WIN
+            ui->tabWidget->setStyleSheet(font-family: calibri;
+                  );
+            #endif
 
-                //for windows, pick a windows common font.
-                #ifdef Q_OS_WIN
-                ui->tabWidget->setStyleSheet(font-family: calibri;
-                      );
-                #endif
-
-                //load custom Katalog stylesheet instead of default theme
-                if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors (light)" ){
-                    loadCustomTheme1();
-                }
+            //load custom Katalog stylesheet instead of default theme
+            if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors (light)" ){
+                loadCustomTheme1();
+            }
 
     //setup tab: Collection
         //Load the list of catalogs from the collection folder
@@ -124,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             ui->Create_lineEdit_NewCatalogPath->setText("/");
         //Always Load the file system for the treeview
             loadFileSystem("/");
-        //Load list of Storage
+        //Load the list of Storage devices
             loadStorageList();
 
     //setup tab: Tags
@@ -145,7 +130,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
      //Setup tap: Stats
             loadTypeOfData();
             statsLoadChart();
-            //statsLoadChart2();
 }
 
 MainWindow::~MainWindow()

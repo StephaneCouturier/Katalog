@@ -609,15 +609,10 @@
             // Get infos stored in the file
             QFile catalogFile(catalogFilePath);
             if(!catalogFile.open(QIODevice::ReadOnly)) {
-                //KMessageBox::information("No catalog found.");
                 return "";
             }
 
             QTextStream textStream(&catalogFile);
-            //bool catalogNameProvided = false;
-            //bool catalogStorageProvided = false;
-
-            //QString catalogSourcePath;
 
             while (true)
             {
@@ -641,7 +636,6 @@
                 else if (line.left(16)=="<catalogStorage>"){
                     QString catalogStorageName = line.right(line.size() - line.lastIndexOf(">") - 1);
                     return catalogStorageName;
-                    //catalogStorageProvided = true;
                 }
                 else
                     break;
@@ -717,7 +711,6 @@
                 ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
                 ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
                 ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
-                //ui->CB_SizeUnit->setCurrentIndex(1);
 
                 //Load last search values (from settings file)
                     if (selectedMaximumSize ==0)

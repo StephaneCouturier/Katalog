@@ -32,30 +32,20 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-//#include <cstdlib>
-
 #include <QApplication>
 #include <QCommandLineParser>
-#include <QTranslator>
 
-#include <KAboutData>
-#include <KLocalizedString>
+//#include <KAboutData>
+//#include <KLocalizedString>
 
 #include "mainwindow.h"
-//#include <QTableView>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    /*
     KLocalizedString::setApplicationDomain("Katalog");
-
-    //Test translation
-    QTranslator translator;
-    translator.load(":/Katalog_fr_FR.ts");
-    //translator.load(app.applicationName() + "_" + QLocale::system().name(), ":/ts");
-    //translator->load("myApp_en.qm", ":/translation/"));
-    app.installTranslator(&translator);
 
     KAboutData aboutData(
          QStringLiteral("Katalog"),         // The program name used internally. (componentName)
@@ -81,6 +71,7 @@ int main(int argc, char *argv[])
     aboutData.setupCommandLine(&parser);
     parser.process(app);
     aboutData.processCommandLine(&parser);
+    */
 
     //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset jsut after)
     QIcon::setThemeName( "default" );

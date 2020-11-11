@@ -60,7 +60,6 @@ void MainWindow::on_Statistics_comboBox_TypeOfData_currentIndexChanged()
 //----------------------------------------------------------------------
 void MainWindow::on_Statistics_pushButton_EditStatisticsFile_clicked()
 {
-    //KMessageBox::information(this,"test:\n");
     QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
     QDesktopServices::openUrl(QUrl::fromLocalFile(statisticsFilePath));
 }
@@ -89,8 +88,7 @@ void MainWindow::statsLoadChart()
     QTextStream stream(&statisticsFile);
     while (!stream.atEnd()) {
         QString line = stream.readLine();
-        //if (line.startsWith("#") || line.startsWith(":"))
-        //    continue;
+
         QStringList values = line.split("\t");
         qint64 number = 0;
 
@@ -99,8 +97,7 @@ void MainWindow::statsLoadChart()
             if ( selectedTypeOfData == "Number of files" )
             {
                 number = values[2].toLongLong();
-                //number = number/1000;
-                //displayUnit = "(k)";
+
                 series->append(datetime.toMSecsSinceEpoch(), number);
                 if ( number > maxValueGraphRange )
                     maxValueGraphRange = number;
@@ -108,7 +105,6 @@ void MainWindow::statsLoadChart()
             else if ( selectedTypeOfData == "Total file size" )
             {
                 number = values[3].toLongLong();
-                //KMessageBox::information(this,"test:\n" + values[0] + "test:\n" +QString::number(number));
                 if ( number > 2000000000 ){
                     number = number/1024/1024/1024;
                     displayUnit = "(GiB)";

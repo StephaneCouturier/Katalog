@@ -122,6 +122,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString sourceCatalog;
             QStringListModel catalogSelectionList;
             void initiateSearchValues();
+            QString getCatalogStorageName(QString catalogFilePath);
 
             QList<QString>  sFileNames;
             QList<qint64>   sFileSizes;
@@ -233,7 +234,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);
-            QString getCatalogStorageName(QString catalogFilePath);
 
             //context menu
             void contextOpenFile();
