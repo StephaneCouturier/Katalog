@@ -34,6 +34,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "database.h"
 
 #include <QFileDialog>
 #include <QTextStream>
@@ -144,17 +145,15 @@
 
         //Collection
         ui->Collection_pushButton_Convert->hide();
-        //ui->Explore_L_Directories->hide();
         //ui->Explore_treeview_Directories->hide();
-        //ui->PB_C_Rename->hide();
 
         //Storage
-        ui->Storage_pushButton_SaveAll->hide();
-        ui->Storage_pushButton_New->hide();
+        //ui->Storage_pushButton_SaveAll->hide();
+        //ui->Storage_pushButton_New->hide();
         //ui->Storage_pushButton_SearchLocation->hide();
         ui->Storage_pushButton_OpenFilelight->hide();
-        ui->Storage_pushButton_Update->hide();
-        ui->Storage_pushButton_Delete->hide();
+        //ui->Storage_pushButton_Update->hide();
+        //ui->Storage_pushButton_Delete->hide();
         ui->Storage_label_SpaceUnit->hide();
 
         //Settings
@@ -212,6 +211,58 @@
     }
 
     //----------------------------------------------------------------------
+
+    void MainWindow::startDatabase()
+    {
+        if (!QSqlDatabase::drivers().contains("QSQLITE"))
+            QMessageBox::critical(
+                        this,
+                        "Unable to load database",
+                        "This demo needs the SQLITE driver"
+                        );
+
+        // Initialize the database:
+
+        QSqlError err = initializeDatabase();
+        if (err.type() != QSqlError::NoError) {
+            //showError(err);
+            return;
+        }
+
+
+        //Statistics_TaV_Test
+        // Create the data model:
+
+        storageModel = new QSqlRelationalTableModel(this);
+        storageModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+        // Set the model
+        //ui->Test_tableView_sql1->setModel(model);
+        //ui->Test_tableView_sql1->setSelectionMode(QAbstractItemView::SingleSelection);
+
+
+       // QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
+        //proxyStorageModel->setSourceModel(model);
+
+        // Connect model to tree/table view
+        //ui->test_treeView->setModel(proxyStorageModel);
+       /*
+        ui->test_treeView->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+        ui->test_treeView->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->test_treeView->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->test_treeView->header()->resizeSection(0,  50); //ID
+        ui->test_treeView->header()->resizeSection(1, 150); //Name
+        ui->test_treeView->header()->resizeSection(2, 100); //type
+        ui->test_treeView->header()->resizeSection(3, 175); //location
+        ui->test_treeView->header()->resizeSection(4, 250); //Path
+        ui->test_treeView->header()->resizeSection(5,  50); //Path
+        ui->test_treeView->header()->resizeSection(6,  75); //FS
+        ui->test_treeView->header()->resizeSection(7,  75); //Total
+        ui->test_treeView->header()->resizeSection(8,  75); //Free
+        //ui->test_treeView->header()->hideSection(1); //Path
+    */
+    }
+
 
 /*
     //Menu and Icons - Actions KDE setup ---------------------------------------

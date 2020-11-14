@@ -34,6 +34,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "database.h"
 #include "storage.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -53,8 +54,8 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
 
               QTextStream stream(&newStorageFile);
 
-              stream << "Name"      << "\t"
-                     << "ID"        << "\t"
+              stream << "ID"        << "\t"
+                     << "Name"      << "\t"
                      << "Type"      << "\t"
                      << "Location"  << "\t"
                      << "Path"      << "\t"
@@ -77,7 +78,10 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
               ui->Storage_pushButton_CreateList->setEnabled(false);
 
               //Even if empty, load it to the model
-              loadStorageModel();
+              //loadStorageModel();
+              loadStorageFileToTable();
+              loadStorageTableToModel();
+              refreshStorageStatistics();
 
         return;
         }
@@ -86,8 +90,12 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_Reload_clicked()
 {
-    loadStorageModel();
-    loadStorageList();
+    //loadStorageModel();
+    //loadStorageList();
+
+    loadStorageFileToTable();
+    loadStorageTableToModel();
+    refreshStorageStatistics();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_EditAll_clicked()
@@ -97,35 +105,23 @@ void MainWindow::on_Storage_pushButton_EditAll_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_SaveAll_clicked()
 {
-    //Prepare export file name
-
-    QString filename = "storage2.csv";
-    filename = collectionFolder + "/" + filename;
-    QFile exportFile(filename);
-
-    //QFile exportFile(collectionFolder+"/file.txt");
-
-      if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
-
-          QTextStream stream(&exportFile);
-          for (int i = 0; i < filesFoundList.size(); ++i)
-            stream << filesFoundList.at(i) << '\n';
-        }
-
-      QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+exportFile.fileName());
-      exportFile.close();
+    saveStorageData();
 }
+//----------------------------------------------------------------------
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
 {
-    selectedStorageName      = ui->Storage_treeView_StorageList->model()->index(index.row(), 2, QModelIndex()).data().toString();
-    selectedStorageLocation = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-    selectedStoragePath      = ui->Storage_treeView_StorageList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+    selectedStorageID       = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
+    selectedStorageName     = ui->Storage_treeView_StorageList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+    selectedStorageLocation = ui->Storage_treeView_StorageList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+    selectedStoragePath     = ui->Storage_treeView_StorageList->model()->index(index.row(), 4, QModelIndex()).data().toString();
 
     //display buttons
     ui->Storage_pushButton_SearchStorage->setEnabled(true);
     ui->Storage_pushButton_SearchLocation->setEnabled(true);
     ui->Storage_pushButton_CreateCatalog->setEnabled(true);
+    ui->Storage_pushButton_Update->setEnabled(true);
+    ui->Storage_pushButton_Delete->setEnabled(true);
     //ui->PB_S_Update->setEnabled(true);
 
     selectedStorageIndexRow = index.row();
@@ -135,7 +131,35 @@ void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &inde
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_New_clicked()
 {
-    //KMessageBox::information(this,"on_Storage_pushButton_New_clicked\n");
+//insert a new line in the table, incrementing the ID
+//    QSqlQuery queryDeviceNumber;
+//    queryDeviceNumber.prepare( "INSERT INTO storage VALUES ( 100, NewDevice )");
+//    queryDeviceNumber.exec();
+
+    QSqlQuery query;
+    if (!query.exec(STORAGE_SQL)){
+        QMessageBox::information(this,"Katalog","pb1.");
+        return;}
+
+    if (!query.prepare(INSERT_STORAGE_SQL)){
+        QMessageBox::information(this,"Katalog","pb2.");
+        return;}
+
+    //Get max ID
+
+    QSqlQuery queryDeviceNumber;
+    queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
+    queryDeviceNumber.exec();
+    queryDeviceNumber.next();
+    int maxID = queryDeviceNumber.value(0).toInt();
+    int newID = maxID + 1;
+
+
+    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0);
+
+    //load table to model
+    loadStorageTableToModel();
+
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
@@ -175,152 +199,300 @@ void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_Update_clicked()
 {
-    QMessageBox::information(this,"Katalog","test:\n" + QString::number(selectedStorageIndexRow));
-
-    //getStorageInfo(selectedStoragePath);
-    //QModelIndex index;
-    //index selectedStorageIndexRow;
-    //QString test;
-    //QModelIndex index = index.sibling(selectedStorageIndexRow, 1);
-    //QVariant data = ui->TrV_Storage->model()->data(index);
-    //QString text = data.toString();
-
-    //ui->TrV_Storage->model()->removeRow(selectedStorageIndexRow);
-    //ui->TrV_Storage->model()->removeRow(selectedStorageIndexRow);
-    //listModel->removeRows(ui->listView_3->currentIndex().row(),1);
-
-    //KMessageBox::information(this,"test:\n" + text);
-
+    updateStorageInfo();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_Delete_clicked()
 {
-    //ui->TrV_Storage->model()->removeRow(selectedStorageIndexRow);
-    //storageListModel->removeRows(selectedStorageIndexRow,1);
-    //proxyStorageModel->removeRows(ui->listView_3->currentIndex().row(),1);
+
+    QMessageBox::information(this,"Katalog","Ok." + QString::number(selectedStorageID));
+
+    QSqlQuery queryDeviceNumber;
+    queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorageID) );
+    queryDeviceNumber.exec();
+
+    //reload data to model
+    loadStorageTableToModel();
+
+    //save model data to file
+    saveStorageData();
+
+    //refresh storage statistics
+    refreshStorageStatistics();
 }
 
 //---------------------------------------------------------------------------------------------------
 //--DATA methods ------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------
-void MainWindow::loadStorageModel()
-{
-    //Set up temporary lists
-    QList<QString> sNames;
-    QList<int> sIDs;
-    QList<QString> sTypes;
-    QList<QString> sLocations;
-    QList<QString> sPaths;
-    QList<QString> sLabels;
-    QList<QString> sFileSystemTypes;
-    QList<qint64>  sBytesTotals;
-    QList<qint64>  sBytesFrees;
-    QList<QIcon>   sIcons;
 
-    //Get data
+void MainWindow::loadStorageFileToTable()
+{
 
     //Define storage file
-    storageFilePath = collectionFolder + "/" + "storage.csv";
     QFile storageFile(storageFilePath);
+    //QMessageBox::information(this,"Katalog","path." + storageFilePath );
 
     //Open file or return information
     if(!storageFile.open(QIODevice::ReadOnly)) {
-
 //        KMessageBox::information(this,"No storage file was found in the current collection folder."
 //                                      "\nPlease create one with the button 'Create list'\n");
         return;
     }
 
-    QTextStream textStream(&storageFile);
+    //Clear all entries of the current table
+    QSqlQuery queryDelete;
+    queryDelete.prepare( "DELETE FROM storage" );
+    queryDelete.exec();
 
-    qint64 storageGrandTotal = 0;
-    qint64 storageGrandFree  = 0;
+    //Prepare query
+    QSqlQuery query;
+    if (!query.exec(STORAGE_SQL)){
+        QMessageBox::information(this,"Katalog","pb1.");
+        return;}
+
+    if (!query.prepare(INSERT_STORAGE_SQL)){
+        QMessageBox::information(this,"Katalog","pb2.");
+        return;}
+
+    QTextStream textStream(&storageFile);
 
     while (true)
     {
+
         QString line = textStream.readLine();
         if (line.isNull())
             break;
         else
-            if (line.left(4)!="Name"){//skip the first line with headers
+            if (line.left(2)!="ID"){//skip the first line with headers
 
                 //Split the string with tabulation into a list
                 QStringList fieldList = line.split('\t');
 
-                QIcon icon;
-                icon.fromTheme("drive-harddisk");
-
-                //Append data to the lists
-                sNames.append(fieldList[0]);
-                sIDs.append(fieldList[1].toInt());
-                sIcons.append(icon);
-                sTypes.append(fieldList[2]);
-                sLocations.append(fieldList[3]);
-                sPaths.append(fieldList[4]);
-                sLabels.append(fieldList[5]);
-                sFileSystemTypes.append(fieldList[6]);
-                sBytesTotals.append(fieldList[7].toLongLong());
-                sBytesFrees.append(fieldList[8].toLongLong());
-
-                storageGrandTotal = storageGrandTotal + fieldList[7].toLongLong();
-                storageGrandFree  = storageGrandFree  + fieldList[8].toLongLong();
+                QVariant storageId = addStorage(query,
+                                                fieldList[0].toInt(),
+                                                fieldList[1],
+                                                fieldList[2],
+                                                fieldList[3],
+                                                fieldList[4],
+                                                fieldList[5],
+                                                fieldList[6],
+                                                fieldList[7].toLongLong(),
+                                                fieldList[8].toLongLong()
+                                                );
             }
-        }
-
-        //Calculate totals
-        int storageCount = sNames.count();
-        qint64 storageGrandUsed = storageGrandTotal - storageGrandFree;
-
-    // Create model
-    Storage *storageModel = new Storage(this);
-
-    // Populate model with data
-    storageModel->populateStorageData(sNames,
-                                      sIDs,
-                                      sTypes,
-                                      sLocations,
-                                      sPaths,
-                                      sLabels,
-                                      sFileSystemTypes,
-                                      sBytesTotals,
-                                      sBytesFrees,
-                                      sIcons
-                                      );
-
-    QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
-    proxyStorageModel->setSourceModel(storageModel);
-
-    // Connect model to tree/table view
-    ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
-    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-    ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->Storage_treeView_StorageList->header()->resizeSection(0, 200); //Location
-    ui->Storage_treeView_StorageList->header()->resizeSection(1,  50); //Icon
-    ui->Storage_treeView_StorageList->header()->resizeSection(2, 175); //Name
-    ui->Storage_treeView_StorageList->header()->resizeSection(3,  50); //ID
-    ui->Storage_treeView_StorageList->header()->resizeSection(4, 100); //Type
-    ui->Storage_treeView_StorageList->header()->resizeSection(5, 250); //Path
-    ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
-    ui->Storage_treeView_StorageList->header()->resizeSection(7,  75); //Total
-    ui->Storage_treeView_StorageList->header()->resizeSection(8,  75); //Free
-    ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
-
-    ui->Storage_label_CountValue->setText(QString::number(storageCount));
-    ui->Storage_label_SpaceTotalValue->setText(QString::number(storageGrandTotal));
-    ui->Storage_label_SpaceUsedValue->setText(QString::number(storageGrandUsed));
-    ui->Storage_label_SpaceFreeValue->setText(QString::number(storageGrandFree));
-
-    //Get list of storage names for Create screen
-    storageNameList = sNames;
+    }
+    storageFile.close();
 
     //Enable buttons
     ui->Storage_pushButton_Reload->setEnabled(true);
     ui->Storage_pushButton_EditAll->setEnabled(true);
     //ui->Storage_pushButton_SaveAll->setEnabled(true);
+    ui->Storage_pushButton_New->setEnabled(true);
 
     //Disable create button so it cannot be overwritten
     ui->Storage_pushButton_CreateList->setEnabled(false);
+}
+//----------------------------------------------------------------------
+void MainWindow::loadStorageTableToModel()
+{
+    storageModel->setTable("storage");
+    storageModel->setSort(0, Qt::AscendingOrder);
+
+    // Set the localized header captions:
+    storageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+    storageModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
+    storageModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
+    storageModel->setHeaderData(3, Qt::Horizontal, tr("Location"));
+    storageModel->setHeaderData(4, Qt::Horizontal, tr("Path"));
+    storageModel->setHeaderData(5, Qt::Horizontal, tr("Label"));
+    storageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
+    storageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
+    storageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
+
+    // Populate the storageModel:
+    if (!storageModel->select()) {
+        //showError(model->lastError());
+        return;
+    }
+
+    QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
+    proxyStorageModel->setSourceModel(storageModel);
+
+    ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
+
+
+    // Connect model to tree/table view
+    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Storage_treeView_StorageList->header()->resizeSection(0,  50); //ID
+    ui->Storage_treeView_StorageList->header()->resizeSection(1, 200); //Name
+    ui->Storage_treeView_StorageList->header()->resizeSection(2, 125); //Type
+    ui->Storage_treeView_StorageList->header()->resizeSection(3, 150); //Location
+    ui->Storage_treeView_StorageList->header()->resizeSection(4, 250); //Path
+    ui->Storage_treeView_StorageList->header()->resizeSection(5,  50); //Label
+    ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
+    ui->Storage_treeView_StorageList->header()->resizeSection(7,  50); //Total
+    ui->Storage_treeView_StorageList->header()->resizeSection(8,  50); //Free
+    //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
+
+    //Get the list of device names for the Create screen
+    QSqlQuery query;
+    query.prepare("SELECT storageName FROM storage ORDER BY storageName");
+    query.exec();
+        while(query.next())
+        {
+            storageNameList<<query.value(0).toString();
+        }
+
 
 }
+//----------------------------------------------------------------------
+void MainWindow::updateStorageInfo()
+{
+    //verify if path is available / not empty
+    QDir dir (selectedStoragePath);
+        ///Warning and choice if the result is 0 files
+        if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+        {
+            int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
+                                          "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
+                                          "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
+            //return;
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+        }
+
+    //Get device information
+    QStorageInfo storage;
+    storage.setPath(selectedStoragePath);
+    if (storage.isReadOnly())
+        qDebug() << "isReadOnly:" << storage.isReadOnly();
+
+    qint64 sizeTotal = storage.bytesTotal()/1024/1024/1024;
+    qint64 sizeAvailable = storage.bytesFree()/1024/1024/1024;
+    QString storageName = storage.name();
+    QString storageFS = storage.fileSystemType();
+
+    //get confirmation for the update
+    int result = QMessageBox::warning(this,"Update","Total:\n" + QString::number(sizeTotal)+"\nFree:\n" + QString::number(sizeAvailable),
+                                      QMessageBox::Yes | QMessageBox::Cancel);
+    //return;
+    if ( result == QMessageBox::Cancel){
+        return;
+    }
+
+    //SQL updates
+    //Get the sum of total space
+    QSqlQuery queryTotalSpace;
+    queryTotalSpace.prepare( "UPDATE storage "
+                             "SET storageTotalSpace = " + QString::number(sizeTotal) +","
+                              "storageFreeSpace = " + QString::number(sizeAvailable) +","
+                              "storageLabel = '" + storageName +"',"
+                              "storageFileSystem = '" + storageFS +"'"
+                          + " WHERE storageID = " + QString::number(selectedStorageID) );
+    queryTotalSpace.exec();
+
+    //reload data to model
+    loadStorageTableToModel();
+
+    //save model data to file
+    saveStorageData();
+
+    //refresh storage statistics
+    refreshStorageStatistics();
+
+}
+
+//----------------------------------------------------------------------
+void MainWindow::saveStorageData()
+{
+    //Save model data to Storage file
+    saveStorageModelToFile();
+
+    //load Storage file data to table
+    loadStorageFileToTable();
+
+    //load table to model
+    loadStorageTableToModel();
+
+    //refresh stats
+    refreshStorageStatistics();
+}
+
+//----------------------------------------------------------------------
+
+void MainWindow::saveStorageModelToFile()
+{
+    //Prepare export file name
+    //Define storage file
+    storageFilePath = collectionFolder + "/" + "storage.csv";
+    QFile storageFile(storageFilePath);
+
+    //QFile exportFile(collectionFolder+"/file.txt");
+    QString textData;
+    int rows = storageModel->rowCount();
+    int columns = storageModel->columnCount();
+
+    QTextStream out(&storageFile);
+    //DEV ADD HEADER LINE
+    out << "ID\tName\tType / Capacité\tContainer\tPath\tLabel\tFileSystem\tTotal Disque	Free"
+           "\tLocation tree\tBrand and model\tBuild Date\tSerial Number\tPartitions\tPartition size	Contents\tCatalog"
+           "\n";
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+
+                textData += storageModel->data(storageModel->index(i,j)).toString();
+                textData += "\t";      // for .csv file format
+        }
+        textData += "\n";             // (optional: for new line segmentation)
+    }
+
+    if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+        out << textData;
+
+        storageFile.close();
+    }
+
+    //QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+storageFile.fileName());
+    storageFile.close();
+}
+//----------------------------------------------------------------------
+
+void MainWindow::refreshStorageStatistics()
+{
+    //Get the number of devices
+    QSqlQuery queryDeviceNumber;
+    queryDeviceNumber.prepare( "SELECT COUNT (storageID) FROM storage" );
+    queryDeviceNumber.exec();
+    queryDeviceNumber.next();
+    int deviceNumber = queryDeviceNumber.value(0).toInt();
+    ui->Storage_label_CountValue->setText(QString::number(deviceNumber));
+
+    //Get the sum of free space
+    QSqlQuery queryFreeSpaceTotal;
+    queryFreeSpaceTotal.prepare( "SELECT SUM(storageFreeSpace) FROM storage" );
+    queryFreeSpaceTotal.exec();
+    queryFreeSpaceTotal.next();
+    int freeSpaceTotal = queryFreeSpaceTotal.value(0).toInt();
+    ui->Storage_label_SpaceFreeValue->setText(QString::number(freeSpaceTotal));
+
+    //Get the sum of total space
+    QSqlQuery queryTotalSpace;
+    queryTotalSpace.prepare( "SELECT SUM(storageTotalSpace) FROM storage" );
+    queryTotalSpace.exec();
+    queryTotalSpace.next();
+    int totalSpace = queryTotalSpace.value(0).toInt();
+    ui->Storage_label_SpaceTotalValue->setText(QString::number(totalSpace));
+
+    //Calculate used space
+    int usedSpace = totalSpace - freeSpaceTotal;
+    ui->Storage_label_SpaceUsedValue->setText(QString::number(usedSpace));
+
+    //Get the percent of free space
+    float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
+    ui->Storage_labelPercentFree->setText(QString::number(round(freepercent))+"%");
+}
+
 //----------------------------------------------------------------------

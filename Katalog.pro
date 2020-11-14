@@ -82,6 +82,7 @@ SOURCES += \
 HEADERS += \
     catalog.h \
     collection.h \
+    database.h \
     mainwindow.h \
     storage.h \
     tag.h

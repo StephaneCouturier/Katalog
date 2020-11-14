@@ -59,10 +59,17 @@
             if ( dir !=""){
                 collectionFolder=dir;
                 ui->Collection_lineEdit_CollectionFolder->setText(dir);
+                storageFilePath = collectionFolder + "/" + "storage.csv";
 
                 //initiateSearchValues();
                 saveSettings();
-                loadStorageModel();
+
+                //loadStorageModel();
+                loadStorageFileToTable();
+                loadStorageTableToModel();
+                refreshStorageStatistics();
+
+                //catalog
                 loadCatalogsToModel();
                 refreshCatalogSelectionList();
             }
@@ -77,7 +84,11 @@
         {
             loadCatalogsToModel();
             refreshCatalogSelectionList();
-            loadStorageModel();
+
+            //loadStorageModel();
+            loadStorageFileToTable();
+            loadStorageTableToModel();
+            refreshStorageStatistics();
 
             //hide buttons to force user to select a catalog before allowing any catalg action.
             hideCatalogButtons();

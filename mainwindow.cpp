@@ -87,6 +87,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
                 loadCustomTheme1();
             }
 
+    //setup: start database
+            startDatabase();
+
     //setup tab: Collection
         //Load the list of catalogs from the collection folder
             loadCatalogsToModel();
@@ -102,7 +105,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
 
     //setup tab: Storage
             storageFilePath = collectionFolder + "/" + "storage.csv";
-            loadStorageModel();
+            //loadStorageModel();
+
+            loadStorageFileToTable();
+            loadStorageTableToModel();
+            refreshStorageStatistics();
 
     //setup tab: Create
         //Default path to scan
@@ -142,4 +149,5 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 KMessageBox::information(this,"test:\n");
 */
+
 

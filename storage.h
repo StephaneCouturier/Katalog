@@ -56,8 +56,7 @@ public:
                                 const QList<QString> &storageLabel,
                                 const QList<QString> &storageFileSystemType,
                                 const QList<qint64>  &storageBytesTotal,
-                                const QList<qint64>  &storageBytesFree,
-                                const QList<QIcon>   &storageIcon
+                                const QList<qint64>  &storageBytesFree
                                 );
 
 private:
@@ -70,7 +69,5 @@ private:
     QList<QString> storageFileSystemType;
     QList<qint64>  storageBytesTotal;
     QList<qint64>  storageBytesFree;
-    QList<QIcon>   storageIcon;
-
 };
 #endif // STORAGE_H

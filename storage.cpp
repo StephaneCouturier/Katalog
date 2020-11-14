@@ -57,16 +57,15 @@ QVariant Storage::data(const QModelIndex &index, int role) const
         return QVariant();
     }
         switch (index.column()){
-        case 0: return QString(storageLocation[index.row()]);
-        case 1: return QIcon(storageIcon[index.row()]);
-        case 2: return QString(storageName[index.row()]);
-        case 3: return int(storageID[index.row()]);
-        case 4: return QString(storageType[index.row()]);
-        case 5: return QString(storagePath[index.row()]);
-        case 6: return QString(storageLabel[index.row()]);
-        case 7: return QString(storageFileSystemType[index.row()]);
-        case 8: return qint64(storageBytesTotal[index.row()]);
-        case 9: return qint64(storageBytesFree[index.row()]);
+        case 0: return QString(storageName[index.row()]);
+        case 1: return int(storageID[index.row()]);
+        case 2: return QString(storageType[index.row()]);
+        case 3: return QString(storageLocation[index.row()]);
+        case 4: return QString(storagePath[index.row()]);
+        case 5: return QString(storageLabel[index.row()]);
+        case 6: return QString(storageFileSystemType[index.row()]);
+        case 7: return qint64(storageBytesTotal[index.row()]);
+        case 8: return qint64(storageBytesFree[index.row()]);
     }
     return QVariant();
 }
@@ -75,16 +74,15 @@ QVariant Storage::headerData(int section, Qt::Orientation orientation, int role)
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
-        case 0: return QString("Location");
-        case 1: return QString("Icon");
-        case 2: return QString("Name");
-        case 3: return QString("ID");
-        case 4: return QString("Type");
-        case 5: return QString("Path");
-        case 6: return QString("Label");
-        case 7: return QString("FileSystem");
-        case 8: return QString("Total");
-        case 9: return QString("Free");
+        case 0: return QString("Name");
+        case 1: return QString("ID");
+        case 2: return QString("Type");
+        case 3: return QString("Location");
+        case 4: return QString("Path");
+        case 5: return QString("Label");
+        case 6: return QString("FileSystem");
+        case 7: return QString("Total");
+        case 8: return QString("Free");
         }
     }
     return QVariant();
@@ -99,14 +97,11 @@ void Storage::populateStorageData(  const QList<QString> &sNames,
                                     const QList<QString> &sLabels,
                                     const QList<QString> &sFileSystemTypes,
                                     const QList<qint64>  &sBytesTotals,
-                                    const QList<qint64>  &sBytesFrees,
-                                    const QList<QIcon>   &sIcons
+                                    const QList<qint64>  &sBytesFrees
                                     )
 {
     storageName.clear();
     storageName = sNames;
-    storageIcon.clear();
-    storageIcon = sIcons;
     storageID.clear();
     storageID = sIDs;
     storageType.clear();

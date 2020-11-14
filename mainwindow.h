@@ -104,6 +104,13 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString fileTypeSelected;
             void setFileTypes();
 
+            //database
+            QSqlRelationalTableModel *storageModel;
+            void startDatabase();
+
+            //void refreshStorageStatistics();
+
+
         //TAB: Search
             //inputs
             QString searchText;
@@ -187,15 +194,21 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
 
         //TAB: Storage
             QString storageFilePath;
-            void loadStorageModel();
             QString selectedStorageName;
-            QString selectedStorageID;
+            int selectedStorageID;
             QString selectedStorageType;
             QString selectedStorageLocation;
             QString selectedStoragePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             QStringList locationCatalogList;
+
+            void loadStorageFileToTable();
+            void loadStorageTableToModel();
+            void saveStorageModelToFile();
+            void saveStorageData();
+            void updateStorageInfo();
+            void refreshStorageStatistics();
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -291,6 +304,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Storage_pushButton_Delete_clicked(); //DEV
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
+
 
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
