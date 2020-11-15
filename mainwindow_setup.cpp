@@ -145,58 +145,65 @@
 
         //Collection
         ui->Collection_pushButton_Convert->hide();
-        //ui->Explore_treeview_Directories->hide();
 
         //Storage
-        //ui->Storage_pushButton_SaveAll->hide();
-        //ui->Storage_pushButton_New->hide();
-        //ui->Storage_pushButton_SearchLocation->hide();
         ui->Storage_pushButton_OpenFilelight->hide();
-        //ui->Storage_pushButton_Update->hide();
-        //ui->Storage_pushButton_Delete->hide();
         ui->Storage_label_SpaceUnit->hide();
 
         //Settings
-        //ui->Settings_label_Theme->hide();
-        //ui->Settings_comboBox_Theme->hide();
 
         //Other tabs
-        ui->tabWidget->removeTab(10);
-        ui->tabWidget->removeTab(9);
-        ui->tabWidget->removeTab(8);
-        ui->tabWidget->removeTab(7);
-
-        //Test translation QPushButton hello(QPushButton::tr("Hello world!"));
-
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::loadTypeOfData()
-    {
-        typeOfData << "Number of files" << "Total file size";
-        listModel = new QStringListModel(this);
-        listModel->setStringList(typeOfData);
-        ui->Statistics_comboBox_TypeOfData->setModel(listModel);
-        ui->Statistics_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
+        ui->tabWidget->removeTab(7); //Tags
     }
 
     //----------------------------------------------------------------------
     void MainWindow::loadCustomTheme1()
     {       
-        //Global
+        //colors:
+            //blue light	39b2e5
+            //blue dark		10a2df
+            //green light	81d41a
+            //green dark	43bf0c
+            //orange light	ff8000
+            //orange dark	e36600
+            //purple light	a1467e
+            //purple dark	8b1871
+
+        /* blue tabwidget bar */
         ui->tabWidget->setStyleSheet(
-              "QTabBar              { background-color: transparent; qproperty-drawBase:0;}"
-              "QTabBar::tab         { background-color: #10a2df; color: #EEE; padding: 5px 20px; }"
-              "QTabBar::tab:selected{ background-color: #eff0f1; color: #10a2df; font-weight: bold; text-decoration: none;} "
+              "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right;}"
+              "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
+
+              "QTabBar::tab          { background-color: #10a2df; color: #EAEAEA; padding: 5px 12px; border-right: 1px solid #39b2e5; }"
+              "QTabBar::tab          { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #39b2e5, stop: 0.2 #39b2e5, stop: 0.3 #31aee4, stop: 0.5 #1ea6e1, stop: 1 #10a2df); }"
+
+              "QTabBar::tab:selected { background-color: #39b2e5; color: #FFF; font-weight: bold; } "
+              "QTabBar::tab:selected { border-top-left-radius: 5px; border-top-right-radius: 5px;} "
+              "QTabBar::tab:!selected{ margin-top: 5px; }"
+              "QTabWidget::tab-bar   { left: 0px; }"
               );
 
-        //Search Tab
+        //Search tab
         ui->Search_pushButton_Search->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
+        /*
+        ui->Search_label_Text->setStyleSheet(
+              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
+              );
+        ui->Search_label_Catalog->setStyleSheet(
+              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
+              );
+        ui->Search_label_File->setStyleSheet(
+              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
+              );
+        */
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #10a2df; } ");
+
+        //Create tab
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
               "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
               );
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #10a2df; } ");
         ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #10a2df; } ");
 
         ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");

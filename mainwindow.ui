@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1096</width>
-    <height>877</height>
+    <width>925</width>
+    <height>520</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>925</width>
+    <height>520</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Katalog</string>
@@ -151,7 +157,7 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>25</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -329,7 +335,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>0</height>
                </size>
               </property>
@@ -445,7 +451,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>0</height>
                </size>
               </property>
@@ -678,12 +684,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>100</width>
+                <width>40</width>
                 <height>20</height>
                </size>
               </property>
@@ -811,8 +814,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QSpinBox" name="Search_spinBox_FileTypeMinimumSize">
               <property name="minimumSize">
                <size>
-                <width>70</width>
+                <width>60</width>
                 <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="maximum">
@@ -824,7 +833,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Search_comboBox_MinSizeUnit">
               <property name="maximumSize">
                <size>
-                <width>70</width>
+                <width>60</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -862,8 +871,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QSpinBox" name="Search_spinBox_MaximumSize">
               <property name="minimumSize">
                <size>
-                <width>70</width>
+                <width>60</width>
                 <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="maximum">
@@ -881,7 +896,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="maximumSize">
                <size>
-                <width>70</width>
+                <width>60</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -902,7 +917,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -918,7 +933,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>0</height>
                </size>
               </property>
@@ -949,13 +964,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>50</width>
+                <width>40</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>50</width>
+                <width>40</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -990,6 +1005,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <size>
                 <width>90</width>
                 <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>90</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="font">
@@ -1050,7 +1071,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -1060,7 +1081,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Search_label_LinkImage8">
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>0</height>
                </size>
               </property>
@@ -1075,7 +1096,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item>
              <widget class="QCheckBox" name="Search_checkBox_ShowFolders">
               <property name="text">
-               <string>list folders only</string>
+               <string>list Folders only</string>
               </property>
               <property name="tristate">
                <bool>false</bool>
@@ -1540,7 +1561,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>20</height>
                </size>
               </property>
@@ -1993,6 +2014,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QVBoxLayout" name="Create_verticalLayout_includeOther">
@@ -2494,7 +2528,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
             <property name="text">
-             <string>with selected Storage: </string>
+             <string>with selected: </string>
             </property>
             <property name="margin">
              <number>6</number>
@@ -2595,7 +2629,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
+              <width>20</width>
               <height>20</height>
              </size>
             </property>
@@ -2646,7 +2680,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Storage_label_CountValue">
             <property name="minimumSize">
              <size>
-              <width>50</width>
+              <width>25</width>
               <height>0</height>
              </size>
             </property>
@@ -2666,20 +2700,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="Storage_horizontalSpacer_01">
+           <widget class="Line" name="line_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceTotalLabel">
@@ -2703,20 +2728,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="Storage_horizontalSpacer_02">
+           <widget class="Line" name="line_3">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceUsedLabel">
@@ -2740,20 +2756,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="Storage_horizontalSpacer_03">
+           <widget class="Line" name="line_4">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceFreeLabel">
@@ -2790,7 +2797,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Storage_labelPercentFree">
             <property name="minimumSize">
              <size>
-              <width>20</width>
+              <width>30</width>
               <height>0</height>
              </size>
             </property>
@@ -2800,20 +2807,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="Storage_horizontalSpacer_04">
+           <widget class="Line" name="line_5">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>50</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="Storage_pushButton_CreateList">
@@ -2932,7 +2930,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>150</width>
               <height>0</height>
              </size>
             </property>
@@ -2958,7 +2956,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QComboBox" name="Statistics_comboBox_SelectCatalog">
             <property name="minimumSize">
              <size>
-              <width>300</width>
+              <width>275</width>
               <height>0</height>
              </size>
             </property>
