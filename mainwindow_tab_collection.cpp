@@ -243,7 +243,7 @@
             //Refresh the collection view
             loadCatalogsToModel();
             //Reload stats file
-            statsLoadChart();
+            loadStatisticsChart();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()

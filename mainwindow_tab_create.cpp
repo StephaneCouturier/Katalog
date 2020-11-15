@@ -313,7 +313,7 @@
                 recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
 
                 //Reload stats file to refresh values
-                statsLoadChart();
+                loadStatisticsChart();
             }
 
         //Change tab to show the result of the catalog creation

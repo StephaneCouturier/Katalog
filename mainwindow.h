@@ -150,6 +150,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void refreshCatalogSelectionList();
 
         //TAB: Collection
+            QString collectionFolder;
             QStringListModel catalogListModel;
             QStringList catalogFileList;
             QString selectedCatalogFile;
@@ -214,15 +215,12 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
-            void loadTypeOfData();
+            void loadStatisticsDataTypes();
+            void loadStatisticsChart();
 
         //TAB: Tags
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
-
-        //TESTS
-            QString collectionFolder;
-
 
     private slots:
         //Menu KDE
@@ -311,7 +309,6 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectCatalog_currentIndexChanged();
             void on_Statistics_comboBox_TypeOfData_currentIndexChanged();
-            void statsLoadChart();
 
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();

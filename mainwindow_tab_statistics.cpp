@@ -50,12 +50,12 @@
 
 void MainWindow::on_Statistics_comboBox_SelectCatalog_currentIndexChanged()
 {
-    statsLoadChart();
+    loadStatisticsChart();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Statistics_comboBox_TypeOfData_currentIndexChanged()
 {
-    statsLoadChart();
+    loadStatisticsChart();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Statistics_pushButton_EditStatisticsFile_clicked()
@@ -66,11 +66,21 @@ void MainWindow::on_Statistics_pushButton_EditStatisticsFile_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Statistics_pushButton_Reload_clicked()
 {
-    statsLoadChart();
+    loadStatisticsChart();
 }
 //----------------------------------------------------------------------
 
-void MainWindow::statsLoadChart()
+//----------------------------------------------------------------------
+void MainWindow::loadStatisticsDataTypes()
+{
+    typeOfData << "Number of files" << "Total file size";
+    listModel = new QStringListModel(this);
+    listModel->setStringList(typeOfData);
+    ui->Statistics_comboBox_TypeOfData->setModel(listModel);
+    ui->Statistics_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
+}
+
+void MainWindow::loadStatisticsChart()
 {
     selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
 

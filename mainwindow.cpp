@@ -135,8 +135,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             setupFileContextMenu();
 
      //Setup tap: Stats
-            loadTypeOfData();
-            statsLoadChart();
+            loadStatisticsDataTypes();
+            loadStatisticsChart();
 }
 
 MainWindow::~MainWindow()
