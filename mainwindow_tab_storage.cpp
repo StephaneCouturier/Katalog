@@ -317,7 +317,7 @@ void MainWindow::loadStorageFileToTable()
 void MainWindow::loadStorageTableToModel()
 {
     storageModel->setTable("storage");
-    storageModel->setSort(0, Qt::AscendingOrder);
+    storageModel->setSort(1, Qt::AscendingOrder);
 
     // Set the localized header captions:
     storageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
@@ -349,7 +349,7 @@ void MainWindow::loadStorageTableToModel()
 
 
     // Connect model to tree/table view
-    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
     ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Storage_treeView_StorageList->header()->resizeSection(0,  50); //ID
     ui->Storage_treeView_StorageList->header()->resizeSection(1, 200); //Name
