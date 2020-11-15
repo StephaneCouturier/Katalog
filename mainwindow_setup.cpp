@@ -161,7 +161,7 @@
     {       
         //colors:
             //blue light	39b2e5
-            //blue dark		10a2df
+            //blue dark		10a2df  0D79A6
             //green light	81d41a
             //green dark	43bf0c
             //orange light	ff8000
@@ -178,7 +178,7 @@
               "QTabBar::tab          { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #39b2e5, stop: 0.2 #39b2e5, stop: 0.3 #31aee4, stop: 0.5 #1ea6e1, stop: 1 #10a2df); }"
 
               "QTabBar::tab:selected { background-color: #39b2e5; color: #FFF; font-weight: bold; } "
-              "QTabBar::tab:selected { border-top-left-radius: 5px; border-top-right-radius: 5px;} "
+              "QTabBar::tab:selected { border: 1px solid #0D79A6; border-bottom: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px;} "
               "QTabBar::tab:!selected{ margin-top: 5px; }"
               "QTabWidget::tab-bar   { left: 0px; }"
               );
