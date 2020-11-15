@@ -2794,7 +2794,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="Storage_labelPercentFree">
+           <widget class="QLabel" name="Storage_label_PercentFree">
             <property name="minimumSize">
              <size>
               <width>30</width>
