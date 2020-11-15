@@ -482,7 +482,7 @@ void MainWindow::saveStorageModelToFile()
          << "SerialNumber"  << "\t"
          << "BuildDate"     << "\t"
          << "ContentType"   << "\t"
-         << "LocationTree"  << "\t"
+         << "Container"     << "\t"
          << "Comment"       << "\t"
          << '\n';
     /*out << "ID\tName\tType / Capacité\tContainer\tPath\tLabel\tFileSystem\tTotal Disque	Free"
