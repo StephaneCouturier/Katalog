@@ -52,17 +52,23 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
 
         if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
 
-              QTextStream stream(&newStorageFile);
+              QTextStream stream(&newStorageFile);          
 
-              stream << "ID"        << "\t"
-                     << "Name"      << "\t"
-                     << "Type"      << "\t"
-                     << "Location"  << "\t"
-                     << "Path"      << "\t"
-                     << "Label"     << "\t"
-                     << "FileSystem"<< "\t"
-                     << "Total"     << "\t"
-                     << "Free"      << "\t"
+              stream << "ID"            << "\t"
+                     << "Name"          << "\t"
+                     << "Type"          << "\t"
+                     << "Location"      << "\t"
+                     << "Path"          << "\t"
+                     << "Label"         << "\t"
+                     << "FileSystem"    << "\t"
+                     << "Total"         << "\t"
+                     << "Free"          << "\t"
+                     << "BrandModel"    << "\t"
+                     << "SerialNumber"  << "\t"
+                     << "BuildDate"     << "\t"
+                     << "ContentType"   << "\t"
+                     << "Container"     << "\t"
+                     << "Comment"       << "\t"
                      << '\n';
 
               newStorageFile.close();
@@ -155,7 +161,7 @@ void MainWindow::on_Storage_pushButton_New_clicked()
     int newID = maxID + 1;
 
 
-    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0);
+    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "",  "",  "", "", "");
 
     //load table to model
     loadStorageTableToModel();
@@ -205,20 +211,30 @@ void MainWindow::on_Storage_pushButton_Update_clicked()
 void MainWindow::on_Storage_pushButton_Delete_clicked()
 {
 
-    QMessageBox::information(this,"Katalog","Ok." + QString::number(selectedStorageID));
+    int result = QMessageBox::warning(this,"Katalog",
+              "Do you want to <span style='color: red';>delete</span> this Storage device?"
+               "<table>"
+               "<tr><td>ID:   </td><td><b>" + QString::number(selectedStorageID) +"</td></tr>"
+               "<tr><td>Name: </td><td><b>" + selectedStorageName + "</td></tr>"
+               "</table>"
+              ,QMessageBox::Yes|QMessageBox::Cancel);
 
-    QSqlQuery queryDeviceNumber;
-    queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorageID) );
-    queryDeviceNumber.exec();
+    if ( result ==QMessageBox::Yes){
 
-    //reload data to model
-    loadStorageTableToModel();
+        //Delete from the table
+        QSqlQuery queryDeviceNumber;
+        queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorageID) );
+        queryDeviceNumber.exec();
 
-    //save model data to file
-    saveStorageData();
+        //Reload data to model
+        loadStorageTableToModel();
 
-    //refresh storage statistics
-    refreshStorageStatistics();
+        //Save model data to file
+        saveStorageData();
+
+        //Refresh storage statistics
+        refreshStorageStatistics();
+    }
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -276,8 +292,14 @@ void MainWindow::loadStorageFileToTable()
                                                 fieldList[5],
                                                 fieldList[6],
                                                 fieldList[7].toLongLong(),
-                                                fieldList[8].toLongLong()
-                                                );
+                                                fieldList[8].toLongLong(),
+                                                fieldList[9],
+                                                fieldList[10],
+                                                fieldList[11],
+                                                fieldList[12],
+                                                fieldList[13],
+                                                fieldList[14]
+                        );
             }
     }
     storageFile.close();
@@ -307,6 +329,12 @@ void MainWindow::loadStorageTableToModel()
     storageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
     storageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
     storageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
+    storageModel->setHeaderData(9, Qt::Horizontal, tr("Brand/Model"));
+    storageModel->setHeaderData(10, Qt::Horizontal, tr("Serial Number"));
+    storageModel->setHeaderData(11, Qt::Horizontal, tr("Build Date"));
+    storageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
+    storageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
+    storageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
 
     // Populate the storageModel:
     if (!storageModel->select()) {
@@ -332,6 +360,12 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
     ui->Storage_treeView_StorageList->header()->resizeSection(7,  50); //Total
     ui->Storage_treeView_StorageList->header()->resizeSection(8,  50); //Free
+    //ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //Brand
+    //ui->Storage_treeView_StorageList->header()->resizeSection(10, 250); //Serial
+    //ui->Storage_treeView_StorageList->header()->resizeSection(11,  50); //Build
+    //ui->Storage_treeView_StorageList->header()->resizeSection(12,  75); //Content
+    ui->Storage_treeView_StorageList->header()->resizeSection(13, 125); //Container
+    //ui->Storage_treeView_StorageList->header()->resizeSection(14,  50); //Comment
     //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
 
     //Get the list of device names for the Create screen
@@ -435,9 +469,25 @@ void MainWindow::saveStorageModelToFile()
 
     QTextStream out(&storageFile);
     //DEV ADD HEADER LINE
-    out << "ID\tName\tType / Capacité\tContainer\tPath\tLabel\tFileSystem\tTotal Disque	Free"
+    out  << "ID"            << "\t"
+         << "Name"          << "\t"
+         << "Type"          << "\t"
+         << "Location"      << "\t"
+         << "Path"          << "\t"
+         << "Label"         << "\t"
+         << "FileSystem"    << "\t"
+         << "Total"         << "\t"
+         << "Free"          << "\t"
+         << "BrandModel"    << "\t"
+         << "SerialNumber"  << "\t"
+         << "BuildDate"     << "\t"
+         << "ContentType"   << "\t"
+         << "LocationTree"  << "\t"
+         << "Comment"       << "\t"
+         << '\n';
+    /*out << "ID\tName\tType / Capacité\tContainer\tPath\tLabel\tFileSystem\tTotal Disque	Free"
            "\tLocation tree\tBrand and model\tBuild Date\tSerial Number\tPartitions\tPartition size	Contents\tCatalog"
-           "\n";
+           "\n";*/
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
@@ -492,7 +542,7 @@ void MainWindow::refreshStorageStatistics()
 
     //Get the percent of free space
     float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
-    ui->Storage_labelPercentFree->setText(QString::number(round(freepercent))+"%");
+    ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");
 }
 
 //----------------------------------------------------------------------

@@ -12,7 +12,13 @@ QVariant addStorage(QSqlQuery &q,
                 QString storageLabel,
                 QString storageFileSystem,
                 qint64  storageTotalSpace,
-                qint64  storageFreeSpace
+                qint64  storageFreeSpace,
+                QString storageBrandModel,
+                QString storageSerialNumber,
+                QString storageBuildDate,
+                QString storageContentType,
+                QString storageContainer,
+                QString storageComment
                 )
             {
                 q.addBindValue(storageID);
@@ -24,6 +30,12 @@ QVariant addStorage(QSqlQuery &q,
                 q.addBindValue(storageFileSystem);
                 q.addBindValue(storageTotalSpace);
                 q.addBindValue(storageFreeSpace);
+                q.addBindValue(storageBrandModel);
+                q.addBindValue(storageSerialNumber);
+                q.addBindValue(storageBuildDate);
+                q.addBindValue(storageContentType);
+                q.addBindValue(storageContainer);
+                q.addBindValue(storageComment);
                 q.exec();
                 return 0;
             }
@@ -38,7 +50,13 @@ const auto STORAGE_SQL = QLatin1String(R"(
                  storageLabel  text  ,
                  storageFileSystem  text  ,
                  storageTotalSpace  int  default 0,
-                 storageFreeSpace  int  default 0
+                 storageFreeSpace  int  default 0,
+                 storageBrandModel  text  ,
+                 storageSerialNumber   text  ,
+                 storageBuildDate  text  ,
+                 storageContentType  text  ,
+                 storageContainer  text  ,
+                 storageComment  text
                )
             )");
 
@@ -51,10 +69,16 @@ const auto INSERT_STORAGE_SQL = QLatin1String(R"(
                         storageLabel,
                         storageFileSystem,
                         storageTotalSpace,
-                        storageFreeSpace)
-                 values(?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        storageFreeSpace,
+                        storageBrandModel,
+                        storageSerialNumber,
+                        storageBuildDate,
+                        storageContentType,
+                        storageContainer,
+                        storageComment
+                )
+                 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     )");
-
 
 QSqlError initializeDatabase()
 {
