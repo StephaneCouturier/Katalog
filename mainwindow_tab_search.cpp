@@ -280,6 +280,9 @@
     //Search methods
         void MainWindow::searchFiles()
         {
+            // Start animation while opening
+            QApplication::setOverrideCursor(Qt::WaitCursor);
+
             //Set up Search
                 //Clear exisitng lists of results and search variables
                     filesFoundList.clear();
@@ -465,9 +468,11 @@
                 //Save the search parameters to the seetings file
                 saveSettings();
 
-            //Stop cursor animation
-            //QApplication::restoreOverrideCursor();
+                //Stop animation
+                QApplication::restoreOverrideCursor();
+
         }
+
         //----------------------------------------------------------------------
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
