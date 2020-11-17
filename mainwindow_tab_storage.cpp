@@ -246,13 +246,15 @@ void MainWindow::loadStorageFileToTable()
     QFile storageFile(storageFilePath);
     QTextStream textStream(&storageFile);
 
+    QSqlQuery queryDelete;
+    queryDelete.prepare( "DELETE FROM storage" );
+
     //Open file or return information
     if(!storageFile.open(QIODevice::ReadOnly)) {
         //if there is no storage file, reset data and buttons
         //QMessageBox::information(this,"Katalog","No storage file was found in the current collection folder."
         //                             "\nPlease create one with the button 'Create list'\n");
-        QSqlQuery queryDelete;
-        queryDelete.prepare( "DELETE FROM storage" );
+
         queryDelete.exec();
 
         //Disable all buttons, enable create list
@@ -264,27 +266,22 @@ void MainWindow::loadStorageFileToTable()
 
         return;
     }
-    else{
-        //test file validity (application breaks between v0.13 and v0.14)
-        while (true)
-        {
-            QString line = textStream.readLine();
 
-            if (line.left(2)!="ID"){
-                   QMessageBox::warning(this,"Katalog",
-                                        "A storage.csv file was found, but could not be loaded.\n"
-                                        "Likely, it was made with an older version of Katalog.\n"
-                                        "The file can be fixed manually, please visit the wiki page:\n"
-                                        "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions"
-                                        //,QMessageBox::Yes|QMessageBox::Cancel
-                                        );
-            }
-            return;
-        }
+    //test file validity (application breaks between v0.13 and v0.14)
+    QString line = textStream.readLine();
+    if (line.left(2)!="ID"){
+           QMessageBox::warning(this,"Katalog",
+                                "A storage.csv file was found, but could not be loaded.\n"
+                                "Likely, it was made with an older version of Katalog.\n"
+                                "The file can be fixed manually, please visit the wiki page:\n"
+                                "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions"
+                                //,QMessageBox::Yes|QMessageBox::Cancel
+                                );
+           return;
     }
+
+
     //Clear all entries of the current table
-    QSqlQuery queryDelete;
-    queryDelete.prepare( "DELETE FROM storage" );
     queryDelete.exec();
 
     //Prepare query
