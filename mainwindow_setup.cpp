@@ -171,40 +171,37 @@
 
         /* blue tabwidget bar */
         ui->tabWidget->setStyleSheet(
-              "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right;}"
+              "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; }"
               "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
+              "QLabel                { color: #095676; }"
 
-              "QTabBar::tab          { background-color: #10a2df; color: #EAEAEA; padding: 5px 12px; border-right: 1px solid #39b2e5; }"
-              "QTabBar::tab          { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #39b2e5, stop: 0.2 #39b2e5, stop: 0.3 #31aee4, stop: 0.5 #1ea6e1, stop: 1 #10a2df); }"
+              "QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; padding: 2px 12px; border: 1px solid #0D79A6; margin-bottom: 4px; margin-left: 4px;}"
+              "QTabBar::tab:selected { background-color: #095676; color: #FFF; margin-top: 4px; margin-left: 4px; } "
+              "QTabBar::tab:selected { border: 1px solid #095676; border-bottom: 0px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin-bottom: 4px;} "
 
-              "QTabBar::tab:selected { background-color: #39b2e5; color: #FFF; font-weight: bold; } "
-              "QTabBar::tab:selected { border: 1px solid #0D79A6; border-bottom: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px;} "
-              "QTabBar::tab:!selected{ margin-top: 5px; }"
+              "QTabBar::tab:!selected{ margin-top: 6px; }"
               "QTabWidget::tab-bar   { left: 0px; }"
+              "QTabWidget          { padding: 0px; margin: 0px; }"
+
+
               );
 
         //Search tab
         ui->Search_pushButton_Search->setStyleSheet(
-              "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
+              "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
               );
-        /*
-        ui->Search_label_Text->setStyleSheet(
-              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
-              );
-        ui->Search_label_Catalog->setStyleSheet(
-              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
-              );
-        ui->Search_label_File->setStyleSheet(
-              "QLabel          { border: 1px solid #10a2df; color: #10a2df; padding: 5px 5px; } "
-              );
-        */
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #10a2df; } ");
+
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+
+        ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
 
         //Create tab
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
-              "QPushButton          { color: #43bf0c; padding: 6px; font-weight: bold;} "
+              "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
               );
-        ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #10a2df; } ");
+        ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+        ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
         ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
@@ -241,7 +238,7 @@
         // Create the data model:
 
         storageModel = new QSqlRelationalTableModel(this);
-        storageModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+        storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
         // Set the model
         //ui->Test_tableView_sql1->setModel(model);

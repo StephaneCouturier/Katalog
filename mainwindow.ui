@@ -95,6 +95,9 @@
         <height>22</height>
        </size>
       </property>
+      <property name="usesScrollButtons">
+       <bool>true</bool>
+      </property>
       <property name="documentMode">
        <bool>true</bool>
       </property>
@@ -1150,6 +1153,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <layout class="QHBoxLayout" name="Search_horizontalLayout_ResultsInfo">
+            <property name="topMargin">
+             <number>4</number>
+            </property>
             <item>
              <layout class="QHBoxLayout" name="Search_horizontalLayout_CatalogResults">
               <item>
@@ -1341,9 +1347,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>0</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
-              </property>
               <property name="text">
                <string>Current collection folder</string>
               </property>
@@ -1416,12 +1419,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
-                <weight>75</weight>
-                <bold>true</bold>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="text">
                <string>with selected Catalog:</string>
@@ -1677,9 +1675,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
-                </property>
                 <property name="text">
                  <string>Directories</string>
                 </property>
@@ -1725,9 +1720,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <width>115</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(95, 95, 95);</string>
                 </property>
                 <property name="text">
                  <string>Number of files:</string>
@@ -1795,9 +1787,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Catalog Name:</string>
             </property>
@@ -1834,9 +1823,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Catalog Path:</string>
             </property>
@@ -1865,7 +1851,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          </layout>
         </item>
         <item row="1" column="0">
-         <widget class="Line" name="line_8">
+         <widget class="Line" name="Explore_line_Separate">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1889,12 +1875,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
              </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
             <property name="text">
              <string>2- Select Content options</string>
@@ -1933,9 +1914,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <pointsize>10</pointsize>
                 <kerning>true</kerning>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="text">
                <string>include File Type</string>
@@ -2019,7 +1997,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="Line" name="line">
             <property name="minimumSize">
              <size>
-              <width>250</width>
+              <width>230</width>
               <height>0</height>
              </size>
             </property>
@@ -2050,9 +2028,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <pointsize>10</pointsize>
                 <kerning>true</kerning>
                </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(95, 95, 95);</string>
               </property>
               <property name="text">
                <string>Other options</string>
@@ -2151,12 +2126,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
              </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
             <property name="text">
              <string>3- Define &amp; Create catalog</string>
@@ -2191,9 +2161,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QLabel" name="Create_label_SelectStorage">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Select Storage</string>
             </property>
@@ -2254,9 +2221,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QLabel" name="Create_label_CatalogName">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Enter Name of the new catalog</string>
             </property>
@@ -2431,12 +2395,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Open Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
              </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
             <property name="text">
              <string>1- Select Source path</string>
@@ -2520,12 +2479,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
              </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
             </property>
             <property name="text">
              <string>with selected: </string>
@@ -2815,14 +2769,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QPushButton" name="Storage_pushButton_CreateList">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
             <property name="text">
-             <string>Create list</string>
+             <string>Create</string>
             </property>
             <property name="icon">
              <iconset theme="document-new">
@@ -2850,7 +2798,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Edit All</string>
+             <string>Edit</string>
             </property>
             <property name="icon">
              <iconset theme="document-edit-sign">
@@ -2864,7 +2812,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Save All</string>
+             <string>Save</string>
             </property>
             <property name="icon">
              <iconset theme="document-save">
@@ -2879,7 +2827,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
+              <width>10</width>
               <height>20</height>
              </size>
             </property>
@@ -2911,102 +2859,113 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Statistics</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0" colspan="3">
-         <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
-          <item>
-           <widget class="QLabel" name="Statistics_label_DataType">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Type of data:</string>
-            </property>
-           </widget>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
+            <item>
+             <widget class="QLabel" name="Statistics_label_DataType">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Type of data:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Statistics_label_Catalog">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Catalog:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="Statistics_comboBox_SelectCatalog">
+              <property name="minimumSize">
+               <size>
+                <width>275</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
+              <property name="text">
+               <string>Edit records</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-edit-sign">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Statistics_pushButton_Reload">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Reload</string>
+              </property>
+              <property name="icon">
+               <iconset theme="view-refresh">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Statistics_horizontalSpacer_01">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
-          <item>
-           <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
-            <property name="minimumSize">
-             <size>
-              <width>150</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
+          <item row="2" column="0">
+           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
           </item>
-          <item>
-           <widget class="QLabel" name="Statistics_label_Catalog">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Catalog:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="Statistics_comboBox_SelectCatalog">
-            <property name="minimumSize">
-             <size>
-              <width>275</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
-            <property name="text">
-             <string>Edit records</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-edit-sign">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Statistics_pushButton_Reload">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Reload</string>
-            </property>
-            <property name="icon">
-             <iconset theme="view-refresh">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="Statistics_horizontalSpacer_01">
+          <item row="1" column="0">
+           <widget class="Line" name="Statistics_line_Separate">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
         </item>
        </layout>
       </widget>
@@ -3021,36 +2980,24 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
          <layout class="QGridLayout" name="Settings_gridLayout">
+          <item row="7" column="1">
+           <widget class="QComboBox" name="Settings_comboBox_Theme">
+            <item>
+             <property name="text">
+              <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
+             </property>
+            </item>
+           </widget>
+          </item>
           <item row="1" column="1">
            <widget class="QLabel" name="Settings_label_Data">
             <property name="text">
              <string>Data</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <spacer name="Settings_horizontalSpacer_01">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-            <property name="text">
-             <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -3070,28 +3017,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
-          <item row="4" column="1">
-           <widget class="Line" name="Settings_line_SeparateData">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QComboBox" name="Settings_comboBox_Theme">
-            <item>
-             <property name="text">
-              <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="7" column="1">
+          <item row="8" column="1">
            <spacer name="Settings_verticalSpacer_01">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -3104,10 +3030,36 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
+          <item row="2" column="0">
+           <spacer name="Settings_horizontalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="5" column="1">
-           <widget class="QLabel" name="Settings_label_Theme">
+           <widget class="Line" name="Settings_line_SeparateData">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
             <property name="text">
-             <string>Theme (requires to restart)</string>
+             <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -3117,6 +3069,29 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Keep one backup file for each katalog (.bak in the collection folder)</string>
             </property>
            </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="Settings_label_Theme">
+            <property name="text">
+             <string>Theme (requires to restart)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -3159,9 +3134,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item row="7" column="0">
            <widget class="QLabel" name="Tags_label_CurrentTags">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Current folders and tags</string>
             </property>
@@ -3169,9 +3141,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item row="0" column="1">
            <widget class="QLabel" name="Tags_label_SelectTag">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Select a tag</string>
             </property>
@@ -3212,9 +3181,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="Tags_label_SelectFolder">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95);</string>
-            </property>
             <property name="text">
              <string>Select a folder</string>
             </property>
@@ -3222,9 +3188,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item row="2" column="1">
            <widget class="QLabel" name="Tags_label_ExistingTags">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(95, 95, 95)</string>
-            </property>
             <property name="text">
              <string>Existing tags</string>
             </property>
