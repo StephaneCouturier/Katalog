@@ -51,8 +51,8 @@
 void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
 {
     //Get file from selected row
-    QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+    QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
     QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
     //Open the file (fromLocalFile needed for spaces in file name)
@@ -188,7 +188,7 @@ void MainWindow::loadCatalogFilesToExplore()
     int catalogFilesNumber = catalog->rowCount();
     ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
-    //DEV   Stop animation
+    //Stop animation
     QApplication::restoreOverrideCursor();
 }
 
