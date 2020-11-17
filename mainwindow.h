@@ -57,7 +57,7 @@
 #include <QMessageBox>
 
 #include <KComboBox>
-//#include <KXmlGuiWindow>
+#include <KXmlGuiWindow>
 //#include <KMessageBox>
 //class KJob;
 
@@ -65,7 +65,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow //WIN KXmlGuiWindow
+class MainWindow : public KXmlGuiWindow //WIN QMainWindow
 {
     Q_OBJECT
 
@@ -164,7 +164,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString selectedCatalogStorage;
             bool    selectedCatalogIncludeSymblinks;
 
-            void saveCatalogToNewFile(QString newCatalogName);
+            void loadCollection();
             void loadCatalogsToModel();
             bool verifyCatalogPath(QString catalogSourcePath);
             void recordSelectedCatalogStats(QString selectedCatalogName,
@@ -183,6 +183,8 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             QString newCatalogPath;
             QString newCatalogName;
             QString newCatalogStorage;
+            QStringList storageNameList;
+
             void loadFileSystem(QString newCatalogPath);
             void catalogDirectory(QString newCatalogPath,
                                   bool includeHidden,
@@ -191,7 +193,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
                                   QString newCatalogStorage,
                                   bool includeSymblinks);
             void loadStorageList();
-            QStringList storageNameList;
+            void saveCatalogToNewFile(QString newCatalogName);
 
         //TAB: Storage
             QString storageFilePath;
@@ -260,6 +262,7 @@ class MainWindow : public QMainWindow //WIN KXmlGuiWindow
             void on_Collection_pushButton_SelectFolder_clicked();
             void on_Collection_pushButton_Reload_clicked();
             void on_Collection_pushButton_OpenFolder_clicked();
+            void on_Collection_lineEdit_CollectionFolder_returnPressed();
 
             void on_Collection_pushButton_Search_clicked();
             void on_Collection_pushButton_ViewCatalog_clicked();
