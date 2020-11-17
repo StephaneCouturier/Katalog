@@ -242,18 +242,46 @@ void MainWindow::on_Storage_pushButton_Delete_clicked()
 
 void MainWindow::loadStorageFileToTable()
 {
-
-    //Define storage file
+    //Define storage file and prepare stream
     QFile storageFile(storageFilePath);
-    //QMessageBox::information(this,"Katalog","path." + storageFilePath );
+    QTextStream textStream(&storageFile);
 
     //Open file or return information
     if(!storageFile.open(QIODevice::ReadOnly)) {
-//        KMessageBox::information(this,"No storage file was found in the current collection folder."
-//                                      "\nPlease create one with the button 'Create list'\n");
+        //if there is no storage file, reset data and buttons
+        //QMessageBox::information(this,"Katalog","No storage file was found in the current collection folder."
+        //                             "\nPlease create one with the button 'Create list'\n");
+        QSqlQuery queryDelete;
+        queryDelete.prepare( "DELETE FROM storage" );
+        queryDelete.exec();
+
+        //Disable all buttons, enable create list
+        ui->Storage_pushButton_Reload->setEnabled(false);
+        ui->Storage_pushButton_EditAll->setEnabled(false);
+        ui->Storage_pushButton_SaveAll->setEnabled(false);
+        ui->Storage_pushButton_New->setEnabled(false);
+        ui->Storage_pushButton_CreateList->setEnabled(true);
+
         return;
     }
+    else{
+        //test file validity (application breaks between v0.13 and v0.14)
+        while (true)
+        {
+            QString line = textStream.readLine();
 
+            if (line.left(2)!="ID"){
+                   QMessageBox::warning(this,"Katalog",
+                                        "A storage.csv file was found, but could not be loaded.\n"
+                                        "Likely, it was made with an older version of Katalog.\n"
+                                        "The file can be fixed manually, please visit the wiki page:\n"
+                                        "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions"
+                                        //,QMessageBox::Yes|QMessageBox::Cancel
+                                        );
+            }
+            return;
+        }
+    }
     //Clear all entries of the current table
     QSqlQuery queryDelete;
     queryDelete.prepare( "DELETE FROM storage" );
@@ -268,8 +296,6 @@ void MainWindow::loadStorageFileToTable()
     if (!query.prepare(INSERT_STORAGE_SQL)){
         QMessageBox::information(this,"Katalog","pb2.");
         return;}
-
-    QTextStream textStream(&storageFile);
 
     while (true)
     {
@@ -352,7 +378,7 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
     ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Storage_treeView_StorageList->header()->resizeSection(0,  50); //ID
-    ui->Storage_treeView_StorageList->header()->resizeSection(1, 200); //Name
+    ui->Storage_treeView_StorageList->header()->resizeSection(1, 225); //Name
     ui->Storage_treeView_StorageList->header()->resizeSection(2, 125); //Type
     ui->Storage_treeView_StorageList->header()->resizeSection(3, 150); //Location
     ui->Storage_treeView_StorageList->header()->resizeSection(4, 250); //Path
