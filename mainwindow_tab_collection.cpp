@@ -80,18 +80,14 @@
             selectedCatalogPath="";
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Collection_lineEdit_CollectionFolder_returnPressed()
+        {
+            loadCollection();
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_Reload_clicked()
         {
-            loadCatalogsToModel();
-            refreshCatalogSelectionList();
-
-            //loadStorageModel();
-            loadStorageFileToTable();
-            loadStorageTableToModel();
-            refreshStorageStatistics();
-
-            //hide buttons to force user to select a catalog before allowing any catalg action.
-            hideCatalogButtons();
+            loadCollection();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_OpenFolder_clicked()
@@ -326,6 +322,20 @@
         //----------------------------------------------------------------------
 
 //TAB: Collection methods----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    void MainWindow::loadCollection()
+    {
+        loadCatalogsToModel();
+        refreshCatalogSelectionList();
+
+        //refresh storage model;
+        loadStorageFileToTable();
+        loadStorageTableToModel();
+        refreshStorageStatistics();
+
+        //hide buttons to force user to select a catalog before allowing any catalog action.
+        hideCatalogButtons();
+    }
 
     // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
@@ -472,9 +482,9 @@
         ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
         ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
         ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
-        ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //Storage
-        ui->Collection_treeView_CatalogList->header()->resizeSection(9,  50); //Symblinks
-        ui->Collection_treeView_CatalogList->header()->resizeSection(10, 50); //Symblinks
+        ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
+        ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
+
         ui->Collection_treeView_CatalogList->header()->hideSection(0); //Path
         ui->Collection_treeView_CatalogList->header()->hideSection(10); //Symblinks
         //Pass list of catalogs
