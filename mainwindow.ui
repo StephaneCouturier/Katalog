@@ -118,6 +118,9 @@
        <attribute name="title">
         <string>Search</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>Search for files or folders</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
          <layout class="QVBoxLayout" name="Search_verticalLayout">
@@ -245,7 +248,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>Get the text from the clipboard</string>
+               <string>Paste the text from the clipboard</string>
               </property>
               <property name="whatsThis">
                <string>Get the text from the clipboard</string>
@@ -277,6 +280,9 @@
                <font>
                 <family>Noto Sans</family>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Launch the search of files </string>
               </property>
               <property name="locale">
                <locale language="English" country="UnitedStates"/>
@@ -401,7 +407,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>define how the search text should be used</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define how the search text should be used&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="whatsThis">
                <string>define how the search text should be used</string>
@@ -514,6 +520,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define if the search text should be used to look only in file names, or folder paths, or both.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <item>
                <property name="text">
                 <string>File names or Folder paths</string>
@@ -583,6 +592,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <width>100</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Reset all criteria to default values</string>
               </property>
               <property name="text">
                <string>Reset all</string>
@@ -679,6 +691,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <font>
                 <family>Noto Sans</family>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Select catalog(s) to search into</string>
               </property>
              </widget>
             </item>
@@ -840,6 +855,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>16777215</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>File size unit for minimum value</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -907,6 +925,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <font>
                 <family>Noto Sans</family>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>File size unit for maximum value</string>
               </property>
              </widget>
             </item>
@@ -1021,6 +1042,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <family>Noto Sans</family>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Select the type of files</string>
+              </property>
               <item>
                <property name="text">
                 <string>Any</string>
@@ -1098,6 +1122,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QCheckBox" name="Search_checkBox_ShowFolders">
+              <property name="toolTip">
+               <string>Choose to only show folders as results</string>
+              </property>
               <property name="text">
                <string>list Folders only</string>
               </property>
@@ -1126,6 +1153,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Search_pushButton_ExportResults">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="toolTip">
+               <string>Export the search results to a csv file</string>
               </property>
               <property name="text">
                <string>Export Results</string>
@@ -1163,7 +1193,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="maximumSize">
                  <size>
                   <width>34</width>
-                  <height>18</height>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1331,6 +1361,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <attribute name="title">
         <string>Collection</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>Manage the catalogs</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="2" column="0" rowspan="2">
          <layout class="QVBoxLayout" name="Collection_verticalLayout">
@@ -1357,6 +1390,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
+              <property name="toolTip">
+               <string>Select a different Collection folder</string>
+              </property>
               <property name="text">
                <string>Select</string>
               </property>
@@ -1368,6 +1404,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QPushButton" name="Collection_pushButton_Reload">
+              <property name="toolTip">
+               <string>Reload all catalog information</string>
+              </property>
               <property name="text">
                <string>Reload</string>
               </property>
@@ -1379,6 +1418,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
+              <property name="toolTip">
+               <string>Open the collection folder</string>
+              </property>
               <property name="text">
                <string>Open</string>
               </property>
@@ -1431,6 +1473,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="toolTip">
+               <string>Search the selected catalog</string>
+              </property>
               <property name="text">
                <string>Search</string>
               </property>
@@ -1444,6 +1489,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Collection_pushButton_ViewCatalog">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Explore the selected catalog's files and folders</string>
               </property>
               <property name="locale">
                <locale language="French" country="France"/>
@@ -1462,6 +1510,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="toolTip">
+               <string>Rename the catalog and its file</string>
+              </property>
               <property name="text">
                <string>Rename</string>
               </property>
@@ -1475,6 +1526,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Collection_pushButton_UpdateCatalog">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Update the catalog files, if the device is available</string>
               </property>
               <property name="text">
                <string>Update</string>
@@ -1495,6 +1549,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Edit the selected catalog file itself</string>
               </property>
               <property name="text">
                <string>Edit</string>
@@ -1526,6 +1583,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="toolTip">
+               <string>Record the values of the selected catalog for statistics</string>
+              </property>
               <property name="text">
                <string>Record</string>
               </property>
@@ -1539,6 +1599,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Collection_pushButton_ViewCatalogStats">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>View the statistics of the selected catalog</string>
               </property>
               <property name="text">
                <string>View</string>
@@ -1570,6 +1633,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="toolTip">
+               <string>Convert the selected catalog to the latest format</string>
+              </property>
               <property name="text">
                <string>Convert</string>
               </property>
@@ -1583,6 +1649,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Collection_pushButton_DeleteCatalog">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Delete the selected catalog</string>
               </property>
               <property name="text">
                <string>Delete</string>
@@ -1653,6 +1722,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <attribute name="title">
         <string>Explore</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Explore a catalog</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10">
         <item row="6" column="0">
@@ -1867,6 +1939,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <attribute name="title">
         <string>Create</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>Create a catalog</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="2">
          <layout class="QVBoxLayout" name="Create_verticalLayout_2_OptionsButton">
@@ -1887,6 +1962,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="Line" name="Create_hline_02">
+            <property name="minimumSize">
+             <size>
+              <width>230</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -1992,19 +2073,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="Line" name="line">
-            <property name="minimumSize">
-             <size>
-              <width>230</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
           </item>
           <item>
            <layout class="QVBoxLayout" name="Create_verticalLayout_includeOther">
@@ -2176,6 +2244,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>Select a storage device to link the new catalog (optional)</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -2185,6 +2256,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <width>120</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Add a new storage device</string>
               </property>
               <property name="text">
                <string>Add Storage</string>
@@ -2255,6 +2329,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Generate a catalog name bsed on the path</string>
+              </property>
               <property name="text">
                <string>Generate</string>
               </property>
@@ -2313,6 +2390,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <width>0</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Launch the cataloging and save it to a file</string>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
@@ -2432,6 +2512,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>16777215</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Select the path</string>
+              </property>
               <property name="text">
                <string>Select ...</string>
               </property>
@@ -2457,6 +2540,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <attribute name="title">
         <string>Storage</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Manage the lit of storage devices</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="1" column="0">
@@ -2494,6 +2580,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="toolTip">
+             <string>Search files or folders in the selected storage device</string>
+            </property>
             <property name="text">
              <string>Search storage</string>
             </property>
@@ -2507,6 +2596,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_SearchLocation">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Search files or folders in the selected location</string>
             </property>
             <property name="text">
              <string>Search location</string>
@@ -2522,6 +2614,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="toolTip">
+             <string>Create a new catalog for this device</string>
+            </property>
             <property name="text">
              <string>Create Catalog</string>
             </property>
@@ -2535,6 +2630,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_OpenFilelight">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Open the path in Filelight</string>
             </property>
             <property name="text">
              <string>Open in Filelight</string>
@@ -2550,6 +2648,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="toolTip">
+             <string>Add a new storage device</string>
+            </property>
             <property name="text">
              <string>New</string>
             </property>
@@ -2563,6 +2664,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_Update">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Update the values for the selected device (label, filesystem, total size, free space)</string>
             </property>
             <property name="text">
              <string>Update</string>
@@ -2593,6 +2697,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_Delete">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Delete the selected device</string>
             </property>
             <property name="text">
              <string>Delete</string>
@@ -2769,6 +2876,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QPushButton" name="Storage_pushButton_CreateList">
+            <property name="toolTip">
+             <string>Create a list to add devices</string>
+            </property>
             <property name="text">
              <string>Create</string>
             </property>
@@ -2782,6 +2892,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_Reload">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Reload the entire list of devices</string>
             </property>
             <property name="text">
              <string>Reload</string>
@@ -2797,6 +2910,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="toolTip">
+             <string>Edit the list in a spreadsheet ( tab separated file)</string>
+            </property>
             <property name="text">
              <string>Edit</string>
             </property>
@@ -2810,6 +2926,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QPushButton" name="Storage_pushButton_SaveAll">
             <property name="enabled">
              <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Save changes made directly in the table below</string>
             </property>
             <property name="text">
              <string>Save</string>
@@ -2858,6 +2977,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <attribute name="title">
         <string>Statistics</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>View collection statistics</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="1" column="0">
          <layout class="QGridLayout" name="gridLayout_2">
@@ -2883,6 +3005,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <width>150</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Select the type of data</string>
               </property>
              </widget>
             </item>
@@ -2910,10 +3035,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Select a catalog</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
+              <property name="toolTip">
+               <string>Edit the file storing all records</string>
+              </property>
               <property name="text">
                <string>Edit records</string>
               </property>
@@ -2930,6 +3061,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <width>100</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Reload the file storing all records</string>
               </property>
               <property name="text">
                <string>Reload</string>
@@ -2977,11 +3111,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <attribute name="title">
         <string>Settings</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>Define user settings</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
          <layout class="QGridLayout" name="Settings_gridLayout">
           <item row="7" column="1">
            <widget class="QComboBox" name="Settings_comboBox_Theme">
+            <property name="toolTip">
+             <string>Select a theme</string>
+            </property>
             <item>
              <property name="text">
               <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
@@ -3118,11 +3258,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <attribute name="title">
         <string>Tags</string>
        </attribute>
+       <attribute name="toolTip">
+        <string>Tag folders for search and statistics</string>
+       </attribute>
        <layout class="QGridLayout" name="gridLayout_12">
         <item row="0" column="0">
          <layout class="QGridLayout" name="Tags_gridLayout">
           <item row="6" column="1">
            <widget class="QPushButton" name="Tags_pushButton_TagFolder">
+            <property name="toolTip">
+             <string>Add the tag to this folder</string>
+            </property>
             <property name="text">
              <string>Tag the folder</string>
             </property>
@@ -3168,6 +3314,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Select a folder </string>
+              </property>
               <property name="text">
                <string>Select</string>
               </property>
@@ -3209,6 +3358,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <width>100</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="toolTip">
+             <string>Reload the file storing the tags</string>
             </property>
             <property name="text">
              <string>Reload</string>
