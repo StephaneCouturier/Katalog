@@ -62,6 +62,12 @@
             ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
             ui->Search_checkBox_ShowFolders->setChecked(false);
             //ui->LE_Tags->setCurrentText("");
+
+            //Clear catalog and file results (load an empty model)
+            Catalog *empty = new Catalog(this);
+            ui->Search_treeView_FilesFound->setModel(empty);
+            ui->Search_listView_CatalogsFound->setModel(empty);
+
         }
 
         //----------------------------------------------------------------------
