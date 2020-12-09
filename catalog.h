@@ -36,7 +36,7 @@
 #define CATALOG_H
 
 #include <QAbstractTableModel>
-#include <QTextStream>
+#include <QLocale>
 
 class Catalog : public QAbstractTableModel
 {

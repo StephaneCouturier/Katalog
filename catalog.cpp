@@ -58,11 +58,12 @@ QVariant Catalog::data(const QModelIndex &index, int role) const
     }
     switch (index.column()){
     case 0: return QString(fileName[index.row()]);
-    case 1: return qint64(fileSize[index.row()]);
+    case 1: return QLocale().formattedDataSize(fileSize[index.row()]);
     case 3: return QString(filePath[index.row()]);
     case 2: return QString(fileDateTime[index.row()]);
     }
     return QVariant();
+
 }
 
 QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role) const
