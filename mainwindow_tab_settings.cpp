@@ -35,7 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSettings>
-
+#include <QDesktopServices>
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -57,4 +57,9 @@ void MainWindow::on_Settings_comboBox_Theme_currentTextChanged()
 {
     QSettings settings(settingsFile, QSettings:: IniFormat);
     settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
+}
+
+void MainWindow::on_Settings_pushButton_Wiki_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/wiki"));
 }
