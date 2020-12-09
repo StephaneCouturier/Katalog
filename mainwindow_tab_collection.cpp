@@ -41,7 +41,7 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
-
+#include <KFormat>
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -220,7 +220,7 @@
                 QMessageBox::information(this,"Katalog","<br/>This catalog was updated:<br/><b>" + selectedCatalogName + "</b> "
                                          "<br/><table>"
                                          "<tr><td>Number of files: </td><td><b>" + QString::number(selectedCatalogFileCount) + "</b></td><td>  (added: <b>" + QString::number(deltaFileCount) + "</b>)</td></tr>"
-                                         "<tr><td>Total file size: </td><td><b>" + QString::number(selectedCatalogTotalFileSize) + "</b></td><td>  (added: <b>" + QString::number(deltaTotalFileSize) + "</b>)</td></tr>"
+                                         "<tr><td>Total file size: </td><td><b>" + QLocale().formattedDataSize(selectedCatalogTotalFileSize) + "</b>  </td><td>  (added: <b>" + QLocale().formattedDataSize(deltaTotalFileSize) + "</b>)</td></tr>"
                                          "</table>"
                                          ,Qt::TextFormat(Qt::RichText));
             }
@@ -289,12 +289,13 @@
             selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
             selectedCatalogDateTime         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 2, QModelIndex()).data().toString();
             selectedCatalogFileCount        = ui->Collection_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
+            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 11, QModelIndex()).data().toLongLong();
             selectedCatalogPath             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
             selectedCatalogFileType         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
             selectedCatalogIncludeHidden    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
             selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
+            //QMessageBox::information(this,"Katalog","Ok." + QString::number(selectedCatalogTotalFileSize));
 
             // Display buttons
             ui->Collection_pushButton_Search->setEnabled(true);
@@ -487,6 +488,8 @@
 
         ui->Collection_treeView_CatalogList->header()->hideSection(0); //Path
         ui->Collection_treeView_CatalogList->header()->hideSection(10); //Symblinks
+        ui->Collection_treeView_CatalogList->header()->hideSection(11); //filesize qint64
+
         //Pass list of catalogs
             catalogFileList = cNames;
             catalogFileList.sort();

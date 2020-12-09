@@ -33,7 +33,6 @@
 */
 
 #include "collection.h"
-//#include "QTreeView"
 
 Collection::Collection(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -49,7 +48,7 @@ int Collection::rowCount(const QModelIndex &parent) const
 int Collection::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 11;
+    return 12;
 }
 
 QVariant Collection::data(const QModelIndex &index, int role) const
@@ -62,14 +61,14 @@ QVariant Collection::data(const QModelIndex &index, int role) const
     case  1: return QString(catalogName[index.row()]);
     case  2: return QString(catalogDateUpdated[index.row()]);
     case  3: return int(catalogFileCount[index.row()]);
-    case  4: return qint64(catalogTotalFileSize[index.row()]);
+    case  4: return QLocale().formattedDataSize(catalogTotalFileSize[index.row()]);
     case  5: return QString(catalogSourcePath[index.row()]);
     case  6: return QString(catalogFileType[index.row()]);
     case  7: return bool(catalogSourcePathIsActive[index.row()]);
     case  8: return bool(catalogIncludeHidden[index.row()]);
     case  9: return QString(catalogStorage[index.row()]);
     case 10: return bool(catalogIncludeSymblinks[index.row()]);
-
+    case 11: return qint64(catalogTotalFileSize[index.row()]);
     }
     return QVariant();
 }
@@ -89,6 +88,7 @@ QVariant Collection::headerData(int section, Qt::Orientation orientation, int ro
         case  8: return QString("include Hidden");
         case  9: return QString("Storage");
         case 10: return QString("include Symblinks");
+        case 11: return QString("Total File Size qint64");
         }
     }
     return QVariant();
