@@ -594,7 +594,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>Reset all criteria to default values</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>Reset all</string>
@@ -1192,8 +1192,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QPushButton" name="Search_pushButton_ShowHideCatalogResults">
                 <property name="maximumSize">
                  <size>
-                  <width>34</width>
-                  <height>20</height>
+                  <width>40</width>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1201,6 +1201,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="statusTip">
                  <string/>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">padding: 2px 10px;</string>
                 </property>
                 <property name="text">
                  <string>&lt;&lt;</string>
@@ -2296,7 +2299,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Create_label_CatalogName">
             <property name="text">
-             <string>Enter Name of the new catalog</string>
+             <string>Enter the Name of the new catalog</string>
             </property>
             <property name="margin">
              <number>0</number>
@@ -3117,6 +3120,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="0">
          <layout class="QGridLayout" name="Settings_gridLayout">
+          <item row="4" column="1">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="7" column="1">
            <widget class="QComboBox" name="Settings_comboBox_Theme">
             <property name="toolTip">
@@ -3132,6 +3151,29 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="Settings_horizontalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="Settings_label_Theme">
+            <property name="text">
+             <string>Theme (requires to restart)</string>
+            </property>
            </widget>
           </item>
           <item row="1" column="1">
@@ -3157,6 +3199,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+            <property name="text">
+             <string>Keep one backup file for each katalog (.bak in the collection folder)</string>
+            </property>
+           </widget>
+          </item>
           <item row="8" column="1">
            <spacer name="Settings_verticalSpacer_01">
             <property name="orientation">
@@ -3166,22 +3215,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <size>
               <width>20</width>
               <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <spacer name="Settings_horizontalSpacer_01">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
              </size>
             </property>
            </spacer>
@@ -3203,39 +3236,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-            <property name="text">
-             <string>Keep one backup file for each katalog (.bak in the collection folder)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="Settings_label_Theme">
-            <property name="text">
-             <string>Theme (requires to restart)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </item>
-        <item row="0" column="1">
+        <item row="0" column="3">
          <spacer name="Settings_horizontalSpacer_02">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -3247,6 +3250,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="Settings_pushButton_Wiki">
+          <property name="text">
+           <string>Go to Katalog's Wiki</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
