@@ -37,6 +37,8 @@
 #include "database.h"
 #include "storage.h"
 
+#include <QDesktopServices>
+
 //---------------------------------------------------------------------------------------------------
 //--- UI methods-------------------------------------------------------------------------------------
 //--------- Full list --------------------------------------------------
@@ -165,6 +167,9 @@ void MainWindow::on_Storage_pushButton_New_clicked()
 
     //load table to model
     loadStorageTableToModel();
+
+    //enable save button
+    ui->Storage_pushButton_New->setEnabled(true);
 
 }
 //----------------------------------------------------------------------
