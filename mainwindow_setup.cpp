@@ -41,10 +41,10 @@
 #include <QSaveFile>
 #include <QSettings>
 
-//#include <KActionCollection>
-//#include <KIO/Job>
-//#include <KMessageBox>
-//#include <KLocalizedString>
+#include <KActionCollection>
+#include <KIO/Job>
+#include <KMessageBox>
+#include <KLocalizedString>
 
 //Settings -----------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
@@ -203,6 +203,7 @@
               "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
               );
         ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+        ui->Collection_line_SeparateSummary->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
         ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
@@ -228,7 +229,6 @@
                         );
 
         // Initialize the database:
-
         QSqlError err = initializeDatabase();
         if (err.type() != QSqlError::NoError) {
             //showError(err);
@@ -270,7 +270,7 @@
     }
 
 
-/*
+
     //Menu and Icons - Actions KDE setup ---------------------------------------
         void MainWindow::setupActions()
         {
@@ -281,14 +281,14 @@
             //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
             //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
             setupGUI();
-            *
+
         }
         //----------------------------------------------------------------------
         void MainWindow::newFile()
         {
             fileName.clear();
-            ui->plainTextEdit->clear();
-            ui->statusbar->showMessage(fileName);
+            //ui->plainTextEdit->clear();
+            //ui->statusbar->showMessage(fileName);
         }
         //----------------------------------------------------------------------
         void MainWindow::openFile()
@@ -306,7 +306,7 @@
                 job->exec();
             }
 
-            ui->statusbar->showMessage(fileName);
+            //ui->statusbar->showMessage(fileName);
         }
         //----------------------------------------------------------------------
         void MainWindow::downloadFinished(KJob* job)
@@ -319,8 +319,7 @@
             }
 
             KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
-            ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),
-                                            QIODevice::ReadOnly).readAll());
+            //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());
         }
         //----------------------------------------------------------------------
         void MainWindow::saveFileAs(const QString &outputFileName)
@@ -331,7 +330,7 @@
                 file.open(QIODevice::WriteOnly);
 
                 QByteArray outputByteArray;
-                outputByteArray.append(ui->plainTextEdit->toPlainText().toUtf8());
+                //outputByteArray.append(ui->plainTextEdit->toPlainText().toUtf8());
                 //outputByteArray.append(ui->LV_FileList->model());
                 file.write(outputByteArray);
                 file.commit();
@@ -343,7 +342,7 @@
         void MainWindow::saveFileAs()
         {
             saveFileAs(QFileDialog::getSaveFileName(this, ("Save File As")));
-            ui->statusbar->showMessage(fileName);
+            //ui->statusbar->showMessage(fileName);
         }
         //----------------------------------------------------------------------
         void MainWindow::saveFile()
@@ -357,5 +356,5 @@
                 saveFileAs();
             }
         }
-*/
+
     //----------------------------------------------------------------------
