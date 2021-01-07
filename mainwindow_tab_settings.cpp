@@ -63,3 +63,8 @@ void MainWindow::on_Settings_pushButton_Wiki_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/wiki"));
 }
+
+void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.15"));
+}

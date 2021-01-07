@@ -75,6 +75,7 @@
       <property name="font">
        <font>
         <family>Noto Sans</family>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="locale">
@@ -157,7 +158,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>0</height>
                </size>
               </property>
@@ -186,7 +187,7 @@
               <property name="minimumSize">
                <size>
                 <width>60</width>
-                <height>36</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -198,6 +199,7 @@
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="locale">
@@ -279,6 +281,7 @@
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="toolTip">
@@ -385,6 +388,7 @@
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -444,7 +448,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -460,7 +464,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>30</width>
+                <width>20</width>
                 <height>0</height>
                </size>
               </property>
@@ -486,7 +490,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>30</width>
+                <width>25</width>
                 <height>0</height>
                </size>
               </property>
@@ -499,6 +503,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -550,22 +555,38 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>30</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="Search_label_Regex">
+             <widget class="QLabel" name="Search_label_LinkImage8">
               <property name="minimumSize">
                <size>
-                <width>250</width>
+                <width>20</width>
                 <height>0</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background: url(:/images/link-h.png)  repeat-x center;</string>
+              </property>
               <property name="text">
-               <string>regex</string>
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_checkBox_ShowFolders">
+              <property name="toolTip">
+               <string>Choose to only show folders as results</string>
+              </property>
+              <property name="text">
+               <string>show Folders only</string>
+              </property>
+              <property name="tristate">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -619,13 +640,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>48</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>47</height>
                </size>
               </property>
@@ -660,6 +681,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -690,6 +712,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="toolTip">
@@ -730,7 +753,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>30</width>
                 <height>0</height>
                </size>
               </property>
@@ -774,6 +797,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -924,6 +948,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="toolTip">
@@ -1001,6 +1026,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1040,6 +1066,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="toolTip">
@@ -1105,31 +1132,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="Search_label_LinkImage8">
+             <widget class="QLabel" name="Search_label_Regex">
               <property name="minimumSize">
                <size>
-                <width>20</width>
+                <width>250</width>
                 <height>0</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background: url(:/images/link-h.png)  repeat-x center;</string>
-              </property>
               <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Search_checkBox_ShowFolders">
-              <property name="toolTip">
-               <string>Choose to only show folders as results</string>
-              </property>
-              <property name="text">
-               <string>list Folders only</string>
-              </property>
-              <property name="tristate">
-               <bool>false</bool>
+               <string>regex</string>
               </property>
              </widget>
             </item>
@@ -1221,6 +1232,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="locale">
@@ -1255,6 +1267,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1273,6 +1286,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1285,6 +1299,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="orientation">
@@ -1327,6 +1342,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="locale">
@@ -1377,14 +1393,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <layout class="QHBoxLayout" name="Collection_horizontalLayout_CollectionFolder">
             <item>
              <widget class="QLabel" name="Collection_label_CurrentFolder">
-              <property name="minimumSize">
+              <property name="maximumSize">
                <size>
-                <width>150</width>
-                <height>0</height>
+                <width>115</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>Current collection folder</string>
+               <string>Collection folder</string>
               </property>
              </widget>
             </item>
@@ -1446,6 +1462,128 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="Collection_horizontalLayout_Totals">
+            <item>
+             <widget class="QLabel" name="Collection_label_CatalogsLabel">
+              <property name="text">
+               <string>Catalogs:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Collection_label_Catalogs">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="Collection_line_01">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Collection_label_TotalSizeLabel">
+              <property name="text">
+               <string>Total File Size:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Collection_label_TotalSize">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="Collection_line_02">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Collection_label_TotalNumberLabel">
+              <property name="text">
+               <string>Total Number of Files:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Collection_label_TotalNumber">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Collection_horizontalSpacer_04">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="Collection_line_SeparateSummary">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="Collection_horizontalLayout_CatalogActions">
             <item>
              <widget class="QLabel" name="Collection_label_WithSelectedCatalog">
@@ -1464,6 +1602,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="font">
                <font>
                 <family>Noto Sans</family>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1953,6 +2092,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="text">
@@ -2197,6 +2337,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="text">
@@ -2478,6 +2619,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Open Sans</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="text">
@@ -2568,6 +2710,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="text">
@@ -2751,6 +2894,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2764,7 +2908,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="Line" name="line_2">
+           <widget class="Line" name="Storage_line_01">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -2782,6 +2926,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2792,7 +2937,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="Line" name="line_3">
+           <widget class="Line" name="Storage_line_02">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -2810,6 +2955,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2820,7 +2966,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="Line" name="line_4">
+           <widget class="Line" name="Storage_line_03">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -2838,6 +2984,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="font">
              <font>
               <family>Noto Sans</family>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2871,7 +3018,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="Line" name="line_5">
+           <widget class="Line" name="Storage_line_04">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -3121,7 +3268,33 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="0" column="0">
          <layout class="QGridLayout" name="Settings_gridLayout">
           <item row="4" column="1">
-           <spacer name="verticalSpacer">
+           <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+            <property name="text">
+             <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <spacer name="Settings_verticalSpacer_02">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="6" column="1">
+           <spacer name="Settings_verticalSpacer_03">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -3136,24 +3309,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
-          <item row="7" column="1">
-           <widget class="QComboBox" name="Settings_comboBox_Theme">
-            <property name="toolTip">
-             <string>Select a theme</string>
-            </property>
-            <item>
-             <property name="text">
-              <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="4" column="0">
            <spacer name="Settings_horizontalSpacer_01">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -3169,45 +3325,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </spacer>
           </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="Settings_label_Theme">
-            <property name="text">
-             <string>Theme (requires to restart)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="Settings_label_Data">
-            <property name="text">
-             <string>Data</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <spacer name="Settings_verticalSpacer_02">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-            <property name="text">
-             <string>Keep one backup file for each katalog (.bak in the collection folder)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <spacer name="Settings_verticalSpacer_01">
+          <item row="9" column="1">
+           <spacer name="Settings_verticalSpacer_04">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -3220,28 +3339,105 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
           <item row="5" column="1">
-           <widget class="Line" name="Settings_line_SeparateData">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+            <property name="text">
+             <string>Keep one backup file for each catalog (.bak in the collection folder)</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+          <item row="0" column="1">
+           <spacer name="Settings_verticalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="Settings_label_Settings">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
-             <string>Save a new record for Statistics after the creation or update of a Catalog.</string>
+             <string>Settings</string>
             </property>
-            <property name="checked">
-             <bool>true</bool>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="Settings_label_Theme">
+            <property name="text">
+             <string>Theme (requires to restart)</string>
             </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="Settings_label_Data">
+            <property name="text">
+             <string>Data</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QComboBox" name="Settings_comboBox_Theme">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Select a theme</string>
+            </property>
+            <item>
+             <property name="text">
+              <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="0" column="3">
+        <item row="0" column="4">
+         <spacer name="Settings_horizontalSpacer_03">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="2">
          <spacer name="Settings_horizontalSpacer_02">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -3251,10 +3447,97 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </property>
          </spacer>
         </item>
-        <item row="0" column="2">
-         <widget class="QPushButton" name="Settings_pushButton_Wiki">
-          <property name="text">
-           <string>Go to Katalog's Wiki</string>
+        <item row="0" column="3">
+         <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
+          <item>
+           <spacer name="Settings_verticalSpacer_05">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Settings_label_Version">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Katalog version:    0.15     2021-01-07</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Settings_verticalSpacer_06">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Settings_pushButton_Wiki">
+            <property name="text">
+             <string>Katalog's Wiki</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
+            <property name="text">
+             <string>Release Notes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Settings_verticalSpacer_07">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="Settings_line_Separate">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
