@@ -33,6 +33,7 @@
 */
 
 #include "storage.h"
+#include <QLocale>
 
 Storage::Storage(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -64,8 +65,8 @@ QVariant Storage::data(const QModelIndex &index, int role) const
         case 4: return QString(storagePath[index.row()]);
         case 5: return QString(storageLabel[index.row()]);
         case 6: return QString(storageFileSystemType[index.row()]);
-        case 7: return qint64(storageBytesTotal[index.row()]);
-        case 8: return qint64(storageBytesFree[index.row()]);
+        case 7: return QLocale().formattedDataSize(storageBytesTotal[index.row()]);
+        case 8: return QLocale().formattedDataSize(storageBytesFree[index.row()]);
     }
     return QVariant();
 }

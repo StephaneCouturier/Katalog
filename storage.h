@@ -33,8 +33,7 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 
-#include <QStandardItemModel>
-#include <QDesktopServices>
+#include <QAbstractTableModel>
 
 class Storage: public QAbstractTableModel
 {
