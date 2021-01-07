@@ -59,7 +59,7 @@
 #include <KComboBox>
 #include <KXmlGuiWindow>
 //#include <KMessageBox>
-//class KJob;
+class KJob;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -81,7 +81,7 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             void hideDevelopmentUIItems();
 
             //KDE menus/icons
-            //void setupActions();
+            void setupActions();
 
             //Application settings
             QString settingsFile;
@@ -226,14 +226,12 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
 
     private slots:
         //Menu KDE
-            /*
             void newFile();
             void openFile();
             void saveFile();
             void saveFileAs();
             void saveFileAs(const QString &outputFileName);
             void downloadFinished(KJob* job);
-            */
 
         //Search
             void on_Search_pushButton_Search_clicked();
@@ -326,6 +324,8 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_comboBox_Theme_currentTextChanged();
 
+            void on_Settings_pushButton_Wiki_clicked();
+            void on_Settings_pushButton_ReleaseNotes_clicked();
 };
 
 #endif // MAINWINDOW_H
