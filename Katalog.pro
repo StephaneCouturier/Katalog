@@ -39,6 +39,7 @@ requires(qtConfig(treeview))
 requires(qtConfig(listview))
 
 #KF5 Libraries
+linux: {
 QT       += KCoreAddons
 QT       += KI18n
 QT       += KXmlGui
@@ -47,6 +48,7 @@ QT       += KConfigWidgets
 QT       += KWidgetsAddons
 QT       += KIOCore
 QT       += KCompletion
+}
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
