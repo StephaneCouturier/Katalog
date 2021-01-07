@@ -2,6 +2,7 @@
 #define DATABASE_H
 
 #include <QtSql>
+#include <QLocale>
 
 QVariant addStorage(QSqlQuery &q,
                 const int     &storageID,
@@ -13,6 +14,8 @@ QVariant addStorage(QSqlQuery &q,
                 QString storageFileSystem,
                 qint64  storageTotalSpace,
                 qint64  storageFreeSpace,
+                QString storageTotalSpaceDisplay,
+                QString storageFreeSpaceDisplay,
                 QString storageBrandModel,
                 QString storageSerialNumber,
                 QString storageBuildDate,
@@ -30,6 +33,8 @@ QVariant addStorage(QSqlQuery &q,
                 q.addBindValue(storageFileSystem);
                 q.addBindValue(storageTotalSpace);
                 q.addBindValue(storageFreeSpace);
+                q.addBindValue(storageTotalSpaceDisplay);
+                q.addBindValue(storageFreeSpaceDisplay);
                 q.addBindValue(storageBrandModel);
                 q.addBindValue(storageSerialNumber);
                 q.addBindValue(storageBuildDate);
@@ -51,6 +56,8 @@ const auto STORAGE_SQL = QLatin1String(R"(
                  storageFileSystem  text  ,
                  storageTotalSpace  int  default 0,
                  storageFreeSpace  int  default 0,
+                 storageTotalSpaceDisplay  text  ,
+                 storageFreeSpaceDisplay  text ,
                  storageBrandModel  text  ,
                  storageSerialNumber   text  ,
                  storageBuildDate  text  ,
@@ -70,14 +77,17 @@ const auto INSERT_STORAGE_SQL = QLatin1String(R"(
                         storageFileSystem,
                         storageTotalSpace,
                         storageFreeSpace,
+                        storageTotalSpaceDisplay,
+                        storageFreeSpaceDisplay,
                         storageBrandModel,
                         storageSerialNumber,
                         storageBuildDate,
                         storageContentType,
                         storageContainer,
                         storageComment
+
                 )
-                 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     )");
 
 QSqlError initializeDatabase()

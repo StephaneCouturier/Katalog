@@ -163,7 +163,7 @@ void MainWindow::on_Storage_pushButton_New_clicked()
     int newID = maxID + 1;
 
 
-    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "",  "",  "", "", "");
+    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "",  "",  "", "", "", "", "");
 
     //load table to model
     loadStorageTableToModel();
@@ -321,6 +321,8 @@ void MainWindow::loadStorageFileToTable()
                                                 fieldList[6],
                                                 fieldList[7].toLongLong(),
                                                 fieldList[8].toLongLong(),
+                                                QLocale().formattedDataSize(fieldList[7].toLongLong()),
+                                                QLocale().formattedDataSize(fieldList[8].toLongLong()),
                                                 fieldList[9],
                                                 fieldList[10],
                                                 fieldList[11],
@@ -357,12 +359,14 @@ void MainWindow::loadStorageTableToModel()
     storageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
     storageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
     storageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
-    storageModel->setHeaderData(9, Qt::Horizontal, tr("Brand/Model"));
-    storageModel->setHeaderData(10, Qt::Horizontal, tr("Serial Number"));
-    storageModel->setHeaderData(11, Qt::Horizontal, tr("Build Date"));
-    storageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
-    storageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
-    storageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
+    storageModel->setHeaderData(9, Qt::Horizontal, tr("Total"));
+    storageModel->setHeaderData(10, Qt::Horizontal, tr("Free"));
+    storageModel->setHeaderData(11, Qt::Horizontal, tr("Brand/Model"));
+    storageModel->setHeaderData(12, Qt::Horizontal, tr("Serial Number"));
+    storageModel->setHeaderData(13, Qt::Horizontal, tr("Build Date"));
+    storageModel->setHeaderData(14, Qt::Horizontal, tr("Content Type"));
+    storageModel->setHeaderData(15, Qt::Horizontal, tr("Container"));
+    storageModel->setHeaderData(16, Qt::Horizontal, tr("Comment"));
 
     // Populate the storageModel:
     if (!storageModel->select()) {
@@ -375,7 +379,6 @@ void MainWindow::loadStorageTableToModel()
 
     ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
 
-
     // Connect model to tree/table view
     ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
     ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
@@ -386,8 +389,10 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(4, 250); //Path
     ui->Storage_treeView_StorageList->header()->resizeSection(5,  50); //Label
     ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
-    ui->Storage_treeView_StorageList->header()->resizeSection(7,  50); //Total
-    ui->Storage_treeView_StorageList->header()->resizeSection(8,  50); //Free
+    ui->Storage_treeView_StorageList->header()->resizeSection(7,  75); //Total
+    ui->Storage_treeView_StorageList->header()->resizeSection(8,  75); //Free
+    ui->Storage_treeView_StorageList->header()->resizeSection(9,  85); //Total
+    ui->Storage_treeView_StorageList->header()->resizeSection(10, 85); //Free
     //ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //Brand
     //ui->Storage_treeView_StorageList->header()->resizeSection(10, 250); //Serial
     //ui->Storage_treeView_StorageList->header()->resizeSection(11,  50); //Build
@@ -395,6 +400,8 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(13, 125); //Container
     //ui->Storage_treeView_StorageList->header()->resizeSection(14,  50); //Comment
     //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
+    ui->Storage_treeView_StorageList->header()->hideSection(7); //Total #
+    ui->Storage_treeView_StorageList->header()->hideSection(8); //Free #
 
     //Get the list of device names for the Create screen
     QSqlQuery query;
@@ -430,13 +437,13 @@ void MainWindow::updateStorageInfo()
     if (storage.isReadOnly())
         qDebug() << "isReadOnly:" << storage.isReadOnly();
 
-    qint64 sizeTotal = storage.bytesTotal()/1024/1024/1024;
-    qint64 sizeAvailable = storage.bytesFree()/1024/1024/1024;
+    qint64 sizeTotal = storage.bytesTotal();
+    qint64 sizeAvailable = storage.bytesAvailable();
     QString storageName = storage.name();
     QString storageFS = storage.fileSystemType();
 
     //get confirmation for the update
-    int result = QMessageBox::warning(this,"Update","Total:\n" + QString::number(sizeTotal)+"\nFree:\n" + QString::number(sizeAvailable),
+    int result = QMessageBox::warning(this,"Update","Total:\n" + QLocale().formattedDataSize(sizeTotal)+"\nFree:\n" + QLocale().formattedDataSize(sizeAvailable),
                                       QMessageBox::Yes | QMessageBox::Cancel);
     //return;
     if ( result == QMessageBox::Cancel){
@@ -447,8 +454,8 @@ void MainWindow::updateStorageInfo()
     //Get the sum of total space
     QSqlQuery queryTotalSpace;
     queryTotalSpace.prepare( "UPDATE storage "
-                             "SET storageTotalSpace = " + QString::number(sizeTotal) +","
-                              "storageFreeSpace = " + QString::number(sizeAvailable) +","
+                             "SET storageTotalSpace = " + QString::number(sizeTotal) + ","
+                              "storageFreeSpace = " + QString::number(sizeAvailable) + ","
                               "storageLabel = '" + storageName +"',"
                               "storageFileSystem = '" + storageFS +"'"
                           + " WHERE storageID = " + QString::number(selectedStorageID) );
@@ -513,15 +520,17 @@ void MainWindow::saveStorageModelToFile()
          << "Container"     << "\t"
          << "Comment"       << "\t"
          << '\n';
-    /*out << "ID\tName\tType / Capacité\tContainer\tPath\tLabel\tFileSystem\tTotal Disque	Free"
-           "\tLocation tree\tBrand and model\tBuild Date\tSerial Number\tPartitions\tPartition size	Contents\tCatalog"
-           "\n";*/
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
 
+            //Exclude the columns used to display total and free size
+            if( j!=9 and j!=10 ) {
+
                 textData += storageModel->data(storageModel->index(i,j)).toString();
                 textData += "\t";      // for .csv file format
+             }
+
         }
         textData += "\n";             // (optional: for new line segmentation)
     }
@@ -553,20 +562,20 @@ void MainWindow::refreshStorageStatistics()
     queryFreeSpaceTotal.prepare( "SELECT SUM(storageFreeSpace) FROM storage" );
     queryFreeSpaceTotal.exec();
     queryFreeSpaceTotal.next();
-    int freeSpaceTotal = queryFreeSpaceTotal.value(0).toInt();
-    ui->Storage_label_SpaceFreeValue->setText(QString::number(freeSpaceTotal));
+    qint64 freeSpaceTotal = queryFreeSpaceTotal.value(0).toLongLong();
+    ui->Storage_label_SpaceFreeValue->setText(QLocale().formattedDataSize(freeSpaceTotal));
 
     //Get the sum of total space
     QSqlQuery queryTotalSpace;
     queryTotalSpace.prepare( "SELECT SUM(storageTotalSpace) FROM storage" );
     queryTotalSpace.exec();
     queryTotalSpace.next();
-    int totalSpace = queryTotalSpace.value(0).toInt();
-    ui->Storage_label_SpaceTotalValue->setText(QString::number(totalSpace));
+    qint64 totalSpace = queryTotalSpace.value(0).toLongLong();
+    ui->Storage_label_SpaceTotalValue->setText(QLocale().formattedDataSize(totalSpace));
 
     //Calculate used space
-    int usedSpace = totalSpace - freeSpaceTotal;
-    ui->Storage_label_SpaceUsedValue->setText(QString::number(usedSpace));
+    qint64 usedSpace = totalSpace - freeSpaceTotal;
+    ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
 
     //Get the percent of free space
     float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;

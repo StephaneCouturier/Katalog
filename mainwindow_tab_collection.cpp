@@ -41,7 +41,7 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
-#include <KFormat>
+//#include <KFormat>
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
@@ -354,6 +354,9 @@
         QList<QString> cStorages;
         QList<bool>    cIncludeSymblinks;
 
+        qint64 collectionTotalSize = 0;
+        qint64 collectionTotalNumber = 0;
+
         // Iterate in the directory to create a list of files and sort it
         QStringList fileTypes;
         fileTypes << "*.idx";
@@ -393,11 +396,13 @@
                     int catalogFileCount = catalogFileCountString.toInt();
                     cFileCounts.append(catalogFileCount);
                     catalogFileCountProvided = true;
+                    collectionTotalNumber = collectionTotalNumber + catalogFileCount;
                 }
                 else if (line.left(22)=="<catalogTotalFileSize>"){
                     QString catalogTotalFileSize = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    qint64 catalogFileCount = catalogTotalFileSize.toLongLong();
-                    cTotalFileSizes.append(catalogFileCount);
+                    qint64 catalogFileSize = catalogTotalFileSize.toLongLong();
+                    cTotalFileSizes.append(catalogFileSize);
+                    collectionTotalSize = collectionTotalSize + catalogFileSize;
                     catalogTotalfileSizeProvided = true;
                 }
                 else if (line.left(22)=="<catalogIncludeHidden>"){
@@ -489,6 +494,10 @@
         ui->Collection_treeView_CatalogList->header()->hideSection(0); //Path
         ui->Collection_treeView_CatalogList->header()->hideSection(10); //Symblinks
         ui->Collection_treeView_CatalogList->header()->hideSection(11); //filesize qint64
+
+        ui->Collection_label_Catalogs->setText(QString::number(cNames.count()));
+        ui->Collection_label_TotalSize->setText(QLocale().formattedDataSize(collectionTotalSize));
+        ui->Collection_label_TotalNumber->setText(QString::number(collectionTotalNumber));
 
         //Pass list of catalogs
             catalogFileList = cNames;
