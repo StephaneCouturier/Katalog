@@ -35,8 +35,8 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
-//#include <KAboutData>
-//#include <KLocalizedString>
+#include <KAboutData>
+#include <KLocalizedString>
 
 #include "mainwindow.h"
 
@@ -44,37 +44,37 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    /*
-    KLocalizedString::setApplicationDomain("Katalog");
+    #ifdef Q_OS_LINUX
+        KLocalizedString::setApplicationDomain("Katalog");
 
-    KAboutData aboutData(
-         QStringLiteral("Katalog"),         // The program name used internally. (componentName)
-         i18n("Katalog"),                   // A displayable program name string. (displayName)
-         QStringLiteral("0.11"),             // The program version string. (version)
-         // Short description of what the app does. (shortDescription)
-         i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
-         KAboutLicense::GPL,// The license this code is released under
-         i18n("(c) 2020 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
-         // Optional text shown in the About box.
-         // Can contain any information desired. (otherText)
-         i18n(""),
-         // The program homepage string. (homePageAddress = QString())
-         QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
-         // The bug report address
-         // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
-         QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
-         aboutData.addAuthor(i18n("Stephane Couturier"), i18n("Creator"), QStringLiteral("contact@symbioxy.com"),
-         QStringLiteral("https://www.symbioxy.com/"), QStringLiteral("OSC Username"));
-    KAboutData::setApplicationData(aboutData);
+        KAboutData aboutData(
+             QStringLiteral("Katalog"),         // The program name used internally. (componentName)
+             i18n("Katalog"),                   // A displayable program name string. (displayName)
+             QStringLiteral("0.15"),             // The program version string. (version)
+             // Short description of what the app does. (shortDescription)
+             i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
+             KAboutLicense::GPL,// The license this code is released under
+             i18n("(c) 2020 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
+             // Optional text shown in the About box.
+             // Can contain any information desired. (otherText)
+             i18n(""),
+             // The program homepage string. (homePageAddress = QString())
+             QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
+             // The bug report address
+             // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
+             QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
+             aboutData.addAuthor(i18n("Stéphane Couturier"), i18n("Creator"), QStringLiteral("contact@symbioxy.com"),
+             QStringLiteral("https://github.com/StephaneCouturier/"), QStringLiteral("OSC Username"));
+        KAboutData::setApplicationData(aboutData);
 
-    QCommandLineParser parser;
-    aboutData.setupCommandLine(&parser);
-    parser.process(app);
-    aboutData.processCommandLine(&parser);
-    */
+        QCommandLineParser parser;
+        aboutData.setupCommandLine(&parser);
+        parser.process(app);
+        aboutData.processCommandLine(&parser);
+    #endif
 
     //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset jsut after)
-    QIcon::setThemeName( "default" );
+    QIcon::setThemeName( "breeze" );
     //Set icon fallback in case theme is not available
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
 
