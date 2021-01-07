@@ -50,7 +50,7 @@
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)// QMainWindow(parent)
    , ui(new Ui::MainWindow)
 {
 
@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)// KXmlGuiWindow(pa
             hideDevelopmentUIItems();
 
         //Set up KDE Menu/Icon actions
-            //setupActions();
+            setupActions();
 
         //Load user settings
             //Get user home path
@@ -147,7 +147,7 @@ MainWindow::~MainWindow()
 //DEV
 /*
 QMessageBox::information(this,"Katalog","Ok.");
+QMessageBox::information(this,"Katalog","Ok." + stringVariable);
 KMessageBox::information(this,"test:\n");
 */
-
 
