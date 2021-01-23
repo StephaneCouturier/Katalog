@@ -36,6 +36,7 @@
 #include "ui_mainwindow.h"
 #include "collection.h"
 #include "catalog.h"
+#include "database.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -55,23 +56,25 @@
                                                             collectionFolder,
                                                             QFileDialog::ShowDirsOnly
                                                             | QFileDialog::DontResolveSymlinks);
+
             //Unless the selection was cancelled, send the selected folder, and refresh the list of catalogs
             if ( dir !=""){
-                collectionFolder=dir;
-                ui->Collection_lineEdit_CollectionFolder->setText(dir);
+
+                //set the new path Colletion tab
+                ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
+
+                //redefine the path of the Storage file
                 storageFilePath = collectionFolder + "/" + "storage.csv";
 
-                //initiateSearchValues();
+                //save Settings for the new collection folder value;
                 saveSettings();
 
-                //loadStorageModel();
-                loadStorageFileToTable();
-                loadStorageTableToModel();
-                refreshStorageStatistics();
+                //load the collection for this new folder;
+                loadCollection();
 
                 //catalog
-                loadCatalogsToModel();
-                refreshCatalogSelectionList();
+                //loadCatalogsToModel();
+                //refreshCatalogSelectionList("","");
             }
 
             //Reset selected catalog values (to avoid updating the last selected one for instance)
@@ -139,7 +142,7 @@
                  //refresh catalog lists
                     loadCatalogsToModel();
                     //LoadCatalogFileList();
-                    refreshCatalogSelectionList();
+                    refreshCatalogSelectionList("","");
             }
         }
         //----------------------------------------------------------------------
@@ -275,7 +278,7 @@
                     QFile file (selectedCatalogFile);
                     file.moveToTrash();
                     loadCatalogsToModel();
-                    refreshCatalogSelectionList();
+                    refreshCatalogSelectionList("","");
                 }
              }
             else QMessageBox::information(this,"Katalog",("Please select a catalog above first."));
@@ -326,17 +329,129 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
-        loadCatalogsToModel();
-        refreshCatalogSelectionList();
+        //Load Storage list and refresh their statistics
+            loadStorageFileToTable();
+            loadStorageTableToModel();
+            refreshStorageStatistics();
 
-        //refresh storage model;
-        loadStorageFileToTable();
-        loadStorageTableToModel();
-        refreshStorageStatistics();
+       //load Catalog list, Location list, Storage list
+            loadCatalogFilesToTable();
 
-        //hide buttons to force user to select a catalog before allowing any catalog action.
-        hideCatalogButtons();
+            loadCatalogsToModel();
+
+            refreshLocationSelectionList();
+            refreshStorageSelectionList("All");
+            refreshCatalogSelectionList("All", "All");
+
+            QMessageBox::information(this,"Katalog","selectedSearchLocation." + selectedSearchLocation);
+            QMessageBox::information(this,"Katalog","selectedSearchStorage." + selectedSearchStorage);
+
+            //restore Search catalog selection
+            ui->Search_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+            ui->Search_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+
+            //hide buttons to force user to select a catalog before allowing any action.
+            hideCatalogButtons();
+
+
+
     }
+
+    //----------------------------------------------------------------------
+    void MainWindow::loadCatalogFilesToTable()
+    {
+        //Clear current entires of the catalog table
+            QSqlQuery queryDelete;
+            queryDelete.prepare( "DELETE FROM catalog" );
+            queryDelete.exec();
+
+        //Prepare table and insert query
+            QSqlQuery query;
+            if (!query.exec(CATALOG_SQL)){
+                QMessageBox::information(this,"Katalog","problem to create the table.");
+                return;}
+
+            if (!query.prepare(INSERT_CATALOG_SQL)){
+                QMessageBox::information(this,"Katalog","problem to insert rows.");
+                return;}
+
+        //Iterate in the directory to create a list of files and sort it
+            QStringList fileTypes;
+            fileTypes << "*.idx";
+
+            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+            while (iterator.hasNext()){
+
+                // Iterate to the next file
+                QFile catalogFile(iterator.next());
+
+                // Get file info
+                QFileInfo catalogFileInfo(catalogFile);
+
+                // Verify that the file can be opened
+                if(!catalogFile.open(QIODevice::ReadOnly)) {
+                    QMessageBox::information(this,"Katalog","No catalog found.");
+                    return;
+                }
+
+                //Prepare a textsteam for the file
+                QTextStream textStream(&catalogFile);
+
+                //Read the first 7 lines and put values in a stringlist
+                QStringList catalogValues;
+                for (int i=0; i<7; i++) {
+                    QString line = textStream.readLine();
+                    QString value = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    catalogValues << value;
+                }
+
+
+                /*
+                <catalogSourcePath>
+                <catalogFileCount>
+                <catalogTotalFileSize>
+                <catalogIncludeHidden>
+                <catalogFileType>
+                <catalogStorage>
+                <catalogIncludeSymblinks>
+                */
+
+                //Insert a line in the table with available data
+
+                QVariant catalogID = addCatalog(query,
+                                catalogFileInfo.filePath(),  //catalogFilePath
+                                catalogFileInfo.baseName(),  //catalogName
+                                catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
+                                catalogValues[0], //catalogSourcePath
+                                catalogValues[1].toInt(), //catalogFileCount
+                                catalogValues[2].toLongLong(), //catalogTotalFileSize
+                                "maybe", //catalogSourcePathIsActive
+                                catalogValues[3], //catalogIncludeHidden
+                                catalogValues[4], //catalogFileType
+                                catalogValues[5], //catalogStorage
+                                catalogValues[6] //catalogIncludeSymblinks
+                                );
+                /*
+                QVariant catalogID = addCatalog(query,
+                                catalogFileInfo.filePath(),  //catalogFilePath
+                                catalogFileInfo.baseName(),  //catalogName
+                                catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
+                                catalogValues[0], //catalogSourcePath
+                                catalogValues[1].toInt(), //catalogFileCount
+                                catalogValues[2].toLongLong(), //catalogTotalFileSize
+                                catalogValues[3], //catalogSourcePathIsActive
+                                catalogValues[4], //catalogIncludeHidden
+                                catalogValues[5], //catalogFileType
+                                catalogValues[6], //catalogStorage
+                                catalogValues[7] //catalogIncludeSymblinks
+                                );
+                */
+                catalogFile.close();
+            }
+
+    }
+
 
     // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()

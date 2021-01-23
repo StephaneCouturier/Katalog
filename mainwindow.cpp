@@ -91,25 +91,17 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)// QMainWindow(pa
             startDatabase();
 
     //setup tab: Collection
-        //Load the list of catalogs from the collection folder
-            loadCatalogsToModel();
+            //setup tab: Search
+            //setup tab: Storage
 
-    //setup tab: Explore
-
-
-    //setup tab: Search
             initiateSearchValues();
-            refreshCatalogSelectionList();
 
-            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
-
-    //setup tab: Storage
             storageFilePath = collectionFolder + "/" + "storage.csv";
-            //loadStorageModel();
 
-            loadStorageFileToTable();
-            loadStorageTableToModel();
-            refreshStorageStatistics();
+            //QMessageBox::information(this,"Katalog","selectedSearchLocation." + selectedSearchLocation);
+            //QMessageBox::information(this,"Katalog","selectedSearchStorage." + selectedSearchStorage);
+
+            loadCollection();
 
     //setup tab: Create
         //Default path to scan

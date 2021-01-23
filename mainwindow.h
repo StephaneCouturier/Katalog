@@ -116,6 +116,8 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             QString searchText;
             QString regexPattern;
             QString selectedSearchCatalog;
+            QString selectedSearchStorage;
+            QString selectedSearchLocation;
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
@@ -127,9 +129,17 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             QString selectedMaxSizeUnit;
             QString selectedTags;
             QString sourceCatalog;
-            QStringListModel catalogSelectionList;
+            //QStringListModel catalogSelectionListModel;
+            QStringList catalogSelectedList;
             void initiateSearchValues();
+            void refreshLocationSelectionList();
+            void refreshStorageSelectionList(QString selectedLocation);
+            void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
+
             QString getCatalogStorageName(QString catalogFilePath);
+
+            //QStringListModel *locationListModel;
+            //QStringListModel *storageListModel;
 
             QList<QString>  sFileNames;
             QList<qint64>   sFileSizes;
@@ -147,7 +157,6 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             QStringList catalogFoundList;
             QStringListModel *catalogFoundListModel;
             QStringList searchTextList;
-            void refreshCatalogSelectionList();
 
         //TAB: Collection
             QString collectionFolder;
@@ -206,6 +215,7 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
             QStringListModel *storageListModel;
             QStringList locationCatalogList;
 
+            void loadCatalogFilesToTable();
             void loadStorageFileToTable();
             void loadStorageTableToModel();
             void saveStorageModelToFile();
@@ -326,6 +336,8 @@ class MainWindow : public KXmlGuiWindow //WIN QMainWindow
 
             void on_Settings_pushButton_Wiki_clicked();
             void on_Settings_pushButton_ReleaseNotes_clicked();
+            void on_Search_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
+            void on_Search_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H

@@ -60,14 +60,18 @@
     void MainWindow::loadSettings()
     {
         QSettings settings(settingsFile, QSettings:: IniFormat);
+
         //Collection folder
         collectionFolder = settings.value("LastCollectionFolder").toString();
         if(collectionFolder == ""){
                collectionFolder = QApplication::applicationDirPath();
         }
+
         //Last Search values
         ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
         selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
+        selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
+        selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
         selectedFileType        = settings.value("LastSearch/FileType").toString();
         selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
         selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
@@ -97,6 +101,8 @@
         settings.setValue("LastCollectionFolder", collectionFolder);
         settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedSearchCatalog);
+        settings.setValue("LastSearch/SelectedSearchStorage", selectedSearchStorage);
+        settings.setValue("LastSearch/SelectedSearchLocation", selectedSearchLocation);
         settings.setValue("LastSearch/FileType", selectedFileType);
         settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
         settings.setValue("LastSearch/SearchIn", selectedSearchIn);
@@ -206,14 +212,16 @@
         ui->Collection_line_SeparateSummary->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
-        ui->Search_label_LinkImage1->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage2->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage3->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage4->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage5->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage6->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage7->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage8->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
 
     }
 

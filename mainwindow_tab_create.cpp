@@ -298,8 +298,18 @@
 
         //Refresh the catalog list for the Collection screen
         loadCatalogsToModel();
+
         //Refresh the catalog list for the combobox of the Search screen
-        refreshCatalogSelectionList();
+            //Get current search selection
+            selectedSearchLocation = ui->Search_comboBox_SelectLocation->currentText();
+            selectedSearchStorage = ui->Search_comboBox_SelectStorage->currentText();
+            selectedSearchCatalog = ui->Search_comboBox_SelectCatalog->currentText();
+
+            //Refresh list
+            refreshCatalogSelectionList(selectedSearchLocation,selectedSearchStorage);
+
+            //Restore selcted catalog
+            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         QMessageBox::information(this, "Katalog",
                                   ("The new catalog,has been created.\n Name:   ")

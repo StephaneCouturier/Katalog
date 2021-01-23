@@ -35,6 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "catalog.h"
+#include "database.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -47,17 +48,20 @@
 
 //TAB: SEARCH FILES ----------------------------------------------------------------------
 
-        //----------------------------------------------------------------------
-        //User interactions
+    //----------------------------------------------------------------------
+    //User interactions
+        //Buttons and other changes
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
             ui->Search_kcombobox_SearchText->setCurrentText("");
+            ui->Search_comboBox_SelectLocation->setCurrentText("All");
+            ui->Search_comboBox_SelectStorage->setCurrentText("All");
             ui->Search_comboBox_SelectCatalog->setCurrentText("All");
             ui->Search_comboBox_TextCriteria->setCurrentText("All Words");
             ui->Search_comboBox_SearchIn->setCurrentText("File names or Folder paths");
             ui->Search_comboBox_FileType->setCurrentText("Any");
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
-            ui->Search_spinBox_MaximumSize->setValue(1000);
+            ui->Search_spinBox_MaximumSize->setValue(999);
             ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
             ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
             ui->Search_checkBox_ShowFolders->setChecked(false);
@@ -69,7 +73,6 @@
             ui->Search_listView_CatalogsFound->setModel(empty);
 
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
         {
@@ -77,6 +80,32 @@
             QString originalText = clipboard->text();
             //clipboard->setText(selectedFile);
             ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_comboBox_SelectLocation_currentIndexChanged(const QString &arg1)
+        {
+            //Get selected Location
+            QString selectedLocation = ui->Search_comboBox_SelectLocation->currentText();
+
+            //Load matching Storage
+            refreshStorageSelectionList(selectedLocation);
+
+            //Load matching Catalog
+            //refreshCatalogSelectionList();
+
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_comboBox_SelectStorage_currentIndexChanged(const QString &arg1)
+        {
+            //Get selected Location and Storage
+            QString selectedLocation = ui->Search_comboBox_SelectLocation->currentText();
+            QString selectedStorage  = ui->Search_comboBox_SelectStorage->currentText();
+
+            //Load matching Storage
+            refreshCatalogSelectionList(selectedLocation, selectedStorage);
+
+            //Load matching Catalog
+            //refreshCatalogSelectionList();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -312,6 +341,8 @@
                     ui->Search_kcombobox_SearchText->addItem(searchText);
 
                     //Get other search criteria
+                    selectedSearchLocation = ui->Search_comboBox_SelectLocation->currentText();
+                    selectedSearchStorage = ui->Search_comboBox_SelectStorage->currentText();
                     selectedSearchCatalog = ui->Search_comboBox_SelectCatalog->currentText();
                     selectedTextCriteria  = ui->Search_comboBox_TextCriteria->currentText();
                     selectedSearchIn      = ui->Search_comboBox_SearchIn->currentText();
@@ -326,18 +357,22 @@
                     // Define a size multiplier depending on the size unit selected
                     sizeMultiplierMin=1;
                     if      (selectedMinSizeUnit =="KiB")
-                            sizeMultiplierMin = sizeMultiplierMin * 1024;
+                            sizeMultiplierMin = sizeMultiplierMin *1024;
                     else if (selectedMinSizeUnit =="MiB")
                             sizeMultiplierMin = sizeMultiplierMin *1024*1024;
                     else if (selectedMinSizeUnit =="GiB")
                             sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
+                    else if (selectedMinSizeUnit =="TiB")
+                            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024*1024;
                     sizeMultiplierMax=1;
                     if      (selectedMaxSizeUnit =="KiB")
-                            sizeMultiplierMax = sizeMultiplierMax * 1024;
+                            sizeMultiplierMax = sizeMultiplierMax *1024;
                     else if (selectedMaxSizeUnit =="MiB")
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024;
                     else if (selectedMaxSizeUnit =="GiB")
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
+                    else if (selectedMaxSizeUnit =="TiB")
+                            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 
                  // Searching "Begin With" for File name or Folder name is not supported yet
                     if (selectedTextCriteria=="Begins With" and selectedSearchIn =="File names or Folder paths"){
@@ -345,18 +380,20 @@
                         return;;
                     }
 
+            //List of catalogs to search from   catalogSelectedList
+
             //Execute the search
                 //Start animation while searching
                 //QApplication::setOverrideCursor(Qt::WaitCursor);
 
                 //Search every catalog if "All" is selected
                 if ( selectedSearchCatalog =="All"){
-                    foreach(sourceCatalog,catalogFileList)
+                    foreach(sourceCatalog,catalogSelectedList)
                             {
                                 searchFilesInCatalog(sourceCatalog);
                             }
                     }
-                //Search catalogs matching the storage if "Selectd storage" is selected
+                //OBSOLETE Search catalogs matching the storage if "Selected storage" is selected
                 else if ( selectedSearchCatalog =="Selected Storage"){
 
                     foreach(sourceCatalog,catalogFileList)
@@ -639,6 +676,8 @@
         //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
+            //DEV: REPLACE BY SQL QUERY ON Catalog TABLE
+
             QString catalogStorageName;
             //LoadCatalogInfo(file);
             // Get infos stored in the file
@@ -680,6 +719,25 @@
         //------------------------------------------------------------------------------------------
         void MainWindow::getLocationCatalogList(QString location)
         {
+            //DEV: REPLACE BY SQL QUERY ON Storage and Catalog TABLE
+
+
+            // get all catalog for storage with matching location
+            /*
+
+            QSqlQuery queryDeviceNumber;
+            queryDeviceNumber.prepare(
+                        "SELECT * FROM storage, catalog "
+                        "WHERE location = " + selectedStorageLocation );
+            queryDeviceNumber.exec();
+
+
+
+            "SELECT * FROM storage, catalog
+            WHERE location = " + location + '"'
+
+            */
+
             //QString catalogStorageName;
 
             //Define storage file
@@ -738,14 +796,16 @@
             {
                 //Prepare list of size units for the Catalog selection combobox
                 // the first line is the one displayed by default
-                ui->Search_comboBox_MinSizeUnit->addItem("GiB");
-                ui->Search_comboBox_MinSizeUnit->addItem("MiB");
-                ui->Search_comboBox_MinSizeUnit->addItem("KiB");
-                ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
-                ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
-                ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
-                ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
-                ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
+                    ui->Search_comboBox_MinSizeUnit->addItem("TiB");
+                    ui->Search_comboBox_MinSizeUnit->addItem("GiB");
+                    ui->Search_comboBox_MinSizeUnit->addItem("MiB");
+                    ui->Search_comboBox_MinSizeUnit->addItem("KiB");
+                    ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
+                    ui->Search_comboBox_MaxSizeUnit->addItem("TiB");
+                    ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
+                    ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
+                    ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
+                    ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
 
                 //Load last search values (from settings file)
                     if (selectedMaximumSize ==0)
@@ -761,23 +821,141 @@
                     ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
                     ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
             }
+
             //----------------------------------------------------------------------
-            void MainWindow::refreshCatalogSelectionList()
+            void MainWindow::refreshLocationSelectionList()
             {
-                //Send list to the Statistics combobox (without All or Selected storage options)
+                //Query the full list of locations
+                QSqlQuery getLocationList;
+                getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage");
+                getLocationList.exec();
+
+                //Put the results in a list
+                QStringList locationList;
+                while (getLocationList.next()) {
+                    locationList << getLocationList.value(0).toString();
+                }
+
+
+                //Prepare list for the Location combobox
+                QStringList displayLocationList = locationList;
+                //Add the "All" option at the beginning
+                displayLocationList.insert(0,"All");
+
+                //Send the list to the Search combobox model
                 fileListModel = new QStringListModel(this);
-                fileListModel->setStringList(catalogFileList);
-                ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
+                fileListModel->setStringList(displayLocationList);
+                ui->Search_comboBox_SelectLocation->setModel(fileListModel);              
 
-                //Prepare list for the Catalog combobox
-                QStringList displaycatalogList = catalogFileList;
+                //DEV: restore last selection which may be different from the last search in settings
 
-                //Add the option All at the beginning
-                displaycatalogList.insert(0,"All");
-                displaycatalogList.insert(1,"Selected Storage");
-                displaycatalogList.insert(2,"Selected Location");
-                //catalogFileList = cNames;
-                fileListModel->setStringList(displaycatalogList);
-                //Send list to the Search combobox (with All on Slecteed storage options)
-                ui->Search_comboBox_SelectCatalog->setModel(fileListModel);
+                //QStringListModel locationListModel;
+                //locationListModel.setStringList(displaycatalogList);
+                //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
             }
+
+            //----------------------------------------------------------------------
+            void MainWindow::refreshStorageSelectionList(QString selectedLocation)
+            {
+                //Query the full list of locations
+                QSqlQuery getStorageList;
+
+                QString queryText = "SELECT DISTINCT storageName FROM storage";
+
+                if ( selectedLocation == "All" ){
+                        getStorageList.prepare(queryText);
+                }
+                else{
+                        queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                        getStorageList.prepare(queryText);
+                }
+                getStorageList.exec();
+
+                //Put the results in a list
+                QStringList locationList;
+                while (getStorageList.next()) {
+                    locationList << getStorageList.value(0).toString();
+                }
+
+
+                //Prepare list for the Location combobox
+                QStringList displayLocationList = locationList;
+                //Add the "All" option at the beginning
+                displayLocationList.insert(0,"All");
+
+                //Send the list to the Search combobox model
+                fileListModel = new QStringListModel(this);
+                fileListModel->setStringList(displayLocationList);
+                ui->Search_comboBox_SelectStorage->setModel(fileListModel);
+
+                //DEV: restore last selection which may be different from the last search in settings
+
+                //QStringListModel locationListModel;
+                //locationListModel.setStringList(displaycatalogList);
+                //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
+            }
+
+
+            //----------------------------------------------------------------------
+            void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
+            {
+                //Query the full list of locations
+                QSqlQuery getCatalogSelectionList;
+
+                //Prepare and run the query
+                    //common
+                    QString queryText = "SELECT c.catalogName FROM catalog AS c"
+                                        " left JOIN storage AS s ON c.catalogStorage = s.storageName";
+
+                    //filter depending on location and selection.
+                        //Default: ( selectedLocation == "All" and selectedStorage == "All")
+
+                        if      ( selectedLocation == "All" and selectedStorage != "All")
+                        {
+                                queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "'";
+                        }
+                        else if ( selectedLocation != "All" and selectedStorage == "All")
+                        {
+                                queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                        }
+                        else if ( selectedLocation != "All" and selectedStorage != "All")
+                        {
+                                queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "' "
+                                                        " AND storageLocation ='" + selectedLocation + "'";
+                        }
+                    //common
+                    //queryText = queryText + " ORDER BY catalogName ASC";
+
+                    //run the query
+                    getCatalogSelectionList.prepare(queryText);
+                    getCatalogSelectionList.exec();
+
+                //Put the results in a list
+                    //clear the list of selected catalogs
+                    catalogSelectedList.clear();
+
+                    //populate from the query results
+                    while (getCatalogSelectionList.next()) {
+                        catalogSelectedList << getCatalogSelectionList.value(0).toString();
+                    }
+                    catalogSelectedList.sort(); //DEV: because the SQL "order by" does not work
+
+                //Prepare the list for the Location combobox
+                    QStringList displayCatalogList = catalogSelectedList;
+                    //Add the "All" option at the beginning
+                    displayCatalogList.insert(0,"All");
+
+                //Send the list to the Search combobox model
+                    fileListModel = new QStringListModel(this);
+                    fileListModel->setStringList(displayCatalogList);
+                    ui->Search_comboBox_SelectCatalog->setModel(fileListModel);
+
+                //Send list to the Statistics combobox (without All or Selected storage options)
+                    fileListModel = new QStringListModel(this);
+                    fileListModel->setStringList(catalogSelectedList);
+                    ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
+
+            }
+
+
+
