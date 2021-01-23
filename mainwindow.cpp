@@ -98,9 +98,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)// QMainWindow(pa
 
             storageFilePath = collectionFolder + "/" + "storage.csv";
 
-            //QMessageBox::information(this,"Katalog","selectedSearchLocation." + selectedSearchLocation);
-            //QMessageBox::information(this,"Katalog","selectedSearchStorage." + selectedSearchStorage);
-
             loadCollection();
 
     //setup tab: Create

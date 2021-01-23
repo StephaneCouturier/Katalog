@@ -343,9 +343,6 @@
             refreshStorageSelectionList("All");
             refreshCatalogSelectionList("All", "All");
 
-            QMessageBox::information(this,"Katalog","selectedSearchLocation." + selectedSearchLocation);
-            QMessageBox::information(this,"Katalog","selectedSearchStorage." + selectedSearchStorage);
-
             //restore Search catalog selection
             ui->Search_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
             ui->Search_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
