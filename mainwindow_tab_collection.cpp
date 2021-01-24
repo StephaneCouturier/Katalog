@@ -57,10 +57,12 @@
                                                             QFileDialog::ShowDirsOnly
                                                             | QFileDialog::DontResolveSymlinks);
 
-            //Unless the selection was cancelled, send the selected folder, and refresh the list of catalogs
+            //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
             if ( dir !=""){
 
-                //set the new path Colletion tab
+                collectionFolder = dir;
+
+                //set the new path in Colletion tab
                 ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
 
                 //redefine the path of the Storage file
@@ -72,12 +74,9 @@
                 //load the collection for this new folder;
                 loadCollection();
 
-                //catalog
-                //loadCatalogsToModel();
-                //refreshCatalogSelectionList("","");
             }
 
-            //Reset selected catalog values (to avoid updating the last selected one for instance)
+            //Reset selected catalog values (to avoid actions on the last selected one)
             selectedCatalogFile="";
             selectedCatalogName="";
             selectedCatalogPath="";
