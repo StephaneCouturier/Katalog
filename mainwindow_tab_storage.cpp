@@ -342,6 +342,7 @@ void MainWindow::loadStorageFileToTable()
 
     //Disable create button so it cannot be overwritten
     ui->Storage_pushButton_CreateList->setEnabled(false);
+
 }
 //----------------------------------------------------------------------
 void MainWindow::loadStorageTableToModel()
@@ -578,8 +579,10 @@ void MainWindow::refreshStorageStatistics()
     ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
 
     //Get the percent of free space
+    if ( totalSpace !=0){
     float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
-    ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");
+    ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
+    else ui->Storage_label_PercentFree->setText("");
 }
 
 //----------------------------------------------------------------------
