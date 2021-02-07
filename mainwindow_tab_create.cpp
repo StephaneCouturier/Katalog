@@ -296,8 +296,11 @@
         //Save the catalog to a new file
         saveCatalogToNewFile(newCatalogName);
 
+        //Refresh the catalog list for the Search screen
+        loadCatalogFilesToTable();
         //Refresh the catalog list for the Collection screen
         loadCatalogsToModel();
+
 
         //Refresh the catalog list for the combobox of the Search screen
             //Get current search selection
@@ -313,7 +316,7 @@
 
         QMessageBox::information(this, "Katalog",
                                   ("The new catalog,has been created.\n Name:   ")
-                                  +newCatalogName+"\n Path:     "+newCatalogPath,
+                                  +newCatalogName+"\n Source:     "+newCatalogPath,
                                   ( "Ok" ) );
 
         //Add new catalog values to the statistics log, if the user has chosen this options.
