@@ -3301,7 +3301,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="text">
-               <string>Catalog:</string>
+               <string>Catalog (list filtered as in Search tab):</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
