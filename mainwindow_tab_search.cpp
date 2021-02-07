@@ -425,6 +425,7 @@
             //Process search results: list of catalogs
                 //Remove duplicates so the catalogs are listed only once
                 catalogFoundList.removeDuplicates();
+                catalogFoundList.sort();
 
                 //Keep the catalog file name only
                 foreach(QString item, catalogFoundList){
