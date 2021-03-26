@@ -41,10 +41,12 @@
 #include <QSaveFile>
 #include <QSettings>
 
-#include <KActionCollection>
-#include <KIO/Job>
-#include <KMessageBox>
-#include <KLocalizedString>
+#ifdef Q_OS_LINUX
+    #include <KActionCollection>
+    #include <KIO/Job>
+    #include <KMessageBox>
+    #include <KLocalizedString>
+#endif
 
 //Settings -----------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
@@ -326,7 +328,10 @@
                 return;
             }
 
+            #ifdef Q_OS_LINUX
             KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
+            #endif
+
             //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());
         }
         //----------------------------------------------------------------------

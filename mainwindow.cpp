@@ -66,7 +66,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             hideDevelopmentUIItems();
 
         //Set up KDE Menu/Icon actions
+            #ifdef Q_OS_LINUX
             setupActions();
+            #endif
 
         //Load user settings
             //Get user home path

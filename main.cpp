@@ -35,8 +35,10 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
-#include <KAboutData>
-#include <KLocalizedString>
+#ifdef Q_OS_LINUX
+    #include <KAboutData>
+    #include <KLocalizedString>
+#endif
 
 #include "mainwindow.h"
 
