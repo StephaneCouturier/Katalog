@@ -50,7 +50,11 @@
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
 
-MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)// QMainWindow(parent)
+#ifdef Q_OS_LINUX
+MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
+#else
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+#endif
    , ui(new Ui::MainWindow)
 {
 

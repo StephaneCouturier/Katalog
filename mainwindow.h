@@ -65,7 +65,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public KXmlGuiWindow //WIN QMainWindow
+#ifdef Q_OS_LINUX
+class MainWindow : public KXmlGuiWindow
+#else
+class MainWindow : public QMainWindow
+#endif
 {
     Q_OBJECT
 
