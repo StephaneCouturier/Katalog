@@ -94,6 +94,7 @@ class MainWindow : public QMainWindow
 
             //Parameters
             QString fileName;
+            int selectedTab;
 
             //FileTypes
             QStringList fileType_Image;
@@ -179,13 +180,14 @@ class MainWindow : public QMainWindow
 
             void loadCollection();
             void loadCatalogsToModel();
-            bool verifyCatalogPath(QString catalogSourcePath);
+            int verifyCatalogPath(QString catalogSourcePath);
             void recordSelectedCatalogStats(QString selectedCatalogName,
                                             int selectedCatalogFileCount,
                                             qint64 selectedCatalogTotalFileSize);
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
+            void updateCatalog(QString catalogName);
 
         //TAB: Explore
             void loadCatalogFilesToExplore();
@@ -342,6 +344,10 @@ class MainWindow : public QMainWindow
             void on_Settings_pushButton_ReleaseNotes_clicked();
             void on_Search_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
             void on_Search_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
+            void on_Collection_pushButton_UpdateAllActive_clicked();
+            void on_tabWidget_currentChanged(int index);
+
+
 };
 
 #endif // MAINWINDOW_H
