@@ -66,7 +66,7 @@ void MainWindow::on_Settings_pushButton_Wiki_clicked()
 
 void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.15"));
+    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.16"));
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)
