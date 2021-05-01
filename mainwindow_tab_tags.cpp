@@ -38,8 +38,6 @@
 
 #include <QFileDialog>
 #include <QStandardItemModel>
-//#include <KMessageBox>
-//#include <KLocalizedString>
 
 //UI
 void MainWindow::on_Tags_pushButton_PickFolder_clicked()
