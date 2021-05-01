@@ -87,7 +87,7 @@
         // Get directory to catalog
         QString directory = newCatalogPath;
 
-        qint64 totalFileSize = 0;
+        qint64 catalogTotalFileSize = 0;
 
         //Iterate in the directory to create a list of files
         QStringList fileList;
@@ -103,7 +103,7 @@
                 QFile file(filePath);
                 //if (file.open(QIODevice::ReadOnly)){
                 fileSize = file.size();
-                totalFileSize = totalFileSize + fileSize;
+                catalogTotalFileSize = catalogTotalFileSize + fileSize;
 
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
@@ -124,7 +124,7 @@
                 QFile file(filePath);
                 //if (file.open(QIODevice::ReadOnly)){
                 fileSize = file.size();
-                totalFileSize = totalFileSize + fileSize;
+                catalogTotalFileSize = catalogTotalFileSize + fileSize;
 
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
@@ -144,7 +144,7 @@
         fileList.prepend("<catalogStorage>"         + newCatalogStorage);
         fileList.prepend("<catalogFileType>"        + fileType);
         fileList.prepend("<catalogIncludeHidden>"   + QVariant(includeHidden).toString());
-        fileList.prepend("<catalogTotalFileSize>"   + QString::number(totalFileSize));
+        fileList.prepend("<catalogTotalFileSize>"   + QString::number(catalogTotalFileSize));
         fileList.prepend("<catalogFileCount>"       + QString::number(catalogFilesNumber));
         fileList.prepend("<catalogSourcePath>"      + newCatalogPath);
 
@@ -154,7 +154,36 @@
 
         //Set this new catalog as the selected Catalog
         selectedCatalogFileCount        = catalogFilesNumber;
-        selectedCatalogTotalFileSize    = totalFileSize;
+        selectedCatalogTotalFileSize    = catalogTotalFileSize;
+
+        /*
+                catalogFilePath,
+                catalogName,
+                catalogDateUpdated,
+                catalogSourcePath,
+                catalogFileCount,
+                catalogTotalFileSize,
+                catalogSourcePathIsActive,
+                catalogIncludeHidden,
+                catalogFileType,
+                catalogStorage,
+                catalogIncludeSymblinks
+        */
+
+
+        QSqlQuery query;
+        query.prepare("UPDATE Catalog "
+                        "SET catalogIncludeSymblinks =:catalogIncludeSymblinks, "
+                            "catalogFileCount =:catalogFileCount, "
+                            "catalogTotalFileSize =:catalogTotalFileSize "
+                        "WHERE catalogSourcePath =:catalogSourcePath ");
+        //query.bindValue(":catalogIncludeSymblinks", QVariant(includeSymblinks).toString());
+        query.bindValue(":catalogFileCount", catalogFilesNumber);
+        query.bindValue(":catalogTotalFileSize", catalogTotalFileSize);
+        //query.bindValue(":catalogSourcePath", newCatalogPath);
+        query.exec();
+
+        loadCatalogFilesToTable();
 
         //DEV   Stop animation
         QApplication::restoreOverrideCursor();
@@ -304,15 +333,15 @@
 
         //Refresh the catalog list for the combobox of the Search screen
             //Get current search selection
-            selectedSearchLocation = ui->Search_comboBox_SelectLocation->currentText();
-            selectedSearchStorage = ui->Search_comboBox_SelectStorage->currentText();
-            selectedSearchCatalog = ui->Search_comboBox_SelectCatalog->currentText();
+            selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();
+            selectedSearchStorage = ui->Filters_comboBox_SelectStorage->currentText();
+            selectedSearchCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
 
             //Refresh list
             refreshCatalogSelectionList(selectedSearchLocation,selectedSearchStorage);
 
             //Restore selcted catalog
-            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         QMessageBox::information(this, "Katalog",
                                   ("The new catalog,has been created.\n Name:   ")
