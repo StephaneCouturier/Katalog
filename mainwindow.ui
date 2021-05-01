@@ -1283,6 +1283,40 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Manage the catalogs</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
+        <item row="4" column="0">
+         <widget class="QTreeView" name="Collection_treeView_CatalogList">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>350</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Noto Sans</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="0" rowspan="2">
          <layout class="QVBoxLayout" name="Collection_verticalLayout">
           <property name="sizeConstraint">
@@ -1680,40 +1714,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
          </layout>
-        </item>
-        <item row="4" column="0">
-         <widget class="QTreeView" name="Collection_treeView_CatalogList">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>350</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Noto Sans</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -3703,6 +3703,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <widget class="QLabel" name="Settings_label_Theme_2">
                <property name="text">
                 <string>(requires to restart)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
