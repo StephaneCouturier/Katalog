@@ -105,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             storageFilePath = collectionFolder + "/" + "storage.csv";
 
             loadCollection();
+            refreshLocationCollectionFilter();
 
     //setup tab: Create
         //Default path to scan
@@ -143,6 +144,11 @@ MainWindow::~MainWindow()
 /*
 QMessageBox::information(this,"Katalog","Ok.");
 QMessageBox::information(this,"Katalog","Ok." + stringVariable);
-KMessageBox::information(this,"test:\n");
+QMessageBox::information(this,"Kotation","variable : \n" + QString::number(numbervariable));
 */
+
+
+
+
+
 
