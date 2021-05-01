@@ -98,12 +98,10 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_Reload_clicked()
 {
-    //loadStorageModel();
-    //loadStorageList();
-
     loadStorageFileToTable();
     loadStorageTableToModel();
     refreshStorageStatistics();
+    //loadStorageList();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_EditAll_clicked()
@@ -178,7 +176,7 @@ void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Storage");
+    ui->Filters_comboBox_SelectCatalog->setCurrentText("Selected Storage");
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
@@ -186,7 +184,7 @@ void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->Search_comboBox_SelectCatalog->setCurrentText("Selected Location");
+    ui->Filters_comboBox_SelectCatalog->setCurrentText("Selected Location");
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
