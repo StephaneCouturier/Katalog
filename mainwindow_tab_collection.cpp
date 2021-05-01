@@ -36,15 +36,13 @@
 #include "ui_mainwindow.h"
 #include "collection.h"
 #include "catalog.h"
+#include "catalogs.h"
 #include "database.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
-//#include <KFormat>
-//#include <KMessageBox>
-//#include <KLocalizedString>
 
 //TAB: Collection UI----------------------------------------------------------------------
 
@@ -235,11 +233,11 @@
     // File methods
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
         {
-            selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
             selectedCatalogDateTime         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 2, QModelIndex()).data().toString();
             selectedCatalogFileCount        = ui->Collection_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 11, QModelIndex()).data().toLongLong();
+            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
             selectedCatalogPath             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
             selectedCatalogFileType         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
             selectedCatalogIncludeHidden    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
@@ -345,9 +343,12 @@
 
                 //Read the first 7 lines and put values in a stringlist
                 QStringList catalogValues;
+                QString line;
+                QString value;
+
                 for (int i=0; i<7; i++) {
-                    QString line = textStream.readLine();
-                    QString value = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    line = textStream.readLine();
+                    value = line.right(line.size() - line.lastIndexOf(">") - 1);
                     catalogValues << value;
 
                     /*
@@ -363,6 +364,13 @@
 
                 }
 
+                // Get infos about the file itself
+                //QFileInfo catalogFileInfo(catalogFile);
+                //QMessageBox::information(this,"Katalog","Ok." + catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+
+
+                //catalogValues << catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss");
+                //cCatalogFilePaths.append(catalogFileInfo.filePath());
 
                 // Verify if path is active (drive connected)
                 int isActive = verifyCatalogPath(catalogValues[0]);
@@ -393,7 +401,6 @@
                         */
 
                 QVariant catalogID = addCatalog(query,
-
                                 catalogFileInfo.filePath(),  //catalogFilePath
                                 catalogFileInfo.baseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
@@ -432,171 +439,69 @@
     // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
-        // Set up temporary lists
-        QList<QString> cNames;
-        QList<QString> cDateUpdates;
-        QList<qint64>  cFileCounts;
-        QList<qint64>  cTotalFileSizes;
-        QList<QString> cSourcePaths;
-        QList<bool>    cSourcePathIsActives;
-        QList<QString> cFileTypes;
-        QList<QString> cCatalogFilePaths;
-        QList<bool>    cCatalogIncludeHiddens;
-        QList<QString> cStorages;
-        QList<bool>    cIncludeSymblinks;
+        //Generate SQL query from filters.
+            QString loadCatalogSQL;
 
-        qint64 collectionTotalSize = 0;
-        qint64 collectionTotalNumber = 0;
+            //main part of the query
+            loadCatalogSQL  = QLatin1String(R"( SELECT
+                                            catalogName                 AS 'Name',
+                                            catalogFilePath             AS 'File Path',
+                                            catalogDateUpdated          AS 'Last Update',
+                                            catalogFileCount            AS 'Files',
+                                            catalogTotalFileSize        AS 'Total Size',
+                                            catalogSourcePath           AS 'Source Path',
+                                            catalogFileType             AS 'File Type',
+                                            catalogSourcePathIsActive   AS 'Active',
+                                            catalogIncludeHidden        AS 'Inc.Hidden',
+                                            catalogStorage              AS 'Storage'
+                                        FROM Catalog
+                                        )");
 
-        // Iterate in the directory to create a list of files and sort it
-        QStringList fileTypes;
-        fileTypes << "*.idx";
+                //adding AND lines for the selected filters
 
-        QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
-        while (iterator.hasNext()){
+                if ( selectedSearchStorage != "All" )
+                    loadCatalogSQL = loadCatalogSQL + " WHERE catalogStorage = '"+selectedSearchStorage+"' ";
 
-            // Get infos stored in the file
-            QFile catalogFile(iterator.next());
-            if(!catalogFile.open(QIODevice::ReadOnly)) {
-                QMessageBox::information(this,"Katalog","No catalog found.");
-                return;
-            }
+                //last lines
+ //               loadStockSQL = loadStockSQL + " GROUP BY s.Ticker ";
+ //               loadStockSQL = loadStockSQL + " ORDER BY s.Name ASC ";
 
-            QTextStream textStream(&catalogFile);
-            bool catalogSourcePathProvided = false;
-            bool catalogFileCountProvided = false;
-            bool catalogTotalfileSizeProvided = false;
-            bool catalogIncludeHiddenProvided = false;
-            bool catalogFileTypeProvided = false;
-            bool catalogStorageProvided = false;
-            bool catalogIncludeProvided = false;
+            //Execute query
+            QSqlQuery loadCatalogQuery;
+            loadCatalogQuery.prepare(loadCatalogSQL);
+            loadCatalogQuery.exec();
 
-            QString catalogSourcePath;
+            //Format and send to Treeview
+            QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
+            catalogQueryModel->setQuery(loadCatalogQuery);
 
-            while (true)
-            {
-                QString line = textStream.readLine();
+//            QSortFilterProxyModel *proxyResultsModel = new QSortFilterProxyModel(this);
+//            proxyResultsModel->setSourceModel(catalogQueryModel);
 
-                if (line.left(19)=="<catalogSourcePath>"){
-                    catalogSourcePath = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cSourcePaths.append(catalogSourcePath);
-                    catalogSourcePathProvided = true;
-                }
-                else if (line.left(18)=="<catalogFileCount>"){
-                    QString catalogFileCountString = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    int catalogFileCount = catalogFileCountString.toInt();
-                    cFileCounts.append(catalogFileCount);
-                    catalogFileCountProvided = true;
-                    collectionTotalNumber = collectionTotalNumber + catalogFileCount;
-                }
-                else if (line.left(22)=="<catalogTotalFileSize>"){
-                    QString catalogTotalFileSize = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    qint64 catalogFileSize = catalogTotalFileSize.toLongLong();
-                    cTotalFileSizes.append(catalogFileSize);
-                    collectionTotalSize = collectionTotalSize + catalogFileSize;
-                    catalogTotalfileSizeProvided = true;
-                }
-                else if (line.left(22)=="<catalogIncludeHidden>"){
-                    QString catalogIncludeHidden = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cCatalogIncludeHiddens.append(QVariant(catalogIncludeHidden).toBool());
-                    catalogIncludeHiddenProvided = true;
-                }
-                else if (line.left(17)=="<catalogFileType>"){
-                    QString catalogFileType = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cFileTypes.append(catalogFileType);
-                    catalogFileTypeProvided = true;
-                }
-                else if (line.left(16)=="<catalogStorage>"){
-                    QString storage = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cStorages.append(storage);
-                    catalogStorageProvided = true;
-                }
-                else if (line.left(25)=="<catalogIncludeSymblinks>"){
-                    QString catalogIncludeSymblinks = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    cIncludeSymblinks.append(catalogIncludeSymblinks.toInt());
-                    catalogIncludeProvided = true;
-                }
-                else
-                    break;
+            CatalogsView *proxyResultsModel = new CatalogsView(this);
+            proxyResultsModel->setSourceModel(catalogQueryModel);
 
-            }
+            // Connect model to tree/table view
+            ui->Collection_treeView_CatalogList->setModel(proxyResultsModel);
+            ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+            ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+            ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
 
-            if(catalogSourcePathProvided==false)
-                cSourcePaths.append("not recorded");
-            if(catalogFileCountProvided==false)
-                cFileCounts.append(0);
-            if(catalogTotalfileSizeProvided==false)
-                cTotalFileSizes.append(0);
-            if(catalogIncludeHiddenProvided==false)
-                cCatalogIncludeHiddens.append(false);
-            if(catalogFileTypeProvided==false)
-                cFileTypes.append("");
-            if(catalogStorageProvided==false)
-                cStorages.append("");
-            if(catalogIncludeProvided==false)
-                cIncludeSymblinks.append("");
+            //Columns size
+            ui->Collection_treeView_CatalogList->header()->hideSection(1); //Path
 
-            // Verify if path is active (drive connected)
-            bool test = verifyCatalogPath(catalogSourcePath);
-            cSourcePathIsActives.append(test);
-
-            // Get infos about the file itself
-            QFileInfo catalogFileInfo(catalogFile);
-            cDateUpdates.append(catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-            cCatalogFilePaths.append(catalogFileInfo.filePath());
-            //QFile file(catalogFile);
-            cNames.append(catalogFileInfo.baseName());
-
-        }
-
-        // Create model
-        Collection *collectionModel = new Collection(this);
-
-        // Populate model with data
-        collectionModel->populateData(cCatalogFilePaths,
-                                 cNames,
-                                 cDateUpdates,
-                                 cFileCounts,
-                                 cTotalFileSizes,
-                                 cSourcePaths,
-                                 cFileTypes,
-                                 cSourcePathIsActives,
-                                 cCatalogIncludeHiddens,
-                                 cStorages,
-                                 cIncludeSymblinks);
-
-        QSortFilterProxyModel *proxyCollectionModel = new QSortFilterProxyModel(this);
-        proxyCollectionModel->setSourceModel(collectionModel);
-
-        // Connect model to tree/table view
-        ui->Collection_treeView_CatalogList->setModel(proxyCollectionModel);
-        ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-        ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Collection_treeView_CatalogList->header()->resizeSection(1, 300); //Name
-        ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
-        ui->Collection_treeView_CatalogList->header()->resizeSection(3, 100); //Files
-        ui->Collection_treeView_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
-        ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
-        ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
-        ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
-        ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
-        ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
-
-        ui->Collection_treeView_CatalogList->header()->hideSection(0); //Path
-        ui->Collection_treeView_CatalogList->header()->hideSection(10); //Symblinks
-        ui->Collection_treeView_CatalogList->header()->hideSection(11); //filesize qint64
-
-        ui->Collection_label_Catalogs->setText(QString::number(cNames.count()));
-        ui->Collection_label_TotalSize->setText(QLocale().formattedDataSize(collectionTotalSize));
-        ui->Collection_label_TotalNumber->setText(QString::number(collectionTotalNumber));
-
-        //Pass list of catalogs
-            catalogFileList = cNames;
-            catalogFileList.sort();
+            ui->Collection_treeView_CatalogList->header()->resizeSection(0, 300); //Name
+            ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
+            ui->Collection_treeView_CatalogList->header()->resizeSection(3, 100); //Files
+            ui->Collection_treeView_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
+            ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
+            ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
+            ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
+            ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
+            ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
 
     }
     //----------------------------------------------------------------------
-
     //----------------------------------------------------------------------
     // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     int MainWindow::verifyCatalogPath(QString catalogSourcePath)
