@@ -36,7 +36,7 @@
 #include "ui_mainwindow.h"
 #include "collection.h"
 #include "catalog.h"
-#include "catalogs.h"
+#include "catalogsview.h"
 #include "database.h"
 
 #include <QTextStream>
@@ -260,7 +260,7 @@
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             // Get file from selected row
-            selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
             loadCatalogFilesToExplore();
 
             // Go to the Search tab
@@ -604,8 +604,20 @@
     void MainWindow::updateCatalog(QString catalogName)
     {
         //Get data from the database
+
+            QString updateCatalogSQL  = QLatin1String(R"(
+                                        SELECT  catalogFilePath,
+                                                catalogName,
+                                                catalogSourcePath,
+                                                catalogFileCount,
+                                                catalogFileType,
+                                                catalogTotalFileSize
+                                        FROM Catalog
+                                        WHERE catalogName =:catalogName
+                                        )");
+
             QSqlQuery query;
-            query.prepare("SELECT catalogFilePath, catalogName, catalogSourcePath, catalogFileCount, catalogFileType, catalogTotalFileSize FROM Catalog WHERE catalogName =:catalogName ");
+            query.prepare(updateCatalogSQL);
             query.bindValue(":catalogName", catalogName);
             query.exec();
             query.next();

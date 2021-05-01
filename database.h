@@ -162,13 +162,26 @@
                         }
 
 
-// Database initialization ------------------------------------------------
+// FILES ------------------------------------------------
 
+        //Create table query
+                const auto FILE_SQL = QLatin1String(R"(
+                               create  table  if not exists  file(
+                                        fileID  int AUTO_INCREMENT primary key ,
+                                        fileName  TEXT  ,
+                                        filePath  TEXT ,
+                                        fileSize REAL,
+                                        fileDateUpdated TEXT,
+                                        fileCatalog TEXT)
+                                    )");
+
+// Database initialization ------------------------------------------------
 
 QSqlError initializeDatabase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(":memory:");
+    //db.setDatabaseName("/home/stephane/Development/katalog_test.db");
 
     if (!db.open())
         return db.lastError();
@@ -180,6 +193,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.prepare(INSERT_STORAGE_SQL))
+        return q.lastError();
+
+    if (!q.exec(FILE_SQL))
         return q.lastError();
 
     return QSqlError();

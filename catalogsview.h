@@ -1,9 +1,7 @@
-#ifndef CATALOGS_H
-#define CATALOGS_H
+#ifndef CATALOGSVIEW_H
+#define CATALOGSVIEW_H
 
 #include <QSortFilterProxyModel>
-//#include <QIdentityProxyModel>
-
 
 class CatalogsView  : public QSortFilterProxyModel
 {
@@ -19,4 +17,4 @@ private:
 
 };
 
-#endif // CATALOGS_H
+#endif // CATALOGSVIEW_H

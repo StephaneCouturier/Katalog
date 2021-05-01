@@ -37,6 +37,7 @@
 
 #include "collection.h"
 #include "catalog.h"
+#include "filesview.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -114,10 +115,10 @@ void MainWindow::loadCatalogFilesToExplore()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     //Set up temporary lists
-    QList<QString> cfileNames;
-    QList<qint64>  cfileSizes;
-    QList<QString> cfilePaths;
-    QList<QString> cfileDateTimes;
+//    QList<QString> cfileNames;
+//    QList<qint64>  cfileSizes;
+//    QList<QString> cfilePaths;
+//    QList<QString> cfileDateTimes;
 
     // Get infos stored in the file
     QFile catalogFile(selectedCatalogFile);
@@ -127,6 +128,26 @@ void MainWindow::loadCatalogFilesToExplore()
     }
 
     QTextStream textStream(&catalogFile);
+
+    QSqlQuery insertQuery;
+
+    QString insertSQL = QLatin1String(R"(
+                        INSERT INTO file (
+                                        fileName,
+                                        filePath,
+                                        fileSize,
+                                        fileDateUpdated,
+                                        fileCatalog )
+                        VALUES(
+                                        :fileName,
+                                        :filePath,
+                                        :fileSize,
+                                        :fileDateUpdated,
+                                        :fileCatalog )
+                                    )");
+
+    insertQuery.prepare(insertSQL);
+
 
     while (true)
     {
@@ -160,24 +181,50 @@ void MainWindow::loadCatalogFilesToExplore()
                 QFileInfo file(filePath);
 
                 //Append data to the lists
-                cfileNames.append(file.fileName());
-                cfileSizes.append(fileSize);
-                cfilePaths.append(file.path());
-                cfileDateTimes.append(fileDateTime);
+//                cfileNames.append(file.fileName());
+//                cfileSizes.append(fileSize);
+//                cfilePaths.append(file.path());
+//                cfileDateTimes.append(fileDateTime);
+
+                insertQuery.bindValue(":fileName", file.fileName());
+                insertQuery.bindValue(":filePath", file.path());
+                insertQuery.bindValue(":fileSize", fileSize);
+                insertQuery.bindValue(":fileDateUpdated", fileDateTime);
+                insertQuery.bindValue(":fileCatalog", selectedCatalogFile);
+                insertQuery.exec();
             }
         }
 
+
     // Create model
-    Catalog *catalog = new Catalog(this);
+    //Catalog *catalog = new Catalog(this);
 
     // Populate model with data
-    catalog->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
+    //catalog->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
 
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(catalog);
+//    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+//    proxyModel->setSourceModel(catalog);
+
+    QString selectSQL = QLatin1String(R"(
+                        SELECT  fileName,
+                                fileSize,
+                                filePath,
+                                fileDateUpdated,
+                                fileCatalog
+                        FROM file
+                                    )");
+    QSqlQuery loadCatalogQuery;
+    loadCatalogQuery.prepare(selectSQL);
+    loadCatalogQuery.exec();
+
+    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+    loadCatalogQueryModel->setQuery(loadCatalogQuery);
+
+    FilesView *proxyModel2 = new FilesView(this);
+    proxyModel2->setSourceModel(loadCatalogQueryModel);
 
     // Connect model to tree/table view
-    ui->Explore_treeView_FileList->setModel(proxyModel);
+    ui->Explore_treeView_FileList->setModel(proxyModel2);
     ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
     ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
@@ -185,8 +232,23 @@ void MainWindow::loadCatalogFilesToExplore()
     ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
     ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
 
-    int catalogFilesNumber = catalog->rowCount();
-    ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
+    QString countSQL = QLatin1String(R"(
+                        SELECT  count (*)
+                        FROM file
+                                    )");
+    QSqlQuery countQuery;
+    loadCatalogQuery.prepare(countSQL);
+    loadCatalogQuery.exec();
+    loadCatalogQuery.next();
+
+    ui->Explore_label_FilesNumberDisplay->setNum(loadCatalogQuery.value(0).toInt());
+
+
+    QString deleteSQL = QLatin1String(R"(
+                        DElETE FROM file
+                                    )");
+    QSqlQuery deleteQuery;
+    deleteQuery.exec(deleteSQL);
 
     //Stop animation
     QApplication::restoreOverrideCursor();

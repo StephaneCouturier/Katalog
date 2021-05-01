@@ -1,4 +1,4 @@
-#include "catalogs.h"
+#include "catalogsview.h"
 
 #include <QFont>
 #include <QBrush>

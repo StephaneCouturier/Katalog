@@ -1875,6 +1875,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -1911,6 +1919,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -1934,7 +1950,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>(select a catalog in the tab Collection first and click Explore)</string>
+           <string>(select a catalog in the tab Catalogs first and click Explore)</string>
           </property>
          </widget>
         </item>

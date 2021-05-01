@@ -36,6 +36,7 @@
 #include "ui_mainwindow.h"
 #include "catalog.h"
 #include "database.h"
+#include "filesview.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -468,8 +469,11 @@
                         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
                         proxyModel->setSourceModel(searchResultsCatalog);
 
+                        FilesView *proxyModel2 = new FilesView(this);
+                        proxyModel2->setSourceModel(searchResultsCatalog);
+
                         // Connect model to tree/table view
-                        ui->Search_treeView_FilesFound->setModel(proxyModel);
+                        ui->Search_treeView_FilesFound->setModel(proxyModel2);
                         ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
                         //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
                         ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
@@ -494,7 +498,6 @@
                 QApplication::restoreOverrideCursor();
 
         }
-
         //----------------------------------------------------------------------
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
@@ -799,7 +802,6 @@
                     ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
                     ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
             }
-
             //----------------------------------------------------------------------
             void MainWindow::refreshLocationSelectionList()
             {
@@ -831,7 +833,6 @@
                 //locationListModel.setStringList(displaycatalogList);
                 //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
             }
-
             //----------------------------------------------------------------------
             void MainWindow::refreshStorageSelectionList(QString selectedLocation)
             {
@@ -872,8 +873,6 @@
                 //locationListModel.setStringList(displaycatalogList);
                 //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
             }
-
-
             //----------------------------------------------------------------------
             void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
             {
