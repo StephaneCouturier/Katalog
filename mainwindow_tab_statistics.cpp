@@ -45,9 +45,6 @@
 //#include <QtCharts/QChartView>
 //#include <QtCharts/QLegend>
 
-//#include <KMessageBox>
-//#include <KLocalizedString>
-
 void MainWindow::on_Statistics_comboBox_SelectCatalog_currentIndexChanged()
 {
     loadStatisticsChart();
