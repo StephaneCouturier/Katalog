@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
              // Short description of what the app does. (shortDescription)
              i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
              KAboutLicense::GPL,// The license this code is released under
-             i18n("(c) 2020 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
+             i18n("(c) 2021 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
              // Optional text shown in the About box.
              // Can contain any information desired. (otherText)
              i18n(""),
