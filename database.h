@@ -106,7 +106,7 @@
                                     catalogSourcePath  text  ,
                                     catalogFileCount   int  ,
                                     catalogTotalFileSize  int ,
-                                    catalogSourcePathIsActive  text ,
+                                    catalogSourcePathIsActive  int ,
                                     catalogIncludeHidden  text  ,
                                     catalogFileType  text  ,
                                     catalogStorage  text  ,
@@ -131,19 +131,21 @@
 
     //Insert row binding
             inline QVariant addCatalog(QSqlQuery &q,
+
                             QString catalogFilePath,
                             QString catalogName,
                             QString catalogDateUpdated,
                             QString catalogSourcePath,
                             int catalogFileCount,
                             qint64 catalogTotalFileSize, //KFormat.formatByteSize
-                            QString catalogSourcePathIsActive,
+                            int catalogSourcePathIsActive,
                             QString catalogIncludeHidden,
                             QString catalogFileType,
                             QString catalogStorage,
                             QString catalogIncludeSymblinks
                             )
                         {
+
                             q.addBindValue(catalogFilePath);
                             q.addBindValue(catalogName);
                             q.addBindValue(catalogDateUpdated);

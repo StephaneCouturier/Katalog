@@ -103,7 +103,7 @@
         void MainWindow::on_Collection_pushButton_Search_clicked()
         {
             //Change the selected catalog in Search tab
-            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
 
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
@@ -148,102 +148,50 @@
         void MainWindow::on_Collection_pushButton_UpdateCatalog_clicked()
         {   //Update the selected catalog
 
-            //Check if the update can be done, or inform the user otherwise.
-                //Deal with old versions, where necessary info may have not have been available
-                if(selectedCatalogFile == "not recorded" or selectedCatalogName == "not recorded" or selectedCatalogPath == "not recorded"){
-                QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
-                                             "Please Edit it and make sure it has the following first 2 lines:\n\n"
-                                             "<catalogSourcePath>/folderpath\n"
-                                             "<catalogFileCount>10000\n\n"
-                                             "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
-                                             "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                             "- the catalogFileCount number does not matter as much, it can be updated.\n"
-                                         );
-                return;
-                }
+            updateCatalog(selectedCatalogName);
 
-                //Deal with other cases where some input information is missing
-                if(selectedCatalogFile == "" or selectedCatalogName == "" or selectedCatalogPath == ""){
-                QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\nselectedCatalogFile:"
-                                         +selectedCatalogFile+"\nselectedCatalogName: "
-                                         +selectedCatalogName+"\nselectedCatalogPath: "
-                                         +selectedCatalogPath);
-                return;
-                }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Collection_pushButton_UpdateAllActive_clicked()
+        {
+            //Get list of active catalogs
+            QSqlQuery query;
+            query.exec("SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath FROM Catalog WHERE catalogSourcePathIsActive = 1 ");
 
-            //BackUp the file before is the option is selected
-                if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-                    backupCatalog(selectedCatalogFile);
-                }
+            // Catalog each result
+            while(query.next()){
+                //Get catalog name
+                QString catalogName = query.value(0).toString();
+                //QMessageBox::information(this,"Katalog","catalogName." + catalogName );
 
-            //
-            newCatalogName = selectedCatalogName;
+                int isActive = verifyCatalogPath(query.value(2).toString());
+                //QMessageBox::information(this,"Katalog","isActive." + QString::number(isActive));
 
-            //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
-            qint64 previousFileCount = selectedCatalogFileCount;
-            qint64 previousTotalFileSize = selectedCatalogTotalFileSize;
+                QDir dir (query.value(2).toString());
+                if (dir.exists()==true){
 
-            //Define the type of files to be included
-            QStringList fileTypes;
-            if      ( selectedCatalogFileType == "Image")
-                                    fileTypes = fileType_Image;
-            else if ( selectedCatalogFileType == "Audio")
-                                    fileTypes = fileType_Audio;
-            else if ( selectedCatalogFileType == "Video")
-                                    fileTypes = fileType_Video;
-            else if ( selectedCatalogFileType == "Text")
-                                    fileTypes = fileType_Text;
-            else                    fileTypes.clear();
+                    //QMessageBox::information(this,"Katalog","dir.exists." );
 
-            //
-            QDir dir (selectedCatalogPath);
-            if (dir.exists()==true){
-                ///Warning and choice if the result is 0 files
-                if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
-                {
-                    int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
-                                                  "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
-                                                  "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
-                    //return;
-                    if ( result == QMessageBox::Cancel){
-                        return;
+                    ///Warning and choice if the result is 0 files
+                    if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+                    {
+                        //QMessageBox::information(this,"Katalog","dir Empty." );
+
+                        //return;
+                    }
+                    else{
+                        updateCatalog(catalogName);
                     }
                 }
 
-                catalogDirectory(selectedCatalogPath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
+                //QMessageBox::information(this,"Katalog","Ok." + catalogName + " _ " + QString::number(isActive));
 
-                saveCatalogToNewFile(selectedCatalogName);
-
-                //Prepare to report changes to the catalog
-                qint64 deltaFileCount = selectedCatalogFileCount - previousFileCount;
-                qint64 deltaTotalFileSize = selectedCatalogTotalFileSize - previousTotalFileSize;
-
-                //Inform user about the update
-                QMessageBox::information(this,"Katalog","<br/>This catalog was updated:<br/><b>" + selectedCatalogName + "</b> "
-                                         "<br/><table>"
-                                         "<tr><td>Number of files: </td><td><b>" + QString::number(selectedCatalogFileCount) + "</b></td><td>  (added: <b>" + QString::number(deltaFileCount) + "</b>)</td></tr>"
-                                         "<tr><td>Total file size: </td><td><b>" + QLocale().formattedDataSize(selectedCatalogTotalFileSize) + "</b>  </td><td>  (added: <b>" + QLocale().formattedDataSize(deltaTotalFileSize) + "</b>)</td></tr>"
-                                         "</table>"
-                                         ,Qt::TextFormat(Qt::RichText));
             }
-            else {
-                QMessageBox::information(this,"Katalog","The catalog " + selectedCatalogName + " cannot be updated.\n"
-                                                "The source folder - "+selectedCatalogPath+" - was not found.\n"
-                                                "Possible reasons:\n"
-                                                "- the device is not connected and mounted,\n"
-                                                "- the source folder was moved or renamed."
-                                         );
-            }
+            QMessageBox::information(this,"Katalog","done.");
 
-            if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true )
-                recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
-
-            //Refresh the collection view
-            loadCatalogsToModel();
-            //Reload stats file
-            loadStatisticsChart();
         }
         //----------------------------------------------------------------------
+
         void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()
         {
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
@@ -322,6 +270,7 @@
             ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
             ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
+
         //----------------------------------------------------------------------
 
 //TAB: Collection methods----------------------------------------------------------------------
@@ -343,9 +292,9 @@
             refreshCatalogSelectionList("All", "All");
 
             //restore Search catalog selection
-            ui->Search_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-            ui->Search_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
-            ui->Search_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
             //hide buttons to force user to select a catalog before allowing any action.
             hideCatalogButtons();
@@ -400,9 +349,23 @@
                     QString line = textStream.readLine();
                     QString value = line.right(line.size() - line.lastIndexOf(">") - 1);
                     catalogValues << value;
+
+                    /*
+                    <catalogSourcePath>
+                    <catalogFileCount>
+                    <catalogTotalFileSize>
+                    <catalogIncludeHidden>
+                    <catalogFileType>
+                    <catalogStorage>
+                    <catalogIncludeSymblinks>
+                    */
+
+
                 }
 
 
+                // Verify if path is active (drive connected)
+                int isActive = verifyCatalogPath(catalogValues[0]);
                 /*
                 <catalogSourcePath>
                 <catalogFileCount>
@@ -414,15 +377,30 @@
                 */
 
                 //Insert a line in the table with available data
+                        /*
+                        catalogID,
+                        catalogFilePath,
+                        catalogName,
+                        catalogDateUpdated,
+                        catalogSourcePath,
+                        catalogFileCount,
+                        catalogTotalFileSize,
+                        catalogSourcePathIsActive,
+                        catalogIncludeHidden,
+                        catalogFileType,
+                        catalogStorage,
+                        catalogIncludeSymblinks
+                        */
 
                 QVariant catalogID = addCatalog(query,
+
                                 catalogFileInfo.filePath(),  //catalogFilePath
                                 catalogFileInfo.baseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
                                 catalogValues[0], //catalogSourcePath
                                 catalogValues[1].toInt(), //catalogFileCount
                                 catalogValues[2].toLongLong(), //catalogTotalFileSize
-                                "maybe", //catalogSourcePathIsActive
+                                isActive, //catalogSourcePathIsActive
                                 catalogValues[3], //catalogIncludeHidden
                                 catalogValues[4], //catalogFileType
                                 catalogValues[5], //catalogStorage
@@ -443,12 +421,14 @@
                                 catalogValues[7] //catalogIncludeSymblinks
                                 );
                 */
+               //QMessageBox::information(this,"Katalog","catalog " + catalogFileInfo.baseName()) ;
+
                 catalogFile.close();
             }
 
     }
 
-
+    //----------------------------------------------------------------------
     // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
@@ -619,10 +599,10 @@
 
     //----------------------------------------------------------------------
     // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
-    bool MainWindow::verifyCatalogPath(QString catalogSourcePath)
+    int MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
         QDir dir(catalogSourcePath);
-        bool status = dir.exists();
+        int status = dir.exists();
         return status;
     }
     //----------------------------------------------------------------------
@@ -716,6 +696,134 @@
 
     }
     //----------------------------------------------------------------------
+    void MainWindow::updateCatalog(QString catalogName)
+    {
+        //Get data from the database
+            QSqlQuery query;
+            query.prepare("SELECT catalogFilePath, catalogName, catalogSourcePath, catalogFileCount, catalogFileType, catalogTotalFileSize FROM Catalog WHERE catalogName =:catalogName ");
+            query.bindValue(":catalogName", catalogName);
+            query.exec();
+            query.next();
+
+            QString currentCatalogFilePath      = query.value(0).toString();   //selectedCatalogFile
+            QString currentCatalogName          = query.value(1).toString();   //selectedCatalogName
+            QString currentCatalogSourcePath    = query.value(2).toString();   //selectedCatalogPath
+            qint64  currentCatalogFileCount     = query.value(3).toLongLong(); //selectedCatalogFileCount
+            QString currentCatalogFileType      = query.value(4).toString();   //selectedCatalogFileType
+            qint64  currentCatalogTotalFileSize = query.value(5).toLongLong(); //selectedCatalogTotalFileSize
+
+        //Check if the update can be done, or inform the user otherwise.
+            //Deal with old versions, where necessary info may have not have been available
+            if(currentCatalogFilePath == "not recorded" or currentCatalogName == "not recorded" or currentCatalogSourcePath == "not recorded"){
+            QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
+                                         "Please Edit it and make sure it has the following first 2 lines:\n\n"
+                                         "<catalogSourcePath>/folderpath\n"
+                                         "<catalogFileCount>10000\n\n"
+                                         "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
+                                         "- the catalogSourcePath is the folder to catalog the files from.\n"
+                                         "- the catalogFileCount number does not matter as much, it can be updated.\n"
+                                     );
+            return;
+            }
+
+            //Deal with other cases where some input information is missing
+            if(currentCatalogFilePath == "" or currentCatalogName == "" or currentCatalogSourcePath == ""){
+            QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\ncurrentCatalogFilePath:"
+                                     +currentCatalogFilePath+"\ncurrentCatalogName: "
+                                     +currentCatalogName+"\ncurrentCatalogSourcePath: "
+                                     +currentCatalogSourcePath);
+            return;
+            }
+
+        //BackUp the file before is the option is selected
+            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
+                backupCatalog(currentCatalogFilePath);
+            }
+
+        //
+        newCatalogName = currentCatalogName;
+
+        //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
+        qint64 previousFileCount = selectedCatalogFileCount; //currentCatalogFileCount;
+        qint64 previousTotalFileSize = selectedCatalogTotalFileSize;//currentCatalogTotalFileSize;
+
+        //Define the type of files to be included
+        QStringList fileTypes;
+        if      ( selectedCatalogFileType == "Image")
+                                fileTypes = fileType_Image;
+        else if ( selectedCatalogFileType == "Audio")
+                                fileTypes = fileType_Audio;
+        else if ( selectedCatalogFileType == "Video")
+                                fileTypes = fileType_Video;
+        else if ( selectedCatalogFileType == "Text")
+                                fileTypes = fileType_Text;
+        else                    fileTypes.clear();
+
+        //
+        QDir dir (currentCatalogSourcePath);
+        if (dir.exists()==true){
+            ///Warning and choice if the result is 0 files
+            if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+            {
+                int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
+                                              "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
+                                              "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
+                //return;
+                if ( result == QMessageBox::Cancel){
+                    return;
+                }
+            }
+
+            catalogDirectory(currentCatalogSourcePath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
+
+            saveCatalogToNewFile(currentCatalogName);
+
+
+            //reload new data
+            query.prepare("SELECT catalogFilePath, catalogName, catalogSourcePath, catalogFileCount, catalogFileType, catalogTotalFileSize FROM Catalog WHERE catalogName =:catalogName ");
+            query.bindValue(":catalogName", catalogName);
+            query.exec();
+            query.next();
+            //currentCatalogFilePath      = query.value(0).toString();   //selectedCatalogFile
+            //currentCatalogName          = query.value(1).toString();   //selectedCatalogName
+            //currentCatalogSourcePath    = query.value(2).toString();   //selectedCatalogPath
+            currentCatalogFileCount     = query.value(3).toLongLong(); //selectedCatalogFileCount
+            currentCatalogFileCount     = selectedCatalogFileCount; //retrieved from catalog method
+            //currentCatalogFileType      = query.value(4).toString();   //selectedCatalogFileType
+            currentCatalogTotalFileSize = query.value(5).toLongLong(); //selectedCatalogTotalFileSize
+            currentCatalogTotalFileSize = selectedCatalogTotalFileSize; //retrieved from catalog method
+            //Prepare to report changes to the catalog
+            qint64 deltaFileCount = currentCatalogFileCount - previousFileCount;
+            qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
+
+            //Inform user about the update
+            QMessageBox::information(this,"Katalog","<br/>This catalog was updated:<br/><b>" + currentCatalogName + "</b> "
+                                     "<br/><table>"
+                                     "<tr><td>Number of files: </td><td><b>" + QString::number(currentCatalogFileCount) + "</b></td><td>  (added: <b>" + QString::number(deltaFileCount) + "</b>)</td></tr>"
+                                     "<tr><td>Total file size: </td><td><b>" + QLocale().formattedDataSize(currentCatalogTotalFileSize) + "</b>  </td><td>  (added: <b>" + QLocale().formattedDataSize(deltaTotalFileSize) + "</b>)</td></tr>"
+                                     "</table>"
+                                     ,Qt::TextFormat(Qt::RichText));
+        }
+        else {
+            QMessageBox::information(this,"Katalog","The catalog " + currentCatalogName + " cannot be updated.\n"
+                                            "\nThe source folder - "+currentCatalogSourcePath+" - was not found.\n"
+                                            "\nPossible reasons:\n"
+                                            "- the device is not connected and mounted,\n"
+                                            "- the source folder was moved or renamed."
+                                     );
+        }
+
+        if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true )
+            recordSelectedCatalogStats(currentCatalogName, currentCatalogFileCount, currentCatalogTotalFileSize);
+
+        //Refresh the collection view
+        loadCatalogsToModel();
+        //Reload stats file
+        loadStatisticsChart();
+
+    }
+
+    //----------------------------------------------------------------------
     void MainWindow::hideCatalogButtons()
     {
         //Display buttons
@@ -728,4 +836,29 @@
         ui->Collection_pushButton_RecordCatalogStats->setEnabled(false);
         ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::refreshLocationCollectionFilter()
+    {
+        //Query the full list of locations
+        QSqlQuery getLocationList;
+        getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage ORDER BY storageLocation");
+        getLocationList.exec();
+
+        //Put the results in a list
+        QStringList locationList;
+        while (getLocationList.next()) {
+            locationList << getLocationList.value(0).toString();
+        }
+
+        //Prepare list for the Location combobox
+        QStringList displayLocationList = locationList;
+        //Add the "All" option at the beginning
+        displayLocationList.insert(0,"All");
+
+        //Send the list to the Search combobox model
+        fileListModel = new QStringListModel(this);
+        fileListModel->setStringList(displayLocationList);
+
     }
