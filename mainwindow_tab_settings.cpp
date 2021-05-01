@@ -115,6 +115,9 @@ void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QSt
 
     //Load matching Catalog
     //refreshCatalogSelectionList();
+    selectedSearchStorage = selectedStorage;
+
+    loadCatalogsToModel();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
