@@ -71,9 +71,11 @@
 
         //Last Search values
         ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+        selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
+        ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
         selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
         selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
-        selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
+
         selectedFileType        = settings.value("LastSearch/FileType").toString();
         selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
         selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
@@ -89,10 +91,24 @@
                 ui->Search_label_CatalogsWithResults->setHidden(true);
         }
 
+        //Show or Hide ShowHideCatalogResults
+        if ( settings.value("Settings/ShowHideGlobal") == ">>"){ //Hide
+                ui->Global_pushButton_ShowHideGlobal->setText(">>");
+                ui->Global_tabWidget->setHidden(true);
+                ui->Global_label_Global->setHidden(true);
+        }
+
         //General settings
         ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
         ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());
+
+        //last tab selected
+        selectedTab = settings.value("Settings/selectedTab").toInt();
+        ui->tabWidget->setCurrentIndex(selectedTab);
+
+        int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
+        ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
 
     }
     //----------------------------------------------------------------------
@@ -153,6 +169,7 @@
 
         //Collection
         ui->Collection_pushButton_Convert->hide();
+        ui->Collection_pushButton_UpdateAllActive->hide();
 
         //Storage
         ui->Storage_pushButton_OpenFilelight->hide();
@@ -161,7 +178,7 @@
         //Settings
 
         //Other tabs
-        ui->tabWidget->removeTab(7); //Tags
+        ui->tabWidget->removeTab(6); //Tags
     }
 
     //----------------------------------------------------------------------
@@ -193,6 +210,7 @@
               "QTabWidget::tab-bar   { left: 0px; }"
               "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
 
+              "QComboBox             {background-color: #FFF; padding-left: 6px; }"
 
               );
 
@@ -219,13 +237,22 @@
         ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        //ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        //ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        //ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
 
+        ui->Global_tabWidget->setStyleSheet(
+                    "QComboBox             {background-color: #FFF; padding-left: 6px; }"
+         );
+
+
+
     }
+
+
+
 
     //----------------------------------------------------------------------
 
@@ -329,7 +356,7 @@
             }
 
             #ifdef Q_OS_LINUX
-            KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
+            //KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
             #endif
 
             //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());

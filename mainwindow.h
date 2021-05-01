@@ -177,6 +177,7 @@ class MainWindow : public QMainWindow
             QString selectedCatalogFileType;
             QString selectedCatalogStorage;
             bool    selectedCatalogIncludeSymblinks;
+            QString selectedStorageLocationFilter;
 
             void loadCollection();
             void loadCatalogsToModel();
@@ -249,7 +250,35 @@ class MainWindow : public QMainWindow
             void saveFileAs(const QString &outputFileName);
             void downloadFinished(KJob* job);
 
+        //Global
+                void on_Global_tabWidget_currentChanged(int index);
+                void on_Global_pushButton_ShowHideGlobal_clicked();
+
+            //Filters
+                void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
+                void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
+                void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);
+                void on_Filters_pushButton_ResetGlobal_clicked();
+
+            //Settings
+                void on_Collection_pushButton_UpdateAllActive_clicked();
+                void on_Collection_pushButton_SelectFolder_clicked();
+                void on_Collection_pushButton_Reload_clicked();
+                void on_Collection_pushButton_OpenFolder_clicked();
+                void on_Collection_lineEdit_CollectionFolder_returnPressed();
+
+                void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
+                void on_Settings_checkBox_KeepOneBackUp_stateChanged();
+                void on_Settings_comboBox_Theme_currentTextChanged();
+
+                void on_Settings_pushButton_Wiki_clicked();
+                void on_Settings_pushButton_ReleaseNotes_clicked();
+
+         //Main tabs
+                void on_tabWidget_currentChanged(int index);
+
         //Search
+
             void on_Search_pushButton_Search_clicked();
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ExportResults_clicked();
@@ -273,11 +302,6 @@ class MainWindow : public QMainWindow
             void contextCopyFileNameWithoutExtension();
 
         //Collection
-            void on_Collection_pushButton_SelectFolder_clicked();
-            void on_Collection_pushButton_Reload_clicked();
-            void on_Collection_pushButton_OpenFolder_clicked();
-            void on_Collection_lineEdit_CollectionFolder_returnPressed();
-
             void on_Collection_pushButton_Search_clicked();
             void on_Collection_pushButton_ViewCatalog_clicked();
             void on_Collection_pushButton_Rename_clicked();
@@ -287,6 +311,7 @@ class MainWindow : public QMainWindow
             void on_Collection_pushButton_ViewCatalogStats_clicked();
             void on_Collection_pushButton_Convert_clicked();
             void on_Collection_pushButton_DeleteCatalog_clicked();
+            void refreshLocationCollectionFilter();
 
             void on_Collection_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index);
@@ -334,18 +359,6 @@ class MainWindow : public QMainWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
-
-        //Settings
-            void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
-            void on_Settings_checkBox_KeepOneBackUp_stateChanged();
-            void on_Settings_comboBox_Theme_currentTextChanged();
-
-            void on_Settings_pushButton_Wiki_clicked();
-            void on_Settings_pushButton_ReleaseNotes_clicked();
-            void on_Search_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
-            void on_Search_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
-            void on_Collection_pushButton_UpdateAllActive_clicked();
-            void on_tabWidget_currentChanged(int index);
 
 
 };
