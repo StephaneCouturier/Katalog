@@ -39,6 +39,92 @@
 //#include <KMessageBox>
 //#include <KLocalizedString>
 
+//Tab: ALL -----------------------------------------------------------------------------
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    selectedTab = index;
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
+}
+
+void MainWindow::on_Global_tabWidget_currentChanged(int index)
+{
+    int selectedTabGlobal = index;
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("Settings/selectedTabGlobal", selectedTabGlobal);
+}
+
+void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
+{
+    QString visible = ui->Global_pushButton_ShowHideGlobal->text();
+
+    if ( visible == "<<"){ //Hide
+            ui->Global_pushButton_ShowHideGlobal->setText(">>");
+            ui->Global_tabWidget->setHidden(true);
+            ui->Global_label_Global->setHidden(true);
+
+            QSettings settings(settingsFile, QSettings:: IniFormat);
+            settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
+    }
+    else{ //Show
+            ui->Global_pushButton_ShowHideGlobal->setText("<<");
+            ui->Global_tabWidget->setHidden(false);
+            ui->Global_label_Global->setHidden(false);
+
+            QSettings settings(settingsFile, QSettings:: IniFormat);
+            settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
+    }
+
+}
+
+//Tab: FILTERS -----------------------------------------------------------------------------
+void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
+{
+        ui->Filters_comboBox_SelectLocation->setCurrentText("All");
+        ui->Filters_comboBox_SelectStorage->setCurrentText("All");
+        ui->Filters_comboBox_SelectCatalog->setCurrentText("All");
+}
+//----------------------------------------------------------------------
+void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
+{
+    //save selection in settings file;
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("LastSearch/SelectedSearchLocation", selectedLocation);
+
+    //Load matching Storage
+    refreshStorageSelectionList(selectedLocation);
+
+    //Load matching Catalog
+    //refreshCatalogSelectionList();
+
+}
+//----------------------------------------------------------------------
+void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
+{
+    //save selection in settings file;
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("LastSearch/SelectedSearchStorage", selectedStorage);
+
+    //Get selected Location and Storage
+    QString selectedLocation = ui->Filters_comboBox_SelectLocation->currentText();
+    //QString selectedStorage  = ui->Filters_comboBox_SelectStorage->currentText();
+
+    //Load matching Storage
+    refreshCatalogSelectionList(selectedLocation, selectedStorage);
+
+    //Load matching Catalog
+    //refreshCatalogSelectionList();
+}
+//----------------------------------------------------------------------
+void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
+{
+    //save selection in settings file;
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalog);
+
+}
+
 //Tab: SETTINGS -----------------------------------------------------------------------------
 
 void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
@@ -69,9 +155,3 @@ void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
     QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.16"));
 }
 
-void MainWindow::on_tabWidget_currentChanged(int index)
-{
-    selectedTab = index;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
-    settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
-}
