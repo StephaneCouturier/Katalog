@@ -500,6 +500,20 @@
             ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
             ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
 
+            //Populate catalog statistics
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT COUNT(*),SUM(catalogTotalFileSize),SUM(catalogFileCount)
+                                FROM Catalog
+                                            )");
+            query.prepare(querySQL);
+            query.exec();
+            query.next();
+
+            ui->Collection_label_Catalogs->setText(QString::number(query.value(0).toInt()));
+            ui->Collection_label_TotalSize->setText(QLocale().formattedDataSize(query.value(1).toLongLong()));
+            ui->Collection_label_TotalNumber->setText(QString::number(query.value(2).toInt()));
+
     }
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
