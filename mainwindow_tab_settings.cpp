@@ -95,8 +95,11 @@ void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QS
     //Load matching Storage
     refreshStorageSelectionList(selectedLocation);
 
+    selectedSearchLocation = selectedLocation;
+
     //Load matching Catalog
-    //refreshCatalogSelectionList();
+    loadCatalogsToModel();
+    loadStorageTableToModel();
 
 }
 //----------------------------------------------------------------------
@@ -113,10 +116,9 @@ void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QSt
     //Load matching Storage
     refreshCatalogSelectionList(selectedLocation, selectedStorage);
 
-    //Load matching Catalog
-    //refreshCatalogSelectionList();
     selectedSearchStorage = selectedStorage;
 
+    //Load matching Catalog
     loadCatalogsToModel();
 }
 //----------------------------------------------------------------------

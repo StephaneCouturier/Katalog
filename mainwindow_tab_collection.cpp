@@ -455,12 +455,15 @@
                                             catalogIncludeHidden        AS 'Inc.Hidden',
                                             catalogStorage              AS 'Storage'
                                         FROM Catalog
+                                        WHERE catalogName !=''
                                         )");
 
                 //adding AND lines for the selected filters
+                if ( selectedSearchLocation != "All" )
+                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchLocation+"' ";
 
                 if ( selectedSearchStorage != "All" )
-                    loadCatalogSQL = loadCatalogSQL + " WHERE catalogStorage = '"+selectedSearchStorage+"' ";
+                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
                 //last lines
  //               loadStockSQL = loadStockSQL + " GROUP BY s.Ticker ";
