@@ -114,23 +114,22 @@ void MainWindow::loadCatalogFilesToExplore()
     // Start animation while opening
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    //Set up temporary lists
-//    QList<QString> cfileNames;
-//    QList<qint64>  cfileSizes;
-//    QList<QString> cfilePaths;
-//    QList<QString> cfileDateTimes;
-
     // Get infos stored in the file
     QFile catalogFile(selectedCatalogFile);
     if(!catalogFile.open(QIODevice::ReadOnly)) {
         QMessageBox::information(this,"Katalog","No catalog found.");
         return;
     }
+    QFileInfo catalogFileInfo(selectedCatalogFile);
 
     QTextStream textStream(&catalogFile);
 
-    QSqlQuery insertQuery;
+    //clear database
+    QSqlQuery deleteQuery0;
+    deleteQuery0.exec("DELETE FROM file");
 
+    //prepare query to load file info
+    QSqlQuery insertQuery;
     QString insertSQL = QLatin1String(R"(
                         INSERT INTO file (
                                         fileName,
@@ -145,34 +144,56 @@ void MainWindow::loadCatalogFilesToExplore()
                                         :fileDateUpdated,
                                         :fileCatalog )
                                     )");
-
     insertQuery.prepare(insertSQL);
 
+    //set temporary values
+        QString     line;
+        QStringList fieldList;
+        int         fieldListCount;
+        QString     filePath;
+        qint64      fileSize;
+        QString     fileDateTime;
+        //QRegExp tagExp; tagExp.setPattern("\t");
 
+    //load each file
     while (true)
     {
-        QString line = textStream.readLine();
+        line = textStream.readLine();
         if (line.isNull())
             break;
         else
             if (line.left(1)!="<"){
-                //Split the string with \t into a list
-                QRegExp tagExp("\t");
-                QStringList fieldList = line.split(tagExp);
 
-                int fieldListCount = fieldList.count();
+                //Split the string with \t (tabulation) into a list
+                QRegExp tagExp("\t"); //setpattern
+                fieldList.clear();
+                fieldList = line.split(tagExp);
+
+                fieldListCount = fieldList.count();
 
                 // Get the filePath from the list:
-                QString filePath        = fieldList[0];
+                filePath        = fieldList[0];
+
+//TEST
+//                if (line.contains("Young")){
+//                    QMessageBox::information(this,"Katalog","line: " + line);
+
+//                        QMessageBox::information(this,"Katalog","filePath: " + filePath);
+
+//                        QMessageBox::information(this,"Katalog","0: " + fieldList[0]);
+//                        QMessageBox::information(this,"Katalog","1: " + fieldList[1]);
+//                        QMessageBox::information(this,"Katalog","2: " + fieldList[2]);
+
+
+//                }
+
 
                 // Get the fileSize from the list if available
-                qint64 fileSize;
                 if (fieldListCount == 3){
                         fileSize = fieldList[1].toLongLong();}
                 else fileSize = 0;
 
                 // Get the fileDateTime from the list if available
-                QString fileDateTime;
                 if (fieldListCount == 3){
                         fileDateTime = fieldList[2];}
                 else fileDateTime = "";
@@ -180,37 +201,32 @@ void MainWindow::loadCatalogFilesToExplore()
                 //Get file informations
                 QFileInfo file(filePath);
 
-                //Append data to the lists
-//                cfileNames.append(file.fileName());
-//                cfileSizes.append(fileSize);
-//                cfilePaths.append(file.path());
-//                cfileDateTimes.append(fileDateTime);
+                //TEST
+//                   if (line.contains("Young")){
+//                                QMessageBox::information(this,"Katalog","0: " + file.fileName());
+//                                QMessageBox::information(this,"Katalog","1: " + file.path());
+//                                QMessageBox::information(this,"Katalog","2: " + QString::number(fileSize));
+//                                QMessageBox::information(this,"Katalog","3: " + fileDateTime);
+//                                QMessageBox::information(this,"Katalog","3: " + catalogFileInfo.baseName());
+//                     }
 
+                //Append data to the database
                 insertQuery.bindValue(":fileName", file.fileName());
                 insertQuery.bindValue(":filePath", file.path());
                 insertQuery.bindValue(":fileSize", fileSize);
                 insertQuery.bindValue(":fileDateUpdated", fileDateTime);
-                insertQuery.bindValue(":fileCatalog", selectedCatalogFile);
+                insertQuery.bindValue(":fileCatalog", catalogFileInfo.baseName());
                 insertQuery.exec();
             }
         }
 
-
-    // Create model
-    //Catalog *catalog = new Catalog(this);
-
-    // Populate model with data
-    //catalog->populateFileData(cfileNames, cfileSizes, cfilePaths, cfileDateTimes);
-
-//    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-//    proxyModel->setSourceModel(catalog);
-
+    // Load all files and create model
     QString selectSQL = QLatin1String(R"(
-                        SELECT  fileName,
-                                fileSize,
-                                filePath,
-                                fileDateUpdated,
-                                fileCatalog
+                        SELECT  fileName AS Name,
+                                fileSize AS Size,
+                                fileDateUpdated AS Date,
+                                fileCatalog AS Catalog,
+                                filePath AS Path
                         FROM file
                                     )");
     QSqlQuery loadCatalogQuery;
@@ -237,18 +253,11 @@ void MainWindow::loadCatalogFilesToExplore()
                         FROM file
                                     )");
     QSqlQuery countQuery;
-    loadCatalogQuery.prepare(countSQL);
-    loadCatalogQuery.exec();
-    loadCatalogQuery.next();
+    countQuery.prepare(countSQL);
+    countQuery.exec();
+    countQuery.next();
 
-    ui->Explore_label_FilesNumberDisplay->setNum(loadCatalogQuery.value(0).toInt());
-
-
-    QString deleteSQL = QLatin1String(R"(
-                        DElETE FROM file
-                                    )");
-    QSqlQuery deleteQuery;
-    deleteQuery.exec(deleteSQL);
+    ui->Explore_label_FilesNumberDisplay->setNum(countQuery.value(0).toInt());
 
     //Stop animation
     QApplication::restoreOverrideCursor();
