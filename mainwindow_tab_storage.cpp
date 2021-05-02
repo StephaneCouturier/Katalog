@@ -398,6 +398,13 @@ void MainWindow::loadStorageFileToTable()
 void MainWindow::loadStorageTableToModel()
 {
     storageModel->setTable("storage");
+
+    if ( selectedSearchLocation != "All" ){
+        //QString tableFilter = "storageLocation = 'DK/Portable'";
+        QString tableFilter = "storageLocation = '" + selectedSearchLocation + "'";
+
+        storageModel->setFilter(tableFilter);
+    }
     storageModel->setSort(1, Qt::AscendingOrder);
 
     // Set the localized header captions:
@@ -423,11 +430,8 @@ void MainWindow::loadStorageTableToModel()
         return;
     }
 
-    QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
-    proxyStorageModel->setSourceModel(storageModel);
-
     StorageView *proxyStorageModel2 = new StorageView(this);
-    proxyStorageModel2->setSourceModel(storageModel);
+    proxyStorageModel2->setSourceModel(storageModel);//storageModel  loadCatalogQueryModel
 
     ui->Storage_treeView_StorageList->setModel(proxyStorageModel2);
 
@@ -453,7 +457,18 @@ void MainWindow::loadStorageTableToModel()
 
     //Get the list of device names for the Create screen
     QSqlQuery query;
-    query.prepare("SELECT storageName FROM storage ORDER BY storageName");
+    QString querySQL = QLatin1String(R"(
+                       SELECT storageName
+                       FROM storage
+                                    )");  // ORDER BY storageName
+
+//        if ( selectedSearchLocation != "All" )
+//            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchLocation+"' ";
+
+//        if ( selectedSearchStorage != "All" )
+//            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
+
+        query.prepare(querySQL);
     query.exec();
         while(query.next())
         {
@@ -543,12 +558,13 @@ void MainWindow::saveStorageModelToFile()
     //Prepare export file name
     //Define storage file
     storageFilePath = collectionFolder + "/" + "storage.csv";
+
     QFile storageFile(storageFilePath);
 
     //QFile exportFile(collectionFolder+"/file.txt");
-    QString textData;
-    int rows = storageModel->rowCount();
-    int columns = storageModel->columnCount();
+//    QString textData;
+//    int rows = storageModel->rowCount();
+//    int columns = storageModel->columnCount();
 
     QTextStream out(&storageFile);
     //DEV ADD HEADER LINE
@@ -569,19 +585,67 @@ void MainWindow::saveStorageModelToFile()
          << "Comment"       << "\t"
          << '\n';
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-                textData += storageModel->data(storageModel->index(i,j)).toString();
-                textData += "\t";      // for .csv file format
+    //save from model
+//    for (int i = 0; i < rows; i++) {
+//        for (int j = 0; j < columns; j++) {
+//                textData += storageModel->data(storageModel->index(i,j)).toString();
+//                textData += "\t";      // for .csv file format
+//        }
+//        textData += "\n";             // (optional: for new line segmentation)
+//    }
+
+
+    //save from query
+//    Open your output file using QFile
+//    Run a select * query on your database table
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT * FROM storage
+                                    )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //    Iterate the result
+    //    -- Make a QStringList containing the output of each field
+    QStringList fieldList;
+    while (query.next()) {
+//        fieldList.clear();
+//        fieldList.append(query.value(0).toString());
+//        fieldList.append(query.value(1).toString());
+//        fieldList.append(query.value(2).toString());
+//        fieldList.append(query.value(3).toString());
+//        fieldList.append(query.value(4).toString());
+//        fieldList.append(query.value(5).toString());
+//        fieldList.append(query.value(6).toString());
+//        fieldList.append(query.value(7).toString());
+//        fieldList.append(query.value(8).toString());
+//        fieldList.append(query.value(9).toString());
+//        fieldList.append(query.value(10).toString());
+//        fieldList.append(query.value(11).toString());
+//        fieldList.append(query.value(12).toString());
+//        fieldList.append(query.value(13).toString());
+//        fieldList.append(query.value(14).toString());
+        //    -- Use join on that list using comma as separator
+//         QString line = fieldList.join("/t");
+//         QMessageBox::information(this,"Katalog","Ok." + line);
+
+        const QSqlRecord record = query.record();
+        for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+            if (i>0)
+            out << '\t';
+            out << record.value(i).toString();
         }
-        textData += "\n";             // (optional: for new line segmentation)
+ //    -- Write the result in the file
+         //out << line;
+         out << '\n';
+
     }
 
     if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
-        out << textData;
-
-        storageFile.close();
+        //out << textData;
+//    Close the file
+        //storageFile.close();
     }
 
     //QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+storageFile.fileName());
