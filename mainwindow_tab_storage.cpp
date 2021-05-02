@@ -36,6 +36,7 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 #include "storage.h"
+#include "storageview.h"
 
 #include <QDesktopServices>
 
@@ -128,7 +129,6 @@ void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &inde
     ui->Storage_pushButton_CreateCatalog->setEnabled(true);
     ui->Storage_pushButton_Update->setEnabled(true);
     ui->Storage_pushButton_Delete->setEnabled(true);
-    //ui->PB_S_Update->setEnabled(true);
 
     selectedStorageIndexRow = index.row();
 }
@@ -137,10 +137,6 @@ void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &inde
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_New_clicked()
 {
-//insert a new line in the table, incrementing the ID
-//    QSqlQuery queryDeviceNumber;
-//    queryDeviceNumber.prepare( "INSERT INTO storage VALUES ( 100, NewDevice )");
-//    queryDeviceNumber.exec();
 
     QSqlQuery query;
     if (!query.exec(STORAGE_SQL)){
@@ -161,7 +157,7 @@ void MainWindow::on_Storage_pushButton_New_clicked()
     int newID = maxID + 1;
 
 
-    QVariant storageId = addStorage(query, newID, "NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "",  "",  "", "", "", "", "");
+    QVariant storageId = addStorage(query, newID, " NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "", "", "", "", "");
 
     //load table to model
     loadStorageTableToModel();
@@ -176,7 +172,7 @@ void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->Filters_comboBox_SelectCatalog->setCurrentText("Selected Storage");
+    ui->Filters_comboBox_SelectStorage->setCurrentText(selectedStorageName);
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
@@ -184,7 +180,7 @@ void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-    ui->Filters_comboBox_SelectCatalog->setCurrentText("Selected Location");
+    ui->Filters_comboBox_SelectLocation->setCurrentText(selectedStorageLocation);
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
@@ -283,9 +279,9 @@ void MainWindow::loadStorageFileToTable()
            return;
     }
 
-
     //Clear all entries of the current table
     queryDelete.exec();
+
 
     //Prepare query
     QSqlQuery query;
@@ -309,6 +305,63 @@ void MainWindow::loadStorageFileToTable()
                 //Split the string with tabulation into a list
                 QStringList fieldList = line.split('\t');
 
+                QString querySQL = QLatin1String(R"(
+                    insert into storage(
+                                    storageID,
+                                    storageName,
+                                    storageType,
+                                    storageLocation,
+                                    storagePath,
+                                    storageLabel,
+                                    storageFileSystem,
+                                    storageTotalSpace,
+                                    storageFreeSpace,
+                                    storageBrandModel,
+                                    storageSerialNumber,
+                                    storageBuildDate,
+                                    storageContentType,
+                                    storageContainer,
+                                    storageComment)
+                              values(
+                                    :storageID,
+                                    :storageName,
+                                    :storageType,
+                                    :storageLocation,
+                                    :storagePath,
+                                    :storageLabel,
+                                    :storageFileSystem,
+                                    :storageTotalSpace,
+                                    :storageFreeSpace,
+                                    :storageBrandModel,
+                                    :storageSerialNumber,
+                                    :storageBuildDate,
+                                    :storageContentType,
+                                    :storageContainer,
+                                    :storageComment)
+                            )");
+
+                QSqlQuery insertQuery;
+                insertQuery.prepare(querySQL);
+                insertQuery.bindValue(":storageID",fieldList[0].toInt());
+                insertQuery.bindValue(":storageName",fieldList[1]);
+                insertQuery.bindValue(":storageType",fieldList[2]);
+                insertQuery.bindValue(":storageLocation",fieldList[3]);
+                insertQuery.bindValue(":storagePath",fieldList[4]);
+                insertQuery.bindValue(":storageLabel",fieldList[5]);
+                insertQuery.bindValue(":storageFileSystem",fieldList[6]);
+                insertQuery.bindValue(":storageTotalSpace",fieldList[7].toLongLong());
+                insertQuery.bindValue(":storageFreeSpace",fieldList[8].toLongLong());
+                insertQuery.bindValue(":storageBrandModel",fieldList[9]);
+                insertQuery.bindValue(":storageSerialNumber",fieldList[10]);
+                insertQuery.bindValue(":storageBuildDate",fieldList[11]);
+                insertQuery.bindValue(":storageContentType",fieldList[12]);
+                insertQuery.bindValue(":storageContainer",fieldList[13]);
+                insertQuery.bindValue(":storageComment", fieldList[14]);
+
+                insertQuery.exec();
+
+                /*
+
                 QVariant storageId = addStorage(query,
                                                 fieldList[0].toInt(),
                                                 fieldList[1],
@@ -319,8 +372,6 @@ void MainWindow::loadStorageFileToTable()
                                                 fieldList[6],
                                                 fieldList[7].toLongLong(),
                                                 fieldList[8].toLongLong(),
-                                                QLocale().formattedDataSize(fieldList[7].toLongLong()),
-                                                QLocale().formattedDataSize(fieldList[8].toLongLong()),
                                                 fieldList[9],
                                                 fieldList[10],
                                                 fieldList[11],
@@ -328,6 +379,7 @@ void MainWindow::loadStorageFileToTable()
                                                 fieldList[13],
                                                 fieldList[14]
                         );
+                */
             }
     }
     storageFile.close();
@@ -358,14 +410,12 @@ void MainWindow::loadStorageTableToModel()
     storageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
     storageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
     storageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
-    storageModel->setHeaderData(9, Qt::Horizontal, tr("Total"));
-    storageModel->setHeaderData(10, Qt::Horizontal, tr("Free"));
-    storageModel->setHeaderData(11, Qt::Horizontal, tr("Brand/Model"));
-    storageModel->setHeaderData(12, Qt::Horizontal, tr("Serial Number"));
-    storageModel->setHeaderData(13, Qt::Horizontal, tr("Build Date"));
-    storageModel->setHeaderData(14, Qt::Horizontal, tr("Content Type"));
-    storageModel->setHeaderData(15, Qt::Horizontal, tr("Container"));
-    storageModel->setHeaderData(16, Qt::Horizontal, tr("Comment"));
+    storageModel->setHeaderData(9, Qt::Horizontal, tr("Brand/Model"));
+    storageModel->setHeaderData(10, Qt::Horizontal, tr("Serial Number"));
+    storageModel->setHeaderData(11, Qt::Horizontal, tr("Build Date"));
+    storageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
+    storageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
+    storageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
 
     // Populate the storageModel:
     if (!storageModel->select()) {
@@ -376,7 +426,10 @@ void MainWindow::loadStorageTableToModel()
     QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
     proxyStorageModel->setSourceModel(storageModel);
 
-    ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
+    StorageView *proxyStorageModel2 = new StorageView(this);
+    proxyStorageModel2->setSourceModel(storageModel);
+
+    ui->Storage_treeView_StorageList->setModel(proxyStorageModel2);
 
     // Connect model to tree/table view
     ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
@@ -388,19 +441,15 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(4, 250); //Path
     ui->Storage_treeView_StorageList->header()->resizeSection(5,  50); //Label
     ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
-    ui->Storage_treeView_StorageList->header()->resizeSection(7,  75); //Total
-    ui->Storage_treeView_StorageList->header()->resizeSection(8,  75); //Free
-    ui->Storage_treeView_StorageList->header()->resizeSection(9,  85); //Total
-    ui->Storage_treeView_StorageList->header()->resizeSection(10, 85); //Free
-    //ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //Brand
-    //ui->Storage_treeView_StorageList->header()->resizeSection(10, 250); //Serial
-    //ui->Storage_treeView_StorageList->header()->resizeSection(11,  50); //Build
-    //ui->Storage_treeView_StorageList->header()->resizeSection(12,  75); //Content
-    ui->Storage_treeView_StorageList->header()->resizeSection(13, 125); //Container
-    //ui->Storage_treeView_StorageList->header()->resizeSection(14,  50); //Comment
+    ui->Storage_treeView_StorageList->header()->resizeSection(7,  85); //Total
+    ui->Storage_treeView_StorageList->header()->resizeSection(8,  85); //Free
+    ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //Brand
+    ui->Storage_treeView_StorageList->header()->resizeSection(10,150); //Serial
+    ui->Storage_treeView_StorageList->header()->resizeSection(11, 75); //Build date
+    ui->Storage_treeView_StorageList->header()->resizeSection(12, 75); //Content
+    ui->Storage_treeView_StorageList->header()->resizeSection(13,125); //Container
+    ui->Storage_treeView_StorageList->header()->resizeSection(14, 50); //Comment
     //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
-    ui->Storage_treeView_StorageList->header()->hideSection(7); //Total #
-    ui->Storage_treeView_StorageList->header()->hideSection(8); //Free #
 
     //Get the list of device names for the Create screen
     QSqlQuery query;
@@ -522,14 +571,8 @@ void MainWindow::saveStorageModelToFile()
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-
-            //Exclude the columns used to display total and free size
-            if( j!=9 and j!=10 ) {
-
                 textData += storageModel->data(storageModel->index(i,j)).toString();
                 textData += "\t";      // for .csv file format
-             }
-
         }
         textData += "\n";             // (optional: for new line segmentation)
     }
