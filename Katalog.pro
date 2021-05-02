@@ -81,6 +81,7 @@ SOURCES += \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
     storage.cpp \
+    storageview.cpp \
     tag.cpp
 
 HEADERS += \
@@ -91,6 +92,7 @@ HEADERS += \
     filesview.h \
     mainwindow.h \
     storage.h \
+    storageview.h \
     tag.h
 
 FORMS += \
