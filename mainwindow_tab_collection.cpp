@@ -147,6 +147,7 @@
         {   //Update the selected catalog
 
             updateCatalog(selectedCatalogName);
+            loadCollection();
 
         }
         //----------------------------------------------------------------------
@@ -243,7 +244,6 @@
             selectedCatalogIncludeHidden    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
             selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
-            //QMessageBox::information(this,"Katalog","Ok." + QString::number(selectedCatalogTotalFileSize));
 
             // Display buttons
             ui->Collection_pushButton_Search->setEnabled(true);
@@ -629,6 +629,9 @@
             QString currentCatalogFileType      = query.value(4).toString();   //selectedCatalogFileType
             qint64  currentCatalogTotalFileSize = query.value(5).toLongLong(); //selectedCatalogTotalFileSize
 
+
+
+
         //Check if the update can be done, or inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
             if(currentCatalogFilePath == "not recorded" or currentCatalogName == "not recorded" or currentCatalogSourcePath == "not recorded"){
@@ -661,8 +664,8 @@
         newCatalogName = currentCatalogName;
 
         //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
-        qint64 previousFileCount = selectedCatalogFileCount; //currentCatalogFileCount;
-        qint64 previousTotalFileSize = selectedCatalogTotalFileSize;//currentCatalogTotalFileSize;
+        qint64 previousFileCount = currentCatalogFileCount; //currentCatalogFileCount;
+        qint64 previousTotalFileSize = currentCatalogTotalFileSize;//currentCatalogTotalFileSize;
 
         //Define the type of files to be included
         QStringList fileTypes;
@@ -691,13 +694,28 @@
                 }
             }
 
-            catalogDirectory(currentCatalogSourcePath, selectedCatalogIncludeHidden, selectedCatalogFileType, fileTypes, selectedCatalogStorage, selectedCatalogIncludeSymblinks);
+            catalogDirectory(currentCatalogSourcePath,
+                             selectedCatalogIncludeHidden,
+                             selectedCatalogFileType,
+                             fileTypes,
+                             selectedCatalogStorage,
+                             selectedCatalogIncludeSymblinks);
 
             saveCatalogToNewFile(currentCatalogName);
 
 
             //reload new data
-            query.prepare("SELECT catalogFilePath, catalogName, catalogSourcePath, catalogFileCount, catalogFileType, catalogTotalFileSize FROM Catalog WHERE catalogName =:catalogName ");
+            QString querySQL = QLatin1String(R"(
+                            SELECT  catalogFilePath,
+                                    catalogName,
+                                    catalogSourcePath,
+                                    catalogFileCount,
+                                    catalogFileType,
+                                    catalogTotalFileSize
+                            FROM Catalog
+                            WHERE catalogName =:catalogName
+                            )");
+            query.prepare(querySQL);
             query.bindValue(":catalogName", catalogName);
             query.exec();
             query.next();
@@ -709,6 +727,7 @@
             //currentCatalogFileType      = query.value(4).toString();   //selectedCatalogFileType
             currentCatalogTotalFileSize = query.value(5).toLongLong(); //selectedCatalogTotalFileSize
             currentCatalogTotalFileSize = selectedCatalogTotalFileSize; //retrieved from catalog method
+
             //Prepare to report changes to the catalog
             qint64 deltaFileCount = currentCatalogFileCount - previousFileCount;
             qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
@@ -725,8 +744,8 @@
             QMessageBox::information(this,"Katalog","The catalog " + currentCatalogName + " cannot be updated.\n"
                                             "\nThe source folder - "+currentCatalogSourcePath+" - was not found.\n"
                                             "\nPossible reasons:\n"
-                                            "- the device is not connected and mounted,\n"
-                                            "- the source folder was moved or renamed."
+                                            "  - the device is not connected and mounted,\n"
+                                            "  - the source folder was moved or renamed."
                                      );
         }
 

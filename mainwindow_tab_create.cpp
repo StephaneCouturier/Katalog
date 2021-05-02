@@ -170,7 +170,6 @@
                 catalogIncludeSymblinks
         */
 
-
         QSqlQuery query;
         query.prepare("UPDATE Catalog "
                         "SET catalogIncludeSymblinks =:catalogIncludeSymblinks, "
@@ -180,7 +179,7 @@
         //query.bindValue(":catalogIncludeSymblinks", QVariant(includeSymblinks).toString());
         query.bindValue(":catalogFileCount", catalogFilesNumber);
         query.bindValue(":catalogTotalFileSize", catalogTotalFileSize);
-        //query.bindValue(":catalogSourcePath", newCatalogPath);
+        query.bindValue(":catalogSourcePath", newCatalogPath);
         query.exec();
 
         loadCatalogFilesToTable();
