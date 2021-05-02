@@ -449,11 +449,8 @@
                     // Connect model to tree/table view
                     ui->Search_treeView_FilesFound->setModel(proxyModel);
                     ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                    //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                    //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                    //ui->TrV_FilesFound->header()->resizeSection(0, 600); //Name
-                    //ui->TrV_FilesFound->header()->resizeSection(1, 110); //Size
-                    //ui->TrV_FilesFound->header()->resizeSection(2, 140); //Date
+                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                     ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
 
                     ui->Search_treeView_FilesFound->header()->hideSection(0);

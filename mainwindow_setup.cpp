@@ -170,6 +170,7 @@
         //Collection
         ui->Collection_pushButton_Convert->hide();
         ui->Collection_pushButton_UpdateAllActive->hide();
+        ui->Collection_pushButton_RecordCatalogStats->hide();
 
         //Storage
         ui->Storage_pushButton_OpenFilelight->hide();
