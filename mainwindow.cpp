@@ -133,6 +133,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
      //Setup tap: Stats
             loadStatisticsDataTypes();
             loadStatisticsChart();
+
 }
 
 MainWindow::~MainWindow()
