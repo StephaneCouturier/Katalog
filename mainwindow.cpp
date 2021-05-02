@@ -146,6 +146,13 @@ MainWindow::~MainWindow()
 QMessageBox::information(this,"Katalog","Ok.");
 QMessageBox::information(this,"Katalog","Ok." + stringVariable);
 QMessageBox::information(this,"Kotation","variable : \n" + QString::number(numbervariable));
+
+QSqlQuery query;
+QString querySQL = QLatin1String(R"(
+
+                                )");
+query.prepare(querySQL);
+query.exec();
 */
 
 
