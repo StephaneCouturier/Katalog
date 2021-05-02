@@ -29,9 +29,9 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
             case Qt::DisplayRole:
             {
-                //Currency (Euro) columns
+                //file size columns
                 if( filesizeColumnList.contains(index.column()) ){
-                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
+                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
 
                 //Numbers columns (without units)

@@ -16,10 +16,8 @@
                                 storagePath  text  ,
                                 storageLabel  text  ,
                                 storageFileSystem  text  ,
-                                storageTotalSpace  int  default 0,
-                                storageFreeSpace  int  default 0,
-                                storageTotalSpaceDisplay  text  ,
-                                storageFreeSpaceDisplay  text ,
+                                storageTotalSpace  REAL  default 0,
+                                storageFreeSpace  REAL  default 0,
                                 storageBrandModel  text  ,
                                 storageSerialNumber   text  ,
                                 storageBuildDate  text  ,
@@ -40,15 +38,13 @@
                                 storageFileSystem,
                                 storageTotalSpace,
                                 storageFreeSpace,
-                                storageTotalSpaceDisplay,
-                                storageFreeSpaceDisplay,
                                 storageBrandModel,
                                 storageSerialNumber,
                                 storageBuildDate,
                                 storageContentType,
                                 storageContainer,
                                 storageComment)
-                          values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                          values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         )");
 
     //Insert row binding
@@ -62,8 +58,6 @@
                                 QString storageFileSystem,
                                 qint64  storageTotalSpace,
                                 qint64  storageFreeSpace,
-                                QString storageTotalSpaceDisplay,
-                                QString storageFreeSpaceDisplay,
                                 QString storageBrandModel,
                                 QString storageSerialNumber,
                                 QString storageBuildDate,
@@ -81,8 +75,6 @@
                                 q.addBindValue(storageFileSystem);
                                 q.addBindValue(storageTotalSpace);
                                 q.addBindValue(storageFreeSpace);
-                                q.addBindValue(storageTotalSpaceDisplay);
-                                q.addBindValue(storageFreeSpaceDisplay);
                                 q.addBindValue(storageBrandModel);
                                 q.addBindValue(storageSerialNumber);
                                 q.addBindValue(storageBuildDate);
@@ -104,9 +96,9 @@
                                     catalogName  text  ,
                                     catalogDateUpdated  text  ,
                                     catalogSourcePath  text  ,
-                                    catalogFileCount   int  ,
-                                    catalogTotalFileSize  int ,
-                                    catalogSourcePathIsActive  int ,
+                                    catalogFileCount   REAL  ,
+                                    catalogTotalFileSize  REAL ,
+                                    catalogSourcePathIsActive  REAL ,
                                     catalogIncludeHidden  text  ,
                                     catalogFileType  text  ,
                                     catalogStorage  text  ,
@@ -136,7 +128,7 @@
                             QString catalogName,
                             QString catalogDateUpdated,
                             QString catalogSourcePath,
-                            int catalogFileCount,
+                            qint64 catalogFileCount,
                             qint64 catalogTotalFileSize, //KFormat.formatByteSize
                             int catalogSourcePathIsActive,
                             QString catalogIncludeHidden,
@@ -167,7 +159,6 @@
         //Create table query
                 const auto FILE_SQL = QLatin1String(R"(
                                create  table  if not exists  file(
-                                        fileID  int AUTO_INCREMENT primary key ,
                                         fileName  TEXT  ,
                                         filePath  TEXT ,
                                         fileSize REAL,
