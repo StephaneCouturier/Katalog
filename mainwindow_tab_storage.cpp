@@ -455,26 +455,34 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(14, 50); //Comment
     //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
 
+
     //Get the list of device names for the Create screen
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                        SELECT storageName
                        FROM storage
+                       WHERE storageName !=''
                                     )");  // ORDER BY storageName
 
-//        if ( selectedSearchLocation != "All" )
-//            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchLocation+"' ";
+    if ( selectedSearchLocation != "All" ){
+        //AND storageLocation ='DK/Portable'  :storageLocation
+        //QMessageBox::information(this,"Katalog","Ok.");
 
+        querySQL = querySQL + " AND storageLocation ='"+selectedSearchLocation+"'";
+    }
 //        if ( selectedSearchStorage != "All" )
 //            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
-        query.prepare(querySQL);
+    querySQL = querySQL + " ORDER BY storageName ";
+    query.bindValue("storageLocation", selectedSearchLocation);
+    query.prepare(querySQL);
     query.exec();
+    storageNameList.clear();
         while(query.next())
         {
             storageNameList<<query.value(0).toString();
         }
-
+    loadStorageList();
 
 }
 //----------------------------------------------------------------------
