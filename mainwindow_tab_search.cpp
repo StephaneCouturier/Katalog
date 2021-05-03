@@ -81,7 +81,7 @@
             ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
             ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
             ui->Search_checkBox_ShowFolders->setChecked(false);
-            //ui->LE_Tags->setCurrentText("");
+            ui->Search_label_NumberResults->setText("");
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
