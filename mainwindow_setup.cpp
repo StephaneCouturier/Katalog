@@ -71,10 +71,15 @@
 
         //Last Search values
         ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+
         selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
         ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+
         selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
+        ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+
         selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
+        ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
         selectedFileType        = settings.value("LastSearch/FileType").toString();
         selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
