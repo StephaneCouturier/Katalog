@@ -80,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //load the settings
             loadSettings();
+            QString firstSelectedLocation = selectedSearchLocation;
+            QString firstSelectedStorage =  selectedSearchStorage;
+            QString firstSelectedCatalog = selectedSearchCatalog;
 
     //load custom stylesheet
             //for windows, pick a windows common font.
@@ -133,6 +136,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
      //Setup tap: Stats
             loadStatisticsDataTypes();
             loadStatisticsChart();
+
+            ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
 
 }
 
