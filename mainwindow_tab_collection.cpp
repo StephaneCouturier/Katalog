@@ -443,7 +443,8 @@
             QString loadCatalogSQL;
 
             //main part of the query
-            loadCatalogSQL  = QLatin1String(R"( SELECT
+            loadCatalogSQL  = QLatin1String(R"(
+                                        SELECT
                                             catalogName                 AS 'Name',
                                             catalogFilePath             AS 'File Path',
                                             catalogDateUpdated          AS 'Last Update',
@@ -453,21 +454,18 @@
                                             catalogFileType             AS 'File Type',
                                             catalogSourcePathIsActive   AS 'Active',
                                             catalogIncludeHidden        AS 'Inc.Hidden',
-                                            catalogStorage              AS 'Storage'
-                                        FROM Catalog
-                                        WHERE catalogName !=''
+                                            catalogStorage              AS 'Storage',
+                                            storageLocation             AS 'Location'
+                                        FROM catalog, storage
+                                        WHERE catalogStorage = storageName
                                         )");
 
                 //adding AND lines for the selected filters
                 if ( selectedSearchLocation != "All" )
-                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchLocation+"' ";
+                    loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
 
                 if ( selectedSearchStorage != "All" )
                     loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
-
-                //last lines
- //               loadStockSQL = loadStockSQL + " GROUP BY s.Ticker ";
- //               loadStockSQL = loadStockSQL + " ORDER BY s.Name ASC ";
 
             //Execute query
             QSqlQuery loadCatalogQuery;
@@ -477,9 +475,6 @@
             //Format and send to Treeview
             QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
             catalogQueryModel->setQuery(loadCatalogQuery);
-
-//            QSortFilterProxyModel *proxyResultsModel = new QSortFilterProxyModel(this);
-//            proxyResultsModel->setSourceModel(catalogQueryModel);
 
             CatalogsView *proxyResultsModel = new CatalogsView(this);
             proxyResultsModel->setSourceModel(catalogQueryModel);
