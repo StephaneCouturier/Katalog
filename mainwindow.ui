@@ -223,6 +223,19 @@
              </widget>
             </item>
             <item>
+             <widget class="QLineEdit" name="Search_lineEdit_SearchText">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="KComboBox" name="Search_kcombobox_SearchText">
               <property name="font">
                <font>
@@ -1323,16 +1336,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <enum>QLayout::SetFixedSize</enum>
           </property>
           <item>
-           <widget class="Line" name="Collection_line_SeparateCatalogs">
-            <property name="frameShadow">
-             <enum>QFrame::Sunken</enum>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="Collection_horizontalLayout_Totals">
             <item>
              <widget class="QLabel" name="Collection_label_CatalogsLabel">
@@ -2258,6 +2261,28 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Create_label_SelectStorage">
             <property name="text">
              <string>Select Storage</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Create_label_SelectThePath_2">
+            <property name="maximumSize">
+             <size>
+              <width>350</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>(optional, can be modified later by editing the Catalog)</string>
+            </property>
+            <property name="margin">
+             <number>6</number>
             </property>
            </widget>
           </item>

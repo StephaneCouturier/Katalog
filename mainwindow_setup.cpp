@@ -71,6 +71,9 @@
 
         //Last Search values
         ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+        //win
+        ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
+
 
         selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
         ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
@@ -159,7 +162,11 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
+
         ui->Search_label_Regex->hide();
+        #ifdef Q_OS_LINUX
+        ui->Search_lineEdit_SearchText->hide();
+        #endif
         //ui->HL_Location_and_Storage->hide();
 
         //Create
@@ -234,7 +241,7 @@
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
               "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
               );
-        ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+        //ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Collection_line_SeparateSummary->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
