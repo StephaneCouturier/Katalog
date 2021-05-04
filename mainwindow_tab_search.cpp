@@ -310,7 +310,11 @@
 
                 //Get search criteria
                     //Get text to search in file names or directories
+                    #ifdef Q_OS_LINUX
                     searchText = ui->Search_kcombobox_SearchText->currentText();
+                    #else
+                    searchText = ui->Search_lineEdit_SearchText->text();
+                    #endif
 
                     //Do nothing if there is no search text
                     if (searchText=="")
@@ -802,6 +806,8 @@
             //----------------------------------------------------------------------
             void MainWindow::refreshLocationSelectionList()
             {
+                //get current location
+                QString currentLocation = ui->Filters_comboBox_SelectLocation->currentText();
                 //Query the full list of locations
                 QSqlQuery getLocationList;
                 getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage");
@@ -824,7 +830,8 @@
                 fileListModel->setStringList(displayLocationList);
                 ui->Filters_comboBox_SelectLocation->setModel(fileListModel);
 
-                //DEV: restore last selection which may be different from the last search in settings
+                //Restore last selection
+                ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
 
                 //QStringListModel locationListModel;
                 //locationListModel.setStringList(displaycatalogList);
@@ -833,6 +840,9 @@
             //----------------------------------------------------------------------
             void MainWindow::refreshStorageSelectionList(QString selectedLocation)
             {
+                //get current location
+                QString currentStorage = ui->Filters_comboBox_SelectStorage->currentText();
+
                 //Query the full list of locations
                 QSqlQuery getStorageList;
 
@@ -864,7 +874,8 @@
                 fileListModel->setStringList(displayLocationList);
                 ui->Filters_comboBox_SelectStorage->setModel(fileListModel);
 
-                //DEV: restore last selection which may be different from the last search in settings
+                //Restore last selection
+                ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
 
                 //QStringListModel locationListModel;
                 //locationListModel.setStringList(displaycatalogList);
@@ -873,6 +884,9 @@
             //----------------------------------------------------------------------
             void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
             {
+                //get current location
+                QString currentCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
+
                 //Query the full list of locations
                 QSqlQuery getCatalogSelectionList;
 
@@ -928,6 +942,9 @@
                     fileListModel = new QStringListModel(this);
                     fileListModel->setStringList(catalogSelectedList);
                     ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
+
+                //Restore last selection
+                    ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
 
             }
 

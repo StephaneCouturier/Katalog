@@ -290,9 +290,9 @@
             refreshCatalogSelectionList("All", "All");
 
             //restore Search catalog selection
-            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+           // ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+            //ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
             //hide buttons to force user to select a catalog before allowing any action.
             hideCatalogButtons();
@@ -350,56 +350,12 @@
                     line = textStream.readLine();
                     value = line.right(line.size() - line.lastIndexOf(">") - 1);
                     catalogValues << value;
-
-                    /*
-                    <catalogSourcePath>
-                    <catalogFileCount>
-                    <catalogTotalFileSize>
-                    <catalogIncludeHidden>
-                    <catalogFileType>
-                    <catalogStorage>
-                    <catalogIncludeSymblinks>
-                    */
-
-
                 }
-
-                // Get infos about the file itself
-                //QFileInfo catalogFileInfo(catalogFile);
-                //QMessageBox::information(this,"Katalog","Ok." + catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-
-
-                //catalogValues << catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss");
-                //cCatalogFilePaths.append(catalogFileInfo.filePath());
 
                 // Verify if path is active (drive connected)
                 int isActive = verifyCatalogPath(catalogValues[0]);
-                /*
-                <catalogSourcePath>
-                <catalogFileCount>
-                <catalogTotalFileSize>
-                <catalogIncludeHidden>
-                <catalogFileType>
-                <catalogStorage>
-                <catalogIncludeSymblinks>
-                */
 
                 //Insert a line in the table with available data
-                        /*
-                        catalogID,
-                        catalogFilePath,
-                        catalogName,
-                        catalogDateUpdated,
-                        catalogSourcePath,
-                        catalogFileCount,
-                        catalogTotalFileSize,
-                        catalogSourcePathIsActive,
-                        catalogIncludeHidden,
-                        catalogFileType,
-                        catalogStorage,
-                        catalogIncludeSymblinks
-                        */
-
                 QVariant catalogID = addCatalog(query,
                                 catalogFileInfo.filePath(),  //catalogFilePath
                                 catalogFileInfo.baseName(),  //catalogName
@@ -413,22 +369,6 @@
                                 catalogValues[5], //catalogStorage
                                 catalogValues[6] //catalogIncludeSymblinks
                                 );
-                /*
-                QVariant catalogID = addCatalog(query,
-                                catalogFileInfo.filePath(),  //catalogFilePath
-                                catalogFileInfo.baseName(),  //catalogName
-                                catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
-                                catalogValues[0], //catalogSourcePath
-                                catalogValues[1].toInt(), //catalogFileCount
-                                catalogValues[2].toLongLong(), //catalogTotalFileSize
-                                catalogValues[3], //catalogSourcePathIsActive
-                                catalogValues[4], //catalogIncludeHidden
-                                catalogValues[5], //catalogFileType
-                                catalogValues[6], //catalogStorage
-                                catalogValues[7] //catalogIncludeSymblinks
-                                );
-                */
-               //QMessageBox::information(this,"Katalog","catalog " + catalogFileInfo.baseName()) ;
 
                 catalogFile.close();
             }
@@ -442,7 +382,7 @@
         //Generate SQL query from filters.
             QString loadCatalogSQL;
 
-            //main part of the query
+            //prepare the main part of the query
             loadCatalogSQL  = QLatin1String(R"(
                                         SELECT
                                             catalogName                 AS 'Name',
@@ -456,11 +396,12 @@
                                             catalogIncludeHidden        AS 'Inc.Hidden',
                                             catalogStorage              AS 'Storage',
                                             storageLocation             AS 'Location'
-                                        FROM catalog, storage
-                                        WHERE catalogStorage = storageName
-                                        )");
+                                        FROM catalog
+                                        LEFT JOIN storage AS s ON catalogStorage = storageName
+                                        WHERE catalogName !=''
+                                        )");  
 
-                //adding AND lines for the selected filters
+                //add AND conditions for the selected filters
                 if ( selectedSearchLocation != "All" )
                     loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
 
@@ -485,9 +426,10 @@
             ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
 
-            //Columns size
+            //hide column with file path
             ui->Collection_treeView_CatalogList->header()->hideSection(1); //Path
 
+            //change columns size
             ui->Collection_treeView_CatalogList->header()->resizeSection(0, 300); //Name
             ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
             ui->Collection_treeView_CatalogList->header()->resizeSection(3, 100); //Files
