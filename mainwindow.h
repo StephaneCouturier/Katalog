@@ -243,6 +243,8 @@ class MainWindow : public QMainWindow
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
 
+            void importFromVVV();
+
     private slots:
         //Menu KDE
             #ifdef Q_OS_LINUX
@@ -365,6 +367,7 @@ class MainWindow : public QMainWindow
             void loadFolderTagModel();
 
 
+            void on_Settings_pushButton_ImportVVV_clicked();
 };
 
 #endif // MAINWINDOW_H

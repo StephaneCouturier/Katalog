@@ -3304,6 +3304,67 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="Global_horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Show/Hide Global settigns and filters.</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding: 2px 10px;</string>
+           </property>
+           <property name="text">
+            <string>&lt;&lt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="Global_label_Global">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Filters &amp; Settings</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <spacer name="Global_verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="2" column="0">
         <widget class="QTabWidget" name="Global_tabWidget">
          <property name="maximumSize">
@@ -3312,8 +3373,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <height>16777215</height>
           </size>
          </property>
+         <property name="tabPosition">
+          <enum>QTabWidget::North</enum>
+         </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="Global_tab1_Filters">
           <attribute name="icon">
@@ -3797,68 +3861,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>DEV</string>
+          </attribute>
+          <widget class="QPushButton" name="Settings_pushButton_ImportVVV">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>180</y>
+             <width>121</width>
+             <height>26</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>import VVV</string>
+           </property>
+          </widget>
+         </widget>
         </widget>
-       </item>
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="Global_horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Show/Hide Global settigns and filters.</string>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">padding: 2px 10px;</string>
-           </property>
-           <property name="text">
-            <string>&lt;&lt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="Global_label_Global">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Filters &amp; Settings</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0">
-        <spacer name="Global_verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
