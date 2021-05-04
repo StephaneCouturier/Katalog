@@ -215,31 +215,31 @@
 
         /* blue tabwidget bar */
         ui->tabWidget->setStyleSheet(
-              "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; }"
-              "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
-              "QLabel                { color: #095676; }"
-              "QPushButton           { padding: 5px 4px; margin: 0px; } "
-              "QComboBox             { padding: 0px 0px; margin: 0px; } "
+            "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; }"
+            "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
+            "QLabel                { color: #095676; }"
+            "QPushButton           { padding: 5px 4px; margin: 0px; } "
+            "QComboBox             { padding: 0px 0px; margin: 0px; } "
 
-              "QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; padding: 2px; padding-left: 4px; padding-right: 20px; border: 1px solid #0D79A6; margin-bottom: 4px; margin-left: 4px;}"
-              "QTabBar::tab:selected { background-color: #095676; color: #FFF; margin-top: 4px; margin-left: 4px; } "
-              "QTabBar::tab:selected { border: 1px solid #095676; border-bottom: 0px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin-bottom: 4px;} "
+            "QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; padding: 2px; padding-left: 4px; padding-right: 20px; border: 1px solid #0D79A6; margin-bottom: 4px; margin-left: 4px;}"
+            "QTabBar::tab:selected { background-color: #095676; color: #FFF; margin-top: 4px; margin-left: 4px; } "
+            "QTabBar::tab:selected { border: 1px solid #095676; border-bottom: 0px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin-bottom: 4px;} "
 
-              "QTabBar::tab:!selected{ margin-top: 6px; }"
-              "QTabWidget::tab-bar   { left: 0px; }"
-              "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
+            "QTabBar::tab:!selected{ margin-top: 6px; }"
+            "QTabWidget::tab-bar   { left: 0px; }"
+            "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
 
-              "QComboBox             {background-color: #FFF; padding-left: 6px; }"
+            "QComboBox             {background-color: #FFF; padding-left: 6px; }"
 
-              );
+        );
 			  
 		/* global tabwidget bar */
         ui->Global_tabWidget->setStyleSheet(
-                    "QComboBox       { background-color: #FFF; padding-left: 6px; }"
-                    "QLabel                { color: #095676; }"
-                    "QTabBar::tab          { height: 30px; }"
-                    "QTabWidget::tab-bar   { left: 0px; }"
-                    "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
+            "QComboBox       { background-color: #FFF; padding-left: 6px; }"
+            "QLabel                { color: #095676; }"
+            "QTabBar::tab          { height: 30px; }"
+            "QTabWidget::tab-bar   { left: 0px; }"
+            "QTabWidget            { padding: 0px; margin: 0px; }"
          );
 		 
         //Search tab

@@ -73,6 +73,8 @@ int main(int argc, char *argv[])
         aboutData.setupCommandLine(&parser);
         parser.process(app);
         aboutData.processCommandLine(&parser);
+    #else
+        QApplication::setStyle("fusion");
     #endif
 
     //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset jsut after)
