@@ -69,10 +69,12 @@
                collectionFolder = QApplication::applicationDirPath();
         }
 
-        //Last Search values
-        ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
-        //win
-        ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
+        //Restore last Search values
+        #ifdef Q_OS_LINUX
+                ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+        #else        
+                ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
+        #endif
 
 
         selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
@@ -125,7 +127,11 @@
         QSettings settings(settingsFile, QSettings:: IniFormat);
         //QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
-        settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
+        #ifdef Q_OS_LINUX
+            settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
+        #else        
+            settings.setValue("LastSearch/SearchText", ui->Search_lineEdit_SearchText->text());
+        #endif
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedSearchCatalog);
         settings.setValue("LastSearch/SelectedSearchStorage", selectedSearchStorage);
         settings.setValue("LastSearch/SelectedSearchLocation", selectedSearchLocation);
@@ -226,7 +232,16 @@
               "QComboBox             {background-color: #FFF; padding-left: 6px; }"
 
               );
-
+			  
+		/* global tabwidget bar */
+        ui->Global_tabWidget->setStyleSheet(
+                    "QComboBox       { background-color: #FFF; padding-left: 6px; }"
+                    "QLabel                { color: #095676; }"
+                    "QTabBar::tab          { height: 30px; }"
+                    "QTabWidget::tab-bar   { left: 0px; }"
+                    "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
+         );
+		 
         //Search tab
         ui->Search_pushButton_Search->setStyleSheet(
               "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
@@ -256,15 +271,7 @@
         ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
 
-        ui->Global_tabWidget->setStyleSheet(
-                    "QComboBox             {background-color: #FFF; padding-left: 6px; }"
-         );
-
-
-
     }
-
-
 
 
     //----------------------------------------------------------------------
@@ -322,6 +329,7 @@
 
 
     //Menu and Icons - Actions KDE setup ---------------------------------------
+	#ifdef Q_OS_LINUX
         void MainWindow::setupActions()
         {
 
@@ -409,5 +417,5 @@
                 saveFileAs();
             }
         }
-
+	#endif
     //----------------------------------------------------------------------

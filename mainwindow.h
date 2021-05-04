@@ -56,10 +56,12 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 
+#ifdef Q_OS_LINUX
 #include <KComboBox>
 #include <KXmlGuiWindow>
 //#include <KMessageBox>
 class KJob;
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -243,12 +245,14 @@ class MainWindow : public QMainWindow
 
     private slots:
         //Menu KDE
-            void newFile();
-            void openFile();
-            void saveFile();
-            void saveFileAs();
-            void saveFileAs(const QString &outputFileName);
-            void downloadFinished(KJob* job);
+            #ifdef Q_OS_LINUX
+                void newFile();
+                void openFile();
+                void saveFile();
+                void saveFileAs();
+                void saveFileAs(const QString &outputFileName);
+                void downloadFinished(KJob* job);
+            #endif
 
         //Global
                 void on_Global_tabWidget_currentChanged(int index);

@@ -62,7 +62,11 @@
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
             //clipboard->setText(selectedFile);
-            ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+            #ifdef Q_OS_LINUX
+                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+            #else
+                ui->Search_lineEdit_SearchText->setText(originalText);
+            #endif
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -72,7 +76,11 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
-            ui->Search_kcombobox_SearchText->setCurrentText("");
+            #ifdef Q_OS_LINUX
+                ui->Search_kcombobox_SearchText->setCurrentText("");
+            #else
+                ui->Search_lineEdit_SearchText->setText("");
+            #endif
             ui->Search_comboBox_TextCriteria->setCurrentText("All Words");
             ui->Search_comboBox_SearchIn->setCurrentText("File names or Folder paths");
             ui->Search_comboBox_FileType->setCurrentText("Any");
@@ -321,7 +329,11 @@
                         return;
 
                     //add searchText to a list, to retrieved it later
-                    ui->Search_kcombobox_SearchText->addItem(searchText);
+                    #ifdef Q_OS_LINUX
+                        ui->Search_kcombobox_SearchText->addItem(searchText);
+                    #else
+                        //no alternative for win
+                    #endif
 
                     //Get other search criteria
                     selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();

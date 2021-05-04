@@ -87,8 +87,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //load custom stylesheet
             //for windows, pick a windows common font.
             #ifdef Q_OS_WIN
-            ui->tabWidget->setStyleSheet(font-family: calibri;
-                  );
+            ui->tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
+            ui->Global_tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
             //load custom Katalog stylesheet instead of default theme
