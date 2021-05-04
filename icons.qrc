@@ -29,5 +29,6 @@
         <file>fallback-icons/view-media-playlist.png</file>
         <file>fallback-icons/view-refresh.png</file>
         <file>fallback-icons/xml-node-duplicate.png</file>
+        <file>fallback-icons/view-filter.png</file>
     </qresource>
 </RCC>
