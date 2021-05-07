@@ -167,7 +167,6 @@ void MainWindow::on_Settings_pushButton_ImportVVV_clicked()
     importFromVVV();
 }
 
-
 void MainWindow::importFromVVV()
 {
     //Select file
@@ -175,21 +174,16 @@ void MainWindow::importFromVVV()
         QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
         QString homePath = standardsPaths[0];
 
-        //get path of the file to import
-        QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"),
-                                                        homePath
-                                                        );
-        //Stop if not path is selected
+        //Get path of the file to import
+        QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"),homePath);
+
+        //Stop if no path is selected
         if ( sourceFilePath=="" ) return;
 
-    //Define file and prepare stream
+    //Define file
         QFile sourceFile(sourceFilePath);
 
-        //QFileInfo sourceFileInfo(sourceFilePath);
-
-        //QMessageBox::information(this,"Katalog","File: \n" + sourceFileInfo.baseName() + "\n"+sourceFileInfo.filePath());
-
-    //Open file and prepare stream
+    //Open file and prepare stream to get first the total file size and files number
         if(!sourceFile.open(QIODevice::ReadOnly)) {
             QMessageBox::information(this,"Katalog","No catalog found.");
             return;
@@ -197,137 +191,101 @@ void MainWindow::importFromVVV()
 
         QTextStream textStream(&sourceFile);
 
-    //Process and check headers
+        //Process and check Headers line
         QString line = textStream.readLine();
 
-        //QMessageBox::information(this,"Kotation",line);
-
-        //split the line into a fieldlist
+        //Split the line into a fieldlist
         QStringList headerList = line.split('\t');
 
-
-        //check this is the right source format
+        //Check this is the right source format
         if (line.left(6)!="Volume"){
             QMessageBox::warning(this,"Kotation","A file was found, but could not be loaded.\n");
             return;
         }
-        else {
+        //else {
             //int headerFieldNumber = headerList.length();
             //QMessageBox::information(this,"Kotation","ok to import. \n number of fields: \n " + QString::number(headerFieldNumber));
-        }
+        //}
 
-    //prepare database
-
-        //clear database
-        QSqlQuery deleteQuery0;
-        deleteQuery0.exec("DELETE FROM file");
-
-        //prepare query
-        QSqlQuery insertQuery;
-        QString insertSQL = QLatin1String(R"(
-                            INSERT INTO file (
-                                            fileName,
-                                            filePath,
-                                            fileSize,
-                                            fileDateUpdated,
-                                            fileCatalog )
-                            VALUES(
-                                            :fileName,
-                                            :filePath,
-                                            :fileSize,
-                                            :fileDateUpdated,
-                                            :fileCatalog )
-                                        )");
-        insertQuery.prepare(insertSQL);
-
-
-    //loop through each line and load values to the database
-    while (true)
-    {
-
-        line = textStream.readLine();
-        QMessageBox::information(this,"Kotation","line: stream \n " + line);
-
-        QStringList fieldList = line.split("\t");
-        //QMessageBox::information(this,"Kotation","fields: \n " + fieldList[0] +"\n "+ fieldList[1] +"\n "+ fieldList[3] );
-//        if (fieldList.count() <2){
-//            QMessageBox::information(this,"Kotation","error: \n " + line);
-//            return;
-//        }
-        if (line !=""){
-            //Append data to the database
-            insertQuery.bindValue(":fileName", fieldList[2].replace("\"",""));
-            insertQuery.bindValue(":filePath", fieldList[1].replace("\"",""));
-            insertQuery.bindValue(":fileSize", fieldList[3].toLongLong());
-            insertQuery.bindValue(":fileDateUpdated", fieldList[5]);
-            insertQuery.bindValue(":fileCatalog", fieldList[0]);
-            insertQuery.exec();
-
-        }
-       //else
-          //return;
-
-//        return;
-    }
-
-
-
-
-    //Write to target file for Katalog
-
-        // Stream the list to the file
-        newCatalogName = "imported_from_VVV";
+        //Stream the list out to the file
+        newCatalogName = "imported";
         QFile fileOut( collectionFolder +"/"+ newCatalogName + ".idx" );
 
-        QTextStream out(&fileOut);
+        //Get number of files and total size
+            qint64 totalSize  = 0;
+            qint64 totalFiles = 0;
+            while (true)
+            {
+                line = textStream.readLine();
 
+                if (line !="" and line.contains("\t")){
+
+                    QStringList fieldList = line.split("\t");
+                    if ( fieldList.count()==7 ){
+                        totalSize = totalSize + fieldList[3].toLongLong();
+                        totalFiles = totalFiles + 1;
+                    }
+                }
+                else
+                    break;
+            }
+        sourceFile.close();
+
+    //now the data out
+        QTextStream out(&fileOut);
         if(fileOut.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
-        //append catalog definition("<catalogName>"+newCatalogName);
-        out  << "<catalogSourcePath>undefined" << "\n"
-             << "<catalogFileCount>"           << "\n"
-             << "<catalogTotalFileSize>"       << "\n"
-             << "<catalogIncludeHidden>"       << "\n"
-             << "<catalogFileType>"            << "\n"
-             << "<catalogStorage>"             << "\n"
-             << "<catalogIncludeSymblinks>"    << "\n";
+            //append catalog definition("<catalogName>"+newCatalogName);
+            out  << "<catalogSourcePath>imported"  << "\n"
+                 << "<catalogFileCount>"+QString::number(totalFiles)           << "\n"
+                 << "<catalogTotalFileSize>"+QString::number(totalSize)       << "\n"
+                 << "<catalogIncludeHidden>"       << "\n"
+                 << "<catalogFileType>"            << "\n"
+                 << "<catalogStorage>"             << "\n"
+                 << "<catalogIncludeSymblinks>"    << "\n";
+        }
 
-        // write data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                        SELECT filePath || '/' || fileName,fileSize,fileDateUpdated  FROM file
-                                        )");
-        query.prepare(querySQL);
-        query.exec();
+        fileOut.close(); //Getting totals is completed.
 
-        //    Iterate the result
-        while (query.next()) {
+        //Reopen the source file, now to get the files list itself
+        if(!sourceFile.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(this,"Katalog","No catalog found.");
+            return;
+        }
+        //Prepare the stream
+        QTextStream textStream2(&sourceFile);
 
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                if (i>0)
-                out << '\t';
-                out << record.value(i).toString();
+
+        if(fileOut.open(QIODevice::WriteOnly | QIODevice::Append)) {
+
+        //Read the first line to skip headers
+            line = textStream2.readLine();
+
+        while (true)
+        {
+            //Read the newt line
+            line = textStream2.readLine();
+
+            if (line !=""){
+                QStringList fieldList = line.split("\t");
+                if ( fieldList.count()==7 ){
+                    out << fieldList[1].replace("\"","")+"/"+fieldList[2].replace("\"","") << '\t';
+                    out << fieldList[3] << '\t';
+                    out << fieldList[5] ;
+                    out << '\n';
+                }
             }
-
-             out << '\n';
-             QMessageBox::information(this,"Katalog","test record. \n");
+           else
+                break;
 
         }
-
-
-
-            //out << textData;
-    //    Close the file
-            //storageFile.close();
-        }
-
-        QMessageBox::information(this,"Katalog","File converted. See in Catalogs");
-        fileOut.close();
-
-
-    //close file
+}
+    //close files
     sourceFile.close();
+
+    fileOut.close();
+    QMessageBox::information(this,"Katalog","File converted.");
+    ui->tabWidget->setCurrentIndex(1);
 
     loadCollection();
 

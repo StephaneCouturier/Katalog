@@ -3377,7 +3377,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="Global_tab1_Filters">
           <attribute name="icon">
@@ -3544,175 +3544,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <string>Settings</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="4" column="0">
-            <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
-             <item>
-              <widget class="QLabel" name="Settings_label_Version">
-               <property name="font">
-                <font>
-                 <family>Noto Sans</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Katalog version:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Line" name="Settings_line_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="Settings_label_Version_2">
-               <property name="font">
-                <font>
-                 <family>Noto Sans</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>0.17     2021-05-01</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="Settings_verticalSpacer_06">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Settings_pushButton_Wiki">
-               <property name="text">
-                <string>Katalog's Wiki</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
-               <property name="text">
-                <string>Release Notes</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="0" column="0">
-            <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
-             <item>
-              <spacer name="Settings_verticalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="Collection_label_CurrentFolder">
-               <property name="maximumSize">
-                <size>
-                 <width>115</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Collection folder</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Line" name="line">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
-               <property name="toolTip">
-                <string>Select a different Collection folder</string>
-               </property>
-               <property name="text">
-                <string>Select</string>
-               </property>
-               <property name="icon">
-                <iconset theme="edit-select">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Collection_pushButton_Reload">
-               <property name="toolTip">
-                <string>Reload all catalog information</string>
-               </property>
-               <property name="text">
-                <string>Reload</string>
-               </property>
-               <property name="icon">
-                <iconset theme="view-refresh">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
-               <property name="toolTip">
-                <string>Open the collection folder</string>
-               </property>
-               <property name="text">
-                <string>Open</string>
-               </property>
-               <property name="icon">
-                <iconset theme="document-open">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
              <item row="2" column="1">
               <widget class="QLabel" name="Settings_label_Data">
@@ -3830,6 +3662,110 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
             </layout>
            </item>
+           <item row="4" column="0">
+            <spacer name="Settings_verticalSpacer_04">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
+             <item>
+              <spacer name="Settings_verticalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="Collection_label_CurrentFolder">
+               <property name="maximumSize">
+                <size>
+                 <width>115</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Collection folder</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
+               <property name="toolTip">
+                <string>Select a different Collection folder</string>
+               </property>
+               <property name="text">
+                <string>Select</string>
+               </property>
+               <property name="icon">
+                <iconset theme="edit-select">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Collection_pushButton_Reload">
+               <property name="toolTip">
+                <string>Reload all catalog information</string>
+               </property>
+               <property name="text">
+                <string>Reload</string>
+               </property>
+               <property name="icon">
+                <iconset theme="view-refresh">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
+               <property name="toolTip">
+                <string>Open the collection folder</string>
+               </property>
+               <property name="text">
+                <string>Open</string>
+               </property>
+               <property name="icon">
+                <iconset theme="document-open">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
            <item row="1" column="0">
             <spacer name="Settings_verticalSpacer_7">
              <property name="orientation">
@@ -3846,38 +3782,91 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </property>
             </spacer>
            </item>
-           <item row="3" column="0">
-            <spacer name="Settings_verticalSpacer_04">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+           <item row="5" column="0">
+            <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
+             <item>
+              <widget class="QLabel" name="Settings_label_Version">
+               <property name="font">
+                <font>
+                 <family>Noto Sans</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Katalog version:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="Settings_line_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="Settings_label_Version_2">
+               <property name="font">
+                <font>
+                 <family>Noto Sans</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>0.17     2021-05-01</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="Settings_verticalSpacer_06">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Settings_pushButton_Wiki">
+               <property name="text">
+                <string>Katalog's Wiki</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
+               <property name="text">
+                <string>Release Notes</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="Settings_pushButton_ImportVVV">
+             <property name="text">
+              <string>Import from VVV tab separated</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tab">
-          <attribute name="title">
-           <string>DEV</string>
-          </attribute>
-          <widget class="QPushButton" name="Settings_pushButton_ImportVVV">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>180</y>
-             <width>121</width>
-             <height>26</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>import VVV</string>
-           </property>
-          </widget>
          </widget>
         </widget>
        </item>
