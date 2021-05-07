@@ -617,25 +617,6 @@ void MainWindow::saveStorageModelToFile()
     //    -- Make a QStringList containing the output of each field
     QStringList fieldList;
     while (query.next()) {
-//        fieldList.clear();
-//        fieldList.append(query.value(0).toString());
-//        fieldList.append(query.value(1).toString());
-//        fieldList.append(query.value(2).toString());
-//        fieldList.append(query.value(3).toString());
-//        fieldList.append(query.value(4).toString());
-//        fieldList.append(query.value(5).toString());
-//        fieldList.append(query.value(6).toString());
-//        fieldList.append(query.value(7).toString());
-//        fieldList.append(query.value(8).toString());
-//        fieldList.append(query.value(9).toString());
-//        fieldList.append(query.value(10).toString());
-//        fieldList.append(query.value(11).toString());
-//        fieldList.append(query.value(12).toString());
-//        fieldList.append(query.value(13).toString());
-//        fieldList.append(query.value(14).toString());
-        //    -- Use join on that list using comma as separator
-//         QString line = fieldList.join("/t");
-//         QMessageBox::information(this,"Katalog","Ok." + line);
 
         const QSqlRecord record = query.record();
         for (int i=0, recCount = record.count() ; i<recCount ; ++i){

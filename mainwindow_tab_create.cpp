@@ -40,9 +40,6 @@
 
 #include <iostream>
 
-//#include <KMessageBox>
-//#include <KLocalizedString>
-
 //TAB: Create Catalog ----------------------------------------------------------------------
 
     //Load file system for the treeview
@@ -155,20 +152,6 @@
         //Set this new catalog as the selected Catalog
         selectedCatalogFileCount        = catalogFilesNumber;
         selectedCatalogTotalFileSize    = catalogTotalFileSize;
-
-        /*
-                catalogFilePath,
-                catalogName,
-                catalogDateUpdated,
-                catalogSourcePath,
-                catalogFileCount,
-                catalogTotalFileSize,
-                catalogSourcePathIsActive,
-                catalogIncludeHidden,
-                catalogFileType,
-                catalogStorage,
-                catalogIncludeSymblinks
-        */
 
         QSqlQuery query;
         query.prepare("UPDATE Catalog "
