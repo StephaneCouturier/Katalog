@@ -167,7 +167,7 @@
 
         loadCatalogFilesToTable();
 
-        //DEV   Stop animation
+        //Stop animation
         QApplication::restoreOverrideCursor();
     }
     //----------------------------------------------------------------------
