@@ -137,6 +137,7 @@
                  QFile::rename(selectedCatalogFile, newCatalogFullName);
 
                  //refresh catalog lists
+                    loadCatalogFilesToTable();
                     loadCatalogsToModel();
                     //LoadCatalogFileList();
                     refreshCatalogSelectionList("","");
@@ -147,7 +148,10 @@
         {   //Update the selected catalog
 
             updateCatalog(selectedCatalogName);
-            loadCollection();
+
+            //refresh catalog lists
+               loadCatalogFilesToTable();
+               loadCatalogsToModel();
 
         }
         //----------------------------------------------------------------------
@@ -228,6 +232,10 @@
                 }
              }
             else QMessageBox::information(this,"Katalog",("Please select a catalog above first."));
+
+            //refresh catalog lists
+               loadCatalogFilesToTable();
+               loadCatalogsToModel();
         }
         //----------------------------------------------------------------------
 
@@ -430,10 +438,10 @@
             ui->Collection_treeView_CatalogList->header()->hideSection(1); //Path
 
             //change columns size
-            ui->Collection_treeView_CatalogList->header()->resizeSection(0, 300); //Name
+            ui->Collection_treeView_CatalogList->header()->resizeSection(0, 450); //Name
             ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
-            ui->Collection_treeView_CatalogList->header()->resizeSection(3, 100); //Files
-            ui->Collection_treeView_CatalogList->header()->resizeSection(4, 125); //TotalFileSize
+            ui->Collection_treeView_CatalogList->header()->resizeSection(3,  80); //Files
+            ui->Collection_treeView_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
             ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
             ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
             ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
