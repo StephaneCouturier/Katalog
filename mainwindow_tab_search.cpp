@@ -56,6 +56,11 @@
         {
             searchFiles();
         }
+        void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
+        {
+            searchFiles();
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
         {

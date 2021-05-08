@@ -161,11 +161,3 @@ QString querySQL = QLatin1String(R"(
 query.prepare(querySQL);
 query.exec();
 */
-
-
-
-
-
-
-
-

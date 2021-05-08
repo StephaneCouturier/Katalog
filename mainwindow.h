@@ -275,7 +275,10 @@ class MainWindow : public QMainWindow
 
                 void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
+
                 void on_Settings_comboBox_Theme_currentTextChanged();
+
+                void on_Settings_pushButton_ImportVVV_clicked();
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -290,6 +293,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_ExportResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
             void on_Search_kcombobox_SearchText_returnPressed();
+            void on_Search_lineEdit_SearchText_returnPressed();
 
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
@@ -367,7 +371,7 @@ class MainWindow : public QMainWindow
             void loadFolderTagModel();
 
 
-            void on_Settings_pushButton_ImportVVV_clicked();
+
 };
 
 #endif // MAINWINDOW_H
