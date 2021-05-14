@@ -101,6 +101,7 @@ void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QS
     //Load matching Catalog
     loadCatalogsToModel();
     loadStorageTableToModel();
+    refreshStorageStatistics();
 
 }
 //----------------------------------------------------------------------

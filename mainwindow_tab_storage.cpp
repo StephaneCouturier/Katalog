@@ -644,7 +644,39 @@ void MainWindow::saveStorageModelToFile()
 
 void MainWindow::refreshStorageStatistics()
 {
+    //Get storage statistics
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                        SELECT  COUNT (storageID),
+                                SUM(storageFreeSpace),
+                                SUM(storageTotalSpace)
+                        FROM storage
+                        WHERE storageName !=''
+                                    )");
+
+    if ( selectedSearchLocation !="All"){
+        querySQL = querySQL + " AND storageLocation =:storageLocation";
+    }
+
+    query.prepare(querySQL);
+    query.bindValue(":storageLocation",selectedSearchLocation);
+    query.exec();
+    query.next();
+
     //Get the number of devices
+    int deviceNumber = query.value(0).toInt();
+    ui->Storage_label_CountValue->setText(QString::number(deviceNumber));
+    //Get the sum of free space
+    qint64 freeSpaceTotal = query.value(1).toLongLong();
+    ui->Storage_label_SpaceFreeValue->setText(QLocale().formattedDataSize(freeSpaceTotal));
+    //Get the sum of total space
+    qint64 totalSpace = query.value(2).toLongLong();
+    ui->Storage_label_SpaceTotalValue->setText(QLocale().formattedDataSize(totalSpace));
+    //Calculate used space
+    qint64 usedSpace = totalSpace - freeSpaceTotal;
+    ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
+
+/*    //Get the number of devices
     QSqlQuery queryDeviceNumber;
     queryDeviceNumber.prepare( "SELECT COUNT (storageID) FROM storage" );
     queryDeviceNumber.exec();
@@ -671,7 +703,7 @@ void MainWindow::refreshStorageStatistics()
     //Calculate used space
     qint64 usedSpace = totalSpace - freeSpaceTotal;
     ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
-
+*/
     //Get the percent of free space
     if ( totalSpace !=0){
     float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;

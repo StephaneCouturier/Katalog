@@ -304,7 +304,7 @@
 
             //restore Search catalog selection
             //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-           // ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+            //ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
             //ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
             //hide buttons to force user to select a catalog before allowing any action.
@@ -410,7 +410,7 @@
                                             catalogStorage              AS 'Storage',
                                             storageLocation             AS 'Location'
                                         FROM catalog
-                                        LEFT JOIN storage AS s ON catalogStorage = storageName
+                                        LEFT JOIN storage ON catalogStorage = storageName
                                         WHERE catalogName !=''
                                         )");  
 
@@ -433,16 +433,16 @@
             CatalogsView *proxyResultsModel = new CatalogsView(this);
             proxyResultsModel->setSourceModel(catalogQueryModel);
 
-            // Connect model to tree/table view
+            //Connect model to tree/table view
             ui->Collection_treeView_CatalogList->setModel(proxyResultsModel);
             ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
             ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
 
-            //hide column with file path
+            //Hide column with file path
             ui->Collection_treeView_CatalogList->header()->hideSection(1); //Path
 
-            //change columns size
+            //Change columns size
             ui->Collection_treeView_CatalogList->header()->resizeSection(0, 450); //Name
             ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
             ui->Collection_treeView_CatalogList->header()->resizeSection(3,  80); //Files
@@ -456,10 +456,18 @@
             //Populate catalog statistics
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT COUNT(*),SUM(catalogTotalFileSize),SUM(catalogFileCount)
-                                FROM Catalog
+                                SELECT COUNT(catalogName),SUM(catalogTotalFileSize),SUM(catalogFileCount)
+                                FROM catalog
+                                LEFT JOIN storage ON catalogStorage = storageName
+                                WHERE catalogName !=''
                                             )");
+
+            if ( selectedSearchLocation !="All"){
+                querySQL = querySQL + " AND storageLocation =:storageLocation";
+            }
+
             query.prepare(querySQL);
+            query.bindValue(":storageLocation",selectedSearchLocation);
             query.exec();
             query.next();
 
