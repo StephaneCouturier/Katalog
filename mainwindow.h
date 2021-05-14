@@ -278,8 +278,6 @@ class MainWindow : public QMainWindow
 
                 void on_Settings_comboBox_Theme_currentTextChanged();
 
-                void on_Settings_pushButton_ImportVVV_clicked();
-
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
 
@@ -319,7 +317,7 @@ class MainWindow : public QMainWindow
             void on_Collection_pushButton_EditCatalogFile_clicked();
             void on_Collection_pushButton_RecordCatalogStats_clicked();
             void on_Collection_pushButton_ViewCatalogStats_clicked();
-            void on_Collection_pushButton_Convert_clicked();
+            void on_Collection_pushButton_Import_clicked();
             void on_Collection_pushButton_DeleteCatalog_clicked();
             void refreshLocationCollectionFilter();
 
