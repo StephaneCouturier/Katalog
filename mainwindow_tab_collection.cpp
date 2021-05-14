@@ -465,9 +465,13 @@
             if ( selectedSearchLocation !="All"){
                 querySQL = querySQL + " AND storageLocation =:storageLocation";
             }
+            if ( selectedSearchStorage !="All"){
+                querySQL = querySQL + " AND catalogStorage =:catalogStorage";
+            }
 
             query.prepare(querySQL);
             query.bindValue(":storageLocation",selectedSearchLocation);
+            query.bindValue(":catalogStorage", selectedSearchStorage);
             query.exec();
             query.next();
 
