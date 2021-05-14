@@ -3611,7 +3611,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </font>
                </property>
                <property name="text">
-                <string>0.17     2021-05-01</string>
+                <string>0.18     2021-05-01</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
