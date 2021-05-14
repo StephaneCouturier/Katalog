@@ -99,8 +99,8 @@ FORMS += \
     mainwindow.ui
 
 TRANSLATIONS += \
-    Katalog_en_EN.ts \
-    Katalog_fr_FR.ts
+    translations/Katalog_en_EN.ts \
+    translations/Katalog_fr_FR.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -109,11 +109,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Katalog_en_EN.ts \
-    README.md
+    README.md \
+    translations/Katalog_en_EN.ts \
+    translations/Katalog_fr_FR.ts
 
 RESOURCES += \
     icons.qrc \
-    images.qrc
+    images.qrc \
+    translations.qrc
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico

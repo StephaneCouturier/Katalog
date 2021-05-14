@@ -34,6 +34,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QTranslator>
 
 #ifdef Q_OS_LINUX
     #include <KAboutData>
@@ -45,6 +46,15 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    QTranslator* translator=new QTranslator(0);
+    //if (translator->load(QLocale(), QLatin1String("Katalog"), QLatin1String("_"), QLatin1String(":/translations"))) {
+     if (translator->load("Katalog_fr_FR", ":translations")) {
+         app.installTranslator(translator);
+     }
+
+//     if (translator->load(QLocale(), QLatin1String("testlang3"), QLatin1String("_"), QLatin1String(":/i18n")))
+//             QCoreApplication::installTranslator(&translator);
 
     #ifdef Q_OS_LINUX
         KLocalizedString::setApplicationDomain("Katalog");
