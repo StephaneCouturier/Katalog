@@ -112,6 +112,7 @@
         ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
         ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());
+        ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
 
         //last tab selected
         selectedTab = settings.value("Settings/selectedTab").toInt();
@@ -401,7 +402,7 @@
         //----------------------------------------------------------------------
         void MainWindow::saveFileAs()
         {
-            saveFileAs(QFileDialog::getSaveFileName(this, ("Save File As")));
+            saveFileAs(QFileDialog::getSaveFileName(this, tr("Save File As")));
             //ui->statusbar->showMessage(fileName);
         }
         //----------------------------------------------------------------------

@@ -394,7 +394,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>45</width>
                 <height>0</height>
                </size>
               </property>
@@ -509,7 +509,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>25</width>
+                <width>45</width>
                 <height>0</height>
                </size>
               </property>
@@ -986,7 +986,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <item>
                <property name="text">
-                <string>Any</string>
+                <string>All</string>
                </property>
               </item>
               <item>
@@ -1340,7 +1340,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item>
              <widget class="QLabel" name="Collection_label_CatalogsLabel">
               <property name="text">
-               <string>Catalogs:</string>
+               <string>Catalogs</string>
               </property>
              </widget>
             </item>
@@ -1375,7 +1375,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item>
              <widget class="QLabel" name="Collection_label_TotalSizeLabel">
               <property name="text">
-               <string>Total File Size:</string>
+               <string>Total File Size</string>
               </property>
              </widget>
             </item>
@@ -1410,7 +1410,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item>
              <widget class="QLabel" name="Collection_label_TotalNumberLabel">
               <property name="text">
-               <string>Total Number of Files:</string>
+               <string>Total Number of Files</string>
               </property>
              </widget>
             </item>
@@ -1536,7 +1536,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </font>
               </property>
               <property name="text">
-               <string>with selected Catalog:</string>
+               <string>with selected Catalog</string>
               </property>
              </widget>
             </item>
@@ -1748,7 +1748,103 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Explore a catalog</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10">
-        <item row="7" column="0">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="Explore_horizontalLayout_CatalogInfo">
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogNameLabel">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Explore_horizontalSpacer_01">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogPathLabel">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Path</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Explore_horizontalSpacer_02">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="Line" name="Explore_line_Separate">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
          <layout class="QHBoxLayout" name="Explore_horizontalLayout_CatalogContent" stretch="0,0">
           <property name="spacing">
            <number>6</number>
@@ -1815,7 +1911,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Number of files:</string>
+                 <string>Number of files</string>
                 </property>
                </widget>
               </item>
@@ -1823,6 +1919,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Explore_label_FilesNumberDisplay">
                 <property name="enabled">
                  <bool>true</bool>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -1870,109 +1974,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
-         <widget class="Line" name="Explore_line_Separate">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <layout class="QHBoxLayout" name="Explore_horizontalLayout_CatalogInfo">
-          <item>
-           <widget class="QLabel" name="Explore_label_CatalogNameLabel">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Catalog Name:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="Explore_horizontalSpacer_01">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="Explore_label_CatalogPathLabel">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Catalog Path:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="Explore_horizontalSpacer_02">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>(select a catalog in the tab Catalogs first and click Explore)</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_Create">
@@ -1990,20 +1991,65 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="0" column="2">
          <layout class="QVBoxLayout" name="Create_verticalLayout_2_OptionsButton">
           <item>
-           <widget class="QLabel" name="Create_label_SelectContent">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>2- Select Content options</string>
-            </property>
-            <property name="margin">
-             <number>6</number>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="Create_label_SelectThePath_4">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>2- </string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Create_label_SelectContent">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Select Content options</string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="Line" name="Create_hline_02">
@@ -2235,20 +2281,65 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="Create_label_DefineCreate">
-            <property name="font">
-             <font>
-              <family>Noto Sans</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>3- Define &amp; Create catalog</string>
-            </property>
-            <property name="margin">
-             <number>6</number>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="Create_label_SelectThePath_5">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>3- </string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Create_label_DefineCreate">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Define &amp; Create catalog</string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="Line" name="Create_hline_03">
@@ -2527,32 +2618,77 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="0" column="0">
          <layout class="QVBoxLayout" name="Create_verticalLayout_1_SelectPath">
           <item>
-           <widget class="QLabel" name="Create_label_SelectThePath">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Open Sans</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>1- Select Source path</string>
-            </property>
-            <property name="margin">
-             <number>6</number>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="Create_label_SelectThePath_3">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>1- </string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Create_label_SelectThePath">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Open Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Select Source path</string>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="Line" name="Create_hline_01">
@@ -2638,7 +2774,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </font>
             </property>
             <property name="text">
-             <string>with selected: </string>
+             <string>with selected</string>
             </property>
             <property name="margin">
              <number>6</number>
@@ -2800,7 +2936,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_CountLabel">
             <property name="text">
-             <string>Devices:</string>
+             <string>Devices</string>
             </property>
             <property name="margin">
              <number>6</number>
@@ -2841,7 +2977,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceTotalLabel">
             <property name="text">
-             <string>Total Space:</string>
+             <string>Total Space</string>
             </property>
            </widget>
           </item>
@@ -2870,7 +3006,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceUsedLabel">
             <property name="text">
-             <string>Used Space: </string>
+             <string>Used Space</string>
             </property>
            </widget>
           </item>
@@ -2899,7 +3035,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceFreeLabel">
             <property name="text">
-             <string>Free Space:</string>
+             <string>Free Space</string>
             </property>
            </widget>
           </item>
@@ -3068,7 +3204,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="text">
-               <string>Type of data:</string>
+               <string>Type of data</string>
               </property>
              </widget>
             </item>
@@ -3094,7 +3230,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="text">
-               <string>Catalog:</string>
+               <string>Catalog</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3404,31 +3540,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <string>Filters</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="4" column="0">
-            <widget class="QLabel" name="Filters_label_Storage">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Storage</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <spacer name="Filters_verticalSpacer_1">
+           <item row="3" column="0">
+            <spacer name="Filters_verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>40</height>
+               <height>10</height>
               </size>
              </property>
             </spacer>
@@ -3449,8 +3572,24 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </property>
             </spacer>
            </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="Filters_label_Catalog">
+           <item row="1" column="0">
+            <widget class="QLabel" name="Filters_label_Location">
+             <property name="minimumSize">
+              <size>
+               <width>70</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Location</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="Filters_label_Storage">
              <property name="minimumSize">
               <size>
                <width>60</width>
@@ -3458,35 +3597,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </size>
              </property>
              <property name="text">
-              <string>Catalog</string>
+              <string>Storage</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="5" column="0" colspan="3">
-            <widget class="QComboBox" name="Filters_comboBox_SelectStorage"/>
-           </item>
-           <item row="8" column="0" colspan="3">
-            <widget class="QComboBox" name="Filters_comboBox_SelectCatalog">
-             <property name="font">
-              <font>
-               <family>Noto Sans</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Select catalog(s) to search into</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
+           <item row="0" column="1">
             <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
              <property name="minimumSize">
               <size>
                <width>30</width>
                <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="toolTip">
@@ -3501,11 +3630,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="0" colspan="3">
+           <item row="5" column="0" colspan="2">
+            <widget class="QComboBox" name="Filters_comboBox_SelectStorage"/>
+           </item>
+           <item row="2" column="0" colspan="2">
             <widget class="QComboBox" name="Filters_comboBox_SelectLocation"/>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Filters_label_Location">
+           <item row="7" column="0">
+            <widget class="QLabel" name="Filters_label_Catalog">
              <property name="minimumSize">
               <size>
                <width>60</width>
@@ -3513,41 +3645,38 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </size>
              </property>
              <property name="text">
-              <string>Location</string>
+              <string>Catalog</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <spacer name="Filters_verticalSpacer_2">
+           <item row="9" column="0">
+            <spacer name="Filters_verticalSpacer_1">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>10</height>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
-           <item row="0" column="1">
-            <spacer name="Filters_horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item row="8" column="0" colspan="2">
+            <widget class="QComboBox" name="Filters_comboBox_SelectCatalog">
+             <property name="font">
+              <font>
+               <family>Noto Sans</family>
+               <pointsize>10</pointsize>
+              </font>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
+             <property name="toolTip">
+              <string>Select catalog(s) to search into</string>
              </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -3586,7 +3715,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Katalog version:</string>
+                <string>Version</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -3611,7 +3740,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </font>
                </property>
                <property name="text">
-                <string>0.18     2021-05-01</string>
+                <string>0.18     2021-05-14</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -3652,20 +3781,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </item>
            <item row="2" column="0">
             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
-             <item row="2" column="1">
-              <widget class="QLabel" name="Settings_label_Data">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Data</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
+             <item row="13" column="1">
               <widget class="QComboBox" name="Settings_comboBox_Theme">
                <property name="minimumSize">
                 <size>
@@ -3688,21 +3804,97 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
               </widget>
              </item>
+             <item row="11" column="1">
+              <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+               <property name="text">
+                <string>Keep 1 backup per catalog</string>
+               </property>
+              </widget>
+             </item>
              <item row="7" column="1">
-              <spacer name="Settings_verticalSpacer_03">
+              <widget class="QLabel" name="Settings_label_Data">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Data</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QLabel" name="Settings_label_Theme">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Theme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QComboBox" name="Settings_comboBox_Language">
+               <item>
+                <property name="text">
+                 <string>System default</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>en_US</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>fr_FR</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+               <property name="text">
+                <string>Save records for Statistics</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="Settings_label_Theme_2">
+               <property name="text">
+                <string>(requires to restart)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="Line" name="line_2">
                <property name="orientation">
-                <enum>Qt::Vertical</enum>
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLabel" name="Settings_label_Data_2">
+               <property name="font">
+                <font>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
+               <property name="text">
+                <string>Language</string>
                </property>
-              </spacer>
+              </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLabel" name="Settings_label_Settings">
@@ -3716,53 +3908,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </property>
                <property name="text">
                 <string>Settings</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-               <property name="text">
-                <string>Save records for Statistics</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="QLabel" name="Settings_label_Theme">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Theme</string>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="1">
-              <widget class="QLabel" name="Settings_label_Theme_2">
-               <property name="text">
-                <string>(requires to restart)</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-               <property name="text">
-                <string>Keep 1 backup file per catalog</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="Line" name="line_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -3790,7 +3935,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <widget class="QLabel" name="Collection_label_CurrentFolder">
                <property name="maximumSize">
                 <size>
-                 <width>115</width>
+                 <width>180</width>
                  <height>16777215</height>
                 </size>
                </property>

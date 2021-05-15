@@ -47,14 +47,25 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QTranslator* translator=new QTranslator(0);
-    //if (translator->load(QLocale(), QLatin1String("Katalog"), QLatin1String("_"), QLatin1String(":/translations"))) {
-     if (translator->load("Katalog_fr_FR", ":translations")) {
-         app.installTranslator(translator);
-     }
+    //Get language choice and apply translation
+        //Get user home path
+        QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        QString homePath = standardsPaths[0];
 
-//     if (translator->load(QLocale(), QLatin1String("testlang3"), QLatin1String("_"), QLatin1String(":/i18n")))
-//             QCoreApplication::installTranslator(&translator);
+        //Define Setting file path and name
+        QString settingsFile = homePath + "/.config/katalog_settings.ini";
+        QSettings settings(settingsFile, QSettings:: IniFormat);
+
+        //bool useSystemLocale = settings.value("Settings/UseSystemLocale").toBool();
+        QString userLanguage = settings.value("Settings/Language").toString();
+        if ( userLanguage != "System Default" ){
+        //if ( useSystemLocale==true ){
+            QTranslator* translator=new QTranslator(0);
+            //if (translator->load(QLocale(), QLatin1String("Katalog"), QLatin1String("_"), QLatin1String(":/translations"))) {
+            if (translator->load("Katalog_" + userLanguage, ":translations")) {
+                app.installTranslator(translator);
+            }
+        }
 
     #ifdef Q_OS_LINUX
         KLocalizedString::setApplicationDomain("Katalog");

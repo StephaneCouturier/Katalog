@@ -162,3 +162,9 @@ void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
     QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.16"));
 }
 
+void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
+{
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("Settings/Language", selectedLanguage);
+
+}

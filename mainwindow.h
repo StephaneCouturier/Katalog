@@ -273,6 +273,8 @@ class MainWindow : public QMainWindow
                 void on_Collection_pushButton_OpenFolder_clicked();
                 void on_Collection_lineEdit_CollectionFolder_returnPressed();
 
+                void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
+
                 void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
 

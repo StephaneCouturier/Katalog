@@ -225,8 +225,8 @@ void MainWindow::loadCatalogFilesToExplore()
                         SELECT  fileName AS Name,
                                 fileSize AS Size,
                                 fileDateUpdated AS Date,
-                                fileCatalog AS Catalog,
-                                filePath AS Path
+                                filePath AS Path,
+                                fileCatalog AS Catalog
                         FROM file
                                     )");
     QSqlQuery loadCatalogQuery;
@@ -238,6 +238,12 @@ void MainWindow::loadCatalogFilesToExplore()
 
     FilesView *proxyModel2 = new FilesView(this);
     proxyModel2->setSourceModel(loadCatalogQueryModel);
+
+    proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
+    proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
+    proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
+    proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Path"));
+    proxyModel2->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
     // Connect model to tree/table view
     ui->Explore_treeView_FileList->setModel(proxyModel2);
