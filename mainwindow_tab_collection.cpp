@@ -398,12 +398,12 @@
             //prepare the main part of the query
             loadCatalogSQL  = QLatin1String(R"(
                                         SELECT
-                                            catalogName                 AS 'Name',
-                                            catalogFilePath             AS 'File Path',
-                                            catalogDateUpdated          AS 'Last Update',
-                                            catalogFileCount            AS 'Files',
-                                            catalogTotalFileSize        AS 'Total Size',
-                                            catalogSourcePath           AS 'Source Path',
+                                            catalogName                 ,
+                                            catalogFilePath             ,
+                                            catalogDateUpdated          ,
+                                            catalogFileCount            ,
+                                            catalogTotalFileSize        ,
+                                            catalogSourcePath           ,
                                             catalogFileType             AS 'File Type',
                                             catalogSourcePathIsActive   AS 'Active',
                                             catalogIncludeHidden        AS 'Inc.Hidden',
@@ -433,6 +433,17 @@
             CatalogsView *proxyResultsModel = new CatalogsView(this);
             proxyResultsModel->setSourceModel(catalogQueryModel);
 
+            proxyResultsModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+            proxyResultsModel->setHeaderData(2, Qt::Horizontal, tr("Last Update"));
+            proxyResultsModel->setHeaderData(3, Qt::Horizontal, tr("Files"));
+            proxyResultsModel->setHeaderData(4, Qt::Horizontal, tr("Total Size"));
+            proxyResultsModel->setHeaderData(5, Qt::Horizontal, tr("Source Path"));
+            proxyResultsModel->setHeaderData(6, Qt::Horizontal, tr("File Type"));
+            proxyResultsModel->setHeaderData(7, Qt::Horizontal, tr("Active"));
+            proxyResultsModel->setHeaderData(8, Qt::Horizontal, tr("Inc.Hidden"));
+            proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
+            proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
+
             //Connect model to tree/table view
             ui->Collection_treeView_CatalogList->setModel(proxyResultsModel);
             ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
@@ -452,6 +463,7 @@
             ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
             ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
             ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
+            ui->Collection_treeView_CatalogList->header()->resizeSection(10,150); //Location
 
             //Populate catalog statistics
             QSqlQuery query;
