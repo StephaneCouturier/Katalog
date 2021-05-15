@@ -467,6 +467,11 @@
                     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
                     proxyModel->setSourceModel(searchResultsCatalog);
 
+                    proxyModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                    proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                    proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                    proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+
                     // Connect model to tree/table view
                     ui->Search_treeView_FilesFound->setModel(proxyModel);
                     ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
@@ -489,6 +494,11 @@
 
                         FilesView *proxyModel2 = new FilesView(this);
                         proxyModel2->setSourceModel(searchResultsCatalog);
+
+                        proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                        proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                        proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                        proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Folder"));
 
                         // Connect model to tree/table view
                         ui->Search_treeView_FilesFound->setModel(proxyModel2);
