@@ -404,11 +404,11 @@
                                             catalogFileCount            ,
                                             catalogTotalFileSize        ,
                                             catalogSourcePath           ,
-                                            catalogFileType             AS 'File Type',
-                                            catalogSourcePathIsActive   AS 'Active',
-                                            catalogIncludeHidden        AS 'Inc.Hidden',
-                                            catalogStorage              AS 'Storage',
-                                            storageLocation             AS 'Location'
+                                            catalogFileType             ,
+                                            catalogSourcePathIsActive   ,
+                                            catalogIncludeHidden        ,
+                                            catalogStorage              ,
+                                            storageLocation
                                         FROM catalog
                                         LEFT JOIN storage ON catalogStorage = storageName
                                         WHERE catalogName !=''

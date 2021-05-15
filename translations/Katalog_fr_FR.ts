@@ -44,6 +44,10 @@
         <translation>Nombre Total de Fichiers</translation>
     </message>
     <message>
+        <source>Number of Files</source>
+        <translation>Nombre de Fichiers</translation>
+    </message>
+    <message>
         <source>Rename</source>
         <translation>Renommer</translation>
     </message>
@@ -56,8 +60,16 @@
         <translation>Editer</translation>
     </message>
     <message>
+        <source>Files</source>
+        <translation>Fichiers</translation>
+    </message>
+    <message>
         <source>View</source>
         <translation>Voir</translation>
+    </message>
+    <message>
+        <source>Last Update</source>
+        <translation>Dernière Mise-à-jour</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -228,10 +240,6 @@
         <translation>Editer les enregistrements</translation>
     </message>
     <message>
-        <source>Number of files</source>
-        <translation>nombre de fichiers</translation>
-    </message>
-    <message>
         <source>Select Source path</source>
         <translation>Sélectionner le chemin source</translation>
     </message>
@@ -242,6 +250,22 @@
     <message>
         <source>Define &amp; Create catalog</source>
         <translation>Définir et créer le catalogue</translation>
+    </message>
+    <message>
+        <source>Total Size</source>
+        <translation>Taille Totale</translation>
+    </message>
+    <message>
+        <source>Source Path</source>
+        <translation>Chemin Source</translation>
+    </message>
+    <message>
+        <source>File Type</source>
+        <translation>Type de Fichier</translation>
+    </message>
+    <message>
+        <source>Inc.Hidden</source>
+        <translation>Inc.Cachés</translation>
     </message>
     <message>
         <source>include File Type</source>
@@ -304,6 +328,22 @@
         <translation>Un des Mots</translation>
     </message>
     <message>
+        <source>Catalogs with results</source>
+        <translation>Catalogues avec résultats</translation>
+    </message>
+    <message>
+        <source>Select Storage</source>
+        <translation>Sélectionner le Stockage</translation>
+    </message>
+    <message>
+        <source>(optional, can be modified later by editing the Catalog)</source>
+        <translation>(optionel, cela peut être modifié plus tard en éditant le Catalogue)</translation>
+    </message>
+    <message>
+        <source>Enter the Name of the new catalog</source>
+        <translation>Entrer le Nom du nouveau catalogue</translation>
+    </message>
+    <message>
         <source>File names or Folder paths</source>
         <translation>Noms de Fichers ou Chemin des Dossiers</translation>
     </message>
@@ -314,6 +354,50 @@
     <message>
         <source>Folder path only</source>
         <translation>Chemins des Dossiers uniquement</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>Etiquette</translation>
+    </message>
+    <message>
+        <source>FileSystem</source>
+        <translation>Système de Fichers</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>Total</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation>Libre</translation>
+    </message>
+    <message>
+        <source>Brand/Model</source>
+        <translation>Marque/Modèle</translation>
+    </message>
+    <message>
+        <source>Serial Number</source>
+        <translation>Numéro de Série</translation>
+    </message>
+    <message>
+        <source>Build Date</source>
+        <translation>Date de Fabrication</translation>
+    </message>
+    <message>
+        <source>Content Type</source>
+        <translation>Type de Contentu</translation>
+    </message>
+    <message>
+        <source>Container</source>
+        <translation>Conteneur</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Commentaire</translation>
+    </message>
+    <message>
+        <source>of</source>
+        <translation>de</translation>
     </message>
 </context>
 </TS>

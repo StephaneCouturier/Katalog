@@ -70,7 +70,7 @@ void MainWindow::on_Statistics_pushButton_Reload_clicked()
 //----------------------------------------------------------------------
 void MainWindow::loadStatisticsDataTypes()
 {
-    typeOfData << "Number of files" << "Total file size";
+    typeOfData << tr("Number of Files") << tr("Total File Size");
     listModel = new QStringListModel(this);
     listModel->setStringList(typeOfData);
     ui->Statistics_comboBox_TypeOfData->setModel(listModel);
@@ -101,7 +101,7 @@ void MainWindow::loadStatisticsChart()
 
         if ( selectedCatalogforStats  == values[1] ){
             QDateTime datetime = QDateTime::fromString(values[0],"yyyy-MM-dd hh:mm:ss");
-            if ( selectedTypeOfData == "Number of files" )
+            if ( selectedTypeOfData == tr("Number of Files") )
             {
                 number = values[2].toLongLong();
 
@@ -109,7 +109,7 @@ void MainWindow::loadStatisticsChart()
                 if ( number > maxValueGraphRange )
                     maxValueGraphRange = number;
             }
-            else if ( selectedTypeOfData == "Total file size" )
+            else if ( selectedTypeOfData == tr("Total File Size") )
             {
                 number = values[3].toLongLong();
                 if ( number > 2000000000 ){
@@ -134,19 +134,19 @@ void MainWindow::loadStatisticsChart()
     chart->legend()->hide();
     chart->setTitle("<p style=\"font-weight: bold; font-size: 22px; font-color: #AAA,\">"
                     +selectedTypeOfData+" "+displayUnit
-                    +" of <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span></p>");
+                    +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span></p>");
 
     //Format axis
     QDateTimeAxis *axisX = new QDateTimeAxis;
     //axisX->setTickCount(10);
     axisX->setFormat("yyyy-MM-dd");
-    axisX->setTitleText("Date");
+    axisX->setTitleText(tr("Date"));
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis;
     axisY->setLabelFormat("%i");
-    axisY->setTitleText("Total");
+    axisY->setTitleText(tr("Total"));
 
     //Calculate axisY max range value
         // Example: 848 365  >  get 6 digits, get the 8 and add one, and mutliply this by 10 power of 6-1 > so max range is 900 000

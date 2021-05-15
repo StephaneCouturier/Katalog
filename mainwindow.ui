@@ -1183,7 +1183,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Files found: </string>
+                 <string>Files found</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1195,14 +1195,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item>
                <widget class="QLabel" name="Search_label_NumberResults">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
                  <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -1519,13 +1530,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Collection_label_WithSelectedCatalog">
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>200</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>150</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1759,7 +1770,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </size>
             </property>
             <property name="text">
-             <string>Name</string>
+             <string>Catalog</string>
             </property>
            </widget>
           </item>
@@ -1906,12 +1917,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>115</width>
+                  <width>150</width>
                   <height>16777215</height>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Number of files</string>
+                 <string>Number of Files</string>
                 </property>
                </widget>
               </item>
@@ -2104,7 +2115,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <locale language="English" country="UnitedStates"/>
               </property>
               <property name="text">
-               <string>Any</string>
+               <string>Tous</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -2373,12 +2384,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <widget class="QLabel" name="Create_label_SelectThePath_2">
-            <property name="maximumSize">
-             <size>
-              <width>350</width>
-              <height>30</height>
-             </size>
-            </property>
             <property name="font">
              <font>
               <family>Open Sans</family>
@@ -2713,7 +2718,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Create_pushButton_PickPath">
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>120</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -2721,7 +2726,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <string>Select the path</string>
               </property>
               <property name="text">
-               <string>Select ...</string>
+               <string>Select</string>
               </property>
               <property name="icon">
                <iconset theme="edit-select">
@@ -3529,7 +3534,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="Global_tab1_Filters">
           <attribute name="icon">
