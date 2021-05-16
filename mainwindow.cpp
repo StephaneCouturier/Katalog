@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             #endif
 
             //load custom Katalog stylesheet instead of default theme
-            if ( ui->Settings_comboBox_Theme->currentText() == "Katalog Colors (light)" ){
+            if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
                 loadCustomTheme1();
             }
 

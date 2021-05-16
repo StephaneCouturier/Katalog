@@ -228,7 +228,7 @@
             if ( selectedCatalogFile != ""){
 
                 int result = QMessageBox::warning(this,"Katalog",
-                          tr("Do you want to delete this catalog,")+"\n"+selectedCatalogFile,QMessageBox::Yes|QMessageBox::Cancel);
+                          tr("Do you want to delete this catalog?")+"\n"+selectedCatalogFile,QMessageBox::Yes|QMessageBox::Cancel);
 
                 if ( result ==QMessageBox::Yes){
                     QFile file (selectedCatalogFile);
@@ -237,7 +237,7 @@
                     refreshCatalogSelectionList("","");
                 }
              }
-            else QMessageBox::information(this,"Katalog",tr("Please select a catalog above first."));
+            else QMessageBox::information(this,"Katalog",tr("Select a catalog above first."));
 
             //refresh catalog lists
                loadCatalogFilesToTable();

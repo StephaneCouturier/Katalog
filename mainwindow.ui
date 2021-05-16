@@ -430,7 +430,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define how the search text should be used&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Define how the search text should be used.</string>
               </property>
               <property name="whatsThis">
                <string>define how the search text should be used</string>
@@ -545,7 +545,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define if the search text should be used to look only in file names, or folder paths, or both.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Define if the search text should be used to look only in file names, or folder paths, or both.</string>
               </property>
               <item>
                <property name="text">
@@ -1468,7 +1468,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalog that are active, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Update all the catalog that are active, if the device is available.</string>
               </property>
               <property name="text">
                <string>All active</string>
@@ -2115,7 +2115,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <locale language="English" country="UnitedStates"/>
               </property>
               <property name="text">
-               <string>Tous</string>
+               <string>All</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -2210,7 +2210,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item>
              <widget class="QCheckBox" name="Create_checkBox_IncludeHidden">
               <property name="text">
-               <string>include Hidden files</string>
+               <string>Include Hidden files</string>
               </property>
              </widget>
             </item>
@@ -2220,49 +2220,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <locale language="English" country="UnitedStates"/>
               </property>
               <property name="text">
-               <string>follow symbolic links</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Create_checkBox_IncludeSubDir">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="locale">
-               <locale language="English" country="UnitedStates"/>
-              </property>
-              <property name="text">
-               <string>include sub-folders</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Create_checkBox_IncludeArchives">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="locale">
-               <locale language="English" country="UnitedStates"/>
-              </property>
-              <property name="text">
-               <string>include archives contents</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Create_checkBox_IncludeChecksum">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="locale">
-               <locale language="English" country="UnitedStates"/>
-              </property>
-              <property name="text">
-               <string>include checksum</string>
+               <string>Follow symbolic links</string>
               </property>
              </widget>
             </item>
@@ -2494,7 +2452,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>Generate a catalog name bsed on the path</string>
+               <string>Generate a catalog name based on the path.</string>
               </property>
               <property name="text">
                <string>Generate</string>
@@ -2752,7 +2710,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Storage</string>
        </attribute>
        <attribute name="toolTip">
-        <string>Manage the lit of storage devices</string>
+        <string>Manage the list of storage devices</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="1" column="0">

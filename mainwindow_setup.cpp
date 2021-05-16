@@ -176,10 +176,7 @@
         #endif
 
         //Create
-        ui->Create_checkBox_IncludeSubDir->hide();
         ui->Create_checkBox_IncludeSymblinks->hide();
-        ui->Create_checkBox_IncludeArchives->hide();
-        ui->Create_checkBox_IncludeChecksum->hide();
 
         //Explore
         ui->Explore_label_Directories->hide();

@@ -280,10 +280,6 @@
         <translation>Autres options</translation>
     </message>
     <message>
-        <source>include Hidden files</source>
-        <translation>inclure les fichiers Cachés</translation>
-    </message>
-    <message>
         <source>with selected</source>
         <translation>avec le sélectionné</translation>
     </message>
@@ -413,7 +409,7 @@
     </message>
     <message>
         <source>Do you want to delete this catalog?</source>
-        <translation type="vanished">Voulez-vous supprimer ce catalogue ?</translation>
+        <translation>Voulez-vous supprimer ce catalogue ?</translation>
     </message>
     <message>
         <source>A file was found, but could not be loaded</source>
@@ -456,16 +452,8 @@
         <translation>Prendre le texte du presse-papier</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define how the search text should be used&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Définir comment le texte de recherche doit être utilisé</translation>
-    </message>
-    <message>
         <source>define how the search text should be used</source>
         <translation>Définir comment le texte de recherche doit être utilisé</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define if the search text should be used to look only in file names, or folder paths, or both.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Défniir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
     </message>
     <message>
         <source>Choose to only show folders as results</source>
@@ -522,10 +510,6 @@
     <message>
         <source>Manage the catalogs</source>
         <translation>Gérér les catalogues</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalog that are active, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Mettre à jour tous les catalogues qui sont actifs, si le lecteur est disponible</translation>
     </message>
     <message>
         <source>All active</source>
@@ -589,31 +573,11 @@
     </message>
     <message>
         <source>2- </source>
-        <translation>2-</translation>
-    </message>
-    <message>
-        <source>Tous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>follow symbolic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include sub-folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include archives contents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>2- </translation>
     </message>
     <message>
         <source>3- </source>
-        <translation>3-</translation>
+        <translation>3- </translation>
     </message>
     <message>
         <source>Select a storage device to link the new catalog (optional)</source>
@@ -621,7 +585,7 @@
     </message>
     <message>
         <source>Add a new storage device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un nouveau stockage</translation>
     </message>
     <message>
         <source>NewCatalog</source>
@@ -632,44 +596,36 @@
         <translation>Entrer un nom pour le nouveau catalog</translation>
     </message>
     <message>
-        <source>Generate a catalog name bsed on the path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Launch the cataloging and save it to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancer le catalogue et le sauver dans un fichier</translation>
     </message>
     <message>
         <source>1- </source>
-        <translation type="unfinished"></translation>
+        <translation>1- </translation>
     </message>
     <message>
         <source>Select the path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Manage the lit of storage devices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search files or folders in the selected storage device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des fichiers ou dossiers dans le stockage sélectionné</translation>
     </message>
     <message>
         <source>Search files or folders in the selected location</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des fichiers ou dossiers dans le lieu sélectionné</translation>
     </message>
     <message>
         <source>Create a new catalog for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un nouveau catalogue pour ce stockage</translation>
     </message>
     <message>
         <source>Open the path in Filelight</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le chemin dans Filelight</translation>
     </message>
     <message>
         <source>Open in Filelight</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir dans Filelight</translation>
     </message>
     <message>
         <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
@@ -677,11 +633,11 @@
     </message>
     <message>
         <source>Delete the selected device</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le stockage sélectionné</translation>
     </message>
     <message>
         <source>(GiB)</source>
-        <translation type="unfinished"></translation>
+        <translation>(GiB)</translation>
     </message>
     <message>
         <source>%</source>
@@ -689,19 +645,19 @@
     </message>
     <message>
         <source>Create a list to add devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une liste pour ajouter les stockages</translation>
     </message>
     <message>
         <source>Reload the entire list of devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger la liste entière de stockages</translation>
     </message>
     <message>
         <source>Edit the list in a spreadsheet ( tab separated file)</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer la liste dans un tableur (fichier de données séparées pat tabulation)</translation>
     </message>
     <message>
         <source>Save changes made directly in the table below</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauver les changements fait diectement dans le tableau ci-dessous</translation>
     </message>
     <message>
         <source>View collection statistics</source>
@@ -713,15 +669,15 @@
     </message>
     <message>
         <source>Select a catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un catalogue</translation>
     </message>
     <message>
         <source>Edit the file storing all records</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer le fichier contenant tous les enregistrements</translation>
     </message>
     <message>
         <source>Reload the file storing all records</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger le fichier contenant les étiquettes</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -733,7 +689,7 @@
     </message>
     <message>
         <source>Add the tag to this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter l&apos;étiquette à ce dossier</translation>
     </message>
     <message>
         <source>Tag the folder</source>
@@ -741,7 +697,7 @@
     </message>
     <message>
         <source>Current folders and tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossiers et étiquettes en cours</translation>
     </message>
     <message>
         <source>Select a tag</source>
@@ -757,11 +713,11 @@
     </message>
     <message>
         <source>Existing tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquettes existantes</translation>
     </message>
     <message>
         <source>Reload the file storing the tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger le fichier contentant les étiquettes</translation>
     </message>
     <message>
         <source>Test</source>
@@ -769,10 +725,6 @@
     </message>
     <message>
         <source>Show/Hide Global settigns and filters.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -790,12 +742,12 @@
     <message>
         <source>Desktop Theme</source>
         <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Thème du bureau</translation>
     </message>
     <message>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Katalog Colors (thème clair)</translation>
     </message>
     <message>
         <source>en_US</source>
@@ -811,51 +763,51 @@
     </message>
     <message>
         <source>Reload all catalog information</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger toutes les informations de catalogues</translation>
     </message>
     <message>
         <source>Open the collection folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le dossier de la collection</translation>
     </message>
     <message>
         <source>Open a Katalog collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir une collection Katalog</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer le Fichier Sous</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le fichier</translation>
     </message>
     <message>
         <source>Open folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le dossier</translation>
     </message>
     <message>
         <source>Copy folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le chemin du répertoire</translation>
     </message>
     <message>
         <source>Copy file absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le chemin absolu du fichier</translation>
     </message>
     <message>
         <source>Copy file name with extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le nom de ficher avec extension</translation>
     </message>
     <message>
         <source>Copy file name without extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le nom de ficher sans extension</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <source>Folders found</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossiers trouvés</translation>
     </message>
     <message>
         <source>Select the directory to be cataloged in this new catalog</source>
@@ -863,14 +815,6 @@
     </message>
     <message>
         <source>QInputDialog::getText()</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to delete this catalog,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select a catalog above first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -887,14 +831,50 @@
     </message>
     <message>
         <source>Copy absolute path</source>
+        <translation>Copier le chemin absolu</translation>
+    </message>
+    <message>
+        <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
+        <translation>Défniir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
+    </message>
+    <message>
+        <source>Define how the search text should be used.</source>
+        <translation>Définir comment le texte de recherche doit être utilisé.</translation>
+    </message>
+    <message>
+        <source>Update all the catalog that are active, if the device is available.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a catalog above first.</source>
+        <translation>Sélectionner d&apos;abord un catalogue.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Hidden files</source>
+        <translation type="unfinished">inclure les fichiers Cachés</translation>
+    </message>
+    <message>
+        <source>Follow symbolic links</source>
+        <translation>Suivre ls liens symboliques</translation>
+    </message>
+    <message>
+        <source>Generate a catalog name based on the path.</source>
+        <translation>Générer un nom de catalogue à partir du chemin.</translation>
+    </message>
+    <message>
+        <source>Manage the list of storage devices</source>
+        <translation>Gérer la liste de stockages</translation>
     </message>
 </context>
 <context>
     <name>Tag</name>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dossier</translation>
     </message>
     <message>
         <source>Tag</source>

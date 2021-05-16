@@ -40,10 +40,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define how the search text should be used&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>define how the search text should be used</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,10 +61,6 @@
     </message>
     <message>
         <source>in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define if the search text should be used to look only in file names, or folder paths, or both.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -196,10 +188,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalog that are active, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All active</source>
         <translation type="unfinished"></translation>
     </message>
@@ -320,31 +308,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Other options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include Hidden files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>follow symbolic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include sub-folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include archives contents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>include checksum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -388,10 +352,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate a catalog name bsed on the path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Generate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -421,10 +381,6 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manage the lit of storage devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -770,14 +726,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to delete this catalog,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select a catalog above first.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Last Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -871,6 +819,42 @@
     </message>
     <message>
         <source>of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Define how the search text should be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update all the catalog that are active, if the device is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete this catalog?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a catalog above first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow symbolic links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate a catalog name based on the path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage the list of storage devices</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
