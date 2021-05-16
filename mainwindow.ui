@@ -304,7 +304,7 @@
                </font>
               </property>
               <property name="toolTip">
-               <string>Launch the search of files</string>
+               <string>Launch the search of files.</string>
               </property>
               <property name="locale">
                <locale language="English" country="UnitedStates"/>
@@ -634,7 +634,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>Search_pushButton_ResetAll</string>
+               <string>Reset all criteria to default values, and clear previous results.</string>
               </property>
               <property name="text">
                <string>Reset</string>
