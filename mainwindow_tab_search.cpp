@@ -387,35 +387,35 @@
                 //QApplication::setOverrideCursor(Qt::WaitCursor);
 
                 //Search every catalog if "All" is selected
-                if ( selectedSearchCatalog =="All"){
+                if ( selectedSearchCatalog ==tr("All")){
                     foreach(sourceCatalog,catalogSelectedList)
                             {
                                 searchFilesInCatalog(sourceCatalog);
                             }
                     }
                 //OBSOLETE Search catalogs matching the storage if "Selected storage" is selected
-                else if ( selectedSearchCatalog =="Selected Storage"){
+//                else if ( selectedSearchCatalog =="Selected Storage"){
 
-                    foreach(sourceCatalog,catalogFileList)
-                            {
+//                    foreach(sourceCatalog,catalogFileList)
+//                            {
 
-                            //get catalog storage name
-                            QString sourceCatalogStorageName;
-                            QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
-                            sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
-                                if  ( selectedStorageName == sourceCatalogStorageName )
-                                {
-                                        searchFilesInCatalog(sourceCatalog);
-                                }
-                            }
-                }
-                else if ( selectedSearchCatalog =="Selected Location"){
-                    getLocationCatalogList(selectedStorageLocation);
-                    foreach(sourceCatalog,locationCatalogList)
-                            {
-                                searchFilesInCatalog(sourceCatalog);
-                            }
-                }
+//                            //get catalog storage name
+//                            QString sourceCatalogStorageName;
+//                            QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
+//                            sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
+//                                if  ( selectedStorageName == sourceCatalogStorageName )
+//                                {
+//                                        searchFilesInCatalog(sourceCatalog);
+//                                }
+//                            }
+//                }
+//                else if ( selectedSearchCatalog =="Selected Location"){
+//                    getLocationCatalogList(selectedStorageLocation);
+//                    foreach(sourceCatalog,locationCatalogList)
+//                            {
+//                                searchFilesInCatalog(sourceCatalog);
+//                            }
+//                }
                 //Otherwise just search files in the selected catalog
                 else{
                     //QString selectedSearchCatalogPath;
@@ -483,7 +483,7 @@
                     ui->Search_treeView_FilesFound->header()->hideSection(1);
                     ui->Search_treeView_FilesFound->header()->hideSection(2);
 
-                    ui->Search_label_FoundTitle->setText("Folders found:");
+                    ui->Search_label_FoundTitle->setText(tr("Folders found"));
                 }
                 else
                 {
@@ -512,7 +512,7 @@
                         ui->Search_treeView_FilesFound->header()->showSection(0);
                         ui->Search_treeView_FilesFound->header()->showSection(1);
                         ui->Search_treeView_FilesFound->header()->showSection(2);
-                        ui->Search_label_FoundTitle->setText("Files found:");
+                        ui->Search_label_FoundTitle->setText(tr("Files found"));
                 }
 
                 //Count and display the number of files found
@@ -533,13 +533,13 @@
             QFile catalogFile(sourceCatalogPath);
 
             //Define how to use the search text
-                if(selectedTextCriteria == "Exact Phrase")
+                if(selectedTextCriteria == tr("Exact Phrase"))
                     regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
-                else if(selectedTextCriteria == "Begins With")
+                else if(selectedTextCriteria == tr("Begins With"))
                     regexSearchtext="(^"+searchText+")";
-                else if(selectedTextCriteria == "Any Word")
+                else if(selectedTextCriteria == tr("Any Word"))
                     regexSearchtext=searchText.replace(" ","|");
-                else if(selectedTextCriteria == "All Words"){
+                else if(selectedTextCriteria == tr("All Words")){
                     QString searchTextToSplit = searchText;
                     QString groupRegEx = "";
                     QRegExp lineSplitExp(" ");
@@ -558,18 +558,18 @@
                 regexPattern = regexSearchtext;
 
             //Prepare the regexFileType for file types
-            if(selectedFileType !="Any"){
+            if(selectedFileType !=tr("All")){
                 //Get the list of file extension and join it into one string
-                if(selectedFileType =="Audio"){
+                if(selectedFileType ==tr("Audio")){
                             regexFileType = fileType_AudioS.join("|");
                 }
-                if(selectedFileType =="Image"){
+                if(selectedFileType ==tr("Image")){
                             regexFileType = fileType_ImageS.join("|");
                 }
-                if(selectedFileType =="Text"){
+                if(selectedFileType ==tr("Text")){
                             regexFileType = fileType_TextS.join("|");
                 }
-                if(selectedFileType =="Video"){
+                if(selectedFileType ==tr("Video")){
                             regexFileType = fileType_VideoS.join("|");
                 }
 
@@ -627,7 +627,7 @@
                     //Finally, verify the text search criteria
                         //Depending on the "Search in" criteria,
                         //reduce the abosulte path to the reaquired text string and match the search text
-                        if(selectedSearchIn == "File names only")
+                        if(selectedSearchIn == tr("File names only"))
                         {
                             // Extract the file name from the lineFilePath
                             QFileInfo file(lineFilePath);
@@ -635,7 +635,7 @@
 
                             match = regex.match(reducedLine);
                         }
-                        else if(selectedSearchIn == "Folder path only")
+                        else if(selectedSearchIn == tr("Folder path only"))
                         {
                             //Keep only the folder name, so all characters left of the last occurence of / in the path.
                             reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
@@ -850,7 +850,7 @@
                 //Prepare list for the Location combobox
                 QStringList displayLocationList = locationList;
                 //Add the "All" option at the beginning
-                displayLocationList.insert(0,"All");
+                displayLocationList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
                 fileListModel = new QStringListModel(this);
@@ -875,7 +875,7 @@
 
                 QString queryText = "SELECT DISTINCT storageName FROM storage";
 
-                if ( selectedLocation == "All" ){
+                if ( selectedLocation == tr("All")){
                         getStorageList.prepare(queryText);
                 }
                 else{
@@ -894,7 +894,7 @@
                 //Prepare list for the Location combobox
                 QStringList displayLocationList = locationList;
                 //Add the "All" option at the beginning
-                displayLocationList.insert(0,"All");
+                displayLocationList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
                 fileListModel = new QStringListModel(this);
@@ -925,15 +925,15 @@
                     //filter depending on location and selection.
                         //Default: ( selectedLocation == "All" and selectedStorage == "All")
 
-                        if      ( selectedLocation == "All" and selectedStorage != "All")
+                        if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
                         {
                                 queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "'";
                         }
-                        else if ( selectedLocation != "All" and selectedStorage == "All")
+                        else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
                         {
                                 queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
                         }
-                        else if ( selectedLocation != "All" and selectedStorage != "All")
+                        else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
                         {
                                 queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "' "
                                                         " AND storageLocation ='" + selectedLocation + "'";
@@ -958,7 +958,7 @@
                 //Prepare the list for the Location combobox
                     QStringList displayCatalogList = catalogSelectedList;
                     //Add the "All" option at the beginning
-                    displayCatalogList.insert(0,"All");
+                    displayCatalogList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
                     fileListModel = new QStringListModel(this);

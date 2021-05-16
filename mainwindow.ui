@@ -304,7 +304,7 @@
                </font>
               </property>
               <property name="toolTip">
-               <string>Launch the search of files </string>
+               <string>Launch the search of files</string>
               </property>
               <property name="locale">
                <locale language="English" country="UnitedStates"/>
@@ -634,7 +634,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Search_pushButton_ResetAll</string>
               </property>
               <property name="text">
                <string>Reset</string>
@@ -3846,17 +3846,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <widget class="QComboBox" name="Settings_comboBox_Language">
                <item>
                 <property name="text">
-                 <string>System default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
                  <string>en_US</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="images.qrc">
+                  <normaloff>:/images/flags/us.png</normaloff>:/images/flags/us.png</iconset>
                 </property>
                </item>
                <item>
                 <property name="text">
                  <string>fr_FR</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="images.qrc">
+                  <normaloff>:/images/flags/fr.png</normaloff>:/images/flags/fr.png</iconset>
                 </property>
                </item>
               </widget>

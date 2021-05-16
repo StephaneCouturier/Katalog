@@ -28,7 +28,7 @@
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
 // Created:     2020-07-11
-// Version:     0.13
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -174,7 +174,6 @@
         #ifdef Q_OS_LINUX
         ui->Search_lineEdit_SearchText->hide();
         #endif
-        //ui->HL_Location_and_Storage->hide();
 
         //Create
         ui->Create_checkBox_IncludeSubDir->hide();
@@ -292,38 +291,9 @@
             return;
         }
 
-
-        //Statistics_TaV_Test
-        // Create the data model:
-
         storageModel = new QSqlRelationalTableModel(this);
         storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
-        // Set the model
-        //ui->Test_tableView_sql1->setModel(model);
-        //ui->Test_tableView_sql1->setSelectionMode(QAbstractItemView::SingleSelection);
-
-
-       // QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
-        //proxyStorageModel->setSourceModel(model);
-
-        // Connect model to tree/table view
-        //ui->test_treeView->setModel(proxyStorageModel);
-       /*
-        ui->test_treeView->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-        ui->test_treeView->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->test_treeView->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->test_treeView->header()->resizeSection(0,  50); //ID
-        ui->test_treeView->header()->resizeSection(1, 150); //Name
-        ui->test_treeView->header()->resizeSection(2, 100); //type
-        ui->test_treeView->header()->resizeSection(3, 175); //location
-        ui->test_treeView->header()->resizeSection(4, 250); //Path
-        ui->test_treeView->header()->resizeSection(5,  50); //Path
-        ui->test_treeView->header()->resizeSection(6,  75); //FS
-        ui->test_treeView->header()->resizeSection(7,  75); //Total
-        ui->test_treeView->header()->resizeSection(8,  75); //Free
-        //ui->test_treeView->header()->hideSection(1); //Path
-    */
     }
 
 
@@ -351,7 +321,7 @@
         //----------------------------------------------------------------------
         void MainWindow::openFile()
         {
-            QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, ("Open a Katalog collection"));
+            QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, tr("Open a Katalog collection"));
 
             if (!fileNameFromDialog.isEmpty())
             {

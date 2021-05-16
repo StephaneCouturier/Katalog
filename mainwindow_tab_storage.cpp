@@ -80,8 +80,8 @@ void MainWindow::on_Storage_pushButton_CreateList_clicked()
               ui->Storage_pushButton_EditAll->setEnabled(true);
               //ui->Storage_pushButton_SaveAll->setEnabled(true);
 
-              QMessageBox::information(this,"Katalog","A storage file was created:\n" + newStorageFile.fileName()
-                                       + "\nYou can edit it now.");
+              QMessageBox::information(this,"Katalog",tr("A storage file was created")+":\n" + newStorageFile.fileName()
+                                       + "\n"+tr("You can edit it now")+".");
 
               //Disable button so it cannot be overwritten
               ui->Storage_pushButton_CreateList->setEnabled(false);
@@ -140,11 +140,11 @@ void MainWindow::on_Storage_pushButton_New_clicked()
 
     QSqlQuery query;
     if (!query.exec(STORAGE_SQL)){
-        QMessageBox::information(this,"Katalog","pb1.");
+        QMessageBox::information(this,"Katalog","pb1 create.");
         return;}
 
     if (!query.prepare(INSERT_STORAGE_SQL)){
-        QMessageBox::information(this,"Katalog","pb2.");
+        QMessageBox::information(this,"Katalog","pb2 insert.");
         return;}
 
     //Get max ID
@@ -211,7 +211,7 @@ void MainWindow::on_Storage_pushButton_Delete_clicked()
 {
 
     int result = QMessageBox::warning(this,"Katalog",
-              "Do you want to <span style='color: red';>delete</span> this Storage device?"
+               "Do you want to <span style='color: red';>delete</span> this Storage device?"
                "<table>"
                "<tr><td>ID:   </td><td><b>" + QString::number(selectedStorageID) +"</td></tr>"
                "<tr><td>Name: </td><td><b>" + selectedStorageName + "</td></tr>"
@@ -360,26 +360,6 @@ void MainWindow::loadStorageFileToTable()
 
                 insertQuery.exec();
 
-                /*
-
-                QVariant storageId = addStorage(query,
-                                                fieldList[0].toInt(),
-                                                fieldList[1],
-                                                fieldList[2],
-                                                fieldList[3],
-                                                fieldList[4],
-                                                fieldList[5],
-                                                fieldList[6],
-                                                fieldList[7].toLongLong(),
-                                                fieldList[8].toLongLong(),
-                                                fieldList[9],
-                                                fieldList[10],
-                                                fieldList[11],
-                                                fieldList[12],
-                                                fieldList[13],
-                                                fieldList[14]
-                        );
-                */
             }
     }
     storageFile.close();
@@ -399,7 +379,7 @@ void MainWindow::loadStorageTableToModel()
 {
     storageModel->setTable("storage");
 
-    if ( selectedSearchLocation != "All" ){
+    if ( selectedSearchLocation != tr("All") ){
         //QString tableFilter = "storageLocation = 'DK/Portable'";
         QString tableFilter = "storageLocation = '" + selectedSearchLocation + "'";
 
@@ -464,7 +444,7 @@ void MainWindow::loadStorageTableToModel()
                        WHERE storageName !=''
                                     )");  // ORDER BY storageName
 
-    if ( selectedSearchLocation != "All" ){
+    if ( selectedSearchLocation != tr("All") ){
         //AND storageLocation ='DK/Portable'  :storageLocation
         //QMessageBox::information(this,"Katalog","Ok.");
 
@@ -654,7 +634,7 @@ void MainWindow::refreshStorageStatistics()
                         WHERE storageName !=''
                                     )");
 
-    if ( selectedSearchLocation !="All"){
+    if ( selectedSearchLocation !=tr("All")){
         querySQL = querySQL + " AND storageLocation =:storageLocation";
     }
 
@@ -676,34 +656,6 @@ void MainWindow::refreshStorageStatistics()
     qint64 usedSpace = totalSpace - freeSpaceTotal;
     ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
 
-/*    //Get the number of devices
-    QSqlQuery queryDeviceNumber;
-    queryDeviceNumber.prepare( "SELECT COUNT (storageID) FROM storage" );
-    queryDeviceNumber.exec();
-    queryDeviceNumber.next();
-    int deviceNumber = queryDeviceNumber.value(0).toInt();
-    ui->Storage_label_CountValue->setText(QString::number(deviceNumber));
-
-    //Get the sum of free space
-    QSqlQuery queryFreeSpaceTotal;
-    queryFreeSpaceTotal.prepare( "SELECT SUM(storageFreeSpace) FROM storage" );
-    queryFreeSpaceTotal.exec();
-    queryFreeSpaceTotal.next();
-    qint64 freeSpaceTotal = queryFreeSpaceTotal.value(0).toLongLong();
-    ui->Storage_label_SpaceFreeValue->setText(QLocale().formattedDataSize(freeSpaceTotal));
-
-    //Get the sum of total space
-    QSqlQuery queryTotalSpace;
-    queryTotalSpace.prepare( "SELECT SUM(storageTotalSpace) FROM storage" );
-    queryTotalSpace.exec();
-    queryTotalSpace.next();
-    qint64 totalSpace = queryTotalSpace.value(0).toLongLong();
-    ui->Storage_label_SpaceTotalValue->setText(QLocale().formattedDataSize(totalSpace));
-
-    //Calculate used space
-    qint64 usedSpace = totalSpace - freeSpaceTotal;
-    ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
-*/
     //Get the percent of free space
     if ( totalSpace !=0){
     float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;

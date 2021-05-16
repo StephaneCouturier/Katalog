@@ -128,7 +128,7 @@
             //Display an input box with the current file name (without extension)
             bool ok;
             QString newCatalogName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                                 tr("Enter new catalog name:"), QLineEdit::Normal,
+                                                 tr("Enter new catalog name"), QLineEdit::Normal,
                                                  currentCatalogName, &ok); //(QDir::home().dirName())
             //generate the full new name of the
             QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
@@ -191,7 +191,7 @@
                 //QMessageBox::information(this,"Katalog","Ok." + catalogName + " _ " + QString::number(isActive));
 
             }
-            QMessageBox::information(this,"Katalog","done.");
+            QMessageBox::information(this,"Katalog","Done.");
 
         }
         //----------------------------------------------------------------------
@@ -228,7 +228,7 @@
             if ( selectedCatalogFile != ""){
 
                 int result = QMessageBox::warning(this,"Katalog",
-                          ("Do you want to delete this catalog?\n")+selectedCatalogFile,QMessageBox::Yes|QMessageBox::Cancel);
+                          tr("Do you want to delete this catalog,")+"\n"+selectedCatalogFile,QMessageBox::Yes|QMessageBox::Cancel);
 
                 if ( result ==QMessageBox::Yes){
                     QFile file (selectedCatalogFile);
@@ -237,7 +237,7 @@
                     refreshCatalogSelectionList("","");
                 }
              }
-            else QMessageBox::information(this,"Katalog",("Please select a catalog above first."));
+            else QMessageBox::information(this,"Katalog",tr("Please select a catalog above first."));
 
             //refresh catalog lists
                loadCatalogFilesToTable();
@@ -299,8 +299,8 @@
             loadCatalogsToModel();
 
             refreshLocationSelectionList();
-            refreshStorageSelectionList("All");
-            refreshCatalogSelectionList("All", "All");
+            refreshStorageSelectionList(tr("All"));
+            refreshCatalogSelectionList(tr("All"), tr("All"));
 
             //restore Search catalog selection
             //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
@@ -415,10 +415,10 @@
                                         )");  
 
                 //add AND conditions for the selected filters
-                if ( selectedSearchLocation != "All" )
+                if ( selectedSearchLocation != tr("All") )
                     loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
 
-                if ( selectedSearchStorage != "All" )
+                if ( selectedSearchStorage != tr("All") )
                     loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
             //Execute query
@@ -474,10 +474,10 @@
                                 WHERE catalogName !=''
                                             )");
 
-            if ( selectedSearchLocation !="All"){
+            if ( selectedSearchLocation !=tr("All")){
                 querySQL = querySQL + " AND storageLocation =:storageLocation";
             }
-            if ( selectedSearchStorage !="All"){
+            if ( selectedSearchStorage !=tr("All")){
                 querySQL = querySQL + " AND catalogStorage =:catalogStorage";
             }
 
@@ -526,6 +526,7 @@
     //----------------------------------------------------------------------
     void MainWindow::convertCatalog(QString catalogSourcePath)
     {
+        //USED / OBSOLETE FUNCTION
         //select catalog file
         //QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
 
@@ -781,7 +782,7 @@
         //Prepare list for the Location combobox
         QStringList displayLocationList = locationList;
         //Add the "All" option at the beginning
-        displayLocationList.insert(0,"All");
+        displayLocationList.insert(0,tr("All"));
 
         //Send the list to the Search combobox model
         fileListModel = new QStringListModel(this);
@@ -852,7 +853,7 @@
 
                 //Check this is the right source format
                 if (line.left(6)!="Volume"){
-                    QMessageBox::warning(this,"Kotation","A file was found, but could not be loaded.\n");
+                    QMessageBox::warning(this,"Kotation",tr("A file was found, but could not be loaded") +".\n");
                     return;
                 }
                 //else {
@@ -891,35 +892,35 @@
 
 
     ////TEST LOAD TO EXPLORE----------
+        /*
+                    // Load all files and create model
+                    QString selectSQL = QLatin1String(R"(
+                                        SELECT  fileName AS Name,
+                                                fileSize AS Size,
+                                                fileDateUpdated AS Date,
+                                                fileCatalog AS Catalog,
+                                                filePath AS Path
+                                        FROM file
+                                                    )");
+                    QSqlQuery loadCatalogQuery;
+                    loadCatalogQuery.prepare(selectSQL);
+                    loadCatalogQuery.exec();
 
-            // Load all files and create model
-            QString selectSQL = QLatin1String(R"(
-                                SELECT  fileName AS Name,
-                                        fileSize AS Size,
-                                        fileDateUpdated AS Date,
-                                        fileCatalog AS Catalog,
-                                        filePath AS Path
-                                FROM file
-                                            )");
-            QSqlQuery loadCatalogQuery;
-            loadCatalogQuery.prepare(selectSQL);
-            loadCatalogQuery.exec();
+                    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                    loadCatalogQueryModel->setQuery(loadCatalogQuery);
 
-            QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-            loadCatalogQueryModel->setQuery(loadCatalogQuery);
+                    FilesView *proxyModel2 = new FilesView(this);
+                    proxyModel2->setSourceModel(loadCatalogQueryModel);
 
-            FilesView *proxyModel2 = new FilesView(this);
-            proxyModel2->setSourceModel(loadCatalogQueryModel);
-
-            // Connect model to tree/table view
-            ui->Explore_treeView_FileList->setModel(proxyModel2);
-            ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-            ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
-            ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
-            ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
-            ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
-            ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
-
+                    // Connect model to tree/table view
+                    ui->Explore_treeView_FileList->setModel(proxyModel2);
+                    ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                    ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
+                    ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
+                    ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
+                    ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
+                    ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
+        */
     ////END - TEST ----------
 
 
@@ -993,13 +994,6 @@
                 //Write the results in the file
                 while (listFilesQuery.next()) {
 
-    //                const QSqlRecord record = listFilesQuery.record();
-    //                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-    //                    if (i>0)
-    //                    out << '\t';
-    //                    out << record.value(i).toString();
-    //                }
-
                         out << listFilesQuery.value(1).toString() + "/" + listFilesQuery.value(0).toString();
                         out << '\t';
                         out << listFilesQuery.value(2).toString();
@@ -1009,54 +1003,7 @@
 
                 }
 
-
-
             }
-
-    /*
-
-
-                    //Reopen the source file, now to get the files list itself
-                    if(!sourceFile.open(QIODevice::ReadOnly)) {
-                        QMessageBox::information(this,"Katalog","No catalog found.");
-                        return;
-                    }
-                    //Prepare the stream
-                    QTextStream textStream2(&sourceFile);
-
-
-                    if(fileOut.open(QIODevice::WriteOnly | QIODevice::Append)) {
-
-                        //Read the first line to skip headers
-                            line = textStream2.readLine();
-
-                        while (true)
-                        {
-                            //Read the newt line
-                            line = textStream2.readLine();
-
-                            if (line !=""){
-                                QStringList fieldList = line.split("\t");
-                                if ( fieldList.count()==7 and fieldList[0]==formerCatalogName ){
-                                    out << fieldList[1].replace("\"","")+"/"+fieldList[2].replace("\"","") << '\t';
-                                    out << fieldList[3] << '\t';
-                                    out << fieldList[5] ;
-                                    out << '\n';
-                                }
-                            }
-                           else
-                                break;
-
-                        }
-                    }
-                //close files
-                sourceFile.close();
-
-                fileOut.close();
-
-        ui->tabWidget->setCurrentIndex(1);
-    */
-        //QMessageBox::information(this,"Katalog","File converted.");
 
             //Stop animation
             QApplication::restoreOverrideCursor();
