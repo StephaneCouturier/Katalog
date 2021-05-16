@@ -7,5 +7,9 @@
         <source>Folder</source>
         <translation>Folder</translation>
     </message>
+    <message>
+        <source>Search_pushButton_ResetAll</source>
+        <translation>Reset all criteria to default values, and clear previous results.</translation>
+    </message>
 </context>
 </TS>

@@ -30,5 +30,6 @@
         <file>fallback-icons/view-refresh.png</file>
         <file>fallback-icons/xml-node-duplicate.png</file>
         <file>fallback-icons/view-filter.png</file>
+        <file>fallback-icons/edit-download.png</file>
     </qresource>
 </RCC>

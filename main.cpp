@@ -56,16 +56,17 @@ int main(int argc, char *argv[])
         QString settingsFile = homePath + "/.config/katalog_settings.ini";
         QSettings settings(settingsFile, QSettings:: IniFormat);
 
-        //bool useSystemLocale = settings.value("Settings/UseSystemLocale").toBool();
         QString userLanguage = settings.value("Settings/Language").toString();
-        if ( userLanguage != "System Default" ){
-        //if ( useSystemLocale==true ){
-            QTranslator* translator=new QTranslator(0);
+
+        if ( userLanguage == "" ) userLanguage = "en_US";
+
+        QTranslator* translator=new QTranslator(0);
+        //if ( userLanguage != "en_US" ){
             //if (translator->load(QLocale(), QLatin1String("Katalog"), QLatin1String("_"), QLatin1String(":/translations"))) {
             if (translator->load("Katalog_" + userLanguage, ":translations")) {
                 app.installTranslator(translator);
             }
-        }
+        //}
 
     #ifdef Q_OS_LINUX
         KLocalizedString::setApplicationDomain("Katalog");

@@ -10,5 +10,7 @@
         <file>images/link_blue/link-tree-end.png</file>
         <file>images/link_blue/link-tree-mid.png</file>
         <file>images/link_blue/link-v.png</file>
+        <file>images/flags/fr.png</file>
+        <file>images/flags/us.png</file>
     </qresource>
 </RCC>

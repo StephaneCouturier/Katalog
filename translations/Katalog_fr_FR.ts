@@ -399,5 +399,37 @@
         <source>of</source>
         <translation>de</translation>
     </message>
+    <message>
+        <source>Select the directory for this collection</source>
+        <translation>Sélectionner le répertoire pour cette collection</translation>
+    </message>
+    <message>
+        <source>Enter new catalog name</source>
+        <translation>Entrer le nouveau nom du catalogue</translation>
+    </message>
+    <message>
+        <source>Do you want to delete this catalog?</source>
+        <translation>Voulez-vous supprimer ce catalogue ?</translation>
+    </message>
+    <message>
+        <source>A file was found, but could not be loaded</source>
+        <translation>Un fichier a été trouvé, mais il n a pas pu être chargé</translation>
+    </message>
+    <message>
+        <source>A storage file was created</source>
+        <translation>Un fichier pour stockage à été créé</translation>
+    </message>
+    <message>
+        <source>You can edit it now</source>
+        <translation>Vous pouvez maintenant l éditer</translation>
+    </message>
+    <message>
+        <source>Launch the search of files</source>
+        <translation>Lancer la recherche de fichiers</translation>
+    </message>
+    <message>
+        <source>Search_pushButton_ResetAll</source>
+        <translation>Réinitialiser tous les critères aux valuers par défault, et effacer les résultats précédents.</translation>
+    </message>
 </context>
 </TS>
