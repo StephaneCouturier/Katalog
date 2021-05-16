@@ -4,6 +4,10 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <source>Katalog is an application to catalog, search, and manage files from any drive, permanent or removable.</source>
+        <translation type="vanished">Katalog est une application pour cataloguer, Chercher et géréer des fichiers de tout lecteur, permanent ou temporaire.</translation>
+    </message>
+    <message>
         <source>Catalog</source>
         <translation>Catalogue</translation>
     </message>
@@ -93,7 +97,7 @@
     </message>
     <message>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation type="vanished">Ajouter</translation>
     </message>
     <message>
         <source>Filters</source>
@@ -141,7 +145,7 @@
     </message>
     <message>
         <source>Use your system locale</source>
-        <translation>Utiliser la langue du système</translation>
+        <translation type="vanished">Utiliser la langue du système</translation>
     </message>
     <message>
         <source>Save records for Statistics</source>
@@ -409,7 +413,7 @@
     </message>
     <message>
         <source>Do you want to delete this catalog?</source>
-        <translation>Voulez-vous supprimer ce catalogue ?</translation>
+        <translation type="vanished">Voulez-vous supprimer ce catalogue ?</translation>
     </message>
     <message>
         <source>A file was found, but could not be loaded</source>
@@ -424,12 +428,477 @@
         <translation>Vous pouvez maintenant l éditer</translation>
     </message>
     <message>
-        <source>Launch the search of files</source>
-        <translation>Lancer la recherche de fichiers</translation>
+        <source>Launch the search of files.</source>
+        <translation>Lancer la recherche de fichiers.</translation>
     </message>
     <message>
-        <source>Search_pushButton_ResetAll</source>
+        <source>Reset all criteria to default values, and clear previous results.</source>
         <translation>Réinitialiser tous les critères aux valuers par défault, et effacer les résultats précédents.</translation>
+    </message>
+    <message>
+        <source>Katalog</source>
+        <translation>Katalog</translation>
+    </message>
+    <message>
+        <source>Search for files or folders</source>
+        <translation>Chercher les fichiers ou les dossiers</translation>
+    </message>
+    <message>
+        <source>enter text to search...</source>
+        <translation>Entrer un texte à chercher...</translation>
+    </message>
+    <message>
+        <source>Paste the text from the clipboard</source>
+        <translation>Coller depuis le presse-papier</translation>
+    </message>
+    <message>
+        <source>Get the text from the clipboard</source>
+        <translation>Prendre le texte du presse-papier</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define how the search text should be used&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Définir comment le texte de recherche doit être utilisé</translation>
+    </message>
+    <message>
+        <source>define how the search text should be used</source>
+        <translation>Définir comment le texte de recherche doit être utilisé</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define if the search text should be used to look only in file names, or folder paths, or both.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Défniir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
+    </message>
+    <message>
+        <source>Choose to only show folders as results</source>
+        <translation>Choisir de ne montrer que les dossiers comme résultats</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation>&gt;</translation>
+    </message>
+    <message>
+        <source>File size unit for minimum value</source>
+        <translation>Unité de taille de fichier pour la valeur minimum</translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation>&lt;</translation>
+    </message>
+    <message>
+        <source>File size unit for maximum value</source>
+        <translation>Unité de taille de fichier pour la valeur maximum</translation>
+    </message>
+    <message>
+        <source>Select the type of files</source>
+        <translation>Sélectionner le type de fichiers</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>Image</translation>
+    </message>
+    <message>
+        <source>regex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the search results to a csv file</source>
+        <translation>Exporter les résultats vers un ficher csv</translation>
+    </message>
+    <message>
+        <source>Show/Hide Catalogs with results</source>
+        <translation>Montrer/Cacher les Catalogues avec résultats</translation>
+    </message>
+    <message>
+        <source>&lt;&lt;</source>
+        <translation>&lt;&lt;</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <source>Manage the catalogs</source>
+        <translation>Gérér les catalogues</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalog that are active, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Mettre à jour tous les catalogues qui sont actifs, si le lecteur est disponible</translation>
+    </message>
+    <message>
+        <source>All active</source>
+        <translation>Tous les actifs</translation>
+    </message>
+    <message>
+        <source>Convert the selected catalog to the latest format</source>
+        <translation>Convertir le catalogue séléctionné vers le dernier format</translation>
+    </message>
+    <message>
+        <source>Search the selected catalog</source>
+        <translation>Chercher dans le catalogue sélectionné</translation>
+    </message>
+    <message>
+        <source>Explore the selected catalog&apos;s files and folders</source>
+        <translation>Explorer les fichiers et dossiers du catalogue sélectionné</translation>
+    </message>
+    <message>
+        <source>Rename the catalog and its file</source>
+        <translation>Renommer le catalogue et son fichier</translation>
+    </message>
+    <message>
+        <source>Update the catalog files, if the device is available</source>
+        <translation>Actualiser les fichiers du catalogue, si le lecteur est disponible</translation>
+    </message>
+    <message>
+        <source>Edit the selected catalog file itself</source>
+        <translation>Editer le fichier de catalogue sélectionné</translation>
+    </message>
+    <message>
+        <source>Record the values of the selected catalog for statistics</source>
+        <translation>Enregistrer les valeurs du catalogue sélectionné pour les statistiques</translation>
+    </message>
+    <message>
+        <source>Record</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>View the statistics of the selected catalog</source>
+        <translation>Voir les statistiques du catalogue sélectionné</translation>
+    </message>
+    <message>
+        <source>Delete the selected catalog</source>
+        <translation>Supprimer le catalogue sélectionné</translation>
+    </message>
+    <message>
+        <source>Explore a catalog</source>
+        <translation>Explorer un catalogue</translation>
+    </message>
+    <message>
+        <source>Directories</source>
+        <translation>Dossiers</translation>
+    </message>
+    <message>
+        <source>Click to open the file</source>
+        <translation>Cliquer pour ouvrir le fichier</translation>
+    </message>
+    <message>
+        <source>Create a catalog</source>
+        <translation>Créer un catalogue</translation>
+    </message>
+    <message>
+        <source>2- </source>
+        <translation>2-</translation>
+    </message>
+    <message>
+        <source>Tous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>follow symbolic links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>include sub-folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>include archives contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>include checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3- </source>
+        <translation>3-</translation>
+    </message>
+    <message>
+        <source>Select a storage device to link the new catalog (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new storage device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NewCatalog</source>
+        <translation>NouveauCatalogue</translation>
+    </message>
+    <message>
+        <source>Enter a name for your new catalog</source>
+        <translation>Entrer un nom pour le nouveau catalog</translation>
+    </message>
+    <message>
+        <source>Generate a catalog name bsed on the path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch the cataloging and save it to a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1- </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage the lit of storage devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search files or folders in the selected storage device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search files or folders in the selected location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new catalog for this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the path in Filelight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open in Filelight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete the selected device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(GiB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Create a list to add devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload the entire list of devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit the list in a spreadsheet ( tab separated file)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes made directly in the table below</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View collection statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the type of data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit the file storing all records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload the file storing all records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag folders for search and statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add the tag to this folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag the folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current folders and tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a folder </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload the file storing the tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show/Hide Global settigns and filters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select catalog(s) to search into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0.18     2021-05-14</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Desktop Theme</source>
+        <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Katalog Colors (light)</source>
+        <extracomment>With custom colors, for desktop light theme.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>en_US</source>
+        <translation>en_US</translation>
+    </message>
+    <message>
+        <source>fr_FR</source>
+        <translation>fr_FR</translation>
+    </message>
+    <message>
+        <source>Select a different Collection folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload all catalog information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the collection folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a Katalog collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save File As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file absolute path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name with extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy file name without extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the directory to be cataloged in this new catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QInputDialog::getText()</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete this catalog,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a catalog above first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Actif</translation>
+    </message>
+    <message>
+        <source>Select the csv file to be imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy absolute path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Tag</name>
+    <message>
+        <source>Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
