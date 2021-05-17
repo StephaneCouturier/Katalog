@@ -104,7 +104,7 @@ void MainWindow::loadStatisticsChart()
             if ( selectedTypeOfData == tr("Number of Files") )
             {
                 number = values[2].toLongLong();
-
+                displayUnit = "";
                 series->append(datetime.toMSecsSinceEpoch(), number);
                 if ( number > maxValueGraphRange )
                     maxValueGraphRange = number;
@@ -114,11 +114,11 @@ void MainWindow::loadStatisticsChart()
                 number = values[3].toLongLong();
                 if ( number > 2000000000 ){
                     number = number/1024/1024/1024;
-                    displayUnit = "(GiB)";
+                    displayUnit = " ("+tr("GiB")+")";
                 }
                 else {
                     number = number/1024/1024;
-                    displayUnit = "(MiB)";
+                    displayUnit = " ("+tr("MiB")+")";
                 }
                 series->append(datetime.toMSecsSinceEpoch(), number);
                 if ( number > maxValueGraphRange )
@@ -132,9 +132,9 @@ void MainWindow::loadStatisticsChart()
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->setTitle("<p style=\"font-weight: bold; font-size: 22px; font-color: #AAA,\">"
-                    +selectedTypeOfData+" "+displayUnit
-                    +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span></p>");
+    chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
+                    + selectedTypeOfData + " "
+                    +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span>"+ displayUnit+"</p>");
 
     //Format axis
     QDateTimeAxis *axisX = new QDateTimeAxis;

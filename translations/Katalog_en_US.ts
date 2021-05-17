@@ -2,6 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
+    <name>Catalog</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Katalog</source>
@@ -137,10 +156,6 @@
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -325,10 +340,6 @@
     </message>
     <message>
         <source>(optional, can be modified later by editing the Catalog)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a storage device to link the new catalog (optional)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -532,10 +543,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select a folder </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,14 +552,6 @@
     </message>
     <message>
         <source>Reload the file storing the tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show/Hide Global settigns and filters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -568,23 +567,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select catalog(s) to search into</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.18     2021-05-14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -610,10 +597,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keep 1 backup per catalog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -627,10 +610,6 @@
     </message>
     <message>
         <source>fr_FR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save records for Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -715,10 +694,6 @@
     </message>
     <message>
         <source>Select the directory for this collection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QInputDialog::getText()</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -855,6 +830,107 @@
     </message>
     <message>
         <source>Manage the list of storage devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is already a catalog with this name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide a name and select a path for this new catalog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a different name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset all filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show/Hide Filters and Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-backup catalogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep records of files and size for Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results exported to the collection folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using &apos;Begin With&apos; with &apos;File names or Folder names&apos; is not supported yet.
+Please try a different combinaison.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The source folder does not contains any file.
+This could mean that the source is empty or the device attached is not mounted.
+Do you want to save it anyway (the catalog would be empty)?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The new catalog,has been created.
+ Name:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No catalog found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always keep one back of each catalog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -117,7 +117,7 @@ void MainWindow::loadCatalogFilesToExplore()
     // Get infos stored in the file
     QFile catalogFile(selectedCatalogFile);
     if(!catalogFile.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this,"Katalog","No catalog found.");
+        QMessageBox::information(this,"Katalog",tr("No catalog found."));
         return;
     }
     QFileInfo catalogFileInfo(selectedCatalogFile);

@@ -85,6 +85,8 @@ class MainWindow : public QMainWindow
             Ui::MainWindow *ui;
             void loadCustomTheme1();
             void hideDevelopmentUIItems();
+            QString version;
+            QString releaseDate;
 
             //KDE menus/icons
             void setupActions();

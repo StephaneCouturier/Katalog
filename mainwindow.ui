@@ -787,7 +787,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Search_comboBox_MinSizeUnit">
               <property name="maximumSize">
                <size>
-                <width>70</width>
+                <width>80</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -853,7 +853,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="maximumSize">
                <size>
-                <width>70</width>
+                <width>80</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1028,35 +1028,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Search_horizontalSpacer_06">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>10</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="Search_label_Regex">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>regex</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="Search_horizontalSpacer_07">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1186,10 +1157,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Files found</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                 </property>
-                <property name="margin">
-                 <number>0</number>
+                <property name="indent">
+                 <number>10</number>
                 </property>
                </widget>
               </item>
@@ -2366,9 +2337,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="toolTip">
-               <string>Select a storage device to link the new catalog (optional)</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -3341,7 +3309,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>Select a folder </string>
+               <string>Select a folder</string>
               </property>
               <property name="text">
                <string>Select</string>
@@ -3397,13 +3365,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="Tags_label_Test">
-            <property name="text">
-             <string>Test</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
        </layout>
@@ -3414,79 +3375,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
      <widget class="QWidget" name="widget" native="true">
       <property name="maximumSize">
        <size>
-        <width>250</width>
+        <width>275</width>
         <height>16777215</height>
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="Global_horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Show/Hide Global settigns and filters.</string>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">padding: 2px 10px;</string>
-           </property>
-           <property name="text">
-            <string>&lt;&lt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="Global_label_Global">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Filters &amp; Settings</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0">
-        <spacer name="Global_verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="2" column="0">
         <widget class="QTabWidget" name="Global_tabWidget">
-         <property name="maximumSize">
-          <size>
-           <width>230</width>
-           <height>16777215</height>
-          </size>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
@@ -3582,7 +3482,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </size>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>Reset all filters</string>
              </property>
              <property name="text">
               <string/>
@@ -3636,9 +3536,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <pointsize>10</pointsize>
               </font>
              </property>
-             <property name="toolTip">
-              <string>Select catalog(s) to search into</string>
-             </property>
             </widget>
            </item>
           </layout>
@@ -3660,31 +3557,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>40</height>
+               <height>20</height>
               </size>
              </property>
             </spacer>
            </item>
            <item row="4" column="0">
             <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
-             <item>
-              <widget class="QLabel" name="Settings_label_Version">
-               <property name="font">
-                <font>
-                 <family>Noto Sans</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Version</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
              <item>
               <widget class="Line" name="Settings_line_3">
                <property name="orientation">
@@ -3693,7 +3572,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="Settings_label_Version_2">
+              <widget class="QLabel" name="Settings_label_About">
                <property name="font">
                 <font>
                  <family>Noto Sans</family>
@@ -3703,28 +3582,94 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </font>
                </property>
                <property name="text">
-                <string>0.18     2021-05-14</string>
+                <string>About</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
              <item>
-              <spacer name="Settings_verticalSpacer_06">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
+              <layout class="QGridLayout" name="gridLayout_13">
+               <item row="1" column="1">
+                <widget class="QLabel" name="Settings_label_DateTitle">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="Settings_label_VersionTitle">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Version</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLabel" name="Settings_label_VersionValue">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Version</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="indent">
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLabel" name="Settings_label_DateValue">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="indent">
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
               <widget class="QPushButton" name="Settings_pushButton_Wiki">
@@ -3744,125 +3689,128 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </item>
            <item row="2" column="0">
             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
-             <item row="13" column="1">
-              <widget class="QComboBox" name="Settings_comboBox_Theme">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Select a theme</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="11" column="1">
-              <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-               <property name="text">
-                <string>Keep 1 backup per catalog</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1">
-              <widget class="QLabel" name="Settings_label_Data">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Data</string>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="1">
-              <widget class="QLabel" name="Settings_label_Theme">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Theme</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QComboBox" name="Settings_comboBox_Language">
-               <item>
-                <property name="text">
-                 <string>en_US</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="images.qrc">
-                  <normaloff>:/images/flags/us.png</normaloff>:/images/flags/us.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>fr_FR</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="images.qrc">
-                  <normaloff>:/images/flags/fr.png</normaloff>:/images/flags/fr.png</iconset>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="10" column="1">
-              <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-               <property name="text">
-                <string>Save records for Statistics</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <widget class="QLabel" name="Settings_label_Theme_2">
                <property name="text">
                 <string>(requires to restart)</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="Line" name="line_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLabel" name="Settings_label_Data_2">
-               <property name="font">
-                <font>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Language</string>
-               </property>
-              </widget>
+              <layout class="QGridLayout" name="gridLayout_14">
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                 <property name="toolTip">
+                  <string>Always keep one back of each catalog</string>
+                 </property>
+                 <property name="text">
+                  <string>Auto-backup catalogs</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+                 <property name="toolTip">
+                  <string>Keep records of files and size for Statistics</string>
+                 </property>
+                 <property name="text">
+                  <string>Save records</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="Settings_label_Data">
+                 <property name="font">
+                  <font>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Data</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="Settings_label_Data_2">
+                 <property name="font">
+                  <font>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Language</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="Settings_comboBox_Language">
+                 <item>
+                  <property name="text">
+                   <string>en_US</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/flags/us.png</normaloff>:/images/flags/us.png</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>fr_FR</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/flags/fr.png</normaloff>:/images/flags/fr.png</iconset>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="Settings_comboBox_Theme">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Select a theme</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="Settings_label_Theme">
+                 <property name="font">
+                  <font>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Theme</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-             <item row="0" column="1">
+             <item row="1" column="1">
               <widget class="QLabel" name="Settings_label_Settings">
                <property name="font">
                 <font>
@@ -3877,26 +3825,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </property>
               </widget>
              </item>
+             <item row="0" column="1">
+              <widget class="Line" name="line_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
-             <item>
-              <spacer name="Settings_verticalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QLabel" name="Collection_label_CurrentFolder">
                <property name="maximumSize">
@@ -3989,6 +3928,67 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </layout>
          </widget>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="Global_horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Show/Hide Filters and Settings</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding: 2px 10px;</string>
+           </property>
+           <property name="text">
+            <string>&lt;&lt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="Global_label_Global">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Filters &amp; Settings</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <spacer name="Global_verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

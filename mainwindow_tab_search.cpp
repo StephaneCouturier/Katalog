@@ -86,13 +86,13 @@
             #else
                 ui->Search_lineEdit_SearchText->setText("");
             #endif
-            ui->Search_comboBox_TextCriteria->setCurrentText("All Words");
-            ui->Search_comboBox_SearchIn->setCurrentText("File names or Folder paths");
-            ui->Search_comboBox_FileType->setCurrentText("Any");
+            ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
+            ui->Search_comboBox_SearchIn->setCurrentText(tr("File names or Folder paths"));
+            ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
             ui->Search_spinBox_MaximumSize->setValue(999);
-            ui->Search_comboBox_MinSizeUnit->setCurrentText("Byte");
-            ui->Search_comboBox_MaxSizeUnit->setCurrentText("GiB");
+            ui->Search_comboBox_MinSizeUnit->setCurrentText(tr("Bytes"));
+            ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_ShowFolders->setChecked(false);
             ui->Search_label_NumberResults->setText("");
 
@@ -125,7 +125,7 @@
                     }
                 }
 
-              QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+exportFile.fileName());
+              QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")+"\n"+exportFile.fileName());
               exportFile.close();
         }
         //----------------------------------------------------------------------
@@ -356,27 +356,27 @@
                     // User can enter size min anx max from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
                     sizeMultiplierMin=1;
-                    if      (selectedMinSizeUnit =="KiB")
+                    if      (selectedMinSizeUnit == tr("KiB"))
                             sizeMultiplierMin = sizeMultiplierMin *1024;
-                    else if (selectedMinSizeUnit =="MiB")
+                    else if (selectedMinSizeUnit == tr("MiB"))
                             sizeMultiplierMin = sizeMultiplierMin *1024*1024;
-                    else if (selectedMinSizeUnit =="GiB")
+                    else if (selectedMinSizeUnit == tr("GiB"))
                             sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
-                    else if (selectedMinSizeUnit =="TiB")
+                    else if (selectedMinSizeUnit == tr("TiB"))
                             sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024*1024;
                     sizeMultiplierMax=1;
-                    if      (selectedMaxSizeUnit =="KiB")
+                    if      (selectedMaxSizeUnit == tr("KiB"))
                             sizeMultiplierMax = sizeMultiplierMax *1024;
-                    else if (selectedMaxSizeUnit =="MiB")
+                    else if (selectedMaxSizeUnit == tr("MiB"))
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024;
-                    else if (selectedMaxSizeUnit =="GiB")
+                    else if (selectedMaxSizeUnit == tr("GiB"))
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
-                    else if (selectedMaxSizeUnit =="TiB")
+                    else if (selectedMaxSizeUnit == tr("TiB"))
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 
                  // Searching "Begin With" for File name or Folder name is not supported yet
-                    if (selectedTextCriteria=="Begins With" and selectedSearchIn =="File names or Folder paths"){
-                        QMessageBox::information(this,"Katalog","Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison.");
+                    if (selectedTextCriteria==tr("Begins With") and selectedSearchIn ==tr("File names or Folder paths")){
+                        QMessageBox::information(this,"Katalog",tr("Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison."));
                         return;;
                     }
 
@@ -579,7 +579,6 @@
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
              }
 
-            ui->Search_label_Regex->setText(regexPattern);
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
             //Search loop for all lines in the catalog file
@@ -806,16 +805,16 @@
             {
                 //Prepare list of size units for the Catalog selection combobox
                 // the first line is the one displayed by default
-                    ui->Search_comboBox_MinSizeUnit->addItem("TiB");
-                    ui->Search_comboBox_MinSizeUnit->addItem("GiB");
-                    ui->Search_comboBox_MinSizeUnit->addItem("MiB");
-                    ui->Search_comboBox_MinSizeUnit->addItem("KiB");
-                    ui->Search_comboBox_MinSizeUnit->addItem("Bytes");
-                    ui->Search_comboBox_MaxSizeUnit->addItem("TiB");
-                    ui->Search_comboBox_MaxSizeUnit->addItem("GiB");
-                    ui->Search_comboBox_MaxSizeUnit->addItem("MiB");
-                    ui->Search_comboBox_MaxSizeUnit->addItem("KiB");
-                    ui->Search_comboBox_MaxSizeUnit->addItem("Bytes");
+                    ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
+                    ui->Search_comboBox_MinSizeUnit->addItem(tr("GiB"));
+                    ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
+                    ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
+                    ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
+                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
+                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
+                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
+                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
+                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
 
                 //Load last search values (from settings file)
                     if (selectedMaximumSize ==0)
@@ -974,6 +973,3 @@
                     ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
 
             }
-
-
-

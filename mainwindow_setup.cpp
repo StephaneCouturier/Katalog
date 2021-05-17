@@ -170,7 +170,6 @@
     {
         //Search
 
-        ui->Search_label_Regex->hide();
         #ifdef Q_OS_LINUX
         ui->Search_lineEdit_SearchText->hide();
         #endif

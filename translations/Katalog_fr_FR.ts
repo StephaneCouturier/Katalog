@@ -2,11 +2,26 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>MainWindow</name>
+    <name>Catalog</name>
     <message>
-        <source>Katalog is an application to catalog, search, and manage files from any drive, permanent or removable.</source>
-        <translation type="vanished">Katalog est une application pour cataloguer, Chercher et géréer des fichiers de tout lecteur, permanent ou temporaire.</translation>
+        <source>Name</source>
+        <translation>Nom</translation>
     </message>
+    <message>
+        <source>Size</source>
+        <translation>Taille</translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation>Dossier</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Date</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
     <message>
         <source>Catalog</source>
         <translation>Catalogue</translation>
@@ -96,10 +111,6 @@
         <translation>Sélectionner</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation type="vanished">Ajouter</translation>
-    </message>
-    <message>
         <source>Filters</source>
         <translation>Filtres</translation>
     </message>
@@ -142,18 +153,6 @@
     <message>
         <source>(requires to restart)</source>
         <translation>(nécessaire de redémarrer)</translation>
-    </message>
-    <message>
-        <source>Use your system locale</source>
-        <translation type="vanished">Utiliser la langue du système</translation>
-    </message>
-    <message>
-        <source>Save records for Statistics</source>
-        <translation>Sauver des valeurs pour les Statistiques</translation>
-    </message>
-    <message>
-        <source>Keep 1 backup per catalog</source>
-        <translation>Garder une sauvegarde par catalogue</translation>
     </message>
     <message>
         <source>Filters &amp; Settings</source>
@@ -488,10 +487,6 @@
         <translation>Image</translation>
     </message>
     <message>
-        <source>regex</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the search results to a csv file</source>
         <translation>Exporter les résultats vers un ficher csv</translation>
     </message>
@@ -580,10 +575,6 @@
         <translation>3- </translation>
     </message>
     <message>
-        <source>Select a storage device to link the new catalog (optional)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a new storage device</source>
         <translation>Ajouter un nouveau stockage</translation>
     </message>
@@ -605,7 +596,7 @@
     </message>
     <message>
         <source>Select the path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le chemin</translation>
     </message>
     <message>
         <source>Search files or folders in the selected storage device</source>
@@ -629,7 +620,7 @@
     </message>
     <message>
         <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser les valeurs pour le stockage sélectionné (étiquette, sysème de fichiers, taille totale, total libre)</translation>
     </message>
     <message>
         <source>Delete the selected device</source>
@@ -661,11 +652,11 @@
     </message>
     <message>
         <source>View collection statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir les statistiques de la collection</translation>
     </message>
     <message>
         <source>Select the type of data</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le type de données</translation>
     </message>
     <message>
         <source>Select a catalog</source>
@@ -681,11 +672,11 @@
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquettes</translation>
     </message>
     <message>
         <source>Tag folders for search and statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetter des dossiers pour la recherche et les statistics</translation>
     </message>
     <message>
         <source>Add the tag to this folder</source>
@@ -693,7 +684,7 @@
     </message>
     <message>
         <source>Tag the folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetter le dossier</translation>
     </message>
     <message>
         <source>Current folders and tags</source>
@@ -701,15 +692,11 @@
     </message>
     <message>
         <source>Select a tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a folder </source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner une étiquette</translation>
     </message>
     <message>
         <source>Select a folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un dossier</translation>
     </message>
     <message>
         <source>Existing tags</source>
@@ -720,24 +707,8 @@
         <translation>Recharger le fichier contentant les étiquettes</translation>
     </message>
     <message>
-        <source>Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show/Hide Global settigns and filters.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select catalog(s) to search into</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.18     2021-05-14</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un thème</translation>
     </message>
     <message>
         <source>Desktop Theme</source>
@@ -759,7 +730,7 @@
     </message>
     <message>
         <source>Select a different Collection folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un dossier de Collection différent</translation>
     </message>
     <message>
         <source>Reload all catalog information</source>
@@ -811,11 +782,7 @@
     </message>
     <message>
         <source>Select the directory to be cataloged in this new catalog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QInputDialog::getText()</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le répertoire à cataloguer pour ce nouveau catalogue</translation>
     </message>
     <message>
         <source>Active</source>
@@ -823,11 +790,11 @@
     </message>
     <message>
         <source>Select the csv file to be imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir le fichier csv à importer</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Id</translation>
     </message>
     <message>
         <source>Copy absolute path</source>
@@ -843,19 +810,15 @@
     </message>
     <message>
         <source>Update all the catalog that are active, if the device is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser tous les catalogues actifs, si le stockage est  disponible.</translation>
     </message>
     <message>
         <source>Select a catalog above first.</source>
         <translation>Sélectionner d&apos;abord un catalogue.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset all criteria to default values, and clear previous results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Include Hidden files</source>
-        <translation type="unfinished">inclure les fichiers Cachés</translation>
+        <translation>inclure les fichiers Cachés</translation>
     </message>
     <message>
         <source>Follow symbolic links</source>
@@ -869,16 +832,126 @@
         <source>Manage the list of storage devices</source>
         <translation>Gérer la liste de stockages</translation>
     </message>
+    <message>
+        <source>There is already a catalog with this name:</source>
+        <translation>Il y a déjà un catalogue avec ce nom :</translation>
+    </message>
+    <message>
+        <source>Provide a name and select a path for this new catalog.</source>
+        <translation>Fournir un nom et sélectionner un chemin pour ce nouveau catalogue.</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom :</translation>
+    </message>
+    <message>
+        <source>Path:</source>
+        <translation>Chemin :</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Choose a different name.</source>
+        <translation>Choisir un nom différent.</translation>
+    </message>
+    <message>
+        <source>Reset all filters</source>
+        <translation>Réinitialiser tous les filtres</translation>
+    </message>
+    <message>
+        <source>Show/Hide Filters and Settings</source>
+        <translation>Montrer/Cacher les Filtres et Réglages</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>A propos</translation>
+    </message>
+    <message>
+        <source>Auto-backup catalogs</source>
+        <translation>Auto-sauvegarde des catalogues</translation>
+    </message>
+    <message>
+        <source>Keep records of files and size for Statistics</source>
+        <translation>Garder des enregistrements des fichiers et taille pour les Statistiques</translation>
+    </message>
+    <message>
+        <source>Save records</source>
+        <translation>Sauver des enregistrements</translation>
+    </message>
+    <message>
+        <source>Byte</source>
+        <translation type="vanished">Octet</translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation>Gio</translation>
+    </message>
+    <message>
+        <source>Results exported to the collection folder:</source>
+        <translation>Résultats exporté vers le dossier de collection :</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>Kio</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>Mio</translation>
+    </message>
+    <message>
+        <source>TiB</source>
+        <translation>Tio</translation>
+    </message>
+    <message>
+        <source>Using &apos;Begin With&apos; with &apos;File names or Folder names&apos; is not supported yet.
+Please try a different combinaison.</source>
+        <translation>Utiliser &apos;Commence Par&apos; avec &apos;Nom de Fichiers ou nom de Dossiers&apos; n&apos;est pas encore pris en charge. 
+Essayer une combinaison différente.</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translation>Octets</translation>
+    </message>
+    <message>
+        <source>The source folder does not contains any file.
+This could mean that the source is empty or the device attached is not mounted.
+Do you want to save it anyway (the catalog would be empty)?
+</source>
+        <translation>The dossier source ne contient aucun fichier. 
+Cela peut vouloir dire que la source est vide ou le périphérique de stockage n&apos;est pas monté.
+Enregistrer malgré cela (le catalogue sera vide) ?
+</translation>
+    </message>
+    <message>
+        <source>The new catalog,has been created.
+ Name:   </source>
+        <translation>Le nouveau catalogue a été créé.
+Nom :   </translation>
+    </message>
+    <message>
+        <source>Source:</source>
+        <translation>Source :</translation>
+    </message>
+    <message>
+        <source>No catalog found.</source>
+        <translation>Aucun catalogue trouvé.</translation>
+    </message>
+    <message>
+        <source>Always keep one back of each catalog</source>
+        <translation>Toujours garder une sauvegarde de chaque catalogue</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>
     <message>
         <source>Folder</source>
-        <translation type="unfinished">Dossier</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <source>Tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquette</translation>
     </message>
 </context>
 </TS>

@@ -276,10 +276,10 @@
         QFile file(fullCatalogPath);
         if (file.exists()==true){
             QMessageBox::information(this, "Katalog",
-                                     ("There is already a catalog with this name:    ")
+                                     tr("There is already a catalog with this name:")
                                         + newCatalogName
-                                        + ("\nPlease choose a different name or go to Collection to rename, update, or delete the existing one."),
-                                     ( "Ok" ) );
+                                        + "\n"+tr("Choose a different name."),
+                                     ( tr("Ok") ) );
             return;
         }
 
@@ -287,16 +287,16 @@
         if (newCatalogName!="" and newCatalogPath!="")
                 catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
         else QMessageBox::warning(this, "Katalog",
-                                  ("Please provide a name and select a path for this new catalog.\n Name: ")
-                                  +newCatalogName+"\n Path: "+newCatalogPath,
-                                  ( "Ok" ) );
+                                  tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
+                                  +newCatalogName+"\n"+tr("Path:")+newCatalogPath,
+                                  ( tr("Ok") ) );
 
         //Check if no files where found, and let the user decide what to do
         // Get the catalog file list
         QStringList filelist = fileListModel->stringList();
         if (filelist.count() == 5){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
             int result = QMessageBox::warning(this, "Katalog - Warning",
-                                ("The source folder does not contains any file.\n"
+                                tr("The source folder does not contains any file.\n"
                                      "This could mean that the source is empty or the device attached is not mounted.\n"
                                      "Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
                                               | QMessageBox::Cancel);
@@ -326,9 +326,9 @@
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         QMessageBox::information(this, "Katalog",
-                                  ("The new catalog,has been created.\n Name:   ")
-                                  +newCatalogName+"\n Source:     "+newCatalogPath,
-                                  ( "Ok" ) );
+                                  tr("The new catalog,has been created.\n Name:   ")
+                                  +newCatalogName+"\n" +tr("Source:") + newCatalogPath,
+                                  ( tr("Ok") ) );
 
         //Add new catalog values to the statistics log, if the user has chosen this options.
             if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){

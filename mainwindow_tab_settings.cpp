@@ -82,9 +82,9 @@ void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
 //Tab: FILTERS -----------------------------------------------------------------------------
 void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
 {
-        ui->Filters_comboBox_SelectLocation->setCurrentText("All");
-        ui->Filters_comboBox_SelectStorage->setCurrentText("All");
-        ui->Filters_comboBox_SelectCatalog->setCurrentText("All");
+        ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+        ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+        ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
@@ -159,7 +159,7 @@ void MainWindow::on_Settings_pushButton_Wiki_clicked()
 
 void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases/tag/v0.16"));
+    QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases"));
 }
 
 void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)

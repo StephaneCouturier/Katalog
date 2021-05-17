@@ -70,10 +70,10 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
-        case 0: return QString("Name");
-        case 1: return QString("Size");
-        case 3: return QString("Folder");
-        case 2: return QString("Date");
+        case 0: return QString(tr("Name"));
+        case 1: return QString(tr("Size"));
+        case 3: return QString(tr("Folder"));
+        case 2: return QString(tr("Date"));
         }
     }
     return QVariant();

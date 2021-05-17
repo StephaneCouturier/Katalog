@@ -127,7 +127,7 @@
 
             //Display an input box with the current file name (without extension)
             bool ok;
-            QString newCatalogName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+            QString newCatalogName = QInputDialog::getText(this, tr("Katalog"),
                                                  tr("Enter new catalog name"), QLineEdit::Normal,
                                                  currentCatalogName, &ok); //(QDir::home().dirName())
             //generate the full new name of the
