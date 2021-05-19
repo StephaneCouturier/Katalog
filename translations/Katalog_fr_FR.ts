@@ -942,6 +942,66 @@ Nom :   </translation>
         <source>Always keep one back of each catalog</source>
         <translation>Toujours garder une sauvegarde de chaque catalogue</translation>
     </message>
+    <message>
+        <source>Conversion completed.</source>
+        <translation>Conversion complète.</translation>
+    </message>
+    <message>
+        <source>Directory is empty</source>
+        <translation type="vanished">Le répertoire est vide</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;br/&gt;Ce catalogue a été actualisé :&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Nombre de fichiers : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajoutés : &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille totale des fichiers : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (ajoutés : &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>The catalog %1 cannot be updated.
+
+ The source folder - %2 - was not found.
+
+ Possible reasons:
+    - the device is not connected and mounted,
+    - the source folder was moved or renamed.</source>
+        <translation>Le catalogue %1 ne peut pas être actualisé.
+
+Le répertoire source  %2 -n&apos;a pas été trouvé.
+
+ Raisons possbiles :
+    - le lecteur n&apos;est pas connecté et monté,
+    - le dossier source a été déplacé ou renommé.</translation>
+    </message>
+    <message>
+        <source>It seems this catalog was not correctly imported or has an old format.
+Edit it and make sure it has the following first 2 lines:
+
+&lt;catalogSourcePath&gt;/folderpath
+&lt;catalogFileCount&gt;10000
+
+Copy/paste these lines at the begining of the file and modify the values after the &gt;:
+- the catalogSourcePath is the folder to catalog the files from.
+- the catalogFileCount number does not matter as much, it can be updated.
+</source>
+        <translation>Il semble que ce catalogue n&apos;a pas été importé correctement ou qu&apos;il a un ancien format.
+Editer le and vérifier qu&apos;il a au moins ces 2 lignes au début :
+
+&lt;catalogSourcePath&gt;/chemin_du_dossier_source
+&lt;catalogFileCount&gt;10000
+
+Copier/coller ces lignes au début du fichier et modifier les valeurs après le &gt; :
+- la valeur catalogSourcePath est le dossier à partir duquel les fihiers doivent être catalogués.
+- la valeur catalogFileCount n&apos;a pas d&apos;importance, elle pourra êrt mise à jour.
+</translation>
+    </message>
+    <message>
+        <source>Select a catalog first (some info is missing).
+ currentCatalogFilePath: %1 
+ currentCatalogName: %2 
+ currentCatalogSourcePath: %3</source>
+        <translation>Sélectionner d&apos;abord un catalogue (certaines informations sont manquantes).
+ chemin du ficher de catalogue : %1 
+ nom du catalogue : %2 
+ chemin source du catalogue : %3</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>

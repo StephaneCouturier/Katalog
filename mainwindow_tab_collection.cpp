@@ -539,7 +539,7 @@
         //read catalog file
         QFile catalogFile(catalogSourcePath);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this,"Katalog","No catalog found.");
+            QMessageBox::information(this,"Katalog",tr("No catalog found."));
             return;
         }
         QFile fileOut(catalogNewPath);
@@ -571,7 +571,7 @@
         catalogFile.rename(catalogFile.fileName() + ".bak");
         fileOut.rename(catalogFileName);
 
-        QMessageBox::information(this,"Katalog","Conversion completed.\n");
+        QMessageBox::information(this,"Katalog",tr("Conversion completed."));
 
     }
     //----------------------------------------------------------------------
@@ -623,27 +623,24 @@
 
 
 
-
         //Check if the update can be done, or inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
             if(currentCatalogFilePath == "not recorded" or currentCatalogName == "not recorded" or currentCatalogSourcePath == "not recorded"){
-            QMessageBox::information(this,"Katalog","It seems this catalog was not correctly imported or has an old format.\n"
-                                         "Please Edit it and make sure it has the following first 2 lines:\n\n"
+            QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
+                                         "Edit it and make sure it has the following first 2 lines:\n\n"
                                          "<catalogSourcePath>/folderpath\n"
                                          "<catalogFileCount>10000\n\n"
                                          "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
                                          "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                         "- the catalogFileCount number does not matter as much, it can be updated.\n"
+                                         "- the catalogFileCount number does not matter as much, it can be updated.\n")
                                      );
             return;
             }
 
             //Deal with other cases where some input information is missing
             if(currentCatalogFilePath == "" or currentCatalogName == "" or currentCatalogSourcePath == ""){
-            QMessageBox::information(this,"Katalog","Please select a catalog first (some info is missing).\ncurrentCatalogFilePath:"
-                                     +currentCatalogFilePath+"\ncurrentCatalogName: "
-                                     +currentCatalogName+"\ncurrentCatalogSourcePath: "
-                                     +currentCatalogSourcePath);
+            QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
+                                     currentCatalogFilePath, currentCatalogName, currentCatalogSourcePath));
             return;
             }
 
@@ -677,10 +674,11 @@
             ///Warning and choice if the result is 0 files
             if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
             {
-                int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
-                                              "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
-                                              "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
-                //return;
+                int result = QMessageBox::warning(this, "Katalog - Warning",
+                                    tr("The source folder does not contains any file.\n"
+                                         "This could mean that the source is empty or the device attached is not mounted.\n"
+                                         "Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
+                                                  | QMessageBox::Cancel);
                 if ( result == QMessageBox::Cancel){
                     return;
                 }
@@ -725,19 +723,25 @@
             qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
 
             //Inform user about the update
-            QMessageBox::information(this,"Katalog","<br/>This catalog was updated:<br/><b>" + currentCatalogName + "</b> "
-                                     "<br/><table>"
-                                     "<tr><td>Number of files: </td><td><b>" + QString::number(currentCatalogFileCount) + "</b></td><td>  (added: <b>" + QString::number(deltaFileCount) + "</b>)</td></tr>"
-                                     "<tr><td>Total file size: </td><td><b>" + QLocale().formattedDataSize(currentCatalogTotalFileSize) + "</b>  </td><td>  (added: <b>" + QLocale().formattedDataSize(deltaTotalFileSize) + "</b>)</td></tr>"
-                                     "</table>"
+            QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
+                                     "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
+                                     "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
+                                     ).arg(currentCatalogName,
+                                           QString::number(currentCatalogFileCount),
+                                           QString::number(deltaFileCount),
+                                           QLocale().formattedDataSize(currentCatalogTotalFileSize),
+                                           QLocale().formattedDataSize(deltaTotalFileSize))
                                      ,Qt::TextFormat(Qt::RichText));
+
         }
         else {
-            QMessageBox::information(this,"Katalog","The catalog " + currentCatalogName + " cannot be updated.\n"
-                                            "\nThe source folder - "+currentCatalogSourcePath+" - was not found.\n"
-                                            "\nPossible reasons:\n"
-                                            "  - the device is not connected and mounted,\n"
-                                            "  - the source folder was moved or renamed."
+            QMessageBox::information(this,"Katalog",tr("The catalog %1 cannot be updated.\n"
+                                            "\n The source folder - %2 - was not found.\n"
+                                            "\n Possible reasons:\n"
+                                            "    - the device is not connected and mounted,\n"
+                                            "    - the source folder was moved or renamed.")
+                                            .arg(currentCatalogName,
+                                                   currentCatalogSourcePath)
                                      );
         }
 

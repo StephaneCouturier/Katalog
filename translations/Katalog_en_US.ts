@@ -933,6 +933,44 @@ Do you want to save it anyway (the catalog would be empty)?
         <source>Always keep one back of each catalog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Conversion completed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The catalog %1 cannot be updated.
+
+ The source folder - %2 - was not found.
+
+ Possible reasons:
+    - the device is not connected and mounted,
+    - the source folder was moved or renamed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It seems this catalog was not correctly imported or has an old format.
+Edit it and make sure it has the following first 2 lines:
+
+&lt;catalogSourcePath&gt;/folderpath
+&lt;catalogFileCount&gt;10000
+
+Copy/paste these lines at the begining of the file and modify the values after the &gt;:
+- the catalogSourcePath is the folder to catalog the files from.
+- the catalogFileCount number does not matter as much, it can be updated.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a catalog first (some info is missing).
+ currentCatalogFilePath: %1 
+ currentCatalogName: %2 
+ currentCatalogSourcePath: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>
