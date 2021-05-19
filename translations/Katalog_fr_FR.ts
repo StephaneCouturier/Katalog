@@ -224,11 +224,11 @@
     </message>
     <message>
         <source>Search storage</source>
-        <translation>Chercher le stockage</translation>
+        <translation type="vanished">Chercher le stockage</translation>
     </message>
     <message>
         <source>Search location</source>
-        <translation>Chercher le lieu</translation>
+        <translation type="vanished">Chercher le lieu</translation>
     </message>
     <message>
         <source>New</source>
@@ -291,16 +291,12 @@
         <translation>Espace Total</translation>
     </message>
     <message>
-        <source>Used Space</source>
-        <translation>Espace Utilisé</translation>
-    </message>
-    <message>
         <source>Free Space</source>
-        <translation>Espace libre</translation>
+        <translation type="vanished">Espace libre</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Enregistrer</translation>
+        <translation type="vanished">Enregistrer</translation>
     </message>
     <message>
         <source>All</source>
@@ -416,11 +412,11 @@
     </message>
     <message>
         <source>A storage file was created</source>
-        <translation>Un fichier pour stockage à été créé</translation>
+        <translation>Un fichier pour stockage a été créé</translation>
     </message>
     <message>
         <source>You can edit it now</source>
-        <translation>Vous pouvez maintenant l éditer</translation>
+        <translation>Vous pouvez maintenant l&apos;éditer</translation>
     </message>
     <message>
         <source>Launch the search of files.</source>
@@ -616,7 +612,7 @@
     </message>
     <message>
         <source>Open in Filelight</source>
-        <translation>Ouvrir dans Filelight</translation>
+        <translation type="vanished">Ouvrir dans Filelight</translation>
     </message>
     <message>
         <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
@@ -919,7 +915,7 @@ Essayer une combinaison différente.</translation>
 This could mean that the source is empty or the device attached is not mounted.
 Do you want to save it anyway (the catalog would be empty)?
 </source>
-        <translation>The dossier source ne contient aucun fichier. 
+        <translation type="vanished">The dossier source ne contient aucun fichier. 
 Cela peut vouloir dire que la source est vide ou le périphérique de stockage n&apos;est pas monté.
 Enregistrer malgré cela (le catalogue sera vide) ?
 </translation>
@@ -948,7 +944,7 @@ Nom :   </translation>
     </message>
     <message>
         <source>Directory is empty</source>
-        <translation type="vanished">Le répertoire est vide</translation>
+        <translation>Le répertoire est vide</translation>
     </message>
     <message>
         <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
@@ -1001,6 +997,58 @@ Copier/coller ces lignes au début du fichier et modifier les valeurs après le 
  chemin du ficher de catalogue : %1 
  nom du catalogue : %2 
  chemin source du catalogue : %3</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation>Sauver tout</translation>
+    </message>
+    <message>
+        <source>Filelight</source>
+        <translation>Filelight</translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation>Utilisé</translation>
+    </message>
+    <message>
+        <source>Create list</source>
+        <translation>Créer une list</translation>
+    </message>
+    <message>
+        <source>Edit list</source>
+        <translation>Editer la liste</translation>
+    </message>
+    <message>
+        <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this Storage device?&lt;table&gt;&lt;tr&gt;&lt;td&gt;ID:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Name: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>Voulez-vous &lt;span style=&apos;color: red&apos;;&gt;supprimer&lt;/span&gt; ce stockage ?&lt;table&gt;&lt;tr&gt;&lt;td&gt;Id. :   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Nom : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>A storage.csv file was found, but could not be loaded.
+Likely, it was made with an older version of Katalog.
+The file can be fixed manually, please visit the wiki page:
+https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</source>
+        <translation>Un fichier storage.csv a été trouvé, mais n&apos;a pas pu être chargé.
+Il a probablement été créé par une ancienne version de Katalog.
+Le fichier peut être corrigé manuellement, visiter la page du Wiki :
+https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</translation>
+    </message>
+    <message>
+        <source>The source folder does not contain any file.
+This could mean that the source is empty or the device is not mounted to this folder.
+</source>
+        <translation>The dossier source ne contient aucun fichier. 
+Cela peut vouloir dire que la source est vide ou le périphérique de stockage n&apos;est pas monté.
+</translation>
+    </message>
+    <message>
+        <source>Do you want to save it anyway (the catalog would be empty)?
+</source>
+        <translation>Voulez-vous le sauver malgré cela (le catalogue serait vide) ?
+</translation>
+    </message>
+    <message>
+        <source>This update cannot be done automatically.</source>
+        <translation>Cette mise-à-jour ne peut pas être faite automatiquement.</translation>
     </message>
 </context>
 <context>

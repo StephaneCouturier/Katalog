@@ -403,15 +403,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Search storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search files or folders in the selected location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -420,10 +412,6 @@
     </message>
     <message>
         <source>Open the path in Filelight</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open in Filelight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -444,14 +432,6 @@
     </message>
     <message>
         <source>Total Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Used Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Free Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -480,10 +460,6 @@
     </message>
     <message>
         <source>Save changes made directly in the table below</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -910,13 +886,6 @@ Please try a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The source folder does not contains any file.
-This could mean that the source is empty or the device attached is not mounted.
-Do you want to save it anyway (the catalog would be empty)?
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The new catalog,has been created.
  Name:   </source>
         <translation type="unfinished"></translation>
@@ -969,6 +938,56 @@ Copy/paste these lines at the begining of the file and modify the values after t
  currentCatalogFilePath: %1 
  currentCatalogName: %2 
  currentCatalogSourcePath: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filelight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this Storage device?&lt;table&gt;&lt;tr&gt;&lt;td&gt;ID:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Name: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A storage.csv file was found, but could not be loaded.
+Likely, it was made with an older version of Katalog.
+The file can be fixed manually, please visit the wiki page:
+https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directory is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The source folder does not contain any file.
+This could mean that the source is empty or the device is not mounted to this folder.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save it anyway (the catalog would be empty)?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This update cannot be done automatically.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

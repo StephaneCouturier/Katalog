@@ -296,9 +296,9 @@
         QStringList filelist = fileListModel->stringList();
         if (filelist.count() == 5){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
             int result = QMessageBox::warning(this, "Katalog - Warning",
-                                tr("The source folder does not contains any file.\n"
-                                     "This could mean that the source is empty or the device attached is not mounted.\n"
-                                     "Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
+                                tr("The source folder does not contain any file.\n"
+                                     "This could mean that the source is empty or the device is not mounted to this folder.\n")
+                                     +tr("Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
                                               | QMessageBox::Cancel);
             if ( result != QMessageBox::Cancel){
                 return;
