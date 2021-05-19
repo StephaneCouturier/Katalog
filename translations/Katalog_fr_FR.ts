@@ -223,14 +223,6 @@
         <translation>Créer le Catalogue</translation>
     </message>
     <message>
-        <source>Search storage</source>
-        <translation type="vanished">Chercher le stockage</translation>
-    </message>
-    <message>
-        <source>Search location</source>
-        <translation type="vanished">Chercher le lieu</translation>
-    </message>
-    <message>
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
@@ -289,14 +281,6 @@
     <message>
         <source>Total Space</source>
         <translation>Espace Total</translation>
-    </message>
-    <message>
-        <source>Free Space</source>
-        <translation type="vanished">Espace libre</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Enregistrer</translation>
     </message>
     <message>
         <source>All</source>
@@ -611,10 +595,6 @@
         <translation>Ouvrir le chemin dans Filelight</translation>
     </message>
     <message>
-        <source>Open in Filelight</source>
-        <translation type="vanished">Ouvrir dans Filelight</translation>
-    </message>
-    <message>
         <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
         <translation>Actualiser les valeurs pour le stockage sélectionné (étiquette, sysème de fichiers, taille totale, total libre)</translation>
     </message>
@@ -877,10 +857,6 @@
         <translation>Sauver des enregistrements</translation>
     </message>
     <message>
-        <source>Byte</source>
-        <translation type="vanished">Octet</translation>
-    </message>
-    <message>
         <source>GiB</source>
         <translation>Gio</translation>
     </message>
@@ -909,16 +885,6 @@ Essayer une combinaison différente.</translation>
     <message>
         <source>Bytes</source>
         <translation>Octets</translation>
-    </message>
-    <message>
-        <source>The source folder does not contains any file.
-This could mean that the source is empty or the device attached is not mounted.
-Do you want to save it anyway (the catalog would be empty)?
-</source>
-        <translation type="vanished">The dossier source ne contient aucun fichier. 
-Cela peut vouloir dire que la source est vide ou le périphérique de stockage n&apos;est pas monté.
-Enregistrer malgré cela (le catalogue sera vide) ?
-</translation>
     </message>
     <message>
         <source>The new catalog,has been created.
@@ -1037,7 +1003,7 @@ https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-version
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
         <translation>The dossier source ne contient aucun fichier. 
-Cela peut vouloir dire que la source est vide ou le périphérique de stockage n&apos;est pas monté.
+Cela peut vouloir dire que la source est vide ou que le périphérique de stockage n&apos;est pas monté.
 </translation>
     </message>
     <message>
@@ -1047,8 +1013,44 @@ Cela peut vouloir dire que la source est vide ou le périphérique de stockage n
 </translation>
     </message>
     <message>
-        <source>This update cannot be done automatically.</source>
-        <translation>Cette mise-à-jour ne peut pas être faite automatiquement.</translation>
+        <source>No path provided</source>
+        <translation>Aucun chemin fourni</translation>
+    </message>
+    <message>
+        <source>No Path was provided. 
+Modify the device to provide one and try again.
+</source>
+        <translation>Aucun chemin n&apos;a été fourni.
+Modifier le stockage pour un fournir un et essayer à nouveau.
+</translation>
+    </message>
+    <message>
+        <source>The source folder does not contain any file.
+
+This could mean that the source is empty or the device is not mounted to this folder.
+
+</source>
+        <translation type="obsolete">Le dossier source ne contient</translation>
+    </message>
+    <message>
+        <source>Katalog is going try to get values anyhow.</source>
+        <translation>Katalog va tout de même essayer d&apos;obtenir des valeurs.</translation>
+    </message>
+    <message>
+        <source>Katalog could not get values. &lt;br/&gt; Check the source folder, or that the device is mounted to the source folder.</source>
+        <translation>Katalog n&apos;a pas pu obtenir de valeurs &lt;br/&gt; Vérifier le chemin source ou que le stockage est monté sur le chemin source.</translation>
+    </message>
+    <message>
+        <source>Accept changes?</source>
+        <translation>Accepter les changements ?</translation>
+    </message>
+    <message>
+        <source>Total:</source>
+        <translation>Total :</translation>
+    </message>
+    <message>
+        <source>Free:</source>
+        <translation>Libre :</translation>
     </message>
 </context>
 <context>

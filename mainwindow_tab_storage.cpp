@@ -161,6 +161,7 @@ void MainWindow::on_Storage_pushButton_New_clicked()
 
     //load table to model
     loadStorageTableToModel();
+    saveStorageData();
 
     //enable save button
     ui->Storage_pushButton_New->setEnabled(true);
@@ -211,11 +212,11 @@ void MainWindow::on_Storage_pushButton_Delete_clicked()
 {
 
     int result = QMessageBox::warning(this,"Katalog",
-               "Do you want to <span style='color: red';>delete</span> this Storage device?"
+               tr("Do you want to <span style='color: red';>delete</span> this Storage device?"
                "<table>"
-               "<tr><td>ID:   </td><td><b>" + QString::number(selectedStorageID) +"</td></tr>"
-               "<tr><td>Name: </td><td><b>" + selectedStorageName + "</td></tr>"
-               "</table>"
+               "<tr><td>ID:   </td><td><b> %1 </td></tr>"
+               "<tr><td>Name: </td><td><b> %2 </td></tr>"
+               "</table>").arg(QString::number(selectedStorageID),selectedStorageName)
               ,QMessageBox::Yes|QMessageBox::Cancel);
 
     if ( result ==QMessageBox::Yes){
@@ -270,10 +271,10 @@ void MainWindow::loadStorageFileToTable()
     QString line = textStream.readLine();
     if (line.left(2)!="ID"){
            QMessageBox::warning(this,"Katalog",
-                                "A storage.csv file was found, but could not be loaded.\n"
+                                tr("A storage.csv file was found, but could not be loaded.\n"
                                 "Likely, it was made with an older version of Katalog.\n"
                                 "The file can be fixed manually, please visit the wiki page:\n"
-                                "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions"
+                                "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions")
                                 //,QMessageBox::Yes|QMessageBox::Cancel
                                 );
            return;
@@ -470,12 +471,21 @@ void MainWindow::updateStorageInfo()
 {
     //verify if path is available / not empty
     QDir dir (selectedStoragePath);
+
+        ///Warning if no Path is provided
+        if ( selectedStoragePath=="" ){
+            QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
+                                          "Modify the device to provide one and try again.\n")
+                                          );
+            return;
+        }
+
         ///Warning and choice if the result is 0 files
         if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
         {
-            int result = QMessageBox::warning(this,"Directory is empty","The source folder does not contains any file.\n"
-                                          "This could mean indeed that the source is empty, or that the device is not mounted to this folder. \n"
-                                          "Do you want to update it anyway (the catalog would then be empty)?\n",QMessageBox::Yes | QMessageBox::Cancel);
+            int result = QMessageBox::warning(this,tr("Directory is empty"),tr("The source folder does not contain any file.\n"
+                                          "This could mean that the source is empty or the device is not mounted to this folder.\n")
+                                          +tr("Katalog is going try to get values anyhow."));
             //return;
             if ( result == QMessageBox::Cancel){
                 return;
@@ -494,13 +504,17 @@ void MainWindow::updateStorageInfo()
     QString storageFS = storage.fileSystemType();
 
     //get confirmation for the update
-    int result = QMessageBox::warning(this,"Update","Total:\n" + QLocale().formattedDataSize(sizeTotal)+"\nFree:\n" + QLocale().formattedDataSize(sizeAvailable),
-                                      QMessageBox::Yes | QMessageBox::Cancel);
-    //return;
-    if ( result == QMessageBox::Cancel){
-        return;
+    if (sizeTotal == -1 ){
+        QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
     }
-
+    else{
+        int result = QMessageBox::warning(this,tr("Update"),tr("Accept changes?") +"<br/><br/>"+ tr("Total:") +"<br/><b>"+ QLocale().formattedDataSize(sizeTotal)+"</b><br/><br/>" +tr("Free:") +"<br/><b>"+ QLocale().formattedDataSize(sizeAvailable)+"</b><br/><br/>",
+                                          QMessageBox::Yes | QMessageBox::Cancel);
+        //return;
+        if ( result == QMessageBox::Cancel){
+            return;
+        }
+    }
     //SQL updates
     //Get the sum of total space
     QSqlQuery queryTotalSpace;

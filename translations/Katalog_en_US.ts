@@ -987,7 +987,33 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This update cannot be done automatically.</source>
+        <source>No path provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Path was provided. 
+Modify the device to provide one and try again.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Katalog is going try to get values anyhow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Katalog could not get values. &lt;br/&gt; Check the source folder, or that the device is mounted to the source folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Free:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

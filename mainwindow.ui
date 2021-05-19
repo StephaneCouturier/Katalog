@@ -94,7 +94,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -2681,6 +2681,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Manage the list of storage devices</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11">
+        <item row="3" column="0">
+         <widget class="QTreeView" name="Storage_treeView_StorageList">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="Line" name="Storage_line_Separate">
           <property name="orientation">
@@ -2691,10 +2701,44 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="Storage_horizontalLayout_SelectedDevice">
           <item>
+           <widget class="QPushButton" name="Storage_pushButton_New">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Add a new storage device</string>
+            </property>
+            <property name="text">
+             <string>New</string>
+            </property>
+            <property name="icon">
+             <iconset theme="folder-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_SaveAll">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Save changes made directly in the table below</string>
+            </property>
+            <property name="text">
+             <string>Save All</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-save">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="Storage_label_WithSelectedStorage">
             <property name="minimumSize">
              <size>
-              <width>150</width>
+              <width>135</width>
               <height>0</height>
              </size>
             </property>
@@ -2707,8 +2751,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="text">
              <string>with selected</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
             <property name="margin">
-             <number>6</number>
+             <number>4</number>
             </property>
            </widget>
           </item>
@@ -2721,7 +2768,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Search files or folders in the selected storage device</string>
             </property>
             <property name="text">
-             <string>Search storage</string>
+             <string>Storage</string>
             </property>
             <property name="icon">
              <iconset theme="edit-find">
@@ -2738,7 +2785,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Search files or folders in the selected location</string>
             </property>
             <property name="text">
-             <string>Search location</string>
+             <string>Location</string>
             </property>
             <property name="icon">
              <iconset theme="edit-find">
@@ -2755,7 +2802,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Create a new catalog for this device</string>
             </property>
             <property name="text">
-             <string>Create Catalog</string>
+             <string>Catalog</string>
             </property>
             <property name="icon">
              <iconset theme="journal-new">
@@ -2772,27 +2819,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Open the path in Filelight</string>
             </property>
             <property name="text">
-             <string>Open in Filelight</string>
+             <string>Filelight</string>
             </property>
             <property name="icon">
              <iconset theme="gparted">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_pushButton_New">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Add a new storage device</string>
-            </property>
-            <property name="text">
-             <string>New</string>
-            </property>
-            <property name="icon">
-             <iconset theme="folder-new">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
@@ -2937,7 +2967,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceUsedLabel">
             <property name="text">
-             <string>Used Space</string>
+             <string>Used</string>
             </property>
            </widget>
           </item>
@@ -2966,7 +2996,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <widget class="QLabel" name="Storage_label_SpaceFreeLabel">
             <property name="text">
-             <string>Free Space</string>
+             <string>Free</string>
             </property>
            </widget>
           </item>
@@ -3021,10 +3051,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <string>Create a list to add devices</string>
             </property>
             <property name="text">
-             <string>Create</string>
+             <string>Create list</string>
             </property>
             <property name="icon">
              <iconset theme="document-new">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Storage_pushButton_EditAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Edit the list in a spreadsheet ( tab separated file)</string>
+            </property>
+            <property name="text">
+             <string>Edit list</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-edit-sign">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
@@ -3047,40 +3094,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Storage_pushButton_EditAll">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Edit the list in a spreadsheet ( tab separated file)</string>
-            </property>
-            <property name="text">
-             <string>Edit</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-edit-sign">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Storage_pushButton_SaveAll">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>Save changes made directly in the table below</string>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-save">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="Storage_horizontalSpacer_05">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -3094,16 +3107,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
          </layout>
-        </item>
-        <item row="3" column="0">
-         <widget class="QTreeView" name="Storage_treeView_StorageList">
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
