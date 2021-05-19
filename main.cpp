@@ -24,11 +24,9 @@
 // Application: Katalog
 // File Name:   main.cpp
 // Purpose:     Main file for the application at start
-// Description:
+// Description: Generates the app, initialize language, theme, fallback icons, translation, and the main window
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.8
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -74,7 +72,7 @@ int main(int argc, char *argv[])
         KAboutData aboutData(
              QStringLiteral("Katalog"),         // The program name used internally. (componentName)
              i18n("Katalog"),                   // A displayable program name string. (displayName)
-             QStringLiteral("0.18"),             // The program version string. (version)
+             QStringLiteral("1.00"),             // The program version string. (version)
              // Short description of what the app does. (shortDescription)
              i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
              KAboutLicense::GPL,// The license this code is released under
