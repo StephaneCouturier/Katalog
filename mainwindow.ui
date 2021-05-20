@@ -94,7 +94,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3146,7 +3146,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>175</width>
                 <height>0</height>
                </size>
               </property>
@@ -3866,7 +3866,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder"/>
+              <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder">
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
