@@ -62,9 +62,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         //Set up the User Interface
             ui->setupUi(this);
 
-            version = "1.00";
+            currentVersion = "1.00";
             releaseDate = "2021-05-31";
-            ui->Settings_label_VersionValue->setText(version);
+            ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
         //Hide user interface items that are not ready for use (under development).
@@ -145,6 +145,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
             ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
+
+    //check if new version is available
+            checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
+            if ( checkVersionChoice == true)
+                checkVersion();
 
 }
 

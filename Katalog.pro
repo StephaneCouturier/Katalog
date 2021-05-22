@@ -32,7 +32,7 @@
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
-QT       += core gui charts
+QT       += core gui charts network
 QT       += sql widgets
 requires(qtConfig(tableview))
 requires(qtConfig(treeview))

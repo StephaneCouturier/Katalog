@@ -1052,6 +1052,18 @@ This could mean that the source is empty or the device is not mounted to this fo
         <source>Free:</source>
         <translation>Libre :</translation>
     </message>
+    <message>
+        <source>Check at start up</source>
+        <translation>Vérifier au démarrage</translation>
+    </message>
+    <message>
+        <source>This is version: v%1 
+A new version is available: v%2 
+ Do you want to download it?</source>
+        <translation type="unfinished">Ceci est la version : v%1
+Une nouvelle version est disponible :  v%2 
+Voulez-vous la télécharger ?</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>

@@ -85,7 +85,7 @@ class MainWindow : public QMainWindow
             Ui::MainWindow *ui;
             void loadCustomTheme1();
             void hideDevelopmentUIItems();
-            QString version;
+            QString currentVersion;
             QString releaseDate;
 
             //KDE menus/icons
@@ -118,7 +118,8 @@ class MainWindow : public QMainWindow
             void startDatabase();
 
             //void refreshStorageStatistics();
-
+            bool checkVersionChoice;
+            void checkVersion();
 
         //TAB: Search
             //inputs
@@ -279,8 +280,8 @@ class MainWindow : public QMainWindow
 
                 void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
-
                 void on_Settings_comboBox_Theme_currentTextChanged();
+                void on_Settings_checkBox_CheckVersion_stateChanged();
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -371,8 +372,6 @@ class MainWindow : public QMainWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
-
-
 
 };
 

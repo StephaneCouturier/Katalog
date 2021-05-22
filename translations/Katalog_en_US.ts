@@ -1016,6 +1016,16 @@ Modify the device to provide one and try again.
         <source>Free:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Check at start up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is version: v%1 
+A new version is available: v%2 
+ Do you want to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>

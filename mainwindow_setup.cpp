@@ -40,6 +40,9 @@
 #include <QTextStream>
 #include <QSaveFile>
 #include <QSettings>
+#include <QDesktopServices>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 #ifdef Q_OS_LINUX
     #include <KActionCollection>
@@ -109,10 +112,11 @@
         }
 
         //General settings
-        ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate").toBool());
+        ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
         ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
-        ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp").toBool());
-        ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
+        ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
+        ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());      
+        ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
 
         //last tab selected
         selectedTab = settings.value("Settings/selectedTab").toInt();
@@ -120,6 +124,7 @@
 
         int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
         ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
+
 
     }
     //----------------------------------------------------------------------
@@ -292,7 +297,61 @@
 
     }
 
+  //----------------------------------------------------------------------
 
+     void MainWindow::checkVersion()
+     {
+
+         //Get the number of the lastest Version
+         QString lastestVersion;
+         QString htmlPage;
+         QString downloadAddress = "https://github.com/StephaneCouturier/Katalog/releases/latest";
+         //NOTES:
+         // github will redirect this address to the actual lastest release page.
+         // The event will return a message containing this latest release exact address;
+         // This address contains the release tag, which is the number to get.
+
+         //Get html message
+         QNetworkAccessManager manager;
+         QNetworkReply *response = manager.get(QNetworkRequest(QUrl(downloadAddress)));
+         QEventLoop event;
+         connect(response,SIGNAL(finished()),&event,SLOT(quit()));
+         event.exec();
+         htmlPage = response->readAll();
+
+         //Parse html text, search, and return the release number
+         QString searchString1 = "/Katalog/releases/tag/v";
+         QStringList lineValues;
+         QTextStream stream(&htmlPage);
+         while (!stream.atEnd())
+         {
+             //Read the next line
+             QString line = stream.readLine();
+
+             //Verify it contains the search string
+             if (line.contains(searchString1, Qt::CaseSensitive)) {
+
+               //get value
+               lineValues = line.split(searchString1);
+               lineValues = lineValues[1].split("\">");
+               lastestVersion = lineValues[0];
+             }
+
+         }
+
+        //inform user if new version is available, and give the choice to download it
+        if ( lastestVersion > currentVersion ){
+
+            int result = QMessageBox::information(this,"Katalog",
+                      tr("This is version: v%1 \nA new version is available: v%2 \n Do you want to download it?").arg(currentVersion,lastestVersion),QMessageBox::Yes|QMessageBox::Cancel);
+
+            if ( result ==QMessageBox::Yes){
+                QDesktopServices::openUrl(QUrl("https://sourceforge.net/projects/katalogg/files/latest/download"));
+
+            }
+        }
+
+     }
 
     //Menu and Icons - Actions KDE setup ---------------------------------------
 	#ifdef Q_OS_LINUX

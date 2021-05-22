@@ -3594,24 +3594,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
              <item>
               <layout class="QGridLayout" name="gridLayout_13">
-               <item row="1" column="1">
-                <widget class="QLabel" name="Settings_label_DateTitle">
-                 <property name="font">
-                  <font>
-                   <family>Noto Sans</family>
-                   <pointsize>10</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Date</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="Settings_label_VersionTitle">
                  <property name="font">
@@ -3627,6 +3609,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLabel" name="Settings_label_DateValue">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="indent">
+                  <number>10</number>
                  </property>
                 </widget>
                </item>
@@ -3651,24 +3654,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="2">
-                <widget class="QLabel" name="Settings_label_DateValue">
+               <item row="2" column="1">
+                <widget class="QLabel" name="Settings_label_DateTitle">
                  <property name="font">
                   <font>
                    <family>Noto Sans</family>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
+                   <weight>50</weight>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="text">
                   <string>Date</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="indent">
-                  <number>10</number>
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -3704,29 +3704,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
              <item row="4" column="1">
               <layout class="QGridLayout" name="gridLayout_14">
-               <item row="2" column="1">
-                <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-                 <property name="toolTip">
-                  <string>Always keep one back of each catalog</string>
-                 </property>
-                 <property name="text">
-                  <string>Auto-backup catalogs</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-                 <property name="toolTip">
-                  <string>Keep records of files and size for Statistics</string>
-                 </property>
-                 <property name="text">
-                  <string>Save records</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="Settings_label_Data">
                  <property name="font">
@@ -3737,6 +3714,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="text">
                   <string>Data</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                 <property name="toolTip">
+                  <string>Always keep one back of each catalog</string>
+                 </property>
+                 <property name="text">
+                  <string>Auto-backup catalogs</string>
                  </property>
                 </widget>
                </item>
@@ -3751,28 +3738,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="text">
                   <string>Language</string>
                  </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="Settings_comboBox_Language">
-                 <item>
-                  <property name="text">
-                   <string>en_US</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="images.qrc">
-                    <normaloff>:/images/flags/us.png</normaloff>:/images/flags/us.png</iconset>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>fr_FR</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="images.qrc">
-                    <normaloff>:/images/flags/fr.png</normaloff>:/images/flags/fr.png</iconset>
-                  </property>
-                 </item>
                 </widget>
                </item>
                <item row="3" column="1">
@@ -3798,6 +3763,41 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </item>
                 </widget>
                </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="Settings_comboBox_Language">
+                 <item>
+                  <property name="text">
+                   <string>en_US</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/flags/us.png</normaloff>:/images/flags/us.png</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>fr_FR</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/flags/fr.png</normaloff>:/images/flags/fr.png</iconset>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+                 <property name="toolTip">
+                  <string>Keep records of files and size for Statistics</string>
+                 </property>
+                 <property name="text">
+                  <string>Save records</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="Settings_label_Theme">
                  <property name="font">
@@ -3808,6 +3808,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="text">
                   <string>Theme</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="Settings_label_CheckVersion">
+                 <property name="font">
+                  <font>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Version</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                 <property name="toolTip">
+                  <string>Keep records of files and size for Statistics</string>
+                 </property>
+                 <property name="text">
+                  <string>Check at start up</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>

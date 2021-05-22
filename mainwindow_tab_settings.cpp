@@ -152,6 +152,14 @@ void MainWindow::on_Settings_comboBox_Theme_currentTextChanged()
     settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
 }
 
+void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
+{
+    QSettings settings(settingsFile, QSettings:: IniFormat);
+    settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
+}
+
+//SETTINGS / About ---------------------------------------------------------------------
+
 void MainWindow::on_Settings_pushButton_Wiki_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/wiki"));
