@@ -35,7 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "collection.h"
+//#include "collection.h"
 #include "catalog.h"
 #include "filesview.h"
 

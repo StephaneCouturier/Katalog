@@ -365,6 +365,7 @@
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(storageNameListforCombo);
         ui->Create_comboBox_StorageSelection->setModel(fileListModel);
+        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
     }
     //----------------------------------------------------------------------
 

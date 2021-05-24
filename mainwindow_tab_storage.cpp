@@ -35,7 +35,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "database.h"
-#include "storage.h"
+//#include "storage.h"
 #include "storageview.h"
 
 #include <QDesktopServices>
@@ -169,7 +169,7 @@ void MainWindow::on_Storage_pushButton_New_clicked()
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
-{//KMessageBox::information(this,"on_PB_S_Search_clicked\n"+ selectedStorageName);
+{
     //Change tab to show the Search screen
     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
@@ -424,7 +424,7 @@ void MainWindow::loadStorageTableToModel()
     ui->Storage_treeView_StorageList->header()->resizeSection(2, 125); //Type
     ui->Storage_treeView_StorageList->header()->resizeSection(3, 150); //Location
     ui->Storage_treeView_StorageList->header()->resizeSection(4, 250); //Path
-    ui->Storage_treeView_StorageList->header()->resizeSection(5,  50); //Label
+    ui->Storage_treeView_StorageList->header()->resizeSection(5, 125); //Label
     ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
     ui->Storage_treeView_StorageList->header()->resizeSection(7,  85); //Total
     ui->Storage_treeView_StorageList->header()->resizeSection(8,  85); //Free
