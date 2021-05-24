@@ -113,7 +113,7 @@
 
         //General settings
         ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
-        ui->Settings_comboBox_Theme->setCurrentText(settings.value("Settings/UseDefaultDesktopTheme").toString());
+        ui->Settings_comboBox_Theme->setCurrentIndex(settings.value("Settings/Theme").toInt());
         ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
         ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());      
         ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());

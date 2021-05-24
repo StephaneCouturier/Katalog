@@ -146,10 +146,10 @@ void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
     settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
 }
 
-void MainWindow::on_Settings_comboBox_Theme_currentTextChanged()
+void MainWindow::on_Settings_comboBox_Theme_currentIndexChanged(int index)
 {
     QSettings settings(settingsFile, QSettings:: IniFormat);
-    settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
+    settings.setValue("Settings/Theme", index);
 }
 
 void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
