@@ -67,7 +67,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     catalog.cpp \
     catalogsview.cpp \
-    collection.cpp \
     filesview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -80,18 +79,15 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
-    storage.cpp \
     storageview.cpp \
     tag.cpp
 
 HEADERS += \
     catalog.h \
     catalogsview.h \
-    collection.h \
     database.h \
     filesview.h \
     mainwindow.h \
-    storage.h \
     storageview.h \
     tag.h
 
