@@ -1002,7 +1002,7 @@ https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-version
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
-        <translation>The dossier source ne contient aucun fichier. 
+        <translation>Le dossier source ne contient aucun fichier.
 Cela peut vouloir dire que la source est vide ou que le périphérique de stockage n&apos;est pas monté.
 </translation>
     </message>
@@ -1038,7 +1038,7 @@ This could mean that the source is empty or the device is not mounted to this fo
     </message>
     <message>
         <source>Katalog could not get values. &lt;br/&gt; Check the source folder, or that the device is mounted to the source folder.</source>
-        <translation>Katalog n&apos;a pas pu obtenir de valeurs &lt;br/&gt; Vérifier le chemin source ou que le stockage est monté sur le chemin source.</translation>
+        <translation>Katalog n&apos;a pas pu obtenir de valeurs. &lt;br/&gt; Vérifier le chemin source ou que le stockage est monté sur le chemin source.</translation>
     </message>
     <message>
         <source>Accept changes?</source>
