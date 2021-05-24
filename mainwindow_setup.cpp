@@ -201,7 +201,7 @@
     }
 
     //----------------------------------------------------------------------
-    void MainWindow::loadCustomTheme1()
+    void MainWindow::loadCustomThemeLight()
     {       
         //colors:
             //blue light	39b2e5
@@ -213,12 +213,18 @@
             //purple light	a1467e
             //purple dark	8b1871
 
+
         /* blue tabwidget bar */
         ui->tabWidget->setStyleSheet(
             "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; }"
             "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
             "QLabel                { color: #095676; }"
-            "QPushButton           { padding: 5px 4px; margin: 0px; } "
+
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
+
             "QComboBox             { padding: 0px 0px; margin: 0px; } "
 
             "QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; padding: 2px; padding-left: 4px; padding-right: 20px; border: 1px solid #0D79A6; margin-bottom: 4px; margin-left: 4px;}"
@@ -240,11 +246,24 @@
             "QTabBar::tab          { height: 30px; }"
             "QTabWidget::tab-bar   { left: 0px; }"
             "QTabWidget            { padding: 0px; margin: 0px; }"
+
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
          );
 		 
         //Search tab
         ui->Search_pushButton_Search->setStyleSheet(
-              "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
+                "QPushButton           { background-color: #81d41a; color: #fff; } "
+                "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+
+              );
+        ui->Collection_pushButton_UpdateCatalog->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; color: #fff; } "
+                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
               );
 
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
