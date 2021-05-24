@@ -40,8 +40,8 @@
 
     //Setup and main object classes
     #include "mainwindow_setup.cpp"
-    #include "collection.cpp"
-    #include "storage.cpp"
+    //#include "collection.cpp"
+    //#include "storage.cpp"
 
     //Application tabs
     #include "mainwindow_tab_search.cpp"
@@ -69,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
         //Hide user interface items that are not ready for use (under development).
             hideDevelopmentUIItems();
+            ui->Catalogs_widget_EditCatalog->hide();
 
         //Set up KDE Menu/Icon actions
             #ifdef Q_OS_LINUX
@@ -98,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //load custom Katalog stylesheet instead of default theme
             if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
-                loadCustomTheme1();
+                loadCustomThemeLight();
             }
 
     //setup: start database
@@ -162,7 +163,7 @@ MainWindow::~MainWindow()
 /*
 QMessageBox::information(this,"Katalog","Ok.");
 QMessageBox::information(this,"Katalog","Ok." + stringVariable);
-QMessageBox::information(this,"Kotation","variable : \n" + QString::number(numbervariable));
+QMessageBox::information(this,"Katalog","variable : \n" + QString::number(numbervariable));
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(

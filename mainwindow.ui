@@ -13,12 +13,6 @@
     <height>774</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>1080</width>
-    <height>720</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Katalog</string>
   </property>
@@ -94,7 +88,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -293,7 +287,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>110</width>
                 <height>0</height>
                </size>
               </property>
@@ -629,7 +623,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="Search_pushButton_ResetAll">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>110</width>
                 <height>0</height>
                </size>
               </property>
@@ -1048,6 +1042,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="toolTip">
                <string>Export the search results to a csv file</string>
               </property>
@@ -1278,7 +1278,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Manage the catalogs</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="4" column="0">
+        <item row="5" column="1">
          <widget class="QTreeView" name="Collection_treeView_CatalogList">
           <property name="enabled">
            <bool>true</bool>
@@ -1312,7 +1312,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" rowspan="2">
+        <item row="2" column="1" rowspan="2">
          <layout class="QVBoxLayout" name="Collection_verticalLayout">
           <property name="sizeConstraint">
            <enum>QLayout::SetFixedSize</enum>
@@ -1356,6 +1356,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QLabel" name="Collection_label_TotalSizeLabel">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
                <string>Total File Size</string>
               </property>
@@ -1418,62 +1424,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Collection_pushButton_UpdateAllActive">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="toolTip">
-               <string>Update all the catalog that are active, if the device is available.</string>
-              </property>
-              <property name="text">
-               <string>All active</string>
-              </property>
-              <property name="icon">
-               <iconset theme="media-playlist-repeat">
-                <normaloff>.</normaloff>.</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Collection_pushButton_Import">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="toolTip">
-               <string>Convert the selected catalog to the latest format</string>
-              </property>
-              <property name="text">
-               <string>Import</string>
-              </property>
-              <property name="icon">
-               <iconset theme="download">
-                <normaloff>.</normaloff>.</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="Collection_horizontalSpacer_04">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1497,6 +1447,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </item>
           <item>
            <layout class="QHBoxLayout" name="Collection_horizontalLayout_CatalogActions">
+            <item>
+             <spacer name="Collection_horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QLabel" name="Collection_label_WithSelectedCatalog">
               <property name="minimumSize">
@@ -1560,21 +1526,87 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_Rename">
+             <widget class="QPushButton" name="Collection_pushButton_ViewCatalogStats">
               <property name="enabled">
                <bool>false</bool>
               </property>
               <property name="toolTip">
-               <string>Rename the catalog and its file</string>
+               <string>View the statistics of the selected catalog</string>
               </property>
               <property name="text">
-               <string>Rename</string>
+               <string>View</string>
               </property>
               <property name="icon">
-               <iconset theme="document-edit">
+               <iconset theme="office-chart-line">
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="Collection_horizontalSpacer_01">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Edit the selected catalog file itself</string>
+              </property>
+              <property name="text">
+               <string>Edit</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-edit-sign">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Collection_pushButton_RecordCatalogStats">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Record the values of the selected catalog for statistics</string>
+              </property>
+              <property name="text">
+               <string>Record</string>
+              </property>
+              <property name="icon">
+               <iconset theme="office-chart-line">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Collection_horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="Collection_pushButton_UpdateCatalog">
@@ -1600,69 +1632,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
+             <widget class="QPushButton" name="Collection_pushButton_UpdateAllActive">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Edit the selected catalog file itself</string>
+               <string>Update all the catalog that are active, if the device is available.</string>
               </property>
               <property name="text">
-               <string>Edit</string>
+               <string>All active</string>
               </property>
               <property name="icon">
-               <iconset theme="document-edit-sign">
+               <iconset theme="media-playlist-repeat">
                 <normaloff>.</normaloff>.</iconset>
               </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="Collection_horizontalSpacer_01">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+              <property name="iconSize">
                <size>
-                <width>5</width>
-                <height>20</height>
+                <width>16</width>
+                <height>16</height>
                </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Collection_pushButton_RecordCatalogStats">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="toolTip">
-               <string>Record the values of the selected catalog for statistics</string>
-              </property>
-              <property name="text">
-               <string>Record</string>
-              </property>
-              <property name="icon">
-               <iconset theme="office-chart-line">
-                <normaloff>.</normaloff>.</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Collection_pushButton_ViewCatalogStats">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="toolTip">
-               <string>View the statistics of the selected catalog</string>
-              </property>
-              <property name="text">
-               <string>View</string>
-              </property>
-              <property name="icon">
-               <iconset theme="office-chart-line">
-                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -1700,6 +1688,46 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
+             <spacer name="Catalogs_horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="Line" name="Collection_line_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Collection_pushButton_Import">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="toolTip">
+               <string>Convert the selected catalog to the latest format</string>
+              </property>
+              <property name="text">
+               <string>Import</string>
+              </property>
+              <property name="icon">
+               <iconset theme="download">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="Collection_horizontalSpacer_03">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1715,6 +1743,257 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
          </layout>
+        </item>
+        <item row="4" column="1">
+         <widget class="QWidget" name="Catalogs_widget_EditCatalog" native="true">
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="1" column="0">
+            <layout class="QGridLayout" name="gridLayout_15">
+             <item row="1" column="6">
+              <widget class="QLabel" name="Catalogs_label_FileType">
+               <property name="text">
+                <string>File Type</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="7">
+              <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
+             </item>
+             <item row="0" column="11">
+              <widget class="QPushButton" name="Catalogs_pushButton_Open">
+               <property name="text">
+                <string>Open file</string>
+               </property>
+               <property name="icon">
+                <iconset theme="document-open">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="9">
+              <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>Include Hidden Files</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QLabel" name="Catalogs_label_Storage">
+               <property name="text">
+                <string>Storage</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <spacer name="Catalogs_horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="3">
+              <widget class="QPushButton" name="Collection_pushButton_Rename">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>90</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Rename the catalog and its file</string>
+               </property>
+               <property name="text">
+                <string>Rename</string>
+               </property>
+               <property name="icon">
+                <iconset theme="document-edit">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="12">
+              <spacer name="Catalogs_horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="11">
+              <widget class="QPushButton" name="Catalogs_pushButton_Save">
+               <property name="text">
+                <string>Save</string>
+               </property>
+               <property name="icon">
+                <iconset theme="document-save">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="Catalogs_label_NameTitle">
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="Catalogs_label_Name">
+               <property name="font">
+                <font>
+                 <family>Noto Sans</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QPushButton" name="Catalogs_pushButton_SelectPath">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>Select</string>
+               </property>
+               <property name="icon">
+                <iconset theme="edit-select">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="7">
+              <widget class="QComboBox" name="Catalogs_comboBox_FileType">
+               <item>
+                <property name="text">
+                 <string>All</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Audio</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="audio-x-mpeg">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Image</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="image-jpeg">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Text</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="folder-text">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Video</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="video-mp4">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="10">
+              <spacer name="Catalogs_horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="Catalogs_label_SourcePath">
+               <property name="text">
+                <string>Source Path</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <spacer name="Catalogs_horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="0">
+            <widget class="Line" name="Collection_line_SeparateSummary_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -3655,8 +3934,35 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
              <item>
               <layout class="QGridLayout" name="gridLayout_13">
+               <item row="0" column="2">
+                <widget class="QLabel" name="Settings_label_VersionValue">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Version</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="indent">
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="Settings_label_VersionTitle">
+                 <property name="maximumSize">
+                  <size>
+                   <width>75</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <family>Noto Sans</family>
@@ -3670,6 +3976,37 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="Settings_label_DateTitle">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QPushButton" name="Settings_pushButton_Wiki">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Katalog's Wiki</string>
                  </property>
                 </widget>
                </item>
@@ -3694,60 +4031,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
-                <widget class="QLabel" name="Settings_label_VersionValue">
-                 <property name="font">
-                  <font>
-                   <family>Noto Sans</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
+               <item row="4" column="2">
+                <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="text">
-                  <string>Version</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="indent">
-                  <number>10</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="Settings_label_DateTitle">
-                 <property name="font">
-                  <font>
-                   <family>Noto Sans</family>
-                   <pointsize>10</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Date</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  <string>Release Notes</string>
                  </property>
                 </widget>
                </item>
               </layout>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Settings_pushButton_Wiki">
-               <property name="text">
-                <string>Katalog's Wiki</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
-               <property name="text">
-                <string>Release Notes</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </item>
@@ -3833,6 +4130,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="text">
                   <string>Auto-backup catalogs</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -3963,6 +4263,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
              <item>
               <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="toolTip">
                 <string>Select a different Collection folder</string>
                </property>
@@ -3973,10 +4279,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <iconset theme="edit-select">
                  <normaloff>.</normaloff>.</iconset>
                </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="Collection_pushButton_Reload">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="toolTip">
                 <string>Reload all catalog information</string>
                </property>
@@ -3991,6 +4306,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </item>
              <item>
               <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="toolTip">
                 <string>Open the collection folder</string>
                </property>

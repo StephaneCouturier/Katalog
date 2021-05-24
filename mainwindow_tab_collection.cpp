@@ -34,7 +34,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "collection.h"
+//#include "collection.h"
 #include "catalog.h"
 #include "catalogsview.h"
 #include "database.h"
@@ -143,6 +143,8 @@
                     //LoadCatalogFileList();
                     refreshCatalogSelectionList("","");
             }
+            ui->Catalogs_widget_EditCatalog->hide();
+            loadCollection();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_UpdateCatalog_clicked()
@@ -198,8 +200,10 @@
 
         void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()
         {
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
+            ui->Catalogs_widget_EditCatalog->show();
+            //load catalog details
         }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_RecordCatalogStats_clicked()
         {
@@ -244,6 +248,28 @@
                loadCatalogsToModel();
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_pushButton_Open_clicked()
+        {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_pushButton_SelectPath_clicked()
+        {
+            //Get current selected path as default path for the dialog window
+            newCatalogPath = ui->Catalogs_lineEdit_SourcePath->text();
+
+            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+            QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
+                                                            newCatalogPath,
+                                                            QFileDialog::ShowDirsOnly
+                                                            | QFileDialog::DontResolveSymlinks);
+            //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+            ui->Catalogs_lineEdit_SourcePath->setText(dir);
+
+            //Select this directory in the treeview.
+            loadFileSystem(newCatalogPath);
+        }
+        //----------------------------------------------------------------------
 
     // File methods
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
@@ -259,6 +285,8 @@
             selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
 
+            if (selectedCatalogFileType=="") selectedCatalogFileType = tr("All");
+
             // Display buttons
             ui->Collection_pushButton_Search->setEnabled(true);
             ui->Collection_pushButton_ViewCatalog->setEnabled(true);
@@ -268,7 +296,44 @@
             ui->Collection_pushButton_RecordCatalogStats->setEnabled(true);
             ui->Collection_pushButton_ViewCatalogStats->setEnabled(true);
             ui->Collection_pushButton_DeleteCatalog->setEnabled(true);
+
+            ui->Catalogs_label_Name->setText(selectedCatalogName);
+            ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalogPath);
+            ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalogFileType);
+            ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalogStorage);
+            ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalogIncludeHidden);
+
         }
+
+        void MainWindow::on_Catalogs_pushButton_Save_clicked()
+        {
+            ui->Catalogs_widget_EditCatalog->hide();
+
+            QString updateCatalogSQL  = QLatin1String(R"(
+                                        UPDATE  Catalog
+                                        SET     catalogFileType =:selectedCatalogFileType
+                                        WHERE catalogName =:catalogName
+                                        )");
+
+            QSqlQuery query;
+            query.prepare(updateCatalogSQL);
+            query.bindValue(":catalogName", selectedCatalogName);
+            query.bindValue(":selectedCatalogFileType", selectedCatalogFileType);
+            query.exec();
+
+            //save catalogs
+            int result = QMessageBox::warning(this, "Katalog - Warning",
+                                tr("Save changes to the definition of the catalog?\n")
+                                     +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
+                                              | QMessageBox::Cancel);
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+
+            loadCollection();
+
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {

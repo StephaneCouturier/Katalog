@@ -83,7 +83,7 @@ class MainWindow : public QMainWindow
         //Global
             //UI
             Ui::MainWindow *ui;
-            void loadCustomTheme1();
+            void loadCustomThemeLight();
             void hideDevelopmentUIItems();
             QString currentVersion;
             QString releaseDate;
@@ -314,7 +314,7 @@ class MainWindow : public QMainWindow
             void contextCopyFileNameWithExtension();
             void contextCopyFileNameWithoutExtension();
 
-        //Collection
+        //Collection/Catalogs
             void on_Collection_pushButton_Search_clicked();
             void on_Collection_pushButton_ViewCatalog_clicked();
             void on_Collection_pushButton_Rename_clicked();
@@ -332,6 +332,8 @@ class MainWindow : public QMainWindow
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void context2CopyAbsolutePath();
+            void on_Catalogs_pushButton_Save_clicked();
+            void on_Catalogs_pushButton_Open_clicked();
 
         //Create
             void on_Create_pushButton_PickPath_clicked();
@@ -373,6 +375,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
 
+            void on_Catalogs_pushButton_SelectPath_clicked();
 };
 
 #endif // MAINWINDOW_H
