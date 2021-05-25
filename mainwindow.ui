@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1533</width>
+    <width>1613</width>
     <height>774</height>
    </rect>
   </property>
@@ -88,7 +88,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -427,7 +427,7 @@
                <string>Define how the search text should be used.</string>
               </property>
               <property name="whatsThis">
-               <string>define how the search text should be used</string>
+               <string>Define how the search text should be used.</string>
               </property>
               <item>
                <property name="text">
@@ -1559,6 +1559,43 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
+             <widget class="QPushButton" name="Collection_pushButton_Rename">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>90</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Rename the catalog and its file</string>
+              </property>
+              <property name="text">
+               <string>Rename</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-edit">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Catalogs_pushButton_Open">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Edit</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-edit-sign">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
               <property name="enabled">
                <bool>false</bool>
@@ -1759,17 +1796,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <item row="0" column="7">
               <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
              </item>
-             <item row="0" column="11">
-              <widget class="QPushButton" name="Catalogs_pushButton_Open">
-               <property name="text">
-                <string>Open file</string>
-               </property>
-               <property name="icon">
-                <iconset theme="document-open">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="9">
               <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
                <property name="enabled">
@@ -1802,29 +1828,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item row="0" column="3">
-              <widget class="QPushButton" name="Collection_pushButton_Rename">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>90</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Rename the catalog and its file</string>
-               </property>
-               <property name="text">
-                <string>Rename</string>
-               </property>
-               <property name="icon">
-                <iconset theme="document-edit">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
              </item>
              <item row="1" column="12">
               <spacer name="Catalogs_horizontalSpacer_5">
@@ -4077,6 +4080,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
                <item row="0" column="1">
                 <widget class="QComboBox" name="Settings_comboBox_Language">
+                 <item>
+                  <property name="text">
+                   <string>cz_CZ</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/flags/cz.png</normaloff>:/images/flags/cz.png</iconset>
+                  </property>
+                 </item>
                  <item>
                   <property name="text">
                    <string>en_US</string>

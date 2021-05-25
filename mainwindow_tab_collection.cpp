@@ -250,7 +250,19 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Open_clicked()
         {
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
+            //save catalogs
+            int result = QMessageBox::warning(this, "Katalog",
+                                tr("You are about to edit the catalog file directly.<br/><br/>"
+"It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
+"Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
+"Do you want to continue anyway?")
+                                     , QMessageBox::Yes
+                                              | QMessageBox::Cancel);
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+            else
+                QDesktopServices::openUrl(QUrl::fromLocalFile(selectedCatalogFile));
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_SelectPath_clicked()
@@ -291,6 +303,7 @@
             ui->Collection_pushButton_Search->setEnabled(true);
             ui->Collection_pushButton_ViewCatalog->setEnabled(true);
             ui->Collection_pushButton_Rename->setEnabled(true);
+            ui->Catalogs_pushButton_Open->setEnabled(true);
             ui->Collection_pushButton_EditCatalogFile->setEnabled(true);
             ui->Collection_pushButton_UpdateCatalog->setEnabled(true);
             ui->Collection_pushButton_RecordCatalogStats->setEnabled(true);
