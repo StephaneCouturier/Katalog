@@ -32,8 +32,7 @@
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
-QT       += core gui charts network
-QT       += sql widgets
+QT       += core widgets gui sql charts network
 requires(qtConfig(tableview))
 requires(qtConfig(treeview))
 requires(qtConfig(listview))
@@ -96,7 +95,8 @@ FORMS += \
 
 TRANSLATIONS += \
     translations/Katalog_en_US.ts \
-    translations/Katalog_fr_FR.ts
+    translations/Katalog_fr_FR.ts \
+    translations/Katalog_cz_CZ.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -110,3 +110,4 @@ RESOURCES += \
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico
+

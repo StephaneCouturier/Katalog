@@ -431,10 +431,6 @@
         <translation>Prendre le texte du presse-papier</translation>
     </message>
     <message>
-        <source>define how the search text should be used</source>
-        <translation>Définir comment le texte de recherche doit être utilisé</translation>
-    </message>
-    <message>
         <source>Choose to only show folders as results</source>
         <translation>Choisir de ne montrer que les dossiers comme résultats</translation>
     </message>
@@ -1060,9 +1056,39 @@ This could mean that the source is empty or the device is not mounted to this fo
         <source>This is version: v%1 
 A new version is available: v%2 
  Do you want to download it?</source>
-        <translation type="unfinished">Ceci est la version : v%1
+        <translation>Ceci est la version : v%1
 Une nouvelle version est disponible :  v%2 
 Voulez-vous la télécharger ?</translation>
+    </message>
+    <message>
+        <source>Include Hidden Files</source>
+        <translation>Incure les Fichiers Cachés</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sauver</translation>
+    </message>
+    <message>
+        <source>Save changes to the definition of the catalog?
+</source>
+        <translation>Sauver les changements de définition du catalogue ?
+</translation>
+    </message>
+    <message>
+        <source>(The catalog must be updated to reflect these changes)</source>
+        <translation>(Le catalogue doit être actualisé pour refléter ces changements)</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
+        <translation>&lt;br/&gt;&lt;b&gt;Bienvenue dans Katalog !&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Il semble que c&apos;est la première fois que ce programme est lancé.&lt;br/&gt;&lt;br/&gt;Les réglages suivant ont été appliqués :&lt;br/&gt; - Langue : &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thème : &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ces choix peuvent être modifiés dans l&apos;onglet %3.</translation>
+    </message>
+    <message>
+        <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
+        <translation>Vous êtes sur le point d&apos;éditer le ficher de catalogue directement.&lt;br/&gt;&lt;br/&gt;Il est généralement recommandé de Créer un nouveau catalogue avec les bonnes valeurs initiales (chemin source, type de fichier, inclure les fichiers cachés, stockage), plutôt que de modifier le fichier de catalogue directement. &lt;br/&gt;&lt;br/&gt;Vérifier la page du Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; pour comprendre l&apos;impact d&apos;un changement directement dans ce ficher.&lt;br/&gt;&lt;br/&gt;Voulez-vous continuer tout de même ?</translation>
+    </message>
+    <message>
+        <source>cz_CZ</source>
+        <translation>cz_CZ</translation>
     </message>
 </context>
 <context>

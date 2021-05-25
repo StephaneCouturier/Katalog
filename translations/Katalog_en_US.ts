@@ -59,10 +59,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>define how the search text should be used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All Words</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,6 +1020,35 @@ Modify the device to provide one and try again.
         <source>This is version: v%1 
 A new version is available: v%2 
  Do you want to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Hidden Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to the definition of the catalog?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(The catalog must be updated to reflect these changes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cz_CZ</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

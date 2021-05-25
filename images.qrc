@@ -12,5 +12,6 @@
         <file>images/link_blue/link-v.png</file>
         <file>images/flags/fr.png</file>
         <file>images/flags/us.png</file>
+        <file>images/flags/cz.png</file>
     </qresource>
 </RCC>

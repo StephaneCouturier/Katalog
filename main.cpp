@@ -51,20 +51,28 @@ int main(int argc, char *argv[])
         QString homePath = standardsPaths[0];
 
         //Define Setting file path and name
-        QString settingsFile = homePath + "/.config/katalog_settings.ini";
-        QSettings settings(settingsFile, QSettings:: IniFormat);
+        QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
         QString userLanguage = settings.value("Settings/Language").toString();
 
-        if ( userLanguage == "" ) userLanguage = "en_US";
+        //Define a language for the first run (no value in the settings file)
+        if ( userLanguage == "" ){
+
+            //Get the language of the user's system
+            userLanguage = QLocale::system().name();
+
+            //If this language is not supported yet, default to Engish US.
+            QStringList availableUserLanguages;
+            availableUserLanguages << "en_US" << "fr_FR" << "cz_CZ";
+            if ( availableUserLanguages.contains(userLanguage) == false )
+                userLanguage = "en_US";
+        }
 
         QTranslator* translator=new QTranslator(0);
-        //if ( userLanguage != "en_US" ){
-            //if (translator->load(QLocale(), QLatin1String("Katalog"), QLatin1String("_"), QLatin1String(":/translations"))) {
-            if (translator->load("Katalog_" + userLanguage, ":translations")) {
-                app.installTranslator(translator);
-            }
-        //}
+        if (translator->load("Katalog_" + userLanguage, ":translations")) {
+            app.installTranslator(translator);
+        }
 
     #ifdef Q_OS_LINUX
         KLocalizedString::setApplicationDomain("Katalog");
