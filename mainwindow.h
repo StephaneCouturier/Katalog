@@ -55,7 +55,7 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QMessageBox>
-
+#include <QTranslator>
 #ifdef Q_OS_LINUX
 #include <KComboBox>
 #include <KXmlGuiWindow>
@@ -92,7 +92,7 @@ class MainWindow : public QMainWindow
             void setupActions();
 
             //Application settings
-            QString settingsFile;
+            QString settingsFilePath;
             void loadSettings();
             void saveSettings();
 
