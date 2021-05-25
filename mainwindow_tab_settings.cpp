@@ -45,14 +45,14 @@
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     selectedTab = index;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
 }
 
 void MainWindow::on_Global_tabWidget_currentChanged(int index)
 {
     int selectedTabGlobal = index;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/selectedTabGlobal", selectedTabGlobal);
 }
 
@@ -65,7 +65,7 @@ void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
             ui->Global_tabWidget->setHidden(true);
             ui->Global_label_Global->setHidden(true);
 
-            QSettings settings(settingsFile, QSettings:: IniFormat);
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
     }
     else{ //Show
@@ -73,7 +73,7 @@ void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
             ui->Global_tabWidget->setHidden(false);
             ui->Global_label_Global->setHidden(false);
 
-            QSettings settings(settingsFile, QSettings:: IniFormat);
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
     }
 
@@ -90,7 +90,7 @@ void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
 void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
 {
     //save selection in settings file;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("LastSearch/SelectedSearchLocation", selectedLocation);
 
     //Load matching Storage
@@ -108,7 +108,7 @@ void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QS
 void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
 {
     //save selection in settings file;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("LastSearch/SelectedSearchStorage", selectedStorage);
 
     //Get selected Location and Storage
@@ -127,7 +127,7 @@ void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QSt
 void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
 {
     //save selection in settings file;
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalog);
 
 }
@@ -136,25 +136,25 @@ void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QSt
 
 void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
 {
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
 }
 
 void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
 {
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
 }
 
 void MainWindow::on_Settings_comboBox_Theme_currentIndexChanged(int index)
 {
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/Theme", index);
 }
 
 void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
 {
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
 }
 
@@ -172,7 +172,7 @@ void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
 
 void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
 {
-    QSettings settings(settingsFile, QSettings:: IniFormat);
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Settings/Language", selectedLanguage);
 
 }

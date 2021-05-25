@@ -162,7 +162,7 @@
                     ui->Search_listView_CatalogsFound->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
 
-                    QSettings settings(settingsFile, QSettings:: IniFormat);
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
             }
             else{ //Show
@@ -170,7 +170,7 @@
                     ui->Search_listView_CatalogsFound->setHidden(false);
                     ui->Search_label_CatalogsWithResults->setHidden(false);
 
-                    QSettings settings(settingsFile, QSettings:: IniFormat);
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
             }
 

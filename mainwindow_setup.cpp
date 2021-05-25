@@ -64,73 +64,102 @@
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
     {
-        QSettings settings(settingsFile, QSettings:: IniFormat);
+        //Check if a settings file already exists. If not considered it first use and get user choices
+        QFile settingsFile(settingsFilePath);
+        int themeID = 1; //default value for the theme.
+        selectedTab = 3;
 
-        //Collection folder
-        collectionFolder = settings.value("LastCollectionFolder").toString();
-        if(collectionFolder == ""){
-               collectionFolder = QApplication::applicationDirPath();
+        //QMessageBox::information(this,"Katalog","theme : \n" + QString::number(themeID));
+        if (!settingsFile.exists()){
+            QString userLanguage = QLocale::system().name();
+            QString themeName = tr("Katalog Colors (light)");
+
+            QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
+                                                       "It seems this is the first run.<br/><br/>"
+                                                       "The following Settings have been applied:<br/>"
+                                                       " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings")));
+
+            // add: Let's go to the Create screen to create your first catalogue
+            //Language
+            ui->Settings_comboBox_Language->setCurrentText(userLanguage);
+
+            //Collection folder
+
+            //Go to create screen
+
+        }
+        else{
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+            //Collection folder
+            collectionFolder = settings.value("LastCollectionFolder").toString();
+            if(collectionFolder == ""){
+                   collectionFolder = QApplication::applicationDirPath();
+            }
+
+            //Restore last Search values
+            #ifdef Q_OS_LINUX
+                    ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+            #else
+                    ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
+            #endif
+
+
+            selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+
+            selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+
+            selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+
+            selectedFileType        = settings.value("LastSearch/FileType").toString();
+            selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
+            selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
+            selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
+            selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
+            selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
+            selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
+
+            //Show or Hide ShowHideCatalogResults
+            if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
+                    ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
+                    ui->Search_listView_CatalogsFound->setHidden(true);
+                    ui->Search_label_CatalogsWithResults->setHidden(true);
+            }
+
+            //Show or Hide ShowHideCatalogResults
+            if ( settings.value("Settings/ShowHideGlobal") == ">>"){ //Hide
+                    ui->Global_pushButton_ShowHideGlobal->setText(">>");
+                    ui->Global_tabWidget->setHidden(true);
+                    ui->Global_label_Global->setHidden(true);
+            }
+
+            //General settings
+            ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
+            themeID = settings.value("Settings/Theme").toInt();
+            ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
+            ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
+            ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
+
+            //last tab selected
+            selectedTab = settings.value("Settings/selectedTab").toInt();
+
+            int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
+            ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
+
         }
 
-        //Restore last Search values
-        #ifdef Q_OS_LINUX
-                ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
-        #else        
-                ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
-        #endif
-
-
-        selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
-        ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-
-        selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
-        ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
-
-        selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
-        ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
-
-        selectedFileType        = settings.value("LastSearch/FileType").toString();
-        selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
-        selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
-        selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
-        selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
-        selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
-        selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
-
-        //Show or Hide ShowHideCatalogResults
-        if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
-                ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
-                ui->Search_listView_CatalogsFound->setHidden(true);
-                ui->Search_label_CatalogsWithResults->setHidden(true);
-        }
-
-        //Show or Hide ShowHideCatalogResults
-        if ( settings.value("Settings/ShowHideGlobal") == ">>"){ //Hide
-                ui->Global_pushButton_ShowHideGlobal->setText(">>");
-                ui->Global_tabWidget->setHidden(true);
-                ui->Global_label_Global->setHidden(true);
-        }
-
-        //General settings
-        ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
-        ui->Settings_comboBox_Theme->setCurrentIndex(settings.value("Settings/Theme").toInt());
-        ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
-        ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());      
-        ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
-
-        //last tab selected
-        selectedTab = settings.value("Settings/selectedTab").toInt();
+        ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
         ui->tabWidget->setCurrentIndex(selectedTab);
-
-        int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
-        ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
-
 
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
     {
-        QSettings settings(settingsFile, QSettings:: IniFormat);
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
         //QString sText = "N/A";
         settings.setValue("LastCollectionFolder", collectionFolder);
         #ifdef Q_OS_LINUX
@@ -189,6 +218,7 @@
         //Collection
         ui->Collection_pushButton_UpdateAllActive->hide();
         ui->Collection_pushButton_RecordCatalogStats->hide();
+        ui->Collection_pushButton_EditCatalogFile->hide();
 
         //Storage
         ui->Storage_pushButton_OpenFilelight->hide();
@@ -253,7 +283,7 @@
 
          );
 		 
-        //Search tab
+        //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; color: #fff; } "
                 "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
@@ -266,15 +296,21 @@
                 "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
               );
 
+        ui->Create_pushButton_CreateCatalog->setStyleSheet(
+                "QPushButton           { background-color: #81d41a; color: #fff; } "
+                "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+
+              );
+
+        //line and other UI items
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
         ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
 
         //Create tab
-        ui->Create_pushButton_CreateCatalog->setStyleSheet(
-              "QPushButton          { background-color: #43bf0c; color: #fff; padding: 6px; } "
-              );
+
         //ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Collection_line_SeparateSummary->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
