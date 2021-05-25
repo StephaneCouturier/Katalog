@@ -57,7 +57,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #endif
    , ui(new Ui::MainWindow)
 {
-
    //Set up interface globally
         //Set up the User Interface
             ui->setupUi(this);
@@ -82,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             QString homePath = standardsPaths[0];
 
             //Define Setting file path and name
-            settingsFile = homePath + "/.config/katalog_settings.ini";
+            settingsFilePath = homePath + "/.config/katalog_settings.ini";
 
             //load the settings
             loadSettings();
