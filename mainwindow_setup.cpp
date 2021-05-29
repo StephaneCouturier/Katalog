@@ -23,11 +23,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_setup.cpp
-// Purpose:
-// Description:
+// Purpose:     methods for the mainwindow
+// Description: initiate additions to the interface including theme and loading previous settings
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
 // Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */

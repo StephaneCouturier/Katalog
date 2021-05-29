@@ -23,12 +23,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_create.cpp
-// Purpose:
+// Purpose:     methods for the screen Create
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.8
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

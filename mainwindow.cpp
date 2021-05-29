@@ -24,11 +24,9 @@
 // Application: Katalog
 // File Name:   mainwindow.cpp
 // Purpose:     Class for the main window
-// Description:
+// Description: intiate the User Interface, load data into the internal database, recover last user position and display data
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.13
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -46,7 +44,7 @@
     //Application tabs
     #include "mainwindow_tab_search.cpp"
     #include "mainwindow_tab_create.cpp"
-    #include "mainwindow_tab_collection.cpp"
+    #include "mainwindow_tab_catalogs.cpp"
     #include "mainwindow_tab_storage.cpp"
     #include "mainwindow_tab_tags.cpp"
 
@@ -62,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             currentVersion = "1.00";
-            releaseDate = "2021-05-31";
+            releaseDate = "2021-05-29";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 

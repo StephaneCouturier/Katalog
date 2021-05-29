@@ -23,12 +23,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_explore.cpp
-// Purpose:     methods for the scren Collection AND the screen Explore
+// Purpose:     methods for the screen Explore
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-10-10
-// Version:     0.1
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

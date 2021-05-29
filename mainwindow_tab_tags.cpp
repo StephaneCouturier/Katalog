@@ -23,12 +23,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_tags.cpp
-// Purpose:     fur the user to tag folder, allowing to refine a search query, or for statistics
+// Purpose:     methods for the screen Tags
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-09-25
-// Version:     0.8
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

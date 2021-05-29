@@ -22,19 +22,17 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_collection.cpp
-// Purpose:     methods for the scren Collection AND the screen Explore
+// File Name:   mainwindow_tab_catalogs.cpp
+// Purpose:     methods for the screen Catalogs AND the screen Explore
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.13
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "collection.h"
+
 #include "catalog.h"
 #include "catalogsview.h"
 #include "database.h"
@@ -45,7 +43,7 @@
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
 
-//TAB: Collection UI----------------------------------------------------------------------
+//TAB: Catalogs UI----------------------------------------------------------------------
 
     //Collection selection
         void MainWindow::on_Collection_pushButton_SelectFolder_clicked()
@@ -197,13 +195,11 @@
 
         }
         //----------------------------------------------------------------------
-
         void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()
         {
             ui->Catalogs_widget_EditCatalog->show();
             //load catalog details
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_RecordCatalogStats_clicked()
         {
@@ -284,6 +280,7 @@
         //----------------------------------------------------------------------
 
     // File methods
+        //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
         {
             selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
@@ -317,7 +314,7 @@
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalogIncludeHidden);
 
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
             ui->Catalogs_widget_EditCatalog->hide();
@@ -346,7 +343,6 @@
             loadCollection();
 
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
@@ -359,7 +355,6 @@
             ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
             ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
-
         //----------------------------------------------------------------------
 
 //TAB: Collection methods----------------------------------------------------------------------

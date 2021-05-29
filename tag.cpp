@@ -23,7 +23,7 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   tag.cpp
-// Purpose:
+// Purpose:     class to create a model used to display tags and their attributes
 // Description:
 // Author:      Stephane Couturier
 // Modified by: Stephane Couturier
@@ -74,7 +74,7 @@ QVariant Tag::headerData(int section, Qt::Orientation orientation, int role) con
     return QVariant();
 }
 
-// Create a method to populate the model with data:
+// Create a method to populate the model with data
 void Tag::populateTagData(const QList<QString> &tFolderPath,
                           const QList<QString> &tTagName)
 {

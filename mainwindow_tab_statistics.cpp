@@ -23,12 +23,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_statistics.cpp
-// Purpose:
+// Purpose:     methods for the screen Statistics
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-10-08
-// Version:     0.1
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

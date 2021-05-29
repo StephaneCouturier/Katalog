@@ -70,7 +70,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mainwindow_setup.cpp \
-    mainwindow_tab_collection.cpp \
+    mainwindow_tab_catalogs.cpp \
     mainwindow_tab_create.cpp \
     mainwindow_tab_explore.cpp \
     mainwindow_tab_search.cpp \

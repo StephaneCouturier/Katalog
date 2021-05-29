@@ -23,12 +23,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_storage.cpp
-// Purpose:
+// Purpose:     methods for the screen Storage
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.9
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -46,10 +44,7 @@
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_CreateList_clicked()
 {
-    // Define storage file
-    //storageFilePath = collectionFolder + "/" + "storage.csv";
-
-    // Create if is does not exist
+    // Create it, if it does not exist
     QFile newStorageFile(storageFilePath);
     if(!newStorageFile.open(QIODevice::ReadOnly)) {
 
@@ -102,7 +97,6 @@ void MainWindow::on_Storage_pushButton_Reload_clicked()
     loadStorageFileToTable();
     loadStorageTableToModel();
     refreshStorageStatistics();
-    //loadStorageList();
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_EditAll_clicked()
@@ -194,12 +188,13 @@ void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
     loadFileSystem(selectedStoragePath);
 
     //Change tab to show the result of the catalog creation
-    ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create Catalog tab
+    ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create catalog tab
 
 }
 //----------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
 {
+    //DEV
     //KMessageBox::information(this,"on_Storage_pushButton_OpenFilelight_clicked\n");
 }
 //----------------------------------------------------------------------
@@ -274,8 +269,7 @@ void MainWindow::loadStorageFileToTable()
                                 tr("A storage.csv file was found, but could not be loaded.\n"
                                 "Likely, it was made with an older version of Katalog.\n"
                                 "The file can be fixed manually, please visit the wiki page:\n"
-                                "https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions")
-                                //,QMessageBox::Yes|QMessageBox::Cancel
+                                "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>Storage/fixing-for-new-versions</a>")
                                 );
            return;
     }

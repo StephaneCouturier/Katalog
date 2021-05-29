@@ -23,12 +23,10 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.cpp
-// Purpose:     class to crate catalogs (list of files and their attributes)
+// Purpose:     class to create catalogs (list of files and their attributes)
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.6
+// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
