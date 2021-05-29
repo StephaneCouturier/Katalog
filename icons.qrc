@@ -31,5 +31,6 @@
         <file>fallback-icons/xml-node-duplicate.png</file>
         <file>fallback-icons/view-filter.png</file>
         <file>fallback-icons/edit-download.png</file>
+        <file>fallback-icons/internet-web-browser.png</file>
     </qresource>
 </RCC>

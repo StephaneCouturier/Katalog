@@ -404,6 +404,15 @@
                  <property name="text">
                   <string>Katalog's Wiki</string>
                  </property>
+                 <property name="icon">
+                  <iconset theme="internet-web-browser"/>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                 </widget>
                </item>
                <item row="2" column="2">
@@ -437,6 +446,9 @@
                  </property>
                  <property name="text">
                   <string>Release Notes</string>
+                 </property>
+                 <property name="icon">
+                  <iconset theme="internet-web-browser"/>
                  </property>
                 </widget>
                </item>
