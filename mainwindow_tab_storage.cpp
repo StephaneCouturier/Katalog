@@ -506,6 +506,7 @@ void MainWindow::updateStorageInfo()
     //get confirmation for the update
     if (sizeTotal == -1 ){
         QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
+        return;
     }
     else{
         int result = QMessageBox::warning(this,tr("Update"),tr("Accept changes?") +"<br/><br/>"+ tr("Total:") +"<br/><b>"+ QLocale().formattedDataSize(sizeTotal)+"</b><br/><br/>" +tr("Free:") +"<br/><b>"+ QLocale().formattedDataSize(sizeAvailable)+"</b><br/><br/>",
