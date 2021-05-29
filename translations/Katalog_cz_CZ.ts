@@ -11,17 +11,17 @@
     <message>
         <location filename="../catalog.cpp" line="74"/>
         <source>Size</source>
-        <translation type="unfinished">Velikost</translation>
+        <translation>Velikost</translation>
     </message>
     <message>
         <location filename="../catalog.cpp" line="75"/>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka</translation>
     </message>
     <message>
         <location filename="../catalog.cpp" line="76"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum</translation>
     </message>
 </context>
 <context>
@@ -332,12 +332,12 @@
     <message>
         <location filename="../mainwindow.ui" line="1497"/>
         <source>Search the selected catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Prohledat vybraný katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1514"/>
         <source>Explore the selected catalog&apos;s files and folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Prozkoumejte soubory a složky vybraného katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1520"/>
@@ -348,97 +348,98 @@
     <message>
         <location filename="../mainwindow.ui" line="1534"/>
         <source>View the statistics of the selected catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit statistiky vybraného katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1573"/>
         <source>Rename the catalog and its file</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejmenujte katalog a jeho soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1576"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejmenujte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1590"/>
         <location filename="../mainwindow.ui" line="1607"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1604"/>
         <source>Edit the selected catalog file itself</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravte samotný vybraný katalogový soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1621"/>
         <source>Record the values of the selected catalog for statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznamenejte hodnoty vybraného katalogu pro statistiku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1624"/>
         <source>Record</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Zaznamenejte</translatorcomment>
+        <translation>Zaznamenejte hodnoty vybraného katalogu pro statistiku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1654"/>
         <source>Update the catalog files, if the device is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizujte soubory katalogu, pokud je zařízení k dispozici</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1657"/>
         <location filename="../mainwindow.ui" line="3121"/>
         <location filename="../mainwindow_tab_storage.cpp" line="511"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizujte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1677"/>
         <source>Update all the catalog that are active, if the device is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizujte veškerý aktivní katalog, pokud je zařízení k dispozici.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1680"/>
         <source>All active</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny aktivní</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1716"/>
         <source>Delete the selected catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraňte vybraný katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1719"/>
         <location filename="../mainwindow.ui" line="3154"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1756"/>
         <source>Convert the selected catalog to the latest format</source>
-        <translation type="unfinished"></translation>
+        <translation>Převést vybraný katalog na nejnovější formát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1759"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1792"/>
         <location filename="../mainwindow_tab_collection.cpp" line="519"/>
         <source>File Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ souboru</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1805"/>
         <source>Include Hidden Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1812"/>
@@ -447,12 +448,12 @@
         <location filename="../mainwindow.ui" line="3809"/>
         <location filename="../mainwindow_tab_collection.cpp" line="522"/>
         <source>Storage</source>
-        <translation>Úložný prostor</translation>
+        <translation>Úložiště</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1861"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1872"/>
@@ -462,7 +463,7 @@
         <location filename="../mainwindow_tab_storage.cpp" line="393"/>
         <location filename="../mainwindow_tab_explore.cpp" line="242"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1897"/>
@@ -470,18 +471,18 @@
         <location filename="../mainwindow.ui" line="3600"/>
         <location filename="../mainwindow.ui" line="4288"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1969"/>
         <location filename="../mainwindow_tab_collection.cpp" line="518"/>
         <source>Source Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta zdroje</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2012"/>
         <source>Explore a catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Prozkoumejte katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2026"/>
@@ -490,31 +491,31 @@
         <location filename="../mainwindow.ui" line="3857"/>
         <location filename="../mainwindow_tab_explore.cpp" line="246"/>
         <source>Catalog</source>
-        <translation type="unfinished">Katalog</translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2070"/>
         <location filename="../mainwindow_tab_storage.cpp" line="396"/>
         <location filename="../mainwindow_tab_explore.cpp" line="245"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2132"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Složku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2178"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="73"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="104"/>
         <source>Number of Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet souborů</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2224"/>
         <source>Click to open the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknutím otevřete soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2249"/>
@@ -524,118 +525,118 @@
     <message>
         <location filename="../mainwindow.ui" line="2252"/>
         <source>Create a catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořte katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2280"/>
         <source>2- </source>
-        <translation type="unfinished"></translation>
+        <translation>2- </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2296"/>
         <source>Select Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte možnosti obsahu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2355"/>
         <source>include File Type</source>
-        <translation type="unfinished"></translation>
+        <translation>zahrnout typ souboru</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2456"/>
         <source>Other options</source>
-        <translation type="unfinished"></translation>
+        <translation>Jiné možnosti</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2466"/>
         <source>Include Hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2476"/>
         <source>Follow symbolic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Postupujte podle symbolických odkazů</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2528"/>
         <source>3- </source>
-        <translation type="unfinished"></translation>
+        <translation>3- </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2544"/>
         <source>Define &amp; Create catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Definujte a vytvořte katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2592"/>
         <source>Select Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte úložiště</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2605"/>
         <source>(optional, can be modified later by editing the Catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>(volitelné, lze upravit později úpravou katalogu)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2633"/>
         <location filename="../mainwindow.ui" line="2991"/>
         <source>Add a new storage device</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidejte nové úložné zařízení</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2636"/>
         <source>Add Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat úložiště</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2671"/>
         <source>Enter the Name of the new catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte název nového katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2683"/>
         <source>NewCatalog</source>
-        <translation type="unfinished"></translation>
+        <translation>NovýKatalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2686"/>
         <source>Enter a name for your new catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte název svého nového katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2705"/>
         <source>Generate a catalog name based on the path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vygenerujte název katalogu na základě cesty.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2708"/>
         <source>Generate</source>
-        <translation type="unfinished"></translation>
+        <translation>Generovat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2767"/>
         <source>Launch the cataloging and save it to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Spusťte katalogizaci a uložte ji do souboru</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2773"/>
         <source>Create Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2856"/>
         <source>1- </source>
-        <translation type="unfinished"></translation>
+        <translation>1- </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2884"/>
         <source>Select Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte cestu ke zdroji</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2934"/>
         <source>Select the path</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte cestu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2963"/>
