@@ -335,10 +335,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>(optional, can be modified later by editing the Catalog)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a new storage device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -574,14 +570,6 @@
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>en_US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fr_FR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1045,10 +1033,6 @@ A new version is available: v%2
     </message>
     <message>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cz_CZ</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

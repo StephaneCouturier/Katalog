@@ -315,10 +315,6 @@
         <translation>Sélectionner le Stockage</translation>
     </message>
     <message>
-        <source>(optional, can be modified later by editing the Catalog)</source>
-        <translation>(optionel, cela peut être modifié plus tard en éditant le Catalogue)</translation>
-    </message>
-    <message>
         <source>Enter the Name of the new catalog</source>
         <translation>Entrer le Nom du nouveau catalogue</translation>
     </message>
@@ -691,14 +687,6 @@
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation>Katalog Colors (thème clair)</translation>
-    </message>
-    <message>
-        <source>en_US</source>
-        <translation>en_US</translation>
-    </message>
-    <message>
-        <source>fr_FR</source>
-        <translation>fr_FR</translation>
     </message>
     <message>
         <source>Select a different Collection folder</source>
@@ -1085,10 +1073,6 @@ Voulez-vous la télécharger ?</translation>
     <message>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
         <translation>Vous êtes sur le point d&apos;éditer le ficher de catalogue directement.&lt;br/&gt;&lt;br/&gt;Il est généralement recommandé de Créer un nouveau catalogue avec les bonnes valeurs initiales (chemin source, type de fichier, inclure les fichiers cachés, stockage), plutôt que de modifier le fichier de catalogue directement. &lt;br/&gt;&lt;br/&gt;Vérifier la page du Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; pour comprendre l&apos;impact d&apos;un changement directement dans ce ficher.&lt;br/&gt;&lt;br/&gt;Voulez-vous continuer tout de même ?</translation>
-    </message>
-    <message>
-        <source>cz_CZ</source>
-        <translation>cz_CZ</translation>
     </message>
 </context>
 <context>
