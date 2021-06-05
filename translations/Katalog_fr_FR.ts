@@ -977,7 +977,7 @@ Copier/coller ces lignes au début du fichier et modifier les valeurs après le 
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
 https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</source>
-        <translation>Un fichier storage.csv a été trouvé, mais n&apos;a pas pu être chargé.
+        <translation type="vanished">Un fichier storage.csv a été trouvé, mais n&apos;a pas pu être chargé.
 Il a probablement été créé par une ancienne version de Katalog.
 Le fichier peut être corrigé manuellement, visiter la page du Wiki :
 https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</translation>
@@ -1073,6 +1073,13 @@ Voulez-vous la télécharger ?</translation>
     <message>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
         <translation>Vous êtes sur le point d&apos;éditer le ficher de catalogue directement.&lt;br/&gt;&lt;br/&gt;Il est généralement recommandé de Créer un nouveau catalogue avec les bonnes valeurs initiales (chemin source, type de fichier, inclure les fichiers cachés, stockage), plutôt que de modifier le fichier de catalogue directement. &lt;br/&gt;&lt;br/&gt;Vérifier la page du Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; pour comprendre l&apos;impact d&apos;un changement directement dans ce ficher.&lt;br/&gt;&lt;br/&gt;Voulez-vous continuer tout de même ?</translation>
+    </message>
+    <message>
+        <source>A storage.csv file was found, but could not be loaded.
+Likely, it was made with an older version of Katalog.
+The file can be fixed manually, please visit the wiki page:
+&lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

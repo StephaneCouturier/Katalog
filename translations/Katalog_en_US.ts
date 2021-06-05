@@ -949,13 +949,6 @@ Copy/paste these lines at the begining of the file and modify the values after t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A storage.csv file was found, but could not be loaded.
-Likely, it was made with an older version of Katalog.
-The file can be fixed manually, please visit the wiki page:
-https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Directory is empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,6 +1026,13 @@ A new version is available: v%2
     </message>
     <message>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A storage.csv file was found, but could not be loaded.
+Likely, it was made with an older version of Katalog.
+The file can be fixed manually, please visit the wiki page:
+&lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
