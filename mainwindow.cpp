@@ -65,10 +65,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Settings_label_DateValue->setText(releaseDate);
 
             //Load languages to the Settings combobox
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
-            //ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
-
 
         //Hide user interface items that are not ready for use (under development).
             hideDevelopmentUIItems();
