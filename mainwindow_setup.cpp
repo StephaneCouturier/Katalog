@@ -215,7 +215,6 @@
 
         //Collection
         ui->Collection_pushButton_UpdateAllActive->hide();
-        ui->Collection_pushButton_RecordCatalogStats->hide();
         ui->Collection_pushButton_EditCatalogFile->hide();
 
         //Storage

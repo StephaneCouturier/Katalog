@@ -348,7 +348,6 @@
         ui->Collection_pushButton_Rename->setEnabled(false);
         ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
         ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Collection_pushButton_RecordCatalogStats->setEnabled(false);
         ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
 

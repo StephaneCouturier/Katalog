@@ -172,20 +172,6 @@ void MainWindow::loadCatalogFilesToExplore()
                 // Get the filePath from the list:
                 filePath        = fieldList[0];
 
-//TEST
-//                if (line.contains("Young")){
-//                    QMessageBox::information(this,"Katalog","line: " + line);
-
-//                        QMessageBox::information(this,"Katalog","filePath: " + filePath);
-
-//                        QMessageBox::information(this,"Katalog","0: " + fieldList[0]);
-//                        QMessageBox::information(this,"Katalog","1: " + fieldList[1]);
-//                        QMessageBox::information(this,"Katalog","2: " + fieldList[2]);
-
-
-//                }
-
-
                 // Get the fileSize from the list if available
                 if (fieldListCount == 3){
                         fileSize = fieldList[1].toLongLong();}
@@ -198,15 +184,6 @@ void MainWindow::loadCatalogFilesToExplore()
 
                 //Get file informations
                 QFileInfo file(filePath);
-
-                //TEST
-//                   if (line.contains("Young")){
-//                                QMessageBox::information(this,"Katalog","0: " + file.fileName());
-//                                QMessageBox::information(this,"Katalog","1: " + file.path());
-//                                QMessageBox::information(this,"Katalog","2: " + QString::number(fileSize));
-//                                QMessageBox::information(this,"Katalog","3: " + fileDateTime);
-//                                QMessageBox::information(this,"Katalog","3: " + catalogFileInfo.baseName());
-//                     }
 
                 //Append data to the database
                 insertQuery.bindValue(":fileName", file.fileName());
