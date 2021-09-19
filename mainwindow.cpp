@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             currentVersion = "1.01";
-            releaseDate = "2021-06-05";
+            releaseDate = "2021-09-19";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -79,14 +79,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             #endif
 
         //Load user settings
-            //Get user home path
+            //Get user home path and application dir path
             QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
             QString homePath = standardsPaths[0];
+            QString applicationDirPath = QCoreApplication::applicationDirPath();
 
             //Define Setting file path and name
-            settingsFilePath = homePath + "/.config/katalog_settings.ini";
+                //For portable mode, check if there is a settings file located with the executable
+                settingsFilePath = applicationDirPath + "/katalog_settings.ini";
+                QFile settingsFile(settingsFilePath);
+                if(!settingsFile.exists()) {
+                    //otherwise fall back to default katalog_settings path
+                    settingsFilePath = homePath + "/.config/katalog_settings.ini";
+                }
 
-            //load the settings
+            //load Settings and intiate values
             loadSettings();
             QString firstSelectedLocation = selectedSearchLocation;
             QString firstSelectedStorage =  selectedSearchStorage;
@@ -142,7 +149,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             setupFileContextMenu();
 
      //Setup tap: Stats
+            statisticsFileName = "statistics.csv";
+            statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+
             loadStatisticsDataTypes();
+            loadStatisticsData();
             loadStatisticsChart();
 
             ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
