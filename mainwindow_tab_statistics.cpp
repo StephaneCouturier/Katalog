@@ -120,7 +120,7 @@ void MainWindow::loadStatisticsData()
     // Get infos stored in the file
     QFile statisticsFile(statisticsFilePath);
     if(!statisticsFile.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this,"Katalog",tr("No statistic file found."));
+        //QMessageBox::information(this,"Katalog",tr("No statistic file found."));
         return;
     }
 
