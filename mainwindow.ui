@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1613</width>
+    <width>1666</width>
     <height>774</height>
    </rect>
   </property>
@@ -405,7 +405,8 @@
                   <string>Katalog's Wiki</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="internet-web-browser"/>
+                  <iconset theme="internet-web-browser">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -448,7 +449,8 @@
                   <string>Release Notes</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="internet-web-browser"/>
+                  <iconset theme="internet-web-browser">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -2302,23 +2304,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_RecordCatalogStats">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="toolTip">
-               <string>Record the values of the selected catalog for statistics</string>
-              </property>
-              <property name="text">
-               <string>Record</string>
-              </property>
-              <property name="icon">
-               <iconset theme="office-chart-line">
-                <normaloff>.</normaloff>.</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="Collection_horizontalSpacer_3">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -2363,7 +2348,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Update all the catalog that are active, if the device is available.</string>
+               <string>Update all the catalogs that are active, if the device is available.</string>
               </property>
               <property name="text">
                <string>All active</string>
@@ -2433,6 +2418,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="Line" name="Collection_line_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Catalogs_pushButton_Snapshot">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="toolTip">
+               <string>Record the values of all catalog for statistics of the full collection </string>
+              </property>
+              <property name="text">
+               <string>Snapshot</string>
+              </property>
+              <property name="icon">
+               <iconset theme="office-chart-line">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -4085,7 +4087,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
             <item>
-             <widget class="QLabel" name="Statistics_label_DataType">
+             <widget class="QLabel" name="Statistics_label_Catalog_2">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -4093,21 +4095,31 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </size>
               </property>
               <property name="text">
-               <string>Type of data</string>
+               <string>Source</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
+             <widget class="QComboBox" name="Statistics_comboBox_SelectSource">
               <property name="minimumSize">
                <size>
-                <width>175</width>
+                <width>200</width>
                 <height>0</height>
                </size>
               </property>
-              <property name="toolTip">
-               <string>Select the type of data</string>
-              </property>
+              <item>
+               <property name="text">
+                <string>selected catalog</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>collection snapshots</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item>
@@ -4136,6 +4148,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="toolTip">
                <string>Select a catalog</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Statistics_label_DataType">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Type of data</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
+              <property name="minimumSize">
+               <size>
+                <width>175</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Select the type of data</string>
               </property>
              </widget>
             </item>
@@ -4334,15 +4372,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QtCharts::QChartView</class>
    <extends>QGraphicsView</extends>
    <header location="global">QtCharts/QChartView&gt;
 #include &lt;QtCharts/chartsnamespace.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

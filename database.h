@@ -166,13 +166,26 @@
                                         fileCatalog TEXT)
                                     )");
 
+// STATISTICS ------------------------------------------------
+
+        //Create table query
+                const auto STATISTICS_SQL = QLatin1String(R"(
+                               create  table  if not exists  statistics(
+                                        dateTime TEXT ,
+                                        catalogName  TEXT  ,
+                                        catalogFileCount  REAL ,
+                                        catalogTotalFileSize REAL ,
+                                        recordType TEXT)
+                                    )");
+
+
 // Database initialization ------------------------------------------------
 
 QSqlError initializeDatabase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(":memory:");
-    //db.setDatabaseName("/home/stephane/Development/katalog_test.db");
+    //db.setDatabaseName("/home/stephane/Development/katalog101.db");
 
     if (!db.open())
         return db.lastError();
@@ -187,6 +200,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.exec(FILE_SQL))
+        return q.lastError();
+
+    if (!q.exec(STATISTICS_SQL))
         return q.lastError();
 
     return QSqlError();

@@ -201,13 +201,9 @@
             //load catalog details
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_RecordCatalogStats_clicked()
-        {
-            recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
-        }
-        //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_ViewCatalogStats_clicked()
         {
+            ui->Statistics_comboBox_SelectSource->setCurrentText("Updates only");
             ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
@@ -303,7 +299,6 @@
             ui->Catalogs_pushButton_Open->setEnabled(true);
             ui->Collection_pushButton_EditCatalogFile->setEnabled(true);
             ui->Collection_pushButton_UpdateCatalog->setEnabled(true);
-            ui->Collection_pushButton_RecordCatalogStats->setEnabled(true);
             ui->Collection_pushButton_ViewCatalogStats->setEnabled(true);
             ui->Collection_pushButton_DeleteCatalog->setEnabled(true);
 
@@ -356,6 +351,13 @@
             ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
+        {
+            //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+            recordAllCatalogStats();
+            QMessageBox::information(this,"Katalog",tr("Snapshot created."));
+
+        }
 
 //TAB: Collection methods----------------------------------------------------------------------
     //----------------------------------------------------------------------
@@ -577,14 +579,13 @@
     //----------------------------------------------------------------------
     void MainWindow::recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize)
     {
-        QString statisticsFileName = "statistics.csv";
-
         QDateTime nowDateTime = QDateTime::currentDateTime();
 
         QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
                                 + selectedCatalogName + "\t"
                                 + QString::number(selectedCatalogFileCount) + "\t"
-                                + QString::number(selectedCatalogTotalFileSize);
+                                + QString::number(selectedCatalogTotalFileSize) + "\t"
+                                + "Update" ;
 
         // Stream the list to the file
         QFile fileOut( collectionFolder + "/" + statisticsFileName );
@@ -595,6 +596,82 @@
             stream << statisticsLine << "\n";
          }
          fileOut.close();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::recordAllCatalogStats()
+    {
+        // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
+
+        QDateTime nowDateTime = QDateTime::currentDateTime();
+        QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+        //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
+
+        //get the list of catalogs and data
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        SELECT
+                                            catalogName                 ,
+                                            catalogFileCount            ,
+                                            catalogTotalFileSize
+                                        FROM catalog
+                                        )");
+            query.prepare(querySQL);
+            query.exec();
+
+
+        //create a new record for each catalog
+            QString recordCatalogName;
+            QString recordCatalogFileCount;
+            QString recordCatalogTotalFileSize;
+
+            while (query.next()){
+                    recordCatalogName = query.value(0).toString();
+                    recordCatalogFileCount = query.value(1).toString();
+                    recordCatalogTotalFileSize = query.value(2).toString();
+
+                    QString statisticsLine = nowDateTimeFormatted + "\t"
+                                            + recordCatalogName + "\t"
+                                            + recordCatalogFileCount + "\t"
+                                            + recordCatalogTotalFileSize + "\t"
+                                            + "Snapshot" ;
+
+                    //QMessageBox::information(this,"Katalog","Ok." + statisticsLine);
+
+                    // Stream the values to the file
+                        QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+                        // Write data
+                        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                            QTextStream stream(&fileOut);
+                            stream << statisticsLine << "\n";
+                         }
+                         fileOut.close();
+
+            }
+
+            //Calculate and report updates since last snapshot
+            /*
+            //Prepare to report changes to the catalog
+            qint64 deltaFileCount = currentCatalogFileCount - previousFileCount;
+            qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
+
+            //Inform user about the update
+            QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
+                                     "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
+                                     "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
+                                     ).arg(currentCatalogName,
+                                           QString::number(currentCatalogFileCount),
+                                           QString::number(deltaFileCount),
+                                           QLocale().formattedDataSize(currentCatalogTotalFileSize),
+                                           QLocale().formattedDataSize(deltaTotalFileSize))
+                                     ,Qt::TextFormat(Qt::RichText));
+
+            */
+
+            //refresh graphs
+            loadStatisticsData();
+            loadStatisticsChart();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::convertCatalog(QString catalogSourcePath)
@@ -837,7 +914,6 @@
         ui->Collection_pushButton_Rename->setEnabled(false);
         ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
         ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Collection_pushButton_RecordCatalogStats->setEnabled(false);
         ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
     }

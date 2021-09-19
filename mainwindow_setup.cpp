@@ -141,17 +141,21 @@
             ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
             ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
             ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
+            ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
+
+            //Restore last statistics values
+            ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());
+            ui->Statistics_comboBox_SelectCatalog->setCurrentText(settings.value("Statistics/SelectedCatalog").toString());
+            ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //last tab selected
-            selectedTab = settings.value("Settings/selectedTab").toInt();
-
+            selectedTab = settings.value("Settings/selectedTab").toInt();                      
             int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
             ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
-
+            ui->tabWidget->setCurrentIndex(selectedTab);
         }
 
-        ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
-        ui->tabWidget->setCurrentIndex(selectedTab);
+
 
     }
     //----------------------------------------------------------------------

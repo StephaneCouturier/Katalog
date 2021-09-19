@@ -965,7 +965,19 @@
                 //Send list to the Statistics combobox (without All or Selected storage options)
                     fileListModel = new QStringListModel(this);
                     fileListModel->setStringList(catalogSelectedList);
+
+                    //Get last value
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
+
+                    //Generate list of values
                     ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
+
+                    //Restore last selection value or default
+                    if (lastValue=="")
+                        ui->Statistics_comboBox_SelectCatalog->setCurrentText(typeOfData[0]);
+                    else
+                        ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
 
                 //Restore last selection
                     ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);

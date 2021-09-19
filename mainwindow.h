@@ -168,7 +168,7 @@ class MainWindow : public QMainWindow
             QStringListModel *catalogFoundListModel;
             QStringList searchTextList;
 
-        //TAB: Collection
+        //TAB: Catalogs
             QString collectionFolder;
             QStringListModel catalogListModel;
             QStringList catalogFileList;
@@ -190,6 +190,7 @@ class MainWindow : public QMainWindow
             void recordSelectedCatalogStats(QString selectedCatalogName,
                                             int selectedCatalogFileCount,
                                             qint64 selectedCatalogTotalFileSize);
+            void recordAllCatalogStats();
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
@@ -236,10 +237,13 @@ class MainWindow : public QMainWindow
             void refreshStorageStatistics();
 
         //TAB: Statistics
+            QString statisticsFileName;
+            QString statisticsFilePath;
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
             void loadStatisticsDataTypes();
+            void loadStatisticsData();
             void loadStatisticsChart();
 
         //TAB: Tags
@@ -320,7 +324,6 @@ class MainWindow : public QMainWindow
             void on_Collection_pushButton_Rename_clicked();
             void on_Collection_pushButton_UpdateCatalog_clicked();
             void on_Collection_pushButton_EditCatalogFile_clicked();
-            void on_Collection_pushButton_RecordCatalogStats_clicked();
             void on_Collection_pushButton_ViewCatalogStats_clicked();
             void on_Collection_pushButton_Import_clicked();
             void on_Collection_pushButton_DeleteCatalog_clicked();
@@ -335,6 +338,7 @@ class MainWindow : public QMainWindow
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
             void on_Catalogs_pushButton_SelectPath_clicked();
+            void on_Catalogs_pushButton_Snapshot_clicked();
         //Create
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
@@ -360,12 +364,12 @@ class MainWindow : public QMainWindow
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
 
-
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
-            void on_Statistics_comboBox_SelectCatalog_currentIndexChanged();
-            void on_Statistics_comboBox_TypeOfData_currentIndexChanged();
+            void on_Statistics_comboBox_SelectSource_currentIndexChanged(const QString &selectedSource);
+            void on_Statistics_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog);
+            void on_Statistics_comboBox_TypeOfData_currentIndexChanged(const QString &typeOfData);
 
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();
