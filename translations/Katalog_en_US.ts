@@ -251,14 +251,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Record the values of the selected catalog for statistics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View the statistics of the selected catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -765,10 +757,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update all the catalog that are active, if the device is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do you want to delete this catalog?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,6 +1021,42 @@ A new version is available: v%2
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update all the catalogs that are active, if the device is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Record the values of all catalog for statistics of the full collection </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snapshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No statistic file found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selected catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collection snapshots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snapshot created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

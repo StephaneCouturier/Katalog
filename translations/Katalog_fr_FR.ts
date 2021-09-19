@@ -508,11 +508,11 @@
     </message>
     <message>
         <source>Record the values of the selected catalog for statistics</source>
-        <translation>Enregistrer les valeurs du catalogue sélectionné pour les statistiques</translation>
+        <translation type="vanished">Enregistrer les valeurs du catalogue sélectionné pour les statistiques</translation>
     </message>
     <message>
         <source>Record</source>
-        <translation>Enregistrer</translation>
+        <translation type="vanished">Enregistrer</translation>
     </message>
     <message>
         <source>View the statistics of the selected catalog</source>
@@ -770,7 +770,7 @@
     </message>
     <message>
         <source>Update all the catalog that are active, if the device is available.</source>
-        <translation>Actualiser tous les catalogues actifs, si le stockage est  disponible.</translation>
+        <translation type="vanished">Actualiser tous les catalogues actifs, si le stockage est  disponible.</translation>
     </message>
     <message>
         <source>Select a catalog above first.</source>
@@ -1079,7 +1079,46 @@ Voulez-vous la télécharger ?</translation>
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Un ficher storage.csv a été trouvé, mais n&apos;a pas pu être chargé.
+Il a probablement été fait avec une version ancienne de Katalog.
+Le fichier peut-être réparé manuellement, voir la page wiki :
+&lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Update all the catalogs that are active, if the device is available.</source>
+        <translation>Mettre à jour tous les catalogues actifs, si le périphérique est disponible.</translation>
+    </message>
+    <message>
+        <source>Record the values of all catalog for statistics of the full collection </source>
+        <translation>Enregistre les valeurs de tous les catalogues de la collection complète </translation>
+    </message>
+    <message>
+        <source>Snapshot</source>
+        <translation>Instantané</translation>
+    </message>
+    <message>
+        <source>No statistic file found.</source>
+        <translation>Aucun fichier de statistiques trouvé.</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Source</translation>
+    </message>
+    <message>
+        <source>selected catalog</source>
+        <translation>catalogue séléctionné</translation>
+    </message>
+    <message>
+        <source>collection snapshots</source>
+        <translation>instantanés de la collection</translation>
+    </message>
+    <message>
+        <source>Snapshot created.</source>
+        <translation>Instantané créé.</translation>
+    </message>
+    <message>
+        <source>collection</source>
+        <translation>collection</translation>
     </message>
 </context>
 <context>
