@@ -321,7 +321,7 @@ class MainWindow : public QMainWindow
         //Collection/Catalogs
             void on_Collection_pushButton_Search_clicked();
             void on_Collection_pushButton_ViewCatalog_clicked();
-            void on_Collection_pushButton_Rename_clicked();
+            void on_Catalogs_pushButton_Cancel_clicked();
             void on_Collection_pushButton_UpdateCatalog_clicked();
             void on_Collection_pushButton_EditCatalogFile_clicked();
             void on_Collection_pushButton_ViewCatalogStats_clicked();
@@ -378,7 +378,6 @@ class MainWindow : public QMainWindow
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
-
 
 };
 
