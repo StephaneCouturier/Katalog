@@ -3551,16 +3551,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <string>Manage the list of storage devices</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11">
-        <item row="3" column="0">
-         <widget class="QTreeView" name="Storage_treeView_StorageList">
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="Line" name="Storage_line_Separate">
           <property name="orientation">
@@ -3886,14 +3876,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="Storage_label_SpaceUnit">
-            <property name="enabled">
-             <bool>false</bool>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="text">
-             <string>(GiB)</string>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QLabel" name="Storage_label_PercentFree">
@@ -3977,6 +3973,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </spacer>
           </item>
          </layout>
+        </item>
+        <item row="3" column="0">
+         <widget class="QTreeView" name="Storage_treeView_StorageList">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

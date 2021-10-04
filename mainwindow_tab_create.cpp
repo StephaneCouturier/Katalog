@@ -72,7 +72,12 @@
     //----------------------------------------------------------------------
 
     //Catalog the files of a directory
-    void MainWindow::catalogDirectory(QString newCatalogPath, bool includeHidden, QString fileType, QStringList fileTypes, QString newCatalogStorage, bool includeSymblinks)
+    void MainWindow::catalogDirectory(QString newCatalogPath,
+                                      bool includeHidden,
+                                      QString fileType,
+                                      QStringList fileTypes,
+                                      QString newCatalogStorage,
+                                      bool includeSymblinks)
     {
         //CATALOG FILES and ADD CATALOG META-DATA to a QStringListModel > fileListModel
 

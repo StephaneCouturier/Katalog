@@ -59,8 +59,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         //Set up the User Interface
             ui->setupUi(this);
 
-            currentVersion = "1.01";
-            releaseDate = "2021-09-19";
+            currentVersion = "1.02";
+            releaseDate = "2021-10-04";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -150,11 +150,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
      //Setup tap: Stats
             statisticsFileName = "statistics.csv";
-            statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+
+            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
 
             loadStatisticsDataTypes();
             loadStatisticsData();
             loadStatisticsChart();
+
+            //loadCollection();
+
+
 
             ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
             ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);

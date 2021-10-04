@@ -206,29 +206,30 @@
     {
         //Search
 
-        #ifdef Q_OS_LINUX
-        ui->Search_lineEdit_SearchText->hide();
-        #endif
+        //Catalogs
+            #ifdef Q_OS_LINUX
+            //hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
+            ui->Search_lineEdit_SearchText->hide();
+            #endif
 
         //Create
-        ui->Create_checkBox_IncludeSymblinks->hide();
+            //DEV: the option to include symblinks is not working yet
+            ui->Create_checkBox_IncludeSymblinks->hide();
 
         //Explore
-        ui->Explore_label_Directories->hide();
-        ui->Explore_treeview_Directories->hide();
-
-        //Collection
-        ui->Collection_pushButton_UpdateAllActive->hide();
-        ui->Collection_pushButton_EditCatalogFile->hide();
+            //DEV: pending the development of a flat or tree structure to display directories for selection
+            ui->Explore_label_Directories->hide();
+            ui->Explore_treeview_Directories->hide();
 
         //Storage
-        ui->Storage_pushButton_OpenFilelight->hide();
-        ui->Storage_label_SpaceUnit->hide();
+            //DEV: pending a test qnd development of a function to open Filelight at the requested place
+            ui->Storage_pushButton_OpenFilelight->hide();
 
         //Settings
 
         //Other tabs
-        ui->tabWidget->removeTab(6); //Tags
+            //DEV: Tags features under pre-development
+            ui->tabWidget->removeTab(6); //Tags
     }
 
     //----------------------------------------------------------------------
@@ -292,6 +293,11 @@
 
               );
         ui->Collection_pushButton_UpdateCatalog->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; color: #fff; } "
+                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Collection_pushButton_UpdateAllActive->setStyleSheet(
                 "QPushButton           { background-color: #ff8000; color: #fff; } "
                 "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
