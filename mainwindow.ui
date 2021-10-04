@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1666</width>
-    <height>774</height>
+    <width>1199</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2155,31 +2155,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_WithSelectedCatalog">
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>with selected Catalog</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="Collection_pushButton_Search">
               <property name="enabled">
                <bool>false</bool>
@@ -2234,22 +2209,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Collection_horizontalSpacer_01">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
               <property name="enabled">
                <bool>false</bool>
@@ -2267,28 +2226,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Collection_horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="Collection_pushButton_UpdateCatalog">
               <property name="enabled">
                <bool>false</bool>
               </property>
               <property name="toolTip">
-               <string>Update the catalog files, if the device is available</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>Update</string>
@@ -2311,7 +2254,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Update all the catalogs that are active, if the device is available.</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>All active</string>
@@ -2329,22 +2272,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Collection_horizontalSpacer_02">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>30</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="Collection_pushButton_DeleteCatalog">
               <property name="enabled">
                <bool>false</bool>
@@ -2360,22 +2287,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="Catalogs_horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
             <item>
              <widget class="Line" name="Collection_line_3">
@@ -2407,7 +2318,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Convert the selected catalog to the latest format</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>Import</string>
@@ -2450,20 +2361,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <width>0</width>
                  <height>0</height>
                 </size>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="11">
-              <widget class="QPushButton" name="Catalogs_pushButton_Open">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Open in text editor</string>
-               </property>
-               <property name="icon">
-                <iconset theme="document-edit-sign">
-                 <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
              </item>
@@ -2519,7 +2416,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
+                 <width>20</width>
                  <height>20</height>
                 </size>
                </property>
@@ -2652,7 +2549,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </property>
               </spacer>
              </item>
-             <item row="2" column="11">
+             <item row="0" column="9">
+              <widget class="QPushButton" name="Catalogs_pushButton_Open">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Open in text editor</string>
+               </property>
+               <property name="icon">
+                <iconset theme="document-edit-sign">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="13">
               <widget class="QPushButton" name="Catalogs_pushButton_Save">
                <property name="text">
                 <string>Save</string>
@@ -2662,6 +2573,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
+             </item>
+             <item row="0" column="8">
+              <spacer name="Catalogs_horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -4092,7 +4019,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Statistics_comboBox_SelectSource">
               <property name="minimumSize">
                <size>
-                <width>200</width>
+                <width>150</width>
                 <height>0</height>
                </size>
               </property>
@@ -4128,7 +4055,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Statistics_comboBox_SelectCatalog">
               <property name="minimumSize">
                <size>
-                <width>275</width>
+                <width>250</width>
                 <height>0</height>
                </size>
               </property>
@@ -4154,7 +4081,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QComboBox" name="Statistics_comboBox_TypeOfData">
               <property name="minimumSize">
                <size>
-                <width>175</width>
+                <width>150</width>
                 <height>0</height>
                </size>
               </property>
@@ -4162,6 +4089,46 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <string>Select the type of data</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="Statistics_horizontalSpacer_01">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <widget class="Line" name="Statistics_line_Separate">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
+          </item>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
@@ -4197,30 +4164,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="Statistics_horizontalSpacer_01">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
-          </item>
-          <item row="2" column="0">
-           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="Line" name="Statistics_line_Separate">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>

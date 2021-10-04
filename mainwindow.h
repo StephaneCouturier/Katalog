@@ -195,6 +195,7 @@ class MainWindow : public QMainWindow
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
             void updateCatalog(QString catalogName);
+            void saveCatalogChanges();
 
         //TAB: Explore
             void loadCatalogFilesToExplore();

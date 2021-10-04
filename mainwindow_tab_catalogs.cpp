@@ -45,57 +45,6 @@
 
 //TAB: Catalogs UI----------------------------------------------------------------------
 
-    //Collection selection
-        void MainWindow::on_Collection_pushButton_SelectFolder_clicked()
-        {
-            //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-            QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                            collectionFolder,
-                                                            QFileDialog::ShowDirsOnly
-                                                            | QFileDialog::DontResolveSymlinks);
-
-            //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
-            if ( dir !=""){
-
-                collectionFolder = dir;
-
-                //set the new path in Colletion tab
-                ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
-
-                //redefine the path of the Storage file
-                storageFilePath = collectionFolder + "/" + "storage.csv";
-
-                //save Settings for the new collection folder value;
-                saveSettings();
-
-                //load the collection for this new folder;
-                loadCollection();
-
-            }
-
-            //Reset selected catalog values (to avoid actions on the last selected one)
-            selectedCatalogFile="";
-            selectedCatalogName="";
-            selectedCatalogPath="";
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Collection_lineEdit_CollectionFolder_returnPressed()
-        {
-            loadCollection();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_Reload_clicked()
-        {
-            loadCollection();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_OpenFolder_clicked()
-        {
-            //Open the selected collection folder
-            QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
-        }
-        //----------------------------------------------------------------------
-
     //Catalog buttons
         void MainWindow::on_Collection_pushButton_Search_clicked()
         {
@@ -336,105 +285,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
-
-            //Get new values
-            QString newCatalogSourcePath = ui->Catalogs_lineEdit_SourcePath->text();
-            bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
-            QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
-            QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();
-            //QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
-
-            //save catalogs
-            int result = QMessageBox::warning(this, "Katalog - Warning",
-                                tr("Save changes to the definition of the catalog?\n")
-                                     +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
-                                              | QMessageBox::Cancel);
-            if ( result == QMessageBox::Cancel){
-                return;
-            }
-
-            //Write changes to catalog file
-            // open file
-            //QMessageBox::information(this,"Katalog",tr("selectedCatalogFile:") + selectedCatalogFile);
-
-            QFile f(selectedCatalogFile);
-            if(f.open(QIODevice::ReadWrite | QIODevice::Text))
-            {
-                QString s;
-                QTextStream t(&f);
-                while(!t.atEnd())
-                {
-                    QString line = t.readLine();
-
-                    if(!line.startsWith("<catalogSourcePath")
-                            and !line.startsWith("<catalogIncludeHidden")
-                            and !line.startsWith("<catalogStorage")
-                            and !line.startsWith("<catalogFileType"))
-                        s.append(line + "\n");
-                    else{
-                        //the ifs must be in the correct order of the meta-data lines
-                        if(line.startsWith("<catalogSourcePath>"))
-                                s.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
-
-                        if(line.startsWith("<catalogIncludeHidden>"))
-                                s.append("<catalogIncludeHidden>" + QVariant(newCatalogIncludeHidden).toString() +"\n");
-
-                        if(line.startsWith("<catalogFileType>"))
-                                s.append("<catalogFileType>" + newCatalogFileType +"\n");
-
-                        if(line.startsWith("<catalogStorage>"))
-                                s.append("<catalogStorage>" + newCatalogStorage +"\n");
-
-                    }
-                }
-                f.resize(0);
-                t << s;
-                f.close();
-              /*  */
-            }
-            else {
-                QMessageBox::information(this,"Katalog",tr("Could not open file."));
-            }
-
-
-            //Rename catalog
-            //Get info from the selected catalog
-            QFileInfo selectedCatalogFileInfo(selectedCatalogFile);
-            QString currentCatalogName = selectedCatalogFileInfo.baseName();
-
-            //Display an input box with the current file name (without extension)
-            //bool ok;
-            QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
-
-            /*
-            QString newCatalogName = QInputDialog::getText(this, tr("Katalog"),
-                                                 tr("Enter new catalog name"), QLineEdit::Normal,
-                                                 currentCatalogName, &ok); //(QDir::home().dirName())
-            */
-
-            //Rename the catalog file
-            if (newCatalogName != currentCatalogName){
-
-                //generate the full new name of the
-                QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
-
-                QFile::rename(selectedCatalogFile, newCatalogFullName);
-
-                 //refresh catalog lists
-                    loadCatalogFilesToTable();
-                    loadCatalogsToModel();
-                    //LoadCatalogFileList();
-                    refreshCatalogSelectionList("","");
-            }
-            //ui->Catalogs_widget_EditCatalog->hide();
-            //loadCollection();
-
-
-
-            ui->Catalogs_widget_EditCatalog->hide();
-
-            loadCollection();
-
+            saveCatalogChanges();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
@@ -458,34 +309,6 @@
         }
 
 //TAB: Collection methods----------------------------------------------------------------------
-    //----------------------------------------------------------------------
-    void MainWindow::loadCollection()
-    {
-        //Load Storage list and refresh their statistics
-            loadStorageFileToTable();
-            loadStorageTableToModel();
-            refreshStorageStatistics();
-
-       //load Catalog list, Location list, Storage list
-            loadCatalogFilesToTable();
-
-            loadCatalogsToModel();
-
-            refreshLocationSelectionList();
-            refreshStorageSelectionList(tr("All"));
-            refreshCatalogSelectionList(tr("All"), tr("All"));
-
-            //restore Search catalog selection
-            //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-            //ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
-            //ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
-
-            //hide buttons to force user to select a catalog before allowing any action.
-            hideCatalogButtons();
-
-
-
-    }
 
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
@@ -850,11 +673,12 @@
                                                 catalogName,
                                                 catalogSourcePath,
                                                 catalogFileCount,
+                                                catalogIncludeHidden,
                                                 catalogFileType,
                                                 catalogTotalFileSize,
                                                 catalogStorage,
                                                 catalogIncludeSymblinks
-                                        FROM Catalog
+                                        FROM catalog
                                         WHERE catalogName =:catalogName
                                         )");
 
@@ -868,12 +692,11 @@
             QString currentCatalogName           = query.value(1).toString();   //selectedCatalogName
             QString currentCatalogSourcePath     = query.value(2).toString();   //selectedCatalogPath
             qint64  currentCatalogFileCount      = query.value(3).toLongLong(); //selectedCatalogFileCount
-            QString currentCatalogFileType       = query.value(4).toString();   //selectedCatalogFileType
-            qint64  currentCatalogTotalFileSize  = query.value(5).toLongLong(); //selectedCatalogTotalFileSize
-            QString currentCatalogStorage        = query.value(6).toString();   //catalogStorage
-            bool currentCatalogIncludeSymblinks  = query.value(7).toBool();     //catalogIncludeSymblinks
-
-
+            bool currentCatalogIncludeHidden     = query.value(4).toBool();    //selectedCatalogIncludeHidden
+            QString currentCatalogFileType       = query.value(5).toString();   //selectedCatalogFileType
+            qint64  currentCatalogTotalFileSize  = query.value(6).toLongLong(); //selectedCatalogTotalFileSize
+            QString currentCatalogStorage        = query.value(7).toString();   //catalogStorage
+            bool currentCatalogIncludeSymblinks  = query.value(8).toBool();     //catalogIncludeSymblinks
 
         //Check if the update can be done, inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
@@ -910,13 +733,13 @@
 
         //Define the type of files to be included
         QStringList fileTypes;
-        if      ( selectedCatalogFileType == "Image")
+        if      ( currentCatalogFileType == "Image")
                                 fileTypes = fileType_Image;
-        else if ( selectedCatalogFileType == "Audio")
+        else if ( currentCatalogFileType == "Audio")
                                 fileTypes = fileType_Audio;
-        else if ( selectedCatalogFileType == "Video")
+        else if ( currentCatalogFileType == "Video")
                                 fileTypes = fileType_Video;
-        else if ( selectedCatalogFileType == "Text")
+        else if ( currentCatalogFileType == "Text")
                                 fileTypes = fileType_Text;
         else                    fileTypes.clear();
 
@@ -936,8 +759,9 @@
                 }
             }
 
+            //catalog the directory
             catalogDirectory(currentCatalogSourcePath,
-                             selectedCatalogIncludeHidden,
+                             currentCatalogIncludeHidden,
                              currentCatalogFileType,
                              fileTypes,
                              currentCatalogStorage,
@@ -954,7 +778,7 @@
                                     catalogFileCount,
                                     catalogFileType,
                                     catalogTotalFileSize
-                            FROM Catalog
+                            FROM catalog
                             WHERE catalogName =:catalogName
                             )");
             query.prepare(querySQL);
@@ -1261,6 +1085,143 @@
 
             //Stop animation
             QApplication::restoreOverrideCursor();
+
+        loadCollection();
+
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::saveCatalogChanges()
+    {
+
+        //Get new values
+            QString newCatalogSourcePath = ui->Catalogs_lineEdit_SourcePath->text();
+            bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
+            QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
+            QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();
+            //QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
+
+            //save catalogs
+            int result = QMessageBox::warning(this, "Katalog - Warning",
+                                tr("Save changes to the definition of the catalog?\n")
+                                     +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
+                                              | QMessageBox::Cancel);
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+
+        //Write changes to catalog file
+            // open file
+            //QMessageBox::information(this,"Katalog","Ok." + selectedCatalogFile);
+
+            QFile f(selectedCatalogFile);
+            if(f.open(QIODevice::ReadWrite | QIODevice::Text))
+            {
+                QString s;
+                QTextStream t(&f);
+                while(!t.atEnd())
+                {
+                    QString line = t.readLine();
+
+                    if(!line.startsWith("<catalogSourcePath")
+                            and !line.startsWith("<catalogIncludeHidden")
+                            and !line.startsWith("<catalogStorage")
+                            and !line.startsWith("<catalogFileType"))
+                        s.append(line + "\n");
+                    else{
+                        //the ifs must be in the correct order of the meta-data lines
+                        if(line.startsWith("<catalogSourcePath>"))
+                                s.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
+
+                        if(line.startsWith("<catalogIncludeHidden>"))
+                                s.append("<catalogIncludeHidden>" + QVariant(newCatalogIncludeHidden).toString() +"\n");
+
+                        if(line.startsWith("<catalogFileType>"))
+                                s.append("<catalogFileType>" + newCatalogFileType +"\n");
+
+                        if(line.startsWith("<catalogStorage>"))
+                                s.append("<catalogStorage>" + newCatalogStorage +"\n");
+                    }
+                }
+                f.resize(0);
+                t << s;
+                f.close();
+            }
+            else {
+                QMessageBox::information(this,"Katalog",tr("Could not open file."));
+            }
+
+        //Rename catalog
+            //Get info from the selected catalog
+            QFileInfo selectedCatalogFileInfo(selectedCatalogFile);
+            QString currentCatalogName = selectedCatalogFileInfo.baseName();
+            QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
+
+
+            //Rename the catalog file
+            if (newCatalogName != currentCatalogName){
+
+                //generate the full new name of the
+                QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+
+                QFile::rename(selectedCatalogFile, newCatalogFullName);
+
+                 //refresh catalog lists
+                    loadCatalogFilesToTable();
+                    loadCatalogsToModel();
+                    //LoadCatalogFileList();
+                    refreshCatalogSelectionList("","");
+
+                //Rename in statistics
+
+            }
+
+        //Reload/refresh data
+            /*
+            QString updateCatalogSQL  = QLatin1String(R"(
+                                        UPDATE catalog
+                                        SET catalogName         =:newCatalogName
+                                            catalogSourcePath   =:newCatalogSourcePath,
+                                            catalogIncludeHidden=:newCatalogIncludeHidden,
+                                            catalogFileType     =:newCatalogFileType,
+                                            catalogStorage      =:newCatalogStorage
+                                        WHERE catalogName =:catalogName
+                                        )");
+            QSqlQuery query;
+            query.prepare(updateCatalogSQL);
+            query.bindValue(":newCatalogName", newCatalogName);
+            query.bindValue(":newCatalogSourcePath", newCatalogSourcePath);
+            query.bindValue(":newCatalogIncludeHidden", newCatalogIncludeHidden);
+            query.bindValue(":newCatalogFileType", newCatalogFileType);
+            query.bindValue(":newCatalogStorage", newCatalogStorage);
+            query.bindValue(":catalogName", selectedCatalogName);
+            query.exec();
+            query.next();
+            */
+            //loadCollection();
+            loadCatalogFilesToTable();
+
+        //Launch update if catalog is active and changes impact the contents (path, type, hidden)
+            if (       newCatalogSourcePath    != selectedCatalogPath
+                    or newCatalogIncludeHidden != selectedCatalogIncludeHidden
+                    or newCatalogFileType      != selectedCatalogFileType){
+
+                int updatechoice = QMessageBox::warning(this, "Katalog",
+                                    tr("Update the catalog content with the new criteria?\n")
+                                         , QMessageBox::Yes
+                                                  | QMessageBox::Cancel);
+                if ( updatechoice == QMessageBox::Yes){
+                    //DEV: reselct the catalog to get the right values in the next function
+                    // or improve the function to get it from db
+                    //loadCatalogFilesToTable();
+                    updateCatalog(newCatalogName);
+                    //QMessageBox::information(this,"Katalog",tr("Updated."));
+
+                }
+            }
+
+
+        ui->Catalogs_widget_EditCatalog->hide();
 
         loadCollection();
 
