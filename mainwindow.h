@@ -183,6 +183,7 @@ class MainWindow : public QMainWindow
             QString selectedCatalogStorage;
             bool    selectedCatalogIncludeSymblinks;
             QString selectedStorageLocationFilter;
+            bool    skipCatalogUpdateSummary;
 
             void loadCollection();
             void loadCatalogsToModel();

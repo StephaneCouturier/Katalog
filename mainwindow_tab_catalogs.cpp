@@ -45,7 +45,7 @@
 
 //TAB: Catalogs UI----------------------------------------------------------------------
 
-    //Catalog buttons
+    //Catalog operations
         void MainWindow::on_Collection_pushButton_Search_clicked()
         {
             //Change the selected catalog in Search tab
@@ -91,41 +91,54 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_UpdateAllActive_clicked()
         {
+            //user to confirm running this global update
+
+                int confirm = QMessageBox::warning(this, "Katalog",
+                                    tr("Are you sure you want to update ALL catalogs that are currently filtered and identified as active?")
+                                         , QMessageBox::Yes
+                                                  | QMessageBox::Cancel);
+                if ( confirm == QMessageBox::Cancel){
+                    return;
+                }
+
+            //user to choose showing or skipping summary for each catalog update
+                skipCatalogUpdateSummary = false;
+                int result = QMessageBox::warning(this, "Katalog",
+                                    tr("Do you want to view the summary of updates at the end of each catalog update?")
+                                         , QMessageBox::Yes
+                                                  | QMessageBox::No);
+                if ( result == QMessageBox::No){
+                    skipCatalogUpdateSummary= true;
+                }
+
             //Get list of displayed and active catalogs
-            //prepare the main part of the query
-            QString querySQL  = QLatin1String(R"(
-                                        SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath
-                                        FROM catalog
-                                        LEFT JOIN storage ON catalogStorage = storageName
-                                        WHERE catalogSourcePathIsActive = 1
-                                        )");
+                //prepare the main part of the query
+                QString querySQL  = QLatin1String(R"(
+                                            SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath
+                                            FROM catalog
+                                            LEFT JOIN storage ON catalogStorage = storageName
+                                            WHERE catalogSourcePathIsActive = 1
+                                            )");
 
-                //add AND conditions for the selected filters
-                if ( selectedSearchLocation != tr("All") )
-                    querySQL = querySQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
+                    //add AND conditions for the selected filters
+                    if ( selectedSearchLocation != tr("All") )
+                        querySQL = querySQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
 
-                if ( selectedSearchStorage != tr("All") )
-                    querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
+                    if ( selectedSearchStorage != tr("All") )
+                        querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
-            //run the query
-            QSqlQuery query;
-            query.prepare(querySQL);
-            query.exec();
-
+                //run the query
+                QSqlQuery query;
+                query.prepare(querySQL);
+                query.exec();
 
             // Catalog each result
             while(query.next()){
                 //Get catalog name
                 QString catalogName = query.value(0).toString();
-                //QMessageBox::information(this,"Katalog","catalogName." + catalogName );
-
-                //int isActive = verifyCatalogPath(query.value(2).toString());
-                //QMessageBox::information(this,"Katalog","isActive." + QString::number(isActive));
 
                 QDir dir (query.value(2).toString());
                 if (dir.exists()==true){
-
-                    //QMessageBox::information(this,"Katalog","dir.exists." );
 
                     ///Warning and choice if the result is 0 files
                     if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
@@ -136,23 +149,12 @@
                     }
                     else{
 
-                        //selectedCatalogFileType
-                        //selectedCatalogStorage
-//                        catalogDirectory(currentCatalogSourcePath,
-//                                         selectedCatalogIncludeHidden,
-//                                         selectedCatalogFileType,
-//                                         fileTypes,
-//                                         selectedCatalogStorage,
-//                                         selectedCatalogIncludeSymblinks); >
-
-                        updateCatalog(catalogName);
+                       updateCatalog(catalogName);
                     }
                 }
-
-                //QMessageBox::information(this,"Katalog","Ok." + catalogName + " _ " + QString::number(isActive));
-
             }
             QMessageBox::information(this,"Katalog","Update of displayed and active catalogs completed.");
+            skipCatalogUpdateSummary= false;
 
         }
         //----------------------------------------------------------------------
@@ -186,11 +188,6 @@
         {
                 importFromVVV();
         }
-        //----------------------------------------------------------------------
-        //        void MainWindow::on_Collection_pushButton_Convert_clicked()
-        //        {
-        //            convertCatalog(selectedCatalogFile);
-        //        }
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_DeleteCatalog_clicked()
         {
@@ -247,8 +244,13 @@
             loadFileSystem(newCatalogPath);
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_pushButton_Save_clicked()
+        {
+            saveCatalogChanges();
+        }
+        //----------------------------------------------------------------------
 
-    // File methods
+    //File methods
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
         {
@@ -283,11 +285,6 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_pushButton_Save_clicked()
-        {
-            saveCatalogChanges();
-        }
-        //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             // Get file from selected row
@@ -308,7 +305,7 @@
 
         }
 
-//TAB: Collection methods----------------------------------------------------------------------
+//TAB: Catalog methods----------------------------------------------------------------------
 
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
@@ -383,9 +380,7 @@
             }
 
     }
-
     //----------------------------------------------------------------------
-    // Load a collection (catalogs)
     void MainWindow::loadCatalogsToModel()
     {
         //Generate SQL query from filters.
@@ -461,7 +456,7 @@
             ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
             ui->Collection_treeView_CatalogList->header()->resizeSection(10,150); //Location
 
-            //Populate catalog statistics
+            //Populate catalogs statistics
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                 SELECT COUNT(catalogName),SUM(catalogTotalFileSize),SUM(catalogFileCount)
@@ -490,9 +485,10 @@
     }
     //----------------------------------------------------------------------
     //----------------------------------------------------------------------
-    // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
     int MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
+        // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
+
         QDir dir(catalogSourcePath);
         int status = dir.exists();
         return status;
@@ -595,57 +591,6 @@
 
     }
     //----------------------------------------------------------------------
-    void MainWindow::convertCatalog(QString catalogSourcePath)
-    {
-        //USED / OBSOLETE FUNCTION
-        //select catalog file
-        //QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
-
-        //verify catalog
-        // is it .idx?
-
-        //define new catalog file = existing + _new
-        QString catalogNewPath = collectionFolder + "/temp.idx";
-
-        //read catalog file
-        QFile catalogFile(catalogSourcePath);
-        if(!catalogFile.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this,"Katalog",tr("No catalog found."));
-            return;
-        }
-        QFile fileOut(catalogNewPath);
-
-        //stream line by line
-        // Get infos stored in the file
-        QTextStream textStream(&catalogFile);
-        //QStringList lines;
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-
-            //replace @@ by \t
-            line.replace("@@", "\t");
-
-            //append the line to the new file
-            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                QTextStream stream(&fileOut);
-                stream << line << "\n";
-             }
-             fileOut.close();
-
-            }
-
-        //rename files
-        QString catalogFileName = catalogFile.fileName();
-        catalogFile.rename(catalogFile.fileName() + ".bak");
-        fileOut.rename(catalogFileName);
-
-        QMessageBox::information(this,"Katalog",tr("Conversion completed."));
-
-    }
-    //----------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
         QString catalogBackUpSourcePath = catalogSourcePath + ".bak";
@@ -666,7 +611,7 @@
     //----------------------------------------------------------------------
     void MainWindow::updateCatalog(QString catalogName)
     {
-        //Get data from the database
+        //Get data about the catalog from the database
 
             QString updateCatalogSQL  = QLatin1String(R"(
                                         SELECT  catalogFilePath,
@@ -724,8 +669,6 @@
                 backupCatalog(currentCatalogFilePath);
             }
 
-        //
-        newCatalogName = currentCatalogName;
 
         //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
         qint64 previousFileCount = currentCatalogFileCount; //currentCatalogFileCount;
@@ -799,6 +742,7 @@
             qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
 
             //Inform user about the update
+            if(skipCatalogUpdateSummary !=true){
             QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
                                      "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
                                      "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
@@ -808,6 +752,7 @@
                                            QLocale().formattedDataSize(currentCatalogTotalFileSize),
                                            QLocale().formattedDataSize(deltaTotalFileSize))
                                      ,Qt::TextFormat(Qt::RichText));
+            }
 
         }
         else {
@@ -830,7 +775,6 @@
         loadStatisticsChart();
 
     }
-
     //----------------------------------------------------------------------
     void MainWindow::hideCatalogButtons()
     {
@@ -842,7 +786,6 @@
         ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
     }
-
     //----------------------------------------------------------------------
     void MainWindow::refreshLocationCollectionFilter()
     {
@@ -867,7 +810,6 @@
         fileListModel->setStringList(displayLocationList);
 
     }
-
     //----------------------------------------------------------------------
     void MainWindow::importFromVVV()
     {
@@ -1089,7 +1031,6 @@
         loadCollection();
 
     }
-
     //----------------------------------------------------------------------
     void MainWindow::saveCatalogChanges()
     {
