@@ -1115,31 +1115,33 @@
 
                 //Rename in statistics
 
+                    int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
+                                             , QMessageBox::Yes | QMessageBox::No);
+
+                    if (renameChoice == QMessageBox::Yes){
+                        QFile f(statisticsFilePath);
+                        if(f.open(QIODevice::ReadWrite | QIODevice::Text))
+                        {
+                            QString s;
+                            QTextStream t(&f);
+                            while(!t.atEnd())
+                            {
+                                QString line = t.readLine();
+                                QStringList lineParts = line.split("\t");
+                                if (lineParts[1]==currentCatalogName){
+                                    lineParts[1]= newCatalogName;
+                                    line = lineParts.join("\t");
+                                }
+                                s.append(line + "\n");
+                            }
+                            f.resize(0);
+                            t << s;
+                            f.close();
+                        }
+                    }
             }
 
-        //Reload/refresh data
-            /*
-            QString updateCatalogSQL  = QLatin1String(R"(
-                                        UPDATE catalog
-                                        SET catalogName         =:newCatalogName
-                                            catalogSourcePath   =:newCatalogSourcePath,
-                                            catalogIncludeHidden=:newCatalogIncludeHidden,
-                                            catalogFileType     =:newCatalogFileType,
-                                            catalogStorage      =:newCatalogStorage
-                                        WHERE catalogName =:catalogName
-                                        )");
-            QSqlQuery query;
-            query.prepare(updateCatalogSQL);
-            query.bindValue(":newCatalogName", newCatalogName);
-            query.bindValue(":newCatalogSourcePath", newCatalogSourcePath);
-            query.bindValue(":newCatalogIncludeHidden", newCatalogIncludeHidden);
-            query.bindValue(":newCatalogFileType", newCatalogFileType);
-            query.bindValue(":newCatalogStorage", newCatalogStorage);
-            query.bindValue(":catalogName", selectedCatalogName);
-            query.exec();
-            query.next();
-            */
-            //loadCollection();
+        //Refresh data
             loadCatalogFilesToTable();
 
         //Launch update if catalog is active and changes impact the contents (path, type, hidden)
