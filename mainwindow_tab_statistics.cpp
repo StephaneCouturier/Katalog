@@ -51,6 +51,26 @@ void MainWindow::on_Statistics_comboBox_SelectSource_currentIndexChanged(const Q
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Statistics/SelectedSource", selectedSource);
 
+    //Display selection combo boxes depending on data source
+    if (selectedSource ==tr("collection snapshots")){
+        ui->Statistics_label_Catalog->hide();
+        ui->Statistics_comboBox_SelectCatalog->hide();
+        ui->Statistics_label_DataType->show();
+        ui->Statistics_comboBox_TypeOfData->show();
+    }
+    else if(selectedSource ==tr("selected catalog")){
+        ui->Statistics_label_Catalog->show();
+        ui->Statistics_comboBox_SelectCatalog->show();
+        ui->Statistics_label_DataType->show();
+        ui->Statistics_comboBox_TypeOfData->show();
+    }
+    else if(selectedSource ==tr("storage")){
+        ui->Statistics_label_Catalog->hide();
+        ui->Statistics_comboBox_SelectCatalog->hide();
+        ui->Statistics_label_DataType->hide();
+        ui->Statistics_comboBox_TypeOfData->hide();
+    }
+
     //load the graph
     loadStatisticsChart();
 }
@@ -125,8 +145,6 @@ void MainWindow::loadStatisticsData()
     }
 
     QTextStream textStream(&statisticsFile);
-
-
 
     //prepare query to load file info
     QSqlQuery insertQuery;
@@ -209,10 +227,13 @@ void MainWindow::loadStatisticsChart()
 
         QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
         QString selectedCatalogforStats = ui->Statistics_comboBox_SelectCatalog->currentText();
+        QString selectedStorageforStats = ui->Filters_comboBox_SelectStorage->currentText();
         qint64 maxValueGraphRange = 0.0;
         QString displayUnit;
-        QLineSeries *series = new QLineSeries();
+        QLineSeries *series1 = new QLineSeries();
+        QLineSeries *series2 = new QLineSeries();
         qint64 number = 0;
+        qint64 number2 = 0;
 
     //Get the data
         //Getting one catalog data
@@ -238,7 +259,6 @@ void MainWindow::loadStatisticsChart()
 
                        if ( number > maxValueGraphRange )
                            maxValueGraphRange = number;
-
                    }
                    else if ( selectedTypeOfData == tr("Total File Size") )
                    {
@@ -255,7 +275,10 @@ void MainWindow::loadStatisticsChart()
                        if ( number > maxValueGraphRange )
                            maxValueGraphRange = number;
                    }
-                   series->append(datetime.toMSecsSinceEpoch(), number);
+
+                   series1->setName(selectedTypeOfData);
+                   series1->append(datetime.toMSecsSinceEpoch(), number);
+
             }
         }
 
@@ -299,22 +322,75 @@ void MainWindow::loadStatisticsChart()
 
                        if ( number > maxValueGraphRange )
                            maxValueGraphRange = number;
+
                    }
 
-                   series->append(datetime.toMSecsSinceEpoch(), number);
+                   series1->setName(selectedTypeOfData);
+                   series1->append(datetime.toMSecsSinceEpoch(), number);
+               }
+        }
+
+        //Getting the storage data
+        else if(selectedSource ==tr("storage")){
+
+            QSqlQuery queryTotalSnapshots;
+            QString querySQL = QLatin1String(R"(
+                                                SELECT dateTime, SUM(catalogFileCount), SUM(catalogTotalFileSize)
+                                                FROM statistics
+                                                WHERE recordType = 'Storage'
+                                                AND catalogName = :selectedStorageforStats
+                                                GROUP BY datetime
+                                            )");
+            queryTotalSnapshots.prepare(querySQL);
+            queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedStorageforStats);
+            queryTotalSnapshots.exec();
+
+
+            while (queryTotalSnapshots.next()){
+
+                   QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
+
+                   number = queryTotalSnapshots.value(2).toLongLong();
+                   if ( number > 2000000000 ){
+                       number = number/1024/1024/1024;
+                       displayUnit = " ("+tr("GiB")+")";
+                   }
+                   else {
+                       number = number/1024/1024;
+                       displayUnit = " ("+tr("MiB")+")";
+                   }
+                   if ( number > maxValueGraphRange )
+                       maxValueGraphRange = number;
+
+                   number2 = queryTotalSnapshots.value(1).toLongLong();
+                   if ( number2 > 2000000000 ){
+                       number2 = number2/1024/1024/1024;
+                       displayUnit = " ("+tr("GiB")+")";
+                   }
+                   else {
+                       number2 = number2/1024/1024;
+                       displayUnit = " ("+tr("MiB")+")";
+                   }
+
+                   if ( number2 > maxValueGraphRange )
+                       maxValueGraphRange = number2;
+
+                   series1->append(datetime.toMSecsSinceEpoch(), number);
+                   series2->append(datetime.toMSecsSinceEpoch(), number2);
+                   series1->setName("Free Space");
+                   series2->setName("Total Space");
 
                }
         }
 
     //Prepare the chart and plot the data
 
-        //Clear current graph in case no data was retrieved
-        //QChart *emptyChart = new QChart();
-        //ui->Stats_chartview_Graph1->setChart(emptyChart);
-
         //Create new chart and prepare formating
         QChart *chart = new QChart();
-        chart->addSeries(series);
+        chart->addSeries(series1);
+        if(selectedSource ==tr("storage")){
+            chart->addSeries(series2);
+        }
         chart->legend()->hide();
         chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
                         + selectedTypeOfData + " "
@@ -337,7 +413,8 @@ void MainWindow::loadStatisticsChart()
         axisX->setFormat("yyyy-MM-dd");
         axisX->setTitleText(tr("Date"));
         chart->addAxis(axisX, Qt::AlignBottom);
-        series->attachAxis(axisX);
+        series1->attachAxis(axisX);
+        series2->attachAxis(axisX);
 
         QValueAxis *axisY = new QValueAxis;
         axisY->setLabelFormat("%i");
@@ -359,7 +436,21 @@ void MainWindow::loadStatisticsChart()
 
         axisY->setRange(0 , maxValueGraphRange);
         chart->addAxis(axisY, Qt::AlignLeft);
-        series->attachAxis(axisY);
+        series1->attachAxis(axisY);
+        series2->attachAxis(axisY);
+
+        //Legend
+            //chart->legend()->setAlignment(Qt::AlignRight);
+            chart->legend()->setVisible(true);
+            chart->legend()->setAlignment(Qt::AlignLeft);
+            chart->legend()->detachFromChart();
+            chart->legend()->setBrush(QBrush(QColor(255, 255, 255, 220)));
+            chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
+            //chart->legend()->attachToChart();
+            chart->legend()->setBackgroundVisible(true);
+            chart->legend()->setGeometry(QRectF(120, 70, 200, 75));
+            chart->legend()->update();
+
 
         ui->Stats_chartview_Graph1->setChart(chart);
         ui->Stats_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
