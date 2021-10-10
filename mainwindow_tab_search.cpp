@@ -26,7 +26,7 @@
 // Purpose:     methods for the screen Search
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
+// Version:     1.02
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -41,9 +41,6 @@
 #include <QSaveFile>
 #include <QFileDialog>
 #include <QMessageBox>
-
-//#include <KMessageBox>
-//#include <KLocalizedString>
 
 //TAB: SEARCH FILES ----------------------------------------------------------------------
 
@@ -178,12 +175,7 @@
         //File Context Menu actions set up
         void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
-            //KMessageBox::information(this,"test.");
-
-            // for most widgets
             QPoint globalPos = ui->Search_treeView_FilesFound->mapToGlobal(pos);
-            // for QAbstractScrollArea and derived classes you would use:
-            //QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
             QMenu fileContextMenu;
 
             QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open"),(tr("Open file")), this);
@@ -293,7 +285,7 @@
 
             QFileInfo fileName;
             fileName.setFile(selectedFile);
-            QString fileNameWithoutExtension = fileName.baseName();
+            QString fileNameWithoutExtension = fileName.completeBaseName();
 
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
@@ -391,29 +383,7 @@
                                 searchFilesInCatalog(sourceCatalog);
                             }
                     }
-                //OBSOLETE Search catalogs matching the storage if "Selected storage" is selected
-//                else if ( selectedSearchCatalog =="Selected Storage"){
 
-//                    foreach(sourceCatalog,catalogFileList)
-//                            {
-
-//                            //get catalog storage name
-//                            QString sourceCatalogStorageName;
-//                            QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
-//                            sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
-//                                if  ( selectedStorageName == sourceCatalogStorageName )
-//                                {
-//                                        searchFilesInCatalog(sourceCatalog);
-//                                }
-//                            }
-//                }
-//                else if ( selectedSearchCatalog =="Selected Location"){
-//                    getLocationCatalogList(selectedStorageLocation);
-//                    foreach(sourceCatalog,locationCatalogList)
-//                            {
-//                                searchFilesInCatalog(sourceCatalog);
-//                            }
-//                }
                 //Otherwise just search files in the selected catalog
                 else{
                     //QString selectedSearchCatalogPath;
@@ -769,7 +739,6 @@
 
                 //Add to the list if the location is matching
                 if ( fieldList[3] == location){
-                    //KMessageBox::information(this,"test:\n"+ location + fieldList[0] );
                     locationStorageList << fieldList[0];
                 }
             }
@@ -857,9 +826,6 @@
                 //Restore last selection
                 ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
 
-                //QStringListModel locationListModel;
-                //locationListModel.setStringList(displaycatalogList);
-                //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
             }
             //----------------------------------------------------------------------
             void MainWindow::refreshStorageSelectionList(QString selectedLocation)
@@ -901,9 +867,6 @@
                 //Restore last selection
                 ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
 
-                //QStringListModel locationListModel;
-                //locationListModel.setStringList(displaycatalogList);
-                //ui->Search_comboBox_SelectCatalog->setModel(locationListModel);
             }
             //----------------------------------------------------------------------
             void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
