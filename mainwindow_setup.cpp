@@ -302,7 +302,11 @@
                 "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
               );
-
+        ui->Storage_pushButton_Update->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; color: #fff; } "
+                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+              );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; color: #fff; } "
                 "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
@@ -401,11 +405,18 @@
 
          }
 
+         QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + lastestVersion;
+
+
         //inform user if new version is available, and give the choice to download it
         if ( lastestVersion > currentVersion ){
 
             int result = QMessageBox::information(this,"Katalog",
-                      tr("This is version: v%1 \nA new version is available: v%2 \n Do you want to download it?").arg(currentVersion,lastestVersion),QMessageBox::Yes|QMessageBox::Cancel);
+                      tr("This is version: v%1 <br/><br/>A new version is available: <b>v%2</b> <br/> "
+                         "Find the list of new features in the <a href='%3'>Release Notes</a><br/><br/>"
+                         "Do you want to download it?")
+                         .arg(currentVersion,lastestVersion, releaseNotesAddress),
+                         QMessageBox::Yes|QMessageBox::Cancel);
 
             if ( result ==QMessageBox::Yes){
                 QDesktopServices::openUrl(QUrl("https://sourceforge.net/projects/katalogg/files/latest/download"));
