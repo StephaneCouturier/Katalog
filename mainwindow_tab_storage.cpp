@@ -463,10 +463,32 @@ void MainWindow::loadStorageTableToModel()
 //----------------------------------------------------------------------
 void MainWindow::updateStorageInfo()
 {
+    //Get current values for comparison later
+        QString getStorageInfoSQL = QLatin1String(R"(
+                                    SELECT  storageID,
+                                            storageName,
+                                            storageLocation,
+                                            storageFreeSpace,
+                                            storageTotalSpace
+                                    FROM storage
+                                    WHERE storageID =:storageID
+                                    )");
+
+        QSqlQuery getStorageInfoQuery;
+        getStorageInfoQuery.prepare(getStorageInfoSQL);
+        getStorageInfoQuery.bindValue(":storageID", selectedStorageID);
+        getStorageInfoQuery.exec();
+        getStorageInfoQuery.next();
+
+        qint64 previousStorageFreeSpace  = getStorageInfoQuery.value(3).toLongLong();
+        qint64 previousStorageTotalSpace = getStorageInfoQuery.value(4).toLongLong();
+        qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
+
+
     //verify if path is available / not empty
     QDir dir (selectedStoragePath);
 
-        ///Warning if no Path is provided
+        //Warning if no Path is provided
         if ( selectedStoragePath=="" ){
             QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
                                           "Modify the device to provide one and try again.\n")
@@ -487,39 +509,97 @@ void MainWindow::updateStorageInfo()
         }
 
     //Get device information
-    QStorageInfo storage;
-    storage.setPath(selectedStoragePath);
-    if (storage.isReadOnly())
-        qDebug() << "isReadOnly:" << storage.isReadOnly();
+        QStorageInfo storage;
+        storage.setPath(selectedStoragePath);
+        if (storage.isReadOnly())
+            qDebug() << "isReadOnly:" << storage.isReadOnly();
 
-    qint64 sizeTotal = storage.bytesTotal();
-    qint64 sizeAvailable = storage.bytesAvailable();
-    QString storageName = storage.name();
-    QString storageFS = storage.fileSystemType();
+        qint64 sizeTotal = storage.bytesTotal();
+        qint64 sizeAvailable = storage.bytesAvailable();
+        QString storageName = storage.name();
+        QString storageFS = storage.fileSystemType();
 
     //get confirmation for the update
-    if (sizeTotal == -1 ){
-        QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
-        return;
-    }
-    else{
-        int result = QMessageBox::warning(this,tr("Update"),tr("Accept changes?") +"<br/><br/>"+ tr("Total:") +"<br/><b>"+ QLocale().formattedDataSize(sizeTotal)+"</b><br/><br/>" +tr("Free:") +"<br/><b>"+ QLocale().formattedDataSize(sizeAvailable)+"</b><br/><br/>",
-                                          QMessageBox::Yes | QMessageBox::Cancel);
-        //return;
-        if ( result == QMessageBox::Cancel){
+        if (sizeTotal == -1 ){
+            QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
             return;
         }
-    }
+        else{
+            int result = QMessageBox::warning(this,tr("Update"),tr("Accept changes?") +"<br/><br/>"+ tr("Total:") +"<br/><b>"+ QLocale().formattedDataSize(sizeTotal)+"</b><br/><br/>" +tr("Free:") +"<br/><b>"+ QLocale().formattedDataSize(sizeAvailable)+"</b><br/><br/>",
+                                              QMessageBox::Yes | QMessageBox::Cancel);
+            //return;
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+        }
+
     //SQL updates
-    //Get the sum of total space
-    QSqlQuery queryTotalSpace;
-    queryTotalSpace.prepare( "UPDATE storage "
-                             "SET storageTotalSpace = " + QString::number(sizeTotal) + ","
-                              "storageFreeSpace = " + QString::number(sizeAvailable) + ","
-                              "storageLabel = '" + storageName +"',"
-                              "storageFileSystem = '" + storageFS +"'"
-                          + " WHERE storageID = " + QString::number(selectedStorageID) );
-    queryTotalSpace.exec();
+        QSqlQuery queryTotalSpace;
+        queryTotalSpace.prepare( "UPDATE storage "
+                                 "SET storageTotalSpace = " + QString::number(sizeTotal) + ","
+                                  "storageFreeSpace = " + QString::number(sizeAvailable) + ","
+                                  "storageLabel = '" + storageName +"',"
+                                  "storageFileSystem = '" + storageFS +"'"
+                              + " WHERE storageID = " + QString::number(selectedStorageID) );
+        queryTotalSpace.exec();
+
+    //Add values to statistics
+        QDateTime nowDateTime = QDateTime::currentDateTime();
+
+        QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                + selectedStorageName + "\t"
+                                + QString::number(sizeAvailable) + "\t"
+                                + QString::number(sizeTotal) + "\t"
+                                + "Storage" ;
+
+        // Stream the list to the file
+        QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+        // Write data
+        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            stream << statisticsLine << "\n";
+         }
+         fileOut.close();
+
+    //Reload new data
+         QSqlQuery query;
+         QString querySQL = QLatin1String(R"(
+                         SELECT  storageFreeSpace, storageTotalSpace
+                         FROM storage
+                         WHERE storageID =:storageID
+                         )");
+         query.prepare(querySQL);
+         query.bindValue(":storageID", selectedStorageID);
+         query.exec();
+         query.next();
+
+
+    //Prepare to report changes to the storage
+         qint64 newStorageFreeSpace    = query.value(0).toLongLong();
+         qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
+         qint64 newStorageTotalSpace   = query.value(1).toLongLong();
+         qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
+         qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
+         qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
+
+         //Inform user about the update
+         if(skipCatalogUpdateSummary !=true){
+         QMessageBox::information(this,"Katalog",tr("<br/>This storage was updated:<br/><b> %1 </b> <br/>"
+                                  "<table>"
+                                          "<tr><td> Used Space: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
+                                          "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
+                                          "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
+                                  "</table>"
+                                  ).arg(selectedStorageName,
+                                        QLocale().formattedDataSize(newStorageUsedSpace),
+                                        QLocale().formattedDataSize(deltaStorageUsedSpace),
+                                        QLocale().formattedDataSize(newStorageFreeSpace),
+                                        QLocale().formattedDataSize(deltaStorageFreeSpace),
+                                        QLocale().formattedDataSize(newStorageTotalSpace),
+                                        QLocale().formattedDataSize(deltaStorageTotalSpace))
+                                  ,Qt::TextFormat(Qt::RichText));
+         }
 
     //reload data to model
     loadStorageTableToModel();
