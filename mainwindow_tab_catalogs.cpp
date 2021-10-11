@@ -153,7 +153,7 @@
                     }
                 }
             }
-            QMessageBox::information(this,"Katalog","Update of displayed and active catalogs completed.");
+            QMessageBox::information(this,"Katalog",tr("Update of displayed and active catalogs completed."));
             skipCatalogUpdateSummary= false;
 
         }
@@ -340,7 +340,7 @@
 
                 // Verify that the file can be opened
                 if(!catalogFile.open(QIODevice::ReadOnly)) {
-                    QMessageBox::information(this,"Katalog","No catalog found.");
+                    QMessageBox::information(this,"Katalog",tr("No catalog found."));
                     return;
                 }
 
@@ -858,7 +858,7 @@
             //prepare file and stream
 
                 if(!sourceFile.open(QIODevice::ReadOnly)) {
-                    QMessageBox::information(this,"Katalog","No catalog found.");
+                    QMessageBox::information(this,"Katalog",tr("No catalog found."));
                     return;
                 }
 
@@ -1043,7 +1043,7 @@
             //QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
             //save catalogs
-            int result = QMessageBox::warning(this, "Katalog - Warning",
+            int result = QMessageBox::warning(this, "Katalog",
                                 tr("Save changes to the definition of the catalog?\n")
                                      +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
                                               | QMessageBox::Cancel);

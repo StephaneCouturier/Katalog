@@ -203,15 +203,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convert the selected catalog to the latest format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>with selected Catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -224,18 +216,6 @@
     </message>
     <message>
         <source>Explore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename the catalog and its file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update the catalog files, if the device is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -416,10 +396,6 @@
     </message>
     <message>
         <source>Total Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(GiB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -649,10 +625,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter new catalog name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Last Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -875,10 +847,6 @@ Please try a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Conversion completed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -986,12 +954,6 @@ Modify the device to provide one and try again.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This is version: v%1 
-A new version is available: v%2 
- Do you want to download it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Include Hidden Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,19 +986,11 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update all the catalogs that are active, if the device is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Record the values of all catalog for statistics of the full collection </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No statistic file found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1057,6 +1011,64 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open in text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to update ALL catalogs that are currently filtered and identified as active?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to view the summary of updates at the end of each catalog update?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply the change in the statistics file?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the catalog content with the new criteria?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update of displayed and active catalogs completed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

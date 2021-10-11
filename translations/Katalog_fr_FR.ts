@@ -67,10 +67,6 @@
         <translation>Nombre de Fichiers</translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Actualiser</translation>
     </message>
@@ -197,10 +193,6 @@
     <message>
         <source>Path</source>
         <translation>Chemin</translation>
-    </message>
-    <message>
-        <source>with selected Catalog</source>
-        <translation>avec le Catalogue sélectionné</translation>
     </message>
     <message>
         <source>Size</source>
@@ -379,10 +371,6 @@
         <translation>Sélectionner le répertoire pour cette collection</translation>
     </message>
     <message>
-        <source>Enter new catalog name</source>
-        <translation>Entrer le nouveau nom du catalogue</translation>
-    </message>
-    <message>
         <source>Do you want to delete this catalog?</source>
         <translation>Voulez-vous supprimer ce catalogue ?</translation>
     </message>
@@ -483,10 +471,6 @@
         <translation>Tous les actifs</translation>
     </message>
     <message>
-        <source>Convert the selected catalog to the latest format</source>
-        <translation>Convertir le catalogue séléctionné vers le dernier format</translation>
-    </message>
-    <message>
         <source>Search the selected catalog</source>
         <translation>Chercher dans le catalogue sélectionné</translation>
     </message>
@@ -495,24 +479,8 @@
         <translation>Explorer les fichiers et dossiers du catalogue sélectionné</translation>
     </message>
     <message>
-        <source>Rename the catalog and its file</source>
-        <translation>Renommer le catalogue et son fichier</translation>
-    </message>
-    <message>
-        <source>Update the catalog files, if the device is available</source>
-        <translation>Actualiser les fichiers du catalogue, si le lecteur est disponible</translation>
-    </message>
-    <message>
         <source>Edit the selected catalog file itself</source>
         <translation>Editer le fichier de catalogue sélectionné</translation>
-    </message>
-    <message>
-        <source>Record the values of the selected catalog for statistics</source>
-        <translation type="vanished">Enregistrer les valeurs du catalogue sélectionné pour les statistiques</translation>
-    </message>
-    <message>
-        <source>Record</source>
-        <translation type="vanished">Enregistrer</translation>
     </message>
     <message>
         <source>View the statistics of the selected catalog</source>
@@ -593,10 +561,6 @@
     <message>
         <source>Delete the selected device</source>
         <translation>Supprimer le stockage sélectionné</translation>
-    </message>
-    <message>
-        <source>(GiB)</source>
-        <translation>(GiB)</translation>
     </message>
     <message>
         <source>%</source>
@@ -769,10 +733,6 @@
         <translation>Définir comment le texte de recherche doit être utilisé.</translation>
     </message>
     <message>
-        <source>Update all the catalog that are active, if the device is available.</source>
-        <translation type="vanished">Actualiser tous les catalogues actifs, si le stockage est  disponible.</translation>
-    </message>
-    <message>
         <source>Select a catalog above first.</source>
         <translation>Sélectionner d&apos;abord un catalogue.</translation>
     </message>
@@ -889,10 +849,6 @@ Nom :   </translation>
         <translation>Toujours garder une sauvegarde de chaque catalogue</translation>
     </message>
     <message>
-        <source>Conversion completed.</source>
-        <translation>Conversion complète.</translation>
-    </message>
-    <message>
         <source>Directory is empty</source>
         <translation>Le répertoire est vide</translation>
     </message>
@@ -973,16 +929,6 @@ Copier/coller ces lignes au début du fichier et modifier les valeurs après le 
         <translation>Voulez-vous &lt;span style=&apos;color: red&apos;;&gt;supprimer&lt;/span&gt; ce stockage ?&lt;table&gt;&lt;tr&gt;&lt;td&gt;Id. :   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Nom : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <source>A storage.csv file was found, but could not be loaded.
-Likely, it was made with an older version of Katalog.
-The file can be fixed manually, please visit the wiki page:
-https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</source>
-        <translation type="vanished">Un fichier storage.csv a été trouvé, mais n&apos;a pas pu être chargé.
-Il a probablement été créé par une ancienne version de Katalog.
-Le fichier peut être corrigé manuellement, visiter la page du Wiki :
-https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions</translation>
-    </message>
-    <message>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
@@ -1041,14 +987,6 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation>Vérifier au démarrage</translation>
     </message>
     <message>
-        <source>This is version: v%1 
-A new version is available: v%2 
- Do you want to download it?</source>
-        <translation>Ceci est la version : v%1
-Une nouvelle version est disponible :  v%2 
-Voulez-vous la télécharger ?</translation>
-    </message>
-    <message>
         <source>Include Hidden Files</source>
         <translation>Incure les Fichiers Cachés</translation>
     </message>
@@ -1085,20 +1023,12 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Storage/fixing-for-new-versions&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Update all the catalogs that are active, if the device is available.</source>
-        <translation>Mettre à jour tous les catalogues actifs, si le périphérique est disponible.</translation>
-    </message>
-    <message>
         <source>Record the values of all catalog for statistics of the full collection </source>
         <translation>Enregistre les valeurs de tous les catalogues de la collection complète </translation>
     </message>
     <message>
         <source>Snapshot</source>
         <translation>Instantané</translation>
-    </message>
-    <message>
-        <source>No statistic file found.</source>
-        <translation>Aucun fichier de statistiques trouvé.</translation>
     </message>
     <message>
         <source>Source</source>
@@ -1119,6 +1049,71 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>collection</source>
         <translation>collection</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualiser tous les catalogues qui sont actifs, si le périphérique is disponible.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Importer une liste.de volumes depuis VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Open in text editor</source>
+        <translation>Ouvrir dans l&apos;éditeur de texte</translation>
+    </message>
+    <message>
+        <source>storage</source>
+        <translation>stockage</translation>
+    </message>
+    <message>
+        <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
+        <translatorcomment>a</translatorcomment>
+        <translation>Ceci est la version: v%1 &lt;br/&gt;&lt;br/&gt;Une nouvelle version est disponible : &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Voir la liste de nouvelles fonctionnalités dans les &lt;a href=&apos;%3&apos;&gt;Notes de Version&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Voulez-vous la télécharger ?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to update ALL catalogs that are currently filtered and identified as active?</source>
+        <translation>Êtes vous sur de vouloir actualiser TOUS les catalogues qui sont actuellement filtrés et identifiés comme actifs ?</translation>
+    </message>
+    <message>
+        <source>Do you want to view the summary of updates at the end of each catalog update?</source>
+        <translation>Voulez-vous voir le résumé des mises à jour à la fin de la mise à jour de chaque catalogue ?</translation>
+    </message>
+    <message>
+        <source>Could not open file.</source>
+        <translation>N&apos;a pas pu ouvrir le fichier.</translation>
+    </message>
+    <message>
+        <source>Apply the change in the statistics file?
+</source>
+        <translation>Appliquer le changement dans le fichier de statisques ?
+</translation>
+    </message>
+    <message>
+        <source>Update the catalog content with the new criteria?
+</source>
+        <translation>Actualiser le contenu du catalogue avec les nouveaux critère ?
+</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;br/&gt;Ce stockage a été mis à jour :&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Espace utilisé : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté : &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace Total : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualiser les fichers du catalogue sélectionné, si le périphérique est disponible&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Update of displayed and active catalogs completed.</source>
+        <translation>Les catalogues affichés et actifs ont été actualisés.</translation>
     </message>
 </context>
 <context>
