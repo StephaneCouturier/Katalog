@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             currentVersion = "1.02";
-            releaseDate = "2021-10-10";
+            releaseDate = "2021-10-12";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
