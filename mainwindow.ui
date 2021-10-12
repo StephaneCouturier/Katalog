@@ -58,19 +58,6 @@
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="3" column="0">
-        <spacer name="Global_verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="1" column="0">
         <layout class="QHBoxLayout" name="Global_horizontalLayout">
          <item>
@@ -288,19 +275,6 @@
            <string>Settings</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="3" column="0">
-            <spacer name="Settings_verticalSpacer_04">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="4" column="0">
             <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
              <item>
@@ -457,6 +431,19 @@
               </layout>
              </item>
             </layout>
+           </item>
+           <item row="3" column="0">
+            <spacer name="Settings_verticalSpacer_04">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item row="2" column="0">
             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
@@ -615,6 +602,22 @@
              </item>
             </layout>
            </item>
+           <item row="1" column="0">
+            <spacer name="Settings_verticalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
              <item>
@@ -717,25 +720,22 @@
              </item>
             </layout>
            </item>
-           <item row="1" column="0">
-            <spacer name="Settings_verticalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </widget>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="Global_verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -2231,7 +2231,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <bool>false</bool>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog's files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
                <string>Update</string>
@@ -3078,6 +3078,34 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="text">
                <string>Follow symbolic links</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="Create_pushButton_EditExcludeList">
+              <property name="text">
+               <string>Edit list of folders to be excluded</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-edit-sign">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -4003,6 +4031,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="1" column="0">
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="3" column="0">
+           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
+          </item>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
             <item>
@@ -4037,6 +4068,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <property name="text">
                 <string>collection snapshots</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>storage</string>
                </property>
               </item>
              </widget>
@@ -4081,6 +4117,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="text">
                <string>Type of data</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
              </widget>
             </item>
             <item>
@@ -4117,9 +4156,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
           </item>
           <item row="1" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_4">

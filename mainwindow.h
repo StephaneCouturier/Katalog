@@ -208,6 +208,7 @@ class MainWindow : public QMainWindow
             QString newCatalogName;
             QString newCatalogStorage;
             QStringList storageNameList;
+            QString excludeFilePath;
 
             void loadFileSystem(QString newCatalogPath);
             void catalogDirectory(QString newCatalogPath,
@@ -344,6 +345,7 @@ class MainWindow : public QMainWindow
         //Create
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
+            void on_Create_pushButton_EditExcludeList_clicked();
             void on_Create_pushButton_AddStorage_clicked();
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();

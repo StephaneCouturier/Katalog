@@ -35,8 +35,7 @@
 
 #include <QFileDialog>
 #include <QTextStream>
-
-#include <iostream>
+#include <QDesktopServices>
 
 //TAB: Create Catalog ----------------------------------------------------------------------
 
@@ -89,6 +88,25 @@
 
         qint64 catalogTotalFileSize = 0;
 
+        // Get directories to exclude
+        QStringList excludedFolders;
+        QFile excludeFile(excludeFilePath);
+        if(!excludeFile.open(QIODevice::ReadOnly)) {
+             //QMessageBox::information(this,"Katalog",tr("No exclude file found."));
+             //return;
+        }
+        QTextStream textStream(&excludeFile);
+        QString line;
+        while (true)
+        {
+            line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                excludedFolders << line;
+        }
+        excludeFile.close();
+
         //Iterate in the directory to create a list of files
         QStringList fileList;
 
@@ -108,8 +126,23 @@
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
 
-                //add the data to the list, \t is used as a separator for now
-                fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                //exclude if the folder is part of excluded directories
+                bool excludeFile = false;
+                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
+                for (int i=0; i<excludedFolders.length(); i++) {
+                    if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
+                        excludeFile = true;
+                        break;
+                    }
+                }
+                //exclude files in /directory/file when exclude fodler is in /directory
+                if (excludedFolders.contains(fileInfo.absolutePath())){
+                    excludeFile = true;
+                }
+                //add file to list if not excluded
+                if(excludeFile == false){
+                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
             }
         }
         else{
@@ -118,7 +151,6 @@
 
                 //Get file information  (absolute path, size, datetime)
                 QString filePath = iterator.next();
-                //KMessageBox::information(this,"test:\n"+filePath);
 
                 qint64 fileSize;
                 QFile file(filePath);
@@ -129,8 +161,23 @@
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
 
-                //add the data to the list, \t is used as a separator for now
-                fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                //exclude if the folder is part of excluded directories
+                bool excludeFile = false;
+                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
+                for (int i=0; i<excludedFolders.length(); i++) {
+                    if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
+                        excludeFile = true;
+                        break;
+                    }
+                }
+                //exclude files in /directory/file when exclude fodler is in /directory
+                if (excludedFolders.contains(fileInfo.absolutePath())){
+                    excludeFile = true;
+                }
+                //add file to list if not excluded
+                if(excludeFile == false){
+                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
             }
         }
 
@@ -191,7 +238,7 @@
             for (int i = 0; i < filelist.size(); ++i)
               stream << filelist.at(i) << '\n';
           } else {
-            std::cerr << "error opening output file\n";
+              QMessageBox::information(this,"Katalog","error opening output file\n");
             //return EXIT_FAILURE;
           }
           fileOut.close();
@@ -226,6 +273,43 @@
 
         //Select this directory in the treeview.
         loadFileSystem(newCatalogPath);
+    }
+
+    //----------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
+    {
+        //Verify if a folder exclusion list exists
+        QFile excludeFile(excludeFilePath);
+        if ( excludeFile.exists()){
+            QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+        }
+        else{
+            //if not, propose to create it
+            int result = QMessageBox::warning(this,tr("Update"),tr("No list found, create one?"),
+                                              QMessageBox::Yes | QMessageBox::Cancel);
+
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+            else{
+                // Create it, if it does not exist
+                if(!excludeFile.open(QIODevice::ReadOnly)) {
+
+                    if (excludeFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                          QTextStream stream(&excludeFile);
+
+                          //insert one line as an example
+                          stream << tr("folder/path/without/slash_at_the_end");
+
+                          excludeFile.close();
+
+                          //and open it for edition
+                          QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+                    }
+                }
+            }
+        }
     }
 
     //----------------------------------------------------------------------
