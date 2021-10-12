@@ -193,7 +193,9 @@ void MainWindow::loadCatalogFilesToExplore()
                 insertQuery.bindValue(":fileCatalog", catalogFileInfo.baseName());
                 insertQuery.exec();
             }
-        }
+    }
+
+    catalogFile.close();
 
     // Load all files and create model
     QString selectSQL = QLatin1String(R"(

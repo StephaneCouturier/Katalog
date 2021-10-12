@@ -671,20 +671,20 @@
 
 
         //Capture previous FileCount and TotalFileSize to be able to report the changes after the update
-        qint64 previousFileCount = currentCatalogFileCount; //currentCatalogFileCount;
-        qint64 previousTotalFileSize = currentCatalogTotalFileSize;//currentCatalogTotalFileSize;
+            qint64 previousFileCount = currentCatalogFileCount; //currentCatalogFileCount;
+            qint64 previousTotalFileSize = currentCatalogTotalFileSize;//currentCatalogTotalFileSize;
 
         //Define the type of files to be included
-        QStringList fileTypes;
-        if      ( currentCatalogFileType == "Image")
-                                fileTypes = fileType_Image;
-        else if ( currentCatalogFileType == "Audio")
-                                fileTypes = fileType_Audio;
-        else if ( currentCatalogFileType == "Video")
-                                fileTypes = fileType_Video;
-        else if ( currentCatalogFileType == "Text")
-                                fileTypes = fileType_Text;
-        else                    fileTypes.clear();
+            QStringList fileTypes;
+            if      ( currentCatalogFileType == "Image")
+                                    fileTypes = fileType_Image;
+            else if ( currentCatalogFileType == "Audio")
+                                    fileTypes = fileType_Audio;
+            else if ( currentCatalogFileType == "Video")
+                                    fileTypes = fileType_Video;
+            else if ( currentCatalogFileType == "Text")
+                                    fileTypes = fileType_Text;
+            else                    fileTypes.clear();
 
         //
         QDir dir (currentCatalogSourcePath);
