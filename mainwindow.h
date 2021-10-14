@@ -199,7 +199,11 @@ class MainWindow : public QMainWindow
             void saveCatalogChanges();
 
         //TAB: Explore
+            QString selectedDirectoryName;
+            void openCatalogToExplore();
             void loadCatalogFilesToExplore();
+            void loadSelectedDirectoryFilesToExplore();
+            void loadCatalogDirectoriesToExplore();
 
         //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
@@ -351,6 +355,7 @@ class MainWindow : public QMainWindow
             void on_Create_pushButton_CreateCatalog_clicked();
 
         //Explore
+            void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
 
         //Storage
             void on_Storage_pushButton_CreateList_clicked();

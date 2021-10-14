@@ -106,6 +106,31 @@ void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const Q
     }
 }
 //----------------------------------------------------------------------
+
+void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
+{
+    selectedDirectoryName = ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+    loadSelectedDirectoryFilesToExplore();
+}
+//----------------------------------------------------------------------
+void MainWindow::openCatalogToExplore()
+{
+    //Reset selectedDirectoryName to load and display all catalog files
+    selectedDirectoryName.clear();
+
+    //Load the files of the Selected Catalog
+    loadCatalogFilesToExplore();
+    loadCatalogDirectoriesToExplore();
+    loadSelectedDirectoryFilesToExplore();
+
+    //Go to the Explorer tab
+    ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
+    ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
+    ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
+}
+
+
 //Load a catalog to view the files
 void MainWindow::loadCatalogFilesToExplore()
 {
@@ -197,6 +222,12 @@ void MainWindow::loadCatalogFilesToExplore()
 
     catalogFile.close();
 
+    //Stop animation
+    QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::loadSelectedDirectoryFilesToExplore()
+{
     // Load all files and create model
     QString selectSQL = QLatin1String(R"(
                         SELECT  fileName AS Name,
@@ -206,8 +237,14 @@ void MainWindow::loadCatalogFilesToExplore()
                                 fileCatalog AS Catalog
                         FROM file
                                     )");
+
+    if (selectedDirectoryName!=""){
+        selectSQL = selectSQL + " WHERE filePath =:filePath";
+    }
+
     QSqlQuery loadCatalogQuery;
     loadCatalogQuery.prepare(selectSQL);
+    loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
     loadCatalogQuery.exec();
 
     QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
@@ -235,15 +272,59 @@ void MainWindow::loadCatalogFilesToExplore()
                         SELECT  count (*)
                         FROM file
                                     )");
+
+    if (selectedDirectoryName!=""){
+        countSQL = countSQL + " WHERE filePath =:filePath";
+    }
+
     QSqlQuery countQuery;
     countQuery.prepare(countSQL);
+    countQuery.bindValue(":filePath",selectedDirectoryName);
     countQuery.exec();
     countQuery.next();
 
     ui->Explore_label_FilesNumberDisplay->setNum(countQuery.value(0).toInt());
 
-    //Stop animation
-    QApplication::restoreOverrideCursor();
+}
+
+//Load a catalog's directory to view the files
+void MainWindow::loadCatalogDirectoriesToExplore()
+{
+    //prepare query to load file info
+    QSqlQuery getDirectoriesQuery;
+    QString getDirectoriesSQL = QLatin1String(R"(
+                                SELECT DISTINCT filePath
+                                FROM file
+                                ORDER BY filePath ASC
+                                    )");
+    getDirectoriesQuery.prepare(getDirectoriesSQL);
+    getDirectoriesQuery.exec();
+
+    QSqlQueryModel *getDirectoriesQueryModel = new QSqlQueryModel;
+    getDirectoriesQueryModel->setQuery(getDirectoriesQuery);
+
+    QSortFilterProxyModel *getDirectoriesProxyModel = new QSortFilterProxyModel;
+    getDirectoriesProxyModel->setSourceModel(getDirectoriesQueryModel);
+
+    getDirectoriesProxyModel->setHeaderData(0, Qt::Horizontal, tr("Directory"));
+
+    // Connect model to tree/table view
+    ui->Explore_treeview_Directories->setModel(getDirectoriesProxyModel);
+    ui->Explore_treeview_Directories->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
+
+    QString countSQL = QLatin1String(R"(
+                        SELECT count (DISTINCT (filePath))
+                        FROM file
+                                    )");
+    QSqlQuery countQuery;
+    countQuery.prepare(countSQL);
+    countQuery.exec();
+    countQuery.next();
+
+   ui->Explore_label_DirectoryNumberDisplay->setNum(countQuery.value(0).toInt());
+
 }
 
 //----------------------------------------------------------------------

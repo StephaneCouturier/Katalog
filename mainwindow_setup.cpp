@@ -217,9 +217,6 @@
             ui->Create_checkBox_IncludeSymblinks->hide();
 
         //Explore
-            //DEV: pending the development of a flat or tree structure to display directories for selection
-            ui->Explore_label_Directories->hide();
-            ui->Explore_treeview_Directories->hide();
 
         //Storage
             //DEV: pending a test qnd development of a function to open Filelight at the requested place

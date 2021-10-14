@@ -57,13 +57,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_pushButton_ViewCatalog_clicked()
         {
-            //View the files of the Selected Catalog
-            loadCatalogFilesToExplore();
-
-            //Go to the Search tab
-            ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
-            ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
-            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
+            openCatalogToExplore();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
@@ -287,14 +281,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
-            // Get file from selected row
-            selectedCatalogFile = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-            loadCatalogFilesToExplore();
-
-            // Go to the Search tab
-            ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
-            ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
-            ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
+            openCatalogToExplore();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
