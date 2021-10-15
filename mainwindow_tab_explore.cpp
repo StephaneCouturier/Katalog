@@ -244,7 +244,7 @@ void MainWindow::loadSelectedDirectoryFilesToExplore()
 
     QSqlQuery loadCatalogQuery;
     loadCatalogQuery.prepare(selectSQL);
-    loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
+    loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+selectedDirectoryName);
     loadCatalogQuery.exec();
 
     QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
@@ -293,11 +293,15 @@ void MainWindow::loadCatalogDirectoriesToExplore()
     //prepare query to load file info
     QSqlQuery getDirectoriesQuery;
     QString getDirectoriesSQL = QLatin1String(R"(
-                                SELECT DISTINCT filePath
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, ''))
                                 FROM file
                                 ORDER BY filePath ASC
                                     )");
     getDirectoriesQuery.prepare(getDirectoriesSQL);
+    //DEV: shorten the paths as they all start with the catalog path
+    //                                  SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, ''))
+    getDirectoriesQuery.bindValue(":selectedCatalogPath",selectedCatalogPath);
+    //pb: when clicking on it to get the files, the pqth is not the right one
     getDirectoriesQuery.exec();
 
     QSqlQueryModel *getDirectoriesQueryModel = new QSqlQueryModel;
