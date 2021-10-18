@@ -33,7 +33,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//#include "collection.h"
 #include "catalog.h"
 #include "filesview.h"
 
@@ -41,9 +40,6 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
-
-//#include <KMessageBox>
-//#include <KLocalizedString>
 
 //----------------------------------------------------------------------
 
@@ -226,74 +222,13 @@ void MainWindow::loadCatalogFilesToExplore()
     QApplication::restoreOverrideCursor();
 }
 
-void MainWindow::loadSelectedDirectoryFilesToExplore()
-{
-    // Load all files and create model
-    QString selectSQL = QLatin1String(R"(
-                        SELECT  fileName AS Name,
-                                fileSize AS Size,
-                                fileDateUpdated AS Date,
-                                filePath AS Path,
-                                fileCatalog AS Catalog
-                        FROM file
-                                    )");
-
-    if (selectedDirectoryName!=""){
-        selectSQL = selectSQL + " WHERE filePath =:filePath";
-    }
-
-    QSqlQuery loadCatalogQuery;
-    loadCatalogQuery.prepare(selectSQL);
-    loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+selectedDirectoryName);
-    loadCatalogQuery.exec();
-
-    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-    loadCatalogQueryModel->setQuery(loadCatalogQuery);
-
-    FilesView *proxyModel2 = new FilesView(this);
-    proxyModel2->setSourceModel(loadCatalogQueryModel);
-
-    proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
-    proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
-    proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
-    proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Path"));
-    proxyModel2->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
-
-    // Connect model to tree/table view
-    ui->Explore_treeView_FileList->setModel(proxyModel2);
-    ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-    ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
-    ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
-    ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
-    ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
-
-    QString countSQL = QLatin1String(R"(
-                        SELECT  count (*)
-                        FROM file
-                                    )");
-
-    if (selectedDirectoryName!=""){
-        countSQL = countSQL + " WHERE filePath =:filePath";
-    }
-
-    QSqlQuery countQuery;
-    countQuery.prepare(countSQL);
-    countQuery.bindValue(":filePath",selectedDirectoryName);
-    countQuery.exec();
-    countQuery.next();
-
-    ui->Explore_label_FilesNumberDisplay->setNum(countQuery.value(0).toInt());
-
-}
-
 //Load a catalog's directory to view the files
 void MainWindow::loadCatalogDirectoriesToExplore()
 {
     //prepare query to load file info
     QSqlQuery getDirectoriesQuery;
     QString getDirectoriesSQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, ''))
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', ''))
                                 FROM file
                                 ORDER BY filePath ASC
                                     )");
@@ -328,6 +263,68 @@ void MainWindow::loadCatalogDirectoriesToExplore()
     countQuery.next();
 
    ui->Explore_label_DirectoryNumberDisplay->setNum(countQuery.value(0).toInt());
+
+}
+
+//Load selected directory Files to view the files
+void MainWindow::loadSelectedDirectoryFilesToExplore()
+{
+    // Load all files and create model
+    QString selectSQL = QLatin1String(R"(
+                        SELECT  fileName AS Name,
+                                fileSize AS Size,
+                                fileDateUpdated AS Date,
+                                filePath AS Path,
+                                fileCatalog AS Catalog
+                        FROM file
+                                    )");
+
+    if (selectedDirectoryName!=""){
+        selectSQL = selectSQL + " WHERE filePath =:filePath";
+    }
+
+    QSqlQuery loadCatalogQuery;
+    loadCatalogQuery.prepare(selectSQL);
+    loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+    loadCatalogQuery.exec();
+
+    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+    loadCatalogQueryModel->setQuery(loadCatalogQuery);
+
+    FilesView *proxyModel2 = new FilesView(this);
+    proxyModel2->setSourceModel(loadCatalogQueryModel);
+
+    proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
+    proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
+    proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
+    proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Path"));
+    proxyModel2->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+
+    // Connect model to tree/table view
+    ui->Explore_treeView_FileList->setModel(proxyModel2);
+    ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+    ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
+    ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
+    ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
+    ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
+
+    QString countSQL = QLatin1String(R"(
+                        SELECT  count (*)
+                        FROM file
+                                    )");
+
+    if (selectedDirectoryName!=""){
+        countSQL = countSQL + " WHERE filePath =:filePath";
+    }
+
+    QSqlQuery countQuery;
+    countQuery.prepare(countSQL);
+    countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+    countQuery.exec();
+    countQuery.next();
+
+    ui->Explore_label_FilesNumberDisplay->setNum(countQuery.value(0).toInt());
 
 }
 
