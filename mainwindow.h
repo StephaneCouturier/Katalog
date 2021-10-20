@@ -139,7 +139,6 @@ class MainWindow : public QMainWindow
             QString selectedMaxSizeUnit;
             QString selectedTags;
             QString sourceCatalog;
-            //QStringListModel catalogSelectionListModel;
             QStringList catalogSelectedList;
             void initiateSearchValues();
             void refreshLocationSelectionList();
@@ -147,9 +146,6 @@ class MainWindow : public QMainWindow
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
 
             QString getCatalogStorageName(QString catalogFilePath);
-
-            //QStringListModel *locationListModel;
-            //QStringListModel *storageListModel;
 
             QList<QString>  sFileNames;
             QList<qint64>   sFileSizes;
@@ -318,12 +314,12 @@ class MainWindow : public QMainWindow
             void getLocationCatalogList(QString location);
 
             //context menu
-            void contextOpenFile();
-            void contextOpenFolder();
-            void contextCopyAbsolutePath();
-            void contextCopyFolderPath();
-            void contextCopyFileNameWithExtension();
-            void contextCopyFileNameWithoutExtension();
+            void searchContextOpenFile();
+            void searchContextOpenFolder();
+            void searchContextCopyAbsolutePath();
+            void searchContextCopyFolderPath();
+            void searchContextCopyFileNameWithExtension();
+            void searchContextCopyFileNameWithoutExtension();
 
         //Collection/Catalogs
             void on_Collection_pushButton_Search_clicked();
@@ -339,9 +335,6 @@ class MainWindow : public QMainWindow
             void on_Collection_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index);
 
-            void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
-            void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
-            void context2CopyAbsolutePath();
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
             void on_Catalogs_pushButton_SelectPath_clicked();
@@ -356,6 +349,15 @@ class MainWindow : public QMainWindow
 
         //Explore
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
+            void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
+            void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
+            //context menu
+            void exploreContextOpenFile();
+            void exploreContextOpenFolder();
+            void exploreContextCopyAbsolutePath();
+            void exploreContextCopyFolderPath();
+            void exploreContextCopyFileNameWithExtension();
+            void exploreContextCopyFileNameWithoutExtension();
 
         //Storage
             void on_Storage_pushButton_CreateList_clicked();

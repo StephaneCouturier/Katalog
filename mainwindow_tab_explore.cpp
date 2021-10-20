@@ -63,33 +63,31 @@ void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const Q
 
     QMenu fileContextMenu;
 
-//            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
-//            connect(menuAction1, &QAction::triggered, this, &MainWindow::contextOpenFile);
-//            fileContextMenu.addAction(menuAction1);
+    QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
+    connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFile);
+    fileContextMenu.addAction(menuAction1);
 
-//            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
-//            connect(menuAction2, &QAction::triggered, this, &MainWindow::contextOpenFolder);
-//            fileContextMenu.addAction(menuAction2);
+    QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+    connect(menuAction2, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
+    fileContextMenu.addAction(menuAction2);
 
-//            fileContextMenu.addSeparator();
+    fileContextMenu.addSeparator();
 
-    QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy absolute path")), this);
-    connect( menuAction3,&QAction::triggered, this, &MainWindow::context2CopyAbsolutePath);
+    QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+    connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
     fileContextMenu.addAction(menuAction3);
 
-//            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
-//            connect( menuAction4,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithExtension);
-//            fileContextMenu.addAction(menuAction4);
+    QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
+    connect( menuAction4,&QAction::triggered, this, &MainWindow::exploreContextCopyAbsolutePath);
+    fileContextMenu.addAction(menuAction4);
 
-//            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
-//            connect( menuAction5,&QAction::triggered, this, &MainWindow::contextCopyFileNameWithoutExtension);
-//            fileContextMenu.addAction(menuAction5);
+    QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
+    connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
+    fileContextMenu.addAction(menuAction5);
 
-    //fileContextMenu.addSeparator();
-
-    // TEST:  copy file to..., cut file, move file to..., trash, delete, the full Dolphin menu!
-    //QAction *menuAction30 = new QAction(QIcon::fromTheme("edit-copy"),(tr("TEST")), this);
-    //fileContextMenu.addAction(menuAction30);
+    QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
+    connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
+    fileContextMenu.addAction(menuAction6);
 
     QAction* selectedItem = fileContextMenu.exec(globalPos);
     if (selectedItem)
@@ -125,7 +123,6 @@ void MainWindow::openCatalogToExplore()
     ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
     ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
 }
-
 
 //Load a catalog to view the files
 void MainWindow::loadCatalogFilesToExplore()
@@ -329,14 +326,76 @@ void MainWindow::loadSelectedDirectoryFilesToExplore()
 }
 
 //----------------------------------------------------------------------
-void MainWindow::context2CopyAbsolutePath()
+//Context Menu methods
+void MainWindow::exploreContextOpenFile()
 {
     QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+    //Get filepath from selected row
     QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
     QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-    QString selectedFileAbsolutePath = selectedFileFolder+"/"+selectedFileName;
+    QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+    //Open the file (fromLocalFile needed for spaces in file name)
+    QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+}
+
+void MainWindow::exploreContextOpenFolder()
+{
+    QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+    QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+    QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+    QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
+}
+
+void MainWindow::exploreContextCopyAbsolutePath()
+{
+    QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+
+    QString selectedFileName =   ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+    QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
     QClipboard *clipboard = QGuiApplication::clipboard();
     QString originalText = clipboard->text();
-    clipboard->setText(selectedFileAbsolutePath);
+    clipboard->setText(selectedFile);
 }
-//----------------------------------------------------------------------
+
+void MainWindow::exploreContextCopyFolderPath()
+{
+    QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString originalText = clipboard->text();
+    clipboard->setText(selectedFileFolder);
+}
+
+void MainWindow::exploreContextCopyFileNameWithExtension()
+{
+    QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+    QString selectedFileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+    QString fileNameWithExtension = selectedFileName;
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString originalText = clipboard->text();
+    clipboard->setText(fileNameWithExtension);
+}
+
+void MainWindow::exploreContextCopyFileNameWithoutExtension()
+{
+    QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+
+    QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+    QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+    QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
+    QFileInfo fileName;
+    fileName.setFile(selectedFile);
+    QString fileNameWithoutExtension = fileName.completeBaseName();
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString originalText = clipboard->text();
+    clipboard->setText(fileNameWithoutExtension);
+}
