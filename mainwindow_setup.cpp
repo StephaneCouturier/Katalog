@@ -49,7 +49,7 @@
     #include <KLocalizedString>
 #endif
 
-//Settings -----------------------------------------------------------------
+//Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
         connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -62,14 +62,21 @@
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
     {
-        //Check if a settings file already exists. If not considered it first use and get user choices
+        //Check if a settings file already exists. If not, it is considered first use and one gets generted
         QFile settingsFile(settingsFilePath);
         int themeID = 1; //default value for the theme.
-        selectedTab = 3;
+        selectedTab = 3; //default value for the first launch
 
-        //QMessageBox::information(this,"Katalog","theme : \n" + QString::number(themeID));
         if (!settingsFile.exists()){
+            //create a file, with default values
+                  QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                  settings.setValue("General/LastCollectionFolder", QApplication::applicationDirPath());
+
+            //Set Language and theme
+
             QString userLanguage = QLocale::system().name();
+            settings.setValue("Settings/Language", userLanguage);
+
             QString themeName = tr("Katalog Colors (light)");
 
             QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
@@ -77,16 +84,17 @@
                                                        "The following Settings have been applied:<br/>"
                                                        " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings")));
 
-            // add: Let's go to the Create screen to create your first catalogue
             //Language
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
             //Collection folder
 
             //Go to create screen
+            // add: "Let's go to the Create screen to create your first catalog"
 
         }
-        else{
+
+        //Load the settings file
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
@@ -137,7 +145,13 @@
 
             //General settings
             ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
-            themeID = settings.value("Settings/Theme").toInt();
+            QString themeText = settings.value("Settings/Theme").toString();
+            if (themeText==""){
+                //fallback on default theme
+                themeID=1;
+            }
+            else
+                themeID = settings.value("Settings/Theme").toInt();
             ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
             ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
             ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
@@ -153,9 +167,6 @@
             int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
             ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
             ui->tabWidget->setCurrentIndex(selectedTab);
-        }
-
-
 
     }
     //----------------------------------------------------------------------
@@ -200,8 +211,7 @@
         fileType_TextS << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
 
     }
-
-//Development -------------------------------------------------------
+    //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
@@ -228,7 +238,6 @@
             //DEV: Tags features under pre-development
             ui->tabWidget->removeTab(6); //Tags
     }
-
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
     {       
@@ -335,10 +344,7 @@
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
 
     }
-
-
     //----------------------------------------------------------------------
-
     void MainWindow::startDatabase()
     {
         if (!QSqlDatabase::drivers().contains("QSQLITE"))
@@ -359,10 +365,8 @@
         storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
     }
-
-  //----------------------------------------------------------------------
-
-     void MainWindow::checkVersion()
+    //----------------------------------------------------------------------
+    void MainWindow::checkVersion()
      {
 
          //Get the number of the lastest Version

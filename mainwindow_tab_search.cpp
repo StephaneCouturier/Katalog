@@ -797,7 +797,7 @@
             //----------------------------------------------------------------------
             void MainWindow::refreshLocationSelectionList()
             {
-                //get current location
+                //Get current location
                 QString currentLocation = ui->Filters_comboBox_SelectLocation->currentText();
                 //Query the full list of locations
                 QSqlQuery getLocationList;
@@ -810,16 +810,14 @@
                     locationList << getLocationList.value(0).toString();
                 }
 
-
-                //Prepare list for the Location combobox
                 QStringList displayLocationList = locationList;
                 //Add the "All" option at the beginning
                 displayLocationList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
-                fileListModel = new QStringListModel(this);
-                fileListModel->setStringList(displayLocationList);
-                ui->Filters_comboBox_SelectLocation->setModel(fileListModel);
+                QStringListModel *locationListModel = new QStringListModel();
+                locationListModel->setStringList(displayLocationList);
+                ui->Filters_comboBox_SelectLocation->setModel(locationListModel);
 
                 //Restore last selection
                 ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
@@ -846,21 +844,20 @@
                 getStorageList.exec();
 
                 //Put the results in a list
-                QStringList locationList;
+                QStringList storageList;
                 while (getStorageList.next()) {
-                    locationList << getStorageList.value(0).toString();
+                    storageList << getStorageList.value(0).toString();
                 }
 
-
                 //Prepare list for the Location combobox
-                QStringList displayLocationList = locationList;
+                QStringList displayStorageList = storageList;
                 //Add the "All" option at the beginning
-                displayLocationList.insert(0,tr("All"));
+                displayStorageList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
-                fileListModel = new QStringListModel(this);
-                fileListModel->setStringList(displayLocationList);
-                ui->Filters_comboBox_SelectStorage->setModel(fileListModel);
+                QStringListModel *storageListModel = new QStringListModel();
+                storageListModel->setStringList(displayStorageList);
+                ui->Filters_comboBox_SelectStorage->setModel(storageListModel);
 
                 //Restore last selection
                 ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
@@ -912,35 +909,32 @@
                         catalogSelectedList << getCatalogSelectionList.value(0).toString();
                     }
                     catalogSelectedList.sort(); //DEV: because the SQL "order by" does not work
-
                 //Prepare the list for the Location combobox
                     QStringList displayCatalogList = catalogSelectedList;
                     //Add the "All" option at the beginning
                     displayCatalogList.insert(0,tr("All"));
 
                 //Send the list to the Search combobox model
-                    fileListModel = new QStringListModel(this);
-                    fileListModel->setStringList(displayCatalogList);
-                    ui->Filters_comboBox_SelectCatalog->setModel(fileListModel);
+                    QStringListModel *catalogListModel = new QStringListModel();
+                    catalogListModel->setStringList(displayCatalogList);
+                    ui->Filters_comboBox_SelectCatalog->setModel(catalogListModel);
 
                 //Send list to the Statistics combobox (without All or Selected storage options)
-                    fileListModel = new QStringListModel(this);
-                    fileListModel->setStringList(catalogSelectedList);
+                    QStringListModel *catalogListModelForStats = new QStringListModel(this);
+                    catalogListModelForStats->setStringList(catalogSelectedList);
 
                     //Get last value
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
                     //Generate list of values
-                    ui->Statistics_comboBox_SelectCatalog->setModel(fileListModel);
+                    if ( catalogListModelForStats->rowCount()!=0)
+                        ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
 
                     //Restore last selection value or default
-                    if (lastValue=="")
-                        ui->Statistics_comboBox_SelectCatalog->setCurrentText(typeOfData[0]);
-                    else
-                        ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
+                       ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
 
                 //Restore last selection
-                    ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
+                   ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
 
             }
