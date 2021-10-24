@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         KAboutData aboutData(
              QStringLiteral("Katalog"),         // The program name used internally. (componentName)
              i18n("Katalog"),                   // A displayable program name string. (displayName)
-             QStringLiteral("1.01"),             // The program version string. (version)
+             QStringLiteral("1.03"),             // The program version string. (version)
              // Short description of what the app does. (shortDescription)
              i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
              KAboutLicense::GPL,// The license this code is released under

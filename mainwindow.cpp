@@ -59,8 +59,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         //Set up the User Interface
             ui->setupUi(this);
 
-            currentVersion = "1.02";
-            releaseDate = "2021-10-12";
+            currentVersion = "1.03";
+            releaseDate = "2021-10-24";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -162,9 +162,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             loadStatisticsChart();
 
             //loadCollection();
-
-
-
             ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
             ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
@@ -184,7 +181,7 @@ MainWindow::~MainWindow()
 //DEV
 /*
 QMessageBox::information(this,"Katalog","Ok.");
-QMessageBox::information(this,"Katalog","Ok." + stringVariable);
+QMessageBox::information(this,"Katalog","stringVariable:" + stringVariable);
 QMessageBox::information(this,"Katalog","variable : \n" + QString::number(numbervariable));
 
 QSqlQuery query;

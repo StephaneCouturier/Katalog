@@ -713,10 +713,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>of</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1069,6 +1065,22 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>Update of displayed and active catalogs completed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit list of folders to be excluded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No list found, create one?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>folder/path/without/slash_at_the_end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -722,7 +722,7 @@
     </message>
     <message>
         <source>Copy absolute path</source>
-        <translation>Copier le chemin absolu</translation>
+        <translation type="vanished">Copier le chemin absolu</translation>
     </message>
     <message>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
@@ -1114,6 +1114,22 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Update of displayed and active catalogs completed.</source>
         <translation>Les catalogues affichés et actifs ont été actualisés.</translation>
+    </message>
+    <message>
+        <source>Edit list of folders to be excluded</source>
+        <translation>Editer la liste des dossiers à exclure</translation>
+    </message>
+    <message>
+        <source>No list found, create one?</source>
+        <translation>Pas de liste trouvée, en créer une ?</translation>
+    </message>
+    <message>
+        <source>folder/path/without/slash_at_the_end</source>
+        <translation>chemin/du/dossier/sans_slash_a_la_fin</translation>
+    </message>
+    <message>
+        <source>Directory</source>
+        <translation>Répertoire</translation>
     </message>
 </context>
 <context>
