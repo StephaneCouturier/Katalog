@@ -93,14 +93,12 @@
 
         //Load matching Storage
         refreshStorageSelectionList(selectedLocation);
-
         selectedSearchLocation = selectedLocation;
 
         //Load matching Catalog
         loadCatalogsToModel();
         loadStorageTableToModel();
         refreshStorageStatistics();
-
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
@@ -109,9 +107,8 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastSearch/SelectedSearchStorage", selectedStorage);
 
-        //Get selected Location and Storage
+        //Get selected Location
         QString selectedLocation = ui->Filters_comboBox_SelectLocation->currentText();
-        //QString selectedStorage  = ui->Filters_comboBox_SelectStorage->currentText();
 
         //Load matching Storage
         refreshCatalogSelectionList(selectedLocation, selectedStorage);
@@ -127,7 +124,6 @@
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalog);
-
     }
 
 //Tab: SETTINGS -----------------------------------------------------------------------------
