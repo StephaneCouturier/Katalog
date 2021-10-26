@@ -13,5 +13,6 @@
         <file>images/flags/fr.png</file>
         <file>images/flags/us.png</file>
         <file>images/flags/cz.png</file>
+        <file>images/flags/de.png</file>
     </qresource>
 </RCC>

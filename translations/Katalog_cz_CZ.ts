@@ -899,7 +899,7 @@
     <message>
         <location filename="../mainwindow.ui" line="275"/>
         <location filename="../mainwindow.ui" line="592"/>
-        <location filename="../mainwindow_setup.cpp" line="120"/>
+        <location filename="../mainwindow_setup.cpp" line="85"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -989,8 +989,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="548"/>
-        <location filename="../mainwindow_setup.cpp" line="114"/>
-        <location filename="../mainwindow.cpp" line="110"/>
+        <location filename="../mainwindow_setup.cpp" line="80"/>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation>Katalogové barvy (světlé)</translation>
@@ -1026,22 +1026,22 @@
         <translation>Otevřeno</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="117"/>
+        <location filename="../mainwindow_setup.cpp" line="82"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt; &lt;b&gt; Vítejte v Katalogu! &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Zdá se, že toto je první spuštění. &lt;br/&gt; &lt;br/&gt; Byla použita následující nastavení: &lt;br/&gt; - Jazyk: &lt;b&gt;%1 &lt;/b&gt; &lt;br/&gt; - Téma: &lt;b&gt;%2 &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Tyto údaje můžete změnit na kartě%3.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="452"/>
+        <location filename="../mainwindow_setup.cpp" line="416"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verze: v%1 &lt;br/&gt; &lt;br/&gt; K dispozici je nová verze: &lt;b&gt; v%2 &lt;/b&gt; &lt;br/&gt; Seznam nových funkcí najdete v &lt;a href = &apos;%3 &apos;&gt; Poznámky k vydání &lt;/a&gt; &lt;br/&gt; &lt;br/&gt; Chcete si jej stáhnout?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="489"/>
+        <location filename="../mainwindow_setup.cpp" line="453"/>
         <source>Open a Katalog collection</source>
         <translation>Otevřete kolekci Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="540"/>
+        <location filename="../mainwindow_setup.cpp" line="504"/>
         <source>Save File As</source>
         <translation>Uložit soubor jako</translation>
     </message>
