@@ -94,6 +94,7 @@ FORMS += \
     mainwindow.ui
 
 TRANSLATIONS += \
+    translations/Katalog_de_DE.ts \
     translations/Katalog_en_US.ts \
     translations/Katalog_fr_FR.ts \
     translations/Katalog_cz_CZ.ts
@@ -110,4 +111,6 @@ RESOURCES += \
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico
+
+DISTFILES +=
 

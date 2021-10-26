@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QTranslator>
+#include <QMessageBox>
 
 #ifdef Q_OS_LINUX
     #include <KAboutData>
@@ -60,11 +61,14 @@ int main(int argc, char *argv[])
         if ( userLanguage == "" ){
 
             //Get the language of the user's system
-            userLanguage = QLocale::system().name();
+            userLanguage = QLocale::system().name();           
 
             //If this language is not supported yet, default to Engish US.
             QStringList availableUserLanguages;
-            availableUserLanguages << "en_US" << "fr_FR" << "cz_CZ";
+            availableUserLanguages  << "de_DE"
+                                    << "cz_CZ"
+                                    << "fr_FR"
+                                    << "en_US";
             if ( availableUserLanguages.contains(userLanguage) == false )
                 userLanguage = "en_US";
         }
