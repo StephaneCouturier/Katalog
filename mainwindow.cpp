@@ -55,25 +55,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #endif
    , ui(new Ui::MainWindow)
 {
-   //Set up interface globally
+    //setup: start database
+            startDatabase();
+
+    //Set up interface globally
         //Set up the User Interface
             ui->setupUi(this);
 
-            currentVersion = "1.03";
-            releaseDate = "2021-10-24";
+            currentVersion = "1.04a";
+            releaseDate = "2021-10-26";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
             //Load languages to the Settings combobox
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
-        //Hide user interface items that are not ready for use (under development).
+            //Hide user interface items that are not ready for use (under development).
             hideDevelopmentUIItems();
             ui->Catalogs_widget_EditCatalog->hide();
 
-        //Set up KDE Menu/Icon actions
+            //Set up KDE Menu/Icon actions
             #ifdef Q_OS_LINUX
             setupActions();
             #endif
@@ -111,8 +115,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-    //setup: start database
-            startDatabase();
+
 
     //setup tab: Collection
             //setup tab: Search
