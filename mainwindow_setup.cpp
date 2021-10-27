@@ -162,6 +162,13 @@
             ui->Statistics_comboBox_SelectCatalog->setCurrentText(settings.value("Statistics/SelectedCatalog").toString());
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
+            //Restore last opened catalog file to Explore
+            selectedCatalogFile = settings.value("Settings/lastSelectedCatalogFile").toString();
+            selectedCatalogName = settings.value("Settings/lastSelectedCatalogName").toString();
+            selectedCatalogPath = settings.value("Settings/lastSelectedCatalogPath").toString();
+            if (selectedCatalogFile != "")
+                    openCatalogToExplore();
+
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
             int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();

@@ -121,9 +121,16 @@ void MainWindow::openCatalogToExplore()
     //Go to the Explorer tab
     ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
     ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
-    ui->tabWidget->setCurrentIndex(2); // tab 0 is the Explorer tab
+    ui->tabWidget->setCurrentIndex(2);
+
+    //Remember last opened catalog
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("Settings/lastSelectedCatalogFile", selectedCatalogFile);
+    settings.setValue("Settings/lastSelectedCatalogName", selectedCatalogName);
+    settings.setValue("Settings/lastSelectedCatalogPath", selectedCatalogPath);
 }
 
+//----------------------------------------------------------------------
 //Load a catalog to view the files
 void MainWindow::loadCatalogFilesToExplore()
 {
@@ -136,6 +143,7 @@ void MainWindow::loadCatalogFilesToExplore()
         QMessageBox::information(this,"Katalog",tr("No catalog found."));
         return;
     }
+
     QFileInfo catalogFileInfo(selectedCatalogFile);
 
     QTextStream textStream(&catalogFile);
@@ -169,12 +177,17 @@ void MainWindow::loadCatalogFilesToExplore()
         QString     filePath;
         qint64      fileSize;
         QString     fileDateTime;
-        //QRegExp tagExp; tagExp.setPattern("\t");
+
+
+        int count=0;
 
     //load each file
     while (true)
     {
         line = textStream.readLine();
+
+        count++;
+
         if (line.isNull())
             break;
         else
@@ -188,7 +201,7 @@ void MainWindow::loadCatalogFilesToExplore()
                 fieldListCount = fieldList.count();
 
                 // Get the filePath from the list:
-                filePath        = fieldList[0];
+                filePath = fieldList[0];
 
                 // Get the fileSize from the list if available
                 if (fieldListCount == 3){
@@ -210,7 +223,9 @@ void MainWindow::loadCatalogFilesToExplore()
                 insertQuery.bindValue(":fileDateUpdated", fileDateTime);
                 insertQuery.bindValue(":fileCatalog", catalogFileInfo.baseName());
                 insertQuery.exec();
+
             }
+
     }
 
     catalogFile.close();
@@ -219,23 +234,25 @@ void MainWindow::loadCatalogFilesToExplore()
     QApplication::restoreOverrideCursor();
 }
 
+//----------------------------------------------------------------------
 //Load a catalog's directory to view the files
 void MainWindow::loadCatalogDirectoriesToExplore()
 {
     //prepare query to load file info
     QSqlQuery getDirectoriesQuery;
-    QString getDirectoriesSQL = QLatin1String(R"(
+
+        //shorten the paths as they all start with the catalog path
+        QString getDirectoriesSQL = QLatin1String(R"(
                                 SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', ''))
                                 FROM file
                                 ORDER BY filePath ASC
-                                    )");
-    getDirectoriesQuery.prepare(getDirectoriesSQL);
-    //DEV: shorten the paths as they all start with the catalog path
-    //                                  SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, ''))
-    getDirectoriesQuery.bindValue(":selectedCatalogPath",selectedCatalogPath);
-    //pb: when clicking on it to get the files, the pqth is not the right one
-    getDirectoriesQuery.exec();
+         )");
 
+        getDirectoriesQuery.prepare(getDirectoriesSQL);
+        getDirectoriesQuery.bindValue(":selectedCatalogPath",selectedCatalogPath);
+        getDirectoriesQuery.exec();
+
+    //Prepare model
     QSqlQueryModel *getDirectoriesQueryModel = new QSqlQueryModel;
     getDirectoriesQueryModel->setQuery(getDirectoriesQuery);
 
@@ -263,6 +280,7 @@ void MainWindow::loadCatalogDirectoriesToExplore()
 
 }
 
+//----------------------------------------------------------------------
 //Load selected directory Files to view the files
 void MainWindow::loadSelectedDirectoryFilesToExplore()
 {
@@ -399,3 +417,11 @@ void MainWindow::exploreContextCopyFileNameWithoutExtension()
     QString originalText = clipboard->text();
     clipboard->setText(fileNameWithoutExtension);
 }
+
+/*
+ *     RestoreTreeModel *restoretreeModel = new RestoreTreeModel();
+
+    ui->Tests_treeView_2->setModel(restoretreeModel);
+    ui->Tests_treeView_2->header()->resizeSection(0,  200); //ID
+    ui->Tests_treeView_2->expandAll();
+    */
