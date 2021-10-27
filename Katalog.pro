@@ -78,8 +78,10 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
+    restoretreemodel.cpp \
     storageview.cpp \
-    tag.cpp
+    tag.cpp \
+    treeitem.cpp
 
 HEADERS += \
     catalog.h \
@@ -87,8 +89,10 @@ HEADERS += \
     database.h \
     filesview.h \
     mainwindow.h \
+    restoretreemodel.h \
     storageview.h \
-    tag.h
+    tag.h \
+    treeitem.h
 
 FORMS += \
     mainwindow.ui
