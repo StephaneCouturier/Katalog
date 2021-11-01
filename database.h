@@ -159,11 +159,13 @@
         //Create table query
                 const auto FILE_SQL = QLatin1String(R"(
                                create  table  if not exists  file(
+                                        id_file INTEGER ,
                                         fileName  TEXT  ,
                                         filePath  TEXT ,
                                         fileSize REAL,
                                         fileDateUpdated TEXT,
-                                        fileCatalog TEXT)
+                                        fileCatalog TEXT,
+                                        PRIMARY KEY("id_file" AUTOINCREMENT))
                                     )");
 
 // STATISTICS ------------------------------------------------

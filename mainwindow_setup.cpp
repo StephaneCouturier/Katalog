@@ -87,9 +87,9 @@
             //Language
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
-            //Collection folder
+            //Collection folder choice
 
-            //Go to create screen
+            //Go to Create screen
             // add: "Let's go to the Create screen to create your first catalog"
 
         }
@@ -163,11 +163,10 @@
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //Restore last opened catalog file to Explore
-            selectedCatalogFile = settings.value("Settings/lastSelectedCatalogFile").toString();
-            selectedCatalogName = settings.value("Settings/lastSelectedCatalogName").toString();
-            selectedCatalogPath = settings.value("Settings/lastSelectedCatalogPath").toString();
-            if (selectedCatalogFile != "")
-                    openCatalogToExplore();
+            selectedCatalogFile = settings.value("Explore/lastSelectedCatalogFile").toString();
+            selectedCatalogName = settings.value("Explore/lastSelectedCatalogName").toString();
+            selectedCatalogPath = settings.value("Explore/lastSelectedCatalogPath").toString();
+            selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
@@ -243,6 +242,7 @@
 
         //Other tabs
             //DEV: Tags features under pre-development
+            ui->tabWidget->removeTab(7); //DEV
             ui->tabWidget->removeTab(6); //Tags
     }
     //----------------------------------------------------------------------

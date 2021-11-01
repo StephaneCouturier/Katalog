@@ -58,6 +58,7 @@
         void MainWindow::on_Collection_pushButton_ViewCatalog_clicked()
         {
             openCatalogToExplore();
+            ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
@@ -282,6 +283,7 @@
         void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             openCatalogToExplore();
+            ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()

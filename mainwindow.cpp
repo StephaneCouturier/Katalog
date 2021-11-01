@@ -174,6 +174,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if ( checkVersionChoice == true)
                 checkVersion();
 
+    //load last catalog to explore
+            ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+            if (selectedCatalogFile != ""){
+                openCatalogToExplore();
+            }
+
+
 }
 
 MainWindow::~MainWindow()
