@@ -66,6 +66,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     catalog.cpp \
     catalogsview.cpp \
+    directorytreemodel.cpp \
     filesview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -78,7 +79,6 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
-    restoretreemodel.cpp \
     storageview.cpp \
     tag.cpp \
     treeitem.cpp
@@ -87,9 +87,9 @@ HEADERS += \
     catalog.h \
     catalogsview.h \
     database.h \
+    directorytreemodel.h \
     filesview.h \
     mainwindow.h \
-    restoretreemodel.h \
     storageview.h \
     tag.h \
     treeitem.h
