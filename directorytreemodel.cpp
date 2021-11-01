@@ -1,21 +1,22 @@
-#include "restoretreemodel.h"
+#include "directorytreemodel.h"
 #include <QStringList>
 
-RestoreTreeModel::RestoreTreeModel(QObject *parent)
+DirectoryTreeModel::DirectoryTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     QList<QVariant> rootData;
-    rootData << "Nom" << "Nombre d'éléments";
+    rootData << tr("Directory") << tr("Path");
     rootItem = new TreeItem(rootData);
+
     setupModelData(rootItem);
 }
 
-RestoreTreeModel::~RestoreTreeModel()
+DirectoryTreeModel::~DirectoryTreeModel()
 {
     delete rootItem;
 }
 
-int RestoreTreeModel::columnCount(const QModelIndex &parent) const
+int DirectoryTreeModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
@@ -23,7 +24,7 @@ int RestoreTreeModel::columnCount(const QModelIndex &parent) const
         return rootItem->columnCount();
 }
 
-QVariant RestoreTreeModel::data(const QModelIndex &index, int role) const
+QVariant DirectoryTreeModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -36,7 +37,7 @@ QVariant RestoreTreeModel::data(const QModelIndex &index, int role) const
     return item->data(index.column());
 }
 
-Qt::ItemFlags RestoreTreeModel::flags(const QModelIndex &index) const
+Qt::ItemFlags DirectoryTreeModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return 0;
@@ -44,7 +45,7 @@ Qt::ItemFlags RestoreTreeModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index);
 }
 
-QVariant RestoreTreeModel::headerData(int section, Qt::Orientation orientation,
+QVariant DirectoryTreeModel::headerData(int section, Qt::Orientation orientation,
                                int role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
@@ -53,7 +54,7 @@ QVariant RestoreTreeModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QModelIndex RestoreTreeModel::index(int row, int column, const QModelIndex &parent)
+QModelIndex DirectoryTreeModel::index(int row, int column, const QModelIndex &parent)
             const
 {
     if (!hasIndex(row, column, parent))
@@ -73,7 +74,7 @@ QModelIndex RestoreTreeModel::index(int row, int column, const QModelIndex &pare
         return QModelIndex();
 }
 
-QModelIndex RestoreTreeModel::parent(const QModelIndex &index) const
+QModelIndex DirectoryTreeModel::parent(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QModelIndex();
@@ -87,7 +88,7 @@ QModelIndex RestoreTreeModel::parent(const QModelIndex &index) const
     return createIndex(parentItem->row(), 0, parentItem);
 }
 
-int RestoreTreeModel::rowCount(const QModelIndex &parent) const
+int DirectoryTreeModel::rowCount(const QModelIndex &parent) const
 {
     TreeItem *parentItem;
     if (parent.column() > 0)
@@ -101,7 +102,7 @@ int RestoreTreeModel::rowCount(const QModelIndex &parent) const
     return parentItem->childCount();
 }
 
-int RestoreTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tList)
+int DirectoryTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tList)
 {
     for(int idx = 0; idx < tList.size(); ++idx)
     {
@@ -114,72 +115,47 @@ int RestoreTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tList
 }
 
 
+void DirectoryTreeModel::setSelectedCatalogPath(QString newSelectedCatalogPath){
+    selectedCatalogPath = newSelectedCatalogPath;
+}
 
-void RestoreTreeModel::setupModelData(TreeItem *parent)
+void DirectoryTreeModel::setupModelData(TreeItem *parent)
 {
     QList<TreeItem*> parents;
     parents << parent;
 
+// DEV: REPLACE BY CURRENT VALUE
+        selectedCatalogPath = "/run/media/stephane";
+// DEV: REPLACE BY CURRENT VALUE
 
-//    create  table  if not exists  file
-//    (
-//      fileID  int AUTO_INCREMENT primary key ,
-//      fileName  text  ,
-//      filePath  text  ,
-//      fileCatalogName text
-//    )
-
-
-    QString path = "my_db_path";
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path);
-    if(db.open())
-    {
-
-        QSqlQuery queryCreate;
-        QString queryCreateSQL = QLatin1String(R"(
-                                create  table  if not exists  file
-                                (
-                                  path  text ,
-                                  id_file  text
-                                )
-        )");
-        queryCreate.prepare(queryCreateSQL);
-        queryCreate.exec();
-
-        QSqlQuery queryDelete("DELETE FROM file");
-
-
-        QSqlQuery queryInsert;
+        QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                INSERT INTO file(path, id_file) VALUES('/home/stephane/file1.txt','1')
-                                        )");
-        queryInsert.prepare(querySQL);
-        queryInsert.exec();
-        querySQL = QLatin1String(R"(
-                        INSERT INTO file(path, id_file) VALUES('/home/mods/file1.txt','1')
-                                                )");
-        queryInsert.prepare(querySQL);
-        queryInsert.exec();
-        querySQL = QLatin1String(R"(
-                        INSERT INTO file(path, id_file) VALUES('/home/mods/file2.txt','1')
-                                                )");
-        queryInsert.prepare(querySQL);
-        queryInsert.exec();
-        querySQL = QLatin1String(R"(
-                        INSERT INTO file(path, id_file) VALUES('/home/file2.txt','1')
-                                                )");
-        queryInsert.prepare(querySQL);
-        queryInsert.exec();
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+                                        filePath AS id_file
+                                FROM file
+                                GROUP BY filePath
+                                ORDER BY filePath ASC
+         )");
+//        QString querySQL = QLatin1String(R"(
+//                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+//                                        count(*) AS id_file
+//                                FROM file
+//                                GROUP BY filePath
+//                                ORDER BY filePath ASC
+//         )");
 
-        QSqlQuery query("SELECT path, id_file FROM file");
-        int idPath = query.record().indexOf("path");
+        query.prepare(querySQL);
+        query.bindValue(":selectedCatalogPath",selectedCatalogPath);
+        query.exec();
+
+        int idPath = query.record().indexOf("filePath");
         int idIdx = query.record().indexOf("id_file");
 
         while (query.next())
         {
            QString name = query.value(idPath).toString();
-           int id_file = query.value(idIdx).toInt();
+//           int id_file = query.value(idIdx).toInt();
+           QString id_file = query.value(idIdx).toString();
 
            QStringList nodeString = name.split("/", QString::SkipEmptyParts);
 
@@ -209,12 +185,12 @@ void RestoreTreeModel::setupModelData(TreeItem *parent)
                    if(node == nodeString.count() - 1)
                    {
                        sQuery += "SELECT count(*) FROM version WHERE id_file=";
-                       sQuery += QString::number(id_file);
+                       //sQuery += QString::number(id_file);
+                       sQuery += id_file;
                        sQuery += ";";
                    }
                    else
                    {
-
                        sQuery += "SELECT count(*) FROM file WHERE path like '";
                        sQuery += temppath;
                        sQuery += "%';";
@@ -227,7 +203,8 @@ void RestoreTreeModel::setupModelData(TreeItem *parent)
                    if(query2.next())
                         nChild = query2.value(0).toInt();
 
-                   columnData << nChild;
+                   //columnData << nChild;
+                   columnData << id_file;
 
                    if(lastidx != -1)
                    {
@@ -243,5 +220,4 @@ void RestoreTreeModel::setupModelData(TreeItem *parent)
                }
            }
         }
-    }
 }
