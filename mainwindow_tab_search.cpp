@@ -74,6 +74,31 @@
             searchFiles();
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_CleanSearchText_clicked()
+        {
+            QString originalText;
+            #ifdef Q_OS_LINUX
+                originalText = ui->Search_kcombobox_SearchText->currentText();
+            #else
+                originalText = ui->Search_lineEdit_SearchText->text();
+            #endif
+            originalText.replace("."," ");
+            originalText.replace(","," ");
+            originalText.replace("_"," ");
+            originalText.replace("-"," ");
+            originalText.replace("("," ");
+            originalText.replace(")"," ");
+            originalText.replace("["," ");
+            originalText.replace("]"," ");
+            originalText.replace("{"," ");
+            originalText.replace("}"," ");
+            #ifdef Q_OS_LINUX
+                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+            #else
+                ui->Search_lineEdit_SearchText->setText(originalText);
+            #endif
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
             #ifdef Q_OS_LINUX

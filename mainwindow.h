@@ -196,6 +196,10 @@ class MainWindow : public QMainWindow
 
         //TAB: Explore
             QString selectedDirectoryName;
+            //QString selectedCatalogPath;
+            QString tempSelectedTreeviewSource;
+
+
             void openCatalogToExplore();
             void loadCatalogFilesToExplore();
             void loadSelectedDirectoryFilesToExplore();
@@ -297,8 +301,8 @@ class MainWindow : public QMainWindow
                 void on_tabWidget_currentChanged(int index);
 
         //Search
-
             void on_Search_pushButton_Search_clicked();
+            void on_Search_pushButton_CleanSearchText_clicked();
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ExportResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
@@ -390,6 +394,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
 
+            void on_DEV_treeView_Directories_activated(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H

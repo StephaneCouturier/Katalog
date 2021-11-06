@@ -969,6 +969,32 @@
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="Search_pushButton_CleanSearchText">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Clean the search Text from characters such as _ - . ,</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-clear-history">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="Search_pushButton_Search">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2691,6 +2717,50 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
+           <spacer name="Explore_horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogDirectoryLabel">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Directory</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="Explore_horizontalSpacer_02">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -4380,28 +4450,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          <rect>
           <x>20</x>
           <y>40</y>
-          <width>411</width>
-          <height>271</height>
+          <width>611</width>
+          <height>591</height>
          </rect>
         </property>
        </widget>
        <widget class="QTreeView" name="DEV_treeView_Files">
         <property name="geometry">
          <rect>
-          <x>440</x>
+          <x>640</x>
           <y>40</y>
-          <width>471</width>
-          <height>491</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTreeView" name="DEV_treeView_Directories2">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>341</y>
-          <width>411</width>
-          <height>281</height>
+          <width>271</width>
+          <height>591</height>
          </rect>
         </property>
        </widget>
