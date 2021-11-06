@@ -242,7 +242,7 @@
 
         //Other tabs
             //DEV: Tags features under pre-development
-            ui->tabWidget->removeTab(7); //DEV
+            //ui->tabWidget->removeTab(7); //DEV
             ui->tabWidget->removeTab(6); //Tags
     }
     //----------------------------------------------------------------------

@@ -115,9 +115,9 @@ int DirectoryTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tLi
 }
 
 
-void DirectoryTreeModel::setSelectedCatalogPath(QString newSelectedCatalogPath){
-    selectedCatalogPath = newSelectedCatalogPath;
-}
+//void DirectoryTreeModel::setSelectedCatalogPath(QString newSelectedCatalogPath){
+//    selectedCatalogPath = newSelectedCatalogPath;
+//}
 
 void DirectoryTreeModel::setupModelData(TreeItem *parent)
 {
@@ -125,27 +125,28 @@ void DirectoryTreeModel::setupModelData(TreeItem *parent)
     parents << parent;
 
 // DEV: REPLACE BY CURRENT VALUE
-        selectedCatalogPath = "/run/media/stephane";
+        //setSelectedCatalogPath(selectedCatalogPath);
+        //selectedCatalogPath = "/run/media/stephane";
 // DEV: REPLACE BY CURRENT VALUE
 
         QSqlQuery query;
+//        QString querySQL = QLatin1String(R"(
+//                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+//                                        filePath AS id_file
+//                                FROM file
+//                                GROUP BY filePath
+//                                ORDER BY filePath ASC
+//         )");
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+                                SELECT DISTINCT (filePath) AS filePath,
                                         filePath AS id_file
                                 FROM file
                                 GROUP BY filePath
                                 ORDER BY filePath ASC
          )");
-//        QString querySQL = QLatin1String(R"(
-//                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
-//                                        count(*) AS id_file
-//                                FROM file
-//                                GROUP BY filePath
-//                                ORDER BY filePath ASC
-//         )");
 
         query.prepare(querySQL);
-        query.bindValue(":selectedCatalogPath",selectedCatalogPath);
+//        query.bindValue(":selectedCatalogPath",selectedCatalogPath);
         query.exec();
 
         int idPath = query.record().indexOf("filePath");

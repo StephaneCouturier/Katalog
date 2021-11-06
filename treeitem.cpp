@@ -36,6 +36,8 @@ int TreeItem::columnCount() const
 
 QVariant TreeItem::data(int column) const
 {
+    if (column < 0 || column >= m_itemData.size())
+        return QVariant();
     return m_itemData.value(column);
 }
 

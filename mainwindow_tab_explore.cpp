@@ -115,6 +115,8 @@ void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &inde
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
+    tempSelectedTreeviewSource = "flatlist";
+
     //Load directory files
     loadSelectedDirectoryFilesToExplore();
 
@@ -122,18 +124,24 @@ void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &inde
 
 void MainWindow::on_DEV_treeView_Directories_activated(const QModelIndex &index)
 {
-    selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
-    QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
+    selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 1, QModelIndex()).data().toString();
+
+//    for (int i=0;i<3 ;i++ ) {
+//        QString temp = ui->DEV_treeView_Directories->model()->data(index().toString();
+//        QList<QVariant> temp = ui->DEV_treeView_Directories->model()->index(index.row(), i, QModelIndex()).data().toList();
+//
+//        QString temp = ui->DEV_treeView_Directories->model()->data(QModelIndex()).toString();
+//        QString temp = ui->DEV_treeView_Directories->model()->index(index.row(), i, QModelIndex()).data().toString();
+        //QMessageBox::information(this,"Katalog","col:" + QString::number(i) + "<br/>value:" + temp[i].toString());
+//    }
+
+    //QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
     tempSelectedTreeviewSource = "treelist";
+
     loadSelectedDirectoryFilesToExplore();
 }
 
-void MainWindow::on_DEV_treeView_Directories2_clicked(const QModelIndex &index)
-{
-    selectedDirectoryName = ui->DEV_treeView_Directories2->model()->index(index.row(), 1, QModelIndex()).data().toString();
-    QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
-    tempSelectedTreeviewSource = "treelist";
-    loadSelectedDirectoryFilesToExplore();}
+
 
 //----------------------------------------------------------------------
 void MainWindow::openCatalogToExplore()
@@ -326,18 +334,13 @@ void MainWindow::loadCatalogDirectoriesToExplore()
   //TreeView TESTS---------------
 
     DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
+    //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
 
    ui->DEV_treeView_Directories->setModel(directorytreeModel);
    ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
    ui->DEV_treeView_Directories->expandAll();
    ui->DEV_treeView_Directories->setModel(directorytreeModel);
 
-   ui->DEV_treeView_Directories2->setModel(directorytreeModel);
-   ui->DEV_treeView_Directories2->header()->resizeSection(0,  300);
-   ui->DEV_treeView_Directories2->expandAll();
-   ui->DEV_treeView_Directories2->setModel(directorytreeModel);
-
-//   directorytreeModel.setSelectedCatalogPath(selectedCatalogPath);
 //   directorytreeModel->selectedCatalogPath()
 
 }
