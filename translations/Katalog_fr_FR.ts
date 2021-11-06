@@ -21,6 +21,17 @@
     </message>
 </context>
 <context>
+    <name>DirectoryTreeModel</name>
+    <message>
+        <source>Directory</source>
+        <translation>Répertoire</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Chemin</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Catalog</source>
@@ -1130,6 +1141,18 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Directory</source>
         <translation>Répertoire</translation>
+    </message>
+    <message>
+        <source>Clean the search Text from characters such as _ - . ,</source>
+        <translation>Nettoyer le Texte de recherche des caractères comme _ - . ,</translation>
+    </message>
+    <message>
+        <source>DEV</source>
+        <translation>DEV</translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation>Le catalogue sélectionné contient plus de 100 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
     </message>
 </context>
 <context>

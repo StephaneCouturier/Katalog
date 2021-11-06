@@ -21,6 +21,17 @@
     </message>
 </context>
 <context>
+    <name>DirectoryTreeModel</name>
+    <message>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Katalog</source>
@@ -1081,6 +1092,18 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clean the search Text from characters such as _ - . ,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
