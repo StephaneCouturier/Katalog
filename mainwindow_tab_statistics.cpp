@@ -450,8 +450,8 @@
                 chart->legend()->update();
 
 
-            ui->Stats_chartview_Graph1->setChart(chart);
-            ui->Stats_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
+            ui->Statistics_chartview_Graph1->setChart(chart);
+            ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
 
     }
     //----------------------------------------------------------------------

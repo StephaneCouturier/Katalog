@@ -768,7 +768,7 @@
 
     void MainWindow::on_DEV2_treeView_Storage_clicked(const QModelIndex &index)
     {
-        QString clickedStorageName = ui->DEV2_treeView_Storage->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString clickedStorageName = ui->DEV2_treeView_Storage->model()->index(index.row(), 1, QModelIndex()).data().toString();
 
         QMessageBox::information(this,"Katalog","clickedStorageName:" + clickedStorageName);
 
