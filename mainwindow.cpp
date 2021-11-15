@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             //Set current version and date
             currentVersion = "1.05";
             releaseDate = "2021-11-15";
+            developmentMode = false;
+
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -75,8 +77,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
             //Hide user interface items that are not ready for use (under development).
-            hideDevelopmentUIItems();
-            ui->Catalogs_widget_EditCatalog->hide();
+            if(developmentMode==false){
+                hideDevelopmentUIItems();
+                ui->Catalogs_widget_EditCatalog->hide();
+            }
 
             //For Linux, Set up KDE Menu/Icon actions
             #ifdef Q_OS_LINUX
