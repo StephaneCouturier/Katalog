@@ -210,7 +210,7 @@
             //QMessageBox::information(this,"Katalog","col:" + QString::number(i) + "<br/>value:" + temp[i].toString());
     //    }
 
-        //QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
+        QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
         tempSelectedTreeviewSource = "treelist";
 
         loadSelectedDirectoryFilesToExplore();
@@ -441,6 +441,9 @@
         if ( tempSelectedTreeviewSource == "treelist"){
             loadCatalogQuery.bindValue(":filePath", selectedDirectoryName+'/');
             QMessageBox::information(this,"Katalog","source: treelist, selectedDirectoryName:" + selectedDirectoryName+'/');
+        }
+        else if(selectedCatalogPath==selectedDirectoryName){
+            loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{
             loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
