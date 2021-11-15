@@ -26,9 +26,6 @@
 #// Purpose:     Necessary file providing the instructions to build the application in Qt Creator
 #// Description:
 #// Author:      Stephane Couturier
-#// Modified by: Stephane Couturier
-#// Created:     2020-07-11
-#// Version:     0.13
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
@@ -79,6 +76,7 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
+    storagetreemodel.cpp \
     storageview.cpp \
     tag.cpp \
     treeitem.cpp
@@ -90,6 +88,7 @@ HEADERS += \
     directorytreemodel.h \
     filesview.h \
     mainwindow.h \
+    storagetreemodel.h \
     storageview.h \
     tag.h \
     treeitem.h
@@ -111,10 +110,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     icons.qrc \
     images.qrc \
+    styles.qrc \
     translations.qrc
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico
 
 DISTFILES +=
+
 
