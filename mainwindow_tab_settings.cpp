@@ -38,7 +38,7 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 
-//Tab: ALL -----------------------------------------------------------------------------
+//ALL/GLOBAL -----------------------------------------------------------------
 
     void MainWindow::on_tabWidget_currentChanged(int index)
     {
@@ -46,14 +46,14 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Global_tabWidget_currentChanged(int index)
     {
         int selectedTabGlobal = index;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/selectedTabGlobal", selectedTabGlobal);
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
     {
         QString visible = ui->Global_pushButton_ShowHideGlobal->text();
@@ -77,7 +77,7 @@
 
     }
 
-//Tab: FILTERS -----------------------------------------------------------------------------
+//FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
     {
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
@@ -124,11 +124,12 @@
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalog);
+
+        selectedSearchCatalog = selectedCatalog;
+
     }
 
-//Tab: SETTINGS -----------------------------------------------------------------------------
-
-//SETTINGS / Collection ---------------------------------------------------------------------
+//SETTINGS / Collection ----------------------------------------------------
 
     void MainWindow::on_Collection_pushButton_SelectFolder_clicked()
     {
@@ -178,7 +179,6 @@
     {
         loadCollection();
     }
-
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
@@ -209,46 +209,48 @@
             hideCatalogButtons();
     }
 
-//SETTINGS / Settings ---------------------------------------------------------------------
+//SETTINGS / Settings ------------------------------------------------------
 
     void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_comboBox_Theme_currentIndexChanged(int index)
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/Theme", index);
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
     }
+    //----------------------------------------------------------------------
 
-//SETTINGS / About ---------------------------------------------------------------------
+//SETTINGS / About ---------------------------------------------------------
 
     void MainWindow::on_Settings_pushButton_Wiki_clicked()
     {
         QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/wiki"));
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()
     {
         QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/releases"));
     }
-
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/Language", selectedLanguage);
     }
+    //----------------------------------------------------------------------

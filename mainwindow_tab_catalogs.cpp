@@ -23,10 +23,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_catalogs.cpp
-// Purpose:     methods for the screen Catalogs AND the screen Explore
-// Description:
+// Purpose:     methods for the screen Catalogs
+// Description: https://github.com/StephaneCouturier/Katalog/wiki/Catalogs
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -43,7 +42,7 @@
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
 
-//TAB: Catalogs UI----------------------------------------------------------------------
+//UI----------------------------------------------------------------------------
 
     //Catalog operations
         void MainWindow::on_Collection_pushButton_Search_clicked()
@@ -294,9 +293,9 @@
 
         }
 
-//TAB: Catalog methods----------------------------------------------------------------------
+//Methods-----------------------------------------------------------------------
 
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
         //Clear current entires of the catalog table
@@ -369,7 +368,7 @@
             }
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::loadCatalogsToModel()
     {
         //Generate SQL query from filters.
@@ -472,8 +471,7 @@
             ui->Collection_label_TotalNumber->setText(QString::number(query.value(2).toInt()));
 
     }
-    //----------------------------------------------------------------------
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     int MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
         // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
@@ -482,7 +480,7 @@
         int status = dir.exists();
         return status;
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize)
     {
         QDateTime nowDateTime = QDateTime::currentDateTime();
@@ -503,7 +501,7 @@
          }
          fileOut.close();
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::recordAllCatalogStats()
     {
         // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
@@ -579,7 +577,7 @@
             loadStatisticsChart();
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
         QString catalogBackUpSourcePath = catalogSourcePath + ".bak";
@@ -597,7 +595,7 @@
         //QMessageBox::information(this,"Katalog","Backup done.\n");
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::updateCatalog(QString catalogName)
     {
         //Get data about the catalog from the database
@@ -764,10 +762,10 @@
         loadStatisticsChart();
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::hideCatalogButtons()
     {
-        //Display buttons
+        //Hide buttons
         ui->Collection_pushButton_Search->setEnabled(false);
         ui->Collection_pushButton_ViewCatalog->setEnabled(false);
         ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
@@ -775,7 +773,7 @@
         ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::refreshLocationCollectionFilter()
     {
         //Query the full list of locations
@@ -799,7 +797,7 @@
         fileListModel->setStringList(displayLocationList);
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
     {
         //Select file
@@ -899,40 +897,6 @@
             //close source file
             sourceFile.close();
 
-
-    ////TEST LOAD TO EXPLORE----------
-        /*
-                    // Load all files and create model
-                    QString selectSQL = QLatin1String(R"(
-                                        SELECT  fileName AS Name,
-                                                fileSize AS Size,
-                                                fileDateUpdated AS Date,
-                                                fileCatalog AS Catalog,
-                                                filePath AS Path
-                                        FROM file
-                                                    )");
-                    QSqlQuery loadCatalogQuery;
-                    loadCatalogQuery.prepare(selectSQL);
-                    loadCatalogQuery.exec();
-
-                    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-                    loadCatalogQueryModel->setQuery(loadCatalogQuery);
-
-                    FilesView *proxyModel2 = new FilesView(this);
-                    proxyModel2->setSourceModel(loadCatalogQueryModel);
-
-                    // Connect model to tree/table view
-                    ui->Explore_treeView_FileList->setModel(proxyModel2);
-                    ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                    ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
-                    ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
-                    ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
-                    ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
-                    ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
-        */
-    ////END - TEST ----------
-
-
         //Stream the list of files out to the target calog file(s)
 
             //Get a list of the source catalogs
@@ -987,8 +951,6 @@
                              << "<catalogIncludeSymblinks>"    << "\n";
                     }
 
-
-
                 //Get the list of file to add
                 QString listFilesSQL = QLatin1String(R"(
                                     SELECT *
@@ -1009,9 +971,7 @@
                         out << '\t';
                         out << listFilesQuery.value(3).toString();
                         out << '\n';
-
                 }
-
             }
 
             //Stop animation
@@ -1020,7 +980,7 @@
         loadCollection();
 
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::saveCatalogChanges()
     {
 
@@ -1148,13 +1108,10 @@
                     //loadCatalogFilesToTable();
                     updateCatalog(newCatalogName);
                     //QMessageBox::information(this,"Katalog",tr("Updated."));
-
                 }
             }
-
 
         ui->Catalogs_widget_EditCatalog->hide();
 
         loadCollection();
-
     }

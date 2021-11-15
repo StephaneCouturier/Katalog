@@ -23,10 +23,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_create.cpp
-// Purpose:     methods for the screen Create
-// Description:
+// Purpose:     methods for the screen CREATE
+// Description: https://github.com/StephaneCouturier/Katalog/wiki/Create
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -37,7 +36,204 @@
 #include <QTextStream>
 #include <QDesktopServices>
 
-//TAB: Create Catalog ----------------------------------------------------------------------
+//UI----------------------------------------------------------------------------
+
+    void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
+    {
+        //Sends the selected folder in the tree for the New Catalog Path
+
+        //Get the model/data from the tree
+        QFileSystemModel* pathmodel = (QFileSystemModel*)ui->Create_treeView_Explorer->model();
+        //get data from the selected file/directory
+        QFileInfo fileInfo = pathmodel->fileInfo(index);
+        //send the path to the line edit
+        ui->Create_lineEdit_NewCatalogPath->setText(fileInfo.filePath());
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_PickPath_clicked()
+    {
+        //Pick a directory from a dialog window
+
+        //Get current selected path as default path for the dialog window
+        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
+
+        //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
+                                                        newCatalogPath,
+                                                        QFileDialog::ShowDirsOnly
+                                                        | QFileDialog::DontResolveSymlinks);
+        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+        ui->Create_lineEdit_NewCatalogPath->setText(dir);
+
+        //Select this directory in the treeview.
+        loadFileSystem(newCatalogPath);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
+    {
+        //Edit Exclusion list
+
+        //Verify if a folder exclusion list exists
+        QFile excludeFile(excludeFilePath);
+        if ( excludeFile.exists()){
+            QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+        }
+        else{
+            //if not, propose to create it
+            int result = QMessageBox::warning(this,tr("Update"),tr("No list found, create one?"),
+                                              QMessageBox::Yes | QMessageBox::Cancel);
+
+            if ( result == QMessageBox::Cancel){
+                return;
+            }
+            else{
+                // Create it, if it does not exist
+                if(!excludeFile.open(QIODevice::ReadOnly)) {
+
+                    if (excludeFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                          QTextStream stream(&excludeFile);
+
+                          //insert one line as an example
+                          stream << tr("folder/path/without/slash_at_the_end");
+
+                          excludeFile.close();
+
+                          //and open it for edition
+                          QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+                    }
+                }
+            }
+        }
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_AddStorage_clicked()
+    {
+        //Change tab to show the screen to add a storage
+        ui->tabWidget->setCurrentIndex(4); // tab 1 is the Collection tab
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()
+    {
+        //Generate the Catalog name from the path
+        QString newCatalogName = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalogName.replace("/","_");
+        newCatalogName.replace(":","_");
+        ui->Create_lineEdit_NewCatalogName->setText(newCatalogName);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
+    {
+        //Launch the cataloging, save it, and show it
+
+        //Get inputs
+        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalogName = ui->Create_lineEdit_NewCatalogName->text();
+        newCatalogStorage = ui->Create_comboBox_StorageSelection->currentText();
+        //get other options
+        bool includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+        // Get the file type for the catalog
+        QStringList fileTypes;
+        QString selectedCreateFileType;
+        if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
+                fileTypes = fileType_Image;
+                selectedCreateFileType = "Image";}
+        else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
+                fileTypes = fileType_Audio;
+                selectedCreateFileType = "Audio";}
+         else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
+                fileTypes = fileType_Video;
+                selectedCreateFileType = "Video";}
+        else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
+                fileTypes = fileType_Text;
+                selectedCreateFileType = "Text";}
+        else    fileTypes.clear();
+
+        //check if the file already exists
+        QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
+        QFile file(fullCatalogPath);
+        if (file.exists()==true){
+            QMessageBox::information(this, "Katalog",
+                                     tr("There is already a catalog with this name:")
+                                        + newCatalogName
+                                        + "\n"+tr("Choose a different name."),
+                                     ( tr("Ok") ) );
+            return;
+        }
+
+        //Catalog files
+        if (newCatalogName!="" and newCatalogPath!="")
+                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
+        else QMessageBox::warning(this, "Katalog",
+                                  tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
+                                  +newCatalogName+"\n"+tr("Path:")+newCatalogPath,
+                                  ( tr("Ok") ) );
+
+        //Check if no files where found, and let the user decide what to do
+        // Get the catalog file list
+        QStringList filelist = fileListModel->stringList();
+        if (filelist.count() == 5){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
+            int result = QMessageBox::warning(this, "Katalog - Warning",
+                                tr("The source folder does not contain any file.\n"
+                                     "This could mean that the source is empty or the device is not mounted to this folder.\n")
+                                     +tr("Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
+                                              | QMessageBox::Cancel);
+            if ( result != QMessageBox::Cancel){
+                return;
+            }
+        }
+        //Save the catalog to a new file
+        saveCatalogToNewFile(newCatalogName);
+
+        //Refresh the catalog list for the Search screen
+        loadCatalogFilesToTable();
+        //Refresh the catalog list for the Collection screen
+        loadCatalogsToModel();
+
+
+        //Refresh the catalog list for the combobox of the Search screen
+            //Get current search selection
+            selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();
+            selectedSearchStorage = ui->Filters_comboBox_SelectStorage->currentText();
+            selectedSearchCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
+
+            //Refresh list
+            refreshCatalogSelectionList(selectedSearchLocation,selectedSearchStorage);
+
+            //Restore selcted catalog
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+
+        QMessageBox::information(this, "Katalog",
+                                  tr("The new catalog,has been created.\n Name:   ")
+                                  +newCatalogName+"\n" +tr("Source:") + newCatalogPath,
+                                  ( tr("Ok") ) );
+
+        //Add new catalog values to the statistics log, if the user has chosen this options.
+            if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
+
+                //Save values
+                recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+
+                //Reload stats file to refresh values
+                loadStatisticsChart();
+            }
+
+        //Change tab to show the result of the catalog creation
+        ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
+
+        //Disable buttons to force user to select a catalog
+        ui->Collection_pushButton_Search->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
+        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
+
+    }
+    //--------------------------------------------------------------------------
+
+//Methods-----------------------------------------------------------------------
 
     //Load file system for the treeview
     void MainWindow::loadFileSystem(QString newCatalogPath)
@@ -68,9 +264,18 @@
             ui->Create_treeView_Explorer->setHeaderHidden(true);
             ui->Create_treeView_Explorer->expandToDepth(1);
     }
-    //----------------------------------------------------------------------
-
-    //Catalog the files of a directory
+    //--------------------------------------------------------------------------
+    void MainWindow::loadStorageList()
+    {
+        //Prepare list for the Storage selection combobox
+        QStringList storageNameListforCombo = storageNameList;
+        storageNameListforCombo.prepend("");
+        fileListModel = new QStringListModel(this);
+        fileListModel->setStringList(storageNameListforCombo);
+        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
+        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
+    }
+    //--------------------------------------------------------------------------
     void MainWindow::catalogDirectory(QString newCatalogPath,
                                       bool includeHidden,
                                       QString fileType,
@@ -78,7 +283,7 @@
                                       QString newCatalogStorage,
                                       bool includeSymblinks)
     {
-        //CATALOG FILES and ADD CATALOG META-DATA to a QStringListModel > fileListModel
+        //Catalog the files of a directory and add catalog meta-data
 
         // Start animation while cataloging
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -220,11 +425,11 @@
         //Stop animation
         QApplication::restoreOverrideCursor();
     }
-    //----------------------------------------------------------------------
-
-    //Save a catalog to a new file
+    //--------------------------------------------------------------------------
     void MainWindow::saveCatalogToNewFile(QString newCatalogName)
     {
+        //Save a catalog to a new file
+
         // Get the file list from this model
         QStringList filelist = fileListModel->stringList();
 
@@ -243,215 +448,7 @@
           }
           fileOut.close();
     }
-
-    //Send selected folder in the tree
-    void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
-    {//Sends the selected folder in the tree for the New Catalog Path)
-        //Get the model/data from the tree
-        QFileSystemModel* pathmodel = (QFileSystemModel*)ui->Create_treeView_Explorer->model();
-        //get data from the selected file/directory
-        QFileInfo fileInfo = pathmodel->fileInfo(index);
-        //send the path to the line edit
-        ui->Create_lineEdit_NewCatalogPath->setText(fileInfo.filePath());
-    }
-
-    //----------------------------------------------------------------------
-
-    //Pick a directory from a dialog window
-    void MainWindow::on_Create_pushButton_PickPath_clicked()
-    {
-        //Get current selected path as default path for the dialog window
-        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
-
-        //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
-                                                        newCatalogPath,
-                                                        QFileDialog::ShowDirsOnly
-                                                        | QFileDialog::DontResolveSymlinks);
-        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-        ui->Create_lineEdit_NewCatalogPath->setText(dir);
-
-        //Select this directory in the treeview.
-        loadFileSystem(newCatalogPath);
-    }
-
-    //----------------------------------------------------------------------
-    void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
-    {
-        //Verify if a folder exclusion list exists
-        QFile excludeFile(excludeFilePath);
-        if ( excludeFile.exists()){
-            QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
-        }
-        else{
-            //if not, propose to create it
-            int result = QMessageBox::warning(this,tr("Update"),tr("No list found, create one?"),
-                                              QMessageBox::Yes | QMessageBox::Cancel);
-
-            if ( result == QMessageBox::Cancel){
-                return;
-            }
-            else{
-                // Create it, if it does not exist
-                if(!excludeFile.open(QIODevice::ReadOnly)) {
-
-                    if (excludeFile.open(QFile::WriteOnly | QFile::Text)) {
-
-                          QTextStream stream(&excludeFile);
-
-                          //insert one line as an example
-                          stream << tr("folder/path/without/slash_at_the_end");
-
-                          excludeFile.close();
-
-                          //and open it for edition
-                          QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
-                    }
-                }
-            }
-        }
-    }
-
-    //----------------------------------------------------------------------
-    //Create a storage first to select it later
-    void MainWindow::on_Create_pushButton_AddStorage_clicked()
-    {
-        //Change tab to show the screen to add a storage
-        ui->tabWidget->setCurrentIndex(4); // tab 1 is the Collection tab
-    }
-    //----------------------------------------------------------------------
-    //Generate the Catalog name from the path
-    void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()
-    {
-        //Just copy the Catalog path to the name
-        QString newCatalogName = ui->Create_lineEdit_NewCatalogPath->text();
-        newCatalogName.replace("/","_");
-        newCatalogName.replace(":","_");
-        ui->Create_lineEdit_NewCatalogName->setText(newCatalogName);
-    }
-    //----------------------------------------------------------------------
-
-    //Launch the cataloging, save it, and show it
-    void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
-    {
-        //Get inputs
-        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
-        newCatalogName = ui->Create_lineEdit_NewCatalogName->text();
-        newCatalogStorage = ui->Create_comboBox_StorageSelection->currentText();
-        //get other options
-        bool includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-        bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-        // Get the file type for the catalog
-        QStringList fileTypes;
-        QString selectedCreateFileType;
-        if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
-                fileTypes = fileType_Image;
-                selectedCreateFileType = "Image";}
-        else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
-                fileTypes = fileType_Audio;
-                selectedCreateFileType = "Audio";}
-         else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
-                fileTypes = fileType_Video;
-                selectedCreateFileType = "Video";}
-        else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
-                fileTypes = fileType_Text;
-                selectedCreateFileType = "Text";}
-        else    fileTypes.clear();
-
-        //check if the file already exists
-        QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
-        QFile file(fullCatalogPath);
-        if (file.exists()==true){
-            QMessageBox::information(this, "Katalog",
-                                     tr("There is already a catalog with this name:")
-                                        + newCatalogName
-                                        + "\n"+tr("Choose a different name."),
-                                     ( tr("Ok") ) );
-            return;
-        }
-
-        //Catalog files
-        if (newCatalogName!="" and newCatalogPath!="")
-                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
-        else QMessageBox::warning(this, "Katalog",
-                                  tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
-                                  +newCatalogName+"\n"+tr("Path:")+newCatalogPath,
-                                  ( tr("Ok") ) );
-
-        //Check if no files where found, and let the user decide what to do
-        // Get the catalog file list
-        QStringList filelist = fileListModel->stringList();
-        if (filelist.count() == 5){ //the CatalogDirectory method always adds 2 lines for the catalog info, there should be ignored
-            int result = QMessageBox::warning(this, "Katalog - Warning",
-                                tr("The source folder does not contain any file.\n"
-                                     "This could mean that the source is empty or the device is not mounted to this folder.\n")
-                                     +tr("Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
-                                              | QMessageBox::Cancel);
-            if ( result != QMessageBox::Cancel){
-                return;
-            }
-        }
-        //Save the catalog to a new file
-        saveCatalogToNewFile(newCatalogName);
-
-        //Refresh the catalog list for the Search screen
-        loadCatalogFilesToTable();
-        //Refresh the catalog list for the Collection screen
-        loadCatalogsToModel();
-
-
-        //Refresh the catalog list for the combobox of the Search screen
-            //Get current search selection
-            selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();
-            selectedSearchStorage = ui->Filters_comboBox_SelectStorage->currentText();
-            selectedSearchCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
-
-            //Refresh list
-            refreshCatalogSelectionList(selectedSearchLocation,selectedSearchStorage);
-
-            //Restore selcted catalog
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
-
-        QMessageBox::information(this, "Katalog",
-                                  tr("The new catalog,has been created.\n Name:   ")
-                                  +newCatalogName+"\n" +tr("Source:") + newCatalogPath,
-                                  ( tr("Ok") ) );
-
-        //Add new catalog values to the statistics log, if the user has chosen this options.
-            if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
-
-                //Save values
-                recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
-
-                //Reload stats file to refresh values
-                loadStatisticsChart();
-            }
-
-        //Change tab to show the result of the catalog creation
-        ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
-
-        //Disable buttons to force user to select a catalog
-        ui->Collection_pushButton_Search->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
-        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
-        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
-        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
-
-    }
-
-    //----------------------------------------------------------------------
-    void MainWindow::loadStorageList()
-    {
-        //Prepare list for the Storage selection combobox
-        QStringList storageNameListforCombo = storageNameList;
-        storageNameListforCombo.prepend("");
-        fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(storageNameListforCombo);
-        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
-        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
-    }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
 
 
