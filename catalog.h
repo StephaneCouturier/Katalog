@@ -50,16 +50,18 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void populateFileData(const QList<QString> &fileName,
-                      const QList<qint64> &fileSize,
-                      const QList<QString> &filePath,
-                      const QList<QString> &fileDateTime);
+    void populateFileData(  const QList<QString> &fileName,
+                            const QList<qint64>  &fileSize,
+                            const QList<QString> &filePath,
+                            const QList<QString> &fileDateTime,
+                            const QList<QString> &fileCatalog);
 
 private:
     QList<QString> fileName;
-    QList<qint64> fileSize;
+    QList<qint64>  fileSize;
     QList<QString> filePath;
     QList<QString> fileDateTime;
+    QList<QString> fileCatalog;
 };
 
 #endif // CATALOG_H

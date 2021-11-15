@@ -26,7 +26,6 @@
 // Purpose:     class to create catalogs (list of files and their attributes)
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -46,7 +45,7 @@ int Catalog::rowCount(const QModelIndex &parent) const
 int Catalog::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 4;
+    return 5;
 }
 
 QVariant Catalog::data(const QModelIndex &index, int role) const
@@ -56,9 +55,10 @@ QVariant Catalog::data(const QModelIndex &index, int role) const
     }
     switch (index.column()){
     case 0: return QString(fileName[index.row()]);
-    case 1: return qint64(fileSize[index.row()]);
+    case 1: return qint64 (fileSize[index.row()]);
     case 3: return QString(filePath[index.row()]);
     case 2: return QString(fileDateTime[index.row()]);
+    case 4: return QString(fileCatalog[index.row()]);
     }
     return QVariant();
 
@@ -72,16 +72,18 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
         case 1: return QString(tr("Size"));
         case 3: return QString(tr("Folder"));
         case 2: return QString(tr("Date"));
+        case 4: return QString(tr("Catalog"));
         }
     }
     return QVariant();
 }
 
 // Create a method to populate the model with data:
-void Catalog::populateFileData(const QList<QString> &cfileName,
-                           const QList<qint64> &cfileSize,
-                           const QList<QString> &cfilePath,
-                           const QList<QString> &cfileDateTime)
+void Catalog::populateFileData( const QList<QString> &cfileName,
+                                const QList<qint64>  &cfileSize,
+                                const QList<QString> &cfilePath,
+                                const QList<QString> &cfileDateTime,
+                                const QList<QString> &cfileCatalog)
 {
     fileName.clear();
     fileName = cfileName;
@@ -91,6 +93,8 @@ void Catalog::populateFileData(const QList<QString> &cfileName,
     filePath = cfilePath;
     fileDateTime.clear();
     fileDateTime = cfileDateTime;
+    fileCatalog.clear();
+    fileCatalog = cfileCatalog;
 
     return;
 }
