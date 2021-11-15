@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         KAboutData aboutData(
              QStringLiteral("Katalog"),         // The program name used internally. (componentName)
              i18n("Katalog"),                   // A displayable program name string. (displayName)
-             QStringLiteral("1.03"),             // The program version string. (version)
+             QStringLiteral("1.05"),             // The program version string. (version)
              // Short description of what the app does. (shortDescription)
              i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
              KAboutLicense::GPL,// The license this code is released under
@@ -106,14 +106,13 @@ int main(int argc, char *argv[])
         parser.process(app);
         aboutData.processCommandLine(&parser);
     #else
-        QApplication::setStyle("fusion");
+        QApplication::setStyle("fusion");       
     #endif
 
     //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset jsut after)
     QIcon::setThemeName( "breeze" );
     //Set icon fallback in case theme is not available
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
-
     MainWindow* window = new MainWindow();
     window->show();
 

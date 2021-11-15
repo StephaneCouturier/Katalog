@@ -58,12 +58,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //setup: start database
             startDatabase();
 
-    //Set up interface globally
+    //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
 
-            currentVersion = "1.04";
-            releaseDate = "2021-11-07";
+            //Set current version and date
+            currentVersion = "1.05";
+            releaseDate = "2021-11-15";
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -77,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             hideDevelopmentUIItems();
             ui->Catalogs_widget_EditCatalog->hide();
 
-            //Set up KDE Menu/Icon actions
+            //For Linux, Set up KDE Menu/Icon actions
             #ifdef Q_OS_LINUX
             setupActions();
             #endif
@@ -97,13 +98,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                     settingsFilePath = homePath + "/.config/katalog_settings.ini";
                 }
 
-            //load Settings and intiate values
+            //Load Settings and intiate values
             loadSettings();
             QString firstSelectedLocation = selectedSearchLocation;
             QString firstSelectedStorage =  selectedSearchStorage;
             QString firstSelectedCatalog = selectedSearchCatalog;
 
-    //load custom stylesheet
+        //Load custom stylesheet
             //for windows, pick a windows common font.
             #ifdef Q_OS_WIN
             ui->tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
@@ -115,16 +116,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-
-
-    //setup tab: Collection
-            //setup tab: Search
-            //setup tab: Storage
-
+    //setup tab: Search
             initiateSearchValues();
 
-            storageFilePath = collectionFolder + "/" + "storage.csv";
+    //setup tab: Catalogs
 
+    //setup tab: Storage
+            storageFilePath = collectionFolder + "/" + "storage.csv";
             loadCollection();
             refreshLocationCollectionFilter();
 
@@ -148,38 +146,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             loadFolderTagModel();
 
     //setup tab: Settings
-        //Load last collection used
-            //Send collection folder to the line edit
+        //Load path of last collection used
             ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
         //Set file types
             setFileTypes();
             setupFileContextMenu();
-
-     //Setup tap: Stats
-            statisticsFileName = "statistics.csv";
-
-            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
-
-            loadStatisticsDataTypes();
-            loadStatisticsData();
-            loadStatisticsChart();
-
-            //loadCollection();
+        //Restore filters
             ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
             ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
 
-    //check if new version is available
+     //Setup tab: Stats
+            statisticsFileName = "statistics.csv";
+            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+            loadStatisticsDataTypes();
+            loadStatisticsData();
+            loadStatisticsChart();
+
+    //Check if new version is available
             checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
             if ( checkVersionChoice == true)
                 checkVersion();
 
-    //load last catalog to explore
+    //Load last catalog to explore
             ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
             if (selectedCatalogFile != ""){
                 openCatalogToExplore();
             }
 
+//DEV StorageTreeModel
+            StorageTreeModel *storagetreeModel = new StorageTreeModel();
+            //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
+            ui->DEV2_treeView_Storage->setModel(storagetreeModel);
+            ui->DEV2_treeView_Storage->header()->resizeSection(0,  300);
+            ui->DEV2_treeView_Storage->expandAll();
 
 }
 
@@ -191,8 +191,8 @@ MainWindow::~MainWindow()
 //DEV
 /*
 QMessageBox::information(this,"Katalog","Ok.");
-QMessageBox::information(this,"Katalog","stringVariable:" + stringVariable);
-QMessageBox::information(this,"Katalog","variable : \n" + QString::number(numbervariable));
+QMessageBox::information(this,"Katalog","stringVariable: \n" + stringVariable);
+QMessageBox::information(this,"Katalog","numbervariable: \n" + QString::number(numbervariable));
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(
