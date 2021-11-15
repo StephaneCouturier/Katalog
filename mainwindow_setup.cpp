@@ -197,6 +197,9 @@
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
         settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
+        settings.setValue("LastSearch/hasDuplicatesOnName", hasDuplicatesOnName);
+        settings.setValue("LastSearch/hasDuplicatesOnSize", hasDuplicatesOnSize);
+        settings.setValue("LastSearch/hasDuplicatesOnDateModified", hasDuplicatesOnDateModified);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());

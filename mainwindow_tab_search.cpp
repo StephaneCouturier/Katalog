@@ -188,8 +188,7 @@
                 ui->Search_checkBox_DuplicateDateModified->setDisabled(false);
             }
         }
-
-
+        //----------------------------------------------------------------------
         //Context Menu methods
         void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
@@ -509,7 +508,6 @@
                 //Save the search parameters to the seetings file
                 saveSettings();
 
-
                 //Process DUPLICATES -------------------------------
                     //Get inputs
                         hasDuplicatesOnName         = ui->Search_checkBox_DuplicateName->checkState();
@@ -643,6 +641,9 @@
                         }
                         ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
                         ui->Search_label_NumberResults->setText(QString::number(fileCount));
+
+                //Save the search parameters to the seetings file
+                saveSettings();
 
                 //Stop animation
                 QApplication::restoreOverrideCursor();

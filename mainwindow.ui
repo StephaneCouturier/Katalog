@@ -1816,7 +1816,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Search_label_File_2">
+             <widget class="QLabel" name="Search_label_DuplicatesOn">
               <property name="enabled">
                <bool>true</bool>
               </property>
