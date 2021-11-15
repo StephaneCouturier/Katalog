@@ -1,0 +1,80 @@
+/*
+    //colors:
+            //blue light	39b2e5              #39b2e5
+            //blue dark		10a2df  0D79A6      #0D79A6
+            //blue darker   095676              #095676
+            //green light	81d41a
+            //green dark	43bf0c
+            //orange light	ff8000
+            //orange dark	e36600
+            //purple light	a1467e
+            //purple dark	8b1871
+*/
+
+QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
+QTabWidget::tab-bar   { left: 0px; }
+
+QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; 
+                        background-color: #0D79A6; 
+                        qproperty-drawBase:0; 
+    /*                    outline: none;*/
+    
+}
+
+QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
+
+QTabBar::tab          { 
+                        background-color: #0D79A6 ; color: #F2F2F2; 
+                        padding: 2px; padding-left: 4px; padding-right: 10px; 
+                        border: 1px outset #095676; 
+                        border-bottom: 0px;                         
+                        border-top-left-radius:    5px; 
+                        border-top-right-radius:   5px; 
+                        margin-bottom: 0px; 
+                        margin-left: 2px;
+                        text-align: left;
+                      }
+
+QTabBar::tab::hover    {   /*top: -0.25rem;*/
+                        background-color: #095676; color: #FFF; 
+                           /* transition: top 0.25s;*/
+                      }                      
+                      
+                      
+QTabBar::tab:selected { 
+                        background-color: #095676; color: #FFF; 
+                        margin-top: 5px;
+                        border: 1px outset #095676; 
+                        border-top-left-radius:    5px; 
+                        border-top-right-radius:   5px; 
+                        border-bottom: 0px; 
+                        margin-bottom: 0px;   
+}
+                        
+QTabBar::tab:!selected{ margin-top: 5px; }
+
+
+QLabel                { color: #095676; }
+
+QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;}
+QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}
+QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}
+
+QComboBox             { padding: 0px 0px; margin: 0px; }
+QComboBox             { background-color: #FFF; padding-left: 6px; }
+
+/*                                         transition: border 500ms ease;
+                                         transition: 0.5s background ease;
+                                         opacity: 0.5;
+                                     border-bottom: 0px;
+                                         border-top: 0px;
+                                         border-left: 0px;
+                                     border-top-left-radius:0px;
+                                     border-top-right-radius:10px;
+                                     border-bottom-left-radius:0px;
+                                     border-bottom-right-radius:0px;
+                                     background: url(:images/tab_splitter.png) no-repeat right;border: 1px solid #095676;
+*/    
+
+  
+  

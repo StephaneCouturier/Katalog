@@ -58,6 +58,7 @@
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
+
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
@@ -241,8 +242,8 @@
         //Settings
 
         //Other tabs
-            //DEV: Tags features under pre-development
-            ui->tabWidget->removeTab(7); //DEV
+            ui->tabWidget->removeTab(8); //ExploreTreeview
+            ui->tabWidget->removeTab(7); //ExploreTreeview
             ui->tabWidget->removeTab(6); //Tags
     }
     //----------------------------------------------------------------------
@@ -258,35 +259,16 @@
             //purple light	a1467e
             //purple dark	8b1871
 
-
         /* blue tabwidget bar */
-        ui->tabWidget->setStyleSheet(
-            "QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; }"
-            "QTabBar               { background-color: #0D79A6; qproperty-drawBase:0; outline: none; }"
-            "QLabel                { color: #095676; }"
-
-            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-
-
-            "QComboBox             { padding: 0px 0px; margin: 0px; } "
-
-            "QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; padding: 2px; padding-left: 4px; padding-right: 20px; border: 1px solid #0D79A6; margin-bottom: 4px; margin-left: 4px;}"
-            "QTabBar::tab:selected { background-color: #095676; color: #FFF; margin-top: 4px; margin-left: 4px; } "
-            "QTabBar::tab:selected { border: 1px solid #095676; border-bottom: 0px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin-bottom: 4px;} "
-
-            "QTabBar::tab:!selected{ margin-top: 6px; }"
-            "QTabWidget::tab-bar   { left: 0px; }"
-            "QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }"
-
-            "QComboBox             {background-color: #FFF; padding-left: 6px; }"
-
-        );
+            QFile file(":styles/tabwidget_blue.css");
+            //QFile file(":styles/tabwidget_blue.css");
+            file.open(QFile::ReadOnly);
+            QString styleSheet = QLatin1String(file.readAll());
+            ui->tabWidget->setStyleSheet(styleSheet);
 			  
 		/* global tabwidget bar */
         ui->Global_tabWidget->setStyleSheet(
-            "QComboBox       { background-color: #FFF; padding-left: 6px; }"
+            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
             "QLabel                { color: #095676; }"
             "QTabBar::tab          { height: 30px; }"
             "QTabWidget::tab-bar   { left: 0px; }"
@@ -303,7 +285,6 @@
                 "QPushButton           { background-color: #81d41a; color: #fff; } "
                 "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
-
               );
         ui->Collection_pushButton_UpdateCatalog->setStyleSheet(
                 "QPushButton           { background-color: #ff8000; color: #fff; } "
@@ -329,16 +310,12 @@
 
         //line and other UI items
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
-
         ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
-
-        //Create tab
-
-        //ui->Collection_line_SeparateCatalogs->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Collection_line_SeparateSummary->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
+        //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
@@ -346,8 +323,8 @@
         ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         //ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         //ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        //ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
+        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
 
     }
