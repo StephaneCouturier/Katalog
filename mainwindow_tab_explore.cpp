@@ -491,7 +491,12 @@
 
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+        if(selectedCatalogPath==selectedDirectoryName){
+            countQuery.bindValue(":filePath",selectedDirectoryName);
+        }
+        else
+            countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+
         countQuery.exec();
         countQuery.next();
 
