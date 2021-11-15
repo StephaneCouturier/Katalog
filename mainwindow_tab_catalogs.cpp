@@ -248,16 +248,16 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
         {
-            selectedCatalogName             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalogFile             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-            selectedCatalogDateTime         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 2, QModelIndex()).data().toString();
-            selectedCatalogFileCount        = ui->Collection_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
-            selectedCatalogTotalFileSize    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
-            selectedCatalogPath             = ui->Collection_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            selectedCatalogFileType         = ui->Collection_treeView_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            selectedCatalogIncludeHidden    = ui->Collection_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
-            selectedCatalogStorage          = ui->Collection_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
-            selectedCatalogIncludeSymblinks = ui->Collection_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
+            selectedCatalogName             = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedCatalogFile             = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            selectedCatalogDateTime         = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 2, QModelIndex()).data().toString();
+            selectedCatalogFileCount        = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 3, QModelIndex()).data().toLongLong();
+            selectedCatalogTotalFileSize    = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 4, QModelIndex()).data().toLongLong();
+            selectedCatalogPath             = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedCatalogFileType         = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedCatalogIncludeHidden    = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
+            selectedCatalogStorage          = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedCatalogIncludeSymblinks = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
 
             if (selectedCatalogFileType=="") selectedCatalogFileType = tr("All");
 
@@ -424,25 +424,25 @@
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
 
             //Connect model to tree/table view
-            ui->Collection_treeView_CatalogList->setModel(proxyResultsModel);
-            ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-            ui->Collection_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-            ui->Collection_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
+            ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
+            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+            ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
 
             //Hide column with file path
-            ui->Collection_treeView_CatalogList->header()->hideSection(1); //Path
+            ui->Catalogs_treeView_CatalogList->header()->hideSection(1); //Path
 
             //Change columns size
-            ui->Collection_treeView_CatalogList->header()->resizeSection(0, 450); //Name
-            ui->Collection_treeView_CatalogList->header()->resizeSection(2, 150); //Date
-            ui->Collection_treeView_CatalogList->header()->resizeSection(3,  80); //Files
-            ui->Collection_treeView_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
-            ui->Collection_treeView_CatalogList->header()->resizeSection(5, 300); //Path
-            ui->Collection_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
-            ui->Collection_treeView_CatalogList->header()->resizeSection(7,  50); //Active
-            ui->Collection_treeView_CatalogList->header()->resizeSection(8,  50); //include
-            ui->Collection_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
-            ui->Collection_treeView_CatalogList->header()->resizeSection(10,150); //Location
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(0, 450); //Name
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(2, 150); //Date
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(3,  80); //Files
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(5, 300); //Path
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(7,  50); //Active
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //include
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
 
             //Populate catalogs statistics
             QSqlQuery query;

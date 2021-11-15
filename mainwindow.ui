@@ -191,7 +191,7 @@
             </widget>
            </item>
            <item row="3" column="0">
-            <spacer name="Filters_verticalSpacer_2">
+            <spacer name="Filters_verticalSpacer_02">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -223,7 +223,7 @@
             </widget>
            </item>
            <item row="6" column="0">
-            <spacer name="Filters_verticalSpacer_3">
+            <spacer name="Filters_verticalSpacer_03">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -258,7 +258,7 @@
             </widget>
            </item>
            <item row="9" column="0">
-            <spacer name="Filters_verticalSpacer_1">
+            <spacer name="Filters_verticalSpacer_01">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -309,7 +309,7 @@
               </widget>
              </item>
              <item>
-              <layout class="QGridLayout" name="gridLayout_13">
+              <layout class="QGridLayout" name="Settings_gridLayout_13">
                <item row="0" column="2">
                 <widget class="QLabel" name="Settings_label_VersionValue">
                  <property name="font">
@@ -464,7 +464,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <layout class="QGridLayout" name="gridLayout_14">
+              <layout class="QGridLayout" name="Settings_gridLayout_14">
                <item row="2" column="0">
                 <widget class="QLabel" name="Settings_label_Data">
                  <property name="font">
@@ -600,7 +600,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="Line" name="line_2">
+              <widget class="Line" name="Settings_line_2">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -609,7 +609,7 @@
             </layout>
            </item>
            <item row="1" column="0">
-            <spacer name="Settings_verticalSpacer_7">
+            <spacer name="Settings_verticalSpacer_07">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -646,7 +646,7 @@
               </widget>
              </item>
              <item>
-              <widget class="Line" name="line">
+              <widget class="Line" name="Settings_line_4">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1517,7 +1517,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Search_horizontalSpacer_9">
+             <spacer name="Search_horizontalSpacer_10">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1885,7 +1885,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QDateTimeEdit" name="Search_dateTimeEdit_Min"/>
             </item>
             <item>
-             <spacer name="Search_horizontalSpacer_7">
+             <spacer name="Search_horizontalSpacer_11">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1940,7 +1940,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Search_horizontalSpacer_8">
+             <spacer name="Search_horizontalSpacer_04">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -2304,7 +2304,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="5" column="1">
-         <widget class="QTreeView" name="Collection_treeView_CatalogList">
+         <widget class="QTreeView" name="Catalogs_treeView_CatalogList">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -2338,12 +2338,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          </widget>
         </item>
         <item row="2" column="1" rowspan="2">
-         <layout class="QVBoxLayout" name="Collection_verticalLayout">
+         <layout class="QVBoxLayout" name="Catalogs_verticalLayout">
           <property name="sizeConstraint">
            <enum>QLayout::SetFixedSize</enum>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="Collection_horizontalLayout_Totals">
+           <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_Totals">
             <item>
              <widget class="QLabel" name="Collection_label_CatalogsLabel">
               <property name="text">
@@ -2449,7 +2449,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Collection_horizontalSpacer_04">
+             <spacer name="Catalogs_horizontalSpacer_04">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -2464,16 +2464,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <widget class="Line" name="Collection_line_SeparateSummary">
+           <widget class="Line" name="Collection_line_SeparateSummary_01">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="Collection_horizontalLayout_CatalogActions">
+           <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_CatalogActions">
             <item>
-             <spacer name="Collection_horizontalSpacer_2">
+             <spacer name="Catalogs_horizontalSpacer_01">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -2664,7 +2664,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="Collection_horizontalSpacer_03">
+             <spacer name="Catalogs_horizontalSpacer_03">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -2684,7 +2684,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          <widget class="QWidget" name="Catalogs_widget_EditCatalog" native="true">
           <layout class="QGridLayout" name="gridLayout_16">
            <item row="1" column="0">
-            <layout class="QGridLayout" name="gridLayout_15">
+            <layout class="QGridLayout" name="Catalogs_gridLayout_01">
              <item row="2" column="2">
               <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
                <property name="enabled">
@@ -2744,7 +2744,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item row="2" column="14">
-              <spacer name="Catalogs_horizontalSpacer_5">
+              <spacer name="Catalogs_horizontalSpacer_05">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2818,7 +2818,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item row="2" column="0">
-              <spacer name="Catalogs_horizontalSpacer_8">
+              <spacer name="Catalogs_horizontalSpacer_08">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2852,7 +2852,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item row="2" column="5">
-              <spacer name="Catalogs_horizontalSpacer_6">
+              <spacer name="Catalogs_horizontalSpacer_06">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2868,7 +2868,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </spacer>
              </item>
              <item row="0" column="10">
-              <spacer name="Catalogs_horizontalSpacer_7">
+              <spacer name="Catalogs_horizontalSpacer_07">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2909,7 +2909,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
              </item>
              <item row="0" column="8">
-              <spacer name="Catalogs_horizontalSpacer_9">
+              <spacer name="Catalogs_horizontalSpacer_09">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2927,7 +2927,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </layout>
            </item>
            <item row="0" column="0">
-            <widget class="Line" name="Collection_line_SeparateSummary_2">
+            <widget class="Line" name="Catalogs_line_SeparateSummary_02">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -3025,7 +3025,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="Explore_horizontalSpacer_2">
+           <spacer name="Explore_horizontalSpacer_04">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -3134,7 +3134,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <spacer name="Explore_horizontalSpacer_4">
+               <spacer name="Explore_horizontalSpacer_05">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -3271,7 +3271,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         <item row="0" column="2">
          <layout class="QVBoxLayout" name="Create_verticalLayout_2_OptionsButton">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_2_1">
             <item>
              <widget class="QLabel" name="Create_label_SelectThePath_4">
               <property name="minimumSize">
@@ -3317,7 +3317,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="Create_horizontalSpacer_04">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3496,9 +3496,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <layout class="QHBoxLayout" name="Create_horizontalLayout_2_2">
             <item>
-             <spacer name="horizontalSpacer_6">
+             <spacer name="Create_horizontalSpacer_03">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3593,7 +3593,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_4">
+             <spacer name="Create_horizontalSpacer_09">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3917,7 +3917,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_2">
+             <spacer name="Create_horizontalSpacer_05">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -4316,7 +4316,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_5">
+           <spacer name="Storage_horizontalSpacer_08">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -4442,9 +4442,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="Statistics_gridLayout_01">
           <item row="3" column="0">
-           <widget class="QtCharts::QChartView" name="Stats_chartview_Graph1"/>
+           <widget class="QtCharts::QChartView" name="Statistics_chartview_Graph1"/>
           </item>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
@@ -4570,9 +4570,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Records">
             <item>
-             <spacer name="horizontalSpacer">
+             <spacer name="Storage_horizontalSpacer_02">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
