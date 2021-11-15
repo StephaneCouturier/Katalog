@@ -2062,9 +2062,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <widget class="QUndoView" name="undoView"/>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="Search_horizontalLayout_Results" stretch="0,0">
             <property name="sizeConstraint">
              <enum>QLayout::SetDefaultConstraint</enum>
