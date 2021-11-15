@@ -1,7 +1,7 @@
 /*LICENCE
     This file is part of Katalog
 
-    Copyright (C) 2020, the Katalog Development team
+    Copyright (C) 2021, the Katalog Development team
 
     Author: Stephane Couturier (Symbioxy)
 
@@ -26,7 +26,6 @@
 // Purpose:     methods for the screen Search
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.02
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -42,9 +41,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-//TAB: SEARCH FILES ----------------------------------------------------------------------
-
-    //----------------------------------------------------------------------
+//TAB: SEARCH FILES ------------------------------------------------------------
+    //--------------------------------------------------------------------------
     //User interactions
         //Buttons and other changes
         void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
@@ -55,7 +53,6 @@
         {
             searchFiles();
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
         {
@@ -107,7 +104,7 @@
                 ui->Search_lineEdit_SearchText->setText("");
             #endif
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
-            ui->Search_comboBox_SearchIn->setCurrentText(tr("File names or Folder paths"));
+            ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
             ui->Search_spinBox_MaximumSize->setValue(999);
@@ -115,6 +112,9 @@
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_ShowFolders->setChecked(false);
             ui->Search_label_NumberResults->setText("");
+            ui->Search_checkBox_DuplicateName->setChecked(false);
+            ui->Search_checkBox_DuplicateSize->setChecked(false);
+            ui->Search_checkBox_DuplicateDateModified->setChecked(false);
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
@@ -125,30 +125,9 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ExportResults_clicked()
         {
-            //Prepare export file name
-            QDateTime now = QDateTime::currentDateTime();
-            QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-            QString filename = QString::fromLatin1("/search_results_%1.csv").arg(timestamp);
-            filename=collectionFolder+filename;
-            QFile exportFile(filename);
-
-            //QFile exportFile(collectionFolder+"/file.txt");
-
-              if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
-
-                  QTextStream stream(&exportFile);
-
-                  for (int i = 0; i < filesFoundList.size(); ++i)
-                    {
-                      QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t" + QString::number(sFileSizes[i]) + "\t" + sFileDateTimes[i];
-                      stream << line << '\n';
-                    }
-                }
-
-              QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")+"\n"+exportFile.fileName());
-              exportFile.close();
+            QString exportFileName = exportSearchResults();
+            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")+"\n"+exportFileName);
         }
-        //----------------------------------------------------------------------
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
         {
@@ -196,8 +175,22 @@
 
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_ShowFolders_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_checkBox_DuplicateName->setDisabled(true);
+                ui->Search_checkBox_DuplicateSize->setDisabled(true);
+                ui->Search_checkBox_DuplicateDateModified->setDisabled(true);
+            }
+            else{
+                ui->Search_checkBox_DuplicateName->setDisabled(false);
+                ui->Search_checkBox_DuplicateSize->setDisabled(false);
+                ui->Search_checkBox_DuplicateDateModified->setDisabled(false);
+            }
+        }
 
-        //File Context Menu actions set up
+
+        //Context Menu methods
         void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {
             QPoint globalPos = ui->Search_treeView_FilesFound->mapToGlobal(pos);
@@ -239,9 +232,7 @@
                 //KMessageBox::information(this,"test:\n did nothing.");
             }
         }
-
         //----------------------------------------------------------------------
-        //Context Menu methods
         void MainWindow::searchContextOpenFile()
         {
             QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
@@ -252,7 +243,7 @@
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::searchContextOpenFolder()
         {
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
@@ -262,7 +253,7 @@
             QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
             QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::searchContextCopyAbsolutePath()
         {
             QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
@@ -275,7 +266,7 @@
             QString originalText = clipboard->text();
             clipboard->setText(selectedFile);
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::searchContextCopyFolderPath()
         {
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
@@ -285,7 +276,7 @@
             QString originalText = clipboard->text();
             clipboard->setText(selectedFileFolder);
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::searchContextCopyFileNameWithExtension()
         {
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
@@ -297,7 +288,7 @@
             QString originalText = clipboard->text();
             clipboard->setText(fileNameWithExtension);
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::searchContextCopyFileNameWithoutExtension()
         {
             QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
@@ -315,15 +306,18 @@
             clipboard->setText(fileNameWithoutExtension);
         }
 
-        //----------------------------------------------------------------------
+//Methods-----------------------------------------------------------------------
 
     //Search methods
+        //run a search of files in each selected catalog based on user inputs
         void MainWindow::searchFiles()
         {
             // Start animation while opening
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
-            //Set up Search
+            //Prepare the SEARCH -------------------------------
+
+                //Search results are currently captured in the Catalog model, not the database.
                 //Clear exisitng lists of results and search variables
                     filesFoundList.clear();
                     catalogFoundList.clear();
@@ -333,9 +327,10 @@
                     sFileSizes.clear();
                     sFilePaths.clear();
                     sFileDateTimes.clear();
+                    sFileCatalogs.clear();
 
                 //Get search criteria
-                    //Get text to search in file names or directories
+                    //Get the text to search in file names or directories, depending on OS.
                     #ifdef Q_OS_LINUX
                     searchText = ui->Search_kcombobox_SearchText->currentText();
                     #else
@@ -346,7 +341,7 @@
                     if (searchText=="")
                         return;
 
-                    //add searchText to a list, to retrieved it later
+                    //Add searchText to a list, to retrieved it later
                     #ifdef Q_OS_LINUX
                         ui->Search_kcombobox_SearchText->addItem(searchText);
                     #else
@@ -355,18 +350,18 @@
 
                     //Get other search criteria
                     selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();
-                    selectedSearchStorage = ui->Filters_comboBox_SelectStorage->currentText();
-                    selectedSearchCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
-                    selectedTextCriteria  = ui->Search_comboBox_TextCriteria->currentText();
-                    selectedSearchIn      = ui->Search_comboBox_SearchIn->currentText();
-                    selectedFileType      = ui->Search_comboBox_FileType->currentText();
-                    selectedMinimumSize   = ui->Search_spinBox_FileTypeMinimumSize->value();
-                    selectedMaximumSize   = ui->Search_spinBox_MaximumSize->value();
-                    selectedMinSizeUnit   = ui->Search_comboBox_MinSizeUnit->currentText();
-                    selectedMaxSizeUnit   = ui->Search_comboBox_MaxSizeUnit->currentText();
-                    //selectedTags        = ui->LE_Tags->text();
+                    selectedSearchStorage  = ui->Filters_comboBox_SelectStorage->currentText();
+                    selectedSearchCatalog  = ui->Filters_comboBox_SelectCatalog->currentText();
+                    selectedTextCriteria   = ui->Search_comboBox_TextCriteria->currentText();
+                    selectedSearchIn       = ui->Search_comboBox_SearchIn->currentText();
+                    selectedFileType       = ui->Search_comboBox_FileType->currentText();
+                    selectedMinimumSize    = ui->Search_spinBox_FileTypeMinimumSize->value();
+                    selectedMaximumSize    = ui->Search_spinBox_MaximumSize->value();
+                    selectedMinSizeUnit    = ui->Search_comboBox_MinSizeUnit->currentText();
+                    selectedMaxSizeUnit    = ui->Search_comboBox_MaxSizeUnit->currentText();
+                    //selectedTags         = ui->LE_Tags->text();
 
-                    // User can enter size min anx max from 0 to 1000.
+                    // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
                     sizeMultiplierMin=1;
                     if      (selectedMinSizeUnit == tr("KiB"))
@@ -393,117 +388,118 @@
                         return;;
                     }
 
-            //List of catalogs to search from   catalogSelectedList
+            //Process the SEARCH -------------------------------
+                //List of catalogs to search from: catalogSelectedList
+                    //Search every catalog if "All" is selected
+                    if ( selectedSearchCatalog ==tr("All")){
+                        foreach(sourceCatalog,catalogSelectedList)
+                                {
+                                    searchFilesInCatalog(sourceCatalog);
+                                }
+                        }
 
-            //Execute the search
-                //Start animation while searching
-                //QApplication::setOverrideCursor(Qt::WaitCursor);
-
-                //Search every catalog if "All" is selected
-                if ( selectedSearchCatalog ==tr("All")){
-                    foreach(sourceCatalog,catalogSelectedList)
-                            {
-                                searchFilesInCatalog(sourceCatalog);
-                            }
+                    //Otherwise just search files in the selected catalog
+                    else{
+                        //QString selectedSearchCatalogPath;
+                        searchFilesInCatalog(selectedSearchCatalog);
                     }
 
-                //Otherwise just search files in the selected catalog
-                else{
-                    //QString selectedSearchCatalogPath;
-                    searchFilesInCatalog(selectedSearchCatalog);
-                }
+                //Process search results: list of catalogs with results
+                    //Remove duplicates so the catalogs are listed only once, and sort the list
+                    catalogFoundList.removeDuplicates();
+                    catalogFoundList.sort();
 
-            //Process search results: list of catalogs
-                //Remove duplicates so the catalogs are listed only once
-                catalogFoundList.removeDuplicates();
-                catalogFoundList.sort();
+                    //Keep the catalog file name only
+                    foreach(QString item, catalogFoundList){
+                            int index = catalogFoundList.indexOf(item);
+                            //QDir dir(item);
+                            QFileInfo fileInfo(item);
+                            catalogFoundList[index] = fileInfo.baseName();
+                    }
 
-                //Keep the catalog file name only
-                foreach(QString item, catalogFoundList){
-                        int index = catalogFoundList.indexOf(item);
-                        //QDir dir(item);
-                        QFileInfo fileInfo(item);
+                    //Load list of catalogs in which files where found
+                    catalogFoundListModel = new QStringListModel(this);
+                    catalogFoundListModel->setStringList(catalogFoundList);
+                    ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
 
-                        //catalogFoundList[index] = dir.dirName();
-                        catalogFoundList[index] = fileInfo.baseName();
-                }
+                //Process search results: list of files
+                    // Create model
+                    Catalog *searchResultsCatalog = new Catalog(this);
 
-                //Load list of catalogs in which files where found
-                catalogFoundListModel = new QStringListModel(this);
-                catalogFoundListModel->setStringList(catalogFoundList);
-                ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
+                    // Populate model with folders only if this option is selected
+                    if ( ui->Search_checkBox_ShowFolders->isChecked()==true )
+                    {
 
-            //Process search results: list of files
-                // Create model
-                Catalog *searchResultsCatalog = new Catalog(this);              
+                        sFilePaths.removeDuplicates();
+                        int numberOfFolders = sFilePaths.count();
+                        sFileNames.clear();
+                        sFileSizes.clear();
+                        sFileDateTimes.clear();
+                        sFileCatalogs.clear();
+                        for (int i=0; i<numberOfFolders; i++)
+                            sFileNames <<"";
+                        for (int i=0; i<numberOfFolders; i++)
+                            sFileSizes <<0;
+                        for (int i=0; i<numberOfFolders; i++)
+                            sFileDateTimes <<"";
+                        for (int i=0; i<numberOfFolders; i++)
+                            sFileCatalogs <<"";
 
-                if ( ui->Search_checkBox_ShowFolders->isChecked()==true )
-                {
-                    //show folders only:
-
-                    // Populate model with data
-                    sFilePaths.removeDuplicates();
-                    int numberOfFolders = sFilePaths.count();
-                    sFileNames.clear();
-                    sFileSizes.clear();
-                    sFileDateTimes.clear();
-                    for (int i=0; i<numberOfFolders; i++)
-                        sFileNames <<"";
-                    for (int i=0; i<numberOfFolders; i++)
-                        sFileSizes <<0;
-                    for (int i=0; i<numberOfFolders; i++)
-                        sFileDateTimes <<"";
-
-                    searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
-                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                    proxyModel->setSourceModel(searchResultsCatalog);
-
-                    proxyModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                    proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                    proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                    proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-
-                    // Connect model to tree/table view
-                    ui->Search_treeView_FilesFound->setModel(proxyModel);
-                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                    ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-
-                    ui->Search_treeView_FilesFound->header()->hideSection(0);
-                    ui->Search_treeView_FilesFound->header()->hideSection(1);
-                    ui->Search_treeView_FilesFound->header()->hideSection(2);
-
-                    ui->Search_label_FoundTitle->setText(tr("Folders found"));
-                }
-                else
-                {
-                    // Populate model with data
-                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes);
+                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes,sFileCatalogs);
                         QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
                         proxyModel->setSourceModel(searchResultsCatalog);
 
-                        FilesView *proxyModel2 = new FilesView(this);
-                        proxyModel2->setSourceModel(searchResultsCatalog);
+                        proxyModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                        proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                        proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Catalog"));
 
-                        proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-
-                        // Connect model to tree/table view
-                        ui->Search_treeView_FilesFound->setModel(proxyModel2);
+                        // Connect model to treeview and display
+                        ui->Search_treeView_FilesFound->setModel(proxyModel);
                         ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                        //ui->TrV_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                        //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                         ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->Search_treeView_FilesFound->header()->showSection(0);
-                        ui->Search_treeView_FilesFound->header()->showSection(1);
-                        ui->Search_treeView_FilesFound->header()->showSection(2);
-                        ui->Search_label_FoundTitle->setText(tr("Files found"));
+                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
+                        ui->Search_treeView_FilesFound->header()->hideSection(0);
+                        ui->Search_treeView_FilesFound->header()->hideSection(1);
+                        ui->Search_treeView_FilesFound->header()->hideSection(2);
+
+                        ui->Search_label_FoundTitle->setText(tr("Folders found"));
+                    }
+
+                    // Populate model with files if the folder option is not selected
+                else
+                {
+                    // Populate model with data
+                    searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
+
+                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+                    proxyModel->setSourceModel(searchResultsCatalog);
+
+                    FilesView *fileViewModel = new FilesView(this);
+                    fileViewModel->setSourceModel(searchResultsCatalog);
+
+                    fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                    fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                    fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                    fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                    fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+
+                    // Connect model to tree/table view
+                    ui->Search_treeView_FilesFound->setModel(fileViewModel);
+                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+                    ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                    ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                    ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                    ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                    ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                    ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); //Catalog
+                    ui->Search_treeView_FilesFound->header()->showSection(0);
+                    ui->Search_treeView_FilesFound->header()->showSection(1);
+                    ui->Search_treeView_FilesFound->header()->showSection(2);
+                    ui->Search_label_FoundTitle->setText(tr("Files found"));
                 }
 
                 //Count and display the number of files found
@@ -513,11 +509,147 @@
                 //Save the search parameters to the seetings file
                 saveSettings();
 
+
+                //Process DUPLICATES -------------------------------
+                    //Get inputs
+                        hasDuplicatesOnName         = ui->Search_checkBox_DuplicateName->checkState();
+                        hasDuplicatesOnSize         = ui->Search_checkBox_DuplicateSize->checkState();
+                        hasDuplicatesOnDateModified = ui->Search_checkBox_DuplicateDateModified->checkState();
+
+                    //Do no process if folder only are selected (not a feature to find duplicate folders)
+                        if ( ui->Search_checkBox_ShowFolders->isChecked()==true ){
+                            //Stop animation
+                            QApplication::restoreOverrideCursor();
+                            return;
+                        }
+                    //Do no process if no search of duplicate is required
+                        if ( hasDuplicatesOnName==false and hasDuplicatesOnSize==false and hasDuplicatesOnDateModified==false ){
+                            //Stop animation
+                            QApplication::restoreOverrideCursor();
+                            return;
+                        }
+
+                    //Load Search results into the database
+                        //clear database
+                            QSqlQuery deleteQuery;
+                            deleteQuery.exec("DELETE FROM file");
+
+                        //prepare query to load file info
+                            QSqlQuery insertQuery;
+                            QString insertSQL = QLatin1String(R"(
+                                                INSERT INTO file (
+                                                                fileName,
+                                                                filePath,
+                                                                fileSize,
+                                                                fileDateUpdated,
+                                                                fileCatalog )
+                                                VALUES(
+                                                                :fileName,
+                                                                :filePath,
+                                                                :fileSize,
+                                                                :fileDateUpdated,
+                                                                :fileCatalog )
+                                                            )");
+                            insertQuery.prepare(insertSQL);
+
+                        //loop through the result list and populate database
+
+                            int rows = searchResultsCatalog->rowCount();
+
+                            for (int i=0; i<rows; i++) {
+
+                                    QString test = searchResultsCatalog->index(i,0).data().toString();
+
+                                    //Append data to the database
+                                    insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
+                                    insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
+                                    insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
+                                    insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
+                                    insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
+                                    insertQuery.exec();
+
+                            }
+
+                    //Prepare duplicate SQL
+                        // Load all files and create model
+                        QString selectSQL;
+
+                        //Generate grouping of fields based on user selection, determining what are duplicates
+                        QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
+
+                            //same name
+                            if(hasDuplicatesOnName == true){
+                                groupingFields = groupingFields + "fileName";
+                            }
+                            //same size
+                            if(hasDuplicatesOnSize == true){
+                                groupingFields = groupingFields + "||fileSize";
+                            }
+                            //same date modified
+                            if(hasDuplicatesOnDateModified == true){
+                                groupingFields = groupingFields + "||fileDateUpdated";
+                            }
+
+                            //remove starting || if any
+                            if (groupingFields.startsWith("||"))
+                                groupingFields.remove(0, 2);
+
+                        //Generate SQL based on grouping of fields
+                        selectSQL = QLatin1String(R"(
+                                        SELECT      fileName,
+                                                    fileSize,
+                                                    fileDateUpdated,
+                                                    filePath,
+                                                    fileCatalog
+                                        FROM file
+                                        WHERE %1 IN
+                                            (SELECT %1
+                                            FROM file
+                                            GROUP BY %1
+                                            HAVING count(%1)>1)
+                                        ORDER BY %1
+                                    )").arg(groupingFields);
+
+                        //Run Query and load to model
+                        QSqlQuery duplicatesQuery;
+                        duplicatesQuery.prepare(selectSQL);
+                        duplicatesQuery.exec();
+
+                        QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                        loadCatalogQueryModel->setQuery(duplicatesQuery);
+
+                        FilesView *fileModel = new FilesView(this);
+                        fileModel->setSourceModel(loadCatalogQueryModel);
+                        fileModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                        fileModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                        fileModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                        fileModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                        fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+
+                        // Connect model to tree/table view
+                        ui->Search_treeView_FilesFound->setModel(fileModel);
+                        ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
+
+                        // Display count of files
+                        int fileCount = 0;
+                        while(duplicatesQuery.next()){
+                            fileCount++;
+                        }
+                        ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
+                        ui->Search_label_NumberResults->setText(QString::number(fileCount));
+
                 //Stop animation
                 QApplication::restoreOverrideCursor();
 
         }
         //----------------------------------------------------------------------
+        //run a search of files for the selected catalog
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
             QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
@@ -566,6 +698,7 @@
 
                 //Replace the *. by .* needed for regex
                 regexFileType = regexFileType.replace("*.",".*");
+
                 //Add the file type expression to the regex
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
              }
@@ -666,6 +799,8 @@
                         sFilePaths.append(file.path());
                         sFileSizes.append(lineFileSize);
                         sFileDateTimes.append(lineFileDatetime);
+                        sFileCatalogs.append(sourceCatalogName);
+
                     }
 
                 } while(!line.isNull());
@@ -716,7 +851,7 @@
             }
             return "";
         }
-        //------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         void MainWindow::getLocationCatalogList(QString location)
         {
             //DEV: REPLACE BY SQL QUERY ON Storage and Catalog TABLE
@@ -788,178 +923,207 @@
                     }
 
         }
-        //------------------------------------------------------------------------------------------
-        //UI methods
-            //Set up
-            void MainWindow::initiateSearchValues()
-            {
-                //Prepare list of size units for the Catalog selection combobox
-                // the first line is the one displayed by default
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("GiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
+        //----------------------------------------------------------------------
 
-                //Load last search values (from settings file)
-                    if (selectedMaximumSize ==0)
-                        selectedMaximumSize = 1000;
+    //--------------------------------------------------------------------------
+    //UI methods
+        //Set up
+        void MainWindow::initiateSearchValues()
+        {
+            //Prepare list of size units for the Catalog selection combobox
+            // the first line is the one displayed by default
+                ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
+                ui->Search_comboBox_MinSizeUnit->addItem(tr("GiB"));
+                ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
+                ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
+                ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
+                ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
+                ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
+                ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
+                ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
+                ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
 
-                //Set values
-                    ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
-                    ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
-                    ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
-                    ui->Search_spinBox_FileTypeMinimumSize->setValue(selectedMinimumSize);
-                    ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
-                    ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
-                    ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
+            //Load last search values (from settings file)
+                if (selectedMaximumSize ==0)
+                    selectedMaximumSize = 1000;
+
+            //Set values
+                ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
+                ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
+                ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
+                ui->Search_spinBox_FileTypeMinimumSize->setValue(selectedMinimumSize);
+                ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
+                ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
+                ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::refreshLocationSelectionList()
+        {
+            //Get current location
+            QString currentLocation = ui->Filters_comboBox_SelectLocation->currentText();
+            //Query the full list of locations
+            QSqlQuery getLocationList;
+            getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage");
+            getLocationList.exec();
+
+            //Put the results in a list
+            QStringList locationList;
+            while (getLocationList.next()) {
+                locationList << getLocationList.value(0).toString();
             }
-            //----------------------------------------------------------------------
-            void MainWindow::refreshLocationSelectionList()
-            {
-                //Get current location
-                QString currentLocation = ui->Filters_comboBox_SelectLocation->currentText();
-                //Query the full list of locations
-                QSqlQuery getLocationList;
-                getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage");
-                getLocationList.exec();
 
-                //Put the results in a list
-                QStringList locationList;
-                while (getLocationList.next()) {
-                    locationList << getLocationList.value(0).toString();
-                }
+            QStringList displayLocationList = locationList;
+            //Add the "All" option at the beginning
+            displayLocationList.insert(0,tr("All"));
 
-                QStringList displayLocationList = locationList;
-                //Add the "All" option at the beginning
-                displayLocationList.insert(0,tr("All"));
+            //Send the list to the Search combobox model
+            QStringListModel *locationListModel = new QStringListModel();
+            locationListModel->setStringList(displayLocationList);
+            ui->Filters_comboBox_SelectLocation->setModel(locationListModel);
 
-                //Send the list to the Search combobox model
-                QStringListModel *locationListModel = new QStringListModel();
-                locationListModel->setStringList(displayLocationList);
-                ui->Filters_comboBox_SelectLocation->setModel(locationListModel);
+            //Restore last selection
+            ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
 
-                //Restore last selection
-                ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::refreshStorageSelectionList(QString selectedLocation)
+        {
+            //get current location
+            QString currentStorage = ui->Filters_comboBox_SelectStorage->currentText();
 
+            //Query the full list of locations
+            QSqlQuery getStorageList;
+
+            QString queryText = "SELECT DISTINCT storageName FROM storage";
+
+            if ( selectedLocation == tr("All")){
+                    getStorageList.prepare(queryText);
             }
-            //----------------------------------------------------------------------
-            void MainWindow::refreshStorageSelectionList(QString selectedLocation)
-            {
-                //get current location
-                QString currentStorage = ui->Filters_comboBox_SelectStorage->currentText();
-
-                //Query the full list of locations
-                QSqlQuery getStorageList;
-
-                QString queryText = "SELECT DISTINCT storageName FROM storage";
-
-                if ( selectedLocation == tr("All")){
-                        getStorageList.prepare(queryText);
-                }
-                else{
-                        queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
-                        getStorageList.prepare(queryText);
-                }
-                getStorageList.exec();
-
-                //Put the results in a list
-                QStringList storageList;
-                while (getStorageList.next()) {
-                    storageList << getStorageList.value(0).toString();
-                }
-
-                //Prepare list for the Location combobox
-                QStringList displayStorageList = storageList;
-                //Add the "All" option at the beginning
-                displayStorageList.insert(0,tr("All"));
-
-                //Send the list to the Search combobox model
-                QStringListModel *storageListModel = new QStringListModel();
-                storageListModel->setStringList(displayStorageList);
-                ui->Filters_comboBox_SelectStorage->setModel(storageListModel);
-
-                //Restore last selection
-                ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
-
+            else{
+                    queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                    getStorageList.prepare(queryText);
             }
-            //----------------------------------------------------------------------
-            void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
-            {
-                //get current location
-                QString currentCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
+            getStorageList.exec();
 
-                //Query the full list of locations
-                QSqlQuery getCatalogSelectionList;
+            //Put the results in a list
+            QStringList storageList;
+            while (getStorageList.next()) {
+                storageList << getStorageList.value(0).toString();
+            }
 
-                //Prepare and run the query
-                    //common
-                    QString queryText = "SELECT c.catalogName FROM catalog AS c"
-                                        " left JOIN storage AS s ON c.catalogStorage = s.storageName";
+            //Prepare list for the Location combobox
+            QStringList displayStorageList = storageList;
+            //Add the "All" option at the beginning
+            displayStorageList.insert(0,tr("All"));
 
-                    //filter depending on location and selection.
-                        //Default: ( selectedLocation == "All" and selectedStorage == "All")
+            //Send the list to the Search combobox model
+            QStringListModel *storageListModel = new QStringListModel();
+            storageListModel->setStringList(displayStorageList);
+            ui->Filters_comboBox_SelectStorage->setModel(storageListModel);
 
-                        if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
-                        {
-                                queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "'";
-                        }
-                        else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
-                        {
-                                queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
-                        }
-                        else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
-                        {
-                                queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "' "
-                                                        " AND storageLocation ='" + selectedLocation + "'";
-                        }
-                    //common
-                    //queryText = queryText + " ORDER BY catalogName ASC";
+            //Restore last selection
+            ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
 
-                    //run the query
-                    getCatalogSelectionList.prepare(queryText);
-                    getCatalogSelectionList.exec();
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
+        {
+            //get current location
+            QString currentCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
 
-                //Put the results in a list
-                    //clear the list of selected catalogs
-                    catalogSelectedList.clear();
+            //Query the full list of locations
+            QSqlQuery getCatalogSelectionList;
 
-                    //populate from the query results
-                    while (getCatalogSelectionList.next()) {
-                        catalogSelectedList << getCatalogSelectionList.value(0).toString();
+            //Prepare and run the query
+                //common
+                QString queryText = "SELECT c.catalogName FROM catalog AS c"
+                                    " left JOIN storage AS s ON c.catalogStorage = s.storageName";
+
+                //filter depending on location and selection.
+                    //Default: ( selectedLocation == "All" and selectedStorage == "All")
+
+                    if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
+                    {
+                            queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "'";
                     }
-                    catalogSelectedList.sort(); //DEV: because the SQL "order by" does not work
-                //Prepare the list for the Location combobox
-                    QStringList displayCatalogList = catalogSelectedList;
-                    //Add the "All" option at the beginning
-                    displayCatalogList.insert(0,tr("All"));
+                    else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
+                    {
+                            queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                    }
+                    else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
+                    {
+                            queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "' "
+                                                    " AND storageLocation ='" + selectedLocation + "'";
+                    }
+                //common
+                //queryText = queryText + " ORDER BY catalogName ASC";
 
-                //Send the list to the Search combobox model
-                    QStringListModel *catalogListModel = new QStringListModel();
-                    catalogListModel->setStringList(displayCatalogList);
-                    ui->Filters_comboBox_SelectCatalog->setModel(catalogListModel);
+                //run the query
+                getCatalogSelectionList.prepare(queryText);
+                getCatalogSelectionList.exec();
 
-                //Send list to the Statistics combobox (without All or Selected storage options)
-                    QStringListModel *catalogListModelForStats = new QStringListModel(this);
-                    catalogListModelForStats->setStringList(catalogSelectedList);
+            //Put the results in a list
+                //clear the list of selected catalogs
+                catalogSelectedList.clear();
 
-                    //Get last value
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
+                //populate from the query results
+                while (getCatalogSelectionList.next()) {
+                    catalogSelectedList << getCatalogSelectionList.value(0).toString();
+                }
+                catalogSelectedList.sort(); //DEV: because the SQL "order by" does not work
+            //Prepare the list for the Location combobox
+                QStringList displayCatalogList = catalogSelectedList;
+                //Add the "All" option at the beginning
+                displayCatalogList.insert(0,tr("All"));
 
-                    //Generate list of values
-                    if ( catalogListModelForStats->rowCount()!=0)
-                        ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
+            //Send the list to the Search combobox model
+                QStringListModel *catalogListModel = new QStringListModel();
+                catalogListModel->setStringList(displayCatalogList);
+                ui->Filters_comboBox_SelectCatalog->setModel(catalogListModel);
 
-                    //Restore last selection value or default
-                       ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
+            //Send list to the Statistics combobox (without All or Selected storage options)
+                QStringListModel *catalogListModelForStats = new QStringListModel(this);
+                catalogListModelForStats->setStringList(catalogSelectedList);
 
-                //Restore last selection
-                   ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
+                //Get last value
+                QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
+                //Generate list of values
+                if ( catalogListModelForStats->rowCount()!=0)
+                    ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
+
+                //Restore last selection value or default
+                   ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
+
+            //Restore last selection
+               ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
+
+        }
+
+        //----------------------------------------------------------------------
+        QString MainWindow::exportSearchResults()
+        {
+            //Prepare export file name
+            QDateTime now = QDateTime::currentDateTime();
+            QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
+            QString filename = QString::fromLatin1("/search_results_%1.csv").arg(timestamp);
+            filename=collectionFolder+filename;
+            QFile exportFile(filename);
+
+            //Export search results to file
+            if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                QTextStream stream(&exportFile);
+
+                for (int i = 0; i < filesFoundList.size(); ++i)
+                {
+                    QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t" + QString::number(sFileSizes[i]) + "\t" + sFileDateTimes[i] + "\t" + sFilePaths[i]+ "\t" + sFileCatalogs[i];
+                    stream << line << '\n';
+                }
             }
+            exportFile.close();
+
+            return filename;
+        }
+        //----------------------------------------------------------------------
