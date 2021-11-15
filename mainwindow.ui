@@ -2062,6 +2062,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
+           <widget class="QUndoView" name="undoView"/>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="Search_horizontalLayout_Results" stretch="0,0">
             <property name="sizeConstraint">
              <enum>QLayout::SetDefaultConstraint</enum>
@@ -4613,13 +4616,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_17">
         <item row="0" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>TREEVIEW for STORAGE</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
          <widget class="QTreeView" name="DEV2_treeView_Storage"/>
         </item>
        </layout>

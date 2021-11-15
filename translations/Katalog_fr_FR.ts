@@ -19,6 +19,10 @@
         <source>Date</source>
         <translation>Date</translation>
     </message>
+    <message>
+        <source>Catalog</source>
+        <translation>Catalogue</translation>
+    </message>
 </context>
 <context>
     <name>DirectoryTreeModel</name>
@@ -732,10 +736,6 @@
         <translation>Id</translation>
     </message>
     <message>
-        <source>Copy absolute path</source>
-        <translation type="vanished">Copier le chemin absolu</translation>
-    </message>
-    <message>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
         <translation>Défniir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
     </message>
@@ -1147,12 +1147,99 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>Nettoyer le Texte de recherche des caractères comme _ - . ,</translation>
     </message>
     <message>
-        <source>DEV</source>
-        <translation>DEV</translation>
-    </message>
-    <message>
         <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation>Le catalogue sélectionné contient plus de 100 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>Duplicates on</source>
+        <translation>Doublons sur</translation>
+    </message>
+    <message>
+        <source>Date Modified</source>
+        <translation>Date modifié</translation>
+    </message>
+    <message>
+        <source>Duplicates found</source>
+        <translation>Doublons trouvés</translation>
+    </message>
+    <message>
+        <source>DEV_EXPLORE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEV_STORAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StorageTreeModel</name>
+    <message>
+        <source>Storage</source>
+        <translation>Stockage</translation>
+    </message>
+    <message>
+        <source>StoragePath</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageLocation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storagePath</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageFileSystem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageTotalSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageFreeSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageBrandModel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageSerialNumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageBuildDate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageContentType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageContainer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageComment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -19,6 +19,10 @@
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DirectoryTreeModel</name>
@@ -1099,11 +1103,98 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DEV</source>
+        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <source>Duplicates on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicates found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEV_EXPLORE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEV_STORAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StorageTreeModel</name>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>StoragePath</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageLocation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storagePath</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageFileSystem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageTotalSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageFreeSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageBrandModel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageSerialNumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageBuildDate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageContentType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageContainer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>storageComment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
