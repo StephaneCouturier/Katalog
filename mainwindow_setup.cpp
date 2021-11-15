@@ -129,6 +129,8 @@
             selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
             selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
             selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
+            selectedDateMin         = QDateTime::fromString(settings.value("LastSearch/DateMin").toString(),"yyyy/MM/dd hh:mm:ss");
+            selectedDateMax         = QDateTime::fromString(settings.value("LastSearch/DateMax").toString(),"yyyy/MM/dd hh:mm:ss");
 
             //Show or Hide ShowHideCatalogResults
             if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
@@ -164,9 +166,9 @@
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //Restore last opened catalog file to Explore
-            selectedCatalogFile = settings.value("Explore/lastSelectedCatalogFile").toString();
-            selectedCatalogName = settings.value("Explore/lastSelectedCatalogName").toString();
-            selectedCatalogPath = settings.value("Explore/lastSelectedCatalogPath").toString();
+            selectedCatalogFile   = settings.value("Explore/lastSelectedCatalogFile").toString();
+            selectedCatalogName   = settings.value("Explore/lastSelectedCatalogName").toString();
+            selectedCatalogPath   = settings.value("Explore/lastSelectedCatalogPath").toString();
             selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
 
             //last tab selected
@@ -200,9 +202,14 @@
         settings.setValue("LastSearch/hasDuplicatesOnName", hasDuplicatesOnName);
         settings.setValue("LastSearch/hasDuplicatesOnSize", hasDuplicatesOnSize);
         settings.setValue("LastSearch/hasDuplicatesOnDateModified", hasDuplicatesOnDateModified);
+        settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+        settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
+
+
         //settings.setValue("LastSelectedCatalog", sText);
     }
     //----------------------------------------------------------------------

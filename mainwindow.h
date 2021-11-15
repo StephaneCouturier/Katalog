@@ -144,6 +144,8 @@ class MainWindow : public QMainWindow
             bool hasDuplicatesOnName;
             bool hasDuplicatesOnSize;
             bool hasDuplicatesOnDateModified;
+            QDateTime selectedDateMin;
+            QDateTime selectedDateMax;
 
             void initiateSearchValues();
             void refreshLocationSelectionList();
@@ -316,6 +318,7 @@ class MainWindow : public QMainWindow
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
+            void on_Search_checkBox_ShowFolders_toggled(bool checked);
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);
@@ -401,7 +404,7 @@ class MainWindow : public QMainWindow
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
 
-            void on_Search_checkBox_ShowFolders_toggled(bool checked);
+
 };
 
 #endif // MAINWINDOW_H

@@ -107,7 +107,7 @@
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
-            ui->Search_spinBox_MaximumSize->setValue(999);
+            ui->Search_spinBox_MaximumSize->setValue(1000);
             ui->Search_comboBox_MinSizeUnit->setCurrentText(tr("Bytes"));
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_ShowFolders->setChecked(false);
@@ -115,6 +115,8 @@
             ui->Search_checkBox_DuplicateName->setChecked(false);
             ui->Search_checkBox_DuplicateSize->setChecked(false);
             ui->Search_checkBox_DuplicateDateModified->setChecked(false);
+            ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("2000-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
+            ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
@@ -337,8 +339,10 @@
                     #endif
 
                     //Do nothing if there is no search text
-                    if (searchText=="")
+                    if (searchText==""){
+                        QApplication::restoreOverrideCursor();
                         return;
+                    }
 
                     //Add searchText to a list, to retrieved it later
                     #ifdef Q_OS_LINUX
@@ -358,6 +362,8 @@
                     selectedMaximumSize    = ui->Search_spinBox_MaximumSize->value();
                     selectedMinSizeUnit    = ui->Search_comboBox_MinSizeUnit->currentText();
                     selectedMaxSizeUnit    = ui->Search_comboBox_MaxSizeUnit->currentText();
+                    selectedDateMin        = ui->Search_dateTimeEdit_Min->dateTime();
+                    selectedDateMax        = ui->Search_dateTimeEdit_Max->dateTime();
                     //selectedTags         = ui->LE_Tags->text();
 
                     // Get the file size min and max, from 0 to 1000.
@@ -727,14 +733,18 @@
                         QStringList lineFieldList  = line.split(lineSplitExp);
                         int         fieldListCount = lineFieldList.count();
 
-                        // Get the file absolute path and the file size from this list
+                        //Get the file absolute path from this list
                         QString     lineFilePath   = lineFieldList[0];
 
-                        // Get the FileSize from the list if available
+                        //Get the FileSize from the list if available
                         qint64      lineFileSize;
-                        if (fieldListCount == 3){
-                                lineFileSize = lineFieldList[1].toLongLong();}
+                        if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
                         else lineFileSize = 0;
+
+                        //Get the File DateTime from the list if available
+                        QDateTime   lineFileDateTime;
+                        if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
+                        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
                     //Exclude catalog metadata lines which are starting with the character <
                          if (lineFilePath.left(1)=="<"){continue;}
@@ -743,9 +753,14 @@
                         //selectedTags
                         //if (selectedTags == selectedTags){continue;}
 
-                    //continue if the file is matching the size range
+                    //Continue if the file is matching the size range
                         if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
                                 and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
+                                    continue;}
+
+                    //Continue if the file is matching the date range
+                        if ( !(     lineFileDateTime >= selectedDateMin
+                                and lineFileDateTime <= selectedDateMax ) ){
                                     continue;}
 
                     //Finally, verify the text search criteria
@@ -956,6 +971,8 @@
                 ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
                 ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
                 ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
+                ui->Search_dateTimeEdit_Min->setDateTime(selectedDateMin);
+                ui->Search_dateTimeEdit_Max->setDateTime(selectedDateMax);
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshLocationSelectionList()
