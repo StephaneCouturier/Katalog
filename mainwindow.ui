@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1199</width>
-    <height>720</height>
+    <width>1218</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1364,10 +1364,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>8</number>
+             <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="Search_label_LinkImage09">
+             <widget class="QLabel" name="Search_label_LinkImage11">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -1377,20 +1377,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="minimumSize">
                <size>
                 <width>30</width>
-                <height>0</height>
+                <height>38</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>25</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
+               <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
               </property>
              </widget>
             </item>
@@ -1776,6 +1779,136 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="Search_horizontalLayout_Duplicates">
+            <item>
+             <widget class="QLabel" name="Search_label_LinkImage09">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Search_label_File_2">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Duplicates on</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_checkBox_DuplicateName">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_checkBox_DuplicateSize">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Search_checkBox_DuplicateDateModified">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Date Modified</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Search_horizontalSpacer_09">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>200</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -4441,9 +4574,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="DEV_EXPLORE">
+       <attribute name="icon">
+        <iconset theme="folder-development">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
        <attribute name="title">
-        <string>DEV</string>
+        <string>DEV_EXPLORE</string>
        </attribute>
        <widget class="QTreeView" name="DEV_treeView_Directories">
         <property name="geometry">
@@ -4465,6 +4602,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
          </rect>
         </property>
        </widget>
+      </widget>
+      <widget class="QWidget" name="DEV_STORAGE">
+       <attribute name="icon">
+        <iconset theme="folder-development">
+         <normaloff>.</normaloff>.</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>DEV_STORAGE</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_17">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>TREEVIEW for STORAGE</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTreeView" name="DEV2_treeView_Storage"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
