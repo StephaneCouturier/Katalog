@@ -81,12 +81,13 @@ class MainWindow : public QMainWindow
 
     private:
         //Global
+            QString currentVersion;
+            QString releaseDate;
+
             //UI
             Ui::MainWindow *ui;
             void loadCustomThemeLight();
             void hideDevelopmentUIItems();
-            QString currentVersion;
-            QString releaseDate;
 
             //KDE menus/icons
             void setupActions();
@@ -140,19 +141,23 @@ class MainWindow : public QMainWindow
             QString selectedTags;
             QString sourceCatalog;
             QStringList catalogSelectedList;
+            bool hasDuplicatesOnName;
+            bool hasDuplicatesOnSize;
+            bool hasDuplicatesOnDateModified;
+
             void initiateSearchValues();
             void refreshLocationSelectionList();
             void refreshStorageSelectionList(QString selectedLocation);
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
-
+            QString exportSearchResults();
             QString getCatalogStorageName(QString catalogFilePath);
 
+            //search
             QList<QString>  sFileNames;
             QList<qint64>   sFileSizes;
             QList<QString>  sFilePaths;
             QList<QString>  sFileDateTimes;
-
-            //search
+            QList<QString>  sFileCatalogs;
             QString regexSearchtext;
             QString regexFileType;
             void searchFiles();
@@ -193,12 +198,12 @@ class MainWindow : public QMainWindow
             void hideCatalogButtons();
             void updateCatalog(QString catalogName);
             void saveCatalogChanges();
+            void importFromVVV();
 
         //TAB: Explore
             QString selectedDirectoryName;
             //QString selectedCatalogPath;
             QString tempSelectedTreeviewSource;
-
 
             void openCatalogToExplore();
             void loadCatalogFilesToExplore();
@@ -256,8 +261,6 @@ class MainWindow : public QMainWindow
         //TAB: Tags
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
-
-            void importFromVVV();
 
     private slots:
         //Menu KDE
@@ -394,7 +397,11 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
             void loadFolderTagModel();
 
+        //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
+            void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
+
+            void on_Search_checkBox_ShowFolders_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
