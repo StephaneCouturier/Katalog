@@ -124,7 +124,7 @@
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="Global_tab1_Filters">
           <attribute name="icon">
@@ -627,7 +627,7 @@
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
              <item>
-              <widget class="QLabel" name="Collection_label_CurrentFolder">
+              <widget class="QLabel" name="Catalogs_label_CurrentFolder">
                <property name="maximumSize">
                 <size>
                  <width>180</width>
@@ -2345,14 +2345,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           <item>
            <layout class="QHBoxLayout" name="Catalogs_horizontalLayout_Totals">
             <item>
-             <widget class="QLabel" name="Collection_label_CatalogsLabel">
+             <widget class="QLabel" name="Catalogs_label_CatalogsLabel">
               <property name="text">
                <string>Catalogs</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_Catalogs">
+             <widget class="QLabel" name="Catalogs_label_Catalogs">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -2373,14 +2373,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="Line" name="Collection_line_01">
+             <widget class="Line" name="Catalogs_line_01">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_TotalSizeLabel">
+             <widget class="QLabel" name="Catalogs_label_TotalSizeLabel">
               <property name="font">
                <font>
                 <family>Noto Sans</family>
@@ -2393,7 +2393,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_TotalSize">
+             <widget class="QLabel" name="Catalogs_label_TotalSize">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -2414,21 +2414,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="Line" name="Collection_line_02">
+             <widget class="Line" name="Catalogs_line_02">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_TotalNumberLabel">
+             <widget class="QLabel" name="Catalogs_label_TotalNumberLabel">
               <property name="text">
                <string>Total Number of Files</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Collection_label_TotalNumber">
+             <widget class="QLabel" name="Catalogs_label_TotalNumber">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -2464,7 +2464,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <widget class="Line" name="Collection_line_SeparateSummary_01">
+           <widget class="Line" name="Catalogs_line_SeparateSummary_01">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -2489,7 +2489,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_Search">
+             <widget class="QPushButton" name="Catalogs_pushButton_Search">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2506,7 +2506,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_ViewCatalog">
+             <widget class="QPushButton" name="Catalogs_pushButton_ViewCatalog">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2526,7 +2526,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_ViewCatalogStats">
+             <widget class="QPushButton" name="Catalogs_pushButton_ViewCatalogStats">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2543,7 +2543,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_EditCatalogFile">
+             <widget class="QPushButton" name="Catalogs_pushButton_EditCatalogFile">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2560,7 +2560,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_UpdateCatalog">
+             <widget class="QPushButton" name="Catalogs_pushButton_UpdateCatalog">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2583,7 +2583,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_UpdateAllActive">
+             <widget class="QPushButton" name="Catalogs_pushButton_UpdateAllActive">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -2606,7 +2606,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_DeleteCatalog">
+             <widget class="QPushButton" name="Catalogs_pushButton_DeleteCatalog">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2623,7 +2623,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="Line" name="Collection_line_3">
+             <widget class="Line" name="Catalogs_line_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -2647,7 +2647,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="Collection_pushButton_Import">
+             <widget class="QPushButton" name="Catalogs_pushButton_Import">
               <property name="enabled">
                <bool>true</bool>
               </property>

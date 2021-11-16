@@ -45,7 +45,7 @@
 //UI----------------------------------------------------------------------------
 
     //Catalog operations
-        void MainWindow::on_Collection_pushButton_Search_clicked()
+        void MainWindow::on_Catalogs_pushButton_Search_clicked()
         {
             //Change the selected catalog in Search tab
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
@@ -54,7 +54,7 @@
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_ViewCatalog_clicked()
+        void MainWindow::on_Catalogs_pushButton_ViewCatalog_clicked()
         {
             openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
@@ -72,7 +72,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_UpdateCatalog_clicked()
+        void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {   //Update the selected catalog
 
             updateCatalog(selectedCatalogName);
@@ -83,7 +83,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_UpdateAllActive_clicked()
+        void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         {
             //user to confirm running this global update
 
@@ -152,7 +152,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_EditCatalogFile_clicked()
+        void MainWindow::on_Catalogs_pushButton_EditCatalogFile_clicked()
         {
             //save catalogs
             int result = QMessageBox::warning(this, "Katalog",
@@ -170,7 +170,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_ViewCatalogStats_clicked()
+        void MainWindow::on_Catalogs_pushButton_ViewCatalogStats_clicked()
         {
             ui->Statistics_comboBox_SelectSource->setCurrentText("Updates only");
             ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
@@ -178,12 +178,12 @@
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_Import_clicked()
+        void MainWindow::on_Catalogs_pushButton_Import_clicked()
         {
                 importFromVVV();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_pushButton_DeleteCatalog_clicked()
+        void MainWindow::on_Catalogs_pushButton_DeleteCatalog_clicked()
         {
             if ( selectedCatalogFile != ""){
 
@@ -246,7 +246,7 @@
 
     //File methods
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_treeView_CatalogList_clicked(const QModelIndex &index)
+        void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
         {
             selectedCatalogName             = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedCatalogFile             = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 1, QModelIndex()).data().toString();
@@ -262,13 +262,13 @@
             if (selectedCatalogFileType=="") selectedCatalogFileType = tr("All");
 
             // Display buttons
-            ui->Collection_pushButton_Search->setEnabled(true);
-            ui->Collection_pushButton_ViewCatalog->setEnabled(true);
+            ui->Catalogs_pushButton_Search->setEnabled(true);
+            ui->Catalogs_pushButton_ViewCatalog->setEnabled(true);
             ui->Catalogs_pushButton_Open->setEnabled(true);
-            ui->Collection_pushButton_EditCatalogFile->setEnabled(true);
-            ui->Collection_pushButton_UpdateCatalog->setEnabled(true);
-            ui->Collection_pushButton_ViewCatalogStats->setEnabled(true);
-            ui->Collection_pushButton_DeleteCatalog->setEnabled(true);
+            ui->Catalogs_pushButton_EditCatalogFile->setEnabled(true);
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+            ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(true);
+            ui->Catalogs_pushButton_DeleteCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
             ui->Catalogs_lineEdit_Name->setText(selectedCatalogName);
@@ -279,7 +279,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index)
+        void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
@@ -466,9 +466,9 @@
             query.exec();
             query.next();
 
-            ui->Collection_label_Catalogs->setText(QString::number(query.value(0).toInt()));
-            ui->Collection_label_TotalSize->setText(QLocale().formattedDataSize(query.value(1).toLongLong()));
-            ui->Collection_label_TotalNumber->setText(QString::number(query.value(2).toInt()));
+            ui->Catalogs_label_Catalogs->setText(QString::number(query.value(0).toInt()));
+            ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(query.value(1).toLongLong()));
+            ui->Catalogs_label_TotalNumber->setText(QString::number(query.value(2).toInt()));
 
     }
     //--------------------------------------------------------------------------
@@ -766,12 +766,12 @@
     void MainWindow::hideCatalogButtons()
     {
         //Hide buttons
-        ui->Collection_pushButton_Search->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
-        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
-        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
-        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_Search->setEnabled(false);
+        ui->Catalogs_pushButton_ViewCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
     }
     //--------------------------------------------------------------------------
     void MainWindow::refreshLocationCollectionFilter()

@@ -287,7 +287,6 @@ class MainWindow : public QMainWindow
                 void on_Filters_pushButton_ResetGlobal_clicked();
 
             //Settings
-                void on_Collection_pushButton_UpdateAllActive_clicked();
                 void on_Collection_pushButton_SelectFolder_clicked();
                 void on_Collection_pushButton_Reload_clicked();
                 void on_Collection_pushButton_OpenFolder_clicked();
@@ -332,19 +331,20 @@ class MainWindow : public QMainWindow
             void searchContextCopyFileNameWithExtension();
             void searchContextCopyFileNameWithoutExtension();
 
-        //Collection/Catalogs
-            void on_Collection_pushButton_Search_clicked();
-            void on_Collection_pushButton_ViewCatalog_clicked();
+        //Catalogs
+            void on_Catalogs_pushButton_Search_clicked();
+            void on_Catalogs_pushButton_ViewCatalog_clicked();
             void on_Catalogs_pushButton_Cancel_clicked();
-            void on_Collection_pushButton_UpdateCatalog_clicked();
-            void on_Collection_pushButton_EditCatalogFile_clicked();
-            void on_Collection_pushButton_ViewCatalogStats_clicked();
-            void on_Collection_pushButton_Import_clicked();
-            void on_Collection_pushButton_DeleteCatalog_clicked();
+            void on_Catalogs_pushButton_UpdateCatalog_clicked();
+            void on_Catalogs_pushButton_UpdateAllActive_clicked();
+            void on_Catalogs_pushButton_EditCatalogFile_clicked();
+            void on_Catalogs_pushButton_ViewCatalogStats_clicked();
+            void on_Catalogs_pushButton_Import_clicked();
+            void on_Catalogs_pushButton_DeleteCatalog_clicked();
             void refreshLocationCollectionFilter();
 
-            void on_Collection_treeView_CatalogList_clicked(const QModelIndex &index);
-            void on_Collection_treeView_CatalogList_doubleClicked(const QModelIndex &index);
+            void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
+            void on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index);
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();

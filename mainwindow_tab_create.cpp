@@ -223,12 +223,12 @@
         ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
 
         //Disable buttons to force user to select a catalog
-        ui->Collection_pushButton_Search->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalog->setEnabled(false);
-        ui->Collection_pushButton_EditCatalogFile->setEnabled(false);
-        ui->Collection_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Collection_pushButton_ViewCatalogStats->setEnabled(false);
-        ui->Collection_pushButton_DeleteCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_Search->setEnabled(false);
+        ui->Catalogs_pushButton_ViewCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
 
     }
     //--------------------------------------------------------------------------

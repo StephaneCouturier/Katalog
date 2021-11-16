@@ -296,12 +296,12 @@
                 "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
               );
-        ui->Collection_pushButton_UpdateCatalog->setStyleSheet(
+        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
                 "QPushButton           { background-color: #ff8000; color: #fff; } "
                 "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
               );
-        ui->Collection_pushButton_UpdateAllActive->setStyleSheet(
+        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
                 "QPushButton           { background-color: #ff8000; color: #fff; } "
                 "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
