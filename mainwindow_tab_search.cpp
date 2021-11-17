@@ -112,6 +112,7 @@
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_ShowFolders->setChecked(false);
             ui->Search_label_NumberResults->setText("");
+            ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicateName->setChecked(false);
             ui->Search_checkBox_DuplicateSize->setChecked(false);
             ui->Search_checkBox_DuplicateDateModified->setChecked(false);
@@ -180,14 +181,58 @@
         void MainWindow::on_Search_checkBox_ShowFolders_toggled(bool checked)
         {
             if(checked==1){
+                ui->Search_checkBox_Duplicates->setChecked(false);
+//                ui->Search_checkBox_DuplicateName->setDisabled(true);
+//                ui->Search_checkBox_DuplicateSize->setDisabled(true);
+//                ui->Search_checkBox_DuplicateDateModified->setDisabled(true);
+            }
+            else{
+//                ui->Search_checkBox_DuplicateName->setEnabled(true);
+//                ui->Search_checkBox_DuplicateSize->setEnabled(true);
+//                ui->Search_checkBox_DuplicateDateModified->setEnabled(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Duplicates_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_checkBox_DuplicateName->setEnabled(true);
+                ui->Search_checkBox_DuplicateSize->setEnabled(true);
+                ui->Search_checkBox_DuplicateDateModified->setEnabled(true);
+                ui->Search_checkBox_ShowFolders->setChecked(false);
+            }
+            else{
                 ui->Search_checkBox_DuplicateName->setDisabled(true);
                 ui->Search_checkBox_DuplicateSize->setDisabled(true);
                 ui->Search_checkBox_DuplicateDateModified->setDisabled(true);
             }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Size_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_spinBox_FileTypeMinimumSize->setEnabled(true);
+                ui->Search_comboBox_MinSizeUnit->setEnabled(true);
+                ui->Search_spinBox_MaximumSize->setEnabled(true);
+                ui->Search_comboBox_MaxSizeUnit->setEnabled(true);
+            }
             else{
-                ui->Search_checkBox_DuplicateName->setDisabled(false);
-                ui->Search_checkBox_DuplicateSize->setDisabled(false);
-                ui->Search_checkBox_DuplicateDateModified->setDisabled(false);
+                ui->Search_spinBox_FileTypeMinimumSize->setDisabled(true);
+                ui->Search_comboBox_MinSizeUnit->setDisabled(true);
+                ui->Search_spinBox_MaximumSize->setDisabled(true);
+                ui->Search_comboBox_MaxSizeUnit->setDisabled(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Date_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_dateTimeEdit_Min->setEnabled(true);
+                ui->Search_dateTimeEdit_Max->setEnabled(true);
+            }
+            else{
+                ui->Search_dateTimeEdit_Min->setDisabled(true);
+                ui->Search_dateTimeEdit_Max->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -364,6 +409,8 @@
                     selectedMaxSizeUnit    = ui->Search_comboBox_MaxSizeUnit->currentText();
                     selectedDateMin        = ui->Search_dateTimeEdit_Min->dateTime();
                     selectedDateMax        = ui->Search_dateTimeEdit_Max->dateTime();
+                    searchOnSize           = ui->Search_checkBox_Size->isChecked();
+                    searchOnDate           = ui->Search_checkBox_Date->isChecked();
                     //selectedTags         = ui->LE_Tags->text();
 
                     // Get the file size min and max, from 0 to 1000.
@@ -522,6 +569,13 @@
 
                     //Do no process if folder only are selected (not a feature to find duplicate folders)
                         if ( ui->Search_checkBox_ShowFolders->isChecked()==true ){
+                            //Stop animation
+                            QApplication::restoreOverrideCursor();
+                            return;
+                        }
+
+                    //Do no process if search on duplicates is not checked
+                        if ( ui->Search_checkBox_Duplicates->isChecked()==false ){
                             //Stop animation
                             QApplication::restoreOverrideCursor();
                             return;
@@ -754,15 +808,17 @@
                         //if (selectedTags == selectedTags){continue;}
 
                     //Continue if the file is matching the size range
-                        if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
-                                and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
-                                    continue;}
-
+                    if (searchOnSize==true){
+                            if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
+                                    and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
+                                        continue;}
+                        }
                     //Continue if the file is matching the date range
-                        if ( !(     lineFileDateTime >= selectedDateMin
-                                and lineFileDateTime <= selectedDateMax ) ){
-                                    continue;}
-
+                        if (searchOnDate==true){
+                            if ( !(     lineFileDateTime >= selectedDateMin
+                                    and lineFileDateTime <= selectedDateMax ) ){
+                                        continue;}
+                        }
                     //Finally, verify the text search criteria
                         //Depending on the "Search in" criteria,
                         //reduce the abosulte path to the reaquired text string and match the search text
@@ -973,6 +1029,9 @@
                 ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
                 ui->Search_dateTimeEdit_Min->setDateTime(selectedDateMin);
                 ui->Search_dateTimeEdit_Max->setDateTime(selectedDateMax);
+                ui->Search_checkBox_Size->setChecked(searchOnSize);
+                ui->Search_checkBox_Date->setChecked(searchOnDate);
+                ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshLocationSelectionList()

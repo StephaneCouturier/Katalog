@@ -131,6 +131,15 @@
             selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
             selectedDateMin         = QDateTime::fromString(settings.value("LastSearch/DateMin").toString(),"yyyy/MM/dd hh:mm:ss");
             selectedDateMax         = QDateTime::fromString(settings.value("LastSearch/DateMax").toString(),"yyyy/MM/dd hh:mm:ss");
+            searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
+            searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
+            showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
+
+            ui->Search_checkBox_Duplicates->setChecked(settings.value("LastSearch/DuplicatesOn").toBool());
+            ui->Search_checkBox_DuplicateName->setChecked(settings.value("LastSearch/hasDuplicatesOnName").toBool());
+            ui->Search_checkBox_DuplicateSize->setChecked(settings.value("LastSearch/hasDuplicatesOnSize").toBool());
+            ui->Search_checkBox_DuplicateDateModified->setChecked(settings.value("LastSearch/hasDuplicatesOnDateModified").toBool());
+
 
             //Show or Hide ShowHideCatalogResults
             if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
@@ -182,7 +191,7 @@
     void MainWindow::saveSettings()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        //QString sText = "N/A";
+
         settings.setValue("LastCollectionFolder", collectionFolder);
         #ifdef Q_OS_LINUX
             settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
@@ -199,9 +208,14 @@
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
         settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
-        settings.setValue("LastSearch/hasDuplicatesOnName", hasDuplicatesOnName);
-        settings.setValue("LastSearch/hasDuplicatesOnSize", hasDuplicatesOnSize);
-        settings.setValue("LastSearch/hasDuplicatesOnDateModified", hasDuplicatesOnDateModified);
+
+        settings.setValue("LastSearch/showFoldersOnly", ui->Search_checkBox_ShowFolders->isChecked());
+        settings.setValue("LastSearch/DuplicatesOn", ui->Search_checkBox_Duplicates->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnName", ui->Search_checkBox_DuplicateName->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnSize", ui->Search_checkBox_DuplicateSize->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnDateModified", ui->Search_checkBox_DuplicateDateModified->isChecked());
+        settings.setValue("LastSearch/searchOnSize", ui->Search_checkBox_Size->isChecked());
+        settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
 
@@ -234,10 +248,6 @@
         //Search
 
         //Catalogs
-            #ifdef Q_OS_LINUX
-            //hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
-            ui->Search_lineEdit_SearchText->hide();
-            #endif
 
         //Create
             //DEV: the option to include symblinks is not working yet
@@ -270,11 +280,18 @@
             //purple dark	8b1871
 
         /* blue tabwidget bar */
-            QFile file(":styles/tabwidget_blue.css");
-            //QFile file(":styles/tabwidget_blue.css");
-            file.open(QFile::ReadOnly);
-            QString styleSheet = QLatin1String(file.readAll());
-            ui->tabWidget->setStyleSheet(styleSheet);
+            if(developmentMode==true){
+                QFile file(":styles/tabwidget_dev.css");
+                file.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(styleSheet);
+            }
+            else{
+                QFile file(":styles/tabwidget_blue.css");
+                file.open(QFile::ReadOnly);
+                QString styleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(styleSheet);
+            }
 			  
 		/* global tabwidget bar */
         ui->Global_tabWidget->setStyleSheet(
@@ -330,13 +347,13 @@
         ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        //ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
-        //ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
         ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-
     }
     //----------------------------------------------------------------------
     void MainWindow::startDatabase()
