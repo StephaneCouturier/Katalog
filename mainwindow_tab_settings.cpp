@@ -55,26 +55,26 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
-    {
-        QString visible = ui->Global_pushButton_ShowHideGlobal->text();
+    {     
+        QString iconName = ui->Global_pushButton_ShowHideGlobal->icon().name();
 
-        if ( visible == "<<"){ //Hide
-                ui->Global_pushButton_ShowHideGlobal->setText(">>");
+        if ( iconName == "arrow-left"){ //Hide
+                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-right"));
                 ui->Global_tabWidget->setHidden(true);
                 ui->Global_label_Global->setHidden(true);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
+                settings.setValue("Settings/ShowHideGlobal", "arrow-right");
         }
         else{ //Show
-                ui->Global_pushButton_ShowHideGlobal->setText("<<");
+                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-left"));
+
                 ui->Global_tabWidget->setHidden(false);
                 ui->Global_label_Global->setHidden(false);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", ui->Global_pushButton_ShowHideGlobal->text());
+                settings.setValue("Settings/ShowHideGlobal", "arrow-left");
         }
-
     }
 
 //FILTERS -------------------------------------------------------------

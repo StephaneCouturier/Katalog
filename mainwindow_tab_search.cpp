@@ -106,18 +106,21 @@
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
+            ui->Search_checkBox_Size->setChecked(false);
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
             ui->Search_spinBox_MaximumSize->setValue(1000);
+
             ui->Search_comboBox_MinSizeUnit->setCurrentText(tr("Bytes"));
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_ShowFolders->setChecked(false);
-            ui->Search_label_NumberResults->setText("");
             ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicateName->setChecked(false);
             ui->Search_checkBox_DuplicateSize->setChecked(false);
             ui->Search_checkBox_DuplicateDateModified->setChecked(false);
+            ui->Search_checkBox_Date->setChecked(false);
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("2000-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
+            ui->Search_label_NumberResults->setText("");
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
@@ -157,39 +160,52 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ShowHideCatalogResults_clicked()
         {
-            QString visible = ui->Search_pushButton_ShowHideCatalogResults->text();
+            QString iconName = ui->Search_pushButton_ShowHideCatalogResults->icon().name();
 
-            if ( visible == "<<"){ //Hide
-                    ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
+            if ( iconName == "arrow-left"){ //Hide
+                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-right"));
                     ui->Search_listView_CatalogsFound->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
+                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-right");
             }
             else{ //Show
-                    ui->Search_pushButton_ShowHideCatalogResults->setText("<<");
+                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-left"));
+
                     ui->Search_listView_CatalogsFound->setHidden(false);
                     ui->Search_label_CatalogsWithResults->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideCatalogResults", ui->Search_pushButton_ShowHideCatalogResults->text());
+                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-left");
             }
 
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_ShowHideSearchHistory_clicked()
+        {
+            QString iconName = ui->Search_pushButton_ShowHideSearchHistory->icon().name();
+
+            if ( iconName == "arrow-down"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-up"));
+                    ui->Search_tableView_History->setHidden(true);
+
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-up");
+            }
+            else{ //Show
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_tableView_History->setHidden(false);
+
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideSearchHistory", "arrow-down");
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_ShowFolders_toggled(bool checked)
         {
             if(checked==1){
                 ui->Search_checkBox_Duplicates->setChecked(false);
-//                ui->Search_checkBox_DuplicateName->setDisabled(true);
-//                ui->Search_checkBox_DuplicateSize->setDisabled(true);
-//                ui->Search_checkBox_DuplicateDateModified->setDisabled(true);
-            }
-            else{
-//                ui->Search_checkBox_DuplicateName->setEnabled(true);
-//                ui->Search_checkBox_DuplicateSize->setEnabled(true);
-//                ui->Search_checkBox_DuplicateDateModified->setEnabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -234,6 +250,47 @@
                 ui->Search_dateTimeEdit_Min->setDisabled(true);
                 ui->Search_dateTimeEdit_Max->setDisabled(true);
             }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_tableView_History_activated(const QModelIndex &index)
+        {
+            //Restore the criteria of the selected search history
+
+            QString TextPhrase = ui->Search_tableView_History->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            #ifdef Q_OS_LINUX
+                    ui->Search_kcombobox_SearchText->setEditText(TextPhrase);
+            #else
+                    ui->Search_lineEdit_SearchText->setText(TextPhrase);
+            #endif
+
+            selectedTextCriteria = ui->Search_tableView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
+            selectedSearchIn     = ui->Search_tableView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toBool();
+            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toInt();
+            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toString();
+            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
+            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toBool();
+            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toDateTime();
+            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toDateTime();
+            searchOnDuplicates  = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toBool();
+            hasDuplicatesOnName = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
+            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
+            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+
+            initiateSearchValues();
+
+            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toString();
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+
+            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toString();
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+
+            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+
         }
         //----------------------------------------------------------------------
         //Context Menu methods
@@ -437,6 +494,8 @@
                  // Searching "Begin With" for File name or Folder name is not supported yet
                     if (selectedTextCriteria==tr("Begins With") and selectedSearchIn ==tr("File names or Folder paths")){
                         QMessageBox::information(this,"Katalog",tr("Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison."));
+                        //Stop animation
+                        QApplication::restoreOverrideCursor();
                         return;;
                     }
 
@@ -567,143 +626,133 @@
                         hasDuplicatesOnSize         = ui->Search_checkBox_DuplicateSize->checkState();
                         hasDuplicatesOnDateModified = ui->Search_checkBox_DuplicateDateModified->checkState();
 
-                    //Do no process if folder only are selected (not a feature to find duplicate folders)
-                        if ( ui->Search_checkBox_ShowFolders->isChecked()==true ){
-                            //Stop animation
-                            QApplication::restoreOverrideCursor();
-                            return;
+                    //Process if enabled and criteria are provided
+                        if ( ui->Search_checkBox_Duplicates->isChecked() ==true
+                             and (     hasDuplicatesOnName==true
+                                    or hasDuplicatesOnSize==true
+                                    or hasDuplicatesOnDateModified==true)){
+
+                            //Load Search results into the database
+                                //clear database
+                                    QSqlQuery deleteQuery;
+                                    deleteQuery.exec("DELETE FROM file");
+
+                                //prepare query to load file info
+                                    QSqlQuery insertQuery;
+                                    QString insertSQL = QLatin1String(R"(
+                                                        INSERT INTO file (
+                                                                        fileName,
+                                                                        filePath,
+                                                                        fileSize,
+                                                                        fileDateUpdated,
+                                                                        fileCatalog )
+                                                        VALUES(
+                                                                        :fileName,
+                                                                        :filePath,
+                                                                        :fileSize,
+                                                                        :fileDateUpdated,
+                                                                        :fileCatalog )
+                                                                    )");
+                                    insertQuery.prepare(insertSQL);
+
+                                //loop through the result list and populate database
+
+                                    int rows = searchResultsCatalog->rowCount();
+
+                                    for (int i=0; i<rows; i++) {
+
+                                            QString test = searchResultsCatalog->index(i,0).data().toString();
+
+                                            //Append data to the database
+                                            insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
+                                            insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
+                                            insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
+                                            insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.exec();
+
+                                    }
+
+                            //Prepare duplicate SQL
+                                // Load all files and create model
+                                QString selectSQL;
+
+                                //Generate grouping of fields based on user selection, determining what are duplicates
+                                QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
+
+                                    //same name
+                                    if(hasDuplicatesOnName == true){
+                                        groupingFields = groupingFields + "fileName";
+                                    }
+                                    //same size
+                                    if(hasDuplicatesOnSize == true){
+                                        groupingFields = groupingFields + "||fileSize";
+                                    }
+                                    //same date modified
+                                    if(hasDuplicatesOnDateModified == true){
+                                        groupingFields = groupingFields + "||fileDateUpdated";
+                                    }
+
+                                    //remove starting || if any
+                                    if (groupingFields.startsWith("||"))
+                                        groupingFields.remove(0, 2);
+
+                                //Generate SQL based on grouping of fields
+                                selectSQL = QLatin1String(R"(
+                                                SELECT      fileName,
+                                                            fileSize,
+                                                            fileDateUpdated,
+                                                            filePath,
+                                                            fileCatalog
+                                                FROM file
+                                                WHERE %1 IN
+                                                    (SELECT %1
+                                                    FROM file
+                                                    GROUP BY %1
+                                                    HAVING count(%1)>1)
+                                                ORDER BY %1
+                                            )").arg(groupingFields);
+
+                                //Run Query and load to model
+                                QSqlQuery duplicatesQuery;
+                                duplicatesQuery.prepare(selectSQL);
+                                duplicatesQuery.exec();
+
+                                QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                                loadCatalogQueryModel->setQuery(duplicatesQuery);
+
+                                FilesView *fileModel = new FilesView(this);
+                                fileModel->setSourceModel(loadCatalogQueryModel);
+                                fileModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                                fileModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                                fileModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                                fileModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                                fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+
+                                // Connect model to tree/table view
+                                ui->Search_treeView_FilesFound->setModel(fileModel);
+                                ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                                ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                                ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                                ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                                ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                                ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                                ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
+
+                                // Display count of files
+                                int fileCount = 0;
+                                while(duplicatesQuery.next()){
+                                    fileCount++;
+                                }
+                                ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
+                                ui->Search_label_NumberResults->setText(QString::number(fileCount));
+
                         }
 
-                    //Do no process if search on duplicates is not checked
-                        if ( ui->Search_checkBox_Duplicates->isChecked()==false ){
-                            //Stop animation
-                            QApplication::restoreOverrideCursor();
-                            return;
-                        }
-                    //Do no process if no search of duplicate is required
-                        if ( hasDuplicatesOnName==false and hasDuplicatesOnSize==false and hasDuplicatesOnDateModified==false ){
-                            //Stop animation
-                            QApplication::restoreOverrideCursor();
-                            return;
-                        }
-
-                    //Load Search results into the database
-                        //clear database
-                            QSqlQuery deleteQuery;
-                            deleteQuery.exec("DELETE FROM file");
-
-                        //prepare query to load file info
-                            QSqlQuery insertQuery;
-                            QString insertSQL = QLatin1String(R"(
-                                                INSERT INTO file (
-                                                                fileName,
-                                                                filePath,
-                                                                fileSize,
-                                                                fileDateUpdated,
-                                                                fileCatalog )
-                                                VALUES(
-                                                                :fileName,
-                                                                :filePath,
-                                                                :fileSize,
-                                                                :fileDateUpdated,
-                                                                :fileCatalog )
-                                                            )");
-                            insertQuery.prepare(insertSQL);
-
-                        //loop through the result list and populate database
-
-                            int rows = searchResultsCatalog->rowCount();
-
-                            for (int i=0; i<rows; i++) {
-
-                                    QString test = searchResultsCatalog->index(i,0).data().toString();
-
-                                    //Append data to the database
-                                    insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
-                                    insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
-                                    insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
-                                    insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
-                                    insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
-                                    insertQuery.exec();
-
-                            }
-
-                    //Prepare duplicate SQL
-                        // Load all files and create model
-                        QString selectSQL;
-
-                        //Generate grouping of fields based on user selection, determining what are duplicates
-                        QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
-
-                            //same name
-                            if(hasDuplicatesOnName == true){
-                                groupingFields = groupingFields + "fileName";
-                            }
-                            //same size
-                            if(hasDuplicatesOnSize == true){
-                                groupingFields = groupingFields + "||fileSize";
-                            }
-                            //same date modified
-                            if(hasDuplicatesOnDateModified == true){
-                                groupingFields = groupingFields + "||fileDateUpdated";
-                            }
-
-                            //remove starting || if any
-                            if (groupingFields.startsWith("||"))
-                                groupingFields.remove(0, 2);
-
-                        //Generate SQL based on grouping of fields
-                        selectSQL = QLatin1String(R"(
-                                        SELECT      fileName,
-                                                    fileSize,
-                                                    fileDateUpdated,
-                                                    filePath,
-                                                    fileCatalog
-                                        FROM file
-                                        WHERE %1 IN
-                                            (SELECT %1
-                                            FROM file
-                                            GROUP BY %1
-                                            HAVING count(%1)>1)
-                                        ORDER BY %1
-                                    )").arg(groupingFields);
-
-                        //Run Query and load to model
-                        QSqlQuery duplicatesQuery;
-                        duplicatesQuery.prepare(selectSQL);
-                        duplicatesQuery.exec();
-
-                        QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-                        loadCatalogQueryModel->setQuery(duplicatesQuery);
-
-                        FilesView *fileModel = new FilesView(this);
-                        fileModel->setSourceModel(loadCatalogQueryModel);
-                        fileModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        fileModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        fileModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        fileModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
-
-                        // Connect model to tree/table view
-                        ui->Search_treeView_FilesFound->setModel(fileModel);
-                        ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
-
-                        // Display count of files
-                        int fileCount = 0;
-                        while(duplicatesQuery.next()){
-                            fileCount++;
-                        }
-                        ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
-                        ui->Search_label_NumberResults->setText(QString::number(fileCount));
-
-                //Save the search parameters to the seetings file
+                //Save the search parameters to the settings file
                 saveSettings();
+                saveSearchHistory();
+                loadSearchHistory();
 
                 //Stop animation
                 QApplication::restoreOverrideCursor();
@@ -1031,6 +1080,10 @@
                 ui->Search_dateTimeEdit_Max->setDateTime(selectedDateMax);
                 ui->Search_checkBox_Size->setChecked(searchOnSize);
                 ui->Search_checkBox_Date->setChecked(searchOnDate);
+                ui->Search_checkBox_Duplicates->setChecked(searchOnDuplicates);
+                ui->Search_checkBox_DuplicateName->setChecked(hasDuplicatesOnName);
+                ui->Search_checkBox_DuplicateSize->setChecked(hasDuplicatesOnSize);
+                ui->Search_checkBox_DuplicateDateModified->setChecked(hasDuplicatesOnDateModified);
                 ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
         }
         //----------------------------------------------------------------------
@@ -1204,3 +1257,109 @@
             return filename;
         }
         //----------------------------------------------------------------------
+        void MainWindow::saveSearchHistory()
+        {
+            //Save Search to db
+            QDateTime nowDateTime = QDateTime::currentDateTime();
+            QString searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+            //QMessageBox::information(this,"Katalog","start save: \n" + searchDateTime);
+
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                INSERT INTO search(
+                                    dateTime	,
+                                    TextPhrase	,
+                                    TextCriteria	,
+                                    TextSearchIn	,
+                                    FileType	,
+                                    FileSizeChecked	,
+                                    FileSizeMin	,
+                                    FileSizeMinUnit	,
+                                    FileSizeMax	,
+                                    FileSizeMaxUnit	,
+                                    DateModifiedChecked	,
+                                    DateModifiedMin	,
+                                    DateModifiedMax	,
+                                    DuplicatesChecked	,
+                                    DuplicateName	,
+                                    DuplicateSize	,
+                                    DuplicateDateModified	,
+                                    ShowFolders	,
+                                    searchLocation	,
+                                    searchStorage	,
+                                    searchCatalog	)
+                                VALUES(
+                                    :dateTime	,
+                                    :TextPhrase	,
+                                    :TextCriteria	,
+                                    :TextSearchIn	,
+                                    :FileType	,
+                                    :FileSizeChecked	,
+                                    :FileSizeMin	,
+                                    :FileSizeMinUnit	,
+                                    :FileSizeMax	,
+                                    :FileSizeMaxUnit	,
+                                    :DateModifiedChecked	,
+                                    :DateModifiedMin	,
+                                    :DateModifiedMax	,
+                                    :DuplicatesChecked	,
+                                    :DuplicateName	,
+                                    :DuplicateSize	,
+                                    :DuplicateDateModified	,
+                                    :ShowFolders	,
+                                    :searchLocation	,
+                                    :searchStorage	,
+                                    :searchCatalog	)
+                )");
+
+            query.prepare(querySQL);
+            query.bindValue(":dateTime",             searchDateTime);
+            query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
+            query.bindValue(":TextCriteria",         selectedTextCriteria);
+            query.bindValue(":TextSearchIn",         selectedSearchIn);
+            query.bindValue(":FileType",             selectedFileType);
+            query.bindValue(":FileSizeChecked",      ui->Search_checkBox_Size->isChecked());
+            query.bindValue(":FileSizeMin",          selectedMinimumSize);
+            query.bindValue(":FileSizeMinUnit",      selectedMinSizeUnit);
+            query.bindValue(":FileSizeMax",          selectedMaximumSize);
+            query.bindValue(":FileSizeMaxUnit",      selectedMaxSizeUnit);
+            query.bindValue(":DateModifiedChecked",  ui->Search_checkBox_Date->isChecked());
+            query.bindValue(":DateModifiedMin",      ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+            query.bindValue(":DateModifiedMax",      ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+            query.bindValue(":DuplicatesChecked",    ui->Search_checkBox_Duplicates->isChecked());
+            query.bindValue(":DuplicateName",        ui->Search_checkBox_DuplicateName->isChecked());
+            query.bindValue(":DuplicateSize",        ui->Search_checkBox_DuplicateSize->isChecked());
+            query.bindValue(":DuplicateDateModified",ui->Search_checkBox_DuplicateDateModified->isChecked());
+            query.bindValue(":ShowFolders",          ui->Search_checkBox_ShowFolders->isChecked());
+            query.bindValue(":searchLocation",       selectedSearchLocation);
+            query.bindValue(":searchStorage",        selectedSearchStorage);
+            query.bindValue(":searchCatalog",        selectedSearchCatalog);
+
+            query.exec();
+
+            //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
+
+        }
+        //----------------------------------------------------------------------
+
+        void MainWindow::loadSearchHistory()
+        {
+            //QMessageBox::information(this,"Katalog","start load: \n");
+
+
+            QSqlQuery querySearchHistory;
+            QString querySearchHistorySQL = QLatin1String(R"(
+                                SELECT *
+                                FROM search
+                                            )");
+            querySearchHistory.prepare(querySearchHistorySQL);
+            querySearchHistory.exec();
+
+            QSqlQueryModel *queryModel = new QSqlQueryModel();
+            queryModel->setQuery(querySearchHistory);
+            ui->Search_tableView_History->setModel(queryModel);
+            ui->Search_tableView_History->resizeColumnsToContents();
+        }
+        //----------------------------------------------------------------------
+

@@ -154,7 +154,7 @@
                         }
 
 
-// FILES ------------------------------------------------
+// FILES ----------------------------------------------------
 
         //Create table query
                 const auto FILE_SQL = QLatin1String(R"(
@@ -178,6 +178,35 @@
                                         catalogFileCount  REAL ,
                                         catalogTotalFileSize REAL ,
                                         recordType TEXT)
+                                    )");
+
+
+// SEARCH ----------------------------------------------------
+
+        //Create table query
+                const auto SEARCH_SQL = QLatin1String(R"(
+                               create  table  if not exists  search(
+                                        dateTime	TEXT,
+                                        TextPhrase	TEXT,
+                                        TextCriteria	TEXT,
+                                        TextSearchIn	TEXT,
+                                        FileType	TEXT,
+                                        FileSizeChecked	INTEGER,
+                                        FileSizeMin	INTEGER,
+                                        FileSizeMinUnit	INTEGER,
+                                        FileSizeMax	INTEGER,
+                                        FileSizeMaxUnit	INTEGER,
+                                        DateModifiedChecked	INTEGER,
+                                        DateModifiedMin	TEXT,
+                                        DateModifiedMax	TEXT,
+                                        DuplicatesChecked	INTEGER,
+                                        DuplicateName	INTEGER,
+                                        DuplicateSize	INTEGER,
+                                        DuplicateDateModified	INTEGER,
+                                        ShowFolders	INTEGER,
+                                        searchLocation	TEXT,
+                                        searchStorage	TEXT,
+                                        searchCatalog	TEXT)
                                     )");
 
 
@@ -205,6 +234,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.exec(STATISTICS_SQL))
+        return q.lastError();
+
+    if (!q.exec(SEARCH_SQL))
         return q.lastError();
 
     return QSqlError();

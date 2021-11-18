@@ -116,11 +116,12 @@
             selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
+            selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+
             selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
-            selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
             selectedFileType        = settings.value("LastSearch/FileType").toString();
             selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
@@ -135,24 +136,29 @@
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
             showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
 
-            ui->Search_checkBox_Duplicates->setChecked(settings.value("LastSearch/DuplicatesOn").toBool());
-            ui->Search_checkBox_DuplicateName->setChecked(settings.value("LastSearch/hasDuplicatesOnName").toBool());
-            ui->Search_checkBox_DuplicateSize->setChecked(settings.value("LastSearch/hasDuplicatesOnSize").toBool());
-            ui->Search_checkBox_DuplicateDateModified->setChecked(settings.value("LastSearch/hasDuplicatesOnDateModified").toBool());
-
+            searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
+            hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
+            hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
+            hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
 
             //Show or Hide ShowHideCatalogResults
-            if ( settings.value("Settings/ShowHideCatalogResults") == ">>"){ //Hide
-                    ui->Search_pushButton_ShowHideCatalogResults->setText(">>");
+            if ( settings.value("Settings/ShowHideCatalogResults") == "arrow-right"){ //Hide
+                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-right"));
                     ui->Search_listView_CatalogsFound->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
             }
 
             //Show or Hide ShowHideCatalogResults
-            if ( settings.value("Settings/ShowHideGlobal") == ">>"){ //Hide
-                    ui->Global_pushButton_ShowHideGlobal->setText(">>");
+            if ( settings.value("Settings/ShowHideGlobal") == "arrow-right"){ //Hide
+                    ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-right"));
                     ui->Global_tabWidget->setHidden(true);
                     ui->Global_label_Global->setHidden(true);
+            }
+
+            //Show or Hide ShowHideSearchResults
+            if ( settings.value("Settings/ShowHideSearchHistory") == "arrow-up"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_tableView_History->setHidden(true);
             }
 
             //General settings
@@ -223,8 +229,8 @@
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
 
-
         //settings.setValue("LastSelectedCatalog", sText);
+
     }
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()

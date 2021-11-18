@@ -84,7 +84,11 @@
             <string notr="true">padding: 2px 10px;</string>
            </property>
            <property name="text">
-            <string>&lt;&lt;</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="arrow-left">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -124,7 +128,7 @@
           <enum>QTabWidget::North</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="Global_tab1_Filters">
           <attribute name="icon">
@@ -2340,7 +2344,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string notr="true">padding: 2px 10px;</string>
                 </property>
                 <property name="text">
-                 <string>&lt;&lt;</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset theme="arrow-left">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -2358,6 +2366,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">padding-left:10px;</string>
+                </property>
                 <property name="locale">
                  <locale language="English" country="UnitedStates"/>
                 </property>
@@ -2365,7 +2376,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Catalogs with results</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -2501,6 +2512,111 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="topMargin">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="Search_pushButton_ShowHideSearchHistory">
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Show/Hide search history</string>
+              </property>
+              <property name="statusTip">
+               <string/>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">padding: 2px 10px;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="arrow-down">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Search_label_CatalogsWithResults_2">
+              <property name="minimumSize">
+               <size>
+                <width>215</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">padding-left:10px;</string>
+              </property>
+              <property name="locale">
+               <locale language="English" country="UnitedStates"/>
+              </property>
+              <property name="text">
+               <string>Search history</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="Search_horizontalSpacer_9">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableView" name="Search_tableView_History">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>160</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

@@ -133,30 +133,33 @@ class MainWindow : public QMainWindow
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
+            bool searchOnSize;
             qint64  selectedMinimumSize;
             qint64  selectedMaximumSize;
             qint64  sizeMultiplierMin;
             qint64  sizeMultiplierMax;
             QString selectedMinSizeUnit;
             QString selectedMaxSizeUnit;
-            QString selectedTags;
-            QString sourceCatalog;
-            QStringList catalogSelectedList;
+            QString selectedTags;          
+            bool searchOnDuplicates;
             bool hasDuplicatesOnName;
             bool hasDuplicatesOnSize;
             bool hasDuplicatesOnDateModified;
+            bool searchOnDate;
             QDateTime selectedDateMin;
             QDateTime selectedDateMax;
             bool showFoldersOnly;
-            bool searchOnDate;
-            bool searchOnSize;
 
+            QString sourceCatalog;
+            QStringList catalogSelectedList;
             void initiateSearchValues();
             void refreshLocationSelectionList();
             void refreshStorageSelectionList(QString selectedLocation);
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
             QString exportSearchResults();
             QString getCatalogStorageName(QString catalogFilePath);
+            void saveSearchHistory();
+            void loadSearchHistory();
 
             //search
             QList<QString>  sFileNames;
@@ -325,6 +328,8 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
+            void on_Search_pushButton_ShowHideSearchHistory_clicked();
+            void on_Search_tableView_History_activated(const QModelIndex &index);
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);
