@@ -251,6 +251,18 @@
                 ui->Search_dateTimeEdit_Max->setDisabled(true);
             }
         }
+
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Tags_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_comboBox_Tags->setEnabled(true);
+            }
+            else{
+                ui->Search_comboBox_Tags->setDisabled(true);
+            }
+        }
+
         //----------------------------------------------------------------------
         void MainWindow::on_Search_tableView_History_activated(const QModelIndex &index)
         {
@@ -274,21 +286,23 @@
             searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toBool();
             selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toDateTime();
             selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toDateTime();
-            searchOnDuplicates  = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toBool();
-            hasDuplicatesOnName = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
-            hasDuplicatesOnSize = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
+            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toBool();
+            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
             hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
             showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toString();
+            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
-            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toString();
+            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
-            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
+            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         }
@@ -468,7 +482,8 @@
                     selectedDateMax        = ui->Search_dateTimeEdit_Max->dateTime();
                     searchOnSize           = ui->Search_checkBox_Size->isChecked();
                     searchOnDate           = ui->Search_checkBox_Date->isChecked();
-                    //selectedTags         = ui->LE_Tags->text();
+                    searchOnTags           = ui->Search_checkBox_Tags->isChecked();
+                    selectedTag            = ui->Search_comboBox_Tags->currentText();
 
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
@@ -823,7 +838,10 @@
                 QString line;
                 QString reducedLine;
 
-                //Line by Line, test if the file is matching all search criteria
+                //File by file, test if the file is matching all search criteria
+				//Loop principle1: stop further verification as soon as a criteria fails to match
+				//Loop principle2: start with fastest criteria (size, date), end continue with more complex ones (tag, file name)
+				
                 do {
                     //Get line / file data
                         line = stream.readLine();
@@ -852,10 +870,6 @@
                     //Exclude catalog metadata lines which are starting with the character <
                          if (lineFilePath.left(1)=="<"){continue;}
 
-                    //PREDEV: continue if the folder has a matching tag
-                        //selectedTags
-                        //if (selectedTags == selectedTags){continue;}
-
                     //Continue if the file is matching the size range
                     if (searchOnSize==true){
                             if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
@@ -868,6 +882,37 @@
                                     and lineFileDateTime <= selectedDateMax ) ){
                                         continue;}
                         }
+
+					//Continue if the file is matching the tags
+                        if (searchOnTags==true){			
+				
+							bool fileIsMatchingTag = false;
+							
+							//Set query to get a list of folder paths matching the selected tag
+                            QSqlQuery queryTag;
+                            QString queryTagSQL = QLatin1String(R"(
+												SELECT Path
+												FROM tag
+												WHERE Name=:Name
+							)");
+                            queryTag.prepare(queryTagSQL);
+                            queryTag.bindValue(":Name",selectedTag);
+                            queryTag.exec();
+							
+							//Test if the FilePath contains a path from the list of folders matching the selected tag name
+                            while(queryTag.next()){
+                                if ( lineFilePath.contains(queryTag.value(0).toString())==true){
+                                    fileIsMatchingTag = true;
+									break;
+								}
+								//else tagIsMatching==false
+							}
+
+							//If the file is not matching any of the paths, process the next file
+                            if ( !fileIsMatchingTag==true ){
+                                    continue;}
+                        }
+
                     //Finally, verify the text search criteria
                         //Depending on the "Search in" criteria,
                         //reduce the abosulte path to the reaquired text string and match the search text
@@ -976,22 +1021,16 @@
         void MainWindow::getLocationCatalogList(QString location)
         {
             //DEV: REPLACE BY SQL QUERY ON Storage and Catalog TABLE
-
-
             // get all catalog for storage with matching location
             /*
-
             QSqlQuery queryDeviceNumber;
             queryDeviceNumber.prepare(
                         "SELECT * FROM storage, catalog "
                         "WHERE location = " + selectedStorageLocation );
             queryDeviceNumber.exec();
 
-
-
             "SELECT * FROM storage, catalog
             WHERE location = " + location + '"'
-
             */
 
             //QString catalogStorageName;
@@ -1040,9 +1079,7 @@
                                     locationCatalogList << sourceCatalog;
                             }
                         }
-
                     }
-
         }
         //----------------------------------------------------------------------
 
@@ -1080,11 +1117,14 @@
                 ui->Search_dateTimeEdit_Max->setDateTime(selectedDateMax);
                 ui->Search_checkBox_Size->setChecked(searchOnSize);
                 ui->Search_checkBox_Date->setChecked(searchOnDate);
+                ui->Search_checkBox_Tags->setChecked(searchOnTags);
+                ui->Search_comboBox_Tags->setCurrentText(selectedTag);
                 ui->Search_checkBox_Duplicates->setChecked(searchOnDuplicates);
                 ui->Search_checkBox_DuplicateName->setChecked(hasDuplicatesOnName);
                 ui->Search_checkBox_DuplicateSize->setChecked(hasDuplicatesOnSize);
                 ui->Search_checkBox_DuplicateDateModified->setChecked(hasDuplicatesOnDateModified);
                 ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
+
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshLocationSelectionList()
@@ -1286,6 +1326,8 @@
                                     DuplicateSize	,
                                     DuplicateDateModified	,
                                     ShowFolders	,
+                                    TagChecked	,
+                                    Tag     	,
                                     searchLocation	,
                                     searchStorage	,
                                     searchCatalog	)
@@ -1308,6 +1350,8 @@
                                     :DuplicateSize	,
                                     :DuplicateDateModified	,
                                     :ShowFolders	,
+                                    :TagChecked	,
+                                    :Tag     	,
                                     :searchLocation	,
                                     :searchStorage	,
                                     :searchCatalog	)
@@ -1332,6 +1376,8 @@
             query.bindValue(":DuplicateSize",        ui->Search_checkBox_DuplicateSize->isChecked());
             query.bindValue(":DuplicateDateModified",ui->Search_checkBox_DuplicateDateModified->isChecked());
             query.bindValue(":ShowFolders",          ui->Search_checkBox_ShowFolders->isChecked());
+            query.bindValue(":TagChecked",           ui->Search_checkBox_Tags->isChecked());
+            query.bindValue(":Tag",                  ui->Search_comboBox_Tags->currentText());
             query.bindValue(":searchLocation",       selectedSearchLocation);
             query.bindValue(":searchStorage",        selectedSearchStorage);
             query.bindValue(":searchCatalog",        selectedSearchCatalog);

@@ -134,8 +134,9 @@
             selectedDateMax         = QDateTime::fromString(settings.value("LastSearch/DateMax").toString(),"yyyy/MM/dd hh:mm:ss");
             searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
+            searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
             showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
-
+            selectedTag             = settings.value("LastSearch/SearchTag").toString();
             searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
             hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
@@ -224,6 +225,8 @@
         settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+        settings.setValue("LastSearch/searchOnTags", ui->Search_checkBox_Tags->isChecked());
+        settings.setValue("LastSearch/SearchTag", ui->Search_comboBox_Tags->currentText());
 
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
@@ -270,7 +273,6 @@
         //Other tabs
             ui->tabWidget->removeTab(8); //ExploreTreeview
             ui->tabWidget->removeTab(7); //ExploreTreeview
-            ui->tabWidget->removeTab(6); //Tags
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
@@ -360,6 +362,8 @@
         ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
         ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+
     }
     //----------------------------------------------------------------------
     void MainWindow::startDatabase()

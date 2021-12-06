@@ -204,11 +204,24 @@
                                         DuplicateSize	INTEGER,
                                         DuplicateDateModified	INTEGER,
                                         ShowFolders	INTEGER,
+                                        TagChecked	INTEGER,
+                                        Tag     	TEXT,
                                         searchLocation	TEXT,
                                         searchStorage	TEXT,
                                         searchCatalog	TEXT)
                                     )");
 
+// TAG ----------------------------------------------------
+
+        //Create table query
+                const auto TAG_SQL = QLatin1String(R"(
+										create  table  if not exists  tag(
+											Name		TEXT,
+											Path		TEXT,
+											Type		TEXT,
+											dateTime	TEXT
+                                        )
+                )");
 
 // Database initialization ------------------------------------------------
 
@@ -237,6 +250,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.exec(SEARCH_SQL))
+        return q.lastError();
+
+    if (!q.exec(TAG_SQL))
         return q.lastError();
 
     return QSqlError();

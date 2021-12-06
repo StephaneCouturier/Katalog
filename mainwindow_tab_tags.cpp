@@ -83,19 +83,19 @@
             //KMessageBox::information(this,"No tags file found.");
 
         //Refresh the lists
-        loadFolderTagModel();
-
+        loadTagsToTable();
+        loadTagsTableToModel();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_Reload_clicked()
     {
-        loadFolderTagModel();
+        loadTagsTableToModel();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_listView_ExistingTags_clicked(const QModelIndex &index)
     {
-        QString selectedTag = ui->Tags_listView_ExistingTags->model()->index(index.row(), 0, QModelIndex()).data().toString();
-        ui->Tags_lineEdit_TagName->setText(selectedTag);
+        QString selectedTagListName = ui->Tags_listView_ExistingTags->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        ui->Tags_lineEdit_TagName->setText(selectedTagListName);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_treeview_Explorer_clicked(const QModelIndex &index)
@@ -110,7 +110,7 @@
     }
     //----------------------------------------------------------------------
 
-//Methods-----------------------------------------------------------------------
+//Methods-------------------------------------------------------------------
 
     void MainWindow::loadFileSystemTags(QString newTagFolderPath)
     {
@@ -141,63 +141,92 @@
             ui->Tags_treeview_Explorer->expandToDepth(1);
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadFolderTagModel()
+    void MainWindow::loadTagsToTable()
+    {
+        //Clear table
+        QSqlQuery queryDelete;
+        QString queryDeleteSQL = QLatin1String(R"(
+                                    DELETE FROM tag
+                                )");
+        queryDelete.prepare(queryDeleteSQL);
+        queryDelete.exec();
+
+        //Prepare for using the csv file storing tag data
+        QString tagFilePath = collectionFolder + "/" + "tags.csv";
+
+        QFile tagFile(tagFilePath);
+        if(!tagFile.open(QIODevice::ReadOnly)) {
+                return;
+        }
+
+        // Loop through each line of the csv file, and load data in table
+        QTextStream textStream(&tagFile);
+        QStringList fieldList;
+        QSqlQuery queryInsert;
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                    break;
+            else{
+                //Split the line with tabulation into a list
+                fieldList = line.split('\t');
+
+                //Check data
+                if (fieldList.count()!=2)
+                        return;
+
+                //Append data to the table
+                QString queryInsertSQL = QLatin1String(R"(
+                                            INSERT INTO tag(
+                                                            Name,
+                                                            Path,
+                                                            Type,
+                                                            dateTime
+                                            )
+                                            VALUES(
+                                                            :Name,
+                                                            :Path,
+                                                            :Type,
+                                                            :dateTime
+                                            )
+                )");
+                queryInsert.prepare(queryInsertSQL);
+                queryInsert.bindValue(":Name",fieldList[1]);
+                queryInsert.bindValue(":Path",fieldList[0]);
+                queryInsert.bindValue(":Type","not_stored_in_file_yet");    //fieldList[2]
+                queryInsert.bindValue(":dateTime","not_stored_in_file_yet");//fieldList[3]
+                queryInsert.exec();
+             }
+        }
+    }
+    //----------------------------------------------------------------------
+	void MainWindow::loadTagsTableToModel()
     {
         //Set up temporary lists
         QList<QString> tFolderPaths;
         QList<QString> tTagNames;
 
-        //Get data
+		//Get full list of tags
+		QSqlQuery query;
+		QString querySQL = QLatin1String(R"(
+                                    SELECT Path, Name
+                                    FROM tag
+                                    )");
+		query.prepare(querySQL);
+		query.exec();
 
-            // Get infos stored in the file
-            QString tagFilePath = collectionFolder + "/" + "tags.csv";
-
-            QFile tagFile(tagFilePath);
-            if(!tagFile.open(QIODevice::ReadOnly)) {
-                //KMessageBox::information(this,"No tag file found.");
-                //ui->TrV_Storage->nativeParentWidget()model()->>removeRows();
-                return;
-            }
-
-            QTextStream textStream(&tagFile);
-
-            //qint64 storageGrandTotal = 0;
-            //qint64 storageGrandFree  = 0;
-
-            while (true)
-            {
-                QString line = textStream.readLine();
-                if (line.isNull())
-                    break;
-                else
-                    if (line.left(6)!="Folder"){
-
-                        //Split the string with tabulation into a list
-                        QStringList fieldList = line.split('\t');
-
-                        //QIcon icon;
-                        //icon.fromTheme("drive-harddisk");
-
-                        //Append data to the lists
-                        tFolderPaths.append(fieldList[0]);
-                        tTagNames.append(fieldList[1]);
-
-                        //storageGrandTotal = storageGrandTotal + fieldList[7].toLongLong();
-                        //storageGrandFree  = storageGrandFree  + fieldList[8].toLongLong();
-                    }
-                }
-
-            //Calculate totals
-            //int storageCount = sNames.count();
-            //qint64 storageGrandUsed = storageGrandTotal - storageGrandFree;
+		//Populate lists
+		while(query.next()){
+                        tFolderPaths << query.value(0).toString();
+                        tTagNames    << query.value(1).toString();
+		}
 
         // Create model
         Tag *tagModel = new Tag(this);
 
         // Populate model with data
-        tagModel->populateTagData(tFolderPaths,
-                                          tTagNames
-                                          );
+        tagModel->populateTagData(tFolderPaths, tTagNames);
 
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);
@@ -208,45 +237,15 @@
         ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(0,Qt::AscendingOrder);
         ui->Tags_treeView_FolderTags->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Tags_treeView_FolderTags->header()->resizeSection(0, 350); //Folder
-        //ui->TrV_FolderTags->header()->resizeSection(1, 200); //Tag
-        //ui->TrV_FolderTags->header()->hideSection(0); //Path
-
-        //ui->L_StorageCountValue->setText(QString::number(storageCount));
-        //ui->L_StorageSpaceTotalValue->setText(QString::number(storageGrandTotal));
-        //ui->L_StorageSpaceUsedValue->setText(QString::number(storageGrandUsed));
-        //ui->L_StorageSpaceFreeValue->setText(QString::number(storageGrandFree));
 
         QList<QString> tTagUniqueNames;
         tTagUniqueNames = tTagNames;
         tTagUniqueNames.removeDuplicates();
 
-        //ui->LI_ExistingTags->setModel()
-
-        //QStringListModel* model;
-        //QStringList stringList;// = tTagNames;
-        //stringList.append("test");
-
-        //model->setStringList(stringList);
-        //ui->LI_ExistingTags->setModel(model);
-
-        //catalogFoundList.removeDuplicates();
-
-        //Keep the catalog file name only
-    //    foreach(QString item, catalogFoundList){
-    //            int index = catalogFoundList.indexOf(item);
-    //            //QDir dir(item);
-    //            QFileInfo fileInfo(item);
-
-    //            //catalogFoundList[index] = dir.dirName();
-    //            catalogFoundList[index] = fileInfo.baseName();
-
-    //    }
-
         //Load list of catalogs in which files where found
         tagListModel = new QStringListModel(this);
         tagListModel->setStringList(tTagUniqueNames);
         ui->Tags_listView_ExistingTags->setModel(tagListModel);
-
+        ui->Search_comboBox_Tags->setModel(tagListModel);
     }
     //----------------------------------------------------------------------
-

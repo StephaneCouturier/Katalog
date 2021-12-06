@@ -140,15 +140,17 @@ class MainWindow : public QMainWindow
             qint64  sizeMultiplierMax;
             QString selectedMinSizeUnit;
             QString selectedMaxSizeUnit;
-            QString selectedTags;          
+            QString selectedTagName;
             bool searchOnDuplicates;
             bool hasDuplicatesOnName;
             bool hasDuplicatesOnSize;
             bool hasDuplicatesOnDateModified;
             bool searchOnDate;
+            bool searchOnTags;
             QDateTime selectedDateMin;
             QDateTime selectedDateMax;
             bool showFoldersOnly;
+            QString selectedTag;
 
             QString sourceCatalog;
             QStringList catalogSelectedList;
@@ -327,6 +329,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
+            void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
             void on_Search_pushButton_ShowHideSearchHistory_clicked();
             void on_Search_tableView_History_activated(const QModelIndex &index);
@@ -410,7 +413,8 @@ class MainWindow : public QMainWindow
             void on_Tags_pushButton_Reload_clicked();
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
-            void loadFolderTagModel();
+            void loadTagsToTable();
+            void loadTagsTableToModel();
 
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
