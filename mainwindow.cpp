@@ -63,8 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             //Set current version and date
-            currentVersion = "1.05";
-            releaseDate = "2021-11-15";
+            currentVersion = "1.06";
+            releaseDate = "2021-12-06";
             developmentMode = false;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
@@ -76,15 +76,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
-            //Hide user interface items that are not ready for use (under development).
+            //Always hide some widget at start
+            ui->Catalogs_widget_EditCatalog->hide();
+
+            //Hide user interface items that are not ready for use (development).
             if(developmentMode==false){
                 hideDevelopmentUIItems();
-                ui->Catalogs_widget_EditCatalog->hide();
             }
 
-            //For Linux, Set up KDE Menu/Icon actions
+            //For Linux
             #ifdef Q_OS_LINUX
-            setupActions();
+                //Set up KDE Menu/Icon actions
+                setupActions();
+                //Hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
+                ui->Search_lineEdit_SearchText->hide();
             #endif
 
         //Load user settings
@@ -120,8 +125,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-    //setup tab: Search
-            initiateSearchValues();
+
 
     //setup tab: Catalogs
 
@@ -147,7 +151,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Tags_lineEdit_FolderPath->setText("/");
             //Always Load the file system for the treeview
             loadFileSystemTags("/");
-            loadFolderTagModel();
+            loadTagsToTable();
+            loadTagsTableToModel();
 
     //setup tab: Settings
         //Load path of last collection used
@@ -177,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (selectedCatalogFile != ""){
                 openCatalogToExplore();
             }
+
+    //setup tab: Search
+            initiateSearchValues();
 
 //DEV StorageTreeModel
             StorageTreeModel *storagetreeModel = new StorageTreeModel();
