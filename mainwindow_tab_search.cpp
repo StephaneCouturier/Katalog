@@ -657,6 +657,15 @@
                 int numberFilesResult = searchResultsCatalog->rowCount();
                 ui->Search_label_NumberResults->setNum(numberFilesResult);
 
+                //Count and display the total size of files found
+                qint64 sizeResult = 0;
+                qint64 sizeItem;
+                foreach (sizeItem, sFileSizes) {
+                    sizeResult = sizeResult + sizeItem;
+                }
+                QString formatedSizeResult = QLocale().formattedDataSize(sizeResult);
+                ui->Search_label_SizeResults->setText(formatedSizeResult);
+
                 //Save the search parameters to the seetings file
                 saveSettings();
 
