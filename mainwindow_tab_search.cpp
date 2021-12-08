@@ -1441,23 +1441,18 @@
             query.bindValue(":searchLocation",       selectedSearchLocation);
             query.bindValue(":searchStorage",        selectedSearchStorage);
             query.bindValue(":searchCatalog",        selectedSearchCatalog);
-
             query.exec();
-
-            //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
 
         }
         //----------------------------------------------------------------------
 
         void MainWindow::loadSearchHistory()
         {
-            //QMessageBox::information(this,"Katalog","start load: \n");
-
-
             QSqlQuery querySearchHistory;
             QString querySearchHistorySQL = QLatin1String(R"(
-                                SELECT *
-                                FROM search
+                                                SELECT *
+                                                FROM search
+                                                ORDER BY dateTime DESC
                                             )");
             querySearchHistory.prepare(querySearchHistorySQL);
             querySearchHistory.exec();
