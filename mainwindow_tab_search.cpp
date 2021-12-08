@@ -192,7 +192,7 @@
                     ui->Search_tableView_History->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-up");
+                    settings.setValue("Settings/ShowHideSearchHistory", "arrow-up");
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-down"));
