@@ -326,14 +326,15 @@ class MainWindow : public QMainWindow
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
+            void on_Search_pushButton_ShowHideSearchCriteria_clicked();
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
+            void on_Search_pushButton_ShowHideSearchHistory_clicked();
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
             void on_Search_checkBox_Text_toggled(bool checked);
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
-            void on_Search_pushButton_ShowHideSearchHistory_clicked();
             void on_Search_tableView_History_activated(const QModelIndex &index);
 
             void setupFileContextMenu();
@@ -421,6 +422,7 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
+
 
 
 

@@ -159,6 +159,26 @@
             searchFiles();
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_ShowHideSearchCriteria_clicked()
+        {
+            QString iconName = ui->Search_pushButton_ShowHideSearchCriteria->icon().name();
+
+            if ( iconName == "arrow-up"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_widget_SearchCriteria->setHidden(true);
+
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideSearchCriteria", "arrow-down");
+            }
+            else{ //Show
+                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("arrow-up"));
+                    ui->Search_widget_SearchCriteria->setHidden(false);
+
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/ShowHideSearchCriteria", "arrow-up");
+            }
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ShowHideCatalogResults_clicked()
         {
             QString iconName = ui->Search_pushButton_ShowHideCatalogResults->icon().name();

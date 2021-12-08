@@ -143,6 +143,12 @@
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
             hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
 
+            //Show or Hide ShowHideSearchCriteria
+            if ( settings.value("Settings/ShowHideSearchCriteria") == "arrow-down"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_widget_SearchCriteria->setHidden(true);
+            }
+
             //Show or Hide ShowHideCatalogResults
             if ( settings.value("Settings/ShowHideCatalogResults") == "arrow-right"){ //Hide
                     ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-right"));
@@ -150,16 +156,16 @@
                     ui->Search_label_CatalogsWithResults->setHidden(true);
             }
 
-            //Show or Hide ShowHideCatalogResults
+            //Show or Hide ShowHideGlobal
             if ( settings.value("Settings/ShowHideGlobal") == "arrow-right"){ //Hide
                     ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-right"));
                     ui->Global_tabWidget->setHidden(true);
                     ui->Global_label_Global->setHidden(true);
             }
 
-            //Show or Hide ShowHideSearchResults
+            //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "arrow-up"){ //Hide
-                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-up"));
                     ui->Search_tableView_History->setHidden(true);
             }
 
