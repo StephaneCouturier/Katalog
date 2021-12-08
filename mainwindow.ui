@@ -72,6 +72,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Verify if a new version of Katalog is available when starting the app.</string>
+         </property>
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
          </property>
@@ -370,7 +373,7 @@
                <item row="4" column="1">
                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
                  <property name="toolTip">
-                  <string>Keep records of files and size for Statistics</string>
+                  <string>Verify if a new version of Katalog is available when starting the app.</string>
                  </property>
                  <property name="text">
                   <string>Check at start up</string>
@@ -746,6 +749,19 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="3" column="0">
+        <spacer name="Filters_verticalSpacer_00">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
