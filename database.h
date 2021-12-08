@@ -187,6 +187,7 @@
                 const auto SEARCH_SQL = QLatin1String(R"(
                                create  table  if not exists  search(
                                         dateTime	TEXT,
+                                        TextChecked	INTEGER,
                                         TextPhrase	TEXT,
                                         TextCriteria	TEXT,
                                         TextSearchIn	TEXT,

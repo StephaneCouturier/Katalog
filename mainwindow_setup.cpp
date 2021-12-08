@@ -135,6 +135,7 @@
             searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
             searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
+            searchOnText            = settings.value("LastSearch/searchOnText").toBool();
             showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
             selectedTag             = settings.value("LastSearch/SearchTag").toString();
             searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
@@ -225,6 +226,7 @@
         settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+        settings.setValue("LastSearch/searchOnText", ui->Search_checkBox_Text->isChecked());
         settings.setValue("LastSearch/searchOnTags", ui->Search_checkBox_Tags->isChecked());
         settings.setValue("LastSearch/SearchTag", ui->Search_comboBox_Tags->currentText());
 

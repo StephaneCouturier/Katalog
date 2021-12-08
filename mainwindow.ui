@@ -878,42 +878,30 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="Search_label_Text">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QCheckBox" name="Search_checkBox_Text">
               <property name="minimumSize">
                <size>
-                <width>60</width>
+                <width>70</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>60</width>
+                <width>70</width>
                 <height>16777215</height>
                </size>
               </property>
-              <property name="font">
-               <font>
-                <family>Noto Sans</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="locale">
-               <locale language="English" country="UnitedStates"/>
+              <property name="toolTip">
+               <string>Choose to only show folders as results</string>
               </property>
               <property name="text">
                <string>Text</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <property name="checked">
+               <bool>true</bool>
               </property>
-              <property name="margin">
-               <number>6</number>
+              <property name="tristate">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -1158,6 +1146,9 @@
             </item>
             <item>
              <widget class="QLabel" name="Search_label_With">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>

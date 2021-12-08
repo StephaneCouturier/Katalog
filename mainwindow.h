@@ -147,6 +147,7 @@ class MainWindow : public QMainWindow
             bool hasDuplicatesOnDateModified;
             bool searchOnDate;
             bool searchOnTags;
+            bool searchOnText;
             QDateTime selectedDateMin;
             QDateTime selectedDateMax;
             bool showFoldersOnly;
@@ -327,6 +328,7 @@ class MainWindow : public QMainWindow
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
+            void on_Search_checkBox_Text_toggled(bool checked);
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);

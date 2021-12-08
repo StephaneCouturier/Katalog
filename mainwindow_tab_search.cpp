@@ -121,6 +121,7 @@
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("2000-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_label_NumberResults->setText("");
+            ui->Search_checkBox_Text->setEnabled(true);
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
@@ -262,47 +263,69 @@
                 ui->Search_comboBox_Tags->setDisabled(true);
             }
         }
-
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Text_toggled(bool checked)
+        {
+            if(checked==1){
+                #ifdef Q_OS_LINUX
+                    ui->Search_kcombobox_SearchText->setEnabled(true);
+                #else
+                    ui->Search_lineEdit_SearchText->setEnabled(true);
+                #endif
+                    ui->Search_comboBox_TextCriteria->setEnabled(true);
+                    ui->Search_comboBox_SearchIn->setEnabled(true);
+            }
+            else{
+                #ifdef Q_OS_LINUX
+                    ui->Search_kcombobox_SearchText->setDisabled(true);
+                #else
+                    ui->Search_lineEdit_SearchText->setDisabled(true);
+                #endif
+                    ui->Search_comboBox_TextCriteria->setDisabled(true);
+                    ui->Search_comboBox_SearchIn->setDisabled(true);
+            }
+        }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_tableView_History_activated(const QModelIndex &index)
         {
             //Restore the criteria of the selected search history
+            searchOnText         = ui->Search_tableView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
 
-            QString TextPhrase = ui->Search_tableView_History->model()->index(index.row(), 1, QModelIndex()).data().toString();
+            QString TextPhrase   = ui->Search_tableView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
             #ifdef Q_OS_LINUX
                     ui->Search_kcombobox_SearchText->setEditText(TextPhrase);
             #else
                     ui->Search_lineEdit_SearchText->setText(TextPhrase);
             #endif
 
-            selectedTextCriteria = ui->Search_tableView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
-            selectedSearchIn     = ui->Search_tableView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toBool();
-            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toInt();
-            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toString();
-            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
-            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
-            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toBool();
-            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toDateTime();
-            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toDateTime();
-            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toBool();
-            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
-            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
-            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
-            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
-            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
-            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toString();
+            selectedTextCriteria = ui->Search_tableView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            selectedSearchIn     = ui->Search_tableView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toBool();
+            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toInt();
+            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toString();
+            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toInt();
+            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toString();
+            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toBool();
+            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toDateTime();
+            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
+            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
+            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
+            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
+            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
-            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
+            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
-            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
+            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         }
@@ -430,7 +453,7 @@
         void MainWindow::searchFiles()
         {
             // Start animation while opening
-            QApplication::setOverrideCursor(Qt::WaitCursor);
+            QApplication::setOverrideCursor(Qt::WaitCursor);           
 
             //Prepare the SEARCH -------------------------------
 
@@ -453,12 +476,6 @@
                     #else
                     searchText = ui->Search_lineEdit_SearchText->text();
                     #endif
-
-                    //Do nothing if there is no search text
-                    if (searchText==""){
-                        QApplication::restoreOverrideCursor();
-                        return;
-                    }
 
                     //Add searchText to a list, to retrieved it later
                     #ifdef Q_OS_LINUX
@@ -483,7 +500,15 @@
                     searchOnSize           = ui->Search_checkBox_Size->isChecked();
                     searchOnDate           = ui->Search_checkBox_Date->isChecked();
                     searchOnTags           = ui->Search_checkBox_Tags->isChecked();
+                    searchOnText           = ui->Search_checkBox_Text->isChecked();
                     selectedTag            = ui->Search_comboBox_Tags->currentText();
+
+                    //Verify criteria and validity of the search
+                        if(searchOnText==true and searchText==""){
+                            QApplication::restoreOverrideCursor();
+                            QMessageBox::information(this,"Katalog",tr("Enter a Text to search, or untick to skip this criteria"));
+                            return;
+                        }
 
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
@@ -914,6 +939,7 @@
                         }
 
                     //Finally, verify the text search criteria
+                    if (searchOnText==true){
                         //Depending on the "Search in" criteria,
                         //reduce the abosulte path to the reaquired text string and match the search text
                         if(selectedSearchIn == tr("File names only"))
@@ -946,30 +972,54 @@
                             match = regex.match(lineFilePath);
                         }
 
-                    //If the file is matching the criteria, add it and its catalog to the search results
-                    if (match.hasMatch()){
-                        filesFoundList << lineFilePath;
-                        catalogFoundList.insert(0,sourceCatalogName);
+                        //If the file is matching the criteria, add it and its catalog to the search results
+                        if (match.hasMatch()){
+                            filesFoundList << lineFilePath;
+                            catalogFoundList.insert(0,sourceCatalogName);
 
-                        //Retrieve other file info
-                        QFileInfo file(lineFilePath);
+                            //Retrieve other file info
+                            QFileInfo file(lineFilePath);
 
-                        // Get the fileDateTime from the list if available
-                        QString lineFileDatetime;
-                        if (fieldListCount == 3){
-                                lineFileDatetime = lineFieldList[2];}
-                        else lineFileDatetime = "";
+                            // Get the fileDateTime from the list if available
+                            QString lineFileDatetime;
+                            if (fieldListCount == 3){
+                                    lineFileDatetime = lineFieldList[2];}
+                            else lineFileDatetime = "";
 
-                        //Populate result lists
-                        sFileNames.append(file.fileName());
-                        sFilePaths.append(file.path());
-                        sFileSizes.append(lineFileSize);
-                        sFileDateTimes.append(lineFileDatetime);
-                        sFileCatalogs.append(sourceCatalogName);
+                            //Populate result lists
+                            sFileNames.append(file.fileName());
+                            sFilePaths.append(file.path());
+                            sFileSizes.append(lineFileSize);
+                            sFileDateTimes.append(lineFileDatetime);
+                            sFileCatalogs.append(sourceCatalogName);
+                        }
+                    }
+                    else{
+                        //Add the file qnd its catalog to the results, excluding blank lines
+                        if (lineFilePath !=""){
+                            filesFoundList << lineFilePath;
+                            catalogFoundList.insert(0,sourceCatalogName);
 
+                            //Retrieve other file info
+                            QFileInfo file(lineFilePath);
+
+                            // Get the fileDateTime from the list if available
+                            QString lineFileDatetime;
+                            if (fieldListCount == 3){
+                                    lineFileDatetime = lineFieldList[2];}
+                            else lineFileDatetime = "";
+
+                            //Populate result lists
+                            sFileNames.append(file.fileName());
+                            sFilePaths.append(file.path());
+                            sFileSizes.append(lineFileSize);
+                            sFileDateTimes.append(lineFileDatetime);
+                            sFileCatalogs.append(sourceCatalogName);
+                        }
                     }
 
                 } while(!line.isNull());
+
             }
             else return;
 
@@ -1106,6 +1156,7 @@
                     selectedMaximumSize = 1000;
 
             //Set values
+                ui->Search_checkBox_Text->setChecked(searchOnText);
                 ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
                 ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
                 ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
@@ -1309,6 +1360,7 @@
             QString querySQL = QLatin1String(R"(
                                 INSERT INTO search(
                                     dateTime	,
+                                    TextChecked ,
                                     TextPhrase	,
                                     TextCriteria	,
                                     TextSearchIn	,
@@ -1333,6 +1385,7 @@
                                     searchCatalog	)
                                 VALUES(
                                     :dateTime	,
+                                    :TextChecked ,
                                     :TextPhrase	,
                                     :TextCriteria	,
                                     :TextSearchIn	,
@@ -1359,7 +1412,14 @@
 
             query.prepare(querySQL);
             query.bindValue(":dateTime",             searchDateTime);
+            query.bindValue(":TextChecked",          ui->Search_checkBox_Text->isChecked());
+
+            #ifdef Q_OS_LINUX
             query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
+            #else
+            query.bindValue(":TextPhrase",           ui->Search_lineEdit_SearchText->currentText());
+            #endif
+
             query.bindValue(":TextCriteria",         selectedTextCriteria);
             query.bindValue(":TextSearchIn",         selectedSearchIn);
             query.bindValue(":FileType",             selectedFileType);

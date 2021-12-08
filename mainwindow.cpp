@@ -125,8 +125,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-
-
+    //setup tab: Search step 1 of 2
+            searchOnText = true;
     //setup tab: Catalogs
 
     //setup tab: Storage
@@ -183,7 +183,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 openCatalogToExplore();
             }
 
-    //setup tab: Search
+    //setup tab: Search step 2 of 2
+            searchOnText = true;
             initiateSearchValues();
 
 //DEV StorageTreeModel
