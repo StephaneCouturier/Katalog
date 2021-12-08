@@ -174,6 +174,13 @@ class MainWindow : public QMainWindow
             QString regexFileType;
             void searchFiles();
             void searchFilesInCatalog(const QString &sourceCatalog);
+            qint64 filesFoundNumber;
+            qint64 filesFoundTotalSize;
+            qint64 filesFoundAverageSize;
+            qint64 filesFoundMinSize;
+            qint64 filesFoundMaxSize;
+            QString filesFoundMinDate;
+            QString filesFoundMaxDate;
 
             //outputs
             QStringList filesFoundList;
@@ -336,6 +343,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
             void on_Search_tableView_History_activated(const QModelIndex &index);
+            void on_Search_pushButton_FileFoundMoreStatistics_clicked();
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);

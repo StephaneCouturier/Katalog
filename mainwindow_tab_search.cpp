@@ -121,7 +121,9 @@
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("2000-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_label_NumberResults->setText("");
+            ui->Search_label_SizeResults->setText("");
             ui->Search_checkBox_Text->setEnabled(true);
+            ui->Search_pushButton_FileFoundMoreStatistics->setDisabled(true);
 
             //Clear catalog and file results (load an empty model)
             Catalog *empty = new Catalog(this);
@@ -272,7 +274,6 @@
                 ui->Search_dateTimeEdit_Max->setDisabled(true);
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Tags_toggled(bool checked)
         {
@@ -348,6 +349,28 @@
             selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_FileFoundMoreStatistics_clicked()
+        {
+            QMessageBox::information(this,"Katalog",tr("<br/><b>Files Found Statistics</b><br/>"
+                                     "<table> <tr><td>Files found:  </td><td><b> %1 </b> <br/> </td></tr>"
+                                             "<tr><td>Total size:   </td><td><b> %2 </b>  </td></tr>"
+                                             "<tr><td>Average size: </td><td><b> %3 </b>  </td></tr>"
+                                             "<tr><td>Min size:     </td><td><b> %4 </b>  </td></tr>"
+                                             "<tr><td>Max size:     </td><td><b> %5 </b>  <br/></td></tr>"
+                                             "<tr><td>Min Date:     </td><td><b> %6 </b>  </td></tr>"
+                                             "<tr><td>Max Date:     </td><td><b> %7 </b>  </td></tr>"
+                                     "</table>"
+                                     ).arg(
+                                           QString::number(filesFoundList.count()),
+                                           QLocale().formattedDataSize(filesFoundTotalSize),
+                                           QLocale().formattedDataSize(filesFoundAverageSize),
+                                           QLocale().formattedDataSize(filesFoundMinSize),
+                                           QLocale().formattedDataSize(filesFoundMaxSize),
+                                           filesFoundMinDate,
+                                           filesFoundMaxDate)
+                                     ,Qt::TextFormat(Qt::RichText));
         }
         //----------------------------------------------------------------------
         //Context Menu methods
@@ -673,18 +696,33 @@
                     ui->Search_label_FoundTitle->setText(tr("Files found"));
                 }
 
-                //Count and display the number of files found
-                int numberFilesResult = searchResultsCatalog->rowCount();
-                ui->Search_label_NumberResults->setNum(numberFilesResult);
+                //Files found Statistics
+                    //Count and display the number of files found
+                    filesFoundNumber = searchResultsCatalog->rowCount();
+                    ui->Search_label_NumberResults->setText(QString::number(filesFoundNumber));
 
-                //Count and display the total size of files found
-                qint64 sizeResult = 0;
-                qint64 sizeItem;
-                foreach (sizeItem, sFileSizes) {
-                    sizeResult = sizeResult + sizeItem;
-                }
-                QString formatedSizeResult = QLocale().formattedDataSize(sizeResult);
-                ui->Search_label_SizeResults->setText(formatedSizeResult);
+                    //Count and display the total size of files found
+                    filesFoundTotalSize = 0;
+                    qint64 sizeItem;
+                    foreach (sizeItem, sFileSizes) {
+                        filesFoundTotalSize = filesFoundTotalSize + sizeItem;
+                    }
+                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
+
+                    //Other statistics
+                    filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
+
+                    QList<qint64> fileSizeList = sFileSizes;
+                    std::sort(fileSizeList.begin(), fileSizeList.end());
+                    filesFoundMinSize = fileSizeList.first();
+                    filesFoundMaxSize = fileSizeList.last();
+
+                    QList<QString> fileDateList = sFileDateTimes;
+                    std::sort(fileDateList.begin(), fileDateList.end());
+                    filesFoundMinDate = fileDateList.first();
+                    filesFoundMaxDate = fileDateList.last();
+
+                    ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
 
                 //Save the search parameters to the seetings file
                 saveSettings();
