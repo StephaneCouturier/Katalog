@@ -89,6 +89,10 @@
             originalText.replace("]"," ");
             originalText.replace("{"," ");
             originalText.replace("}"," ");
+            originalText.replace("/"," ");
+            originalText.replace("\\"," ");
+            originalText.replace("'"," ");
+            originalText.replace("\""," ");
             #ifdef Q_OS_LINUX
                 ui->Search_kcombobox_SearchText->setCurrentText(originalText);
             #else
