@@ -263,7 +263,6 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
-            ui->Search_pushButton_FileFoundMoreStatistics->hide();
         //Catalogs
 
         //Create
