@@ -186,6 +186,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //setup tab: Search step 2 of 2
             searchOnText = true;
             initiateSearchValues();
+            //load search history
+                //Define search history file
+                searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
+
+                loadSearchHistoryFileToTable();
+                loadSearchHistoryTableToModel();
 
 //DEV StorageTreeModel
             StorageTreeModel *storagetreeModel = new StorageTreeModel();

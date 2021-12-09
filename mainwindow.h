@@ -162,8 +162,11 @@ class MainWindow : public QMainWindow
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
             QString exportSearchResults();
             QString getCatalogStorageName(QString catalogFilePath);
-            void saveSearchHistory();
-            void loadSearchHistory();
+            void insertSearchHistoryToTable();
+            void loadSearchHistoryTableToModel();
+            void saveSearchHistoryTableToFile();
+            void loadSearchHistoryFileToTable();
+            QString searchHistoryFilePath;
 
             //search
             QList<QString>  sFileNames;
@@ -431,9 +434,6 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
-
-
-
 
 };
 

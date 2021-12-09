@@ -863,8 +863,10 @@
 
                 //Save the search parameters to the settings file
                 saveSettings();
-                saveSearchHistory();
-                loadSearchHistory();
+                insertSearchHistoryToTable();
+                saveSearchHistoryTableToFile();
+                //loadSearchHistoryFileToTable();
+                loadSearchHistoryTableToModel();
 
                 //Stop animation
                 QApplication::restoreOverrideCursor();
@@ -1420,13 +1422,13 @@
             return filename;
         }
         //----------------------------------------------------------------------
-        void MainWindow::saveSearchHistory()
+
+        //----------------------------------------------------------------------
+        void MainWindow::insertSearchHistoryToTable()
         {
             //Save Search to db
             QDateTime nowDateTime = QDateTime::currentDateTime();
             QString searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
-
-            //QMessageBox::information(this,"Katalog","start save: \n" + searchDateTime);
 
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
@@ -1515,10 +1517,190 @@
             query.bindValue(":searchCatalog",        selectedSearchCatalog);
             query.exec();
 
+            //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
+
         }
         //----------------------------------------------------------------------
+        void MainWindow::saveSearchHistoryTableToFile()
+        {
+            //Prepare export
+            QFile searchFile(searchHistoryFilePath);
+            //Create if not exist
+            //QFile exportFile(collectionFolder+"/file.txt");
 
-        void MainWindow::loadSearchHistory()
+            QTextStream out(&searchFile);
+            //DEV ADD HEADER LINE
+            /*
+            out  << "ID"            << "\t"
+                 << "Name"          << "\t"
+                 << "Type"          << "\t"
+                 << "Location"      << "\t"
+                 << "Path"          << "\t"
+                 << "Label"         << "\t"
+                 << "FileSystem"    << "\t"
+                 << "Total"         << "\t"
+                 << "Free"          << "\t"
+                 << "BrandModel"    << "\t"
+                 << "SerialNumber"  << "\t"
+                 << "BuildDate"     << "\t"
+                 << "ContentType"   << "\t"
+                 << "Container"     << "\t"
+                 << "Comment"       << "\t"
+                 << '\n';
+            */
+
+            //Query
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT *
+                                FROM search
+                                ORDER BY dateTime DESC
+                               )");
+            query.prepare(querySQL);
+            query.exec();
+
+            //    Iterate the result
+            //    -- Make a QStringList containing the output of each field
+            QStringList fieldList;
+            while (query.next()) {
+
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                    out << '\t';
+                    out << record.value(i).toString();
+                }
+         //    -- Write the result in the file
+                 //out << line;
+                 out << '\n';
+
+            }
+
+            if(searchFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+                //out << textData;
+        //    Close the file
+                //searchFile.close();
+            }
+
+            //QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+storageFile.fileName());
+            searchFile.close();
+        }
+        //--------------------------------------------------------------------------
+        void MainWindow::loadSearchHistoryFileToTable()
+        {
+            //Define storage file and prepare stream
+            QFile searchFile(searchHistoryFilePath);
+            QTextStream textStream(&searchFile);
+
+            QSqlQuery queryDelete;
+            queryDelete.prepare( "DELETE FROM search" );
+
+            //Open file or return information
+            if(!searchFile.open(QIODevice::ReadOnly)) {
+                return;
+            }
+            //Clear all entries of the current table
+            queryDelete.exec();
+
+            while (true)
+            {
+                QString line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                    if (line.left(2)!="ID"){//test the validity of the file    //DEV NOT OK
+
+                        //Split the string with tabulation into a list
+                        QStringList fieldList = line.split('\t');
+
+                        QString querySQL = QLatin1String(R"(
+                            insert into search(
+                                            dateTime	,
+                                            TextChecked ,
+                                            TextPhrase	,
+                                            TextCriteria	,
+                                            TextSearchIn	,
+                                            FileType	,
+                                            FileSizeChecked	,
+                                            FileSizeMin	,
+                                            FileSizeMinUnit	,
+                                            FileSizeMax	,
+                                            FileSizeMaxUnit	,
+                                            DateModifiedChecked	,
+                                            DateModifiedMin	,
+                                            DateModifiedMax	,
+                                            DuplicatesChecked	,
+                                            DuplicateName	,
+                                            DuplicateSize	,
+                                            DuplicateDateModified	,
+                                            ShowFolders	,
+                                            TagChecked	,
+                                            Tag     	,
+                                            searchLocation	,
+                                            searchStorage	,
+                                            searchCatalog
+                                        )
+                                    values(
+                                            :dateTime	,
+                                            :TextChecked ,
+                                            :TextPhrase	,
+                                            :TextCriteria	,
+                                            :TextSearchIn	,
+                                            :FileType	,
+                                            :FileSizeChecked	,
+                                            :FileSizeMin	,
+                                            :FileSizeMinUnit	,
+                                            :FileSizeMax	,
+                                            :FileSizeMaxUnit	,
+                                            :DateModifiedChecked	,
+                                            :DateModifiedMin	,
+                                            :DateModifiedMax	,
+                                            :DuplicatesChecked	,
+                                            :DuplicateName	,
+                                            :DuplicateSize	,
+                                            :DuplicateDateModified	,
+                                            :ShowFolders	,
+                                            :TagChecked	,
+                                            :Tag     	,
+                                            :searchLocation	,
+                                            :searchStorage	,
+                                            :searchCatalog	)
+                                    )");
+
+                        QSqlQuery insertQuery;
+                        insertQuery.prepare(querySQL);
+                        insertQuery.bindValue(":dateTime",				fieldList[0]);
+                        insertQuery.bindValue(":TextChecked",           fieldList[1]);
+                        insertQuery.bindValue(":TextPhrase",			fieldList[2]);
+                        insertQuery.bindValue(":TextCriteria",			fieldList[3]);
+                        insertQuery.bindValue(":TextSearchIn",			fieldList[4]);
+                        insertQuery.bindValue(":FileType",				fieldList[5]);
+                        insertQuery.bindValue(":FileSizeChecked",		fieldList[6]);
+                        insertQuery.bindValue(":FileSizeMin",			fieldList[7]);
+                        insertQuery.bindValue(":FileSizeMinUnit",		fieldList[8]);
+                        insertQuery.bindValue(":FileSizeMax",			fieldList[9]);
+                        insertQuery.bindValue(":FileSizeMaxUnit",		fieldList[10]);
+                        insertQuery.bindValue(":DateModifiedChecked",	fieldList[11]);
+                        insertQuery.bindValue(":DateModifiedMin",		fieldList[12]);
+                        insertQuery.bindValue(":DateModifiedMax",		fieldList[13]);
+                        insertQuery.bindValue(":DuplicatesChecked",		fieldList[14]);
+                        insertQuery.bindValue(":DuplicateName",			fieldList[15]);
+                        insertQuery.bindValue(":DuplicateSize",			fieldList[16]);
+                        insertQuery.bindValue(":DuplicateDateModified", fieldList[17]);
+                        insertQuery.bindValue(":ShowFolders", 			fieldList[18]);
+                        insertQuery.bindValue(":TagChecked",            fieldList[19]);
+                        insertQuery.bindValue(":Tag",                   fieldList[20]);
+                        insertQuery.bindValue(":searchLocation", 		fieldList[21]);
+                        insertQuery.bindValue(":searchStorage", 		fieldList[22]);
+                        insertQuery.bindValue(":searchCatalog", 		fieldList[23]);
+                        insertQuery.exec();
+                    }
+            }
+            searchFile.close();
+        }
+        //--------------------------------------------------------------------------
+        void MainWindow::loadSearchHistoryTableToModel()
         {
             QSqlQuery querySearchHistory;
             QString querySearchHistorySQL = QLatin1String(R"(
@@ -1535,4 +1717,3 @@
             ui->Search_tableView_History->resizeColumnsToContents();
         }
         //----------------------------------------------------------------------
-
