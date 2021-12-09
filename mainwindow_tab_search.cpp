@@ -713,7 +713,7 @@
                     }
                     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
 
-                    //Other statistics, covering the cqse where no results are returned.
+                    //Other statistics, covering the case where no results are returned.
                     if (filesFoundNumber !=0){
                         filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
                         QList<qint64> fileSizeList = sFileSizes;

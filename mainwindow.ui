@@ -868,7 +868,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>Show/Hide search history</string>
+               <string>Show/Hide search criteria</string>
               </property>
               <property name="statusTip">
                <string/>

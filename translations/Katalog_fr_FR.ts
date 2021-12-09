@@ -470,10 +470,6 @@
         <translation>Montrer/Cacher les Catalogues avec résultats</translation>
     </message>
     <message>
-        <source>&lt;&lt;</source>
-        <translation>&lt;&lt;</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
     </message>
@@ -1169,6 +1165,54 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>DEV_STORAGE</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verify if a new version of Katalog is available when starting the app.</source>
+        <translation>Vérifier si une nouvelle version de Katalog est disponible au démarrage de l&apos;application.</translation>
+    </message>
+    <message>
+        <source>Show/Hide search history</source>
+        <translation>Montrer/Cacher l&apos;historique de recherche</translation>
+    </message>
+    <message>
+        <source>Search criteria</source>
+        <translation>Critères de recherche</translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation>Etiquette</translation>
+    </message>
+    <message>
+        <source>View more statitics about the results</source>
+        <translation>Voir plus de statistiques de résultats</translation>
+    </message>
+    <message>
+        <source>Search history</source>
+        <translation>Historique de recherche</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
+        <translation>&lt;br/&gt;&lt;br/Sur l&apos;écran suivant, choisir un dossier de Collection existant ou créez-en un nouveau.</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
+        <translation>&lt;br/&gt;&lt;b&gt;Prêt à créer un catalogue de fichiers :&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
+        <translation>1- Sélectionner un disque entier ou un répertoire, &lt;br/&gt;2- Sélectionner des options, et &lt;br/&gt;3- cliquer &apos;Créer&apos;&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;&lt;b&gt;Files Found Statistics&lt;/b&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %7 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;br/&gt;&lt;b&gt;Statistiques des Fichiers trouvés&lt;/b&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Fichiers trouvés :  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Totale :   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Moyenne : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Min :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Max :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Date Min :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Date Max :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %7 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>Enter a Text to search, or untick to skip this criteria</source>
+        <translation>Entrer un texte à rechercher, ou décocher pour ignorer ce critère</translation>
+    </message>
+    <message>
+        <source>Show/Hide search criteria</source>
+        <translation>Afficher/Masquer les critères de recherche</translation>
     </message>
 </context>
 <context>
