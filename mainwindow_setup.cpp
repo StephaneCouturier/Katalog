@@ -58,7 +58,6 @@
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(ShowContextMenu(const QPoint&)));
-
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
@@ -66,11 +65,22 @@
         //Check if a settings file already exists. If not, it is considered first use and one gets generted
         QFile settingsFile(settingsFilePath);
         int themeID = 1; //default value for the theme.
-        selectedTab = 3; //default value for the first launch
+        selectedTab = 3; //default value for the first launch. Create screen
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        if (!settingsFile.exists()){
+        firstRun =false;
+
+        if (!settingsFile.exists())
+            firstRun =true;
+
+        collectionFolder = settings.value("General/LastCollectionFolder").toString();
+
+        if (collectionFolder == "")
+            firstRun =true;
+
+        if (firstRun == true){
             //create a file, with default values
-                  QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                  //QSettings settings(settingsFilePath, QSettings:: IniFormat);
                   settings.setValue("General/LastCollectionFolder", QApplication::applicationDirPath());
 
             //Set Language and theme
@@ -83,27 +93,40 @@
             QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
                                                        "It seems this is the first run.<br/><br/>"
                                                        "The following Settings have been applied:<br/>"
-                                                       " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings")));
+                                                       " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
+                                     + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one.")
+                                     );
 
             //Language
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
             //Collection folder choice
+                //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+                collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                            collectionFolder,
+                                                            QFileDialog::ShowDirsOnly
+                                                            | QFileDialog::DontResolveSymlinks);
+
+                //set the location of the application as a default value if a folder was not provided
+                if (collectionFolder =="")
+                    collectionFolder = QApplication::applicationDirPath();
+
+                //save setting
+                settings.setValue("General/LastCollectionFolder", collectionFolder);
 
             //Go to Create screen
-            // add: "Let's go to the Create screen to create your first catalog"
+            QMessageBox::information(this,"Katalog",tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                                         + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+                                         );
 
+            ui->tabWidget->setCurrentIndex(selectedTab);
         }
 
         //Load the settings file
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
             //Collection folder
-            collectionFolder = settings.value("LastCollectionFolder").toString();
-            if(collectionFolder == ""){
-                   collectionFolder = QApplication::applicationDirPath();
-            }
+            if (firstRun != true)
+                collectionFolder = settings.value("General/LastCollectionFolder").toString();
 
             //Restore last Search values
             #ifdef Q_OS_LINUX
@@ -206,7 +229,7 @@
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        settings.setValue("LastCollectionFolder", collectionFolder);
+        settings.setValue("General/LastCollectionFolder", collectionFolder);
         #ifdef Q_OS_LINUX
             settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
         #else        

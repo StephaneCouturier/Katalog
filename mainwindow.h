@@ -83,6 +83,7 @@ class MainWindow : public QMainWindow
         //Global
             QString currentVersion;
             QString releaseDate;
+            bool firstRun;
             bool developmentMode;
 
             //UI
