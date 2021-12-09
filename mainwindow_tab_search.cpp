@@ -713,20 +713,21 @@
                     }
                     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
 
-                    //Other statistics
-                    filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
+                    //Other statistics, covering the cqse where no results are returned.
+                    if (filesFoundNumber !=0){
+                        filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
+                        QList<qint64> fileSizeList = sFileSizes;
+                        std::sort(fileSizeList.begin(), fileSizeList.end());
+                        filesFoundMinSize = fileSizeList.first();
+                        filesFoundMaxSize = fileSizeList.last();
 
-                    QList<qint64> fileSizeList = sFileSizes;
-                    std::sort(fileSizeList.begin(), fileSizeList.end());
-                    filesFoundMinSize = fileSizeList.first();
-                    filesFoundMaxSize = fileSizeList.last();
+                        QList<QString> fileDateList = sFileDateTimes;
+                        std::sort(fileDateList.begin(), fileDateList.end());
+                        filesFoundMinDate = fileDateList.first();
+                        filesFoundMaxDate = fileDateList.last();
 
-                    QList<QString> fileDateList = sFileDateTimes;
-                    std::sort(fileDateList.begin(), fileDateList.end());
-                    filesFoundMinDate = fileDateList.first();
-                    filesFoundMaxDate = fileDateList.last();
-
-                    ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
+                        ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
+                    }
 
                 //Save the search parameters to the seetings file
                 saveSettings();
