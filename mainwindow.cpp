@@ -127,6 +127,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     //setup tab: Search step 1 of 2
             searchOnText = true;
+
+            //Load an empty model to display headers
+            Catalog *empty = new Catalog(this);
+            ui->Search_treeView_FilesFound->setModel(empty);
+            ui->Search_listView_CatalogsFound->setModel(empty);
+
     //setup tab: Catalogs
 
     //setup tab: Storage
@@ -165,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
 
-     //Setup tab: Stats
+        //Setup tab: Stats
             statisticsFileName = "statistics.csv";
             statisticsFilePath = collectionFolder + "/" + statisticsFileName;
             loadStatisticsDataTypes();
@@ -193,7 +199,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadSearchHistoryFileToTable();
                 loadSearchHistoryTableToModel();
 
-//DEV StorageTreeModel
+
+    //DEV StorageTreeModel
             StorageTreeModel *storagetreeModel = new StorageTreeModel();
             //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
             ui->DEV2_treeView_Storage->setModel(storagetreeModel);
