@@ -404,9 +404,9 @@
         countQuery.prepare(countSQL);
         countQuery.exec();
         countQuery.next();
-        ui->Explore_label_DirectoryNumberDisplay->setNum(countQuery.value(0).toInt());
+        ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
 
-      //TreeView TESTS---------------
+        //TreeView TESTS---------------
 
     //    DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
     //    //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
@@ -500,7 +500,6 @@
         countQuery.exec();
         countQuery.next();
 
-        ui->Explore_label_FilesNumberDisplay->setNum(countQuery.value(0).toInt());
-
+        ui->Explore_label_FilesNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
     }
     //----------------------------------------------------------------------

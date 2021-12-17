@@ -468,7 +468,7 @@
 
             ui->Catalogs_label_Catalogs->setText(QString::number(query.value(0).toInt()));
             ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(query.value(1).toLongLong()));
-            ui->Catalogs_label_TotalNumber->setText(QString::number(query.value(2).toInt()));
+            ui->Catalogs_label_TotalNumber->setText(QLocale().toString(query.value(2).toInt()));
 
     }
     //--------------------------------------------------------------------------
