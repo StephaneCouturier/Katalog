@@ -79,6 +79,7 @@
 
                   //Disable button so it cannot be overwritten
                   ui->Storage_pushButton_CreateList->setEnabled(false);
+                  ui->Storage_pushButton_SaveAll->setEnabled(true);
 
                   //Even if empty, load it to the model
                   //loadStorageModel();
