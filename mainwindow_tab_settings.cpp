@@ -99,6 +99,10 @@
         loadCatalogsToModel();
         loadStorageTableToModel();
         refreshStorageStatistics();
+
+        //Load statistics
+        loadStatisticsData();
+        loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
@@ -117,6 +121,10 @@
 
         //Load matching Catalog
         loadCatalogsToModel();
+
+        //Load statistics
+        loadStatisticsData();
+        loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
@@ -127,6 +135,9 @@
 
         selectedSearchCatalog = selectedCatalog;
 
+        //Load statistics
+        loadStatisticsData();
+        loadStatisticsChart();
     }
 
 //SETTINGS / Collection ----------------------------------------------------

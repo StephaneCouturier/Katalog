@@ -238,10 +238,10 @@
             if(selectedSource ==tr("selected catalog")){
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                                    SELECT dateTime, catalogFileCount, catalogTotalFileSize
-                                                    FROM statistics
-                                                    WHERE catalogName = :selectedCatalogforStats
-                                                )");
+                                    SELECT dateTime, catalogFileCount, catalogTotalFileSize
+                                    FROM statistics
+                                    WHERE catalogName = :selectedCatalogforStats
+                                  )");
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":selectedCatalogforStats",selectedCatalogforStats);
                 queryTotalSnapshots.exec();
@@ -285,14 +285,28 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                                    SELECT dateTime, SUM(catalogFileCount), SUM(catalogTotalFileSize)
-                                                    FROM statistics
-                                                    WHERE recordType = 'Snapshot'
-                                                    GROUP BY datetime
-                                                )");
+                                    SELECT dateTime, SUM(statistics.catalogFileCount), SUM(statistics.catalogTotalFileSize)
+                                    FROM statistics
+                                    LEFT JOIN catalog ON catalog.catalogName = statistics.catalogName
+                                    LEFT JOIN storage ON catalog.catalogStorage = storage.storageName
+                                    WHERE recordType = 'Snapshot'
+                                  )");
+
+                //add AND conditions for the selected filters
+                if ( selectedSearchLocation != tr("All") )
+                    querySQL = querySQL + " AND storage.storageLocation = '"+selectedSearchLocation+"' ";
+
+                if ( selectedSearchStorage != tr("All") )
+                    querySQL = querySQL + " AND catalog.catalogStorage = '"+selectedSearchStorage+"' ";
+
+                if ( selectedSearchCatalog != tr("All") )
+                    querySQL = querySQL + " AND catalog.catalogName = '"+selectedSearchCatalog+"' ";
+
+                //add last part
+                querySQL = querySQL + " GROUP BY datetime ";
+
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.exec();
-
 
                 while (queryTotalSnapshots.next()){
 
