@@ -73,7 +73,7 @@
         if (!settingsFile.exists())
             firstRun =true;
 
-        collectionFolder = settings.value("General/LastCollectionFolder").toString();
+        collectionFolder = settings.value("LastCollectionFolder").toString();
 
         if (collectionFolder == "")
             firstRun =true;
@@ -81,7 +81,7 @@
         if (firstRun == true){
             //create a file, with default values
                   //QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                  settings.setValue("General/LastCollectionFolder", QApplication::applicationDirPath());
+                  settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
 
             //Set Language and theme
 
@@ -112,7 +112,7 @@
                     collectionFolder = QApplication::applicationDirPath();
 
                 //save setting
-                settings.setValue("General/LastCollectionFolder", collectionFolder);
+                settings.setValue("LastCollectionFolder", collectionFolder);
 
             //Go to Create screen
             QMessageBox::information(this,"Katalog",tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
@@ -126,7 +126,7 @@
 
             //Collection folder
             if (firstRun != true)
-                collectionFolder = settings.value("General/LastCollectionFolder").toString();
+                collectionFolder = settings.value("LastCollectionFolder").toString();
 
             //Restore last Search values
             #ifdef Q_OS_LINUX
@@ -229,7 +229,7 @@
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        settings.setValue("General/LastCollectionFolder", collectionFolder);
+        settings.setValue("LastCollectionFolder", collectionFolder);
         #ifdef Q_OS_LINUX
             settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
         #else        
