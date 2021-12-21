@@ -431,18 +431,13 @@
                             WHERE filePath =:filePath
                                         )");
 
-        //  if (selectedDirectoryName!="") then no file is loaded
-
+        //  if selectedDirectoryName="" then no file is loaded
 
         QSqlQuery loadCatalogQuery;
         loadCatalogQuery.prepare(selectSQL);
 
-        //DEV fill lists depending on directory selection source
-        if ( tempSelectedTreeviewSource == "treelist"){
-            loadCatalogQuery.bindValue(":filePath", selectedDirectoryName+'/');
-            QMessageBox::information(this,"Katalog","source: treelist, selectedDirectoryName:" + selectedDirectoryName+'/');
-        }
-        else if(selectedCatalogPath==selectedDirectoryName){
+        // fill lists depending on directory selection source
+        if(selectedCatalogPath==selectedDirectoryName){
             loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{
