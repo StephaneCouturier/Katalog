@@ -233,9 +233,9 @@
         query.exec();
         query.next();
         int selectedcatalogFileCount = query.value(0).toInt();
-        if (selectedcatalogFileCount > 100000){
+        if (selectedcatalogFileCount > 500000){
                 int result = QMessageBox::warning(this,"Katalog",
-                          tr("The selected catalog contains more than 100.000 files.<br/>"
+                          tr("The selected catalog contains more than 500.000 files.<br/>"
                              "This could take one or several minutes to open.<br/>"
                              "Do you want to continue?"),QMessageBox::Yes|QMessageBox::Cancel);
                 if ( result ==QMessageBox::Cancel){
@@ -428,11 +428,11 @@
                                     filePath AS Path,
                                     fileCatalog AS Catalog
                             FROM file
+                            WHERE filePath =:filePath
                                         )");
 
-        if (selectedDirectoryName!=""){
-            selectSQL = selectSQL + " WHERE filePath =:filePath";
-        }
+        //  if (selectedDirectoryName!="") then no file is loaded
+
 
         QSqlQuery loadCatalogQuery;
         loadCatalogQuery.prepare(selectSQL);
