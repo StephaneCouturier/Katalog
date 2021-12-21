@@ -2527,7 +2527,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
+                  <width>130</width>
                   <height>0</height>
                  </size>
                 </property>

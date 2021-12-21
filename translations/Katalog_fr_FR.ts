@@ -1144,7 +1144,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Le catalogue sélectionné contient plus de 100 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
+        <translation type="vanished">Le catalogue sélectionné contient plus de 100 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
     </message>
     <message>
         <source>Duplicates on</source>
@@ -1213,6 +1213,10 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Show/Hide search criteria</source>
         <translation>Afficher/Masquer les critères de recherche</translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation>Le catalogue sélectionné contient plus de 500 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
     </message>
 </context>
 <context>

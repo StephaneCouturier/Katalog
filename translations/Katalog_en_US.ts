@@ -1099,10 +1099,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Duplicates on</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,6 +1164,10 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>Show/Hide search criteria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

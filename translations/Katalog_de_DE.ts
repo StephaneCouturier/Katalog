@@ -46,7 +46,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="23"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="539"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="540"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -91,7 +91,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="654"/>
         <location filename="../mainwindow_tab_search.cpp" line="685"/>
         <location filename="../mainwindow_tab_search.cpp" line="842"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="464"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="459"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -99,7 +99,7 @@
         <location filename="../mainwindow.ui" line="208"/>
         <location filename="../mainwindow.ui" line="4652"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="424"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="383"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="384"/>
         <source>Location</source>
         <translation>Standort</translation>
     </message>
@@ -129,8 +129,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="652"/>
         <location filename="../mainwindow_tab_search.cpp" line="683"/>
         <location filename="../mainwindow_tab_search.cpp" line="840"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="462"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="412"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="457"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="426"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -266,7 +266,7 @@
         <location filename="../mainwindow.ui" line="1893"/>
         <location filename="../mainwindow.ui" line="3292"/>
         <location filename="../mainwindow.ui" line="4006"/>
-        <location filename="../mainwindow_tab_search.cpp" line="914"/>
+        <location filename="../mainwindow_tab_search.cpp" line="916"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -304,26 +304,26 @@
     <message>
         <location filename="../mainwindow.ui" line="1292"/>
         <location filename="../mainwindow_tab_search.cpp" line="110"/>
-        <location filename="../mainwindow_tab_search.cpp" line="887"/>
+        <location filename="../mainwindow_tab_search.cpp" line="889"/>
         <source>All Words</source>
         <translation>Alle Worte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1297"/>
-        <location filename="../mainwindow_tab_search.cpp" line="881"/>
+        <location filename="../mainwindow_tab_search.cpp" line="883"/>
         <source>Exact Phrase</source>
         <translation>Exakte Formulierung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1302"/>
         <location filename="../mainwindow_tab_search.cpp" line="582"/>
-        <location filename="../mainwindow_tab_search.cpp" line="883"/>
+        <location filename="../mainwindow_tab_search.cpp" line="885"/>
         <source>Begins With</source>
         <translation>Beginnt mit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1307"/>
-        <location filename="../mainwindow_tab_search.cpp" line="885"/>
+        <location filename="../mainwindow_tab_search.cpp" line="887"/>
         <source>Any Word</source>
         <translation>Jedes Wort</translation>
     </message>
@@ -346,7 +346,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1404"/>
         <location filename="../mainwindow_tab_search.cpp" line="111"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1017"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1019"/>
         <source>File names only</source>
         <translation>Nur Dateinamen</translation>
     </message>
@@ -357,7 +357,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1414"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1025"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1027"/>
         <source>Folder path only</source>
         <translation>Nur Ordnerpfad</translation>
     </message>
@@ -396,7 +396,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="651"/>
         <location filename="../mainwindow_tab_search.cpp" line="682"/>
         <location filename="../mainwindow_tab_search.cpp" line="839"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="461"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="456"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
@@ -424,7 +424,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1826"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="382"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="383"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -439,14 +439,14 @@
         <location filename="../mainwindow.ui" line="3951"/>
         <location filename="../mainwindow_tab_search.cpp" line="112"/>
         <location filename="../mainwindow_tab_search.cpp" line="592"/>
-        <location filename="../mainwindow_tab_search.cpp" line="906"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1270"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1292"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1310"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1338"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1342"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1346"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1370"/>
+        <location filename="../mainwindow_tab_search.cpp" line="908"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1272"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1294"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1312"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1340"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1344"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1348"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1372"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="118"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="121"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="262"/>
@@ -455,14 +455,17 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="456"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="459"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="793"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="373"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="436"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="737"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="374"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="437"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="738"/>
         <location filename="../mainwindow_tab_settings.cpp" line="83"/>
         <location filename="../mainwindow_tab_settings.cpp" line="84"/>
         <location filename="../mainwindow_tab_settings.cpp" line="85"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="196"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="197"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="207"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="208"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="296"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="299"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="302"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -470,7 +473,7 @@
         <location filename="../mainwindow.ui" line="1875"/>
         <location filename="../mainwindow.ui" line="3274"/>
         <location filename="../mainwindow.ui" line="3980"/>
-        <location filename="../mainwindow_tab_search.cpp" line="908"/>
+        <location filename="../mainwindow_tab_search.cpp" line="910"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -478,7 +481,7 @@
         <location filename="../mainwindow.ui" line="1884"/>
         <location filename="../mainwindow.ui" line="3283"/>
         <location filename="../mainwindow.ui" line="3967"/>
-        <location filename="../mainwindow_tab_search.cpp" line="911"/>
+        <location filename="../mainwindow_tab_search.cpp" line="913"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
@@ -486,7 +489,7 @@
         <location filename="../mainwindow.ui" line="1902"/>
         <location filename="../mainwindow.ui" line="3301"/>
         <location filename="../mainwindow.ui" line="3993"/>
-        <location filename="../mainwindow_tab_search.cpp" line="917"/>
+        <location filename="../mainwindow_tab_search.cpp" line="919"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -543,7 +546,7 @@
         <location filename="../mainwindow.ui" line="2955"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="118"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="261"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="309"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="323"/>
         <source>Total File Size</source>
         <translation>Gesamtdateigröße</translation>
     </message>
@@ -597,7 +600,7 @@
         <location filename="../mainwindow.ui" line="3135"/>
         <location filename="../mainwindow.ui" line="4703"/>
         <location filename="../mainwindow_tab_create.cpp" line="83"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -660,8 +663,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="681"/>
         <location filename="../mainwindow_tab_search.cpp" line="838"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="415"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="381"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="460"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="382"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="455"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -739,8 +742,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3572"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="384"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="463"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="385"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="458"/>
         <source>Path</source>
         <translation>Weg</translation>
     </message>
@@ -753,7 +756,7 @@
         <location filename="../mainwindow.ui" line="3758"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="118"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="254"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="301"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="315"/>
         <source>Number of Files</source>
         <translation>Anzahl der Dateien</translation>
     </message>
@@ -960,7 +963,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4863"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="388"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="389"/>
         <source>Free</source>
         <translation>Frei</translation>
     </message>
@@ -1026,8 +1029,8 @@
     <message>
         <location filename="../mainwindow.ui" line="5051"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="64"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="332"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="389"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="346"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="403"/>
         <source>storage</source>
         <translation>Lagerung</translation>
     </message>
@@ -1138,24 +1141,24 @@
         <translation>1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="467"/>
+        <location filename="../mainwindow_setup.cpp" line="468"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dies ist Version: v%1 &lt;br/&gt;&lt;br/&gt;Eine neue Version ist verfügbar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Die Liste der neuen Funktionen finden Sie im &lt;a href=&apos;%3 &apos;&gt;Versionshinweise&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Möchten Sie es herunterladen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="504"/>
+        <location filename="../mainwindow_setup.cpp" line="505"/>
         <source>Open a Katalog collection</source>
         <translation>Öffnen Sie eine Katalogsammlung</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="555"/>
+        <location filename="../mainwindow_setup.cpp" line="556"/>
         <source>Save File As</source>
         <translation>Datei speichern als</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="117"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1219"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1224"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1221"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1226"/>
         <source>Bytes</source>
         <translation>Byte</translation>
     </message>
@@ -1163,12 +1166,12 @@
         <location filename="../mainwindow_tab_search.cpp" line="118"/>
         <location filename="../mainwindow_tab_search.cpp" line="567"/>
         <location filename="../mainwindow_tab_search.cpp" line="576"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1216"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1221"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1218"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1223"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="266"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="314"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="354"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="366"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="328"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="368"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="380"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -1226,28 +1229,28 @@
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="563"/>
         <location filename="../mainwindow_tab_search.cpp" line="572"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1218"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1223"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1220"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1225"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="565"/>
         <location filename="../mainwindow_tab_search.cpp" line="574"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1217"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1222"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1219"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1224"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="270"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="318"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="358"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="370"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="332"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="372"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="384"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="569"/>
         <location filename="../mainwindow_tab_search.cpp" line="578"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1215"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1220"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1217"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1222"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
@@ -1327,7 +1330,7 @@ Bitte versuchen Sie es mit einer anderen Kombination.</translation>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="178"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="683"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="517"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="518"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
@@ -1531,12 +1534,12 @@ Kopieren / fügen Sie diese Zeilen am Anfang der Datei ein und ändern Sie die W
         <translation>Sie können es jetzt bearbeiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="207"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="208"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this Storage device?&lt;table&gt;&lt;tr&gt;&lt;td&gt;ID:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Name: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>Möchten Sie dieses Speichergerät &lt;span style=&apos;color: red&apos;;&gt;löschen&lt;/span&gt;?&lt;table&gt;&lt;tr&gt;&lt;td&gt;ID: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td &gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Name: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="265"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="266"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -1547,63 +1550,63 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Speicher/fixing-for-new-versions&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="380"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="381"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="385"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="386"/>
         <source>Label</source>
         <translation>Etikett</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="386"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="387"/>
         <source>FileSystem</source>
         <translation>Dateisystem</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="387"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="419"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="388"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="433"/>
         <source>Total</source>
         <translation>Gesamt</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="389"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="390"/>
         <source>Brand/Model</source>
         <translation>Marke/Modell</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="390"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="391"/>
         <source>Serial Number</source>
         <translation>Seriennummer</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="391"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="392"/>
         <source>Build Date</source>
         <translation>Erstellungsdatum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="392"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="393"/>
         <source>Content Type</source>
         <translation>Inhaltstyp</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="393"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="394"/>
         <source>Container</source>
         <translation>Container</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="394"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="395"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="508"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="509"/>
         <source>No path provided</source>
         <translation>Kein Pfad angegeben</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="508"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="509"/>
         <source>No Path was provided. 
 Modify the device to provide one and try again.
 </source>
@@ -1612,37 +1615,37 @@ Modify the device to provide one and try again.
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="517"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="518"/>
         <source>Directory is empty</source>
         <translation>Verzeichnis ist leer</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="519"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="520"/>
         <source>Katalog is going try to get values anyhow.</source>
         <translation>Der Katalog wird sowieso versuchen, Werte zu bekommen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="539"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="540"/>
         <source>Katalog could not get values. &lt;br/&gt; Check the source folder, or that the device is mounted to the source folder.</source>
         <translation>Katalog konnte keine Werte abrufen. &lt;br/&gt; Überprüfen Sie den Quellordner oder ob das Gerät in den Quellordner eingebunden ist.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Accept changes?</source>
         <translation>Änderungen akzeptieren?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Total:</source>
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Free:</source>
         <translation>Frei:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="603"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="604"/>
         <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Dieser Speicher wurde aktualisiert:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Verwendeter Speicherplatz: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (hinzugefügt: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Freier Speicherplatz: &lt;/td&gt;&lt;td&gt;&lt;b &gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (hinzugefügt: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Gesamtspeicherplatz: &lt;/td&gt;&lt;td &gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (hinzugefügt: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -1654,26 +1657,30 @@ Modify the device to provide one and try again.
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="105"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="137"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="148"/>
         <source>Select the directory for this collection</source>
         <translation>Wählen Sie das Verzeichnis für diese Sammlung</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="395"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="400"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="405"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="409"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="414"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="419"/>
         <source>of</source>
         <translation>von</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="400"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="414"/>
         <source>collection</source>
         <translation>Sammlung</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="238"/>
         <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Der ausgewählte Katalog enthält mehr als 100.000 Dateien.&lt;br/&gt;Das Öffnen kann eine oder mehrere Minuten dauern.&lt;br/&gt;Möchten Sie fortfahren?</translation>
+        <translation type="vanished">Der ausgewählte Katalog enthält mehr als 100.000 Dateien.&lt;br/&gt;Das Öffnen kann eine oder mehrere Minuten dauern.&lt;br/&gt;Möchten Sie fortfahren?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="238"/>
+        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation>Der ausgewählte Katalog enthält mehr als 500.000 Dateien.&lt;br/&gt;Das Öffnen kann eine oder mehrere Minuten dauern.&lt;br/&gt;Möchten Sie fortfahren?</translation>
     </message>
 </context>
 <context>

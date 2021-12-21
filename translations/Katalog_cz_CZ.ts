@@ -46,7 +46,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="23"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="539"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="540"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -67,7 +67,7 @@
         <location filename="../mainwindow.ui" line="1893"/>
         <location filename="../mainwindow.ui" line="3292"/>
         <location filename="../mainwindow.ui" line="4006"/>
-        <location filename="../mainwindow_tab_search.cpp" line="914"/>
+        <location filename="../mainwindow_tab_search.cpp" line="916"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -105,26 +105,26 @@
     <message>
         <location filename="../mainwindow.ui" line="1292"/>
         <location filename="../mainwindow_tab_search.cpp" line="110"/>
-        <location filename="../mainwindow_tab_search.cpp" line="887"/>
+        <location filename="../mainwindow_tab_search.cpp" line="889"/>
         <source>All Words</source>
         <translation>Všechna slova</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1297"/>
-        <location filename="../mainwindow_tab_search.cpp" line="881"/>
+        <location filename="../mainwindow_tab_search.cpp" line="883"/>
         <source>Exact Phrase</source>
         <translation>Přesná fráze</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1302"/>
         <location filename="../mainwindow_tab_search.cpp" line="582"/>
-        <location filename="../mainwindow_tab_search.cpp" line="883"/>
+        <location filename="../mainwindow_tab_search.cpp" line="885"/>
         <source>Begins With</source>
         <translation>Začíná s</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1307"/>
-        <location filename="../mainwindow_tab_search.cpp" line="885"/>
+        <location filename="../mainwindow_tab_search.cpp" line="887"/>
         <source>Any Word</source>
         <translation>Jakékoli slovo</translation>
     </message>
@@ -147,13 +147,13 @@
     <message>
         <location filename="../mainwindow.ui" line="1404"/>
         <location filename="../mainwindow_tab_search.cpp" line="111"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1017"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1019"/>
         <source>File names only</source>
         <translation>Pouze názvy souborů</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1414"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1025"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1027"/>
         <source>Folder path only</source>
         <translation>Pouze cesta ke složce</translation>
     </message>
@@ -192,7 +192,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="651"/>
         <location filename="../mainwindow_tab_search.cpp" line="682"/>
         <location filename="../mainwindow_tab_search.cpp" line="839"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="461"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="456"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -220,7 +220,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1826"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="382"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="383"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -235,14 +235,14 @@
         <location filename="../mainwindow.ui" line="3951"/>
         <location filename="../mainwindow_tab_search.cpp" line="112"/>
         <location filename="../mainwindow_tab_search.cpp" line="592"/>
-        <location filename="../mainwindow_tab_search.cpp" line="906"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1270"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1292"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1310"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1338"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1342"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1346"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1370"/>
+        <location filename="../mainwindow_tab_search.cpp" line="908"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1272"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1294"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1312"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1340"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1344"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1348"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1372"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="118"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="121"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="262"/>
@@ -251,14 +251,17 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="456"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="459"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="793"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="373"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="436"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="737"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="374"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="437"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="738"/>
         <location filename="../mainwindow_tab_settings.cpp" line="83"/>
         <location filename="../mainwindow_tab_settings.cpp" line="84"/>
         <location filename="../mainwindow_tab_settings.cpp" line="85"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="196"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="197"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="207"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="208"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="296"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="299"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="302"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -266,7 +269,7 @@
         <location filename="../mainwindow.ui" line="1875"/>
         <location filename="../mainwindow.ui" line="3274"/>
         <location filename="../mainwindow.ui" line="3980"/>
-        <location filename="../mainwindow_tab_search.cpp" line="908"/>
+        <location filename="../mainwindow_tab_search.cpp" line="910"/>
         <source>Audio</source>
         <translation>Zvuk</translation>
     </message>
@@ -274,7 +277,7 @@
         <location filename="../mainwindow.ui" line="1884"/>
         <location filename="../mainwindow.ui" line="3283"/>
         <location filename="../mainwindow.ui" line="3967"/>
-        <location filename="../mainwindow_tab_search.cpp" line="911"/>
+        <location filename="../mainwindow_tab_search.cpp" line="913"/>
         <source>Image</source>
         <translation>Obraz</translation>
     </message>
@@ -282,7 +285,7 @@
         <location filename="../mainwindow.ui" line="1902"/>
         <location filename="../mainwindow.ui" line="3301"/>
         <location filename="../mainwindow.ui" line="3993"/>
-        <location filename="../mainwindow_tab_search.cpp" line="917"/>
+        <location filename="../mainwindow_tab_search.cpp" line="919"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -343,7 +346,7 @@
         <location filename="../mainwindow.ui" line="2955"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="118"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="261"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="309"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="323"/>
         <source>Total File Size</source>
         <translation>Celková velikost souboru</translation>
     </message>
@@ -392,7 +395,7 @@
         <location filename="../mainwindow.ui" line="3135"/>
         <location filename="../mainwindow.ui" line="4703"/>
         <location filename="../mainwindow_tab_create.cpp" line="83"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Update</source>
         <translation>Aktualizujte</translation>
     </message>
@@ -449,8 +452,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="681"/>
         <location filename="../mainwindow_tab_search.cpp" line="838"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="415"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="381"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="460"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="382"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="455"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -481,7 +484,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="654"/>
         <location filename="../mainwindow_tab_search.cpp" line="685"/>
         <location filename="../mainwindow_tab_search.cpp" line="842"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="464"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="459"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -558,8 +561,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3572"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="384"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="463"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="385"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="458"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
@@ -572,7 +575,7 @@
         <location filename="../mainwindow.ui" line="3758"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="118"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="254"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="301"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="315"/>
         <source>Number of Files</source>
         <translation>Počet souborů</translation>
     </message>
@@ -751,7 +754,7 @@
         <location filename="../mainwindow.ui" line="208"/>
         <location filename="../mainwindow.ui" line="4652"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="424"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="383"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="384"/>
         <source>Location</source>
         <translation>Umístění</translation>
     </message>
@@ -807,7 +810,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4863"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="388"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="389"/>
         <source>Free</source>
         <translation>Volný</translation>
     </message>
@@ -886,8 +889,8 @@
     <message>
         <location filename="../mainwindow.ui" line="5051"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="64"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="332"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="389"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="346"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="403"/>
         <source>storage</source>
         <translation>Úložiště</translation>
     </message>
@@ -1013,8 +1016,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="652"/>
         <location filename="../mainwindow_tab_search.cpp" line="683"/>
         <location filename="../mainwindow_tab_search.cpp" line="840"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="462"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="412"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="457"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="426"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -1138,24 +1141,24 @@
         <translation>1- Vyberte celou jednotku nebo adresář, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- klikněte na &apos;Vytvořit&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="467"/>
+        <location filename="../mainwindow_setup.cpp" line="468"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verze: v%1 &lt;br/&gt; &lt;br/&gt; K dispozici je nová verze: &lt;b&gt; v%2 &lt;/b&gt; &lt;br/&gt; Seznam nových funkcí najdete v &lt;a href = &apos;%3 &apos;&gt; Poznámky k vydání &lt;/a&gt; &lt;br/&gt; &lt;br/&gt; Chcete si jej stáhnout?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="504"/>
+        <location filename="../mainwindow_setup.cpp" line="505"/>
         <source>Open a Katalog collection</source>
         <translation>Otevřete kolekci Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="555"/>
+        <location filename="../mainwindow_setup.cpp" line="556"/>
         <source>Save File As</source>
         <translation>Uložit soubor jako</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="117"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1219"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1224"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1221"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1226"/>
         <source>Bytes</source>
         <translation>Bajty</translation>
     </message>
@@ -1163,12 +1166,12 @@
         <location filename="../mainwindow_tab_search.cpp" line="118"/>
         <location filename="../mainwindow_tab_search.cpp" line="567"/>
         <location filename="../mainwindow_tab_search.cpp" line="576"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1216"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1221"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1218"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1223"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="266"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="314"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="354"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="366"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="328"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="368"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="380"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -1226,28 +1229,28 @@
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="563"/>
         <location filename="../mainwindow_tab_search.cpp" line="572"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1218"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1223"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1220"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1225"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="565"/>
         <location filename="../mainwindow_tab_search.cpp" line="574"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1217"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1222"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1219"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1224"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="270"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="318"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="358"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="370"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="332"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="372"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="384"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="569"/>
         <location filename="../mainwindow_tab_search.cpp" line="578"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1215"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1220"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1217"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1222"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
@@ -1326,7 +1329,7 @@ Please try a different combinaison.</source>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="178"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="683"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="517"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="518"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
@@ -1356,7 +1359,7 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="105"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="137"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="148"/>
         <source>Select the directory for this collection</source>
         <translation>Vyberte adresář pro tuto kolekci</translation>
     </message>
@@ -1536,12 +1539,12 @@ Zkopírujte / vložte tyto řádky na začátku souboru a upravte hodnoty po&gt;
         <translation>Nyní to můžete upravit</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="207"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="208"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this Storage device?&lt;table&gt;&lt;tr&gt;&lt;td&gt;ID:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Name: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>Chcete &lt;span style = &apos;color: red&apos;;&gt; smazat &lt;/span&gt; toto úložné zařízení? &lt;table&gt; &lt;tr&gt; &lt;td&gt; ID: &lt;/td&gt;&lt;td&gt; &lt;b&gt;%1 &lt;/ td &gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; Název: &lt;/td&gt;&lt;td&gt; &lt;b&gt;%2 &lt;/td&gt;&lt;/tr&gt; &lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="265"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="266"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -1552,63 +1555,63 @@ Soubor lze opravit ručně, navštivte stránku wiki:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt; Úložiště / oprava nových verzí &lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="380"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="381"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="385"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="386"/>
         <source>Label</source>
         <translation>Označení</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="386"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="387"/>
         <source>FileSystem</source>
         <translation>Souborový systém</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="387"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="419"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="388"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="433"/>
         <source>Total</source>
         <translation>Celkový</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="389"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="390"/>
         <source>Brand/Model</source>
         <translation>Značka / Model</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="390"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="391"/>
         <source>Serial Number</source>
         <translation>Sériové číslo</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="391"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="392"/>
         <source>Build Date</source>
         <translation>Datum výstavby</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="392"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="393"/>
         <source>Content Type</source>
         <translation>Typ obsahu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="393"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="394"/>
         <source>Container</source>
         <translation>Kontejner</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="394"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="395"/>
         <source>Comment</source>
         <translation>Komentář</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="508"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="509"/>
         <source>No path provided</source>
         <translation>Není k dispozici žádná cesta</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="508"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="509"/>
         <source>No Path was provided. 
 Modify the device to provide one and try again.
 </source>
@@ -1617,49 +1620,49 @@ Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="517"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="518"/>
         <source>Directory is empty</source>
         <translation>Adresář je prázdný</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="519"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="520"/>
         <source>Katalog is going try to get values anyhow.</source>
         <translation>Katalog se i tak pokusí získat hodnoty.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="539"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="540"/>
         <source>Katalog could not get values. &lt;br/&gt; Check the source folder, or that the device is mounted to the source folder.</source>
         <translation>Katalog nemohl získat hodnoty. &lt;br/&gt; Zkontrolujte zdrojovou složku nebo zda je zařízení připojeno ke zdrojové složce.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Accept changes?</source>
         <translation>Přijmout změny?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Total:</source>
         <translation>Celkový:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="543"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="544"/>
         <source>Free:</source>
         <translation>Volný:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="603"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="604"/>
         <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt; Toto úložiště bylo aktualizováno: &lt;br/&gt; &lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;table&gt; &lt;tr&gt; &lt;td&gt; Použitý prostor: &lt;/td&gt; &lt;td&gt; &lt;b&gt; %2 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; (přidáno: &lt;b&gt; %3 &lt;/b&gt;) &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; Volné místo: &lt;/td&gt; &lt;td&gt; &lt;b &gt; %4 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; (přidáno: &lt;b&gt; %5 &lt;/b&gt;) &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; Celkový prostor: &lt;/td&gt; &lt;td &gt; &lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; (přidáno: &lt;b&gt; %7 &lt;/b&gt;) &lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="395"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="400"/>
-        <location filename="../mainwindow_tab_statistics.cpp" line="405"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="409"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="414"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="419"/>
         <source>of</source>
         <translation>z</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_statistics.cpp" line="400"/>
+        <location filename="../mainwindow_tab_statistics.cpp" line="414"/>
         <source>collection</source>
         <translation>sbírka</translation>
     </message>
@@ -1670,9 +1673,13 @@ Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
         <translation>Složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="238"/>
         <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Vybraný katalog obsahuje více než 100 000 souborů.&lt;br/&gt;Otevření může trvat jednu nebo několik minut.&lt;br/&gt;Chcete pokračovat?</translation>
+        <translation type="vanished">Vybraný katalog obsahuje více než 100 000 souborů.&lt;br/&gt;Otevření může trvat jednu nebo několik minut.&lt;br/&gt;Chcete pokračovat?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="238"/>
+        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation>Vybraný katalog obsahuje více než 500 000 souborů.&lt;br/&gt;Otevření může trvat jednu nebo několik minut.&lt;br/&gt;Chcete pokračovat?</translation>
     </message>
 </context>
 <context>
