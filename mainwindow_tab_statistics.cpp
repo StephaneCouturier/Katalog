@@ -223,7 +223,7 @@
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
 
-            QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+            //QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
             QString selectedCatalogforStats = ui->Statistics_comboBox_SelectCatalog->currentText();
             QString selectedStorageforStats = ui->Filters_comboBox_SelectStorage->currentText();
             qint64 maxValueGraphRange = 0.0;
@@ -420,6 +420,8 @@
             }
 
             //Format axis
+            chart->setLocalizeNumbers(true);
+
             QDateTimeAxis *axisX = new QDateTimeAxis;
             //axisX->setTickCount(10);
             axisX->setFormat("yyyy-MM-dd");
@@ -429,7 +431,7 @@
             series2->attachAxis(axisX);
 
             QValueAxis *axisY = new QValueAxis;
-            axisY->setLabelFormat("%i");
+            axisY->setLabelFormat("%.0f");
             axisY->setTitleText(tr("Total"));
 
             //Calculate axisY max range value
