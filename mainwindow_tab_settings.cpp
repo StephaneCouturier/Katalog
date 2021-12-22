@@ -58,22 +58,22 @@
     {     
         QString iconName = ui->Global_pushButton_ShowHideGlobal->icon().name();
 
-        if ( iconName == "arrow-left"){ //Hide
-                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-right"));
+        if ( iconName == "go-previous"){ //Hide
+                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-next"));
                 ui->Global_tabWidget->setHidden(true);
                 ui->Global_label_Global->setHidden(true);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", "arrow-right");
+                settings.setValue("Settings/ShowHideGlobal", "go-next");
         }
         else{ //Show
-                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("arrow-left"));
+                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-previous"));
 
                 ui->Global_tabWidget->setHidden(false);
                 ui->Global_label_Global->setHidden(false);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", "arrow-left");
+                settings.setValue("Settings/ShowHideGlobal", "go-previous");
         }
     }
 

@@ -721,8 +721,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="arrow-left">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="go-previous"/>
            </property>
           </widget>
          </item>
@@ -880,8 +879,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="arrow-up">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset theme="go-up"/>
               </property>
              </widget>
             </item>
@@ -2480,8 +2478,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset theme="arrow-left">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="go-previous"/>
                 </property>
                </widget>
               </item>
@@ -2772,8 +2769,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="arrow-down">
-                <normaloff>.</normaloff>.</iconset>
+               <iconset theme="go-down"/>
               </property>
              </widget>
             </item>

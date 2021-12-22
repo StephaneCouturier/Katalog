@@ -169,19 +169,19 @@
         {
             QString iconName = ui->Search_pushButton_ShowHideSearchCriteria->icon().name();
 
-            if ( iconName == "arrow-up"){ //Hide
-                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("arrow-down"));
+            if ( iconName == "go-up"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_widget_SearchCriteria->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideSearchCriteria", "arrow-down");
+                    settings.setValue("Settings/ShowHideSearchCriteria", "go-down");
             }
             else{ //Show
-                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("arrow-up"));
+                    ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-up"));
                     ui->Search_widget_SearchCriteria->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideSearchCriteria", "arrow-up");
+                    settings.setValue("Settings/ShowHideSearchCriteria", "go-up");
             }
         }
         //----------------------------------------------------------------------
@@ -189,22 +189,22 @@
         {
             QString iconName = ui->Search_pushButton_ShowHideCatalogResults->icon().name();
 
-            if ( iconName == "arrow-left"){ //Hide
-                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-right"));
+            if ( iconName == "go-previous"){ //Hide
+                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("go-next"));
                     ui->Search_listView_CatalogsFound->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-right");
+                    settings.setValue("Settings/ShowHideCatalogResults", "go-next");
             }
             else{ //Show
-                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("arrow-left"));
+                    ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("go-previous"));
 
                     ui->Search_listView_CatalogsFound->setHidden(false);
                     ui->Search_label_CatalogsWithResults->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideCatalogResults", "arrow-left");
+                    settings.setValue("Settings/ShowHideCatalogResults", "go-previous");
             }
 
         }
@@ -213,19 +213,19 @@
         {
             QString iconName = ui->Search_pushButton_ShowHideSearchHistory->icon().name();
 
-            if ( iconName == "arrow-down"){ //Hide
-                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-up"));
+            if ( iconName == "go-down"){ //Hide
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
                     ui->Search_tableView_History->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideSearchHistory", "arrow-up");
+                    settings.setValue("Settings/ShowHideSearchHistory", "go-up");
             }
             else{ //Show
-                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("arrow-down"));
+                    ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_tableView_History->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/ShowHideSearchHistory", "arrow-down");
+                    settings.setValue("Settings/ShowHideSearchHistory", "go-down");
             }
         }
         //----------------------------------------------------------------------
