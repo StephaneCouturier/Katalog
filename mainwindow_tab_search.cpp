@@ -1491,7 +1491,7 @@
             #ifdef Q_OS_LINUX
             query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
             #else
-            query.bindValue(":TextPhrase",           ui->Search_lineEdit_SearchText->currentText());
+            query.bindValue(":TextPhrase",           ui->Search_lineEdit_SearchText->text());
             #endif
 
             query.bindValue(":TextCriteria",         selectedTextCriteria);
