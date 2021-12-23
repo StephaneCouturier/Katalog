@@ -1292,10 +1292,12 @@
             QString queryText = "SELECT DISTINCT storageName FROM storage";
 
             if ( selectedLocation == tr("All")){
+                    queryText = queryText + " ORDER BY storageName";
                     getStorageList.prepare(queryText);
             }
             else{
                     queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                    queryText = queryText + " ORDER BY storageName";
                     getStorageList.prepare(queryText);
             }
             getStorageList.exec();
@@ -1413,7 +1415,12 @@
 
                 for (int i = 0; i < filesFoundList.size(); ++i)
                 {
-                    QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t" + QString::number(sFileSizes[i]) + "\t" + sFileDateTimes[i] + "\t" + sFilePaths[i]+ "\t" + sFileCatalogs[i];
+                    QString line = sFilePaths[i] + "/"
+                                 + sFileNames[i] + "\t"
+                                 + QString::number(sFileSizes[i]) + "\t"
+                                 + sFileDateTimes[i] + "\t"
+                                 + sFilePaths[i] + "\t"
+                                 + sFileCatalogs[i];
                     stream << line << '\n';
                 }
             }
@@ -1713,6 +1720,30 @@
 
             QSqlQueryModel *queryModel = new QSqlQueryModel();
             queryModel->setQuery(querySearchHistory);
+//            queryModel->setHeaderData(0, Qt::Horizontal, tr("dateTime"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("TextPhrase"));
+//            queryModel->setHeaderData(0, Qt::Horizontal, tr("TextCriteria"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextSearchIn"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileType"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeChecked"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileSizeMin"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeMinUnit"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileSizeMax"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeMaxUnit"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DateModifiedChecked"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DateModifiedMin"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DateModifiedMax"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DuplicatesChecked"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DuplicateName"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DuplicateSize"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DuplicateDateModified"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("ShowFolders"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("TagChecked"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("Tag"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("searchLocation"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("searchStorage"));
+//            queryModel->setHeaderData(2, Qt::Horizontal, tr("searchCatalog"));
             ui->Search_tableView_History->setModel(queryModel);
             ui->Search_tableView_History->resizeColumnsToContents();
         }
