@@ -32,5 +32,9 @@
         <file>fallback-icons/view-filter.png</file>
         <file>fallback-icons/edit-download.png</file>
         <file>fallback-icons/internet-web-browser.png</file>
+        <file>fallback-icons/go-down.png</file>
+        <file>fallback-icons/go-next.png</file>
+        <file>fallback-icons/go-previous.png</file>
+        <file>fallback-icons/go-up.png</file>
     </qresource>
 </RCC>
