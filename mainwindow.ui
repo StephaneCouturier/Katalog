@@ -64,57 +64,6 @@
        </size>
       </property>
       <layout class="QGridLayout" name="Global_gridLayout">
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="Global_horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Show/Hide Filters and Settings</string>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">padding: 2px 10px;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset theme="go-previous">
-             <normaloff>.</normaloff>.</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="Global_label_Global">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Filters &amp; Settings</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
        <item row="2" column="0">
         <widget class="QTabWidget" name="Global_tabWidget">
          <property name="sizePolicy">
@@ -869,6 +818,76 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="Global_horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Show/Hide Filters and Settings</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding: 2px 10px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="Global_label_Global">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Filters &amp; Settings</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <widget class="QWidget" name="Global_widget_VerticalSpacer" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <spacer name="Global_verticalSpacer_WhenFiltersHidden">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

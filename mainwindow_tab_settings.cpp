@@ -59,6 +59,8 @@
         QString iconName = ui->Global_pushButton_ShowHideGlobal->icon().name();
 
         if ( iconName == "go-previous"){ //Hide
+                ui->Global_widget_VerticalSpacer->setHidden(false);
+
                 ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-next"));
                 ui->Global_tabWidget->setHidden(true);
                 ui->Global_label_Global->setHidden(true);
@@ -67,6 +69,8 @@
                 settings.setValue("Settings/ShowHideGlobal", "go-next");
         }
         else{ //Show
+                ui->Global_widget_VerticalSpacer->setHidden(true);
+
                 ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-previous"));
 
                 ui->Global_tabWidget->setHidden(false);

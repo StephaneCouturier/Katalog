@@ -191,6 +191,8 @@
                     ui->Global_tabWidget->setHidden(true);
                     ui->Global_label_Global->setHidden(true);
             }
+            else
+                ui->Global_widget_VerticalSpacer->setHidden(true);
 
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
