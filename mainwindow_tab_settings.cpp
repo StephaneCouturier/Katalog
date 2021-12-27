@@ -139,6 +139,37 @@
         loadStatisticsData();
         loadStatisticsChart();
     }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("LastSearch/searchInFileCatalogsChecked", checked);
+
+        if(checked==1){
+            ui->Filters_widget_CatalogSelection->setEnabled(true);
+            ui->Filters_widget_ConnectedDrives->setDisabled(true);
+            ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
+        }
+        else{
+            ui->Filters_widget_CatalogSelection->setDisabled(true);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("LastSearch/searchInConnectedDriveChecked", checked);
+
+        if(checked==1){
+            ui->Filters_widget_ConnectedDrives->setEnabled(true);
+            ui->Filters_widget_CatalogSelection->setDisabled(true);
+            ui->Filters_checkBox_SearchInCatalogs->setChecked(false);
+        }
+        else{
+            ui->Filters_widget_ConnectedDrives->setDisabled(true);
+        }
+    }
+
 
 //SETTINGS / Collection ----------------------------------------------------
 

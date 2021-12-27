@@ -124,6 +124,10 @@ class MainWindow : public QMainWindow
             bool checkVersionChoice;
             void checkVersion();
 
+            //Filers
+            bool searchInFileCatalogsChecked;
+            bool searchInConnectedDriveChecked;
+
         //TAB: Search
             //inputs
             QString searchText;
@@ -305,6 +309,8 @@ class MainWindow : public QMainWindow
                 void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);
                 void on_Filters_pushButton_ResetGlobal_clicked();
+                void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
+                void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
 
             //Settings
                 void on_Collection_pushButton_SelectFolder_clicked();

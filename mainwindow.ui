@@ -90,129 +90,34 @@
            <string>Filters</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="5" column="0" colspan="2">
-            <widget class="QComboBox" name="Filters_comboBox_SelectStorage"/>
+           <item row="12" column="0" colspan="2">
+            <widget class="QWidget" name="Filters_widget_ConnectedDrives" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeView" name="Filters_treeView_Directory">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
-             <property name="minimumSize">
-              <size>
-               <width>30</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>30</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Reset all filters</string>
-             </property>
+           <item row="11" column="0">
+            <widget class="QCheckBox" name="Filters_checkBox_SearchInConnectedDrives">
              <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset theme="edit-clear-history">
-               <normaloff>.</normaloff>.</iconset>
+              <string>Search in connected drives</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="Filters_label_Storage">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Storage</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0" colspan="2">
-            <widget class="QComboBox" name="Filters_comboBox_SelectCatalog">
-             <property name="font">
-              <font>
-               <family>Noto Sans</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <spacer name="Filters_verticalSpacer_02">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="Filters_label_Catalog">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Catalog</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <spacer name="Filters_verticalSpacer_03">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QComboBox" name="Filters_comboBox_SelectLocation"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Filters_label_Location">
-             <property name="minimumSize">
-              <size>
-               <width>70</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Location</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
+           <item row="10" column="0">
             <spacer name="Filters_verticalSpacer_01">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -224,6 +129,149 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="9" column="0" colspan="2">
+            <widget class="QWidget" name="Filters_widget_CatalogSelection" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Reset all filters</string>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-clear-history">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Filters_label_Location">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Location</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="Filters_comboBox_SelectLocation"/>
+              </item>
+              <item>
+               <spacer name="Filters_verticalSpacer_02">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>10</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="Filters_label_Storage">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Storage</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="Filters_comboBox_SelectStorage"/>
+              </item>
+              <item>
+               <spacer name="Filters_verticalSpacer_03">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>10</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="Filters_label_Catalog">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Catalog</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="Filters_comboBox_SelectCatalog">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="Filters_checkBox_SearchInCatalogs">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Search in file catalogs</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -270,7 +318,6 @@
                 <widget class="QLabel" name="Settings_label_Data">
                  <property name="font">
                   <font>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -299,7 +346,6 @@
                 <widget class="QLabel" name="Settings_label_Data_2">
                  <property name="font">
                   <font>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -325,7 +371,6 @@
                 <widget class="QLabel" name="Settings_label_Theme">
                  <property name="font">
                   <font>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -361,7 +406,6 @@
                 <widget class="QLabel" name="Settings_label_CheckVersion">
                  <property name="font">
                   <font>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -389,9 +433,7 @@
               <widget class="QLabel" name="Settings_label_Settings">
                <property name="font">
                 <font>
-                 <family>Noto Sans</family>
                  <pointsize>10</pointsize>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -421,7 +463,6 @@
                </property>
                <property name="font">
                 <font>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -524,9 +565,7 @@
               <widget class="QLabel" name="Settings_label_About">
                <property name="font">
                 <font>
-                 <family>Noto Sans</family>
                  <pointsize>10</pointsize>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -544,9 +583,7 @@
                 <widget class="QLabel" name="Settings_label_VersionValue">
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -571,9 +608,7 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -589,9 +624,7 @@
                 <widget class="QLabel" name="Settings_label_DateTitle">
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -630,9 +663,7 @@
                 <widget class="QLabel" name="Settings_label_DateValue">
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -701,6 +732,27 @@
        <item row="1" column="0">
         <layout class="QHBoxLayout" name="Global_horizontalLayout">
          <item>
+          <widget class="QLabel" name="Global_label_Global">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Filters &amp; Settings</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="Global_pushButton_ShowHideGlobal">
            <property name="maximumSize">
             <size>
@@ -721,29 +773,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="go-previous"/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="Global_label_Global">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Filters &amp; Settings</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -790,7 +821,6 @@
       </property>
       <property name="font">
        <font>
-        <family>Noto Sans</family>
         <pointsize>10</pointsize>
        </font>
       </property>
@@ -879,7 +909,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="go-up"/>
+               <iconset theme="go-up">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -893,7 +924,6 @@
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -1012,7 +1042,6 @@
                 <widget class="QLineEdit" name="Search_lineEdit_SearchText">
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>11</pointsize>
                   </font>
                  </property>
@@ -1025,7 +1054,6 @@
                 <widget class="KComboBox" name="Search_kcombobox_SearchText">
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>11</pointsize>
                   </font>
                  </property>
@@ -1143,7 +1171,6 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1256,7 +1283,6 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1371,7 +1397,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1516,7 +1541,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1594,7 +1618,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>13</pointsize>
                   </font>
                  </property>
@@ -1685,7 +1708,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>12</pointsize>
                   </font>
                  </property>
@@ -1738,7 +1760,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1816,7 +1837,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -1856,7 +1876,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -2029,7 +2048,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>13</pointsize>
                   </font>
                  </property>
@@ -2087,7 +2105,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans</family>
                    <pointsize>12</pointsize>
                   </font>
                  </property>
@@ -2478,7 +2495,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset theme="go-previous"/>
+                 <iconset theme="go-previous">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -2492,7 +2510,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
@@ -2530,7 +2547,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
@@ -2555,9 +2571,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -2585,7 +2599,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
@@ -2610,9 +2623,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -2673,7 +2684,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <spacer name="Search_horizontalSpacer_08">
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
@@ -2716,7 +2726,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -2769,7 +2778,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="go-down"/>
+               <iconset theme="go-down">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -2783,7 +2793,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -2805,7 +2814,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <spacer name="Search_horizontalSpacer_9">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -2832,7 +2840,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -2882,7 +2889,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </property>
           <property name="font">
            <font>
-            <family>Noto Sans</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -2921,9 +2927,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -2943,7 +2947,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Catalogs_label_TotalSizeLabel">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -2962,9 +2965,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -2997,9 +2998,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -3529,9 +3528,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -3573,9 +3570,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -3617,9 +3612,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -3682,9 +3675,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -3762,9 +3753,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -3792,7 +3781,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QTreeView" name="Explore_treeView_FileList">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -3848,7 +3836,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Open Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -3864,7 +3851,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Create_label_SelectContent">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -3922,7 +3908,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Create_label_includeFileType">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                 <kerning>true</kerning>
                </font>
@@ -4023,7 +4008,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Create_label_OtherOptions">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                 <kerning>true</kerning>
                </font>
@@ -4124,7 +4108,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Open Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -4140,7 +4123,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QLabel" name="Create_label_DefineCreate">
               <property name="font">
                <font>
-                <family>Noto Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -4436,7 +4418,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Open Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -4464,7 +4445,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="font">
                <font>
-                <family>Open Sans</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -4604,7 +4584,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
              </font>
             </property>
@@ -4774,9 +4753,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -4806,9 +4783,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Storage_label_SpaceTotalValue">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -4835,9 +4810,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Storage_label_SpaceUsedValue">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -4864,9 +4837,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QLabel" name="Storage_label_SpaceFreeValue">
             <property name="font">
              <font>
-              <family>Noto Sans</family>
               <pointsize>10</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>

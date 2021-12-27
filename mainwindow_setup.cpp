@@ -135,7 +135,6 @@
                     ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
             #endif
 
-
             selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
@@ -165,6 +164,13 @@
             hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
             hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
+
+            //Filters selection
+                //by default, SearchInCatalogs is enabled
+                ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
+                //switch to SearchInConnectedDrives if it was last choice
+                searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
+                ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
 
             //Show or Hide ShowHideSearchCriteria
             if ( settings.value("Settings/ShowHideSearchCriteria") == "go-down"){ //Hide
@@ -295,10 +301,13 @@
         //Explore
 
         //Storage
-            //DEV: pending a test qnd development of a function to open Filelight at the requested place
+            //DEV: pending a test and development of a function to open Filelight at the requested place
             ui->Storage_pushButton_OpenFilelight->hide();
 
         //Settings
+            ui->Filters_checkBox_SearchInCatalogs->hide();
+            ui->Filters_checkBox_SearchInConnectedDrives->hide();
+            ui->Filters_widget_ConnectedDrives->hide();
 
         //Other tabs
             ui->tabWidget->removeTab(8); //ExploreTreeview
