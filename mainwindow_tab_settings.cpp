@@ -169,6 +169,37 @@
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
         }
     }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filters_treeView_Directory_clicked(const QModelIndex &index)
+    {
+        //Sends the selected folder in the tree for the Filter
+
+        //Get the model/data from the tree
+        QFileSystemModel* pathmodel = (QFileSystemModel*)ui->Create_treeView_Explorer->model();
+        //get data from the selected file/directory
+        QFileInfo fileInfo = pathmodel->fileInfo(index);
+        //send the path to the line edit
+        ui->Filters_lineEdit_SeletedDirectory->setText(fileInfo.filePath());
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filter_pushButton_PickPath_clicked()
+    {
+        //Pick a directory from a dialog window
+
+        //Get current selected path as default path for the dialog window
+        selectedConnectedDrivePath = ui->Filters_lineEdit_SeletedDirectory->text();
+
+        //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
+                                                        selectedConnectedDrivePath,
+                                                        QFileDialog::ShowDirsOnly
+                                                        | QFileDialog::DontResolveSymlinks);
+        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+        ui->Filters_lineEdit_SeletedDirectory->setText(dir);
+
+        //Select this directory in the treeview.
+        loadFileSystem(selectedConnectedDrivePath);
+    }
 
 
 //SETTINGS / Collection ----------------------------------------------------

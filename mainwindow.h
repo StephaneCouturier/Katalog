@@ -124,9 +124,10 @@ class MainWindow : public QMainWindow
             bool checkVersionChoice;
             void checkVersion();
 
-            //Filers
+            //Filters
             bool searchInFileCatalogsChecked;
             bool searchInConnectedDriveChecked;
+            QString selectedConnectedDrivePath;
 
         //TAB: Search
             //inputs
@@ -311,6 +312,8 @@ class MainWindow : public QMainWindow
                 void on_Filters_pushButton_ResetGlobal_clicked();
                 void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
                 void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
+                void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
+                void on_Filter_pushButton_PickPath_clicked();
 
             //Settings
                 void on_Collection_pushButton_SelectFolder_clicked();

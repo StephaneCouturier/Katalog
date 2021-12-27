@@ -94,11 +94,35 @@
             <widget class="QWidget" name="Filters_widget_ConnectedDrives" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_Input_2">
+                <item>
+                 <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filter_pushButton_PickPath">
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Select the path</string>
+                  </property>
+                  <property name="text">
+                   <string>Select</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-select">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <widget class="QTreeView" name="Filters_treeView_Directory">
@@ -834,7 +858,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
