@@ -183,6 +183,7 @@ class MainWindow : public QMainWindow
             QString regexFileType;
             void searchFiles();
             void searchFilesInCatalog(const QString &sourceCatalog);
+            void searchFilesInDirectory(const QString &sourceDirectory);
             qint64 filesFoundNumber;
             qint64 filesFoundTotalSize;
             qint64 filesFoundAverageSize;
