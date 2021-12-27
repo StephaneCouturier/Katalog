@@ -117,5 +117,3 @@ RESOURCES += \
 RC_ICONS = images/Katalog_logo_64.ico
 
 DISTFILES +=
-
-

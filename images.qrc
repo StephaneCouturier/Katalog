@@ -14,5 +14,6 @@
         <file>images/flags/us.png</file>
         <file>images/flags/cz.png</file>
         <file>images/flags/de.png</file>
+        <file>images/Banner_1.06.png</file>
     </qresource>
 </RCC>
