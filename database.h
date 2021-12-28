@@ -209,7 +209,10 @@
                                         Tag     	TEXT,
                                         searchLocation	TEXT,
                                         searchStorage	TEXT,
-                                        searchCatalog	TEXT)
+                                        searchCatalog	TEXT,
+                                        SearchCatalogChecked INTEGER,
+                                        SearchDirectoryChecked INTEGER,
+                                        SeletedDirectory TEXT)
                                     )");
 
 // TAG ----------------------------------------------------

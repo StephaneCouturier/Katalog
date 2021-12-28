@@ -342,6 +342,10 @@
             searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
             selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
 
+            searchInFileCatalogsChecked   = ui->Search_tableView_History->model()->index(index.row(), 24, QModelIndex()).data().toBool();
+            searchInConnectedDriveChecked = ui->Search_tableView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
+            selectedDirectoryName = ui->Search_tableView_History->model()->index(index.row(), 26, QModelIndex()).data().toString();
+
             initiateSearchValues();
 
             selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
@@ -1697,6 +1701,9 @@
                 ui->Search_checkBox_DuplicateSize->setChecked(hasDuplicatesOnSize);
                 ui->Search_checkBox_DuplicateDateModified->setChecked(hasDuplicatesOnDateModified);
                 ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
+                ui->Filters_lineEdit_SeletedDirectory->setText(selectedConnectedDrivePath);
+                ui->Filters_checkBox_SearchInCatalogs->setChecked(searchInFileCatalogsChecked);
+                ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
 
         }
         //----------------------------------------------------------------------
@@ -1911,7 +1918,11 @@
                                     Tag     	,
                                     searchLocation	,
                                     searchStorage	,
-                                    searchCatalog	)
+                                    searchCatalog ,
+                                    SearchCatalogChecked ,
+                                    SearchDirectoryChecked ,
+                                    SeletedDirectory
+                                )
                                 VALUES(
                                     :dateTime	,
                                     :TextChecked ,
@@ -1936,7 +1947,11 @@
                                     :Tag     	,
                                     :searchLocation	,
                                     :searchStorage	,
-                                    :searchCatalog	)
+                                    :searchCatalog ,
+                                    :SearchCatalogChecked ,
+                                    :SearchDirectoryChecked ,
+                                    :SeletedDirectory
+                                )
                 )");
 
             query.prepare(querySQL);
@@ -1970,6 +1985,9 @@
             query.bindValue(":searchLocation",       selectedSearchLocation);
             query.bindValue(":searchStorage",        selectedSearchStorage);
             query.bindValue(":searchCatalog",        selectedSearchCatalog);
+            query.bindValue(":SearchCatalogChecked",      ui->Filters_checkBox_SearchInCatalogs->isChecked());
+            query.bindValue(":SearchDirectoryChecked",    ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
+            query.bindValue(":SeletedDirectory",          ui->Filters_lineEdit_SeletedDirectory->text());
             query.exec();
 
             //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
@@ -2068,6 +2086,11 @@
 
                         //Split the string with tabulation into a list
                         QStringList fieldList = line.split('\t');
+                        if (fieldList.count()<27){
+                            fieldList.append("");
+                            fieldList.append("");
+                            fieldList.append("");
+                        }
 
                         QString querySQL = QLatin1String(R"(
                             insert into search(
@@ -2094,7 +2117,10 @@
                                             Tag     	,
                                             searchLocation	,
                                             searchStorage	,
-                                            searchCatalog
+                                            searchCatalog ,
+                                            SearchCatalogChecked ,
+                                            SearchDirectoryChecked ,
+                                            SeletedDirectory
                                         )
                                     values(
                                             :dateTime	,
@@ -2120,7 +2146,11 @@
                                             :Tag     	,
                                             :searchLocation	,
                                             :searchStorage	,
-                                            :searchCatalog	)
+                                            :searchCatalog	,
+                                            :SearchCatalogChecked ,
+                                            :SearchDirectoryChecked ,
+                                            :SeletedDirectory
+                                           )
                                     )");
 
                         QSqlQuery insertQuery;
@@ -2149,6 +2179,9 @@
                         insertQuery.bindValue(":searchLocation", 		fieldList[21]);
                         insertQuery.bindValue(":searchStorage", 		fieldList[22]);
                         insertQuery.bindValue(":searchCatalog", 		fieldList[23]);
+                        insertQuery.bindValue(":SearchCatalogChecked",  fieldList[24]);
+                        insertQuery.bindValue(":SearchDirectoryChecked",fieldList[25]);
+                        insertQuery.bindValue(":SeletedDirectory",      fieldList[26]);
                         insertQuery.exec();
                     }
             }
@@ -2169,6 +2202,10 @@
             QSqlQueryModel *queryModel = new QSqlQueryModel();
             queryModel->setQuery(querySearchHistory);
 //            queryModel->setHeaderData(0, Qt::Horizontal, tr("dateTime"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
+//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
+
 //            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
 //            queryModel->setHeaderData(2, Qt::Horizontal, tr("TextPhrase"));
 //            queryModel->setHeaderData(0, Qt::Horizontal, tr("TextCriteria"));

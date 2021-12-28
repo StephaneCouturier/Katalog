@@ -164,6 +164,7 @@
             hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
             hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
+            selectedConnectedDrivePath  = settings.value("LastSearch/selectedConnectedDrivePath").toString();
 
             //Filters selection
                 //by default, SearchInCatalogs is enabled
@@ -253,6 +254,7 @@
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
         settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
         settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
+        settings.setValue("LastSearch/selectedConnectedDrivePath", ui->Filters_lineEdit_SeletedDirectory->text());
 
         settings.setValue("LastSearch/showFoldersOnly", ui->Search_checkBox_ShowFolders->isChecked());
         settings.setValue("LastSearch/DuplicatesOn", ui->Search_checkBox_Duplicates->isChecked());
