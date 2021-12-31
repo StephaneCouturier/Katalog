@@ -165,6 +165,8 @@
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
             hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
             selectedConnectedDrivePath  = settings.value("LastSearch/selectedConnectedDrivePath").toString();
+            searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
+            searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
 
             //Filters selection
                 //by default, SearchInCatalogs is enabled
