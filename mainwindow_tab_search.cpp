@@ -532,7 +532,7 @@
                     #ifdef Q_OS_LINUX
                         ui->Search_kcombobox_SearchText->addItem(searchText);
                     #else
-                        //no alternative for win
+                        //no alternative for win, covered by qcombobox
                     #endif
 
                     //Get other search criteria
@@ -594,22 +594,28 @@
                     }
 
 
-            //Process the SEARCH in CATALOGS ------------------------------
-            if (searchInFileCatalogsChecked==true)
-            {
-                //List of catalogs to search from: catalogSelectedList
-                    //Search every catalog if "All" is selected
-                    if ( selectedSearchCatalog ==tr("All")){
-                        foreach(sourceCatalog,catalogSelectedList)
-                                {
-                                    searchFilesInCatalog(sourceCatalog);
+            //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
+                    //Process the SEARCH in CATALOGS
+                    if (searchInFileCatalogsChecked==true){
+                        //List of catalogs to search from: catalogSelectedList
+                            //Search every catalog if "All" is selected
+                            if ( selectedSearchCatalog ==tr("All")){
+                                foreach(sourceCatalog,catalogSelectedList)
+                                        {
+                                            searchFilesInCatalog(sourceCatalog);
+                                        }
                                 }
-                        }
 
-                    //Otherwise just search files in the selected catalog
-                    else{
-                        //QString selectedSearchCatalogPath;
-                        searchFilesInCatalog(selectedSearchCatalog);
+                            //Otherwise just search files in the selected catalog
+                            else{
+                                //QString selectedSearchCatalogPath;
+                                searchFilesInCatalog(selectedSearchCatalog);
+                            }
+                    }
+                    //Process the SEARCH in SELECTED DIRECTORY
+                    else if (searchInConnectedDriveChecked==true){
+                            QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
+                            searchFilesInDirectory(sourceDirectory);
                     }
 
                 //Process search results: list of catalogs with results
@@ -693,6 +699,9 @@
                     fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
                     fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
                     fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+                    if (searchInConnectedDriveChecked==true){
+                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
+                    }
 
                     // Connect model to tree/table view
                     ui->Search_treeView_FilesFound->setModel(fileViewModel);
@@ -870,15 +879,15 @@
                                 ui->Search_label_NumberResults->setText(QString::number(fileCount));
 
                         }
-
+/*
             }
 
             //or Process the SEARCH in CONNECTED DRIVE ------------------------------
+
             else if (searchInConnectedDriveChecked==true)
             {
 
                 QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
- //QMessageBox::information(this,"Katalog","sourceDirectory:<br/>" + sourceDirectory);
 
                 searchFilesInDirectory(sourceDirectory);
 
@@ -1015,7 +1024,7 @@
 //                QMessageBox::information(this,"Katalog","searchInConnectedDriveChecked completed.");
 
             }
-
+*/
             //Save the search parameters to the settings file
             saveSettings();
             insertSearchHistoryToTable();
@@ -1028,7 +1037,7 @@
 
         }
         //----------------------------------------------------------------------
-        //run a search of files for the selected catalog
+        //run a search of files for the selected Catalog
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
             QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
@@ -1254,7 +1263,7 @@
 
         }
         //----------------------------------------------------------------------
-        //run a search of files for the selected catalog
+        //run a search of files for the selected Directory
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
         {
             //QString sourceCatalogPath = sourceDirectory;
@@ -1349,25 +1358,25 @@
 
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
-
+/*
                 //exclude if the folder is part of excluded directories
-//                bool excludeFile = false;
-//                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
-//                for (int i=0; i<excludedFolders.length(); i++) {
-//                    if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
-//                        excludeFile = true;
-//                        break;
-//                    }
-//                }
+                bool excludeFile = false;
+                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
+                for (int i=0; i<excludedFolders.length(); i++) {
+                    if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
+                        excludeFile = true;
+                        break;
+                    }
+                }
                 //exclude files in /directory/file when exclude fodler is in /directory
-//                if (excludedFolders.contains(fileInfo.absolutePath())){
-//                    excludeFile = true;
-//                }
-//                //add file to list if not excluded
-//                if(excludeFile == false){
-//                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
-//                }
-//            }
+                if (excludedFolders.contains(fileInfo.absolutePath())){
+                    excludeFile = true;
+                }
+                //add file to list if not excluded
+                if(excludeFile == false){
+                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
+*/
 
             line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
 
@@ -1713,7 +1722,7 @@
             QString currentLocation = ui->Filters_comboBox_SelectLocation->currentText();
             //Query the full list of locations
             QSqlQuery getLocationList;
-            getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage");
+            getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage ORDER BY storageLocation");
             getLocationList.exec();
 
             //Put the results in a list
