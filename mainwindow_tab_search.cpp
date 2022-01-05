@@ -1179,7 +1179,7 @@
                     //Finally, verify the text search criteria
                     if (searchOnText==true){
                         //Depending on the "Search in" criteria,
-                        //reduce the abosulte path to the reaquired text string and match the search text
+                        //reduce the abosulte path to the required text string and match the search text
                         if(selectedSearchIn == tr("File names only"))
                         {
                             // Extract the file name from the lineFilePath
@@ -1193,7 +1193,7 @@
                             //Keep only the folder name, so all characters left of the last occurence of / in the path.
                             reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
-                            //Check the fodler name matches the search text
+                            //Check that the folder name matches the search text
                             regex.setPattern(regexSearchtext);
 
                             foldermatch = regex.match(reducedLine);
@@ -1233,7 +1233,14 @@
                         }
                     }
                     else{
-                        //Add the file qnd its catalog to the results, excluding blank lines
+                        //verify file matches the selected file type
+                        regex.setPattern(regexFileType);
+                        match = regex.match(lineFilePath);
+                        if (!match.hasMatch()){
+                            continue;
+                        }
+
+                        //Add the file and its catalog to the results, excluding blank lines
                         if (lineFilePath !=""){
                             filesFoundList << lineFilePath;
                             catalogFoundList.insert(0,sourceCatalogName);
@@ -1323,21 +1330,6 @@
 //DUPLICATE   //filetypes
                     // Get the file type for the catalog
                     QStringList fileTypes;
-                    QString selectedCreateFileType;
-                    if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
-                            fileTypes = fileType_Image;
-                            selectedCreateFileType = "Image";}
-                    else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
-                            fileTypes = fileType_Audio;
-                            selectedCreateFileType = "Audio";}
-                     else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
-                            fileTypes = fileType_Video;
-                            selectedCreateFileType = "Video";}
-                    else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
-                            fileTypes = fileType_Text;
-                            selectedCreateFileType = "Text";}
-                    else    fileTypes.clear();
-
 
             //Scan directory and create a list of files
                 QString line;
@@ -1558,7 +1550,7 @@
             }
  //           else return;
 
-        }
+        }              
         //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
