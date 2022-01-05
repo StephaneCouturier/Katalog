@@ -150,13 +150,19 @@
         settings.setValue("LastSearch/searchInFileCatalogsChecked", checked);
 
         if(checked==1){
+            //Enable Catalogs selection
             ui->Filters_widget_CatalogSelection->setEnabled(true);
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
             ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
         }
-        else{
+        else if(ui->Filters_checkBox_SearchInConnectedDrives->isChecked()==true){
+            //Disable Catalogs selection
             ui->Filters_widget_CatalogSelection->setDisabled(true);
         }
+        else{
+            //Prevent uncheck if SearchInConnectedDrives is also unchecked
+            ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
+}
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
@@ -165,12 +171,18 @@
         settings.setValue("LastSearch/searchInConnectedDriveChecked", checked);
 
         if(checked==1){
+            //Enable Directory selection
             ui->Filters_widget_ConnectedDrives->setEnabled(true);
             ui->Filters_widget_CatalogSelection->setDisabled(true);
             ui->Filters_checkBox_SearchInCatalogs->setChecked(false);
         }
-        else{
+        else if(ui->Filters_checkBox_SearchInCatalogs->isChecked()==true){
+            //Disable Directory selection
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
+        }
+        else{
+            //Prevent uncheck if SearchInCatalogs is also unchecked
+            ui->Filters_checkBox_SearchInConnectedDrives->setChecked(true);
         }
     }
     //----------------------------------------------------------------------
