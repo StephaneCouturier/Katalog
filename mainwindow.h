@@ -212,6 +212,7 @@ class MainWindow : public QMainWindow
             QString selectedCatalogFileType;
             QString selectedCatalogStorage;
             bool    selectedCatalogIncludeSymblinks;
+            bool    selectedCatalogIsFullDevice;
             QString selectedStorageLocationFilter;
             bool    skipCatalogUpdateSummary;
 
@@ -254,7 +255,8 @@ class MainWindow : public QMainWindow
                                   QString fileType,
                                   QStringList fileTypes,
                                   QString newCatalogStorage,
-                                  bool includeSymblinks);
+                                  bool includeSymblinks,
+                                  bool isFullDevice);
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
 

@@ -258,6 +258,7 @@
             selectedCatalogIncludeHidden    = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
             selectedCatalogStorage          = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
+            selectedCatalogIsFullDevice     = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),11, QModelIndex()).data().toBool();
 
             if (selectedCatalogFileType=="") selectedCatalogFileType = tr("All");
 
@@ -276,6 +277,7 @@
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalogFileType);
             ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalogStorage);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalogIncludeHidden);
+            ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
 
         }
         //----------------------------------------------------------------------
@@ -340,11 +342,13 @@
                 QString line;
                 QString value;
 
-                for (int i=0; i<7; i++) {
+                for (int i=0; i<8; i++) {
                     line = textStream.readLine();
-                    value = line.right(line.size() - line.lastIndexOf(">") - 1);
+                    if (line.at(0)=="<")
+                        value = line.right(line.size() - line.lastIndexOf(">") - 1);
                     catalogValues << value;
                 }
+                if (catalogValues.count()==7) catalogValues << "";
 
                 // Verify if path is active (drive connected)
                 int isActive = verifyCatalogPath(catalogValues[0]);
@@ -357,11 +361,12 @@
                                 catalogValues[0], //catalogSourcePath
                                 catalogValues[1].toInt(), //catalogFileCount
                                 catalogValues[2].toLongLong(), //catalogTotalFileSize
-                                isActive, //catalogSourcePathIsActive
+                                isActive,         //catalogSourcePathIsActive
                                 catalogValues[3], //catalogIncludeHidden
                                 catalogValues[4], //catalogFileType
                                 catalogValues[5], //catalogStorage
-                                catalogValues[6] //catalogIncludeSymblinks
+                                catalogValues[6], //catalogIncludeSymblinks
+                                catalogValues[7]  //catalogStorageRelation
                                 );
 
                 catalogFile.close();
@@ -387,7 +392,8 @@
                                             catalogSourcePathIsActive   ,
                                             catalogIncludeHidden        ,
                                             catalogStorage              ,
-                                            storageLocation
+                                            storageLocation             ,
+                                            catalogStorageRelation
                                         FROM catalog
                                         LEFT JOIN storage ON catalogStorage = storageName
                                         WHERE catalogName !=''
@@ -422,6 +428,7 @@
             proxyResultsModel->setHeaderData(8, Qt::Horizontal, tr("Inc.Hidden"));
             proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
+            proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Storage Relation"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -443,6 +450,7 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //include
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //Relation
 
             //Populate catalogs statistics
             QSqlQuery query;
@@ -609,7 +617,8 @@
                                                 catalogFileType,
                                                 catalogTotalFileSize,
                                                 catalogStorage,
-                                                catalogIncludeSymblinks
+                                                catalogIncludeSymblinks,
+                                                catalogStorageRelation
                                         FROM catalog
                                         WHERE catalogName =:catalogName
                                         )");
@@ -629,6 +638,7 @@
             qint64  currentCatalogTotalFileSize  = query.value(6).toLongLong(); //selectedCatalogTotalFileSize
             QString currentCatalogStorage        = query.value(7).toString();   //catalogStorage
             bool currentCatalogIncludeSymblinks  = query.value(8).toBool();     //catalogIncludeSymblinks
+            bool isFullDevice                    = query.value(9).toBool();     //catalogStorageRelation
 
         //Check if the update can be done, inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
@@ -695,7 +705,8 @@
                              currentCatalogFileType,
                              fileTypes,
                              currentCatalogStorage,
-                             currentCatalogIncludeSymblinks);
+                             currentCatalogIncludeSymblinks,
+                             isFullDevice);
 
             saveCatalogToNewFile(currentCatalogName);
 
@@ -948,7 +959,8 @@
                              << "<catalogIncludeHidden>"       << "\n"
                              << "<catalogFileType>"            << "\n"
                              << "<catalogStorage>"             << "\n"
-                             << "<catalogIncludeSymblinks>"    << "\n";
+                             << "<catalogIncludeSymblinks>"    << "\n"
+                             << "<catalogStorageRelation>"     << "\n";
                     }
 
                 //Get the list of file to add
@@ -989,6 +1001,7 @@
             bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
             QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
             QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();
+            bool isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
             //save catalogs
@@ -1002,40 +1015,53 @@
 
         //Write changes to catalog file
             // open file
-            //QMessageBox::information(this,"Katalog","Ok." + selectedCatalogFile);
-
-            QFile f(selectedCatalogFile);
-            if(f.open(QIODevice::ReadWrite | QIODevice::Text))
+            QFile file(selectedCatalogFile);
+            if(file.open(QIODevice::ReadWrite | QIODevice::Text))
             {
-                QString s;
-                QTextStream t(&f);
-                while(!t.atEnd())
+                QString fullFileText;
+                QTextStream textStream(&file);
+//                int lineNumber = 0;
+                while(!textStream.atEnd())
                 {
-                    QString line = t.readLine();
+                    QString line = textStream.readLine();
+                    //lineNumber = lineNumber + 1;
+//                    bool addedStorageRelation = false;
 
+                    //add file data line
                     if(!line.startsWith("<catalogSourcePath")
                             and !line.startsWith("<catalogIncludeHidden")
+                            and !line.startsWith("<catalogFileType")
                             and !line.startsWith("<catalogStorage")
-                            and !line.startsWith("<catalogFileType"))
-                        s.append(line + "\n");
+                            and !line.startsWith("<catalogStorageRelation"))
+                        fullFileText.append(line + "\n");
                     else{
-                        //the ifs must be in the correct order of the meta-data lines
+                        //add meta-data. The ifs must be in the correct order of the meta-data lines
                         if(line.startsWith("<catalogSourcePath>"))
-                                s.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
+                                fullFileText.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
 
                         if(line.startsWith("<catalogIncludeHidden>"))
-                                s.append("<catalogIncludeHidden>" + QVariant(newCatalogIncludeHidden).toString() +"\n");
+                                fullFileText.append("<catalogIncludeHidden>" + QVariant(newCatalogIncludeHidden).toString() +"\n");
 
                         if(line.startsWith("<catalogFileType>"))
-                                s.append("<catalogFileType>" + newCatalogFileType +"\n");
+                                fullFileText.append("<catalogFileType>" + newCatalogFileType +"\n");
 
                         if(line.startsWith("<catalogStorage>"))
-                                s.append("<catalogStorage>" + newCatalogStorage +"\n");
+                                fullFileText.append("<catalogStorage>" + newCatalogStorage +"\n");
+
+                        if(line.startsWith("<catalogStorageRelation>")){
+                                fullFileText.append("<catalogStorageRelation>" + QVariant(isFullDevice).toString() +"\n");
+//                                addedStorageRelation = true;
+                        }
+
                     }
+//                    if(addedStorageRelation ==false){
+//                        //add missing line
+//                        fullFileText.prepend("<catalogStorageRelation>" + QVariant(isFullDevice).toString() +"\n");
+//                    }
                 }
-                f.resize(0);
-                t << s;
-                f.close();
+                file.resize(0);
+                textStream << fullFileText;
+                file.close();
             }
             else {
                 QMessageBox::information(this,"Katalog",tr("Could not open file."));

@@ -102,7 +102,8 @@
                                     catalogIncludeHidden  text  ,
                                     catalogFileType  text  ,
                                     catalogStorage  text  ,
-                                    catalogIncludeSymblinks  text)
+                                    catalogIncludeSymblinks  text,
+                                    catalogStorageRelation   text)
                                 )");
     //Insert row  query
             const auto INSERT_CATALOG_SQL = QLatin1String(R"(
@@ -117,24 +118,25 @@
                                     catalogIncludeHidden,
                                     catalogFileType,
                                     catalogStorage,
-                                    catalogIncludeSymblinks)
-                                values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                    catalogIncludeSymblinks,
+                                    catalogStorageRelation)
+                                values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 )");
 
     //Insert row binding
-            inline QVariant addCatalog(QSqlQuery &q,
-
-                            QString catalogFilePath,
-                            QString catalogName,
-                            QString catalogDateUpdated,
-                            QString catalogSourcePath,
-                            qint64 catalogFileCount,
-                            qint64 catalogTotalFileSize, //KFormat.formatByteSize
-                            int catalogSourcePathIsActive,
-                            QString catalogIncludeHidden,
-                            QString catalogFileType,
-                            QString catalogStorage,
-                            QString catalogIncludeSymblinks
+            inline QVariant addCatalog( QSqlQuery &q,
+                                        QString catalogFilePath,
+                                        QString catalogName,
+                                        QString catalogDateUpdated,
+                                        QString catalogSourcePath,
+                                        qint64 catalogFileCount,
+                                        qint64 catalogTotalFileSize, //KFormat.formatByteSize
+                                        int catalogSourcePathIsActive,
+                                        QString catalogIncludeHidden,
+                                        QString catalogFileType,
+                                        QString catalogStorage,
+                                        QString catalogIncludeSymblinks,
+                                        QString catalogStorageRelation
                             )
                         {
 
@@ -149,6 +151,7 @@
                             q.addBindValue(catalogFileType);
                             q.addBindValue(catalogStorage);
                             q.addBindValue(catalogIncludeSymblinks);
+                            q.addBindValue(catalogStorageRelation);
                             q.exec();
                             return 0;
                         }

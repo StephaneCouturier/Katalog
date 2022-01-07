@@ -131,8 +131,10 @@
         newCatalogName = ui->Create_lineEdit_NewCatalogName->text();
         newCatalogStorage = ui->Create_comboBox_StorageSelection->currentText();
         //get other options
-        bool includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+        bool includeHidden    = ui->Create_checkBox_IncludeHidden->isChecked();
         bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+        bool isFullDevice     = ui->Create_checkBox_isFullDevice->isChecked();
+
         // Get the file type for the catalog
         QStringList fileTypes;
         QString selectedCreateFileType;
@@ -164,7 +166,7 @@
 
         //Catalog files
         if (newCatalogName!="" and newCatalogPath!="")
-                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks);
+                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks, isFullDevice);
         else QMessageBox::warning(this, "Katalog",
                                   tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
                                   +newCatalogName+"\n"+tr("Path:")+newCatalogPath,
@@ -293,7 +295,8 @@
                                       QString fileType,
                                       QStringList fileTypes,
                                       QString newCatalogStorage,
-                                      bool includeSymblinks)
+                                      bool includeSymblinks,
+                                      bool isFullDevice)
     {
         //Catalog the files of a directory and add catalog meta-data
 
@@ -404,6 +407,7 @@
         ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
+        fileList.prepend("<catalogStorageRelation>" + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
         fileList.prepend("<catalogStorage>"         + newCatalogStorage);
         fileList.prepend("<catalogFileType>"        + fileType);
