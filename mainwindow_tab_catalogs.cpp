@@ -409,7 +409,7 @@
                 //Insert a line in the table with available data
                 QVariant catalogID = addCatalog(query,
                                 catalogFileInfo.filePath(),  //catalogFilePath
-                                catalogFileInfo.baseName(),  //catalogName
+                                catalogFileInfo.completeBaseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
                                 catalogValues[0], //catalogSourcePath
                                 catalogValues[1].toInt(), //catalogFileCount
