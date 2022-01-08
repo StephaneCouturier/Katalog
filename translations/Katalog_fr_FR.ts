@@ -925,7 +925,7 @@ Copier/coller ces lignes au début du fichier et modifier les valeurs après le 
     </message>
     <message>
         <source>Create list</source>
-        <translation>Créer une list</translation>
+        <translation>Créer une liste</translation>
     </message>
     <message>
         <source>Edit list</source>
@@ -958,7 +958,7 @@ Cela peut vouloir dire que la source est vide ou que le périphérique de stocka
 Modify the device to provide one and try again.
 </source>
         <translation>Aucun chemin n&apos;a été fourni.
-Modifier le stockage pour un fournir un et essayer à nouveau.
+Modifier le stockage pour en fournir un et essayer à nouveau.
 </translation>
     </message>
     <message>
