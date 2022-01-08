@@ -77,6 +77,28 @@
 
             updateCatalog(selectedCatalogName);
 
+            //Update the related storage
+            if ( selectedCatalogStorage != ""){
+                //get Storage ID
+                QSqlQuery query;
+                QString querySQL = QLatin1String(R"(
+                                    SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
+                                                )");
+                query.prepare(querySQL);
+                query.bindValue(":storageName",selectedCatalogStorage);
+                query.exec();
+                query.next();
+                int selectedCatalogStorageID = query.value(0).toInt();
+                QString selectedCatalogStoragePath =  query.value(1).toString();
+
+                //Update storage
+                if ( selectedCatalogStoragePath!="")
+                    updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
+                else
+                    QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
+
+            }
+
             //refresh catalog lists
                loadCatalogFilesToTable();
                loadCatalogsToModel();
@@ -108,7 +130,7 @@
             //Get list of displayed and active catalogs
                 //prepare the main part of the query
                 QString querySQL  = QLatin1String(R"(
-                                            SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath
+                                            SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath, catalogStorage
                                             FROM catalog
                                             LEFT JOIN storage ON catalogStorage = storageName
                                             WHERE catalogSourcePathIsActive = 1
@@ -142,8 +164,37 @@
                         //return;
                     }
                     else{
+                        //Update catalog
+                        updateCatalog(catalogName);
 
-                       updateCatalog(catalogName);
+                       //Update storage
+                        selectedCatalogStorage = query.value(3).toString();
+
+                        //Update the related storage
+                        if ( selectedCatalogStorage != ""){
+                           //get Storage ID
+                           QSqlQuery query;
+                           QString querySQL = QLatin1String(R"(
+                                               SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
+                                                           )");
+                           query.prepare(querySQL);
+                           query.bindValue(":storageName",selectedCatalogStorage);
+                           query.exec();
+                           query.next();
+                           int selectedCatalogStorageID = query.value(0).toInt();
+                           QString selectedCatalogStoragePath =  query.value(1).toString();
+
+                           //Update storage
+                           if ( selectedCatalogStoragePath!="")
+                               updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
+                           else
+                               QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
+
+                       }
+
+                       //refresh catalog lists
+                          loadCatalogFilesToTable();
+                          loadCatalogsToModel();
                     }
                 }
             }
@@ -258,7 +309,7 @@
             selectedCatalogIncludeHidden    = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 8, QModelIndex()).data().toBool();
             selectedCatalogStorage          = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 9, QModelIndex()).data().toString();
             selectedCatalogIncludeSymblinks = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),10, QModelIndex()).data().toBool();
-            selectedCatalogIsFullDevice     = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),11, QModelIndex()).data().toBool();
+            //DEV: selectedCatalogIsFullDevice     = ui->Catalogs_treeView_CatalogList->model()->index(index.row(),11, QModelIndex()).data().toBool();
 
             if (selectedCatalogFileType=="") selectedCatalogFileType = tr("All");
 
@@ -277,7 +328,7 @@
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalogFileType);
             ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalogStorage);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalogIncludeHidden);
-            ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
+            //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
 
         }
         //----------------------------------------------------------------------
@@ -323,7 +374,8 @@
             while (iterator.hasNext()){
 
                 // Iterate to the next file
-                QFile catalogFile(iterator.next());
+                QString path = iterator.next();
+                QFile catalogFile(path);
 
                 // Get file info
                 QFileInfo catalogFileInfo(catalogFile);
@@ -337,18 +389,19 @@
                 //Prepare a textsteam for the file
                 QTextStream textStream(&catalogFile);
 
-                //Read the first 7 lines and put values in a stringlist
+                //Read the first 8 lines and put values in a stringlist
                 QStringList catalogValues;
                 QString line;
                 QString value;
-
                 for (int i=0; i<8; i++) {
                     line = textStream.readLine();
-                    if (line.at(0)=="<")
+                    if (line.at(0)=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    catalogValues << value;
+                        if (value =="") catalogValues << "";
+                        else catalogValues << value;
+                    }
                 }
-                if (catalogValues.count()==7) catalogValues << "";
+                if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
 
                 // Verify if path is active (drive connected)
                 int isActive = verifyCatalogPath(catalogValues[0]);
@@ -366,7 +419,7 @@
                                 catalogValues[4], //catalogFileType
                                 catalogValues[5], //catalogStorage
                                 catalogValues[6], //catalogIncludeSymblinks
-                                catalogValues[7]  //catalogStorageRelation
+                                catalogValues[7]  //catalogIsFullDevice
                                 );
 
                 catalogFile.close();
@@ -393,11 +446,11 @@
                                             catalogIncludeHidden        ,
                                             catalogStorage              ,
                                             storageLocation             ,
-                                            catalogStorageRelation
+                                            catalogIsFullDevice
                                         FROM catalog
                                         LEFT JOIN storage ON catalogStorage = storageName
                                         WHERE catalogName !=''
-                                        )");  
+                                        )");  //DEV:
 
                 //add AND conditions for the selected filters
                 if ( selectedSearchLocation != tr("All") )
@@ -428,7 +481,7 @@
             proxyResultsModel->setHeaderData(8, Qt::Horizontal, tr("Inc.Hidden"));
             proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
-            proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Storage Relation"));
+            proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -450,7 +503,11 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //include
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //Relation
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
+
+            //DEV: hide last new column
+            ui->Catalogs_treeView_CatalogList->hideColumn(11); //FullDevice
+
 
             //Populate catalogs statistics
             QSqlQuery query;
@@ -618,7 +675,7 @@
                                                 catalogTotalFileSize,
                                                 catalogStorage,
                                                 catalogIncludeSymblinks,
-                                                catalogStorageRelation
+                                                catalogIsFullDevice
                                         FROM catalog
                                         WHERE catalogName =:catalogName
                                         )");
@@ -638,7 +695,7 @@
             qint64  currentCatalogTotalFileSize  = query.value(6).toLongLong(); //selectedCatalogTotalFileSize
             QString currentCatalogStorage        = query.value(7).toString();   //catalogStorage
             bool currentCatalogIncludeSymblinks  = query.value(8).toBool();     //catalogIncludeSymblinks
-            bool isFullDevice                    = query.value(9).toBool();     //catalogStorageRelation
+            bool isFullDevice                    = query.value(9).toBool();     //catalogIsFullDevice
 
         //Check if the update can be done, inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
@@ -960,7 +1017,7 @@
                              << "<catalogFileType>"            << "\n"
                              << "<catalogStorage>"             << "\n"
                              << "<catalogIncludeSymblinks>"    << "\n"
-                             << "<catalogStorageRelation>"     << "\n";
+                             << "<catalogIsFullDevice>"     << "\n";
                     }
 
                 //Get the list of file to add
@@ -1025,14 +1082,14 @@
                 {
                     QString line = textStream.readLine();
                     //lineNumber = lineNumber + 1;
-//                    bool addedStorageRelation = false;
+//                    bool addedIsFullDevice = false;
 
                     //add file data line
                     if(!line.startsWith("<catalogSourcePath")
                             and !line.startsWith("<catalogIncludeHidden")
                             and !line.startsWith("<catalogFileType")
                             and !line.startsWith("<catalogStorage")
-                            and !line.startsWith("<catalogStorageRelation"))
+                            and !line.startsWith("<catalogIsFullDevice"))
                         fullFileText.append(line + "\n");
                     else{
                         //add meta-data. The ifs must be in the correct order of the meta-data lines
@@ -1048,15 +1105,15 @@
                         if(line.startsWith("<catalogStorage>"))
                                 fullFileText.append("<catalogStorage>" + newCatalogStorage +"\n");
 
-                        if(line.startsWith("<catalogStorageRelation>")){
-                                fullFileText.append("<catalogStorageRelation>" + QVariant(isFullDevice).toString() +"\n");
-//                                addedStorageRelation = true;
+                        if(line.startsWith("<catalogIsFullDevice>")){
+                                fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
+//                                addedIsFullDevice = true;
                         }
 
                     }
-//                    if(addedStorageRelation ==false){
+//                    if(addedIsFullDevice ==false){
 //                        //add missing line
-//                        fullFileText.prepend("<catalogStorageRelation>" + QVariant(isFullDevice).toString() +"\n");
+//                        fullFileText.prepend("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
 //                    }
                 }
                 file.resize(0);

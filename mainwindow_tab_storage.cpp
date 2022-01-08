@@ -198,7 +198,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
-        updateStorageInfo();
+        updateStorageInfo(selectedStorageID, selectedStoragePath);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Delete_clicked()
@@ -477,7 +477,7 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateStorageInfo()
+    void MainWindow::updateStorageInfo(int storageID, QString storagePath)
     {
         //Get current values for comparison later
             QString getStorageInfoSQL = QLatin1String(R"(
@@ -492,20 +492,20 @@
 
             QSqlQuery getStorageInfoQuery;
             getStorageInfoQuery.prepare(getStorageInfoSQL);
-            getStorageInfoQuery.bindValue(":storageID", selectedStorageID);
+            getStorageInfoQuery.bindValue(":storageID", storageID);
             getStorageInfoQuery.exec();
             getStorageInfoQuery.next();
 
             qint64 previousStorageFreeSpace  = getStorageInfoQuery.value(3).toLongLong();
             qint64 previousStorageTotalSpace = getStorageInfoQuery.value(4).toLongLong();
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-
+            selectedStorageName = getStorageInfoQuery.value(2).toString();
 
         //verify if path is available / not empty
-        QDir dir (selectedStoragePath);
+        QDir dir (storagePath);
 
             //Warning if no Path is provided
-            if ( selectedStoragePath=="" ){
+            if ( storagePath=="" ){
                 QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
                                               "Modify the device to provide one and try again.\n")
                                               );
@@ -526,7 +526,7 @@
 
         //Get device information
             QStorageInfo storage;
-            storage.setPath(selectedStoragePath);
+            storage.setPath(storagePath);
             if (storage.isReadOnly())
                 qDebug() << "isReadOnly:" << storage.isReadOnly();
 
@@ -540,14 +540,6 @@
                 QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
                 return;
             }
-            else{
-                int result = QMessageBox::warning(this,tr("Update"),tr("Accept changes?") +"<br/><br/>"+ tr("Total:") +"<br/><b>"+ QLocale().formattedDataSize(sizeTotal)+"</b><br/><br/>" +tr("Free:") +"<br/><b>"+ QLocale().formattedDataSize(sizeAvailable)+"</b><br/><br/>",
-                                                  QMessageBox::Yes | QMessageBox::Cancel);
-                //return;
-                if ( result == QMessageBox::Cancel){
-                    return;
-                }
-            }
 
         //SQL updates
             QSqlQuery queryTotalSpace;
@@ -556,7 +548,7 @@
                                       "storageFreeSpace = " + QString::number(sizeAvailable) + ","
                                       "storageLabel = '" + storageName +"',"
                                       "storageFileSystem = '" + storageFS +"'"
-                                  + " WHERE storageID = " + QString::number(selectedStorageID) );
+                                  + " WHERE storageID = " + QString::number(storageID) );
             queryTotalSpace.exec();
 
         //Add values to statistics
@@ -586,7 +578,7 @@
                              WHERE storageID =:storageID
                              )");
              query.prepare(querySQL);
-             query.bindValue(":storageID", selectedStorageID);
+             query.bindValue(":storageID", storageID);
              query.exec();
              query.next();
 
@@ -601,7 +593,7 @@
 
              //Inform user about the update
              if(skipCatalogUpdateSummary !=true){
-             QMessageBox::information(this,"Katalog",tr("<br/>This storage was updated:<br/><b> %1 </b> <br/>"
+             QMessageBox::information(this,"Katalog",tr("<br/>The storage device <b> %1 </b> was updated:<br/> "
                                       "<table>"
                                               "<tr><td> Used Space: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
                                               "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
@@ -613,7 +605,8 @@
                                             QLocale().formattedDataSize(newStorageFreeSpace),
                                             QLocale().formattedDataSize(deltaStorageFreeSpace),
                                             QLocale().formattedDataSize(newStorageTotalSpace),
-                                            QLocale().formattedDataSize(deltaStorageTotalSpace))
+                                            QLocale().formattedDataSize(deltaStorageTotalSpace),
+                                            selectedStorageName)
                                       ,Qt::TextFormat(Qt::RichText));
              }
 

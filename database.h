@@ -103,7 +103,7 @@
                                     catalogFileType  text  ,
                                     catalogStorage  text  ,
                                     catalogIncludeSymblinks  text,
-                                    catalogStorageRelation   text)
+                                    catalogIsFullDevice   text)
                                 )");
     //Insert row  query
             const auto INSERT_CATALOG_SQL = QLatin1String(R"(
@@ -119,7 +119,7 @@
                                     catalogFileType,
                                     catalogStorage,
                                     catalogIncludeSymblinks,
-                                    catalogStorageRelation)
+                                    catalogIsFullDevice)
                                 values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 )");
 
@@ -136,7 +136,7 @@
                                         QString catalogFileType,
                                         QString catalogStorage,
                                         QString catalogIncludeSymblinks,
-                                        QString catalogStorageRelation
+                                        QString catalogIsFullDevice
                             )
                         {
 
@@ -151,7 +151,7 @@
                             q.addBindValue(catalogFileType);
                             q.addBindValue(catalogStorage);
                             q.addBindValue(catalogIncludeSymblinks);
-                            q.addBindValue(catalogStorageRelation);
+                            q.addBindValue(catalogIsFullDevice);
                             q.exec();
                             return 0;
                         }

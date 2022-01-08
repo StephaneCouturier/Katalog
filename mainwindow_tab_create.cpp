@@ -407,7 +407,7 @@
         ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
-        fileList.prepend("<catalogStorageRelation>" + QVariant(isFullDevice).toString());
+        fileList.prepend("<catalogIsFullDevice>" + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
         fileList.prepend("<catalogStorage>"         + newCatalogStorage);
         fileList.prepend("<catalogFileType>"        + fileType);

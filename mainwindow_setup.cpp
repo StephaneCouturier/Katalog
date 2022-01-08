@@ -303,6 +303,10 @@
         //Create
             //DEV: the option to include symblinks is not working yet
             ui->Create_checkBox_IncludeSymblinks->hide();
+            ui->Create_checkBox_isFullDevice->hide();
+
+        //Catalogs
+            ui->Catalogs_checkBox_isFullDevice->hide();
 
         //Explore
 
@@ -311,9 +315,6 @@
             ui->Storage_pushButton_OpenFilelight->hide();
 
         //Settings
-            ui->Filters_checkBox_SearchInCatalogs->hide();
-            ui->Filters_checkBox_SearchInConnectedDrives->hide();
-            ui->Filters_widget_ConnectedDrives->hide();
 
         //Other tabs
             ui->tabWidget->removeTab(8); //ExploreTreeview

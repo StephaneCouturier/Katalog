@@ -276,7 +276,7 @@ class MainWindow : public QMainWindow
             void loadStorageTableToModel();
             void saveStorageModelToFile();
             void saveStorageData();
-            void updateStorageInfo();
+            void updateStorageInfo(int storageID, QString storagePath);
             void refreshStorageStatistics();
 
         //TAB: Statistics
