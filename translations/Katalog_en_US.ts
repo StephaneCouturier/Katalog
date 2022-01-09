@@ -828,11 +828,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Using &apos;Begin With&apos; with &apos;File names or Folder names&apos; is not supported yet.
-Please try a different combinaison.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bytes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1201,6 +1196,11 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>Choose to use Tags to filter results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The option &apos;Begin With&apos; can only be used with &apos;File names only&apos;.
+Use a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

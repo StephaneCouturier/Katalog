@@ -828,12 +828,6 @@
         <translation>Tio</translation>
     </message>
     <message>
-        <source>Using &apos;Begin With&apos; with &apos;File names or Folder names&apos; is not supported yet.
-Please try a different combinaison.</source>
-        <translation>Utiliser &apos;Commence Par&apos; avec &apos;Nom de Fichiers ou nom de Dossiers&apos; n&apos;est pas encore pris en charge. 
-Essayer une combinaison différente.</translation>
-    </message>
-    <message>
         <source>Bytes</source>
         <translation>Octets</translation>
     </message>
@@ -978,18 +972,6 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation>Katalog n&apos;a pas pu obtenir de valeurs. &lt;br/&gt; Vérifier le chemin source ou que le stockage est monté sur le chemin source.</translation>
     </message>
     <message>
-        <source>Accept changes?</source>
-        <translation type="vanished">Accepter les changements ?</translation>
-    </message>
-    <message>
-        <source>Total:</source>
-        <translation type="vanished">Total :</translation>
-    </message>
-    <message>
-        <source>Free:</source>
-        <translation type="vanished">Libre :</translation>
-    </message>
-    <message>
         <source>Check at start up</source>
         <translation>Vérifier au démarrage</translation>
     </message>
@@ -1111,10 +1093,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
 </translation>
     </message>
     <message>
-        <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="vanished">&lt;br/&gt;Ce stockage a été mis à jour :&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Espace utilisé : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté : &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace Total : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualiser les fichers du catalogue sélectionné, si le périphérique est disponible&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1141,10 +1119,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Nettoyer le Texte de recherche des caractères comme _ - . ,</translation>
-    </message>
-    <message>
-        <source>The selected catalog contains more than 100.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation type="vanished">Le catalogue sélectionné contient plus de 100 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
     </message>
     <message>
         <source>Duplicates on</source>
@@ -1207,10 +1181,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>&lt;br/&gt;&lt;b&gt;Statistiques des Fichiers trouvés&lt;/b&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Fichiers trouvés :  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Totale :   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Moyenne : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Min :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille Max :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Date Min :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Date Max :     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %7 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <source>Enter a Text to search, or untick to skip this criteria</source>
-        <translation type="vanished">Entrer un texte à rechercher, ou décocher pour ignorer ce critère</translation>
-    </message>
-    <message>
         <source>Show/Hide search criteria</source>
         <translation>Afficher/Masquer les critères de recherche</translation>
     </message>
@@ -1224,7 +1194,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <source>Search in file catalogs</source>
-        <translation type="unfinished">Rechercher dans les catalogues</translation>
+        <translation>Rechercher dans les catalogues</translation>
     </message>
     <message>
         <source>exclude</source>
@@ -1271,6 +1241,12 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Choose to use Tags to filter results</source>
         <translation>Choisir d&apos;utiliser les étiquettes pour filtrer les résultats</translation>
+    </message>
+    <message>
+        <source>The option &apos;Begin With&apos; can only be used with &apos;File names only&apos;.
+Use a different combinaison.</source>
+        <translation>L&apos;option &apos;Commencer par&apos; ne peut être utilisée qu&apos;avec &apos;Noms de fichiers uniquement&apos;.
+Utilisez une combinaison différente.</translation>
     </message>
 </context>
 <context>

@@ -586,13 +586,6 @@
                     searchInFileCatalogsChecked   = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                     searchInConnectedDriveChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
 
-                    //Verify criteria and validity of the search
-//                        if(searchOnText==true and searchText==""){
-//                            QApplication::restoreOverrideCursor();
-//                            QMessageBox::information(this,"Katalog",tr("Enter a Text to search, or untick to skip this criteria"));
-//                            return;
-//                        }
-
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
                     sizeMultiplierMin=1;
@@ -615,8 +608,8 @@
                             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 
                  // Searching "Begin With" for File name or Folder name is not supported yet
-                    if (selectedTextCriteria==tr("Begins With") and selectedSearchIn ==tr("File names or Folder paths")){
-                        QMessageBox::information(this,"Katalog",tr("Using 'Begin With' with 'File names or Folder names' is not supported yet.\nPlease try a different combinaison."));
+                    if (selectedTextCriteria==tr("Begins With") and selectedSearchIn !=tr("File names only")){
+                        QMessageBox::information(this,"Katalog",tr("The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
                         //Stop animation
                         QApplication::restoreOverrideCursor();
                         return;;
