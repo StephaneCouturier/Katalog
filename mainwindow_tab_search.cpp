@@ -123,7 +123,7 @@
             ui->Search_checkBox_DuplicateSize->setChecked(false);
             ui->Search_checkBox_DuplicateDateModified->setChecked(false);
             ui->Search_checkBox_Date->setChecked(false);
-            ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("2000-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
+            ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("1970-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_label_NumberResults->setText("");
             ui->Search_label_SizeResults->setText("");
