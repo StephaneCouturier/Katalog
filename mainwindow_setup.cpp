@@ -125,8 +125,9 @@
         //Load the settings file
 
             //Collection folder
-            if (firstRun != true)
+            if (firstRun != true){
                 collectionFolder = settings.value("LastCollectionFolder").toString();
+            }
 
             //Restore last Search values
             #ifdef Q_OS_LINUX
@@ -148,6 +149,7 @@
             selectedFileType        = settings.value("LastSearch/FileType").toString();
             selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
             selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
+            selectedSearchExclude   = settings.value("LastSearch/SearchExclude").toString();
             selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
             selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
             selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
@@ -157,7 +159,8 @@
             searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
             searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
-            searchOnText            = settings.value("LastSearch/searchOnText").toBool();
+            if ( settings.value("LastSearch/searchOnText").toString() =="") searchOnText=true;
+            else searchOnText       = settings.value("LastSearch/searchOnText").toBool();
             showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
             selectedTag             = settings.value("LastSearch/SearchTag").toString();
             searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
@@ -252,6 +255,7 @@
         settings.setValue("LastSearch/FileType", selectedFileType);
         settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
         settings.setValue("LastSearch/SearchIn", selectedSearchIn);
+        settings.setValue("LastSearch/SearchExclude", selectedSearchExclude);
         settings.setValue("LastSearch/MinimumSize", selectedMinimumSize);
         settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
         settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
@@ -313,6 +317,9 @@
         //Storage
             //DEV: pending a test and development of a function to open Filelight at the requested place
             ui->Storage_pushButton_OpenFilelight->hide();
+            ui->Storage_pushButton_ShowHide->hide();
+            ui->Storage_label_Device->hide();
+            ui->Storage_widget_DeviceForm->hide();
 
         //Settings
 
@@ -415,7 +422,7 @@
         ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-
+        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
     }
     //----------------------------------------------------------------------
     void MainWindow::startDatabase()

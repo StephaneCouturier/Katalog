@@ -109,6 +109,7 @@
             #endif
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
+            ui->Search_lineEdit_Exclude->setText(tr(""));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_checkBox_Size->setChecked(false);
             ui->Search_spinBox_FileTypeMinimumSize->setValue(0);
@@ -299,6 +300,7 @@
                 #endif
                     ui->Search_comboBox_TextCriteria->setEnabled(true);
                     ui->Search_comboBox_SearchIn->setEnabled(true);
+                    ui->Search_lineEdit_Exclude->setEnabled(true);
             }
             else{
                 #ifdef Q_OS_LINUX
@@ -308,6 +310,7 @@
                 #endif
                     ui->Search_comboBox_TextCriteria->setDisabled(true);
                     ui->Search_comboBox_SearchIn->setDisabled(true);
+                    ui->Search_lineEdit_Exclude->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -325,36 +328,37 @@
 
             selectedTextCriteria = ui->Search_tableView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
             selectedSearchIn     = ui->Search_tableView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toBool();
-            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toInt();
-            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toString();
-            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toInt();
-            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toString();
-            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toBool();
-            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toDateTime();
-            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
-            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toBool();
-            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
-            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
-            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
-            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
-            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
-            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toString();
+            selectedSearchExclude= ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toBool();
+            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
+            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toInt();
+            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toString();
+            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toBool();
+            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
+            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toDateTime();
+            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
+            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
+            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
 
-            searchInFileCatalogsChecked   = ui->Search_tableView_History->model()->index(index.row(), 24, QModelIndex()).data().toBool();
-            searchInConnectedDriveChecked = ui->Search_tableView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
-            selectedDirectoryName = ui->Search_tableView_History->model()->index(index.row(), 26, QModelIndex()).data().toString();
+            searchInFileCatalogsChecked   = ui->Search_tableView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
+            searchInConnectedDriveChecked = ui->Search_tableView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
+            selectedDirectoryName = ui->Search_tableView_History->model()->index(index.row(), 27, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
+            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
-            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
+            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
-            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
+            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         }
@@ -541,6 +545,7 @@
                     selectedSearchCatalog  = ui->Filters_comboBox_SelectCatalog->currentText();
                     selectedTextCriteria   = ui->Search_comboBox_TextCriteria->currentText();
                     selectedSearchIn       = ui->Search_comboBox_SearchIn->currentText();
+                    selectedSearchExclude  = ui->Search_lineEdit_Exclude->text();
                     selectedFileType       = ui->Search_comboBox_FileType->currentText();
                     selectedMinimumSize    = ui->Search_spinBox_FileTypeMinimumSize->value();
                     selectedMaximumSize    = ui->Search_spinBox_MaximumSize->value();
@@ -558,11 +563,11 @@
                     searchInConnectedDriveChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
 
                     //Verify criteria and validity of the search
-                        if(searchOnText==true and searchText==""){
-                            QApplication::restoreOverrideCursor();
-                            QMessageBox::information(this,"Katalog",tr("Enter a Text to search, or untick to skip this criteria"));
-                            return;
-                        }
+//                        if(searchOnText==true and searchText==""){
+//                            QApplication::restoreOverrideCursor();
+//                            QMessageBox::information(this,"Katalog",tr("Enter a Text to search, or untick to skip this criteria"));
+//                            return;
+//                        }
 
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
@@ -1091,6 +1096,31 @@
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
              }
 
+            //Add the words to exclude to the regex
+            if ( selectedSearchExclude !=""){
+
+                //Prepare
+                QString searchTextToSplit = selectedSearchExclude;
+                QString excludeGroupRegEx = "";
+                QRegExp lineSplitExp(" ");
+                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
+                int numberOfSearchWords = lineFieldList.count();
+
+                //Build regex group to exclude all words
+                    //Genereate first part = first characters + the first word
+                    excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
+                    //add more words
+                    for (int i=1; i<(numberOfSearchWords); i++){
+                        excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
+                    }
+                    //last part
+                    excludeGroupRegEx = excludeGroupRegEx + "))";
+
+                //Add regex group to exclude to the global regexPattern
+                regexPattern = excludeGroupRegEx + regexPattern;
+            }
+
+
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
             //Search loop for all lines in the catalog file
@@ -1108,6 +1138,7 @@
                 do {
                     //Get line / file data
                         line = stream.readLine();
+                        if ( line=="") continue;
                         QRegularExpressionMatch match;
                         QRegularExpressionMatch foldermatch;
                         //QRegularExpressionMatch matchFileType;
@@ -1683,9 +1714,10 @@
                     selectedMaximumSize = 1000;
 
             //Set values
-                ui->Search_checkBox_Text->setChecked(searchOnText);
+                ui->Search_checkBox_Text->setChecked(searchOnText);               
                 ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
                 ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
+                ui->Search_lineEdit_Exclude->setText(selectedSearchExclude);
                 ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
                 ui->Search_spinBox_FileTypeMinimumSize->setValue(selectedMinimumSize);
                 ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
@@ -1922,7 +1954,8 @@
                                     searchCatalog ,
                                     SearchCatalogChecked ,
                                     SearchDirectoryChecked ,
-                                    SeletedDirectory
+                                    SeletedDirectory,
+                                    TextExclude
                                 )
                                 VALUES(
                                     :dateTime	,
@@ -1951,7 +1984,8 @@
                                     :searchCatalog ,
                                     :SearchCatalogChecked ,
                                     :SearchDirectoryChecked ,
-                                    :SeletedDirectory
+                                    :SeletedDirectory,
+                                    :TextExclude
                                 )
                 )");
 
@@ -1989,6 +2023,7 @@
             query.bindValue(":SearchCatalogChecked",      ui->Filters_checkBox_SearchInCatalogs->isChecked());
             query.bindValue(":SearchDirectoryChecked",    ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
             query.bindValue(":SeletedDirectory",          ui->Filters_lineEdit_SeletedDirectory->text());
+            query.bindValue(":TextExclude",          ui->Search_lineEdit_Exclude->text());
             query.exec();
 
             //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
@@ -2003,25 +2038,6 @@
             //QFile exportFile(collectionFolder+"/file.txt");
 
             QTextStream out(&searchFile);
-            //DEV ADD HEADER LINE
-            /*
-            out  << "ID"            << "\t"
-                 << "Name"          << "\t"
-                 << "Type"          << "\t"
-                 << "Location"      << "\t"
-                 << "Path"          << "\t"
-                 << "Label"         << "\t"
-                 << "FileSystem"    << "\t"
-                 << "Total"         << "\t"
-                 << "Free"          << "\t"
-                 << "BrandModel"    << "\t"
-                 << "SerialNumber"  << "\t"
-                 << "BuildDate"     << "\t"
-                 << "ContentType"   << "\t"
-                 << "Container"     << "\t"
-                 << "Comment"       << "\t"
-                 << '\n';
-            */
 
             //Query
             QSqlQuery query;
@@ -2087,7 +2103,9 @@
 
                         //Split the string with tabulation into a list
                         QStringList fieldList = line.split('\t');
-                        if (fieldList.count()<27){
+                        //add empty values to support the addition of new fields for files from older versions
+                        if (fieldList.count()<28){
+                            fieldList.append("");
                             fieldList.append("");
                             fieldList.append("");
                             fieldList.append("");
@@ -2121,7 +2139,8 @@
                                             searchCatalog ,
                                             SearchCatalogChecked ,
                                             SearchDirectoryChecked ,
-                                            SeletedDirectory
+                                            SeletedDirectory,
+                                            TextExclude
                                         )
                                     values(
                                             :dateTime	,
@@ -2150,7 +2169,8 @@
                                             :searchCatalog	,
                                             :SearchCatalogChecked ,
                                             :SearchDirectoryChecked ,
-                                            :SeletedDirectory
+                                            :SeletedDirectory,
+                                            :TextExclude
                                            )
                                     )");
 
@@ -2183,6 +2203,7 @@
                         insertQuery.bindValue(":SearchCatalogChecked",  fieldList[24]);
                         insertQuery.bindValue(":SearchDirectoryChecked",fieldList[25]);
                         insertQuery.bindValue(":SeletedDirectory",      fieldList[26]);
+                        insertQuery.bindValue(":TextExclude",           fieldList[27]);
                         insertQuery.exec();
                     }
             }
@@ -2193,7 +2214,35 @@
         {
             QSqlQuery querySearchHistory;
             QString querySearchHistorySQL = QLatin1String(R"(
-                                                SELECT *
+                                                SELECT
+                                                    dateTime	,
+                                                    TextChecked ,
+                                                    TextPhrase	,
+                                                    TextCriteria	,
+                                                    TextSearchIn	,
+                                                    TextExclude     ,
+                                                    FileType	,
+                                                    FileSizeChecked	,
+                                                    FileSizeMin	,
+                                                    FileSizeMinUnit	,
+                                                    FileSizeMax	,
+                                                    FileSizeMaxUnit	,
+                                                    DateModifiedChecked	,
+                                                    DateModifiedMin	,
+                                                    DateModifiedMax	,
+                                                    DuplicatesChecked	,
+                                                    DuplicateName	,
+                                                    DuplicateSize	,
+                                                    DuplicateDateModified	,
+                                                    ShowFolders	,
+                                                    TagChecked	,
+                                                    Tag     	,
+                                                    searchLocation	,
+                                                    searchStorage	,
+                                                    searchCatalog ,
+                                                    SearchCatalogChecked ,
+                                                    SearchDirectoryChecked ,
+                                                    SeletedDirectory
                                                 FROM search
                                                 ORDER BY dateTime DESC
                                             )");
@@ -2202,34 +2251,30 @@
 
             QSqlQueryModel *queryModel = new QSqlQueryModel();
             queryModel->setQuery(querySearchHistory);
-//            queryModel->setHeaderData(0, Qt::Horizontal, tr("dateTime"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
-
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextChecked"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("TextPhrase"));
-//            queryModel->setHeaderData(0, Qt::Horizontal, tr("TextCriteria"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("TextSearchIn"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileType"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeChecked"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileSizeMin"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeMinUnit"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("FileSizeMax"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("FileSizeMaxUnit"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DateModifiedChecked"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DateModifiedMin"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DateModifiedMax"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DuplicatesChecked"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DuplicateName"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("DuplicateSize"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("DuplicateDateModified"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("ShowFolders"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("TagChecked"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("Tag"));
-//            queryModel->setHeaderData(1, Qt::Horizontal, tr("searchLocation"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("searchStorage"));
-//            queryModel->setHeaderData(2, Qt::Horizontal, tr("searchCatalog"));
+//            queryModel->setHeaderData( 0, Qt::Horizontal, tr("dateTime"));
+//            queryModel->setHeaderData( 1, Qt::Horizontal, tr("TextChecked"));
+//            queryModel->setHeaderData( 2, Qt::Horizontal, tr("TextPhrase"));
+//            queryModel->setHeaderData( 3, Qt::Horizontal, tr("TextCriteria"));
+//            queryModel->setHeaderData( 4, Qt::Horizontal, tr("TextSearchIn"));
+//            queryModel->setHeaderData( 5, Qt::Horizontal, tr("FileType"));
+//            queryModel->setHeaderData( 6, Qt::Horizontal, tr("FileSizeChecked"));
+//            queryModel->setHeaderData( 7, Qt::Horizontal, tr("FileSizeMin"));
+//            queryModel->setHeaderData( 8, Qt::Horizontal, tr("FileSizeMinUnit"));
+//            queryModel->setHeaderData( 9, Qt::Horizontal, tr("FileSizeMax"));
+//            queryModel->setHeaderData(10, Qt::Horizontal, tr("FileSizeMaxUnit"));
+//            queryModel->setHeaderData(11, Qt::Horizontal, tr("DateModifiedChecked"));
+//            queryModel->setHeaderData(12, Qt::Horizontal, tr("DateModifiedMin"));
+//            queryModel->setHeaderData(13, Qt::Horizontal, tr("DateModifiedMax"));
+//            queryModel->setHeaderData(14, Qt::Horizontal, tr("DuplicatesChecked"));
+//            queryModel->setHeaderData(15, Qt::Horizontal, tr("DuplicateName"));
+//            queryModel->setHeaderData(16, Qt::Horizontal, tr("DuplicateSize"));
+//            queryModel->setHeaderData(17, Qt::Horizontal, tr("DuplicateDateModified"));
+//            queryModel->setHeaderData(18, Qt::Horizontal, tr("ShowFolders"));
+//            queryModel->setHeaderData(19, Qt::Horizontal, tr("TagChecked"));
+//            queryModel->setHeaderData(20, Qt::Horizontal, tr("Tag"));
+//            queryModel->setHeaderData(21, Qt::Horizontal, tr("searchLocation"));
+//            queryModel->setHeaderData(22, Qt::Horizontal, tr("searchStorage"));
+//            queryModel->setHeaderData(23, Qt::Horizontal, tr("searchCatalog"));
             ui->Search_tableView_History->setModel(queryModel);
             ui->Search_tableView_History->resizeColumnsToContents();
         }

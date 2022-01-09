@@ -215,7 +215,8 @@
                                         searchCatalog	TEXT,
                                         SearchCatalogChecked INTEGER,
                                         SearchDirectoryChecked INTEGER,
-                                        SeletedDirectory TEXT)
+                                        SeletedDirectory TEXT,
+                                        TextExclude	TEXT)
                                     )");
 
 // TAG ----------------------------------------------------

@@ -139,6 +139,7 @@ class MainWindow : public QMainWindow
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
+            QString selectedSearchExclude;
             bool searchOnSize;
             qint64  selectedMinimumSize;
             qint64  selectedMaximumSize;
