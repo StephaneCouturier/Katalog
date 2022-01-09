@@ -370,7 +370,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
-            void on_Search_tableView_History_activated(const QModelIndex &index);
+            void on_Search_treeView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
             void on_Search_treeView_FilesFound_HeaderSortOrderChanged();
             void on_Search_treeView_History_HeaderSortOrderChanged();

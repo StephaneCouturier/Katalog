@@ -314,7 +314,7 @@
             }
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_tableView_History_activated(const QModelIndex &index)
+        void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {
             //Restore the criteria of the selected search history
             searchOnText         = ui->Search_treeView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
@@ -2118,9 +2118,12 @@
             QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel;
             searchHistoryProxyModel->setSourceModel(queryModel);
 
+
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
             ui->Search_treeView_History->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
-            ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+            ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
+
+            ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
 
         }
         //----------------------------------------------------------------------
