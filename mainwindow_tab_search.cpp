@@ -911,152 +911,7 @@
                                 ui->Search_label_NumberResults->setText(QString::number(fileCount));
 
                         }
-/*
-            }
 
-            //or Process the SEARCH in CONNECTED DRIVE ------------------------------
-
-            else if (searchInConnectedDriveChecked==true)
-            {
-
-                QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
-
-                searchFilesInDirectory(sourceDirectory);
-
-                //Process search results: list of catalogs with results
-                    //Remove duplicates so the catalogs are listed only once, and sort the list
-                    catalogFoundList.removeDuplicates();
-                    catalogFoundList.sort();
-
-                    //Keep the catalog file name only
-                    foreach(QString item, catalogFoundList){
-                            int index = catalogFoundList.indexOf(item);
-                            //QDir dir(item);
-                            QFileInfo fileInfo(item);
-                            catalogFoundList[index] = fileInfo.baseName();
-                    }
-
-                    //Load list of catalogs in which files where found
-                    catalogFoundListModel = new QStringListModel(this);
-                    catalogFoundListModel->setStringList(catalogFoundList);
-                    ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
-
-                //Process search results: list of files
-                    // Create model
-                    Catalog *searchResultsCatalog = new Catalog(this);
-
-                    // Populate model with folders only if this option is selected
-                    if ( ui->Search_checkBox_ShowFolders->isChecked()==true )
-                    {
-
-                        sFilePaths.removeDuplicates();
-                        int numberOfFolders = sFilePaths.count();
-                        sFileNames.clear();
-                        sFileSizes.clear();
-                        sFileDateTimes.clear();
-                        sFileCatalogs.clear();
-                        for (int i=0; i<numberOfFolders; i++)
-                            sFileNames <<"";
-                        for (int i=0; i<numberOfFolders; i++)
-                            sFileSizes <<0;
-                        for (int i=0; i<numberOfFolders; i++)
-                            sFileDateTimes <<"";
-                        for (int i=0; i<numberOfFolders; i++)
-                            sFileCatalogs <<"";
-
-                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes,sFileCatalogs);
-                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                        proxyModel->setSourceModel(searchResultsCatalog);
-
-                        proxyModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
-
-                        // Connect model to treeview and display
-                        ui->Search_treeView_FilesFound->setModel(proxyModel);
-                        ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                        //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
-                        ui->Search_treeView_FilesFound->header()->hideSection(0);
-                        ui->Search_treeView_FilesFound->header()->hideSection(1);
-                        ui->Search_treeView_FilesFound->header()->hideSection(2);
-
-                        ui->Search_label_FoundTitle->setText(tr("Folders found"));
-                    }
-
-                    // Populate model with files if the folder option is not selected
-                else
-                {
-                    // Populate model with data
-                    searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
-
-                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                    proxyModel->setSourceModel(searchResultsCatalog);
-
-                    FilesView *fileViewModel = new FilesView(this);
-                    fileViewModel->setSourceModel(searchResultsCatalog);
-
-                    fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                    fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                    fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                    fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                    fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Search Directory"));
-
-                    // Connect model to tree/table view
-                    ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-                    ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                    ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                    ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                    ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                    ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                    ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); //Catalog
-                    ui->Search_treeView_FilesFound->header()->showSection(0);
-                    ui->Search_treeView_FilesFound->header()->showSection(1);
-                    ui->Search_treeView_FilesFound->header()->showSection(2);
-                    ui->Search_label_FoundTitle->setText(tr("Files found"));
-                }
-
-                //Files found Statistics
-                    //Count and display the number of files found
-                    filesFoundNumber = searchResultsCatalog->rowCount();
-                    ui->Search_label_NumberResults->setText(QString::number(filesFoundNumber));
-
-                    //Count and display the total size of files found
-                    filesFoundTotalSize = 0;
-                    qint64 sizeItem;
-                    foreach (sizeItem, sFileSizes) {
-                        filesFoundTotalSize = filesFoundTotalSize + sizeItem;
-                    }
-                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
-
-                    //Other statistics, covering the case where no results are returned.
-                    if (filesFoundNumber !=0){
-                        filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
-                        QList<qint64> fileSizeList = sFileSizes;
-                        std::sort(fileSizeList.begin(), fileSizeList.end());
-                        filesFoundMinSize = fileSizeList.first();
-                        filesFoundMaxSize = fileSizeList.last();
-
-                        QList<QString> fileDateList = sFileDateTimes;
-                        std::sort(fileDateList.begin(), fileDateList.end());
-                        filesFoundMinDate = fileDateList.first();
-                        filesFoundMaxDate = fileDateList.last();
-
-                        ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
-                    }
-
-                //Save the search parameters to the seetings file
-                saveSettings();
-
-//                QMessageBox::information(this,"Katalog","searchInConnectedDriveChecked completed.");
-
-            }
-*/
             //Save the search parameters to the settings file
             saveSettings();
             insertSearchHistoryToTable();
@@ -1146,7 +1001,6 @@
                 //Add regex group to exclude to the global regexPattern
                 regexPattern = excludeGroupRegEx + regexPattern;
             }
-
 
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
@@ -1331,11 +1185,9 @@
         //run a search of files for the selected Directory
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
         {
-            //QString sourceCatalogPath = sourceDirectory;
-            //QFile catalogFile(sourceCatalogPath);
 
-//COMMON
-            //Define how to use the search text
+
+            //Define how to use the search text //COMMON to searchFilesInCatalog
                 if(selectedTextCriteria == tr("Exact Phrase"))
                     regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
                 else if(selectedTextCriteria == tr("Begins With"))
@@ -1360,7 +1212,7 @@
 
                 regexPattern = regexSearchtext;
 
-            //Prepare the regexFileType for file types
+            //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
             if(selectedFileType !=tr("All")){
                 //Get the list of file extension and join it into one string
                 if(selectedFileType ==tr("Audio")){
@@ -1383,9 +1235,33 @@
                 regexPattern = regexSearchtext  + "(" + regexFileType + ")";
              }
 
+            //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
+            if ( selectedSearchExclude !=""){
+
+                //Prepare
+                QString searchTextToSplit = selectedSearchExclude;
+                QString excludeGroupRegEx = "";
+                QRegExp lineSplitExp(" ");
+                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
+                int numberOfSearchWords = lineFieldList.count();
+
+                //Build regex group to exclude all words
+                    //Genereate first part = first characters + the first word
+                    excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
+                    //add more words
+                    for (int i=1; i<(numberOfSearchWords); i++){
+                        excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
+                    }
+                    //last part
+                    excludeGroupRegEx = excludeGroupRegEx + "))";
+
+                //Add regex group to exclude to the global regexPattern
+                regexPattern = excludeGroupRegEx + regexPattern;
+            }
+
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
-//SPECIFIC
-//DUPLICATE   //filetypes
+
+            //filetypes
                     // Get the file type for the catalog
                     QStringList fileTypes;
 
@@ -1399,54 +1275,12 @@
 
                  //Get file information  (absolute path, size, datetime)
                 QString filePath = iterator.next();
-
-//                qint64 fileSize;
-//                QFile file(filePath);
-//                //if (file.open(QIODevice::ReadOnly)){
-//                fileSize = file.size();
-//                catalogTotalFileSize = catalogTotalFileSize + fileSize;
-
                 QFileInfo fileInfo(filePath);
                 QDateTime fileDate = fileInfo.lastModified();
-/*
-                //exclude if the folder is part of excluded directories
-                bool excludeFile = false;
-                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
-                for (int i=0; i<excludedFolders.length(); i++) {
-                    if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
-                        excludeFile = true;
-                        break;
-                    }
-                }
-                //exclude files in /directory/file when exclude fodler is in /directory
-                if (excludedFolders.contains(fileInfo.absolutePath())){
-                    excludeFile = true;
-                }
-                //add file to list if not excluded
-                if(excludeFile == false){
-                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
-                }
-*/
 
             line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
 
-            //QMessageBox::information(this,"Katalog","line: \n" + line);
-
-
-            //Search loop for all lines in the Directory files
-//            if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
-
-                //Set up a stream from the file's data
-//                QTextStream stream(&catalogFile);
-
-
-                //File by file, test if the file is matching all search criteria
-                //Loop principle1: stop further verification as soon as a criteria fails to match
-                //Loop principle2: start with fastest criteria (size, date), end continue with more complex ones (tag, file name)
-//COMMON
-            //    do {
-                    //Get line / file data
-            //            line = stream.readLine();
+            //COMMON to searchFilesInCatalog
                         QRegularExpressionMatch match;
                         QRegularExpressionMatch foldermatch;
                         //QRegularExpressionMatch matchFileType;
@@ -1550,14 +1384,12 @@
                         }
 
                         //If the file is matching the criteria, add it and its catalog to the search results
-//COMMON
+                        //COMMON to searchFilesInCatalog
                         if (match.hasMatch()){
-                            //QMessageBox::information(this,"Katalog","hasMatch, lineFilePath: \n" + lineFilePath);
 
                             filesFoundList << lineFilePath;
-//SPECIFIC
-//                            catalogFoundList.insert(0,sourceCatalogName);
-//COMMON
+
+                            //COMMON to searchFilesInCatalog
                             //Retrieve other file info
                             QFileInfo file(lineFilePath);
 
@@ -1572,14 +1404,11 @@
                             sFilePaths.append(file.path());
                             sFileSizes.append(lineFileSize);
                             sFileDateTimes.append(lineFileDatetime);
-
-//SPECIFIC
-//                            sFileCatalogs.append(sourceCatalogName);
                             sFileCatalogs.append(sourceDirectory);
                         }
                     }
                     else{
-//???
+
                         //Add the file and its catalog to the results, excluding blank lines
                         if (lineFilePath !=""){
                             filesFoundList << lineFilePath;
@@ -1602,13 +1431,9 @@
                             sFileCatalogs.append(sourceDirectory);
                         }
                     }
-
-//                } while(!line.isNull());
-
             }
- //           else return;
+        }
 
-        }              
         //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
