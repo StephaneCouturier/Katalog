@@ -3015,7 +3015,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="Search_tableView_History">
+           <widget class="QTreeView" name="Search_treeView_History">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -3033,8 +3033,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="selectionBehavior">
              <enum>QAbstractItemView::SelectRows</enum>
             </property>
-            <property name="gridStyle">
-             <enum>Qt::SolidLine</enum>
+            <property name="sortingEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

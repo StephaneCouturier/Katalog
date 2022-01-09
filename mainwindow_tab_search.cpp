@@ -216,14 +216,14 @@
 
             if ( iconName == "go-down"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
-                    ui->Search_tableView_History->setHidden(true);
+                    ui->Search_treeView_History->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-up");
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
-                    ui->Search_tableView_History->setHidden(false);
+                    ui->Search_treeView_History->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-down");
@@ -317,48 +317,48 @@
         void MainWindow::on_Search_tableView_History_activated(const QModelIndex &index)
         {
             //Restore the criteria of the selected search history
-            searchOnText         = ui->Search_tableView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
+            searchOnText         = ui->Search_treeView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
 
-            QString TextPhrase   = ui->Search_tableView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
+            QString TextPhrase   = ui->Search_treeView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
             #ifdef Q_OS_LINUX
                     ui->Search_kcombobox_SearchText->setEditText(TextPhrase);
             #else
                     ui->Search_lineEdit_SearchText->setText(TextPhrase);
             #endif
 
-            selectedTextCriteria = ui->Search_tableView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            selectedSearchIn     = ui->Search_tableView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedSearchExclude= ui->Search_tableView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            selectedFileType     = ui->Search_tableView_History->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            searchOnSize         = ui->Search_tableView_History->model()->index(index.row(), 7, QModelIndex()).data().toBool();
-            selectedMinimumSize  = ui->Search_tableView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
-            selectedMinSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
-            selectedMaximumSize  = ui->Search_tableView_History->model()->index(index.row(), 10, QModelIndex()).data().toInt();
-            selectedMaxSizeUnit  = ui->Search_tableView_History->model()->index(index.row(), 11, QModelIndex()).data().toString();
-            searchOnDate         = ui->Search_tableView_History->model()->index(index.row(), 12, QModelIndex()).data().toBool();
-            selectedDateMin      = ui->Search_tableView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
-            selectedDateMax      = ui->Search_tableView_History->model()->index(index.row(), 14, QModelIndex()).data().toDateTime();
-            searchOnDuplicates   = ui->Search_tableView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
-            hasDuplicatesOnName  = ui->Search_tableView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
-            hasDuplicatesOnSize  = ui->Search_tableView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
-            hasDuplicatesOnDateModified = ui->Search_tableView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
-            showFoldersOnly      = ui->Search_tableView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
-            searchOnTags         = ui->Search_tableView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
-            selectedTag          = ui->Search_tableView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
+            selectedTextCriteria = ui->Search_treeView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            selectedSearchIn     = ui->Search_treeView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            selectedSearchExclude= ui->Search_treeView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            selectedFileType     = ui->Search_treeView_History->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            searchOnSize         = ui->Search_treeView_History->model()->index(index.row(), 7, QModelIndex()).data().toBool();
+            selectedMinimumSize  = ui->Search_treeView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
+            selectedMinSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
+            selectedMaximumSize  = ui->Search_treeView_History->model()->index(index.row(), 10, QModelIndex()).data().toInt();
+            selectedMaxSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 11, QModelIndex()).data().toString();
+            searchOnDate         = ui->Search_treeView_History->model()->index(index.row(), 12, QModelIndex()).data().toBool();
+            selectedDateMin      = ui->Search_treeView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
+            selectedDateMax      = ui->Search_treeView_History->model()->index(index.row(), 14, QModelIndex()).data().toDateTime();
+            searchOnDuplicates   = ui->Search_treeView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
+            hasDuplicatesOnName  = ui->Search_treeView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize  = ui->Search_treeView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+            hasDuplicatesOnDateModified = ui->Search_treeView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
+            showFoldersOnly      = ui->Search_treeView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_treeView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_treeView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
 
-            searchInFileCatalogsChecked   = ui->Search_tableView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
-            searchInConnectedDriveChecked = ui->Search_tableView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
-            selectedDirectoryName = ui->Search_tableView_History->model()->index(index.row(), 27, QModelIndex()).data().toString();
+            searchInFileCatalogsChecked   = ui->Search_treeView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
+            searchInConnectedDriveChecked = ui->Search_treeView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
+            selectedDirectoryName = ui->Search_treeView_History->model()->index(index.row(), 27, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedSearchLocation  = ui->Search_tableView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
+            selectedSearchLocation  = ui->Search_treeView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
-            selectedSearchStorage   = ui->Search_tableView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
+            selectedSearchStorage   = ui->Search_treeView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
-            selectedSearchCatalog   = ui->Search_tableView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
+            selectedSearchCatalog   = ui->Search_treeView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         }
@@ -383,6 +383,30 @@
                                            filesFoundMinDate,
                                            filesFoundMaxDate)
                                      ,Qt::TextFormat(Qt::RichText));
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_treeView_FilesFound_HeaderSortOrderChanged(){
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QHeaderView *searchTreeHeader = ui->Search_treeView_FilesFound->header();
+
+            lastSearchSortSection = searchTreeHeader->sortIndicatorSection();
+            lastSearchSortOrder   = searchTreeHeader->sortIndicatorOrder();
+
+            settings.setValue("Search/lastSearchSortSection", QString::number(lastSearchSortSection));
+            settings.setValue("Search/lastSearchSortOrder",   QString::number(lastSearchSortOrder));
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_treeView_History_HeaderSortOrderChanged(){
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QHeaderView *searchHistoryTreeHeader = ui->Search_treeView_History->header();
+
+            lastSearchHistorySortSection = searchHistoryTreeHeader->sortIndicatorSection();
+            lastSearchHistorySortOrder   = searchHistoryTreeHeader->sortIndicatorOrder();
+
+            settings.setValue("Search/lastSearchHistorySortSection", QString::number(lastSearchHistorySortSection));
+            settings.setValue("Search/lastSearchHistorySortOrder",   QString::number(lastSearchHistorySortOrder));
         }
         //----------------------------------------------------------------------
         //Context Menu methods
@@ -710,7 +734,7 @@
 
                     // Connect model to tree/table view
                     ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
                     //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
                     ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                     ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
@@ -866,8 +890,11 @@
                                 fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                                 // Connect model to tree/table view
+                                QMessageBox::information(this,"Katalog","lastSearchSortSection: \n" + QVariant(lastSearchSortSection).toString());
+                                QMessageBox::information(this,"Katalog","lastSearchSortOrder: \n" + QVariant(lastSearchSortOrder).toString());
+
                                 ui->Search_treeView_FilesFound->setModel(fileModel);
-                                ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+                                ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
                                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                                 ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
                                 ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
@@ -2275,7 +2302,14 @@
 //            queryModel->setHeaderData(21, Qt::Horizontal, tr("searchLocation"));
 //            queryModel->setHeaderData(22, Qt::Horizontal, tr("searchStorage"));
 //            queryModel->setHeaderData(23, Qt::Horizontal, tr("searchCatalog"));
-            ui->Search_tableView_History->setModel(queryModel);
-            ui->Search_tableView_History->resizeColumnsToContents();
+
+            QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel;
+            searchHistoryProxyModel->setSourceModel(queryModel);
+
+            ui->Search_treeView_History->setModel(searchHistoryProxyModel);
+            ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::DescendingOrder);
+            ui->Search_treeView_History->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
+            ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
+
         }
         //----------------------------------------------------------------------

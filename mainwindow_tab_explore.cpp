@@ -52,7 +52,7 @@
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
             //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));           
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
@@ -71,10 +71,20 @@
 
             //Load directory files
             loadSelectedDirectoryFilesToExplore();
-
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Explore_treeView_FileList_HeaderSortOrderChanged(){
 
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QHeaderView *exploreTreeHeader = ui->Explore_treeView_FileList->header();
+
+            lastExploreSortSection = exploreTreeHeader->sortIndicatorSection();
+            lastExploreSortOrder   = exploreTreeHeader->sortIndicatorOrder();
+
+            settings.setValue("Explore/lastExploreSortSection", QString::number(lastExploreSortSection));
+            settings.setValue("Explore/lastExploreSortOrder",   QString::number(lastExploreSortOrder));
+        }
+        //----------------------------------------------------------------------
 
     //Context Menu methods
         void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
@@ -391,7 +401,7 @@
 
         // Connect model to tree/table view
         ui->Explore_treeview_Directories->setModel(getDirectoriesProxyModel);
-        ui->Explore_treeview_Directories->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->Explore_treeview_Directories->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
         ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
 
@@ -460,7 +470,7 @@
 
         // Connect model to tree/table view
         ui->Explore_treeView_FileList->setModel(proxyModel2);
-        ui->Explore_treeView_FileList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
         ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
         ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
@@ -468,7 +478,7 @@
         ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
 
         ui->DEV_treeView_Files->setModel(proxyModel2);
-        ui->DEV_treeView_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        //ui->DEV_treeView_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
         ui->DEV_treeView_Files->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->DEV_treeView_Files->header()->resizeSection(0, 600); //Name
         ui->DEV_treeView_Files->header()->resizeSection(1, 110); //Size

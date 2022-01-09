@@ -203,7 +203,6 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Delete_clicked()
     {
-
         int result = QMessageBox::warning(this,"Katalog",
                    tr("Do you want to <span style='color: red';>delete</span> this Storage device?"
                    "<table>"
@@ -228,6 +227,18 @@
             //Refresh storage statistics
             refreshStorageStatistics();
         }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Storage_treeView_StorageList_HeaderSortOrderChanged(){
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QHeaderView *storageTreeHeader = ui->Storage_treeView_StorageList->header();
+
+        lastStorageSortSection = storageTreeHeader->sortIndicatorSection();
+        lastStorageSortOrder   = storageTreeHeader->sortIndicatorOrder();
+
+        settings.setValue("Storage/lastStorageSortSection", QString::number(lastStorageSortSection));
+        settings.setValue("Storage/lastStorageSortOrder",   QString::number(lastStorageSortOrder));
     }
 
 //Methods-----------------------------------------------------------------------

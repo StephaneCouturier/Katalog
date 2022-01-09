@@ -203,7 +203,7 @@
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
-                    ui->Search_tableView_History->setHidden(true);
+                    ui->Search_treeView_History->setHidden(true);
             }
 
             //General settings
@@ -237,6 +237,17 @@
             ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
             ui->tabWidget->setCurrentIndex(selectedTab);
 
+            //Restore last sort order for the catalogs and storage
+            lastCatlogsSortSection = settings.value("Catalogs/lastCatlogsSortSection").toInt();
+            lastCatlogsSortOrder   = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
+            lastStorageSortSection = settings.value("Storage/lastStorageSortSection").toInt();
+            lastStorageSortOrder   = settings.value("Storage/lastStorageSortOrder").toInt();
+            lastExploreSortSection = settings.value("Explore/lastExploreSortSection").toInt();
+            lastExploreSortOrder   = settings.value("Explore/lastExploreSortOrder").toInt();
+            lastSearchSortSection = settings.value("Search/lastSearchSortSection").toInt();
+            lastSearchSortOrder   = settings.value("Search/lastSearchSortOrder").toInt();
+            lastSearchHistorySortSection = settings.value("Search/lastSearchHistorySortSection").toInt();
+            lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()

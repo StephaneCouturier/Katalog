@@ -173,6 +173,8 @@ class MainWindow : public QMainWindow
             void saveSearchHistoryTableToFile();
             void loadSearchHistoryFileToTable();
             QString searchHistoryFilePath;
+            int lastSearchSortSection;
+            int lastSearchSortOrder;
 
             //search
             QList<QString>  sFileNames;
@@ -199,6 +201,10 @@ class MainWindow : public QMainWindow
             QStringListModel *catalogFoundListModel;
             QStringList searchTextList;
 
+            //search history
+            int lastSearchHistorySortSection;
+            int lastSearchHistorySortOrder;
+
         //TAB: Catalogs
             QString collectionFolder;
             QStringListModel catalogListModel;
@@ -216,6 +222,8 @@ class MainWindow : public QMainWindow
             bool    selectedCatalogIsFullDevice;
             QString selectedStorageLocationFilter;
             bool    skipCatalogUpdateSummary;
+            int lastCatlogsSortSection;
+            int lastCatlogsSortOrder;
 
             void loadCollection();
             void loadCatalogsToModel();
@@ -240,7 +248,8 @@ class MainWindow : public QMainWindow
             void loadCatalogFilesToExplore();
             void loadSelectedDirectoryFilesToExplore();
             void loadCatalogDirectoriesToExplore();
-
+            int lastExploreSortSection;
+            int lastExploreSortOrder;
         //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
@@ -271,6 +280,8 @@ class MainWindow : public QMainWindow
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             QStringList locationCatalogList;
+            int lastStorageSortSection;
+            int lastStorageSortOrder;
 
             void loadCatalogFilesToTable();
             void loadStorageFileToTable();
@@ -361,6 +372,8 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Duplicates_toggled(bool checked);
             void on_Search_tableView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
+            void on_Search_treeView_FilesFound_HeaderSortOrderChanged();
+            void on_Search_treeView_History_HeaderSortOrderChanged();
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);
@@ -387,6 +400,7 @@ class MainWindow : public QMainWindow
 
             void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index);
+            void on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged();
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
@@ -404,6 +418,7 @@ class MainWindow : public QMainWindow
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
+            void on_Explore_treeView_FileList_HeaderSortOrderChanged();
             //context menu
             void exploreContextOpenFile();
             void exploreContextOpenFolder();
@@ -427,6 +442,8 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_Delete_clicked(); //DEV
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
+            void on_Storage_treeView_StorageList_HeaderSortOrderChanged();
+
 
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();

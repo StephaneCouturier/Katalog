@@ -346,6 +346,19 @@
 
         }
 
+        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged(){
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+            QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
+
+            lastCatlogsSortSection = catalogsTreeHeader->sortIndicatorSection();
+            lastCatlogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
+
+            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatlogsSortSection));
+            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatlogsSortOrder));
+        }
+
 //Methods-----------------------------------------------------------------------
 
     //--------------------------------------------------------------------------
@@ -487,7 +500,6 @@
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
             ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
             ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
-            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(0,Qt::SortOrder(0));
 
             //Hide column with file path
             ui->Catalogs_treeView_CatalogList->header()->hideSection(1); //Path

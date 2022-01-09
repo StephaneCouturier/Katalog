@@ -63,8 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             //Set current version and date
-            currentVersion = "1.06";
-            releaseDate = "2021-12-22";
+            currentVersion = "1.07";
+            releaseDate = "2022-01-09";
             developmentMode = false;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
@@ -126,14 +126,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             }
 
     //setup tab: Search step 1 of 2
-            searchOnText = true;
-
             //Load an empty model to display headers
             Catalog *empty = new Catalog(this);
             ui->Search_treeView_FilesFound->setModel(empty);
             ui->Search_listView_CatalogsFound->setModel(empty);
-
-    //setup tab: Catalogs
 
     //setup tab: Storage
             storageFilePath = collectionFolder + "/" + "storage.csv";
@@ -178,7 +174,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             loadStatisticsData();
             loadStatisticsChart();
 
-    //Check if new version is available
+                //Check if new version is available
             checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
             if ( checkVersionChoice == true)
                 checkVersion();
@@ -190,7 +186,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             }
 
     //setup tab: Search step 2 of 2
-            searchOnText = true;
             initiateSearchValues();
             //load search history
                 //Define search history file
@@ -199,6 +194,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadSearchHistoryFileToTable();
                 loadSearchHistoryTableToModel();
 
+    //other slot and signals
+            connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                    this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged()) );
+            connect(ui->Storage_treeView_StorageList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                    this , SLOT(on_Storage_treeView_StorageList_HeaderSortOrderChanged()) );
+            connect(ui->Explore_treeView_FileList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                    this , SLOT(on_Explore_treeView_FileList_HeaderSortOrderChanged()) );
+            connect(ui->Search_treeView_FilesFound->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                    this , SLOT(on_Search_treeView_FilesFound_HeaderSortOrderChanged()) );
+            connect(ui->Search_treeView_History->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                    this , SLOT(on_Search_treeView_History_HeaderSortOrderChanged()) );
+
+    //Restore views sorting
+            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatlogsSortSection,Qt::SortOrder(lastCatlogsSortOrder));
+            ui->Storage_treeView_StorageList->QTreeView::sortByColumn(lastStorageSortSection,Qt::SortOrder(lastStorageSortOrder));
+            ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
+            ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
+            ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
 
     //DEV StorageTreeModel
             StorageTreeModel *storagetreeModel = new StorageTreeModel();
@@ -214,11 +227,11 @@ MainWindow::~MainWindow()
       delete ui;
 }
 
-//DEV
+//DEV Templates
 /*
 QMessageBox::information(this,"Katalog","Ok.");
 QMessageBox::information(this,"Katalog","stringVariable: \n" + stringVariable);
-QMessageBox::information(this,"Katalog","numbervariable: \n" + QString::number(numbervariable));
+QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant(anyVariable).toString());
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(
