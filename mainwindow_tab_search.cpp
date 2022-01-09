@@ -879,9 +879,6 @@
                                 fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                                 // Connect model to tree/table view
-                                QMessageBox::information(this,"Katalog","lastSearchSortSection: \n" + QVariant(lastSearchSortSection).toString());
-                                QMessageBox::information(this,"Katalog","lastSearchSortOrder: \n" + QVariant(lastSearchSortOrder).toString());
-
                                 ui->Search_treeView_FilesFound->setModel(fileModel);
                                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                                 ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
@@ -1864,9 +1861,6 @@
             query.bindValue(":SeletedDirectory",          ui->Filters_lineEdit_SeletedDirectory->text());
             query.bindValue(":TextExclude",          ui->Search_lineEdit_Exclude->text());
             query.exec();
-
-            //QMessageBox::information(this,"Katalog","saved: \n" + searchDateTime);
-
         }
         //----------------------------------------------------------------------
         void MainWindow::saveSearchHistoryTableToFile()
@@ -1912,7 +1906,6 @@
                 //searchFile.close();
             }
 
-            //QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+storageFile.fileName());
             searchFile.close();
         }
         //--------------------------------------------------------------------------
