@@ -979,15 +979,15 @@ This could mean that the source is empty or the device is not mounted to this fo
     </message>
     <message>
         <source>Accept changes?</source>
-        <translation>Accepter les changements ?</translation>
+        <translation type="vanished">Accepter les changements ?</translation>
     </message>
     <message>
         <source>Total:</source>
-        <translation>Total :</translation>
+        <translation type="vanished">Total :</translation>
     </message>
     <message>
         <source>Free:</source>
-        <translation>Libre :</translation>
+        <translation type="vanished">Libre :</translation>
     </message>
     <message>
         <source>Check at start up</source>
@@ -1112,7 +1112,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;br/&gt;Ce stockage a été mis à jour :&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Espace utilisé : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté : &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace Total : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <translation type="vanished">&lt;br/&gt;Ce stockage a été mis à jour :&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Espace utilisé : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté : &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace Total : &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (ajouté: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1208,7 +1208,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <source>Enter a Text to search, or untick to skip this criteria</source>
-        <translation>Entrer un texte à rechercher, ou décocher pour ignorer ce critère</translation>
+        <translation type="vanished">Entrer un texte à rechercher, ou décocher pour ignorer ce critère</translation>
     </message>
     <message>
         <source>Show/Hide search criteria</source>
@@ -1217,6 +1217,60 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation>Le catalogue sélectionné contient plus de 500 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>Search in connected drives</source>
+        <translation>Rechercher dans les lecteurs connectés</translation>
+    </message>
+    <message>
+        <source>Search in file catalogs</source>
+        <translation type="unfinished">Rechercher dans les catalogues</translation>
+    </message>
+    <message>
+        <source>exclude</source>
+        <translation>exclure</translation>
+    </message>
+    <message>
+        <source>is full device</source>
+        <translation>est un appareil plein</translation>
+    </message>
+    <message>
+        <source>catalog is for the full device</source>
+        <translation>le catalogue est pour l&apos;appareil complet</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>Appareil</translation>
+    </message>
+    <message>
+        <source>PushButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Directory</source>
+        <translation>Dossier de recherche</translation>
+    </message>
+    <message>
+        <source>The storage device name may not be correct:
+ %1 </source>
+        <translation>Le nom du périphérique de stockage n&apos;est peut-être pas correct&#xa0;:
+ %1 </translation>
+    </message>
+    <message>
+        <source>Full Device</source>
+        <translation>Appareil complet</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;br/&gt;Le périphérique de stockage &lt;b&gt; %1 &lt;/b&gt; a été mis à jour&#xa0;:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Espace utilisé&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b &gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt;&#xa0;%5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace total&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b &gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>Choose to search duplicates based on the next criteria</source>
+        <translation>Choisir de rechercher les doublons en fonction des critères suivants</translation>
+    </message>
+    <message>
+        <source>Choose to use Tags to filter results</source>
+        <translation>Choisir d&apos;utiliser les étiquettes pour filtrer les résultats</translation>
     </message>
 </context>
 <context>

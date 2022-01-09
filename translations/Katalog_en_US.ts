@@ -945,18 +945,6 @@ Modify the device to provide one and try again.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Accept changes?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Free:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Check at start up</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1067,10 +1055,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;br/&gt;This storage was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1159,15 +1143,64 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a Text to search, or untick to skip this criteria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show/Hide search criteria</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in connected drives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in file catalogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>is full device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>catalog is for the full device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PushButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The storage device name may not be correct:
+ %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose to search duplicates based on the next criteria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose to use Tags to filter results</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

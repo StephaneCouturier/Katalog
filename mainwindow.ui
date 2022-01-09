@@ -72,9 +72,6 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="toolTip">
-          <string>Verify if a new version of Katalog is available when starting the app.</string>
-         </property>
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
          </property>
@@ -2371,7 +2368,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item>
                 <widget class="QCheckBox" name="Search_checkBox_Duplicates">
                  <property name="toolTip">
-                  <string>Choose to only show folders as results</string>
+                  <string>Choose to search duplicates based on the next criteria</string>
                  </property>
                  <property name="text">
                   <string>Duplicates on</string>
@@ -2573,7 +2570,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item>
                 <widget class="QCheckBox" name="Search_checkBox_Tags">
                  <property name="toolTip">
-                  <string>Choose to only show folders as results</string>
+                  <string>Choose to use Tags to filter results</string>
                  </property>
                  <property name="text">
                   <string>Tag</string>
@@ -5171,32 +5168,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="Storage_pushButton_ShowHide">
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>22</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Show/Hide Filters and Settings</string>
-               </property>
-               <property name="statusTip">
-                <string/>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">padding: 2px 10px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset theme="go-previous">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0" rowspan="2" colspan="3">
               <widget class="QWidget" name="Storage_widget_DeviceForm" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -5229,6 +5200,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="Storage_pushButton_ShowHide">
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>22</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Show/Hide Filters and Settings</string>
+               </property>
+               <property name="statusTip">
+                <string/>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">padding: 2px 10px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="go-previous">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
