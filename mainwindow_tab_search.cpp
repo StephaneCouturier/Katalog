@@ -700,8 +700,6 @@
 
                         // Connect model to treeview and display
                         ui->Search_treeView_FilesFound->setModel(proxyModel);
-                        ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-                        //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                         ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
                         ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
                         ui->Search_treeView_FilesFound->header()->hideSection(0);
@@ -734,8 +732,6 @@
 
                     // Connect model to tree/table view
                     ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                    ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
-                    //ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
                     ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                     ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
                     ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
@@ -894,7 +890,6 @@
                                 QMessageBox::information(this,"Katalog","lastSearchSortOrder: \n" + QVariant(lastSearchSortOrder).toString());
 
                                 ui->Search_treeView_FilesFound->setModel(fileModel);
-                                ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
                                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                                 ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
                                 ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
@@ -916,7 +911,6 @@
             saveSettings();
             insertSearchHistoryToTable();
             saveSearchHistoryTableToFile();
-            //loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();
 
             //Stop animation
@@ -2132,7 +2126,6 @@
             searchHistoryProxyModel->setSourceModel(queryModel);
 
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
-            ui->Search_treeView_FilesFound->QTreeView::sortByColumn(0,Qt::DescendingOrder);
             ui->Search_treeView_History->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
 
