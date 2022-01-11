@@ -1134,6 +1134,12 @@
                </item>
                <item>
                 <widget class="QLineEdit" name="Search_lineEdit_SearchText">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>11</pointsize>
@@ -1146,6 +1152,12 @@
                </item>
                <item>
                 <widget class="KComboBox" name="Search_kcombobox_SearchText">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>11</pointsize>
@@ -1304,13 +1316,13 @@
                  <property name="minimumSize">
                   <size>
                    <width>110</width>
-                   <height>45</height>
+                   <height>40</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>46</height>
+                   <height>40</height>
                   </size>
                  </property>
                  <property name="styleSheet">
@@ -1337,7 +1349,7 @@
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>40</width>
+                   <width>35</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -1397,6 +1409,12 @@
                   <size>
                    <width>145</width>
                    <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="toolTip">
@@ -1513,6 +1531,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <height>0</height>
                   </size>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="toolTip">
                   <string>Define if the search text should be used to look only in file names, or folder paths, or both.</string>
                  </property>
@@ -1613,6 +1637,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
                <item>
                 <widget class="QLineEdit" name="Search_lineEdit_Exclude">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>11</pointsize>
@@ -1827,7 +1857,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
-                   <height>16777215</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="buttonSymbols">
@@ -1852,8 +1882,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="maximumSize">
                   <size>
                    <width>80</width>
-                   <height>16777215</height>
+                   <height>30</height>
                   </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
                  </property>
                  <property name="toolTip">
                   <string>File size unit for minimum value</string>
@@ -1917,7 +1952,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
-                   <height>16777215</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="maximum">
@@ -1939,12 +1974,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="maximumSize">
                   <size>
                    <width>80</width>
-                   <height>16777215</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>10</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="toolTip">
@@ -2055,7 +2090,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="maximumSize">
                   <size>
                    <width>90</width>
-                   <height>16777215</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="font">
@@ -2248,9 +2283,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
                  <property name="date">
                   <date>
-                   <year>1900</year>
+                   <year>1970</year>
                    <month>1</month>
                    <day>1</day>
                   </date>
@@ -2304,6 +2345,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <widget class="QDateTimeEdit" name="Search_dateTimeEdit_Max">
                  <property name="enabled">
                   <bool>false</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
                  </property>
                  <property name="date">
                   <date>

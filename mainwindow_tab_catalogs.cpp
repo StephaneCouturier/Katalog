@@ -359,7 +359,7 @@
             settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section){
+/*        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section){
 
 //            QList<int> headerSectionsSize;
 
@@ -395,6 +395,7 @@
 //            ui->Catalogs_treeView_CatalogList->header()->resizeSection(lastCatalogsHeaderSection,lastCatalogsHeaderSize);
 
         }
+*/
 
 //Methods-----------------------------------------------------------------------
 

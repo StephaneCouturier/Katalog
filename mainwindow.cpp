@@ -26,7 +26,6 @@
 // Purpose:     Class for the main window
 // Description: intiate the User Interface, load data into the internal database, recover last user position and display data
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -64,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //Set current version and date
             currentVersion = "1.07";
-            releaseDate = "2022-01-09";
+            releaseDate = "2022-01-11";
             developmentMode = false;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
@@ -195,6 +194,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadSearchHistoryTableToModel();
 
     //other slot and signals
+            //Header Order change
             connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
                     this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged()) );
             connect(ui->Storage_treeView_StorageList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
@@ -206,8 +206,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             connect(ui->Search_treeView_History->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
                     this , SLOT(on_Search_treeView_History_HeaderSortOrderChanged()) );
 
+            //Header Size change
+//            connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sectionResized(int,int,int)),
+//                    this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int)) );
+
     //Restore views sorting
-            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatlogsSortSection,Qt::SortOrder(lastCatlogsSortOrder));
+            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatalogsSortSection,Qt::SortOrder(lastCatalogsSortOrder));
             ui->Storage_treeView_StorageList->QTreeView::sortByColumn(lastStorageSortSection,Qt::SortOrder(lastStorageSortOrder));
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));

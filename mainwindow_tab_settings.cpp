@@ -26,7 +26,6 @@
 // Purpose:     methods for the Fitlers and Settings panel
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

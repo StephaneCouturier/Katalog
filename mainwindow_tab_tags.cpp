@@ -26,7 +26,6 @@
 // Purpose:     methods for the screen Tags
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 

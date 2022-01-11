@@ -22,11 +22,10 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   mainwindow_tab_tags.cpp
-// Purpose:     class to create a model used to display storage devices and their attributes
+// File Name:   storageview.cpp
+// Purpose:
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "storageview.h"

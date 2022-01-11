@@ -1089,7 +1089,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Update the catalog content with the new criteria?
 </source>
-        <translation>Actualiser le contenu du catalogue avec les nouveaux critère ?
+        <translation>Actualiser le contenu du catalogue avec les nouveaux critères ?
 </translation>
     </message>
     <message>

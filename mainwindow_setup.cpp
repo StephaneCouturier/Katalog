@@ -26,7 +26,6 @@
 // Purpose:     methods for the mainwindow
 // Description: initiate additions to the interface including theme and loading previous settings
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -52,11 +51,11 @@
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(const QPoint&)),
+        connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(const QPoint&)));
 
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(const QPoint&)),
+        connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(const QPoint&)));
     }
     //----------------------------------------------------------------------
@@ -292,9 +291,6 @@
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
         settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
-
-        //settings.setValue("LastSelectedCatalog", sText);
-
     }
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()
@@ -310,7 +306,6 @@
         fileType_AudioS<< "*.mp3$" << "*.wav$" << "*.ogg$" << "*.aif$";
         fileType_VideoS<< "*.wmv$" << "*.avi$" << "*.mp4$" << "*.mkv$" << "*.flv$"  << "*.webm$";
         fileType_TextS << "*.txt$" << "*.pdf$" << "*.odt$" << "*.idx$" << "*.html$" << "*.rtf$" << "*.doc$" << "*.docx$" << "*.epub$";
-
     }
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
@@ -457,12 +452,10 @@
 
         storageModel = new QSqlRelationalTableModel(this);
         storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
-
     }
     //----------------------------------------------------------------------
     void MainWindow::checkVersion()
      {
-
          //Get the number of the lastest Version
          QString lastestVersion;
          QString htmlPage;
@@ -497,11 +490,9 @@
                lineValues = lineValues[1].split("\">");
                lastestVersion = lineValues[0];
              }
-
          }
 
          QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + lastestVersion;
-
 
         //inform user if new version is available, and give the choice to download it
         if ( lastestVersion > currentVersion ){
@@ -518,7 +509,6 @@
 
             }
         }
-
      }
 
     //Menu and Icons - Actions KDE setup ---------------------------------------

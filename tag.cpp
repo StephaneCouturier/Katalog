@@ -26,9 +26,6 @@
 // Purpose:     class to create a model used to display tags and their attributes
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.1
 /////////////////////////////////////////////////////////////////////////////
 */
 

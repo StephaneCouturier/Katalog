@@ -26,7 +26,6 @@
 // Purpose:     Main file for the application at start
 // Description: Generates the app, initialize language, theme, fallback icons, translation, and the main window
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 
@@ -98,7 +97,7 @@ int main(int argc, char *argv[])
              // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
              QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
              aboutData.addAuthor(i18n("Stéphane Couturier"), i18n("Creator"), QStringLiteral("katalog@stephanecouturier.com"),
-             QStringLiteral("https://github.com/StephaneCouturier/"), QStringLiteral(""));
+             QStringLiteral("https://github.com/StephaneCouturier/"), QStringLiteral(" "));
         KAboutData::setApplicationData(aboutData);
 
         QCommandLineParser parser;
@@ -113,9 +112,9 @@ int main(int argc, char *argv[])
     QIcon::setThemeName( "breeze" );
     //Set icon fallback in case theme is not available
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
+
     MainWindow* window = new MainWindow();
     window->show();
 
     return app.exec();
 }
-
