@@ -305,6 +305,11 @@
 
         // Get directory to catalog
         QString directory = newCatalogPath;
+        //remove the / at the end if any
+        int pathLength = newCatalogPath.length();
+        if (newCatalogPath.at(pathLength-1)=="/") {
+            newCatalogPath.remove(pathLength-1,1);
+        }
 
         qint64 catalogTotalFileSize = 0;
 

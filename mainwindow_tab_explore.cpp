@@ -231,7 +231,7 @@
 
     void MainWindow::openCatalogToExplore()
     {
-        //Check catalog's number of files and confirm load
+        //Check catalog's number of files and confirm load if too big
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                             SELECT catalogFileCount
@@ -251,6 +251,12 @@
                 if ( result ==QMessageBox::Cancel){
                     return;
                 }
+        }
+
+        //selectedCatalogPath: remove the / at the end if any
+        int pathLength = selectedCatalogPath.length();
+        if (selectedCatalogPath.at(pathLength-1)=="/") {
+            selectedCatalogPath.remove(pathLength-1,1);
         }
 
         //Load the files of the Selected Catalog
