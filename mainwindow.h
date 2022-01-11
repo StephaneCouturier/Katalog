@@ -222,8 +222,8 @@ class MainWindow : public QMainWindow
             bool    selectedCatalogIsFullDevice;
             QString selectedStorageLocationFilter;
             bool    skipCatalogUpdateSummary;
-            int lastCatlogsSortSection;
-            int lastCatlogsSortOrder;
+            int lastCatalogsSortSection;
+            int lastCatalogsSortOrder;
 
             void loadCollection();
             void loadCatalogsToModel();
@@ -401,6 +401,7 @@ class MainWindow : public QMainWindow
             void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged();
+            void on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section);
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();

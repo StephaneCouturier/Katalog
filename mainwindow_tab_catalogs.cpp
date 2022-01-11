@@ -345,18 +345,55 @@
             QMessageBox::information(this,"Katalog",tr("Snapshot created."));
 
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged(){
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
             QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
 
-            lastCatlogsSortSection = catalogsTreeHeader->sortIndicatorSection();
-            lastCatlogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
+            lastCatalogsSortSection = catalogsTreeHeader->sortIndicatorSection();
+            lastCatalogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
 
-            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatlogsSortSection));
-            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatlogsSortOrder));
+            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatalogsSortSection));
+            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section){
+
+//            QList<int> headerSectionsSize;
+
+//            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+//            QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
+
+//            lastCatalogsHeaderSection = section;
+//            lastCatalogsHeaderSize    = catalogsTreeHeader->sectionSize(0);
+
+            //headerSectionsSize[lastCatalogsHeaderSection] = lastCatalogsHeaderSize;
+
+//            settings.setValue("Catalogs/lastCatalogsHeaderSection", QString::number(lastCatalogsHeaderSection));
+//            settings.setValue("Catalogs/lastCatalogsHeaderSize"   , QString::number(lastCatalogsHeaderSize));
+            //settings.setValue("Catalogs/lastCatalogsHeaderSectionSizes"   , ui->Catalogs_treeView_CatalogList->header()->saveState());
+
+//            settings.beginWriteArray("headerSectionSizes");
+//            for (int i = 0; i < headerSectionsSize.size(); ++i) {
+//                settings.setArrayIndex(i);
+//                settings.setValue("lastCatalogsHeaderSection", i);
+//                settings.setValue("lastCatalogsHeaderSize", headerSectionsSize[i]);
+//            }
+//            settings.endArray();
+
+
+
+            //            lastCatalogsHeaderSection = 0;
+            //            int currentSize = ui->Catalogs_treeView_CatalogList->header()->sectionSize(0);
+            //            lastCatalogsHeaderSize = 200;
+            //            QMessageBox::information(this,"Katalog","lastCatlogsSortSection: \n" + QVariant(lastCatalogsHeaderSection).toString()
+            //                    +"\ncurrentSize: \n" + QVariant(currentSize).toString()
+            //                    +"\nlastCatalogsHeaderSize: \n" + QVariant(lastCatalogsHeaderSize).toString());
+//            ui->Catalogs_treeView_CatalogList->header()->resizeSection(lastCatalogsHeaderSection,lastCatalogsHeaderSize);
+
         }
 
 //Methods-----------------------------------------------------------------------
@@ -498,7 +535,7 @@
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
-            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+            //ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
             ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(QHeaderView::Interactive);
 
             //Hide column with file path
@@ -1066,7 +1103,13 @@
     {
 
         //Get new values
+            //newCatalogSourcePath: remove the / at the end if any
             QString newCatalogSourcePath = ui->Catalogs_lineEdit_SourcePath->text();
+            int pathLength = newCatalogSourcePath.length();
+            if (newCatalogSourcePath.at(pathLength-1)=="/") {
+                newCatalogSourcePath.remove(pathLength-1,1);
+            }
+
             bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
             QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
             QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();

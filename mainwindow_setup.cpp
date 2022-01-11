@@ -238,8 +238,8 @@
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage
-            lastCatlogsSortSection = settings.value("Catalogs/lastCatlogsSortSection").toInt();
-            lastCatlogsSortOrder   = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
+            lastCatalogsSortSection = settings.value("Catalogs/lastCatlogsSortSection").toInt();
+            lastCatalogsSortOrder   = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
             lastStorageSortSection = settings.value("Storage/lastStorageSortSection").toInt();
             lastStorageSortOrder   = settings.value("Storage/lastStorageSortOrder").toInt();
             lastExploreSortSection = settings.value("Explore/lastExploreSortSection").toInt();
@@ -248,6 +248,9 @@
             lastSearchSortOrder   = settings.value("Search/lastSearchSortOrder").toInt();
             lastSearchHistorySortSection = settings.value("Search/lastSearchHistorySortSection").toInt();
             lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
+
+            //ui->Catalogs_treeView_CatalogList->header()->restoreState(settings.value("Catalog/lastCatalogsHeaderSectionSizes").toByteArray());
+
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
