@@ -1134,10 +1134,16 @@
                </item>
                <item>
                 <widget class="QLineEdit" name="Search_lineEdit_SearchText">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>35</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>30</height>
+                   <height>35</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1152,10 +1158,16 @@
                </item>
                <item>
                 <widget class="KComboBox" name="Search_kcombobox_SearchText">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>35</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>30</height>
+                   <height>35</height>
                   </size>
                  </property>
                  <property name="font">
