@@ -249,6 +249,14 @@
             lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
 
             //ui->Catalogs_treeView_CatalogList->header()->restoreState(settings.value("Catalog/lastCatalogsHeaderSectionSizes").toByteArray());
+            //ui->splitter->pos();
+            //ui->splitter->move(settings.value("Settings/SplitterPosition").toInt(),1);
+            //ui->splitter->sizePolicy().setHorizontalStretch(settings.value("Settings/SplitterPosition").toInt());
+            //ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterPosition").toInt() << settings.value("Settings/SplitterWidth").toInt());
+
+            //Restore Splitter
+            if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1)
+                ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterWidget1Size").toSize().width() << settings.value("Settings/SplitterWidget2Size").toSize().width());
 
     }
     //----------------------------------------------------------------------

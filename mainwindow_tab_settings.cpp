@@ -38,7 +38,18 @@
 #include <QFileDialog>
 
 //ALL/GLOBAL -----------------------------------------------------------------
+    void MainWindow::on_splitter_splitterMoved()
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
+        QSize widget1Size = ui->splitwidget_globalwidget->size();
+        QSize widget2Size = ui->splitwidget_tabwidget->size();
+
+        settings.setValue("Settings/SplitterWidget1Size", widget1Size);
+        settings.setValue("Settings/SplitterWidget2Size", widget2Size);
+
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_tabWidget_currentChanged(int index)
     {
         selectedTab = index;

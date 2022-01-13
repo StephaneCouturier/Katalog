@@ -305,7 +305,7 @@ class MainWindow : public QMainWindow
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
 
-    private slots:
+   private slots:
         //Menu KDE
             #ifdef Q_OS_LINUX
                 void newFile();
@@ -317,6 +317,9 @@ class MainWindow : public QMainWindow
             #endif
 
         //Global
+                //Main tabs
+                void on_tabWidget_currentChanged(int index);
+                void on_splitter_splitterMoved();
                 void on_Global_tabWidget_currentChanged(int index);
                 void on_Global_pushButton_ShowHideGlobal_clicked();
 
@@ -345,9 +348,6 @@ class MainWindow : public QMainWindow
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
-
-         //Main tabs
-                void on_tabWidget_currentChanged(int index);
 
         //Search
             void on_Search_pushButton_Search_clicked();
@@ -465,6 +465,7 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
+
 
 };
 
