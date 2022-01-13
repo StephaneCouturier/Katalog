@@ -321,7 +321,9 @@ class MainWindow : public QMainWindow
                 void on_tabWidget_currentChanged(int index);
                 void on_splitter_splitterMoved();
                 void on_Global_tabWidget_currentChanged(int index);
-                void on_Global_pushButton_ShowHideGlobal_clicked();
+                //void on_Global_pushButton_ShowHideGlobal_clicked();
+                void on_Global_pushButton_ShowHideGlobal_Hide_clicked();
+                void on_Global_pushButton_ShowHideGlobal_Show_clicked();
 
             //Filters
                 void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
@@ -465,8 +467,6 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
-
-
 };
 
 #endif // MAINWINDOW_H

@@ -170,6 +170,11 @@
             searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
             searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
 
+            //Restore Splitter
+            if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1){
+                ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterWidget1Size").toSize().width() << settings.value("Settings/SplitterWidget2Size").toSize().width());
+            }
+
             //Filters selection
                 //by default, SearchInCatalogs is enabled
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
@@ -191,14 +196,14 @@
             }
 
             //Show or Hide ShowHideGlobal
-            if ( settings.value("Settings/ShowHideGlobal") == "go-next"){ //Hide
-                    ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-next"));
-                    ui->Global_tabWidget->setHidden(true);
-                    ui->Global_label_Global->setHidden(true);
+            if ( settings.value("Settings/ShowHideGlobalIcon") == "gonext"){ //Hide
+                    ui->splitwidget_globalwidget->setHidden(true);
+                    ui->Global_widget_ShowFilters->setHidden(false);
             }
-            else
-                ui->Global_widget_VerticalSpacer->setHidden(true);
-
+            else{ // Show
+                ui->splitwidget_globalwidget->setHidden(false);
+                ui->Global_widget_ShowFilters->setHidden(true);
+            }
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
@@ -253,10 +258,6 @@
             //ui->splitter->move(settings.value("Settings/SplitterPosition").toInt(),1);
             //ui->splitter->sizePolicy().setHorizontalStretch(settings.value("Settings/SplitterPosition").toInt());
             //ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterPosition").toInt() << settings.value("Settings/SplitterWidth").toInt());
-
-            //Restore Splitter
-            if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1)
-                ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterWidget1Size").toSize().width() << settings.value("Settings/SplitterWidget2Size").toSize().width());
 
     }
     //----------------------------------------------------------------------
@@ -372,6 +373,19 @@
             }
 			  
 		/* global tabwidget bar */
+        ui->Global_widget_ShowFilters->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+         );
+
+        ui->widget_Global->setStyleSheet(
+            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
+         );
+
         ui->Global_tabWidget->setStyleSheet(
             "QComboBox             { background-color: #FFF; padding-left: 6px; }"
             "QLabel                { color: #095676; }"
@@ -418,6 +432,14 @@
                 "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
               );
+
+//        ui->splitter->setStyleSheet(
+//                "QSplitter::handle     { background: qlineargradient(spread:pad, x1:0 y1:0, x2:0 y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(13, 121, 166, 255));"
+//                                        "margin-top: 300px;"
+//                                        "margin-bottom: 300px;"
+//                                        "border-radius: 4px;"
+//                                       "}"
+//                );
 
         //line and other UI items
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");

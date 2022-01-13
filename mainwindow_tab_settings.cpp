@@ -64,6 +64,26 @@
         settings.setValue("Settings/selectedTabGlobal", selectedTabGlobal);
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Global_pushButton_ShowHideGlobal_Hide_clicked()
+    {
+        ui->splitwidget_globalwidget->setHidden(true);
+        ui->Global_widget_ShowFilters->setHidden(false);
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/ShowHideGlobalIcon", "go-next");
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Global_pushButton_ShowHideGlobal_Show_clicked()
+    {
+        //ui->Global_widget_VerticalSpacer->setHidden(false);
+        ui->splitwidget_globalwidget->setHidden(false);
+        ui->Global_widget_ShowFilters->setHidden(true);
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/ShowHideGlobalIcon", "go-previous");
+    }
+    //----------------------------------------------------------------------
+    /*
     void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
     {     
         QString iconName = ui->Global_pushButton_ShowHideGlobal->icon().name();
@@ -72,11 +92,15 @@
                 ui->Global_widget_VerticalSpacer->setHidden(false);
 
                 ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-next"));
-                ui->Global_tabWidget->setHidden(true);
+//                ui->Global_tabWidget->setHidden(true);
+                ui->splitwidget_globalwidget->setHidden(true);
                 ui->Global_label_Global->setHidden(true);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
                 settings.setValue("Settings/ShowHideGlobal", "go-next");
+
+//                ui->splitwidget_globalwidget->setMaximumSize(QSize(20,100));
+//ui->splitwidget_globalwidget->setHidden(true);
         }
         else{ //Show
                 ui->Global_widget_VerticalSpacer->setHidden(true);
@@ -84,12 +108,14 @@
                 ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-previous"));
 
                 ui->Global_tabWidget->setHidden(false);
+                ui->splitwidget_globalwidget->setHidden(false);
                 ui->Global_label_Global->setHidden(false);
 
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
                 settings.setValue("Settings/ShowHideGlobal", "go-previous");
         }
     }
+    */
 
 //FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
