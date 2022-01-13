@@ -196,13 +196,13 @@
             }
 
             //Show or Hide ShowHideGlobal
-            if ( settings.value("Settings/ShowHideGlobalIcon") == "gonext"){ //Hide
-                    ui->splitwidget_globalwidget->setHidden(true);
-                    ui->Global_widget_ShowFilters->setHidden(false);
+            if ( settings.value("Settings/ShowHideFilters") == "gonext"){ //Hide
+                    ui->splitter_widget_Filters->setHidden(true);
+                    ui->main_widget_ShowFilters->setHidden(false);
             }
             else{ // Show
-                ui->splitwidget_globalwidget->setHidden(false);
-                ui->Global_widget_ShowFilters->setHidden(true);
+                ui->splitter_widget_Filters->setHidden(false);
+                ui->main_widget_ShowFilters->setHidden(true);
             }
             //Show or Hide ShowHideSearchHistory
             if ( settings.value("Settings/ShowHideSearchHistory") == "go-up"){ //Hide
@@ -238,7 +238,7 @@
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
             int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
-            ui->Global_tabWidget->setCurrentIndex(selectedTabGlobal);
+            ui->splitter_widget_Filters_tabWidget->setCurrentIndex(selectedTabGlobal);
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage
@@ -372,21 +372,21 @@
                 ui->tabWidget->setStyleSheet(styleSheet);
             }
 			  
-		/* global tabwidget bar */
-        ui->Global_widget_ShowFilters->setStyleSheet(
+        /* filters widgets */
+        ui->main_widget_ShowFilters->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
          );
 
-        ui->widget_Global->setStyleSheet(
+        ui->splitter_widget_Filters_Hide->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
 
          );
 
-        ui->Global_tabWidget->setStyleSheet(
+        ui->splitter_widget_Filters_tabWidget->setStyleSheet(
             "QComboBox             { background-color: #FFF; padding-left: 6px; }"
             "QLabel                { color: #095676; }"
             "QTabBar::tab          { height: 30px; }"

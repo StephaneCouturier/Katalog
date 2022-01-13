@@ -42,8 +42,8 @@
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        QSize widget1Size = ui->splitwidget_globalwidget->size();
-        QSize widget2Size = ui->splitwidget_tabwidget->size();
+        QSize widget1Size = ui->splitter_widget_Filters->size();
+        QSize widget2Size = ui->splitter_widget_TabWidget->size();
 
         settings.setValue("Settings/SplitterWidget1Size", widget1Size);
         settings.setValue("Settings/SplitterWidget2Size", widget2Size);
@@ -57,65 +57,31 @@
         settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Global_tabWidget_currentChanged(int index)
+    void MainWindow::on_Filters_tabWidget_currentChanged(int index)
     {
-        int selectedTabGlobal = index;
+        int selectedFiltersTab = index;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/selectedTabGlobal", selectedTabGlobal);
+        settings.setValue("Settings/selectedFiltersTab", selectedFiltersTab);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Global_pushButton_ShowHideGlobal_Hide_clicked()
+    void MainWindow::on_Filters_pushButton_Filters_Hide_clicked()
     {
-        ui->splitwidget_globalwidget->setHidden(true);
-        ui->Global_widget_ShowFilters->setHidden(false);
+        ui->splitter_widget_Filters->setHidden(true);
+        ui->main_widget_ShowFilters->setHidden(false);
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/ShowHideGlobalIcon", "go-next");
+        settings.setValue("Settings/ShowHideFilters", "go-next");
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Global_pushButton_ShowHideGlobal_Show_clicked()
+    void MainWindow::on_Filters_pushButton_Filters_Show_clicked()
     {
-        //ui->Global_widget_VerticalSpacer->setHidden(false);
-        ui->splitwidget_globalwidget->setHidden(false);
-        ui->Global_widget_ShowFilters->setHidden(true);
+        ui->splitter_widget_Filters->setHidden(false);
+        ui->main_widget_ShowFilters->setHidden(true);
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/ShowHideGlobalIcon", "go-previous");
+        settings.setValue("Settings/ShowHideFilters", "go-previous");
     }
     //----------------------------------------------------------------------
-    /*
-    void MainWindow::on_Global_pushButton_ShowHideGlobal_clicked()
-    {     
-        QString iconName = ui->Global_pushButton_ShowHideGlobal->icon().name();
-
-        if ( iconName == "go-previous"){ //Hide
-                ui->Global_widget_VerticalSpacer->setHidden(false);
-
-                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-next"));
-//                ui->Global_tabWidget->setHidden(true);
-                ui->splitwidget_globalwidget->setHidden(true);
-                ui->Global_label_Global->setHidden(true);
-
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", "go-next");
-
-//                ui->splitwidget_globalwidget->setMaximumSize(QSize(20,100));
-//ui->splitwidget_globalwidget->setHidden(true);
-        }
-        else{ //Show
-                ui->Global_widget_VerticalSpacer->setHidden(true);
-
-                ui->Global_pushButton_ShowHideGlobal->setIcon(QIcon::fromTheme("go-previous"));
-
-                ui->Global_tabWidget->setHidden(false);
-                ui->splitwidget_globalwidget->setHidden(false);
-                ui->Global_label_Global->setHidden(false);
-
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Settings/ShowHideGlobal", "go-previous");
-        }
-    }
-    */
 
 //FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()

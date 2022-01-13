@@ -316,14 +316,13 @@ class MainWindow : public QMainWindow
                 void downloadFinished(KJob* job);
             #endif
 
-        //Global
+        //Filters_and_Settings
                 //Main tabs
                 void on_tabWidget_currentChanged(int index);
                 void on_splitter_splitterMoved();
-                void on_Global_tabWidget_currentChanged(int index);
-                //void on_Global_pushButton_ShowHideGlobal_clicked();
-                void on_Global_pushButton_ShowHideGlobal_Hide_clicked();
-                void on_Global_pushButton_ShowHideGlobal_Show_clicked();
+                void on_Filters_tabWidget_currentChanged(int index);
+                void on_Filters_pushButton_Filters_Hide_clicked();
+                void on_Filters_pushButton_Filters_Show_clicked();
 
             //Filters
                 void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
