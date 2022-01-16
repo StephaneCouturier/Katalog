@@ -172,8 +172,6 @@
             qint64      catalogFileCount;
             qint64      catalogTotalFileSize;
             QString     recordType;
-            //QRegExp tagExp; tagExp.setPattern("\t");
-
 
             //skip titles
             line = textStream.readLine();
@@ -191,26 +189,22 @@
                     QRegExp tagExp("\t"); //setpattern
                     fieldList.clear();
                     fieldList = line.split(tagExp);
-
                     fieldListCount = fieldList.count();
-                    //QMessageBox::information(this,"Katalog","fieldListCount : \n" + QString::number(fieldListCount));
-
                     dateTime                = fieldList[0];
                     catalogName             = fieldList[1];
                     catalogFileCount        = fieldList[2].toLongLong();
                     catalogTotalFileSize    = fieldList[3].toLongLong();
-
                     if ( fieldListCount >4 ){
                         recordType          = fieldList[4];
                     }
 
                     //Append data to the database
-                        insertQuery.bindValue(":dateTime", dateTime);
-                        insertQuery.bindValue(":catalogName", catalogName);
-                        insertQuery.bindValue(":catalogFileCount", QString::number(catalogFileCount));
-                        insertQuery.bindValue(":catalogTotalFileSize", QString::number(catalogTotalFileSize));
-                        insertQuery.bindValue(":recordType", recordType);
-                        insertQuery.exec();
+                    insertQuery.bindValue(":dateTime", dateTime);
+                    insertQuery.bindValue(":catalogName", catalogName);
+                    insertQuery.bindValue(":catalogFileCount", QString::number(catalogFileCount));
+                    insertQuery.bindValue(":catalogTotalFileSize", QString::number(catalogTotalFileSize));
+                    insertQuery.bindValue(":recordType", recordType);
+                    insertQuery.exec();
                 }
             }
     }
