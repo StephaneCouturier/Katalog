@@ -510,7 +510,7 @@
             qint64 previousStorageFreeSpace  = getStorageInfoQuery.value(3).toLongLong();
             qint64 previousStorageTotalSpace = getStorageInfoQuery.value(4).toLongLong();
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-            selectedStorageName = getStorageInfoQuery.value(2).toString();
+            selectedStorageName = getStorageInfoQuery.value(1).toString();
 
         //verify if path is available / not empty
         QDir dir (storagePath);
