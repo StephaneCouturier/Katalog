@@ -85,7 +85,13 @@
             settings.setValue("Explore/lastExploreSortOrder",   QString::number(lastExploreSortOrder));
         }
         //----------------------------------------------------------------------
-
+        void MainWindow::on_Explore_splitter_splitterMoved()
+        {
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Explore/ExploreSplitterWidget1Size", ui->Explore_splitter_widget_Directory->size());
+            settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
+        }
+        //----------------------------------------------------------------------
     //Context Menu methods
         void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
         {

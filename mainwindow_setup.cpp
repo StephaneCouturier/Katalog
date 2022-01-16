@@ -170,11 +170,13 @@
             searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
             searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
 
-            //Restore Splitter
+            //Restore Splitters
             if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1){
                 ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterWidget1Size").toSize().width() << settings.value("Settings/SplitterWidget2Size").toSize().width());
             }
-
+            if (settings.value("Explore/ExploreSplitterWidget1Size").toSize().width() !=-1 and settings.value("Explore/ExploreSplitterWidget2Size").toSize().width() !=-1){
+                ui->Explore_splitter->setSizes(QList<int>() << settings.value("Explore/ExploreSplitterWidget1Size").toSize().width() << settings.value("Explore/ExploreSplitterWidget2Size").toSize().width());
+            }
             //Filters selection
                 //by default, SearchInCatalogs is enabled
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);

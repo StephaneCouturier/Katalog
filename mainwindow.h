@@ -428,6 +428,7 @@ class MainWindow : public QMainWindow
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();
             void exploreContextCopyFileNameWithoutExtension();
+            void on_Explore_splitter_splitterMoved();
 
         //Storage
             void on_Storage_pushButton_CreateList_clicked();
@@ -466,6 +467,7 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
+
 };
 
 #endif // MAINWINDOW_H
