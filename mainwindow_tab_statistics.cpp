@@ -224,8 +224,9 @@
             QString displayUnit;
             QLineSeries *series1 = new QLineSeries();
             QLineSeries *series2 = new QLineSeries();
-            qint64 number = 0;
-            qint64 number2 = 0;
+            qint64 numberOrSizeTotal = 0;
+            qint64 freeSpace = 0;
+            qint64 totalSpace = 0;
 
         //Get the data
             //Getting one catalog data
@@ -235,6 +236,7 @@
                                     SELECT dateTime, catalogFileCount, catalogTotalFileSize
                                     FROM statistics
                                     WHERE catalogName = :selectedCatalogforStats
+                                    AND recordType != 'Storage'
                                   )");
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":selectedCatalogforStats",selectedCatalogforStats);
@@ -247,29 +249,29 @@
 
                        if ( selectedTypeOfData == tr("Number of Files") )
                        {
-                           number = queryTotalSnapshots.value(1).toLongLong();
+                           numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
 
-                           if ( number > maxValueGraphRange )
-                               maxValueGraphRange = number;
+                           if ( numberOrSizeTotal > maxValueGraphRange )
+                               maxValueGraphRange = numberOrSizeTotal;
                        }
                        else if ( selectedTypeOfData == tr("Total File Size") )
                        {
-                           number = queryTotalSnapshots.value(2).toLongLong();
-                           if ( number > 2000000000 ){
-                               number = number/1024/1024/1024;
+                           numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
+                           if ( freeSpace > 2000000000 ){
+                               freeSpace = freeSpace/1024/1024/1024;
                                displayUnit = " ("+tr("GiB")+")";
                            }
                            else {
-                               number = number/1024/1024;
+                               numberOrSizeTotal = numberOrSizeTotal/1024/1024;
                                displayUnit = " ("+tr("MiB")+")";
                            }
 
-                           if ( number > maxValueGraphRange )
-                               maxValueGraphRange = number;
+                           if ( numberOrSizeTotal > maxValueGraphRange )
+                               maxValueGraphRange = numberOrSizeTotal;
                        }
 
                        series1->setName(selectedTypeOfData);
-                       series1->append(datetime.toMSecsSinceEpoch(), number);
+                       series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
 
                 }
             }
@@ -308,31 +310,31 @@
 
                        if ( selectedTypeOfData == tr("Number of Files") )
                        {
-                           number = queryTotalSnapshots.value(1).toLongLong();
+                           numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
 
-                           if ( number > maxValueGraphRange )
-                               maxValueGraphRange = number;
+                           if ( numberOrSizeTotal > maxValueGraphRange )
+                               maxValueGraphRange = numberOrSizeTotal;
 
                        }
                        else if ( selectedTypeOfData == tr("Total File Size") )
                        {
-                           number = queryTotalSnapshots.value(2).toLongLong();
-                           if ( number > 2000000000 ){
-                               number = number/1024/1024/1024;
+                           numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
+                           if ( numberOrSizeTotal > 2000000000 ){
+                               numberOrSizeTotal = numberOrSizeTotal/1024/1024/1024;
                                displayUnit = " ("+tr("GiB")+")";
                            }
                            else {
-                               number = number/1024/1024;
+                               numberOrSizeTotal = numberOrSizeTotal/1024/1024;
                                displayUnit = " ("+tr("MiB")+")";
                            }
 
-                           if ( number > maxValueGraphRange )
-                               maxValueGraphRange = number;
+                           if ( numberOrSizeTotal > maxValueGraphRange )
+                               maxValueGraphRange = numberOrSizeTotal;
 
                        }
 
                        series1->setName(selectedTypeOfData);
-                       series1->append(datetime.toMSecsSinceEpoch(), number);
+                       series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
                    }
             }
 
@@ -356,33 +358,33 @@
 
                        QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
 
-                       number = queryTotalSnapshots.value(2).toLongLong();
-                       if ( number > 2000000000 ){
-                           number = number/1024/1024/1024;
+                       freeSpace = queryTotalSnapshots.value(1).toLongLong();
+                       if ( freeSpace > 2000000000 ){
+                           freeSpace = freeSpace/1024/1024/1024;
                            displayUnit = " ("+tr("GiB")+")";
                        }
                        else {
-                           number = number/1024/1024;
+                           freeSpace = freeSpace/1024/1024;
                            displayUnit = " ("+tr("MiB")+")";
                        }
-                       if ( number > maxValueGraphRange )
-                           maxValueGraphRange = number;
+                       if ( freeSpace > maxValueGraphRange )
+                           maxValueGraphRange = freeSpace;
 
-                       number2 = queryTotalSnapshots.value(1).toLongLong();
-                       if ( number2 > 2000000000 ){
-                           number2 = number2/1024/1024/1024;
+                       totalSpace = queryTotalSnapshots.value(2).toLongLong();
+                       if ( totalSpace > 2000000000 ){
+                           totalSpace = totalSpace/1024/1024/1024;
                            displayUnit = " ("+tr("GiB")+")";
                        }
                        else {
-                           number2 = number2/1024/1024;
+                           totalSpace = totalSpace/1024/1024;
                            displayUnit = " ("+tr("MiB")+")";
                        }
 
-                       if ( number2 > maxValueGraphRange )
-                           maxValueGraphRange = number2;
+                       if ( totalSpace > maxValueGraphRange )
+                           maxValueGraphRange = totalSpace;
 
-                       series1->append(datetime.toMSecsSinceEpoch(), number);
-                       series2->append(datetime.toMSecsSinceEpoch(), number2);
+                       series1->append(datetime.toMSecsSinceEpoch(), freeSpace);
+                       series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
                        series1->setName("Free Space");
                        series2->setName("Total Space");
 
