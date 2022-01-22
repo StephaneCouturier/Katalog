@@ -18,5 +18,6 @@
         <file>images/drive_blue.png</file>
         <file>images/drive_green.png</file>
         <file>images/drive_orange.png</file>
+        <file>images/drive_gray.png</file>
     </qresource>
 </RCC>
