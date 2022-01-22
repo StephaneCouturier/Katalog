@@ -23,10 +23,9 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   filesview.cpp
-// Purpose:     class to create a model used to display files and their attributes
+// Purpose:     view to display files and their attributes
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "filesview.h"
@@ -45,23 +44,15 @@ FilesView::FilesView(QObject *parent)
 
 QVariant FilesView::data(const QModelIndex &index, int role) const
 {
-
-    //Define list of column per type of data
-    QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
+    //Define list of columns per type of data
+    QList<int> filesizeColumnList, filecountColumnList;
       filesizeColumnList <<1;
 
     switch ( role )
          {
-
             case Qt::DisplayRole:
             {
-                //Filename column
-//                if( index.column()==0 ){
-//                    //QSortFilterProxyModel::setIcon(QIcon("icon.jpg"));
-//                    return QVariant("test" + QSortFilterProxyModel::data(index, role).toString());
-//                }
-
-                //file size columns
+                //File Size columns
                 if( filesizeColumnList.contains(index.column()) ){
                     return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
@@ -71,48 +62,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");
                 }
 
-                //Percent columns
-                else if( percentColumnList.contains(index.column()) ){
-                    if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
-                        return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
-                    else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
-                        return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
-
-                }
-
                 else QSortFilterProxyModel::data(index, role) ;
 
-                //Replace a value
-//                   if ( QSortFilterProxyModel::data(index, role).toFloat() == 0 ){
-//                        return QVariant("");
-//                    }
-                // is column not in any list
-
-                break;
-            }
-
-//            case Qt::ForegroundRole:
-//            {
-//                QBrush redBrush, greenBrush;
-//                      redBrush.setColor(QColor(190, 20, 30));
-//                    greenBrush.setColor(QColor(20, 150, 30));
-
-//                if( colorColumnList.contains(index.column() )){
-//                    if (QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() < 0)
-//                        return QVariant (redBrush);
-//                    else if(QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() >= 0)
-//                        return QVariant (greenBrush);
-//                }
-//                break;
-//            }
-
-            case Qt::FontRole:
-            {
-                if (index.column() == 0 ) {
-//                    QFont boldFont;
-//                    boldFont.setBold(true);
-//                    return boldFont;
-                }
                 break;
             }
 
@@ -125,9 +76,6 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 if ( filesizeColumnList.contains(index.column()) )
                     return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
-//               if ( percentColumnList.contains(index.column()) )
-//                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
-
                break;
             }
 
@@ -135,25 +83,12 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
             {
                 //Filename column
                 if( index.column()==0 ){
-//                    if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toString().contains("S01E03")){
-//                        return QIcon::fromTheme("document-edit");
-//                    }
-//                    else{
-//                        return QIcon::fromTheme("document-preview-archive");
-//                    }
                     return QIcon::fromTheme("document-preview-archive");
-                    //return icon;
-                    //return QIcon::fromTheme("document-open");
-                    //QFileIconProvider iconProvider;
-                    //return iconProvider.icon(QFileIconProvider::File);
                 }
 
                 break;
             }
-
-
         }
-
     return QSortFilterProxyModel::data(index, role);
 }
 
@@ -161,7 +96,6 @@ QVariant FilesView::headerData(int section, Qt::Orientation orientation, int rol
 {
     QList<int> grayColumnList;
     grayColumnList    <<7 <<8 <<9 <<10 <<11;
-
 
     switch ( role )
          {
@@ -177,5 +111,4 @@ QVariant FilesView::headerData(int section, Qt::Orientation orientation, int rol
             }
         }
         return QVariant();
-
 }
