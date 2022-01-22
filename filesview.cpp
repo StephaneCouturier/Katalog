@@ -34,6 +34,8 @@
 #include <QFont>
 #include <QBrush>
 #include <QDebug>
+#include <QFileIconProvider>
+#include <QStandardItem>
 
 FilesView::FilesView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -60,6 +62,12 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
             case Qt::DisplayRole:
             {
+                //Filename column
+//                if( index.column()==0 ){
+//                    //QSortFilterProxyModel::setIcon(QIcon("icon.jpg"));
+//                    return QVariant("" + QSortFilterProxyModel::data(index, role).toString());
+//                }
+
                 //file size columns
                 if( filesizeColumnList.contains(index.column()) ){
                     return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
@@ -117,11 +125,12 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
             case Qt::TextAlignmentRole:
             {
-               if ( filecountColumnList.contains(index.column()) )
-                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
+                //align numbers to the right
+                if ( filecountColumnList.contains(index.column()) )
+                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
-               if ( filesizeColumnList.contains(index.column()) )
-                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
+                if ( filesizeColumnList.contains(index.column()) )
+                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
 //               if ( percentColumnList.contains(index.column()) )
 //                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
@@ -129,12 +138,44 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                break;
             }
 
-            case Qt::BackgroundRole:
+            case Qt::DecorationRole:
             {
-                if (index.column()  == 2)  //change background
-                    //return QBrush(Qt::red);
+                //Filename column
+                if( index.column()==0 ){
+                    QIcon icon = QIcon::fromTheme("document-preview-archive");
+                    //                    QFileIconProvider iconProvider;
+//                    if( QSortFilterProxyModel::data(index, role).toString()=="" ){
+//                        return iconProvider.icon(QFileIconProvider::Folder);
+//                    }
+//                    else if( QSortFilterProxyModel::data(index, role).toString()!="" ){
+//                        return iconProvider.icon(QFileIconProvider::File);
+//                    }
+
+
+//                    QStandardItem *item = static_cast<QStandardItem *>(index.internalPointer());
+//                    item->setIcon(QIcon(":icons/document-edit.png"));
+                    //QSortFilterProxyModel::setIcon(QIcon("icon.jpg"));
+                    //return QVariant("" + QSortFilterProxyModel::data(index, role).toString());
+                    //return iconProvider.icon(QFileIconProvider::File);
+                    //QFileIconProvider ip;
+                    //setIcon(ip.icon(fi));
+
+                    //setIconQIcon(":icons/document-edit.png"));
+                    //QIcon icon = QIcon(":fallback-icons/document-edit.png"); filename-title-amarok.svg
+
+                    //icon.actualSize(QSize(32,32));
+                    //QFileInfo fileInfo("e:\\ss_source\\youcam-tutorial.exe");
+                    //icon = iconProvider.icon(fileInfo);
+
+                    return icon;
+                    //return QIcon::fromTheme("document-open");
+                    //return iconProvider.icon(QFileIconProvider::File);
+
+                }
+
                 break;
-           }
+            }
+
 
         }
 

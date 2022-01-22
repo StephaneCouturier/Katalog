@@ -3067,6 +3067,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="alternatingRowColors">
                    <bool>true</bool>
                   </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
                   <property name="sortingEnabled">
                    <bool>true</bool>
                   </property>
@@ -3219,6 +3225,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="alternatingRowColors">
                <bool>true</bool>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>22</height>
+               </size>
               </property>
               <property name="sortingEnabled">
                <bool>true</bool>
@@ -5298,6 +5310,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="alternatingRowColors">
                  <bool>true</bool>
                 </property>
+                <property name="iconSize">
+                 <size>
+                  <width>48</width>
+                  <height>22</height>
+                 </size>
+                </property>
                 <property name="sortingEnabled">
                  <bool>true</bool>
                 </property>
@@ -5713,21 +5731,60 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QTreeView" name="DEV_treeView_Directories">
             <property name="geometry">
              <rect>
-              <x>20</x>
-              <y>40</y>
+              <x>30</x>
+              <y>80</y>
               <width>611</width>
-              <height>591</height>
+              <height>541</height>
              </rect>
             </property>
            </widget>
            <widget class="QTreeView" name="DEV_treeView_Files">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>40</y>
+              <x>650</x>
+              <y>30</y>
               <width>271</width>
               <height>591</height>
              </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="DEV_Explore_pushButton_Load">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>10</y>
+              <width>161</width>
+              <height>26</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>load tree simple</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="DEV_Explore_pushButton_LoadDirectory">
+            <property name="geometry">
+             <rect>
+              <x>210</x>
+              <y>10</y>
+              <width>191</width>
+              <height>26</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>load directory tree</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="DEV_Explore_label_DisplayText">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>50</y>
+              <width>541</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </widget>

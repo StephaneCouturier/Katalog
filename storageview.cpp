@@ -33,6 +33,7 @@
 #include <QFont>
 #include <QBrush>
 #include <QDebug>
+#include <QFileIconProvider>
 
 StorageView::StorageView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -56,7 +57,6 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
 
     switch ( role )
          {
-
             case Qt::DisplayRole:
             {
                 //Currency (Euro) columns
@@ -79,12 +79,6 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;
-
-                //Replace a value
-//                   if ( QSortFilterProxyModel::data(index, role).toFloat() == 0 ){
-//                        return QVariant("");
-//                    }
-                // is column not in any list
 
                 break;
             }
@@ -133,8 +127,17 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
                 if (index.column()  == 2)  //change background
                     //return QBrush(Qt::red);
                 break;
-           }
+            }
 
+            case Qt::DecorationRole:
+            {
+                //Filename column
+                if( index.column()==1 ){
+                    return QIcon(":/images/drive_blue.png");
+                }
+
+                break;
+            }
         }
 
     return QSortFilterProxyModel::data(index, role);

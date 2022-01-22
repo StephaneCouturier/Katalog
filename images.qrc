@@ -15,5 +15,8 @@
         <file>images/flags/cz.png</file>
         <file>images/flags/de.png</file>
         <file>images/Banner_1.06.png</file>
+        <file>images/drive_blue.png</file>
+        <file>images/drive_green.png</file>
+        <file>images/drive_orange.png</file>
     </qresource>
 </RCC>

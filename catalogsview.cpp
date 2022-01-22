@@ -34,6 +34,7 @@
 #include <QFont>
 #include <QBrush>
 #include <QDebug>
+#include <QFileIconProvider>
 
 CatalogsView::CatalogsView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -46,20 +47,23 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 
     //Define list of column per type of data
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
-//               currencyColumnList, numberColumnList, colorColumnList, signedCurrencyColumnList;
-//    percentColumnList       <<6 <<8 <<9 <<12;
-//    currencyColumnList      <<3 <<4 <<5 <<13 <<14;
-//    signedCurrencyColumnList        <<5 <<13 <<14;
-//     numberColumnList        <<2 <<3;
-//    colorColumnList         <<5 <<6 <<8  <<9     <<14;
       filecountColumnList <<3;
       filesizeColumnList <<4;
 
     switch ( role )
          {
-
             case Qt::DisplayRole:
             {
+                //Filename column
+//                if( index.column()==0 ){
+//                    QModelIndex idx = index.sibling(index.row(), 7);
+//                    if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
+//                        return QVariant("ACTIVE_"+QSortFilterProxyModel::data(index, role).toString());
+//                    }
+//                    else
+//                        return QVariant(QSortFilterProxyModel::data(index, role).toString());
+//                }
+
                 //Currency (Euro) columns
                 if( filesizeColumnList.contains(index.column()) ){
                     return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
@@ -81,17 +85,11 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 
                 else QSortFilterProxyModel::data(index, role) ;
 
-                //Replace a value
-//                   if ( QSortFilterProxyModel::data(index, role).toFloat() == 0 ){
-//                        return QVariant("");
-//                    }
-                // is column not in any list
-
                 break;
             }
 
-//            case Qt::ForegroundRole:
-//            {
+            case Qt::ForegroundRole:
+            {
 //                QBrush redBrush, greenBrush;
 //                      redBrush.setColor(QColor(190, 20, 30));
 //                    greenBrush.setColor(QColor(20, 150, 30));
@@ -102,8 +100,8 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 //                    else if(QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() >= 0)
 //                        return QVariant (greenBrush);
 //                }
-//                break;
-//            }
+                break;
+            }
 
             case Qt::FontRole:
             {
@@ -134,7 +132,41 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 if (index.column()  == 2)  //change background
                     //return QBrush(Qt::red);
                 break;
-           }
+            }
+
+            case Qt::DecorationRole:
+            {
+                //Filename column
+                if( index.column()==0 ){
+                    QModelIndex idx = index.sibling(index.row(), 7);
+                    //if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
+                    if( QSortFilterProxyModel::data(index, role).toString()=="Maxtor_2Tb" ){
+                        return QIcon(":/images/drive_green.png");
+                    }
+                    else
+                        return QIcon(":/images/drive_orange.png");
+
+                }
+
+                break;
+            }
+//            case Qt::ForegroundRole:
+//            {
+//                if( index.column()==0 ){
+//                    QBrush redBrush, greenBrush, blueBrush;
+//                          redBrush.setColor(QColor(190, 20, 30));
+//                        greenBrush.setColor(QColor( 20,150, 30));
+//                         blueBrush.setColor(QColor(  9, 86,118));
+
+//                    QModelIndex idx = index.sibling(index.row(), 7);
+//                    if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
+//                        return QVariant (greenBrush);
+//                    }
+//                    else
+//                        return QVariant (blueBrush);
+//                }
+//                break;
+//            }
 
         }
 
