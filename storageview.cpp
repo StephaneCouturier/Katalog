@@ -43,16 +43,8 @@ StorageView::StorageView(QObject *parent)
 
 QVariant StorageView::data(const QModelIndex &index, int role) const
 {
-
     //Define list of column per type of data
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
-//               currencyColumnList, numberColumnList, colorColumnList, signedCurrencyColumnList;
-//    percentColumnList       <<6 <<8 <<9 <<12;
-//    currencyColumnList      <<3 <<4 <<5 <<13 <<14;
-//    signedCurrencyColumnList        <<5 <<13 <<14;
-//     numberColumnList        <<2 <<3;
-//    colorColumnList         <<5 <<6 <<8  <<9     <<14;
-      //filecountColumnList <<3;
       filesizeColumnList <<7 <<8;
 
     switch ( role )
@@ -83,21 +75,6 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
                 break;
             }
 
-//            case Qt::ForegroundRole:
-//            {
-//                QBrush redBrush, greenBrush;
-//                      redBrush.setColor(QColor(190, 20, 30));
-//                    greenBrush.setColor(QColor(20, 150, 30));
-
-//                if( colorColumnList.contains(index.column() )){
-//                    if (QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() < 0)
-//                        return QVariant (redBrush);
-//                    else if(QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() >= 0)
-//                        return QVariant (greenBrush);
-//                }
-//                break;
-//            }
-
             case Qt::FontRole:
             {
                 if (index.column() == 1 ) {
@@ -115,9 +92,6 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
 
                if ( filesizeColumnList.contains(index.column()) )
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
-
-//               if ( percentColumnList.contains(index.column()) )
-//                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
                break;
             }
