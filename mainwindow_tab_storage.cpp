@@ -181,6 +181,7 @@
         //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
         ui->Create_lineEdit_NewCatalogPath->setText(selectedStoragePath);
         ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorageName);
+        ui->Create_lineEdit_NewCatalogName->setText(selectedStorageName);
 
         //Select this directory in the treeview.
         loadFileSystem(selectedStoragePath);
