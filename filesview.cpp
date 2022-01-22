@@ -48,13 +48,6 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
     //Define list of column per type of data
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
-//               currencyColumnList, numberColumnList, colorColumnList, signedCurrencyColumnList;
-//    percentColumnList       <<6 <<8 <<9 <<12;
-//    currencyColumnList      <<3 <<4 <<5 <<13 <<14;
-//    signedCurrencyColumnList        <<5 <<13 <<14;
-//     numberColumnList        <<2 <<3;
-//    colorColumnList         <<5 <<6 <<8  <<9     <<14;
-      //filecountColumnList <<3;
       filesizeColumnList <<1;
 
     switch ( role )
@@ -65,7 +58,7 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 //Filename column
 //                if( index.column()==0 ){
 //                    //QSortFilterProxyModel::setIcon(QIcon("icon.jpg"));
-//                    return QVariant("" + QSortFilterProxyModel::data(index, role).toString());
+//                    return QVariant("test" + QSortFilterProxyModel::data(index, role).toString());
 //                }
 
                 //file size columns
@@ -142,35 +135,17 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
             {
                 //Filename column
                 if( index.column()==0 ){
-                    QIcon icon = QIcon::fromTheme("document-preview-archive");
-                    //                    QFileIconProvider iconProvider;
-//                    if( QSortFilterProxyModel::data(index, role).toString()=="" ){
-//                        return iconProvider.icon(QFileIconProvider::Folder);
+//                    if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toString().contains("S01E03")){
+//                        return QIcon::fromTheme("document-edit");
 //                    }
-//                    else if( QSortFilterProxyModel::data(index, role).toString()!="" ){
-//                        return iconProvider.icon(QFileIconProvider::File);
+//                    else{
+//                        return QIcon::fromTheme("document-preview-archive");
 //                    }
-
-
-//                    QStandardItem *item = static_cast<QStandardItem *>(index.internalPointer());
-//                    item->setIcon(QIcon(":icons/document-edit.png"));
-                    //QSortFilterProxyModel::setIcon(QIcon("icon.jpg"));
-                    //return QVariant("" + QSortFilterProxyModel::data(index, role).toString());
-                    //return iconProvider.icon(QFileIconProvider::File);
-                    //QFileIconProvider ip;
-                    //setIcon(ip.icon(fi));
-
-                    //setIconQIcon(":icons/document-edit.png"));
-                    //QIcon icon = QIcon(":fallback-icons/document-edit.png"); filename-title-amarok.svg
-
-                    //icon.actualSize(QSize(32,32));
-                    //QFileInfo fileInfo("e:\\ss_source\\youcam-tutorial.exe");
-                    //icon = iconProvider.icon(fileInfo);
-
-                    return icon;
+                    return QIcon::fromTheme("document-preview-archive");
+                    //return icon;
                     //return QIcon::fromTheme("document-open");
+                    //QFileIconProvider iconProvider;
                     //return iconProvider.icon(QFileIconProvider::File);
-
                 }
 
                 break;

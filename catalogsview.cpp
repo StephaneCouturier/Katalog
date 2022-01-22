@@ -49,22 +49,13 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
       filecountColumnList <<3;
       filesizeColumnList <<4;
+      //percentColumnList <<5;
 
     switch ( role )
          {
             case Qt::DisplayRole:
             {
-                //Filename column
-//                if( index.column()==0 ){
-//                    QModelIndex idx = index.sibling(index.row(), 7);
-//                    if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
-//                        return QVariant("ACTIVE_"+QSortFilterProxyModel::data(index, role).toString());
-//                    }
-//                    else
-//                        return QVariant(QSortFilterProxyModel::data(index, role).toString());
-//                }
-
-                //Currency (Euro) columns
+                //File Size columns
                 if( filesizeColumnList.contains(index.column()) ){
                     return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
                 }
@@ -88,21 +79,6 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 break;
             }
 
-            case Qt::ForegroundRole:
-            {
-//                QBrush redBrush, greenBrush;
-//                      redBrush.setColor(QColor(190, 20, 30));
-//                    greenBrush.setColor(QColor(20, 150, 30));
-
-//                if( colorColumnList.contains(index.column() )){
-//                    if (QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() < 0)
-//                        return QVariant (redBrush);
-//                    else if(QSortFilterProxyModel::data(index, Qt::DisplayRole).toDouble() >= 0)
-//                        return QVariant (greenBrush);
-//                }
-                break;
-            }
-
             case Qt::FontRole:
             {
                 if (index.column() == 0 ) { //change font only for columns 0
@@ -121,8 +97,8 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                if ( filesizeColumnList.contains(index.column()) )
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
-//               if ( percentColumnList.contains(index.column()) )
-//                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
+               if ( percentColumnList.contains(index.column()) )
+                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
                break;
             }
@@ -139,34 +115,33 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 //Filename column
                 if( index.column()==0 ){
                     QModelIndex idx = index.sibling(index.row(), 7);
-                    //if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
-                    if( QSortFilterProxyModel::data(index, role).toString()=="Maxtor_2Tb" ){
+                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                         return QIcon(":/images/drive_green.png");
                     }
                     else
-                        return QIcon(":/images/drive_orange.png");
-
+                        return QIcon(":/images/drive_gray.png");
                 }
-
                 break;
             }
-//            case Qt::ForegroundRole:
-//            {
-//                if( index.column()==0 ){
-//                    QBrush redBrush, greenBrush, blueBrush;
-//                          redBrush.setColor(QColor(190, 20, 30));
-//                        greenBrush.setColor(QColor( 20,150, 30));
-//                         blueBrush.setColor(QColor(  9, 86,118));
 
-//                    QModelIndex idx = index.sibling(index.row(), 7);
-//                    if( QSortFilterProxyModel::data(idx, role).toBool()==true ){
-//                        return QVariant (greenBrush);
-//                    }
-//                    else
-//                        return QVariant (blueBrush);
-//                }
-//                break;
-//            }
+            case Qt::ForegroundRole:
+            {
+                if( index.column()==0 ){
+                    QBrush redBrush, greenBrush, blueBrush, grayBrush;
+                          redBrush.setColor(QColor(190, 20, 30));
+                        greenBrush.setColor(QColor( 20,150, 30));
+                         blueBrush.setColor(QColor(  9, 86,118));
+                         grayBrush.setColor(QColor( 60, 60, 60));
+
+                    QModelIndex idx = index.sibling(index.row(), 7);
+                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
+                        return QVariant (greenBrush);
+                    }
+                    else
+                        return QVariant (grayBrush);
+                }
+                break;
+            }
 
         }
 
@@ -178,12 +153,11 @@ QVariant CatalogsView::headerData(int section, Qt::Orientation orientation, int 
     QList<int> grayColumnList;
     grayColumnList    <<7 <<8 <<9 <<10 <<11;
 
-
     switch ( role )
          {
             case Qt::DisplayRole:
             {
-                return QSortFilterProxyModel::headerData( section, orientation, role) ;
+                return QSortFilterProxyModel::headerData(section, orientation, role) ;
             }
             case Qt::BackgroundRole:
             {
@@ -193,5 +167,4 @@ QVariant CatalogsView::headerData(int section, Qt::Orientation orientation, int 
             }
         }
         return QVariant();
-
 }

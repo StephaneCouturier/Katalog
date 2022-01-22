@@ -3228,8 +3228,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <property name="iconSize">
                <size>
-                <width>48</width>
-                <height>22</height>
+                <width>64</width>
+                <height>32</height>
                </size>
               </property>
               <property name="sortingEnabled">
@@ -5312,8 +5312,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>48</width>
-                  <height>22</height>
+                  <width>64</width>
+                  <height>32</height>
                  </size>
                 </property>
                 <property name="sortingEnabled">
