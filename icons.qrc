@@ -37,5 +37,6 @@
         <file>fallback-icons/go-previous.png</file>
         <file>fallback-icons/go-up.png</file>
         <file>fallback-icons/view-statistics.png</file>
+        <file>fallback-icons/document-preview-archive.png</file>
     </qresource>
 </RCC>
