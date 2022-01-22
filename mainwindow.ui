@@ -353,7 +353,7 @@
                   <enum>Qt::Vertical</enum>
                  </property>
                  <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
+                  <enum>QSizePolicy::Expanding</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -363,28 +363,28 @@
                  </property>
                 </spacer>
                </item>
-               <item>
-                <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
-                 <property name="topMargin">
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="Line" name="Search_line_SeparateResults_2">
-                   <property name="lineWidth">
-                    <number>1</number>
-                   </property>
-                   <property name="midLineWidth">
-                    <number>0</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
               </layout>
              </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
+              <property name="topMargin">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="Line" name="Search_line_SeparateResults_2">
+                <property name="lineWidth">
+                 <number>1</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>0</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="QCheckBox" name="Filters_checkBox_SearchInConnectedDrives">

@@ -177,10 +177,14 @@
             ui->Filters_widget_ConnectedDrives->setEnabled(true);
             ui->Filters_widget_CatalogSelection->setDisabled(true);
             ui->Filters_checkBox_SearchInCatalogs->setChecked(false);
+            ui->Filters_widget_CatalogSelection->hide();
+            ui->Filters_widget_ConnectedDrives->show();
         }
         else if(ui->Filters_checkBox_SearchInCatalogs->isChecked()==true){
             //Disable Directory selection
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
+            ui->Filters_widget_CatalogSelection->show();
+            ui->Filters_widget_ConnectedDrives->hide();
         }
         else{
             //Prevent uncheck if SearchInCatalogs is also unchecked
