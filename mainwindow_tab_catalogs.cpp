@@ -559,9 +559,9 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Loaded Version
 
-            //DEV: hide last new column
+            //Hide columns
             ui->Catalogs_treeView_CatalogList->hideColumn(11); //FullDevice
-
+            ui->Catalogs_treeView_CatalogList->hideColumn(12); //Loaded Version
 
             //Populate catalogs statistics
             QSqlQuery query;
