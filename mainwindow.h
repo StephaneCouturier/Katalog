@@ -159,6 +159,7 @@ class MainWindow : public QMainWindow
             QDateTime selectedDateMax;
             bool showFoldersOnly;
             QString selectedTag;
+            bool caseSensitive;
 
             QString sourceCatalog;
             QStringList catalogSelectedList;

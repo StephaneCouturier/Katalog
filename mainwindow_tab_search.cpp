@@ -337,37 +337,38 @@
 
             selectedTextCriteria = ui->Search_treeView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
             selectedSearchIn     = ui->Search_treeView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
-            selectedSearchExclude= ui->Search_treeView_History->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            selectedFileType     = ui->Search_treeView_History->model()->index(index.row(), 6, QModelIndex()).data().toString();
-            searchOnSize         = ui->Search_treeView_History->model()->index(index.row(), 7, QModelIndex()).data().toBool();
-            selectedMinimumSize  = ui->Search_treeView_History->model()->index(index.row(), 8, QModelIndex()).data().toInt();
-            selectedMinSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 9, QModelIndex()).data().toString();
-            selectedMaximumSize  = ui->Search_treeView_History->model()->index(index.row(), 10, QModelIndex()).data().toInt();
-            selectedMaxSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 11, QModelIndex()).data().toString();
-            searchOnDate         = ui->Search_treeView_History->model()->index(index.row(), 12, QModelIndex()).data().toBool();
-            selectedDateMin      = ui->Search_treeView_History->model()->index(index.row(), 13, QModelIndex()).data().toDateTime();
-            selectedDateMax      = ui->Search_treeView_History->model()->index(index.row(), 14, QModelIndex()).data().toDateTime();
-            searchOnDuplicates   = ui->Search_treeView_History->model()->index(index.row(), 15, QModelIndex()).data().toBool();
-            hasDuplicatesOnName  = ui->Search_treeView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
-            hasDuplicatesOnSize  = ui->Search_treeView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
-            hasDuplicatesOnDateModified = ui->Search_treeView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
-            showFoldersOnly      = ui->Search_treeView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
-            searchOnTags         = ui->Search_treeView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
-            selectedTag          = ui->Search_treeView_History->model()->index(index.row(), 21, QModelIndex()).data().toString();
+            caseSensitive        = ui->Search_treeView_History->model()->index(index.row(), 5, QModelIndex()).data().toBool();
+            selectedSearchExclude= ui->Search_treeView_History->model()->index(index.row(), 6, QModelIndex()).data().toString();
+            selectedFileType     = ui->Search_treeView_History->model()->index(index.row(), 7, QModelIndex()).data().toString();
+            searchOnSize         = ui->Search_treeView_History->model()->index(index.row(), 8, QModelIndex()).data().toBool();
+            selectedMinimumSize  = ui->Search_treeView_History->model()->index(index.row(), 9, QModelIndex()).data().toInt();
+            selectedMinSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 10, QModelIndex()).data().toString();
+            selectedMaximumSize  = ui->Search_treeView_History->model()->index(index.row(), 11, QModelIndex()).data().toInt();
+            selectedMaxSizeUnit  = ui->Search_treeView_History->model()->index(index.row(), 12, QModelIndex()).data().toString();
+            searchOnDate         = ui->Search_treeView_History->model()->index(index.row(), 13, QModelIndex()).data().toBool();
+            selectedDateMin      = ui->Search_treeView_History->model()->index(index.row(), 14, QModelIndex()).data().toDateTime();
+            selectedDateMax      = ui->Search_treeView_History->model()->index(index.row(), 15, QModelIndex()).data().toDateTime();
+            searchOnDuplicates   = ui->Search_treeView_History->model()->index(index.row(), 16, QModelIndex()).data().toBool();
+            hasDuplicatesOnName  = ui->Search_treeView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
+            hasDuplicatesOnSize  = ui->Search_treeView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
+            hasDuplicatesOnDateModified = ui->Search_treeView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
+            showFoldersOnly      = ui->Search_treeView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_treeView_History->model()->index(index.row(), 21, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_treeView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
 
-            searchInFileCatalogsChecked   = ui->Search_treeView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
-            searchInConnectedDriveChecked = ui->Search_treeView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
-            selectedDirectoryName = ui->Search_treeView_History->model()->index(index.row(), 27, QModelIndex()).data().toString();
+            searchInFileCatalogsChecked   = ui->Search_treeView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
+            searchInConnectedDriveChecked = ui->Search_treeView_History->model()->index(index.row(), 27, QModelIndex()).data().toBool();
+            selectedDirectoryName = ui->Search_treeView_History->model()->index(index.row(), 28, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedSearchLocation  = ui->Search_treeView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
+            selectedSearchLocation  = ui->Search_treeView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
 
-            selectedSearchStorage   = ui->Search_treeView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
+            selectedSearchStorage   = ui->Search_treeView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
 
-            selectedSearchCatalog   = ui->Search_treeView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
+            selectedSearchCatalog   = ui->Search_treeView_History->model()->index(index.row(), 25, QModelIndex()).data().toString();
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
 
         }
@@ -587,6 +588,7 @@
                     searchOnTags           = ui->Search_checkBox_Tags->isChecked();
                     searchOnText           = ui->Search_checkBox_Text->isChecked();
                     selectedTag            = ui->Search_comboBox_Tags->currentText();
+                    caseSensitive          = ui->Search_checkBox_CaseSensitive->isChecked();
 
                     searchInFileCatalogsChecked   = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                     searchInConnectedDriveChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
@@ -991,7 +993,11 @@
                 regexPattern = excludeGroupRegEx + regexPattern;
             }
 
-            QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
+            //Initiate Regular Expression
+            QRegularExpression regex(regexPattern);
+            if (caseSensitive != true) {
+                regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+            }
 
             //Search loop for all lines in the catalog file
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
@@ -1575,6 +1581,7 @@
                 ui->Search_checkBox_DuplicateSize->setChecked(hasDuplicatesOnSize);
                 ui->Search_checkBox_DuplicateDateModified->setChecked(hasDuplicatesOnDateModified);
                 ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
+                ui->Search_checkBox_CaseSensitive->setChecked(caseSensitive);
                 ui->Filters_lineEdit_SeletedDirectory->setText(selectedConnectedDrivePath);
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(searchInFileCatalogsChecked);
                 ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
@@ -1796,7 +1803,8 @@
                                     SearchCatalogChecked ,
                                     SearchDirectoryChecked ,
                                     SeletedDirectory,
-                                    TextExclude
+                                    TextExclude,
+                                    CaseSensitive
                                 )
                                 VALUES(
                                     :dateTime	,
@@ -1826,7 +1834,8 @@
                                     :SearchCatalogChecked ,
                                     :SearchDirectoryChecked ,
                                     :SeletedDirectory,
-                                    :TextExclude
+                                    :TextExclude,
+                                    :CaseSensitive
                                 )
                 )");
 
@@ -1865,6 +1874,7 @@
             query.bindValue(":SearchDirectoryChecked",    ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
             query.bindValue(":SeletedDirectory",          ui->Filters_lineEdit_SeletedDirectory->text());
             query.bindValue(":TextExclude",          ui->Search_lineEdit_Exclude->text());
+            query.bindValue(":CaseSensitive",        ui->Search_checkBox_CaseSensitive->isChecked());
             query.exec();
         }
         //----------------------------------------------------------------------
@@ -1941,7 +1951,8 @@
                         //Split the string with tabulation into a list
                         QStringList fieldList = line.split('\t');
                         //add empty values to support the addition of new fields for files from older versions
-                        if (fieldList.count()<28){
+                        if (fieldList.count()<29){
+                            fieldList.append("");
                             fieldList.append("");
                             fieldList.append("");
                             fieldList.append("");
@@ -1977,7 +1988,8 @@
                                             SearchCatalogChecked ,
                                             SearchDirectoryChecked ,
                                             SeletedDirectory,
-                                            TextExclude
+                                            TextExclude,
+                                            CaseSensitive
                                         )
                                     values(
                                             :dateTime	,
@@ -2007,7 +2019,8 @@
                                             :SearchCatalogChecked ,
                                             :SearchDirectoryChecked ,
                                             :SeletedDirectory,
-                                            :TextExclude
+                                            :TextExclude,
+                                            :CaseSensitive
                                            )
                                     )");
 
@@ -2041,6 +2054,7 @@
                         insertQuery.bindValue(":SearchDirectoryChecked",fieldList[25]);
                         insertQuery.bindValue(":SeletedDirectory",      fieldList[26]);
                         insertQuery.bindValue(":TextExclude",           fieldList[27]);
+                        insertQuery.bindValue(":CaseSensitive",         fieldList[28]);
                         insertQuery.exec();
                     }
             }
@@ -2052,33 +2066,34 @@
             QSqlQuery querySearchHistory;
             QString querySearchHistorySQL = QLatin1String(R"(
                                                 SELECT
-                                                    dateTime	,
-                                                    TextChecked ,
-                                                    TextPhrase	,
-                                                    TextCriteria	,
-                                                    TextSearchIn	,
-                                                    TextExclude     ,
-                                                    FileType	,
-                                                    FileSizeChecked	,
-                                                    FileSizeMin	,
-                                                    FileSizeMinUnit	,
-                                                    FileSizeMax	,
-                                                    FileSizeMaxUnit	,
-                                                    DateModifiedChecked	,
-                                                    DateModifiedMin	,
-                                                    DateModifiedMax	,
-                                                    DuplicatesChecked	,
-                                                    DuplicateName	,
-                                                    DuplicateSize	,
-                                                    DuplicateDateModified	,
-                                                    ShowFolders	,
-                                                    TagChecked	,
-                                                    Tag     	,
-                                                    searchLocation	,
-                                                    searchStorage	,
-                                                    searchCatalog ,
-                                                    SearchCatalogChecked ,
-                                                    SearchDirectoryChecked ,
+                                                    dateTime,
+                                                    TextChecked,
+                                                    TextPhrase,
+                                                    TextCriteria,
+                                                    TextSearchIn,
+                                                    CaseSensitive,
+                                                    TextExclude,
+                                                    FileType,
+                                                    FileSizeChecked,
+                                                    FileSizeMin,
+                                                    FileSizeMinUnit,
+                                                    FileSizeMax,
+                                                    FileSizeMaxUnit,
+                                                    DateModifiedChecked,
+                                                    DateModifiedMin,
+                                                    DateModifiedMax,
+                                                    DuplicatesChecked,
+                                                    DuplicateName,
+                                                    DuplicateSize,
+                                                    DuplicateDateModified,
+                                                    ShowFolders,
+                                                    TagChecked,
+                                                    Tag,
+                                                    searchLocation,
+                                                    searchStorage,
+                                                    searchCatalog,
+                                                    SearchCatalogChecked,
+                                                    SearchDirectoryChecked,
                                                     SeletedDirectory
                                                 FROM search
                                                 ORDER BY dateTime DESC

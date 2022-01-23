@@ -1389,7 +1389,7 @@
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFilters">
+                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFilters1">
                    <property name="topMargin">
                     <number>0</number>
                    </property>
@@ -1435,17 +1435,17 @@
                      <property name="minimumSize">
                       <size>
                        <width>30</width>
-                       <height>0</height>
+                       <height>38</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>35</width>
+                       <width>25</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
+                      <string notr="true">background: url(:/images/link-tree-mid.png) repeat-y left;</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -1649,7 +1649,128 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="Search_horizontalSpacer_13">
+                    <spacer name="Search_horizontalSpacer_03">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Expanding</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>100</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_ResetAll">
+                     <property name="minimumSize">
+                      <size>
+                       <width>110</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Reset all criteria to default values, and clear previous results.</string>
+                     </property>
+                     <property name="text">
+                      <string>Reset</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-clear-history">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFilters2">
+                   <item>
+                    <widget class="QLabel" name="Search_label_LinkImage15">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>110</width>
+                       <height>33</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background: url(:/images/link-v.png) repeat-y left;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="Search_label_LinkImage08">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>35</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background: url(:/images/link-tree-end.png) no-repeat left;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="Search_checkBox_CaseSensitive">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>75</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>The results should match exactly the text </string>
+                     </property>
+                     <property name="text">
+                      <string>case sensitive</string>
+                     </property>
+                     <property name="checked">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="Search_horizontalSpacer_17">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -1745,7 +1866,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="Search_horizontalSpacer_03">
+                    <spacer name="Search_horizontalSpacer_13">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -1754,36 +1875,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
-                       <width>100</width>
+                       <width>200</width>
                        <height>20</height>
                       </size>
                      </property>
                     </spacer>
                    </item>
-                   <item>
-                    <widget class="QPushButton" name="Search_pushButton_ResetAll">
-                     <property name="minimumSize">
-                      <size>
-                       <width>110</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="toolTip">
-                      <string>Reset all criteria to default values, and clear previous results.</string>
-                     </property>
-                     <property name="text">
-                      <string>Reset</string>
-                     </property>
-                     <property name="icon">
-                      <iconset theme="edit-clear-history">
-                       <normaloff>.</normaloff>.</iconset>
-                     </property>
-                    </widget>
-                   </item>
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFile">
+                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFile1">
                    <property name="topMargin">
                     <number>0</number>
                    </property>
@@ -2254,7 +2355,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFile_2">
+                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFile2">
                    <property name="topMargin">
                     <number>0</number>
                    </property>
@@ -5825,8 +5926,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="images.qrc"/>
   <include location="icons.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>
