@@ -193,8 +193,11 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
     {
-        //DEV
-        //KMessageBox::information(this,"on_Storage_pushButton_OpenFilelight_clicked\n");
+        #ifdef Q_OS_LINUX
+                QProcess::startDetached("filelight", QStringList() << selectedStoragePath);
+        #else
+                QProcess::startDetached("filelight", QStringList() << selectedStoragePath);
+        #endif
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()

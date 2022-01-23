@@ -5403,7 +5403,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QPushButton" name="Storage_pushButton_OpenFilelight">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="toolTip">
                  <string>Open the path in Filelight</string>

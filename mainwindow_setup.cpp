@@ -341,7 +341,7 @@
 
         //Storage
             //DEV: pending a test and development of a function to open Filelight at the requested place
-            ui->Storage_pushButton_OpenFilelight->hide();
+            //ui->Storage_pushButton_OpenFilelight->hide();
             ui->Storage_pushButton_ShowHide->hide();
             ui->Storage_label_Device->hide();
             ui->Storage_widget_DeviceForm->hide();
