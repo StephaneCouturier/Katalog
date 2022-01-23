@@ -2130,12 +2130,8 @@
 
             QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel;
             searchHistoryProxyModel->setSourceModel(queryModel);
-
-
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
-            ui->Search_treeView_History->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
-
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
 
         }
