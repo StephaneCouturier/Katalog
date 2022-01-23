@@ -201,7 +201,7 @@
 
             if ( iconName == "go-previous"){ //Hide
                     ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("go-next"));
-                    ui->Search_listView_CatalogsFound->setHidden(true);
+                    ui->Search_widget_ResultsCatalogs->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -210,7 +210,7 @@
             else{ //Show
                     ui->Search_pushButton_ShowHideCatalogResults->setIcon(QIcon::fromTheme("go-previous"));
 
-                    ui->Search_listView_CatalogsFound->setHidden(false);
+                    ui->Search_widget_ResultsCatalogs->setHidden(false);
                     ui->Search_label_CatalogsWithResults->setHidden(false);
 
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -419,6 +419,14 @@
             settings.setValue("Search/lastSearchHistorySortOrder",   QString::number(lastSearchHistorySortOrder));
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_splitter_Results_splitterMoved()
+        {
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Search/ResultsSplitterWidget1Size", ui->Search_widget_ResultsCatalogs->size());
+            settings.setValue("Search/ResultsSplitterWidget2Size", ui->Search_widget_ResultsFiles->size());
+        }
+        //----------------------------------------------------------------------
+
         //Context Menu methods
         void MainWindow::on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos)
         {

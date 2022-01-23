@@ -376,6 +376,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
             void on_Search_treeView_FilesFound_HeaderSortOrderChanged();
             void on_Search_treeView_History_HeaderSortOrderChanged();
+            void on_Search_splitter_Results_splitterMoved();
 
             void setupFileContextMenu();
             void getLocationCatalogList(QString location);

@@ -34,7 +34,7 @@
     <bool>false</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
+    <item row="0" column="0">
      <widget class="QWidget" name="main_widget_ShowFilters" native="true">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="leftMargin">
@@ -107,7 +107,7 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="0" column="1">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -1041,8 +1041,8 @@
            <attribute name="toolTip">
             <string>Search for files or folders</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_8">
-            <item row="0" column="2">
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
              <layout class="QVBoxLayout" name="Search_verticalLayout">
               <property name="spacing">
                <number>0</number>
@@ -1759,7 +1759,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>The results should match exactly the text </string>
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="text">
                       <string>case sensitive</string>
@@ -3126,57 +3126,108 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="Search_horizontalLayout_Results" stretch="0,0">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetDefaultConstraint</enum>
-                </property>
+               <layout class="QHBoxLayout" name="Search_horizontalLayout_Results">
                 <property name="topMargin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QListView" name="Search_listView_CatalogsFound">
+                 <widget class="QSplitter" name="Search_splitter_Results">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>150</width>
-                    <height>200</height>
-                   </size>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                   </font>
+                  <property name="childrenCollapsible">
+                   <bool>false</bool>
                   </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QTreeView" name="Search_treeView_FilesFound">
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
-                  </property>
-                  <property name="alternatingRowColors">
-                   <bool>true</bool>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>20</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                  <property name="sortingEnabled">
-                   <bool>true</bool>
-                  </property>
+                  <widget class="QWidget" name="Search_widget_ResultsCatalogs" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_6">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QListView" name="Search_listView_CatalogsFound">
+                      <property name="minimumSize">
+                       <size>
+                        <width>150</width>
+                        <height>200</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <property name="locale">
+                       <locale language="English" country="UnitedStates"/>
+                      </property>
+                      <property name="editTriggers">
+                       <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="Search_widget_ResultsFiles" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QTreeView" name="Search_treeView_FilesFound">
+                      <property name="editTriggers">
+                       <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                      <property name="alternatingRowColors">
+                       <bool>true</bool>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="sortingEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
                  </widget>
                 </item>
                </layout>
@@ -3956,8 +4007,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
+              <property name="childrenCollapsible">
+               <bool>false</bool>
+              </property>
               <widget class="QWidget" name="Explore_splitter_widget_Directory" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_4">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item>
                  <layout class="QVBoxLayout" name="Explore_verticalLayout_Directories">
                   <item>
@@ -4022,6 +4088,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </widget>
               <widget class="QWidget" name="Explore_splitter_widget_Files" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_7">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item>
                  <layout class="QVBoxLayout" name="Explore_verticalLayout_Files">
                   <item>
