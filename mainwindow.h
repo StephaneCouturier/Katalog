@@ -221,6 +221,7 @@ class MainWindow : public QMainWindow
             QString selectedCatalogStorage;
             bool    selectedCatalogIncludeSymblinks;
             bool    selectedCatalogIsFullDevice;
+            QString selectedCatalogLoadedVersion;
             QString selectedStorageLocationFilter;
             bool    skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
@@ -239,6 +240,8 @@ class MainWindow : public QMainWindow
             void updateCatalog(QString catalogName);
             void saveCatalogChanges();
             void importFromVVV();
+
+            void loadCatalogFilelistToTable(QString sourceCatalogPath);
 
         //TAB: Explore
             QString selectedDirectoryName;

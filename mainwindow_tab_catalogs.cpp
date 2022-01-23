@@ -470,7 +470,8 @@
                                 catalogValues[4], //catalogFileType
                                 catalogValues[5], //catalogStorage
                                 catalogValues[6], //catalogIncludeSymblinks
-                                catalogValues[7]  //catalogIsFullDevice
+                                catalogValues[7],  //catalogIsFullDevice
+                                ""  //catalogLoadedVersion
                                 );
 
                 catalogFile.close();
@@ -497,11 +498,12 @@
                                             catalogIncludeHidden        ,
                                             catalogStorage              ,
                                             storageLocation             ,
-                                            catalogIsFullDevice
+                                            catalogIsFullDevice         ,
+                                            catalogLoadedVersion
                                         FROM catalog
                                         LEFT JOIN storage ON catalogStorage = storageName
                                         WHERE catalogName !=''
-                                        )");  //DEV:
+                                        )");
 
                 //add AND conditions for the selected filters
                 if ( selectedSearchLocation != tr("All") )
@@ -533,6 +535,7 @@
             proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
+            proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Loaded Version"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -554,6 +557,7 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Loaded Version
 
             //DEV: hide last new column
             ui->Catalogs_treeView_CatalogList->hideColumn(11); //FullDevice

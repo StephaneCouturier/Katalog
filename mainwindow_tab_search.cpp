@@ -718,39 +718,39 @@
                     }
 
                     // Populate model with files if the folder option is not selected
-                else
-                {
-                    // Populate model with data
-                    searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
+                    else
+                    {
+                        // Populate model with data
+                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
 
-                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                    proxyModel->setSourceModel(searchResultsCatalog);
+                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+                        proxyModel->setSourceModel(searchResultsCatalog);
 
-                    FilesView *fileViewModel = new FilesView(this);
-                    fileViewModel->setSourceModel(searchResultsCatalog);
+                        FilesView *fileViewModel = new FilesView(this);
+                        fileViewModel->setSourceModel(searchResultsCatalog);
 
-                    fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                    fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                    fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                    fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                    fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
-                    if (searchInConnectedDriveChecked==true){
-                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
+                        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+                        if (searchInConnectedDriveChecked==true){
+                            proxyModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
+                        }
+
+                        // Connect model to tree/table view
+                        ui->Search_treeView_FilesFound->setModel(fileViewModel);
+                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); //Catalog
+                        ui->Search_treeView_FilesFound->header()->showSection(0);
+                        ui->Search_treeView_FilesFound->header()->showSection(1);
+                        ui->Search_treeView_FilesFound->header()->showSection(2);
+                        ui->Search_label_FoundTitle->setText(tr("Files found"));
                     }
-
-                    // Connect model to tree/table view
-                    ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                    ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                    ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                    ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                    ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                    ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                    ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); //Catalog
-                    ui->Search_treeView_FilesFound->header()->showSection(0);
-                    ui->Search_treeView_FilesFound->header()->showSection(1);
-                    ui->Search_treeView_FilesFound->header()->showSection(2);
-                    ui->Search_label_FoundTitle->setText(tr("Files found"));
-                }
 
                 //Files found Statistics
                     //Count and display the number of files found
@@ -926,134 +926,158 @@
         //run a search of files for the selected Catalog
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
-            QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
-            QFile catalogFile(sourceCatalogPath);
+            //Prepare Inputs
+                QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
+                QFile catalogFile(sourceCatalogPath);
+                QRegularExpressionMatch match;
+                QRegularExpressionMatch foldermatch;
 
-            //Define how to use the search text
-                if(selectedTextCriteria == tr("Exact Phrase"))
-                    regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
-                else if(selectedTextCriteria == tr("Begins With"))
-                    regexSearchtext="(^"+searchText+")";
-                else if(selectedTextCriteria == tr("Any Word"))
-                    regexSearchtext=searchText.replace(" ","|");
-                else if(selectedTextCriteria == tr("All Words")){
-                    QString searchTextToSplit = searchText;
-                    QString groupRegEx = "";
+                //Define how to use the search text
+                    if(selectedTextCriteria == tr("Exact Phrase"))
+                        regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
+                    else if(selectedTextCriteria == tr("Begins With"))
+                        regexSearchtext="(^"+searchText+")";
+                    else if(selectedTextCriteria == tr("Any Word"))
+                        regexSearchtext=searchText.replace(" ","|");
+                    else if(selectedTextCriteria == tr("All Words")){
+                        QString searchTextToSplit = searchText;
+                        QString groupRegEx = "";
+                        QRegExp lineSplitExp(" ");
+                        QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
+                        int numberOfSearchWords = lineFieldList.count();
+                        //build regex group for one word
+                        for (int i=0; i<(numberOfSearchWords); i++){
+                            groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
+                        }
+                        regexSearchtext = groupRegEx;
+                    }
+                    else {
+                        regexSearchtext="";
+                         }
+
+                    regexPattern = regexSearchtext;
+
+                //Prepare the regexFileType for file types
+                if(selectedFileType !=tr("All")){
+                    //Get the list of file extension and join it into one string
+                    if(selectedFileType ==tr("Audio")){
+                                regexFileType = fileType_AudioS.join("|");
+                    }
+                    if(selectedFileType ==tr("Image")){
+                                regexFileType = fileType_ImageS.join("|");
+                    }
+                    if(selectedFileType ==tr("Text")){
+                                regexFileType = fileType_TextS.join("|");
+                    }
+                    if(selectedFileType ==tr("Video")){
+                                regexFileType = fileType_VideoS.join("|");
+                    }
+
+                    //Replace the *. by .* needed for regex
+                    regexFileType = regexFileType.replace("*.",".*");
+
+                    //Add the file type expression to the regex
+                    regexPattern = regexSearchtext  + "(" + regexFileType + ")";
+                 }
+
+                //Add the words to exclude to the regex
+                if ( selectedSearchExclude !=""){
+
+                    //Prepare
+                    QString searchTextToSplit = selectedSearchExclude;
+                    QString excludeGroupRegEx = "";
                     QRegExp lineSplitExp(" ");
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
-                    //build regex group for one word
-                    for (int i=0; i<(numberOfSearchWords); i++){
-                        groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
-                    }
-                    regexSearchtext = groupRegEx;
-                }
-                else {
-                    regexSearchtext="";
-                     }
 
-                regexPattern = regexSearchtext;
+                    //Build regex group to exclude all words
+                        //Genereate first part = first characters + the first word
+                        excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
+                        //add more words
+                        for (int i=1; i<(numberOfSearchWords); i++){
+                            excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
+                        }
+                        //last part
+                        excludeGroupRegEx = excludeGroupRegEx + "))";
 
-            //Prepare the regexFileType for file types
-            if(selectedFileType !=tr("All")){
-                //Get the list of file extension and join it into one string
-                if(selectedFileType ==tr("Audio")){
-                            regexFileType = fileType_AudioS.join("|");
-                }
-                if(selectedFileType ==tr("Image")){
-                            regexFileType = fileType_ImageS.join("|");
-                }
-                if(selectedFileType ==tr("Text")){
-                            regexFileType = fileType_TextS.join("|");
-                }
-                if(selectedFileType ==tr("Video")){
-                            regexFileType = fileType_VideoS.join("|");
+                    //Add regex group to exclude to the global regexPattern
+                    regexPattern = excludeGroupRegEx + regexPattern;
                 }
 
-                //Replace the *. by .* needed for regex
-                regexFileType = regexFileType.replace("*.",".*");
+                //Initiate Regular Expression
+                QRegularExpression regex(regexPattern);
+                if (caseSensitive != true) {
+                    regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+                }
 
-                //Add the file type expression to the regex
-                regexPattern = regexSearchtext  + "(" + regexFileType + ")";
-             }
+            //Load the catalog file if not already loaded in memory
 
-            //Add the words to exclude to the regex
-            if ( selectedSearchExclude !=""){
+                //Verify if the lastest version of the catalog is already in memory
+                QSqlQuery query;
+                QString querySQL = QLatin1String(R"(
+                                    SELECT catalogLoadedVersion,catalogDateUpdated
+                                    FROM catalog
+                                    WHERE catalogName=:catalogName
+                                   )");
+                query.prepare(querySQL);
+                query.bindValue(":catalogName",sourceCatalogName);
+                query.exec();
+                query.next();
+                selectedCatalogLoadedVersion = query.value(0).toString();
+                selectedCatalogDateTime      = query.value(1).toString();
 
-                //Prepare
-                QString searchTextToSplit = selectedSearchExclude;
-                QString excludeGroupRegEx = "";
-                QRegExp lineSplitExp(" ");
-                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-                int numberOfSearchWords = lineFieldList.count();
+                QDateTime dateTime1 = QDateTime::fromString(selectedCatalogLoadedVersion, "yyyy-MM-dd hh:mm:ss");
+                QDateTime dateTime2 = QDateTime::fromString(selectedCatalogDateTime, "yyyy-MM-dd hh:mm:ss");
 
-                //Build regex group to exclude all words
-                    //Genereate first part = first characters + the first word
-                    excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-                    //add more words
-                    for (int i=1; i<(numberOfSearchWords); i++){
-                        excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
-                    }
-                    //last part
-                    excludeGroupRegEx = excludeGroupRegEx + "))";
-
-                //Add regex group to exclude to the global regexPattern
-                regexPattern = excludeGroupRegEx + regexPattern;
-            }
-
-            //Initiate Regular Expression
-            QRegularExpression regex(regexPattern);
-            if (caseSensitive != true) {
-                regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-            }
+                if ( dateTime1 < dateTime2){
+                    loadCatalogFilelistToTable(sourceCatalogName);
+                }
+                else{
+                    //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + QVariant(selectedCatalogLoadedVersion).toString());
+                }
 
             //Search loop for all lines in the catalog file
-            if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
-
-                //Set up a stream from the file's data
-                QTextStream stream(&catalogFile);
-                QString line;
-                QString reducedLine;
+                //load the files of the Catalog
+                QSqlQuery getFilesQuery;
+                QString getFilesQuerySQL = QLatin1String(R"(
+                                    SELECT  fileName,
+                                            filePath,
+                                            fileSize,
+                                            fileDateUpdated
+                                    FROM  filesall
+                                    WHERE fileCatalog=:fileCatalog
+                                                )");
+                getFilesQuery.prepare(getFilesQuerySQL);
+                getFilesQuery.bindValue(":fileCatalog",sourceCatalogName);
+                getFilesQuery.exec();
 
                 //File by file, test if the file is matching all search criteria
-				//Loop principle1: stop further verification as soon as a criteria fails to match
-				//Loop principle2: start with fastest criteria (size, date), end continue with more complex ones (tag, file name)
-				
-                do {
-                    //Get line / file data
-                        line = stream.readLine();
-                        if ( line=="") continue;
-                        QRegularExpressionMatch match;
-                        QRegularExpressionMatch foldermatch;
+                //Loop principle1: stop further verification as soon as a criteria fails to match
+                //Loop principle2: start with fastest criteria (size, date), finish with more complex ones (tag, file name)
+
+                while(getFilesQuery.next()){
+
+
                         //QRegularExpressionMatch matchFileType;
 
-                        //Split the line text with tabulations into a list
-                        QRegExp     lineSplitExp("\t");
-                        QStringList lineFieldList  = line.split(lineSplitExp);
-                        int         fieldListCount = lineFieldList.count();
 
-                        //Get the file absolute path from this list
-                        QString     lineFilePath   = lineFieldList[0];
+                        QString   lineFileName     = getFilesQuery.value(0).toString();
+                        QString   lineFilePath     = getFilesQuery.value(1).toString();
+                        QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
+                        qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
+                        QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
 
-                        //Get the FileSize from the list if available
-                        qint64      lineFileSize;
-                        if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
-                        else lineFileSize = 0;
 
-                        //Get the File DateTime from the list if available
-                        QDateTime   lineFileDateTime;
-                        if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
-                        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
                     //Exclude catalog metadata lines which are starting with the character <
-                         if (lineFilePath.left(1)=="<"){continue;}
+                         //if (lineFilePath.left(1)=="<"){continue;}
 
                     //Continue if the file is matching the size range
-                    if (searchOnSize==true){
-                            if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
-                                    and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
-                                        continue;}
-                        }
+                        if (searchOnSize==true){
+                                if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
+                                        and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
+                                            continue;}
+                            }
                     //Continue if the file is matching the date range
                         if (searchOnDate==true){
                             if ( !(     lineFileDateTime >= selectedDateMin
@@ -1061,135 +1085,117 @@
                                         continue;}
                         }
 
-					//Continue if the file is matching the tags
-                        if (searchOnTags==true){			
-				
-							bool fileIsMatchingTag = false;
-							
-							//Set query to get a list of folder paths matching the selected tag
+                    //Continue if the file is matching the tags
+                        if (searchOnTags==true){
+
+                            bool fileIsMatchingTag = false;
+
+                            //Set query to get a list of folder paths matching the selected tag
                             QSqlQuery queryTag;
                             QString queryTagSQL = QLatin1String(R"(
-												SELECT Path
-												FROM tag
-												WHERE Name=:Name
-							)");
+                                                SELECT Path
+                                                FROM tag
+                                                WHERE Name=:Name
+                            )");
                             queryTag.prepare(queryTagSQL);
                             queryTag.bindValue(":Name",selectedTag);
                             queryTag.exec();
-							
-							//Test if the FilePath contains a path from the list of folders matching the selected tag name
+
+                            //Test if the FilePath contains a path from the list of folders matching the selected tag name
                             while(queryTag.next()){
                                 if ( lineFilePath.contains(queryTag.value(0).toString())==true){
                                     fileIsMatchingTag = true;
-									break;
-								}
-								//else tagIsMatching==false
-							}
+                                    break;
+                                }
+                                //else tagIsMatching==false
+                            }
 
-							//If the file is not matching any of the paths, process the next file
+                            //If the file is not matching any of the paths, process the next file
                             if ( !fileIsMatchingTag==true ){
                                     continue;}
                         }
 
                     //Finally, verify the text search criteria
-                    if (searchOnText==true){
-                        //Depending on the "Search in" criteria,
-                        //reduce the abosulte path to the required text string and match the search text
-                        if(selectedSearchIn == tr("File names only"))
-                        {
-                            // Extract the file name from the lineFilePath
-                            QFileInfo file(lineFilePath);
-                            reducedLine = file.fileName();
+                        if (searchOnText==true){
+                            //Depending on the "Search in" criteria,
+                            //reduce the abosulte path to the required text string and match the search text
+                            if(selectedSearchIn == tr("File names only"))
+                            {
+                                // Extract the file name from the lineFilePath
+    //                            QFileInfo file(lineFilePath);
+    //                            reducedLine = file.fileName();
 
-                            match = regex.match(reducedLine);
-                        }
-                        else if(selectedSearchIn == tr("Folder path only"))
-                        {
-                            //Keep only the folder name, so all characters left of the last occurence of / in the path.
-                            reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
+    //                            match = regex.match(reducedLine);
+                                match = regex.match(lineFileName);
+                            }
+                            else if(selectedSearchIn == tr("Folder path only"))
+                            {
+                                //Keep only the folder name, so all characters left of the last occurence of / in the path.
+                                //reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
-                            //Check that the folder name matches the search text
-                            regex.setPattern(regexSearchtext);
+                                //Check that the folder name matches the search text
+                                regex.setPattern(regexSearchtext);
 
-                            foldermatch = regex.match(reducedLine);
+                                foldermatch = regex.match(lineFilePath);
 
-                            //if it does, then check that the file matches the selected file type
-                            if (foldermatch.hasMatch()){
-                                regex.setPattern(regexFileType);
+                                //if it does, then check that the file matches the selected file type
+                                if (foldermatch.hasMatch()){
+                                    regex.setPattern(regexFileType);
 
-                                match = regex.match(lineFilePath);
+                                    match = regex.match(lineFilePath);
+                                }
+
+                            }
+                            else {
+                                match = regex.match(lineFileFullPath);
                             }
 
+                            //If the file is matching the criteria, add it and its catalog to the search results
+                            if (match.hasMatch()){
+                                filesFoundList << lineFilePath;
+                                catalogFoundList.insert(0,sourceCatalogName);
+
+                                //Retrieve other file info
+                                QFileInfo file(lineFileFullPath);
+
+                                //Populate result lists
+                                sFileNames.append(lineFileName);
+                                sFilePaths.append(lineFilePath);
+                                sFileSizes.append(lineFileSize);
+                                sFileDateTimes.append(lineFileDateTime.toString("yyyy/MM/dd hh:mm:ss"));
+                                sFileCatalogs.append(sourceCatalogName);
+                            }
                         }
-                        else {
+                        else{
+                            //verify file matches the selected file type
+                            regex.setPattern(regexFileType);
                             match = regex.match(lineFilePath);
+                            if (!match.hasMatch()){
+                                continue;
+                            }
+
+                            //Add the file and its catalog to the results, excluding blank lines
+                            if (lineFilePath !=""){
+                                filesFoundList << lineFilePath;
+                                catalogFoundList.insert(0,sourceCatalogName);
+
+                                //Retrieve other file info
+                                QFileInfo file(lineFilePath);
+
+                                //Populate result lists
+                                sFileNames.append(lineFileName);
+                                sFilePaths.append(lineFilePath);
+                                sFileSizes.append(lineFileSize);
+                                sFileDateTimes.append(lineFileDateTime.toString("yyyy/MM/dd hh:mm:ss"));
+                                sFileCatalogs.append(sourceCatalogName);
+                            }
                         }
-
-                        //If the file is matching the criteria, add it and its catalog to the search results
-                        if (match.hasMatch()){
-                            filesFoundList << lineFilePath;
-                            catalogFoundList.insert(0,sourceCatalogName);
-
-                            //Retrieve other file info
-                            QFileInfo file(lineFilePath);
-
-                            // Get the fileDateTime from the list if available
-                            QString lineFileDatetime;
-                            if (fieldListCount == 3){
-                                    lineFileDatetime = lineFieldList[2];}
-                            else lineFileDatetime = "";
-
-                            //Populate result lists
-                            sFileNames.append(file.fileName());
-                            sFilePaths.append(file.path());
-                            sFileSizes.append(lineFileSize);
-                            sFileDateTimes.append(lineFileDatetime);
-                            sFileCatalogs.append(sourceCatalogName);
-                        }
-                    }
-                    else{
-                        //verify file matches the selected file type
-                        regex.setPattern(regexFileType);
-                        match = regex.match(lineFilePath);
-                        if (!match.hasMatch()){
-                            continue;
-                        }
-
-                        //Add the file and its catalog to the results, excluding blank lines
-                        if (lineFilePath !=""){
-                            filesFoundList << lineFilePath;
-                            catalogFoundList.insert(0,sourceCatalogName);
-
-                            //Retrieve other file info
-                            QFileInfo file(lineFilePath);
-
-                            // Get the fileDateTime from the list if available
-                            QString lineFileDatetime;
-                            if (fieldListCount == 3){
-                                    lineFileDatetime = lineFieldList[2];}
-                            else lineFileDatetime = "";
-
-                            //Populate result lists
-                            sFileNames.append(file.fileName());
-                            sFilePaths.append(file.path());
-                            sFileSizes.append(lineFileSize);
-                            sFileDateTimes.append(lineFileDatetime);
-                            sFileCatalogs.append(sourceCatalogName);
-                        }
-                    }
-
-                } while(!line.isNull());
-
-            }
-            else return;
-
-        }
+                }
+      }
         //----------------------------------------------------------------------
         //run a search of files for the selected Directory
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
         {
-
-
             //Define how to use the search text //COMMON to searchFilesInCatalog
                 if(selectedTextCriteria == tr("Exact Phrase"))
                     regexSearchtext=searchText; //just search for the extact text entered including spaces, as one text string.
@@ -1436,7 +1442,117 @@
                     }
             }
         }
+        //----------------------------------------------------------------------
+        void MainWindow::loadCatalogFilelistToTable(QString sourceCatalogName)
+        {
 
+            //Inputs
+            QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
+            QFile catalogFile(sourceCatalogPath);
+
+
+            if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+
+                //Set up a text stream from the file's data
+                QTextStream streamCatalogFile(&catalogFile);
+                QString lineCatalogFile;
+                QRegExp lineCatalogFileSplitExp("\t");
+
+                //Prepare database and queries
+                    //clear database from old version of catalog
+                    QSqlQuery deleteQuery;
+                    QString deleteQuerySQL = QLatin1String(R"(
+                                        DELETE FROM filesall
+                                        WHERE fileCatalog=:fileCatalog
+                                                    )");
+                    deleteQuery.prepare(deleteQuerySQL);
+                    deleteQuery.bindValue(":fileCatalog",sourceCatalogName);
+                    deleteQuery.exec();
+
+                    //prepare insert query
+                    QSqlQuery insertQuery;
+                    QString insertSQL = QLatin1String(R"(
+                                            INSERT INTO filesall (
+                                                            fileName,
+                                                            filePath,
+                                                            fileSize,
+                                                            fileDateUpdated,
+                                                            fileCatalog )
+                                            VALUES(
+                                                            :fileName,
+                                                            :filePath,
+                                                            :fileSize,
+                                                            :fileDateUpdated,
+                                                            :fileCatalog )
+                                        )");
+
+                //process each line of the file
+                    while (true){
+                        lineCatalogFile = streamCatalogFile.readLine();
+                        if (lineCatalogFile.isNull())
+                            break;
+
+                        //exclude catalog meta data
+                        if (lineCatalogFile.left(1)=="<"){continue;}
+
+                        //Split the line text with tabulations into a list
+                        QStringList lineFieldList  = lineCatalogFile.split(lineCatalogFileSplitExp);
+                        int         fieldListCount = lineFieldList.count();
+
+                        //Get the file absolute path from this list
+                        QString     lineFilePath   = lineFieldList[0];
+
+                        //Get the FileSize from the list if available
+                        qint64      lineFileSize;
+                        if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
+                        else lineFileSize = 0;
+
+                        //Get the File DateTime from the list if available
+                        QDateTime   lineFileDateTime;
+                        if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
+                        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
+
+                        //Retrieve file info
+                        QFileInfo fileInfo(lineFilePath);
+
+                        // Get the fileDateTime from the list if available
+                        QString lineFileDatetime;
+                        if (fieldListCount == 3){
+                                lineFileDatetime = lineFieldList[2];}
+                        else lineFileDatetime = "";
+
+                        //Load file into the database
+                            insertQuery.prepare(insertSQL);
+                            insertQuery.bindValue(":fileName",        fileInfo.fileName());
+                            insertQuery.bindValue(":fileSize",        lineFileSize);
+                            insertQuery.bindValue(":filePath",        fileInfo.path());
+                            insertQuery.bindValue(":fileDateUpdated", lineFileDatetime);
+                            insertQuery.bindValue(":fileCatalog",     sourceCatalogName);
+                            insertQuery.exec();
+                    }
+
+                //update catalog loadedversion
+                    QDateTime nowDateTime = QDateTime::currentDateTime();
+
+                    QSqlQuery catalogQuery;
+                    QString catalogQuerySQL = QLatin1String(R"(
+                                                UPDATE catalog
+                                                SET catalogLoadedVersion =:catalogLoadedVersion
+                                                WHERE catalogName =:catalogName
+                                              )");
+                    catalogQuery.prepare(catalogQuerySQL);
+                    catalogQuery.bindValue(":catalogLoadedVersion", nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+                    catalogQuery.bindValue(":catalogName",     sourceCatalogName);
+                    catalogQuery.exec();
+
+                //refresh catalogs screen
+                    loadCatalogsToModel();
+
+                //close file
+                    catalogFile.close();
+
+            }
+        }
         //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
@@ -2143,4 +2259,4 @@
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
 
         }
-        //----------------------------------------------------------------------
+
