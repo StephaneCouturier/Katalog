@@ -511,7 +511,6 @@
             QString fileNameWithExtension = selectedFileName;
 
             QClipboard *clipboard = QGuiApplication::clipboard();
-            //QString originalText = clipboard->text();
             clipboard->setText(fileNameWithExtension);
         }
         //----------------------------------------------------------------------
