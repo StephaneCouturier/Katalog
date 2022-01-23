@@ -170,6 +170,15 @@
         {
             QString iconName = ui->Search_pushButton_ShowHideSearchCriteria->icon().name();
 
+//            QPropertyAnimation animation(ui->Search_widget_SearchCriteria, "geometry");
+//            animation.setDuration(3000);
+//            animation.setStartValue(QRect(0, 0, 100, 30));
+//            animation.setEndValue(QRect(250, 250, 100, 30));
+
+//            animation.setEasingCurve(QEasingCurve::OutBounce);
+
+//            animation.start();
+
             if ( iconName == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_widget_SearchCriteria->setHidden(true);
@@ -482,7 +491,6 @@
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
             QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
             clipboard->setText(selectedFile);
         }
         //----------------------------------------------------------------------
@@ -492,7 +500,6 @@
             QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
 
             QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
             clipboard->setText(selectedFileFolder);
         }
         //----------------------------------------------------------------------
@@ -504,7 +511,7 @@
             QString fileNameWithExtension = selectedFileName;
 
             QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
+            //QString originalText = clipboard->text();
             clipboard->setText(fileNameWithExtension);
         }
         //----------------------------------------------------------------------
@@ -521,7 +528,6 @@
             QString fileNameWithoutExtension = fileName.completeBaseName();
 
             QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
             clipboard->setText(fileNameWithoutExtension);
         }
 
