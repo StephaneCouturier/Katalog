@@ -1011,30 +1011,7 @@
                 }
 
             //Load the catalog file if not already loaded in memory
-
-                //Verify if the lastest version of the catalog is already in memory
-                QSqlQuery query;
-                QString querySQL = QLatin1String(R"(
-                                    SELECT catalogLoadedVersion,catalogDateUpdated
-                                    FROM catalog
-                                    WHERE catalogName=:catalogName
-                                   )");
-                query.prepare(querySQL);
-                query.bindValue(":catalogName",sourceCatalogName);
-                query.exec();
-                query.next();
-                selectedCatalogLoadedVersion = query.value(0).toString();
-                selectedCatalogDateTime      = query.value(1).toString();
-
-                QDateTime dateTime1 = QDateTime::fromString(selectedCatalogLoadedVersion, "yyyy-MM-dd hh:mm:ss");
-                QDateTime dateTime2 = QDateTime::fromString(selectedCatalogDateTime, "yyyy-MM-dd hh:mm:ss");
-
-                if ( dateTime1 < dateTime2){
-                    loadCatalogFilelistToTable(sourceCatalogName);
-                }
-                else{
-                    //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + QVariant(selectedCatalogLoadedVersion).toString());
-                }
+                loadCatalogFilelistToTable(sourceCatalogName);
 
             //Search loop for all lines in the catalog file
                 //load the files of the Catalog
@@ -1430,113 +1407,136 @@
         //----------------------------------------------------------------------
         void MainWindow::loadCatalogFilelistToTable(QString sourceCatalogName)
         {
+            //Verify if the lastest version of the catalog is already in memory
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT catalogLoadedVersion,catalogDateUpdated
+                                FROM catalog
+                                WHERE catalogName=:catalogName
+                               )");
+            query.prepare(querySQL);
+            query.bindValue(":catalogName",sourceCatalogName);
+            query.exec();
+            query.next();
+            selectedCatalogLoadedVersion = query.value(0).toString();
+            selectedCatalogDateTime      = query.value(1).toString();
 
-            //Inputs
-            QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
-            QFile catalogFile(sourceCatalogPath);
+            QDateTime dateTime1 = QDateTime::fromString(selectedCatalogLoadedVersion, "yyyy-MM-dd hh:mm:ss");
+            QDateTime dateTime2 = QDateTime::fromString(selectedCatalogDateTime, "yyyy-MM-dd hh:mm:ss");
+
+            //Load catalog if latest version is not already in memory
+            if ( dateTime1 < dateTime2){
+
+                //Inputs
+                QString sourceCatalogPath = collectionFolder + "/" + sourceCatalogName + ".idx";
+                QFile catalogFile(sourceCatalogPath);
 
 
-            if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+                if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
 
-                //Set up a text stream from the file's data
-                QTextStream streamCatalogFile(&catalogFile);
-                QString lineCatalogFile;
-                QRegExp lineCatalogFileSplitExp("\t");
+                    //Set up a text stream from the file's data
+                    QTextStream streamCatalogFile(&catalogFile);
+                    QString lineCatalogFile;
+                    QRegExp lineCatalogFileSplitExp("\t");
 
-                //Prepare database and queries
-                    //clear database from old version of catalog
-                    QSqlQuery deleteQuery;
-                    QString deleteQuerySQL = QLatin1String(R"(
-                                        DELETE FROM filesall
-                                        WHERE fileCatalog=:fileCatalog
-                                                    )");
-                    deleteQuery.prepare(deleteQuerySQL);
-                    deleteQuery.bindValue(":fileCatalog",sourceCatalogName);
-                    deleteQuery.exec();
+                    //Prepare database and queries
+                        //clear database from old version of catalog
+                        QSqlQuery deleteQuery;
+                        QString deleteQuerySQL = QLatin1String(R"(
+                                            DELETE FROM filesall
+                                            WHERE fileCatalog=:fileCatalog
+                                                        )");
+                        deleteQuery.prepare(deleteQuerySQL);
+                        deleteQuery.bindValue(":fileCatalog",sourceCatalogName);
+                        deleteQuery.exec();
 
-                    //prepare insert query
-                    QSqlQuery insertQuery;
-                    QString insertSQL = QLatin1String(R"(
-                                            INSERT INTO filesall (
-                                                            fileName,
-                                                            filePath,
-                                                            fileSize,
-                                                            fileDateUpdated,
-                                                            fileCatalog )
-                                            VALUES(
-                                                            :fileName,
-                                                            :filePath,
-                                                            :fileSize,
-                                                            :fileDateUpdated,
-                                                            :fileCatalog )
-                                        )");
+                        //prepare insert query
+                        QSqlQuery insertQuery;
+                        QString insertSQL = QLatin1String(R"(
+                                                INSERT INTO filesall (
+                                                                fileName,
+                                                                filePath,
+                                                                fileSize,
+                                                                fileDateUpdated,
+                                                                fileCatalog )
+                                                VALUES(
+                                                                :fileName,
+                                                                :filePath,
+                                                                :fileSize,
+                                                                :fileDateUpdated,
+                                                                :fileCatalog )
+                                            )");
 
-                //process each line of the file
-                    while (true){
-                        lineCatalogFile = streamCatalogFile.readLine();
-                        if (lineCatalogFile.isNull())
-                            break;
+                    //process each line of the file
+                        while (true){
+                            lineCatalogFile = streamCatalogFile.readLine();
+                            if (lineCatalogFile.isNull())
+                                break;
 
-                        //exclude catalog meta data
-                        if (lineCatalogFile.left(1)=="<"){continue;}
+                            //exclude catalog meta data
+                            if (lineCatalogFile.left(1)=="<"){continue;}
 
-                        //Split the line text with tabulations into a list
-                        QStringList lineFieldList  = lineCatalogFile.split(lineCatalogFileSplitExp);
-                        int         fieldListCount = lineFieldList.count();
+                            //Split the line text with tabulations into a list
+                            QStringList lineFieldList  = lineCatalogFile.split(lineCatalogFileSplitExp);
+                            int         fieldListCount = lineFieldList.count();
 
-                        //Get the file absolute path from this list
-                        QString     lineFilePath   = lineFieldList[0];
+                            //Get the file absolute path from this list
+                            QString     lineFilePath   = lineFieldList[0];
 
-                        //Get the FileSize from the list if available
-                        qint64      lineFileSize;
-                        if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
-                        else lineFileSize = 0;
+                            //Get the FileSize from the list if available
+                            qint64      lineFileSize;
+                            if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
+                            else lineFileSize = 0;
 
-                        //Get the File DateTime from the list if available
-                        QDateTime   lineFileDateTime;
-                        if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
-                        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
+                            //Get the File DateTime from the list if available
+                            QDateTime   lineFileDateTime;
+                            if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
+                            else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
-                        //Retrieve file info
-                        QFileInfo fileInfo(lineFilePath);
+                            //Retrieve file info
+                            QFileInfo fileInfo(lineFilePath);
 
-                        // Get the fileDateTime from the list if available
-                        QString lineFileDatetime;
-                        if (fieldListCount == 3){
-                                lineFileDatetime = lineFieldList[2];}
-                        else lineFileDatetime = "";
+                            // Get the fileDateTime from the list if available
+                            QString lineFileDatetime;
+                            if (fieldListCount == 3){
+                                    lineFileDatetime = lineFieldList[2];}
+                            else lineFileDatetime = "";
 
-                        //Load file into the database
-                            insertQuery.prepare(insertSQL);
-                            insertQuery.bindValue(":fileName",        fileInfo.fileName());
-                            insertQuery.bindValue(":fileSize",        lineFileSize);
-                            insertQuery.bindValue(":filePath",        fileInfo.path());
-                            insertQuery.bindValue(":fileDateUpdated", lineFileDatetime);
-                            insertQuery.bindValue(":fileCatalog",     sourceCatalogName);
-                            insertQuery.exec();
-                    }
+                            //Load file into the database
+                                insertQuery.prepare(insertSQL);
+                                insertQuery.bindValue(":fileName",        fileInfo.fileName());
+                                insertQuery.bindValue(":fileSize",        lineFileSize);
+                                insertQuery.bindValue(":filePath",        fileInfo.path());
+                                insertQuery.bindValue(":fileDateUpdated", lineFileDatetime);
+                                insertQuery.bindValue(":fileCatalog",     sourceCatalogName);
+                                insertQuery.exec();
+                        }
 
-                //update catalog loadedversion
-                    QDateTime nowDateTime = QDateTime::currentDateTime();
+                    //update catalog loadedversion
+                        QDateTime nowDateTime = QDateTime::currentDateTime();
 
-                    QSqlQuery catalogQuery;
-                    QString catalogQuerySQL = QLatin1String(R"(
-                                                UPDATE catalog
-                                                SET catalogLoadedVersion =:catalogLoadedVersion
-                                                WHERE catalogName =:catalogName
-                                              )");
-                    catalogQuery.prepare(catalogQuerySQL);
-                    catalogQuery.bindValue(":catalogLoadedVersion", nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
-                    catalogQuery.bindValue(":catalogName",     sourceCatalogName);
-                    catalogQuery.exec();
+                        QSqlQuery catalogQuery;
+                        QString catalogQuerySQL = QLatin1String(R"(
+                                                    UPDATE catalog
+                                                    SET catalogLoadedVersion =:catalogLoadedVersion
+                                                    WHERE catalogName =:catalogName
+                                                  )");
+                        catalogQuery.prepare(catalogQuerySQL);
+                        catalogQuery.bindValue(":catalogLoadedVersion", nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+                        catalogQuery.bindValue(":catalogName",     sourceCatalogName);
+                        catalogQuery.exec();
 
-                //refresh catalogs screen
-                    loadCatalogsToModel();
+                    //refresh catalogs screen
+                        loadCatalogsToModel();
 
-                //close file
-                    catalogFile.close();
-
+                    //close file
+                        catalogFile.close();
+                }
             }
+            else{
+                //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + QVariant(selectedCatalogLoadedVersion).toString());
+            }
+
         }
         //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
