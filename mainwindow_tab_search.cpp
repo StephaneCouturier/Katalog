@@ -1038,52 +1038,45 @@
 
             //Search loop for all lines in the catalog file
                 //load the files of the Catalog
-                QSqlQuery getFilesQuery;
-                QString getFilesQuerySQL = QLatin1String(R"(
-                                    SELECT  fileName,
-                                            filePath,
-                                            fileSize,
-                                            fileDateUpdated
-                                    FROM  filesall
-                                    WHERE fileCatalog=:fileCatalog
-                                                )");
-                getFilesQuery.prepare(getFilesQuerySQL);
-                getFilesQuery.bindValue(":fileCatalog",sourceCatalogName);
-                getFilesQuery.exec();
+                    QSqlQuery getFilesQuery;
+                    QString getFilesQuerySQL = QLatin1String(R"(
+                                        SELECT  fileName,
+                                                filePath,
+                                                fileSize,
+                                                fileDateUpdated
+                                        FROM  filesall
+                                        WHERE fileCatalog=:fileCatalog
+                                                    )");
+
+                    //Add matching size range
+                    if (searchOnSize==true){
+                        getFilesQuerySQL = getFilesQuerySQL+" AND fileSize>=:fileSizeMin ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND fileSize<=:fileSizeMax ";
+                    }
+                    //Add matching date range
+                    if (searchOnDate==true){
+                        getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated>=:fileDateUpdatedMin ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated<=:fileDateUpdatedMax ";
+                    }
+                    getFilesQuery.prepare(getFilesQuerySQL);
+                    getFilesQuery.bindValue(":fileCatalog",sourceCatalogName);
+                    getFilesQuery.bindValue(":fileSizeMin",selectedMinimumSize * sizeMultiplierMin);
+                    getFilesQuery.bindValue(":fileSizeMax",selectedMaximumSize * sizeMultiplierMax);
+                    getFilesQuery.bindValue(":fileDateUpdatedMin",selectedDateMin);
+                    getFilesQuery.bindValue(":fileDateUpdatedMax",selectedDateMax);
+                    getFilesQuery.exec();
 
                 //File by file, test if the file is matching all search criteria
                 //Loop principle1: stop further verification as soon as a criteria fails to match
-                //Loop principle2: start with fastest criteria (size, date), finish with more complex ones (tag, file name)
+                //Loop principle2: start with fastest criteria, finish with more complex ones (tag, file name)
 
                 while(getFilesQuery.next()){
 
-
-                        //QRegularExpressionMatch matchFileType;
-
-
-                        QString   lineFileName     = getFilesQuery.value(0).toString();
+                    QString   lineFileName     = getFilesQuery.value(0).toString();
                         QString   lineFilePath     = getFilesQuery.value(1).toString();
                         QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
                         qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
                         QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
-
-
-
-                    //Exclude catalog metadata lines which are starting with the character <
-                         //if (lineFilePath.left(1)=="<"){continue;}
-
-                    //Continue if the file is matching the size range
-                        if (searchOnSize==true){
-                                if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
-                                        and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
-                                            continue;}
-                            }
-                    //Continue if the file is matching the date range
-                        if (searchOnDate==true){
-                            if ( !(     lineFileDateTime >= selectedDateMin
-                                    and lineFileDateTime <= selectedDateMax ) ){
-                                        continue;}
-                        }
 
                     //Continue if the file is matching the tags
                         if (searchOnTags==true){
@@ -1121,11 +1114,6 @@
                             //reduce the abosulte path to the required text string and match the search text
                             if(selectedSearchIn == tr("File names only"))
                             {
-                                // Extract the file name from the lineFilePath
-    //                            QFileInfo file(lineFilePath);
-    //                            reducedLine = file.fileName();
-
-    //                            match = regex.match(reducedLine);
                                 match = regex.match(lineFileName);
                             }
                             else if(selectedSearchIn == tr("Folder path only"))
@@ -1135,16 +1123,13 @@
 
                                 //Check that the folder name matches the search text
                                 regex.setPattern(regexSearchtext);
-
                                 foldermatch = regex.match(lineFilePath);
 
                                 //if it does, then check that the file matches the selected file type
                                 if (foldermatch.hasMatch()){
                                     regex.setPattern(regexFileType);
-
                                     match = regex.match(lineFilePath);
                                 }
-
                             }
                             else {
                                 match = regex.match(lineFileFullPath);
