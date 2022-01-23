@@ -292,7 +292,8 @@
         // Get infos stored in the file
         QFile catalogFile(selectedCatalogFile);
         if(!catalogFile.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this,"Katalog",tr("No catalog found."));
+            //QMessageBox::information(this,"Katalog",tr("No catalog found."));
+            QApplication::restoreOverrideCursor();
             return;
         }
 
