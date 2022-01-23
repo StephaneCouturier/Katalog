@@ -23,7 +23,7 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   filesview.cpp
-// Purpose:     view to display files and their attributes
+// Purpose:     view formatting to display files and their attributes
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -48,6 +48,13 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
     QList<int> filesizeColumnList, filecountColumnList;
       filesizeColumnList <<1;
 
+    //Definition of filetypes
+    QStringList fileTypesPlain_Image, fileTypesPlain_Audio,fileTypesPlain_Video,fileTypesPlain_Text;
+    fileTypesPlain_Image << "png" << "jpg" << "gif" << "xcf" << "tif" << "bmp";
+    fileTypesPlain_Audio << "mp3" << "wav" << "ogg" << "aif";
+    fileTypesPlain_Video << "wmv" << "avi" << "mp4" << "mkv" << "flv"  << "webm";
+    fileTypesPlain_Text  << "txt" << "pdf" << "odt" << "idx" << "html" << "rtf" << "doc" << "docx" << "epub";
+
     switch ( role )
          {
             case Qt::DisplayRole:
@@ -61,7 +68,6 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 else if( filecountColumnList.contains(index.column()) ){
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");
                 }
-
                 else QSortFilterProxyModel::data(index, role) ;
 
                 break;
@@ -81,9 +87,29 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
             case Qt::DecorationRole:
             {
-                //Filename column
                 if( index.column()==0 ){
-                    return QIcon::fromTheme("document-preview-archive");
+
+                    //Identification of filetype
+                    QString fullFileName, fileName, fileType;
+                    fullFileName = QSortFilterProxyModel::data(index, Qt::DisplayRole).toString();
+                    fileName = fullFileName.left(fullFileName.lastIndexOf("."));
+                    fileType = fullFileName.remove(fileName+".");
+
+                    //Assign the icon per filetype
+                    if(      fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
+                        return QIcon::fromTheme("image-jpeg");
+                    }
+                    else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
+                        return QIcon::fromTheme("audio-x-mpeg");
+                    }
+                    else if( fileTypesPlain_Video.contains(fileType,Qt::CaseInsensitive)){
+                        return QIcon::fromTheme("video-mp4");
+                    }
+                    else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
+                        return QIcon::fromTheme("folder-text");
+                    }
+                    else
+                        return QIcon::fromTheme("document-preview-archive");
                 }
 
                 break;
