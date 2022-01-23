@@ -166,10 +166,6 @@
         <translation>(nécessaire de redémarrer)</translation>
     </message>
     <message>
-        <source>Filters &amp; Settings</source>
-        <translation>Filtres &amp; Réglages</translation>
-    </message>
-    <message>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -1247,6 +1243,26 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
 Use a different combinaison.</source>
         <translation>L&apos;option &apos;Commencer par&apos; ne peut être utilisée qu&apos;avec &apos;Noms de fichiers uniquement&apos;.
 Utilisez une combinaison différente.</translation>
+    </message>
+    <message>
+        <source>case sensitive</source>
+        <translation>sensible à la casse</translation>
+    </message>
+    <message>
+        <source>load tree simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load directory tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les résultats doivent correspondre exactement au texte (sensible à la capitalisation des lettres)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
