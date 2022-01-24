@@ -140,7 +140,8 @@
         void MainWindow::on_Search_pushButton_ExportResults_clicked()
         {
             QString exportFileName = exportSearchResults();
-            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")+"\n"+exportFileName);
+            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")
+                                                    +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
