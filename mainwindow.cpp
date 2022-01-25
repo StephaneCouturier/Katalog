@@ -112,6 +112,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             QString firstSelectedStorage =  selectedSearchStorage;
             QString firstSelectedCatalog = selectedSearchCatalog;
 
+
+
         //Load custom stylesheet
             //for windows, pick a windows common font.
             #ifdef Q_OS_WIN
@@ -178,6 +180,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if ( checkVersionChoice == true)
                 checkVersion();
 
+   //Preload last selected catalogs
+            if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
+                preloadCatalogs();
+            }
+
     //Load last catalog to explore
             ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
             if (selectedCatalogFile != ""){
@@ -223,7 +230,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->DEV2_treeView_Storage->setModel(storagetreeModel);
             ui->DEV2_treeView_Storage->header()->resizeSection(0,  300);
             ui->DEV2_treeView_Storage->expandAll();
-
 }
 
 MainWindow::~MainWindow()

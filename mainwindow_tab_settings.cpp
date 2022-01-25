@@ -303,6 +303,14 @@
             //hide buttons to force user to select a catalog before allowing any action.
             hideCatalogButtons();
     }
+    //----------------------------------------------------------------------
+    void MainWindow::preloadCatalogs()
+    {
+        foreach(sourceCatalog,catalogSelectedList)
+                {
+                    loadCatalogFilelistToTable(sourceCatalog);
+                }
+    }
 
 //SETTINGS / Settings ------------------------------------------------------
 
@@ -328,6 +336,12 @@
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/PreloadCatalogs", ui->Settings_checkBox_PreloadCatalogs->isChecked());
     }
     //----------------------------------------------------------------------
 

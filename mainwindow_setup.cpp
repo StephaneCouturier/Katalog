@@ -228,6 +228,7 @@
             ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
             ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
             ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
+            ui->Settings_checkBox_PreloadCatalogs->setChecked(settings.value("Settings/PreloadCatalogs", true).toBool());
             ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
 
             //Restore last statistics values

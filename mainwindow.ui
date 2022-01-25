@@ -499,6 +499,19 @@
               </item>
               <item row="4" column="1">
                <layout class="QGridLayout" name="Settings_gridLayout_Settings_2">
+                <item row="3" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                  <property name="toolTip">
+                   <string>Always keep one back of each catalog</string>
+                  </property>
+                  <property name="text">
+                   <string>Auto-backup catalogs</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="Settings_label_Data">
                   <property name="font">
@@ -508,6 +521,19 @@
                   </property>
                   <property name="text">
                    <string>Data</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                  <property name="toolTip">
+                   <string>Verify if a new version of Katalog is available when starting the app.</string>
+                  </property>
+                  <property name="text">
+                   <string>Check at start up</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -527,31 +553,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="Settings_label_Data_2">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Language</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-                  <property name="toolTip">
-                   <string>Always keep one back of each catalog</string>
-                  </property>
-                  <property name="text">
-                   <string>Auto-backup catalogs</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="Settings_label_Theme">
                   <property name="font">
@@ -561,6 +562,30 @@
                   </property>
                   <property name="text">
                    <string>Theme</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="Settings_label_CheckVersion">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Version</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="Settings_label_Data_2">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Language</string>
                   </property>
                  </widget>
                 </item>
@@ -587,28 +612,19 @@
                   </item>
                  </widget>
                 </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="Settings_label_CheckVersion">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Version</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="4" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                 <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
                   <property name="toolTip">
-                   <string>Verify if a new version of Katalog is available when starting the app.</string>
+                   <string>Preload last selected catalogs at start-up to accelerate next search</string>
                   </property>
                   <property name="text">
-                   <string>Check at start up</string>
+                   <string>Preload last catalogs</string>
                   </property>
                   <property name="checked">
-                   <bool>true</bool>
+                   <bool>false</bool>
                   </property>
                  </widget>
                 </item>

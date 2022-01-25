@@ -98,6 +98,7 @@ class MainWindow : public QMainWindow
             QString settingsFilePath;
             void loadSettings();
             void saveSettings();
+            void preloadCatalogs();
 
             //Parameters
             QString fileName;
@@ -350,6 +351,7 @@ class MainWindow : public QMainWindow
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
                 void on_Settings_comboBox_Theme_currentIndexChanged(int index);
                 void on_Settings_checkBox_CheckVersion_stateChanged();
+                void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -472,7 +474,6 @@ class MainWindow : public QMainWindow
         //DEV
             void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
-
 };
 
 #endif // MAINWINDOW_H
