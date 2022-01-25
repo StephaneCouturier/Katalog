@@ -3026,7 +3026,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </font>
                     </property>
                     <property name="text">
-                     <string>Size</string>
+                     <string>Total Size</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -6004,8 +6004,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
   <include location="images.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>

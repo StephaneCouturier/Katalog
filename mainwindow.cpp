@@ -62,8 +62,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             //Set current version and date
-            currentVersion = "1.08";
-            releaseDate = "2022-01-23";
+            currentVersion = "1.09";
+            releaseDate = "2022-01-24";
             developmentMode = false;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
@@ -116,7 +116,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             //for windows, pick a windows common font.
             #ifdef Q_OS_WIN
             ui->tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
-            ui->Global_tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
+            ui->splitter_widget_Filters_tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
             //load custom Katalog stylesheet instead of default theme
