@@ -38,5 +38,6 @@
         <file>fallback-icons/go-up.png</file>
         <file>fallback-icons/view-statistics.png</file>
         <file>fallback-icons/document-preview-archive.png</file>
+        <file>fallback-icons/user-trash.png</file>
     </qresource>
 </RCC>

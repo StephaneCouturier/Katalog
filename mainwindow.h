@@ -393,6 +393,8 @@ class MainWindow : public QMainWindow
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();
             void searchContextCopyFileNameWithoutExtension();
+            void searchContextMoveToTrash();
+            void searchContextDeleteFile();
 
         //Catalogs
             void on_Catalogs_pushButton_Search_clicked();
@@ -424,6 +426,7 @@ class MainWindow : public QMainWindow
             void on_Create_pushButton_CreateCatalog_clicked();
 
         //Explore
+            void on_Explore_splitter_splitterMoved();
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
@@ -435,7 +438,8 @@ class MainWindow : public QMainWindow
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();
             void exploreContextCopyFileNameWithoutExtension();
-            void on_Explore_splitter_splitterMoved();
+            void exploreContextMoveToTrash();
+            void exploreContextDeleteFile();
 
         //Storage
             void on_Storage_pushButton_CreateList_clicked();

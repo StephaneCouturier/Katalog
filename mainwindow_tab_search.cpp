@@ -460,6 +460,16 @@
             connect( menuAction6,&QAction::triggered, this, &MainWindow::searchContextCopyFileNameWithoutExtension);
             fileContextMenu.addAction(menuAction6);
 
+            fileContextMenu.addSeparator();
+
+            QAction *menuAction7 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
+            connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveToTrash);
+            fileContextMenu.addAction(menuAction7);
+
+            QAction *menuAction8 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
+            connect( menuAction8,&QAction::triggered, this, &MainWindow::searchContextDeleteFile);
+            fileContextMenu.addAction(menuAction8);
+
             QAction* selectedItem = fileContextMenu.exec(globalPos);
             if (selectedItem)
             {
@@ -538,6 +548,65 @@
 
             QClipboard *clipboard = QGuiApplication::clipboard();
             clipboard->setText(fileNameWithoutExtension);
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::searchContextMoveToTrash()
+        {
+            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
+
+            QString pathInTrash;
+
+            if (selectedFileName.isEmpty()) {
+                return;
+            }
+
+            if (QMessageBox::question(this,
+                                      tr("Confirmation"),
+                                      tr("Are you sure you want to move\n%1\nto the trash?").arg(selectedFile))
+                == QMessageBox::Yes) {
+                if (QFile::moveToTrash(selectedFile, &pathInTrash)) {
+                    QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
+
+                } else {
+                    QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
+                }
+            }
+        }
+
+        //----------------------------------------------------------------------
+        void MainWindow::searchContextDeleteFile()
+        {
+            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+
+            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
+            if (selectedFileName.isEmpty()) {
+                return;
+            }
+
+            if (QMessageBox::question(this,
+                                      tr("Confirmation"),
+                                      tr("Are you sure you want to <span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
+                == QMessageBox::Yes) {
+
+                QFile file(selectedFile);
+                if (file.exists()) {
+
+                    file.remove();
+
+                    QMessageBox::warning(this, tr("Warning"), tr("Deleted.") );
+
+                } else {
+                    QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
+                }
+            }
         }
 
 //Methods-----------------------------------------------------------------------
