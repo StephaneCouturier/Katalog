@@ -393,7 +393,8 @@ class MainWindow : public QMainWindow
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();
             void searchContextCopyFileNameWithoutExtension();
-            void searchContextMoveToTrash();
+            void searchContextMoveFileToFolder();
+            void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
 
         //Catalogs
@@ -438,7 +439,8 @@ class MainWindow : public QMainWindow
             void exploreContextCopyFolderPath();
             void exploreContextCopyFileNameWithExtension();
             void exploreContextCopyFileNameWithoutExtension();
-            void exploreContextMoveToTrash();
+            void exploreContextMoveFileToFolder();
+            void exploreContextMoveFileToTrash();
             void exploreContextDeleteFile();
 
         //Storage
