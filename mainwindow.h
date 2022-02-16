@@ -389,6 +389,7 @@ class MainWindow : public QMainWindow
             //context menu
             void searchContextOpenFile();
             void searchContextOpenFolder();
+            void searchContextOpenExplore();
             void searchContextCopyAbsolutePath();
             void searchContextCopyFolderPath();
             void searchContextCopyFileNameWithExtension();

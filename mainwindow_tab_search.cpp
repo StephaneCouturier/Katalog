@@ -442,6 +442,10 @@
             connect(menuAction2, &QAction::triggered, this, &MainWindow::searchContextOpenFolder);
             fileContextMenu.addAction(menuAction2);
 
+            QAction *menuAction10 = new QAction(QIcon::fromTheme("document-open"),(tr("Explore folder")), this);
+            connect(menuAction10, &QAction::triggered, this, &MainWindow::searchContextOpenExplore);
+            fileContextMenu.addAction(menuAction10);
+
             fileContextMenu.addSeparator();
 
             QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
@@ -504,6 +508,35 @@
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
             QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::searchContextOpenExplore()
+        {
+            //Get values from selection
+            QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
+            QString selectedFileFolder  = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
+
+            //Get additional values from db
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT catalogSourcePath
+                                FROM catalog
+                                WHERE catalogName=:catalogName
+                                            )");
+            query.prepare(querySQL);
+            query.bindValue(":catalogName",selectedFileCatalog);
+            query.exec();
+            query.next();
+
+            //Prepare inputs for the Explore
+            selectedCatalogName   = selectedFileCatalog;
+            selectedCatalogPath   = query.value(0).toString();
+            selectedDirectoryName = selectedFileFolder.remove(selectedCatalogPath+"/");
+
+            //Open the catalog into the Explore
+            openCatalogToExplore();
+            ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::searchContextCopyAbsolutePath()

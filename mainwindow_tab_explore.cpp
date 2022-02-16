@@ -327,8 +327,6 @@
 
     void MainWindow::openCatalogToExplore()
     {
-
-
         //Check catalog's number of files and confirm load if too big
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
@@ -374,6 +372,11 @@
         settings.setValue("Explore/lastSelectedCatalogFile", selectedCatalogFile);
         settings.setValue("Explore/lastSelectedCatalogName", selectedCatalogName);
         settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalogPath);
+        settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+//        selectedCatalogFile   = settings.value("Explore/lastSelectedCatalogFile").toString();
+//        selectedCatalogName   = settings.value("Explore/lastSelectedCatalogName").toString();
+//        selectedCatalogPath   = settings.value("Explore/lastSelectedCatalogPath").toString();
+//        selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogDirectoriesToExplore()
@@ -515,6 +518,8 @@
         countQuery.next();
 
         ui->Explore_label_FilesNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
+        ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+
     }
 
     //----------------------------------------------------------------------
