@@ -1219,6 +1219,98 @@ Use a different combinaison.</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preload last selected catalogs at start-up to accelerate next search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preload last catalogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explore folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move file to other folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move file to Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the folder to move this file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A file %&amp; already exists. Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moved to folder:&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file cannot be moved (offline or not existing).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moved to trash:&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to trash failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to delete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loaded Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to folder failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move
+%1
+to another folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move
+%1
+to the trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelled move to folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StorageTreeModel</name>

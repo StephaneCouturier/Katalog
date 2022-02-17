@@ -474,9 +474,12 @@
             connect( menuAction8,&QAction::triggered, this, &MainWindow::searchContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
 
-//            QAction *menuAction9 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
-//            connect( menuAction9,&QAction::triggered, this, &MainWindow::searchContextDeleteFile);
-//            fileContextMenu.addAction(menuAction9);
+            //DEV
+            if (developmentMode == true){
+                QAction *menuAction9 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
+                connect( menuAction9,&QAction::triggered, this, &MainWindow::searchContextDeleteFile);
+                fileContextMenu.addAction(menuAction9);
+            }
 
             QAction* selectedItem = fileContextMenu.exec(globalPos);
             if (selectedItem)
@@ -485,7 +488,7 @@
             }
             else
             {
-                //KMessageBox::information(this,"test:\n did nothing.");
+                //did nothing
             }
         }
         //----------------------------------------------------------------------
@@ -587,15 +590,6 @@
             clipboard->setText(fileNameWithoutExtension);
         }
         //----------------------------------------------------------------------
-        //QFile::copy("/path/file", "/path/copy-of-file");
-        /*
-        if (QFile::exists("/path/copy-of-file"))
-        {
-            QFile::remove("/path/copy-of-file");
-        }
-
-        QFile::copy("/path/file", "/path/copy-of-file");
-        */
         void MainWindow::searchContextMoveFileToFolder()
         {
             QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
@@ -610,7 +604,7 @@
 
             if (QMessageBox::question(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to move\n%1\nto another folder?").arg(selectedFile))
+                                      tr("Move\n%1\nto another folder?").arg(selectedFile))
                 == QMessageBox::Yes) {
                 QFile file(selectedFile);
                 if (file.exists()) {
@@ -633,7 +627,7 @@
                                 //overwrite
                             }
                             else
-                                 QMessageBox::warning(this, tr("Warning"), tr("Cancelled move to folder.>"));
+                                 QMessageBox::warning(this, tr("Warning"), tr("Cancelled move to folder."));
                             return;
                         }
                         //remove exisiting
@@ -649,7 +643,6 @@
                 }
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::searchContextMoveFileToTrash()
         {
@@ -666,9 +659,9 @@
                 return;
             }
 
-            if (QMessageBox::question(this,
+            if (QMessageBox::warning(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to move\n%1\nto the trash?").arg(selectedFile))
+                                      tr("Move\n%1\nto the trash?").arg(selectedFile))
                 == QMessageBox::Yes) {
                 if (QFile::moveToTrash(selectedFile, &pathInTrash)) {
                     QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
@@ -678,7 +671,6 @@
                 }
             }
         }
-
         //----------------------------------------------------------------------
         void MainWindow::searchContextDeleteFile()
         {
@@ -692,9 +684,9 @@
                 return;
             }
 
-            if (QMessageBox::question(this,
+            if (QMessageBox::warning(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to <span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
+                                      tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
                 == QMessageBox::Yes) {
 
                 QFile file(selectedFile);

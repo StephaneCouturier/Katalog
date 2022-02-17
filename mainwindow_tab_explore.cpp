@@ -240,7 +240,7 @@
 
             if (QMessageBox::question(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to move\n%1\nto the trash?").arg(selectedFile))
+                                      tr("Move\n%1\nto the trash?").arg(selectedFile))
                 == QMessageBox::Yes) {
                 QFile file(selectedFile);
                 if (file.exists()) {
@@ -279,9 +279,9 @@
                 return;
             }
 
-            if (QMessageBox::question(this,
+            if (QMessageBox::warning(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to move\n%1\nto the trash?").arg(selectedFile))
+                                      tr("Move\n%1\nto the trash?").arg(selectedFile))
                 == QMessageBox::Yes) {
                 if (QFile::moveToTrash(selectedFile, &pathInTrash)) {
                     QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
@@ -304,9 +304,9 @@
                 return;
             }
 
-            if (QMessageBox::question(this,
+            if (QMessageBox::warning(this,
                                       tr("Confirmation"),
-                                      tr("Are you sure you want to <span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
+                                      tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
                 == QMessageBox::Yes) {
 
                 QFile file(selectedFile);

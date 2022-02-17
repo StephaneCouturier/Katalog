@@ -1264,6 +1264,102 @@ Utilisez une combinaison différente.</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les résultats doivent correspondre exactement au texte (sensible à la capitalisation des lettres)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Preload last selected catalogs at start-up to accelerate next search</source>
+        <translation>Précharger les derniers catalogues sélectionnés au démarrage pour accélérer la prochaine recherche</translation>
+    </message>
+    <message>
+        <source>Preload last catalogs</source>
+        <translation>Précharger les derniers catalogues</translation>
+    </message>
+    <message>
+        <source>Explore folder</source>
+        <translation>Explorer le dossier</translation>
+    </message>
+    <message>
+        <source>Move file to other folder</source>
+        <translation>Déplacer le fichier vers un autre dossier</translation>
+    </message>
+    <message>
+        <source>Move file to Trash</source>
+        <translation>Déplacer le fichier vers la corbeille</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
+    <message>
+        <source>Select the folder to move this file</source>
+        <translation>Sélectionnez le dossier pour déplacer ce fichier</translation>
+    </message>
+    <message>
+        <source>A file %&amp; already exists. Do you want to overwrite it?</source>
+        <translation>Un fichier %&amp; existe déjà. Voulez-vous l&apos;écraser&#xa0;?</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>Moved to folder:&lt;br/&gt;</source>
+        <translation>Déplacé vers le dossier&#xa0;:&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>This file cannot be moved (offline or not existing).</source>
+        <translation>Ce fichier ne peut pas être déplacé (hors ligne ou inexistant).</translation>
+    </message>
+    <message>
+        <source>Moved to trash:&lt;br/&gt;</source>
+        <translation>Déplacé dans la corbeille :&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <source>Move to trash failed.</source>
+        <translation>Échec du déplacement vers la corbeille.</translation>
+    </message>
+    <message>
+        <source>Deleted.</source>
+        <translation>Supprimé.</translation>
+    </message>
+    <message>
+        <source>Failed to delete.</source>
+        <translation>Échec de la suppression.</translation>
+    </message>
+    <message>
+        <source>Loaded Version</source>
+        <translation>Version chargée</translation>
+    </message>
+    <message>
+        <source>Move to folder failed.</source>
+        <translation>Échec du déplacement vers le dossier.</translation>
+    </message>
+    <message>
+        <source>Delete file</source>
+        <translation>Supprimer le fichier</translation>
+    </message>
+    <message>
+        <source>Move
+%1
+to another folder?</source>
+        <translation>Déplacer
+%1
+vers un autre dossier ?</translation>
+    </message>
+    <message>
+        <source>Move
+%1
+to the trash?</source>
+        <translation>Déplacer
+%1
+à la corbeille ?</translation>
+    </message>
+    <message>
+        <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
+        <translation>&lt;span style=&apos;color:red;&apos;&gt;SUPPRIMER&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt; ?</translation>
+    </message>
+    <message>
+        <source>Cancelled move to folder.</source>
+        <translation>Déplacement vers le dossier.annulé.</translation>
+    </message>
 </context>
 <context>
     <name>StorageTreeModel</name>
