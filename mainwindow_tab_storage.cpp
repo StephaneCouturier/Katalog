@@ -122,6 +122,7 @@
         ui->Storage_pushButton_CreateCatalog->setEnabled(true);
         ui->Storage_pushButton_Update->setEnabled(true);
         ui->Storage_pushButton_Delete->setEnabled(true);
+        ui->Storage_pushButton_OpenFilelight->setEnabled(true);
 
         selectedStorageIndexRow = index.row();
     }
