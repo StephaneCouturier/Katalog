@@ -477,7 +477,7 @@
             connect( menuAction8,&QAction::triggered, this, &MainWindow::searchContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
 
-            QAction *menuAction9 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
+            QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete file")), this);
             connect( menuAction9,&QAction::triggered, this, &MainWindow::searchContextDeleteFile);
             fileContextMenu.addAction(menuAction9);
 
