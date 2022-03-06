@@ -128,17 +128,20 @@
 
             fileContextMenu.addSeparator();
 
-            QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-            connect( menuAction7,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
-            fileContextMenu.addAction(menuAction7);
+            //DEV
+            if (developmentMode == true){
+                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
+                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
+                fileContextMenu.addAction(menuAction7);
+            }
 
             QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
-            connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
+            connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
 
-//            QAction *menuAction9 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
-//            connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
-//            fileContextMenu.addAction(menuAction9);
+            QAction *menuAction9 = new QAction(QIcon::fromTheme("delete"),(tr("Delete file")), this);
+            connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
+            fileContextMenu.addAction(menuAction9);
 
             QAction* selectedItem = fileContextMenu.exec(globalPos);
             if (selectedItem)
@@ -279,7 +282,7 @@
                 return;
             }
 
-            if (QMessageBox::warning(this,
+            if (QMessageBox::question(this,
                                       tr("Confirmation"),
                                       tr("Move\n%1\nto the trash?").arg(selectedFile))
                 == QMessageBox::Yes) {
@@ -304,7 +307,7 @@
                 return;
             }
 
-            if (QMessageBox::warning(this,
+            if (QMessageBox::question(this,
                                       tr("Confirmation"),
                                       tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
                 == QMessageBox::Yes) {

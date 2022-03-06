@@ -659,7 +659,7 @@
                 return;
             }
 
-            if (QMessageBox::warning(this,
+            if (QMessageBox::question(this,
                                       tr("Confirmation"),
                                       tr("Move\n%1\nto the trash?").arg(selectedFile))
                 == QMessageBox::Yes) {
@@ -684,7 +684,7 @@
                 return;
             }
 
-            if (QMessageBox::warning(this,
+            if (QMessageBox::question(this,
                                       tr("Confirmation"),
                                       tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
                 == QMessageBox::Yes) {
