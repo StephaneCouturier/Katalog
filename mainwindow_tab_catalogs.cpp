@@ -227,6 +227,8 @@
             ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
+            //Select the type of display "selected catalog"
+            ui->Statistics_comboBox_SelectSource->setCurrentText(tr("selected catalog"));
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Import_clicked()
