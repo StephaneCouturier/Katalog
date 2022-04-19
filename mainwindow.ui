@@ -5926,7 +5926,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Open file</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign"/>
+                   <iconset theme="document-edit-sign">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>

@@ -42,7 +42,6 @@
     void MainWindow::on_Tags_pushButton_PickFolder_clicked()
     {
         //Get current selected path as default path for the dialog window
-        QString newTagFolderPath;
         newTagFolderPath = ui->Tags_lineEdit_FolderPath->text();
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
@@ -83,14 +82,13 @@
             //KMessageBox::information(this,"No tags file found.");
 
         //Refresh the lists
-        loadTagsToTable();
-        loadTagsTableToModel();
+        reloadTagsData();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_Reload_clicked()
     {
-        loadTagsToTable();
-        loadTagsTableToModel();
+        reloadTagsData();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_OpenTagsFile_clicked()
@@ -101,8 +99,10 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_listView_ExistingTags_clicked(const QModelIndex &index)
     {
-        QString selectedTagListName = ui->Tags_listView_ExistingTags->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        selectedTagListName = ui->Tags_listView_ExistingTags->model()->index(index.row(), 0, QModelIndex()).data().toString();
         ui->Tags_lineEdit_TagName->setText(selectedTagListName);
+        //loadTagsTableToModel();
+        loadTagsTableToTagsAndFolderListModel();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_treeview_Explorer_clicked(const QModelIndex &index)
@@ -119,6 +119,14 @@
 
 //Methods-------------------------------------------------------------------
 
+    void MainWindow::reloadTagsData()
+    {
+        selectedTagListName="";
+        loadTagsToTable();
+        loadTagsTableToExistingTagsModel();
+        loadTagsTableToTagsAndFolderListModel();
+    }
+    //----------------------------------------------------------------------
     void MainWindow::loadFileSystemTags(QString newTagFolderPath)
     {
         //Load file system for the treeview
@@ -130,8 +138,8 @@
             fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
 
          // QFileSystemModel requires root path
-            //QString rootPath ="/";
-            //fileSystemModel->setRootPath(rootPath);
+            QString rootPath ="/";
+            fileSystemModel->setRootPath(rootPath);
             fileSystemModel->setRootPath(newTagFolderPath);
          // Enable/Disable modifying file system
             //qfilesystemmodel->setReadOnly(true);
@@ -208,7 +216,7 @@
         }
     }
     //----------------------------------------------------------------------
-	void MainWindow::loadTagsTableToModel()
+    void MainWindow::loadTagsTableToExistingTagsModel()
     {
         //Set up temporary lists
         QList<QString> tFolderPaths;
@@ -220,7 +228,7 @@
                                     SELECT Path, Name
                                     FROM tag
                                     )");
-		query.prepare(querySQL);
+        query.prepare(querySQL);
 		query.exec();
 
 		//Populate lists
@@ -238,13 +246,6 @@
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);
 
-        // Connect model to tree/table view
-        ui->Tags_treeView_FolderTags->setModel(proxyStorageModel);
-        ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(1,Qt::AscendingOrder);
-        ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->Tags_treeView_FolderTags->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Tags_treeView_FolderTags->header()->resizeSection(0, 350); //Folder
-
         QList<QString> tTagUniqueNames;
         tTagUniqueNames = tTagNames;
         tTagUniqueNames.removeDuplicates();
@@ -254,5 +255,50 @@
         tagListModel->setStringList(tTagUniqueNames);
         ui->Tags_listView_ExistingTags->setModel(tagListModel);
         ui->Search_comboBox_Tags->setModel(tagListModel);
+    }
+    //----------------------------------------------------------------------
+
+    void MainWindow::loadTagsTableToTagsAndFolderListModel()
+    {
+        //Set up temporary lists
+        QList<QString> tFolderPaths;
+        QList<QString> tTagNames;
+
+        //Get full list of tags
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT Path, Name
+                                    FROM tag
+                                    )");
+        if(selectedTagListName!=""){
+            querySQL = querySQL + " WHERE Name=:Name";
+        }
+        query.prepare(querySQL);
+
+        query.bindValue(":Name",selectedTagListName);
+
+        query.exec();
+
+        //Populate lists
+        while(query.next()){
+                        tFolderPaths << query.value(0).toString();
+                        tTagNames    << query.value(1).toString();
+        }
+
+        // Create model
+        Tag *tagModel = new Tag(this);
+
+        // Populate model with data
+        tagModel->populateTagData(tFolderPaths, tTagNames);
+
+        QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
+        proxyStorageModel->setSourceModel(tagModel);
+
+        // Connect model to tree/table view
+        ui->Tags_treeView_FolderTags->setModel(proxyStorageModel);
+        ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(1,Qt::AscendingOrder);
+        ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->Tags_treeView_FolderTags->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->Tags_treeView_FolderTags->header()->resizeSection(0, 350); //Folder
     }
     //----------------------------------------------------------------------

@@ -307,9 +307,15 @@ class MainWindow : public QMainWindow
             void loadStatisticsChart();
 
         //TAB: Tags
+            void reloadTagsData();
+            void loadTagsToTable();
+            void loadTagsTableToExistingTagsModel();
+            void loadTagsTableToTagsAndFolderListModel();
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
+            QString selectedTagListName;
             QString tagsFilePath;
+            QString newTagFolderPath;
 
    private slots:
         //Menu KDE
@@ -482,8 +488,6 @@ class MainWindow : public QMainWindow
             void on_Tags_pushButton_OpenTagsFile_clicked();
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
-            void loadTagsToTable();
-            void loadTagsTableToModel();
 
         //DEV
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
