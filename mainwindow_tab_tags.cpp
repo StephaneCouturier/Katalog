@@ -35,6 +35,7 @@
 
 #include <QFileDialog>
 #include <QStandardItemModel>
+#include <QDesktopServices>
 
 //UI------------------------------------------------------------------------
 
@@ -88,7 +89,14 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_Reload_clicked()
     {
+        loadTagsToTable();
         loadTagsTableToModel();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Tags_pushButton_OpenTagsFile_clicked()
+    {
+        tagsFilePath = collectionFolder + "/" + "tags.csv";
+        QDesktopServices::openUrl(QUrl::fromLocalFile(tagsFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_listView_ExistingTags_clicked(const QModelIndex &index)
@@ -151,9 +159,9 @@
         queryDelete.exec();
 
         //Prepare for using the csv file storing tag data
-        QString tagFilePath = collectionFolder + "/" + "tags.csv";
+        tagsFilePath = collectionFolder + "/" + "tags.csv";
 
-        QFile tagFile(tagFilePath);
+        QFile tagFile(tagsFilePath);
         if(!tagFile.open(QIODevice::ReadOnly)) {
                 return;
         }
