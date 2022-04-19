@@ -92,12 +92,10 @@
             settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
         }
         //----------------------------------------------------------------------
-    //Context Menu methods
+    //Context Menu methods - files
         void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
         {
-            // for most widgets
             QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
-
             QMenu fileContextMenu;
 
             QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
@@ -150,7 +148,8 @@
             }
             else
             {
-                //KMessageBox::information(this,"test:\n did nothing.");
+                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("did nothing").toString());
+
             }
         }
 
@@ -324,6 +323,44 @@
                 }
             }
         }
+
+    //Context Menu methods - directories
+        void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
+        {
+            QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
+            QMenu directoryContextMenu;
+
+            QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
+            connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
+            directoryContextMenu.addAction(menuDirectoryAction1);
+
+            QAction* selectedItem = directoryContextMenu.exec(globalPos);
+
+            if (selectedItem)
+            {
+                //something
+                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("ok").toString());
+
+            }
+            else
+            {
+                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("did nothing").toString());
+            }
+        }
+
+        void MainWindow::exploreContextTagFolder()
+        {
+            QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
+            QString selectedFileFolder =
+                    ui->Explore_label_CatalogPathDisplay->text()
+                  + "/"
+                  + ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+            //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant(selectedFileFolder).toString());
+            ui->Tags_lineEdit_FolderPath->setText(selectedFileFolder);
+            ui->tabWidget->setCurrentIndex(6);
+        }
+
         //----------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
@@ -376,10 +413,6 @@
         settings.setValue("Explore/lastSelectedCatalogName", selectedCatalogName);
         settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalogPath);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
-//        selectedCatalogFile   = settings.value("Explore/lastSelectedCatalogFile").toString();
-//        selectedCatalogName   = settings.value("Explore/lastSelectedCatalogName").toString();
-//        selectedCatalogPath   = settings.value("Explore/lastSelectedCatalogPath").toString();
-//        selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogDirectoriesToExplore()
@@ -413,6 +446,8 @@
         ui->Explore_treeview_Directories->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
         ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
+
+        ui->DEV_treeView_Directories->setModel(getDirectoriesProxyModel);
 
         //Display number of directories
         QString countSQL = QLatin1String(R"(
@@ -490,7 +525,9 @@
         ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
         ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
 
-        ui->DEV_treeView_Files->setModel(proxyModel2);
+        FilesView *proxyModel3 = new FilesView(this);
+        proxyModel3 = proxyModel2;
+        ui->DEV_treeView_Files->setModel(proxyModel3);
         //ui->DEV_treeView_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
         ui->DEV_treeView_Files->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->DEV_treeView_Files->header()->resizeSection(0, 600); //Name
@@ -528,23 +565,7 @@
     //----------------------------------------------------------------------
     //DEV
 
-    void MainWindow::on_DEV_treeView_Directories_activated(const QModelIndex &index)
-    {
-        selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 1, QModelIndex()).data().toString();
 
-    //    for (int i=0;i<3 ;i++ ) {
-    //        QString temp = ui->DEV_treeView_Directories->model()->data(index().toString();
-    //        QList<QVariant> temp = ui->DEV_treeView_Directories->model()->index(index.row(), i, QModelIndex()).data().toList();
-    //
-    //        QString temp = ui->DEV_treeView_Directories->model()->data(QModelIndex()).toString();
-    //        QString temp = ui->DEV_treeView_Directories->model()->index(index.row(), i, QModelIndex()).data().toString();
-            //QMessageBox::information(this,"Katalog","col:" + QString::number(i) + "<br/>value:" + temp[i].toString());
-    //    }
 
-        QMessageBox::information(this,"Katalog","selectedDirectoryName:" + selectedDirectoryName);
-        tempSelectedTreeviewSource = "treelist";
-
-        loadSelectedDirectoryFilesToExplore();
-    }
     //----------------------------------------------------------------------
 

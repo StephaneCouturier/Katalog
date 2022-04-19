@@ -4093,7 +4093,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </item>
                   <item>
                    <widget class="QTreeView" name="Explore_treeview_Directories">
-                    <property name="enabled">
+                    <property name="editTriggers">
+                     <set>QAbstractItemView::NoEditTriggers</set>
+                    </property>
+                    <property name="alternatingRowColors">
                      <bool>true</bool>
                     </property>
                    </widget>
@@ -4172,11 +4175,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </item>
                   <item>
                    <widget class="QTreeView" name="Explore_treeView_FileList">
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
                     <property name="toolTip">
                      <string>Click to open the file</string>
                     </property>
@@ -5928,7 +5926,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <rect>
               <x>30</x>
               <y>80</y>
-              <width>611</width>
+              <width>521</width>
               <height>541</height>
              </rect>
             </property>
@@ -5936,9 +5934,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QTreeView" name="DEV_treeView_Files">
             <property name="geometry">
              <rect>
-              <x>650</x>
+              <x>560</x>
               <y>30</y>
-              <width>271</width>
+              <width>371</width>
               <height>591</height>
              </rect>
             </property>

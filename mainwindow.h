@@ -431,9 +431,14 @@ class MainWindow : public QMainWindow
             void on_Explore_splitter_splitterMoved();
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
-            void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void on_Explore_treeView_FileList_HeaderSortOrderChanged();
-            //context menu
+
+            //context menu directories
+            void on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos);
+            void exploreContextTagFolder();
+
+            //context menu files
+            void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);
             void exploreContextOpenFile();
             void exploreContextOpenFolder();
             void exploreContextCopyAbsolutePath();
@@ -479,7 +484,6 @@ class MainWindow : public QMainWindow
             void loadTagsTableToModel();
 
         //DEV
-            void on_DEV_treeView_Directories_activated(const QModelIndex &index);
             void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
 };
 

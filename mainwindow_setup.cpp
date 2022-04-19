@@ -57,6 +57,11 @@
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(const QPoint&)));
+
+        ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(ui->Explore_treeview_Directories, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(ShowContextMenu(const QPoint&)));
+
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
