@@ -182,10 +182,7 @@ bool StorageTreeModel::setHeaderData(int section, Qt::Orientation orientation,
 void StorageTreeModel::setupModelData(TreeItem *parent)
 {
     QVector<TreeItem*> parents;
-    //QVector<int> indentations;
     parents << parent; //add rootItem
-    //indentations << 0;
-    //int number = 0;
     int countLocation=0;
     int countStorage=0;
     int countCatalog=0;
@@ -200,7 +197,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
     queryLocationList.prepare(queryLocationListSQL);
     queryLocationList.exec();
 
-    //Loop through locations
+    //Add locations
     while (queryLocationList.next())
     {
         //Prepare data
@@ -215,9 +212,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
         for (int column = 0; column < columnData.size(); ++column)
             parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
 
-
-        //Loop and add Storage devices
-        //Get list of Locations
+        //Add Storage devices
         QSqlQuery queryStorageList;
         QString queryStorageListSQL = QLatin1String(R"(
                                 SELECT storageName,"Storage"
@@ -231,7 +226,6 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
 
         while (queryStorageList.next())
         {
-            //Prepare Storage data
             QVector<QVariant> columnData;
             QString currentStorageName = queryStorageList.value(0).toString();
             columnData << queryStorageList.value(0).toString();
@@ -241,8 +235,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
             for (int column = 0; column < columnData.size(); ++column)
                 parent->child(countLocation)->child(countStorage)->setData(column, columnData[column]);
 
-            //Loop and add Catalogs
-            //Get list of Catalogs
+            //Add Catalogs
             QSqlQuery queryCatalogList;
             QString queryCatalogListSQL = QLatin1String(R"(
                                     SELECT catalogName,"Catalog"
@@ -256,7 +249,6 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
 
             while (queryCatalogList.next())
             {
-                //Prepare Catalogs data
                 QVector<QVariant> columnData;
                 columnData << queryCatalogList.value(0).toString();
                 columnData << queryCatalogList.value(1).toString();

@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 //#include "filesview.h"//test
 #include "storagetreemodel.h"
+#include "storageview.h"
 
 #include <QSettings>
 #include <QDesktopServices>
@@ -252,6 +253,7 @@
     void MainWindow::loadStorageTableToFilterTree()
     {
         const QStringList headers({tr("Title"),tr("Type")});
+
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
         //LoadModel
@@ -261,6 +263,7 @@
 
         ui->Filters_treeView_Devices->hideColumn(1);
         ui->Filters_treeView_Devices->collapseAll();
+        ui->Filters_treeView_Devices->header()->hide();
     }
 
 //SETTINGS / Collection ----------------------------------------------------
