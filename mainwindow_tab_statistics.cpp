@@ -78,6 +78,8 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
 
+        selectedSearchCatalog = selectedCatalog;
+
         //load the graph
         loadStatisticsChart();
     }
