@@ -492,6 +492,7 @@
 
 
     }
+
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(int storageID, QString storagePath)
     {
@@ -650,6 +651,10 @@
 
         //refresh stats
         refreshStorageStatistics();
+
+        //refresh filter tree
+        loadStorageTableToFilterTree();
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageModelToFile()
@@ -693,13 +698,12 @@
     //        textData += "\n";             // (optional: for new line segmentation)
     //    }
 
-
         //save from query
     //    Open your output file using QFile
     //    Run a select * query on your database table
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                        SELECT * FROM storage
+                             SELECT * FROM storage
                                         )");
         query.prepare(querySQL);
         query.exec();
@@ -775,11 +779,7 @@
     //--------------------------------------------------------------------------
 
 //DEV-----------------------------------------------------------------------
-
-    void MainWindow::on_DEV2_treeView_Storage_clicked(const QModelIndex &index)
+    void MainWindow::on_DEV2_pushButton_LoadTree_clicked()
     {
-        QString clickedStorageName = ui->DEV2_treeView_Storage->model()->index(index.row(), 1, QModelIndex()).data().toString();
-
-        QMessageBox::information(this,"Katalog","clickedStorageName:" + clickedStorageName);
-
+        //loadStorageTableToFilterTree();
     }

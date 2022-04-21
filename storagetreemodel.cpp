@@ -1,30 +1,17 @@
 #include "storagetreemodel.h"
-#include <QStringList>
+#include "treeitem.h"
 
-StorageTreeModel::StorageTreeModel(QObject *parent)
+#include <QStringList>
+#include <QtWidgets>
+
+StorageTreeModel::StorageTreeModel(const QStringList &headers, QObject *parent)
     : QAbstractItemModel(parent)
 {
-    QList<QVariant> rootData;
-    rootData << tr("Storage")
-             << tr("StoragePath")
-             << tr("storageID")
-             << tr("storageName")
-             << tr("storageType")
-             << tr("storageLocation")
-             << tr("storagePath")
-             << tr("storageLabel")
-             << tr("storageFileSystem")
-             << tr("storageTotalSpace")
-             << tr("storageFreeSpace")
-             << tr("storageBrandModel")
-             << tr("storageSerialNumber")
-             << tr("storageBuildDate")
-             << tr("storageContentType")
-             << tr("storageContainer")
-             << tr("storageComment");
+    QVector<QVariant> rootData;
+    for (const QString &header : headers)
+        rootData << header;
 
     rootItem = new TreeItem(rootData);
-
     setupModelData(rootItem);
 }
 
@@ -35,10 +22,8 @@ StorageTreeModel::~StorageTreeModel()
 
 int StorageTreeModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
-    else
-        return rootItem->columnCount();
+    Q_UNUSED(parent);
+    return rootItem->columnCount();
 }
 
 QVariant StorageTreeModel::data(const QModelIndex &index, int role) const
@@ -46,10 +31,10 @@ QVariant StorageTreeModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
-    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    TreeItem *item = getItem(index);
 
     return item->data(index.column());
 }
@@ -57,9 +42,19 @@ QVariant StorageTreeModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags StorageTreeModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
-        return 0;
+        return Qt::NoItemFlags;
 
-    return QAbstractItemModel::flags(index);
+    return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+}
+
+TreeItem *StorageTreeModel::getItem(const QModelIndex &index) const
+{
+    if (index.isValid()) {
+        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+        if (item)
+            return item;
+    }
+    return rootItem;
 }
 
 QVariant StorageTreeModel::headerData(int section, Qt::Orientation orientation,
@@ -71,24 +66,43 @@ QVariant StorageTreeModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-QModelIndex StorageTreeModel::index(int row, int column, const QModelIndex &parent)
-            const
+QModelIndex StorageTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent))
+    if (parent.isValid() && parent.column() != 0)
         return QModelIndex();
 
-    TreeItem *parentItem;
-
-    if (!parent.isValid())
-        parentItem = rootItem;
-    else
-        parentItem = static_cast<TreeItem*>(parent.internalPointer());
+    TreeItem *parentItem = getItem(parent);
+    if (!parentItem)
+        return QModelIndex();
 
     TreeItem *childItem = parentItem->child(row);
     if (childItem)
         return createIndex(row, column, childItem);
-    else
-        return QModelIndex();
+    return QModelIndex();
+}
+
+bool StorageTreeModel::insertColumns(int position, int columns, const QModelIndex &parent)
+{
+    beginInsertColumns(parent, position, position + columns - 1);
+    const bool success = rootItem->insertColumns(position, columns);
+    endInsertColumns();
+
+    return success;
+}
+
+bool StorageTreeModel::insertRows(int position, int rows, const QModelIndex &parent)
+{
+    TreeItem *parentItem = getItem(parent);
+    if (!parentItem)
+        return false;
+
+    beginInsertRows(parent, position, position + rows - 1);
+    const bool success = parentItem->insertChildren(position,
+                                                    rows,
+                                                    rootItem->columnCount());
+    endInsertRows();
+
+    return success;
 }
 
 QModelIndex StorageTreeModel::parent(const QModelIndex &index) const
@@ -96,190 +110,169 @@ QModelIndex StorageTreeModel::parent(const QModelIndex &index) const
     if (!index.isValid())
         return QModelIndex();
 
-    TreeItem *childItem = static_cast<TreeItem*>(index.internalPointer());
-    TreeItem *parentItem = childItem->parentItem();
+    TreeItem *childItem = getItem(index);
+    TreeItem *parentItem = childItem ? childItem->parent() : nullptr;
 
-    if (parentItem == rootItem)
+    if (parentItem == rootItem || !parentItem)
         return QModelIndex();
 
-    return createIndex(parentItem->row(), 0, parentItem);
+    return createIndex(parentItem->childNumber(), 0, parentItem);
+}
+
+bool StorageTreeModel::removeColumns(int position, int columns, const QModelIndex &parent)
+{
+    beginRemoveColumns(parent, position, position + columns - 1);
+    const bool success = rootItem->removeColumns(position, columns);
+    endRemoveColumns();
+
+    if (rootItem->columnCount() == 0)
+        removeRows(0, rowCount());
+
+    return success;
+}
+
+bool StorageTreeModel::removeRows(int position, int rows, const QModelIndex &parent)
+{
+    TreeItem *parentItem = getItem(parent);
+    if (!parentItem)
+        return false;
+
+    beginRemoveRows(parent, position, position + rows - 1);
+    const bool success = parentItem->removeChildren(position, rows);
+    endRemoveRows();
+
+    return success;
 }
 
 int StorageTreeModel::rowCount(const QModelIndex &parent) const
 {
-    TreeItem *parentItem;
-    if (parent.column() > 0)
-        return 0;
+    const TreeItem *parentItem = getItem(parent);
 
-    if (!parent.isValid())
-        parentItem = rootItem;
-    else
-        parentItem = static_cast<TreeItem*>(parent.internalPointer());
-
-    return parentItem->childCount();
+    return parentItem ? parentItem->childCount() : 0;
 }
 
-int StorageTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tList)
+bool StorageTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    for(int idx = 0; idx < tList.size(); ++idx)
-    {
-        unsigned int z = tList.at(idx)->getIndex();
-        if(z == hash)
-            return idx;
-    }
+    if (role != Qt::EditRole)
+        return false;
 
-    return -1;
+    TreeItem *item = getItem(index);
+    bool result = item->setData(index.column(), value);
+
+    if (result)
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+
+    return result;
 }
 
+bool StorageTreeModel::setHeaderData(int section, Qt::Orientation orientation,
+                              const QVariant &value, int role)
+{
+    if (role != Qt::EditRole || orientation != Qt::Horizontal)
+        return false;
 
-//void StorageTreeModel::setSelectedCatalogPath(QString newSelectedCatalogPath){
-//    selectedCatalogPath = newSelectedCatalogPath;
-//}
+    const bool result = rootItem->setData(section, value);
+
+    if (result)
+        emit headerDataChanged(orientation, section, section);
+
+    return result;
+}
 
 void StorageTreeModel::setupModelData(TreeItem *parent)
 {
-    QList<TreeItem*> parents;
-    parents << parent;
+    QVector<TreeItem*> parents;
+    //QVector<int> indentations;
+    parents << parent; //add rootItem
+    //indentations << 0;
+    //int number = 0;
+    int countLocation=0;
+    int countStorage=0;
+    int countCatalog=0;
 
-// DEV: REPLACE BY CURRENT VALUE
-        //setSelectedCatalogPath(selectedCatalogPath);
-        //selectedCatalogPath = "/run/media/stephane";
-// DEV: REPLACE BY CURRENT VALUE
+    //Get list of Locations
+    QSqlQuery queryLocationList;
+    QString queryLocationListSQL = QLatin1String(R"(
+                            SELECT DISTINCT storageLocation,"Location"
+                            FROM storage
+                            ORDER BY storageLocation ASC
+    )");
+    queryLocationList.prepare(queryLocationListSQL);
+    queryLocationList.exec();
 
-        QSqlQuery query;
-//        QString querySQL = QLatin1String(R"(
-//                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
-//                                        filePath AS id_file
-//                                FROM file
-//                                GROUP BY filePath
-//                                ORDER BY filePath ASC
-//         )");
-        QString querySQL = QLatin1String(R"(
-                                SELECT storageLocation||'/'||storageName AS filePath,
-                                       storageLocation||'/'||storageName AS id_file,
-                                       storageID ,
-                                       storageName,
-                                       storageType,
-                                       storageLocation,
-                                       storagePath,
-                                       storageLabel,
-                                       storageFileSystem,
-                                       storageTotalSpace,
-                                       storageFreeSpace,
-                                       storageBrandModel,
-                                       storageSerialNumber,
-                                       storageBuildDate,
-                                       storageContentType,
-                                       storageContainer,
-                                       storageComment
+    //Loop through locations
+    while (queryLocationList.next())
+    {
+        //Prepare data
+        QVector<QVariant> columnData;
+        QString lineLocationData = queryLocationList.value(0).toString();
+        columnData << queryLocationList.value(0).toString();
+        columnData << queryLocationList.value(1).toString();
+
+        // Append a new item to the current parent's list of children.
+        TreeItem *parent = parents.last();
+        parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
+        for (int column = 0; column < columnData.size(); ++column)
+            parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
+
+
+        //Loop and add Storage devices
+        //Get list of Locations
+        QSqlQuery queryStorageList;
+        QString queryStorageListSQL = QLatin1String(R"(
+                                SELECT storageName,"Storage"
                                 FROM storage
-                                ORDER BY storageLocation, storageName ASC
-         )");
+                                WHERE storageLocation=:storageLocation
+                                ORDER BY storageName ASC
+        )");
+        queryStorageList.prepare(queryStorageListSQL);
+        queryStorageList.bindValue(":storageLocation",lineLocationData);
+        queryStorageList.exec();
 
-        query.prepare(querySQL);
-//        query.bindValue(":selectedCatalogPath",selectedCatalogPath);
-        query.exec();
-
-        int idPath = query.record().indexOf("filePath");
-        int idIdx = query.record().indexOf("id_file");
-
-        while (query.next())
+        while (queryStorageList.next())
         {
-           QString name = query.value(idPath).toString();
-//           int id_file = query.value(idIdx).toInt();
-           QString id_file = query.value(idIdx).toString();
-           QString storageID = query.value(2).toString();
-           QString storageName = query.value(3).toString();
-           QString storageType = query.value(4).toString();
-           QString storageLocation = query.value(5).toString();
-           QString storagePath = query.value(6).toString();
-           QString storageLabel = query.value(7).toString();
-           QString storageFileSystem = query.value(8).toString();
-           QString storageTotalSpace = query.value(9).toString();
-           QString storageFreeSpace = query.value(10).toString();
-           QString storageBrandModel = query.value(11).toString();
-           QString storageSerialNumber = query.value(12).toString();
-           QString storageBuildDate = query.value(13).toString();
-           QString storageContentType = query.value(14).toString();
-           QString storageContainer = query.value(15).toString();
-           QString storageComment = query.value(16).toString();
+            //Prepare Storage data
+            QVector<QVariant> columnData;
+            QString currentStorageName = queryStorageList.value(0).toString();
+            columnData << queryStorageList.value(0).toString();
+            columnData << queryStorageList.value(1).toString();
 
-           QStringList nodeString = name.split("/", QString::SkipEmptyParts);
+            parent->child(countLocation)->insertChildren(countStorage, 1, rootItem->columnCount());
+            for (int column = 0; column < columnData.size(); ++column)
+                parent->child(countLocation)->child(countStorage)->setData(column, columnData[column]);
 
-           QString temppath = "";
+            //Loop and add Catalogs
+            //Get list of Catalogs
+            QSqlQuery queryCatalogList;
+            QString queryCatalogListSQL = QLatin1String(R"(
+                                    SELECT catalogName,"Catalog"
+                                    FROM catalog
+                                    WHERE catalogStorage=:catalogStorage
+                                    ORDER BY catalogName ASC
+            )");
+            queryCatalogList.prepare(queryCatalogListSQL);
+            queryCatalogList.bindValue(":catalogStorage",currentStorageName);
+            queryCatalogList.exec();
 
-           int lastidx = 0;
-           for(int node = 0; node < nodeString.count(); ++node)
-           {
-               temppath += nodeString.at(node);
-               if(node != nodeString.count() - 1)
-                   temppath += "\\";
+            while (queryCatalogList.next())
+            {
+                //Prepare Catalogs data
+                QVector<QVariant> columnData;
+                columnData << queryCatalogList.value(0).toString();
+                columnData << queryCatalogList.value(1).toString();
 
-               unsigned int hash = qHash(temppath);
-               QList<QVariant> columnData;
+                parent->child(countLocation)->child(countStorage)->insertChildren(countCatalog, 1, rootItem->columnCount());
+                for (int column = 0; column < columnData.size(); ++column)
+                    parent->child(countLocation)->child(countStorage)->child(countCatalog)->setData(column, columnData[column]);
 
-               columnData << nodeString.at(node);
+                countCatalog=countCatalog+1;
+            }
 
-               int idx = findNode(hash, parents);
-
-               if(idx != -1)
-               {
-                    lastidx = idx;
-               }
-               else
-               {
-                   QString sQuery =  "";
-                   if(node == nodeString.count() - 1)
-                   {
-                       sQuery += "SELECT count(*) FROM version WHERE id_file=";
-                       //sQuery += QString::number(id_file);
-                       sQuery += id_file;
-                       sQuery += ";";
-                   }
-                   else
-                   {
-                       sQuery += "SELECT count(*) FROM file WHERE path like '";
-                       sQuery += temppath;
-                       sQuery += "%';";
-                   }
-
-
-                   int nChild = 0;
-                   QSqlQuery query2(sQuery);
-
-                   if(query2.next())
-                        nChild = query2.value(0).toInt();
-
-                   //columnData << nChild;
-                   columnData << id_file
-                              << storageID
-                              << storageName
-                              << storageType
-                              << storageLocation
-                              << storagePath
-                              << storageLabel
-                              << storageFileSystem
-                              << storageTotalSpace
-                              << storageFreeSpace
-                              << storageBrandModel
-                              << storageSerialNumber
-                              << storageBuildDate
-                              << storageContentType
-                              << storageContainer
-                              << storageComment;
-
-                   if(lastidx != -1)
-                   {
-                       parents.at(lastidx)->appendChild(new TreeItem(columnData, parents.at(lastidx), hash));
-                       parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
-                       lastidx = -1;
-                   }
-                   else
-                   {
-                       parents.last()->appendChild(new TreeItem(columnData, parents.last(), hash));
-                       parents <<  parents.last()->child( parents.last()->childCount()-1);
-                   }
-               }
-           }
+            countStorage=countStorage+1;
+            countCatalog=0;
         }
+
+        countLocation=countLocation+1;
+        countStorage=0;
+    }
 }

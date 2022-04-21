@@ -1,12 +1,13 @@
 #include "directorytreemodel.h"
 #include <QStringList>
 
+
 DirectoryTreeModel::DirectoryTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     QList<QVariant> rootData;
     rootData << tr("Directory") << tr("Path");
-    rootItem = new TreeItem(rootData);
+    //rootItem = new TreeItem(rootData);
 
     setupModelData(rootItem);
 }
@@ -80,12 +81,12 @@ QModelIndex DirectoryTreeModel::parent(const QModelIndex &index) const
         return QModelIndex();
 
     TreeItem *childItem = static_cast<TreeItem*>(index.internalPointer());
-    TreeItem *parentItem = childItem->parentItem();
+//    TreeItem *parentItem = childItem->parentItem();
 
-    if (parentItem == rootItem)
+//    if (parentItem == rootItem)
         return QModelIndex();
 
-    return createIndex(parentItem->row(), 0, parentItem);
+//    return createIndex(parentItem->row(), 0, parentItem);
 }
 
 int DirectoryTreeModel::rowCount(const QModelIndex &parent) const
@@ -106,8 +107,8 @@ int DirectoryTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tLi
 {
     for(int idx = 0; idx < tList.size(); ++idx)
     {
-        unsigned int z = tList.at(idx)->getIndex();
-        if(z == hash)
+//        unsigned int z = tList.at(idx)->getIndex();
+//        if(z == hash)
             return idx;
     }
 
@@ -209,16 +210,17 @@ void DirectoryTreeModel::setupModelData(TreeItem *parent)
 
                    if(lastidx != -1)
                    {
-                       parents.at(lastidx)->appendChild(new TreeItem(columnData, parents.at(lastidx), hash));
+//                       parents.at(lastidx)->appendChild(new TreeItem(columnData, parents.at(lastidx), hash));
                        parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
                        lastidx = -1;
                    }
                    else
                    {
-                       parents.last()->appendChild(new TreeItem(columnData, parents.last(), hash));
+//                       parents.last()->appendChild(new TreeItem(columnData, parents.last(), hash));
                        parents <<  parents.last()->child( parents.last()->childCount()-1);
                    }
                }
            }
         }
 }
+

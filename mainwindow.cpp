@@ -62,9 +62,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             //Set current version and date
-            currentVersion = "1.10";
-            releaseDate = "2022-03-06";
-            developmentMode = false;
+            currentVersion = "1.11";
+            releaseDate = "2022-04-19";
+            developmentMode = true;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
@@ -136,6 +136,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             storageFilePath = collectionFolder + "/" + "storage.csv";
             loadCollection();
             refreshLocationCollectionFilter();
+            loadStorageTableToFilterTree();
 
     //setup tab: Create
         //Default path to scan
@@ -152,10 +153,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //setup tab: Tags
             //Default path to scan
             ui->Tags_lineEdit_FolderPath->setText("/");
-            //Always Load the file system for the treeview
-            loadFileSystemTags("/");
-            loadTagsToTable();
-            loadTagsTableToModel();
+            loadFileSystemTags(newTagFolderPath);
+            reloadTagsData();
 
     //setup tab: Settings
         //Load path of last collection used
@@ -224,12 +223,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
 
-    //DEV StorageTreeModel
-            StorageTreeModel *storagetreeModel = new StorageTreeModel();
-            //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
-            ui->DEV2_treeView_Storage->setModel(storagetreeModel);
-            ui->DEV2_treeView_Storage->header()->resizeSection(0,  300);
-            ui->DEV2_treeView_Storage->expandAll();
 }
 
 MainWindow::~MainWindow()

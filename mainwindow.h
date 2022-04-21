@@ -255,6 +255,7 @@ class MainWindow : public QMainWindow
             void loadCatalogDirectoriesToExplore();
             int lastExploreSortSection;
             int lastExploreSortOrder;
+
         //TAB: Create Catalog Tab
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
@@ -291,6 +292,7 @@ class MainWindow : public QMainWindow
             void loadCatalogFilesToTable();
             void loadStorageFileToTable();
             void loadStorageTableToModel();
+            void loadStorageTableToFilterTree();
             void saveStorageModelToFile();
             void saveStorageData();
             void updateStorageInfo(int storageID, QString storagePath);
@@ -341,6 +343,7 @@ class MainWindow : public QMainWindow
                 void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);
                 void on_Filters_pushButton_ResetGlobal_clicked();
+                void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
                 void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
                 void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
                 void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
@@ -460,19 +463,17 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_CreateList_clicked();
             void on_Storage_pushButton_Reload_clicked();
             void on_Storage_pushButton_EditAll_clicked();
-            void on_Storage_pushButton_SaveAll_clicked(); //DEV
-
-            void on_Storage_pushButton_New_clicked(); //DEV
+            void on_Storage_pushButton_SaveAll_clicked();
+            void on_Storage_pushButton_New_clicked();
+            void on_Storage_pushButton_OpenFilelight_clicked();
+            void on_Storage_pushButton_Update_clicked();
+            void on_Storage_pushButton_Delete_clicked();
             void on_Storage_pushButton_SearchStorage_clicked();
             void on_Storage_pushButton_SearchLocation_clicked();
             void on_Storage_pushButton_CreateCatalog_clicked();
-            void on_Storage_pushButton_OpenFilelight_clicked(); //DEV
-            void on_Storage_pushButton_Update_clicked(); //DEV
-            void on_Storage_pushButton_Delete_clicked(); //DEV
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
             void on_Storage_treeView_StorageList_HeaderSortOrderChanged();
-
 
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
@@ -490,7 +491,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-            void on_DEV2_treeView_Storage_clicked(const QModelIndex &index);
+            void on_DEV2_pushButton_LoadTree_clicked();
 };
 
 #endif // MAINWINDOW_H

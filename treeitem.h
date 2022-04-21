@@ -5,29 +5,30 @@
 #include <QList>
 #include <QVariant>
 #include <QtSql>
+#include <QVector>
 
 class TreeItem
 {
 public:
-    explicit TreeItem(const QList<QVariant> &data, TreeItem *parentItem = nullptr, unsigned int id = 0);
+    explicit TreeItem(const QVector<QVariant> &data, TreeItem *parent = nullptr);
     ~TreeItem();
 
-    void appendChild(TreeItem *child);
-
-    TreeItem *child(int row);
+    TreeItem *child(int number);
     int childCount() const;
     int columnCount() const;
     QVariant data(int column) const;
-    int row() const;
-    TreeItem *parentItem();
-    unsigned int getIndex(){return _id;};
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    TreeItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
 
 private:
-    QList<TreeItem*> m_childItems;
-    QList<QVariant> m_itemData;
-    TreeItem *m_parentItem;
-    unsigned int _id;
+    QVector<TreeItem*> childItems;
+    QVector<QVariant> itemData;
+    TreeItem *parentItem;
 };
-
 
 #endif // TREEITEM_H

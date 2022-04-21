@@ -31,7 +31,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "filesview.h"//test
+//#include "filesview.h"//test
+#include "storagetreemodel.h"
 
 #include <QSettings>
 #include <QDesktopServices>
@@ -222,7 +223,45 @@
         //Select this directory in the treeview.
         loadFileSystem(selectedConnectedDrivePath);
     }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
+    {
+        QString clickedName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+        //ui->DEV2_label_Display->setText(clickedName);
 
+        QString clickedType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+        //QMessageBox::information(this,"Katalog","type:" + QVariant(clickedType).toString());
+
+        if(clickedType=="Location"){
+            ui->Filters_comboBox_SelectLocation->setCurrentText(clickedName);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+        }
+        else if (clickedType=="Storage"){
+            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectStorage->setCurrentText(clickedName);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+        }
+        else if (clickedType=="Catalog"){
+            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(clickedName);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::loadStorageTableToFilterTree()
+    {
+        const QStringList headers({tr("Title"),tr("Type")});
+        StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
+
+        //LoadModel
+        ui->Filters_treeView_Devices->setModel(storageTreeModel);
+        ui->Filters_treeView_Devices->header()->resizeSection(0,  300);
+        ui->Filters_treeView_Devices->expandAll();
+
+        ui->Filters_treeView_Devices->hideColumn(1);
+        ui->Filters_treeView_Devices->collapseAll();
+    }
 
 //SETTINGS / Collection ----------------------------------------------------
 
@@ -284,7 +323,6 @@
 
        //load Catalog list, Location list, Storage list, Statistics
             loadCatalogFilesToTable();
-
             loadCatalogsToModel();
 
             refreshLocationSelectionList();
