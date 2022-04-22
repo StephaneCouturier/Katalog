@@ -131,17 +131,7 @@
     void MainWindow::on_Storage_pushButton_New_clicked()
     {
 
-        QSqlQuery query;
-        if (!query.exec(STORAGE_SQL)){
-            QMessageBox::information(this,"Katalog","pb1 create.");
-            return;}
-
-        if (!query.prepare(INSERT_STORAGE_SQL)){
-            QMessageBox::information(this,"Katalog","pb2 insert.");
-            return;}
-
         //Get max ID
-
         QSqlQuery queryDeviceNumber;
         queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
         queryDeviceNumber.exec();
@@ -149,8 +139,46 @@
         int maxID = queryDeviceNumber.value(0).toInt();
         int newID = maxID + 1;
 
+        //Insert new device with default values
+        QString querySQL = QLatin1String(R"(
+            insert into storage(
+                            storageID,
+                            storageName,
+                            storageType,
+                            storageLocation,
+                            storagePath,
+                            storageLabel,
+                            storageFileSystem,
+                            storageTotalSpace,
+                            storageFreeSpace,
+                            storageBrandModel,
+                            storageSerialNumber,
+                            storageBuildDate,
+                            storageContentType,
+                            storageContainer,
+                            storageComment)
+                      values(
+                            :newID,
+                            " NewDevice",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            0,
+                            0,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "")
+                    )");
 
-        QVariant storageId = addStorage(query, newID, " NewDevice",  "",  "",  "",  "", "", 0,  0,  "",  "", "", "", "", "");
+        QSqlQuery insertQuery;
+        insertQuery.prepare(querySQL);
+        insertQuery.bindValue(":newID",newID);
+        insertQuery.exec();
 
         //load table to model
         loadStorageTableToModel();
@@ -293,14 +321,11 @@
 
         //Prepare query
         QSqlQuery query;
-        if (!query.exec(STORAGE_SQL)){
+        if (!query.exec(SQL_CREATE_STORAGE)){
             QMessageBox::information(this,"Katalog","pb1.");
             return;}
 
-        if (!query.prepare(INSERT_STORAGE_SQL)){
-            QMessageBox::information(this,"Katalog","pb2.");
-            return;}
-
+        //Load storage device lines to table
         while (true)
         {
 

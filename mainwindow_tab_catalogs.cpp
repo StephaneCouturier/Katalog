@@ -411,11 +411,11 @@
 
         //Prepare table and insert query
             QSqlQuery query;
-            if (!query.exec(CATALOG_SQL)){
+            if (!query.exec(SQL_CREATE_CATALOG)){
                 QMessageBox::information(this,"Katalog","problem to create the table.");
                 return;}
 
-            if (!query.prepare(INSERT_CATALOG_SQL)){
+            if (!query.prepare(SQL_INSERT_CATALOG)){
                 QMessageBox::information(this,"Katalog","problem to insert rows.");
                 return;}
 
