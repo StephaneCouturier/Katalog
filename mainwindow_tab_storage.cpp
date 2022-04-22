@@ -132,13 +132,22 @@
     void MainWindow::on_Storage_pushButton_New_clicked()
     {
 
-        //Get max ID
-        QSqlQuery queryDeviceNumber;
-        queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
-        queryDeviceNumber.exec();
-        queryDeviceNumber.next();
-        int maxID = queryDeviceNumber.value(0).toInt();
-        int newID = maxID + 1;
+        //Get inputs
+            //max ID
+            QSqlQuery queryDeviceNumber;
+            queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
+            queryDeviceNumber.exec();
+            queryDeviceNumber.next();
+            int maxID = queryDeviceNumber.value(0).toInt();
+            int newID = maxID + 1;
+
+            //location
+            QString newLocation;
+            if(selectedSearchLocation!=tr("All")){
+                newLocation = selectedSearchLocation;
+            }
+            else
+                newLocation = "";
 
         //Insert new device with default values
         QString querySQL = QLatin1String(R"(
@@ -162,7 +171,7 @@
                             :newID,
                             " NewDevice",
                             "",
-                            "",
+                            :newLocation,
                             "",
                             "",
                             "",
@@ -179,6 +188,7 @@
         QSqlQuery insertQuery;
         insertQuery.prepare(querySQL);
         insertQuery.bindValue(":newID",newID);
+        insertQuery.bindValue(":newLocation",newLocation);
         insertQuery.exec();
 
         //load table to model
