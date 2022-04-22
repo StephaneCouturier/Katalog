@@ -7,7 +7,7 @@ DirectoryTreeModel::DirectoryTreeModel(QObject *parent)
 {
     QList<QVariant> rootData;
     rootData << tr("Directory") << tr("Path");
-    //rootItem = new TreeItem(rootData);
+    rootItem = new DirectoryTreeItem(rootData);
 
     setupModelData(rootItem);
 }
@@ -20,7 +20,7 @@ DirectoryTreeModel::~DirectoryTreeModel()
 int DirectoryTreeModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
-        return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
+        return static_cast<DirectoryTreeItem*>(parent.internalPointer())->columnCount();
     else
         return rootItem->columnCount();
 }
@@ -33,7 +33,7 @@ QVariant DirectoryTreeModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole)
         return QVariant();
 
-    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    DirectoryTreeItem *item = static_cast<DirectoryTreeItem*>(index.internalPointer());
 
     return item->data(index.column());
 }
@@ -61,14 +61,14 @@ QModelIndex DirectoryTreeModel::index(int row, int column, const QModelIndex &pa
     if (!hasIndex(row, column, parent))
         return QModelIndex();
 
-    TreeItem *parentItem;
+    DirectoryTreeItem *parentItem;
 
     if (!parent.isValid())
         parentItem = rootItem;
     else
-        parentItem = static_cast<TreeItem*>(parent.internalPointer());
+        parentItem = static_cast<DirectoryTreeItem*>(parent.internalPointer());
 
-    TreeItem *childItem = parentItem->child(row);
+    DirectoryTreeItem *childItem = parentItem->child(row);
     if (childItem)
         return createIndex(row, column, childItem);
     else
@@ -80,8 +80,8 @@ QModelIndex DirectoryTreeModel::parent(const QModelIndex &index) const
     if (!index.isValid())
         return QModelIndex();
 
-    TreeItem *childItem = static_cast<TreeItem*>(index.internalPointer());
-//    TreeItem *parentItem = childItem->parentItem();
+    DirectoryTreeItem *childItem = static_cast<DirectoryTreeItem*>(index.internalPointer());
+//    DirectoryTreeItem *parentItem = childItem->parentItem();
 
 //    if (parentItem == rootItem)
         return QModelIndex();
@@ -91,24 +91,24 @@ QModelIndex DirectoryTreeModel::parent(const QModelIndex &index) const
 
 int DirectoryTreeModel::rowCount(const QModelIndex &parent) const
 {
-    TreeItem *parentItem;
+    DirectoryTreeItem *parentItem;
     if (parent.column() > 0)
         return 0;
 
     if (!parent.isValid())
         parentItem = rootItem;
     else
-        parentItem = static_cast<TreeItem*>(parent.internalPointer());
+        parentItem = static_cast<DirectoryTreeItem*>(parent.internalPointer());
 
     return parentItem->childCount();
 }
 
-int DirectoryTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tList)
+int DirectoryTreeModel::findNode(unsigned int& hash, const QList<DirectoryTreeItem*>& tList)
 {
     for(int idx = 0; idx < tList.size(); ++idx)
     {
-//        unsigned int z = tList.at(idx)->getIndex();
-//        if(z == hash)
+        unsigned int z = tList.at(idx)->getIndex();
+        if(z == hash)
             return idx;
     }
 
@@ -120,9 +120,9 @@ int DirectoryTreeModel::findNode(unsigned int& hash, const QList<TreeItem*>& tLi
 //    selectedCatalogPath = newSelectedCatalogPath;
 //}
 
-void DirectoryTreeModel::setupModelData(TreeItem *parent)
+void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 {
-    QList<TreeItem*> parents;
+    QList<DirectoryTreeItem*> parents;
     parents << parent;
 
 // DEV: REPLACE BY CURRENT VALUE
@@ -210,13 +210,13 @@ void DirectoryTreeModel::setupModelData(TreeItem *parent)
 
                    if(lastidx != -1)
                    {
-//                       parents.at(lastidx)->appendChild(new TreeItem(columnData, parents.at(lastidx), hash));
+//                       parents.at(lastidx)->appendChild(new DirectoryTreeItem(columnData, parents.at(lastidx), hash));
                        parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
                        lastidx = -1;
                    }
                    else
                    {
-//                       parents.last()->appendChild(new TreeItem(columnData, parents.last(), hash));
+//                       parents.last()->appendChild(new DirectoryTreeItem(columnData, parents.last(), hash));
                        parents <<  parents.last()->child( parents.last()->childCount()-1);
                    }
                }

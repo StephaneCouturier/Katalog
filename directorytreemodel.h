@@ -1,13 +1,13 @@
 #ifndef DIRECTORYTREEMODEL_H
 #define DIRECTORYTREEMODEL_H
 
-#include "treeitem.h"
+#include "directorytreeitem.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
 #include <QtSql>
 
-class TreeItem;
+class DirectoryTreeItem;
 
 class DirectoryTreeModel : public QAbstractItemModel
 {
@@ -30,11 +30,11 @@ public:
     //void setSelectedCatalogPath(QString newSelectedCatalogPath);
 
 private:
-    void setupModelData(TreeItem *parent);
+    void setupModelData(DirectoryTreeItem *parent);
 
-    int findNode(unsigned int& hash, const QList<TreeItem*>& tList);
+    int findNode(unsigned int& hash, const QList<DirectoryTreeItem*>& tList);
 
-    TreeItem *rootItem;
+    DirectoryTreeItem *rootItem;
 
 };
 

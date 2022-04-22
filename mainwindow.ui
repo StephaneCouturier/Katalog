@@ -1073,7 +1073,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>7</number>
           </property>
           <property name="iconSize">
            <size>
@@ -6000,7 +6000,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <rect>
               <x>30</x>
               <y>80</y>
-              <width>521</width>
+              <width>581</width>
               <height>541</height>
              </rect>
             </property>
@@ -6008,37 +6008,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <widget class="QTreeView" name="DEV_treeView_Files">
             <property name="geometry">
              <rect>
-              <x>560</x>
+              <x>630</x>
               <y>30</y>
-              <width>371</width>
+              <width>301</width>
               <height>591</height>
              </rect>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="DEV_Explore_pushButton_Load">
-            <property name="geometry">
-             <rect>
-              <x>30</x>
-              <y>10</y>
-              <width>161</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>load tree simple</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="DEV_Explore_pushButton_LoadDirectory">
-            <property name="geometry">
-             <rect>
-              <x>210</x>
-              <y>10</y>
-              <width>191</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>load directory tree</string>
             </property>
            </widget>
            <widget class="QLabel" name="DEV_Explore_label_DisplayText">
@@ -6086,34 +6060,41 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </spacer>
               </item>
-              <item>
-               <widget class="QLabel" name="DEV2_label_Label">
-                <property name="text">
-                 <string>Selected:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="DEV2_label_Display">
-                <property name="text">
-                 <string>-</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
              </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QTreeView" name="Filters_treeView_Devices_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>false</bool>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::NoSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectItems</enum>
+              </property>
+              <property name="rootIsDecorated">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <property name="animated">
+               <bool>true</bool>
+              </property>
+              <property name="expandsOnDoubleClick">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -6140,8 +6121,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
   <include location="images.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -462,14 +462,16 @@
         countQuery.next();
         ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
 
-        //TreeView DEV TESTS---------------
 
-        //    DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
-        //    //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
-        //    ui->DEV_treeView_Directories->setModel(directorytreeModel);
-        //    ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
-        //    ui->DEV_treeView_Directories->expandAll();
-
+        //DEV DirectoryTreeModel --------------------------------
+        if(developmentMode==true){
+            DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
+            //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
+            ui->DEV_treeView_Directories->setModel(directorytreeModel);
+            ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
+            ui->DEV_treeView_Directories->expandAll();
+            QMessageBox::information(this,"Katalog","loaded:" + selectedSearchLocation);
+        }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSelectedDirectoryFilesToExplore()
