@@ -107,6 +107,7 @@
     void MainWindow::on_Storage_pushButton_SaveAll_clicked()
     {
         saveStorageData();
+        refreshLocationSelectionList();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
@@ -186,6 +187,9 @@
 
         //enable save button
         ui->Storage_pushButton_New->setEnabled(true);
+
+        //Refresh Location list
+        refreshLocationSelectionList();
 
     }
     //--------------------------------------------------------------------------
