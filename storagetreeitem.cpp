@@ -1,6 +1,6 @@
 #include <QStringList>
 
-#include "treeitem.h"
+#include "storagetreeitem.h"
 
 TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
     : itemData(data),

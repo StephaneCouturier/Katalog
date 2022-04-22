@@ -469,28 +469,6 @@
                 storageNameList<<query.value(0).toString();
             }
         loadStorageList();
-
-
-        //DEV  TREEVIEW
-        //StorageTreeModel *storageTreeModel = new StorageTreeModel();
-    //    DirectoryTreeModel *storagetree = new DirectoryTreeModel();
-    //    ui->DEV2_treeView_Storage->setModel(storagetree);
-    //    ui->DEV2_treeView_Storage->header()->resizeSection(0,  300);
-    //    ui->DEV2_treeView_Storage->expandAll();
-    //    ui->DEV_treeView_Directories->setModel(storagetree);
-    //    ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
-    //    ui->DEV_treeView_Directories->expandAll();
-
-
-    //        DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
-    //        //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
-    //        ui->DEV_treeView_Directories->setModel(directorytreeModel);
-    //        ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
-    //        ui->DEV_treeView_Directories->expandAll();
-
-    //        QMessageBox::information(this,"Katalog","stringVariable:" + selectedSearchLocation);
-
-
     }
 
     //--------------------------------------------------------------------------

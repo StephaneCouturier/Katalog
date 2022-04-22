@@ -1,5 +1,5 @@
-#ifndef TREEITEM_H
-#define TREEITEM_H
+#ifndef STORAGETREEITEM_H
+#define STORAGETREEITEM_H
 
 
 #include <QList>
@@ -31,4 +31,4 @@ private:
     TreeItem *parentItem;
 };
 
-#endif // TREEITEM_H
+#endif // STORAGETREEITEM_H

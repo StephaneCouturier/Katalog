@@ -1,7 +1,7 @@
 #ifndef STORAGETREEMODEL_H
 #define STORAGETREEMODEL_H
 
-#include "treeitem.h"
+#include "storagetreeitem.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>

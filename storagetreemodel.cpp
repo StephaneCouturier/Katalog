@@ -1,5 +1,5 @@
 #include "storagetreemodel.h"
-#include "treeitem.h"
+#include "storagetreeitem.h"
 
 #include <QStringList>
 #include <QtWidgets>
