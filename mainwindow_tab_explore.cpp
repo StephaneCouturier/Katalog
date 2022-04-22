@@ -405,7 +405,6 @@
         //Go to the Explorer tab
         ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
         ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
-        //ui->tabWidget->setCurrentIndex(2);
 
         //Remember last opened catalog
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -470,7 +469,6 @@
             ui->DEV_treeView_Directories->setModel(directorytreeModel);
             ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
             ui->DEV_treeView_Directories->expandAll();
-            QMessageBox::information(this,"Katalog","loaded:" + selectedSearchLocation);
         }
     }
     //----------------------------------------------------------------------
@@ -563,11 +561,4 @@
         ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
     }
-
-    //----------------------------------------------------------------------
-    //DEV
-
-
-
-    //----------------------------------------------------------------------
 
