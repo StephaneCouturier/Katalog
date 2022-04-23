@@ -2013,7 +2013,10 @@
             QStringList catalogMetadata;
 
             int result = QMessageBox::warning(this,"Katalog",
-                      tr("Do you want to create a catalog from these results to use for searching? (If no, the export will be csv file)"),QMessageBox::Yes|QMessageBox::Cancel);
+                      tr("Do you want to create a catalog from these results?"
+                         "<br/>- Yes: create an idx file and use it to refine your search,"
+                         "<br/>- No: simply export results to a csv file."),
+                                              QMessageBox::Yes|QMessageBox::No);
 
             if ( result ==QMessageBox::Yes){
                 fileExtension="idx";
@@ -2023,8 +2026,8 @@
                 catalogMetadata.prepend("<catalogStorage>EXPORT");
                 catalogMetadata.prepend("<catalogFileType>EXPORT");
                 catalogMetadata.prepend("<catalogIncludeHidden>false");
-                catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(0));
-                catalogMetadata.prepend("<catalogFileCount>"     + QString::number(0));
+                catalogMetadata.prepend("<catalogTotalFileSize>0");
+                catalogMetadata.prepend("<catalogFileCount>0");
                 catalogMetadata.prepend("<catalogSourcePath>EXPORT");
             }
             else{
@@ -2034,9 +2037,10 @@
             //Prepare export file name
             QDateTime now = QDateTime::currentDateTime();
             QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-            QString filename = QString::fromLatin1("/search_results_%1.%2").arg(timestamp,fileExtension);
-            filename=collectionFolder+filename;
-            QFile exportFile(filename);
+            QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
+            QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
+            QString fullFileName=collectionFolder+"/"+fileNameWithExtension;
+            QFile exportFile(fullFileName);
 
             //Export search results to file
             if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
@@ -2059,7 +2063,13 @@
             }
             exportFile.close();
 
-            return filename;
+            //Refresh catalogs
+            loadCollection();
+
+            //Select new catalog with results
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(fileNameWithoutExtension);
+
+            return fullFileName;
         }
         //----------------------------------------------------------------------
 
