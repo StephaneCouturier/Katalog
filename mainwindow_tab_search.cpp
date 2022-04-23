@@ -2009,10 +2009,32 @@
         //----------------------------------------------------------------------
         QString MainWindow::exportSearchResults()
         {
+            QString fileExtension;
+            QStringList catalogMetadata;
+
+            int result = QMessageBox::warning(this,"Katalog",
+                      tr("Do you want to create a catalog from these results to use for searching? (If no, the export will be csv file)"),QMessageBox::Yes|QMessageBox::Cancel);
+
+            if ( result ==QMessageBox::Yes){
+                fileExtension="idx";
+
+                catalogMetadata.prepend("<catalogIsFullDevice>");
+                catalogMetadata.prepend("<catalogIncludeSymblinks>");
+                catalogMetadata.prepend("<catalogStorage>EXPORT");
+                catalogMetadata.prepend("<catalogFileType>EXPORT");
+                catalogMetadata.prepend("<catalogIncludeHidden>false");
+                catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(0));
+                catalogMetadata.prepend("<catalogFileCount>"     + QString::number(0));
+                catalogMetadata.prepend("<catalogSourcePath>EXPORT");
+            }
+            else{
+                fileExtension="csv";
+            }
+
             //Prepare export file name
             QDateTime now = QDateTime::currentDateTime();
             QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-            QString filename = QString::fromLatin1("/search_results_%1.csv").arg(timestamp);
+            QString filename = QString::fromLatin1("/search_results_%1.%2").arg(timestamp,fileExtension);
             filename=collectionFolder+filename;
             QFile exportFile(filename);
 
@@ -2021,13 +2043,16 @@
 
                 QTextStream stream(&exportFile);
 
+                for (int i = 0; i < catalogMetadata.size(); ++i)
+                {
+                    stream << catalogMetadata[i] << '\n';
+                }
+
                 for (int i = 0; i < filesFoundList.size(); ++i)
                 {
-                    QString line = sFilePaths[i] + "/"
-                                 + sFileNames[i] + "\t"
+                    QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t"
                                  + QString::number(sFileSizes[i]) + "\t"
                                  + sFileDateTimes[i] + "\t"
-                                 + sFilePaths[i] + "\t"
                                  + sFileCatalogs[i];
                     stream << line << '\n';
                 }
