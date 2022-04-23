@@ -256,7 +256,7 @@ class MainWindow : public QMainWindow
             int lastExploreSortSection;
             int lastExploreSortOrder;
 
-        //TAB: Create Catalog Tab
+        //TAB: Create
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
             QString newCatalogPath;
@@ -266,6 +266,7 @@ class MainWindow : public QMainWindow
             QString excludeFilePath;
 
             void loadFileSystem(QString newCatalogPath);
+            void createCatalog();
             void catalogDirectory(QString newCatalogPath,
                                   bool includeHidden,
                                   QString fileType,

@@ -124,6 +124,67 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
     {
+        createCatalog();
+    }
+    //--------------------------------------------------------------------------
+
+//Methods-----------------------------------------------------------------------
+
+    //Load file system for the treeview
+    void MainWindow::loadFileSystem(QString newCatalogPath)
+    {
+            newCatalogPath="/";
+         // Creates a new model
+            fileSystemModel = new QFileSystemModel(this);
+
+         // Set filter to show only directories
+            fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+
+         // QFileSystemModel requires root path
+            QString rootPath ="/";
+            fileSystemModel->setRootPath(rootPath);
+            fileSystemModel->setRootPath(newCatalogPath);
+
+         // Enable/Disable modifying file system
+            //qfilesystemmodel->setReadOnly(true);
+
+
+        //loadFileSystem in the Create screen tree view
+            // Attach the model to the view
+                ui->Create_treeView_Explorer->setModel(fileSystemModel);
+            // Only show the tree, hidding other columns and the header row.
+                ui->Create_treeView_Explorer->setColumnWidth(0,250);
+                ui->Create_treeView_Explorer->setColumnHidden(1,true);
+                ui->Create_treeView_Explorer->setColumnHidden(2,true);
+                ui->Create_treeView_Explorer->setColumnHidden(3,true);
+                ui->Create_treeView_Explorer->setHeaderHidden(true);
+                ui->Create_treeView_Explorer->expandToDepth(1);
+
+        //loadFileSystem in the Filter tab tree view
+            // Attach the model to the view
+                ui->Filters_treeView_Directory->setModel(fileSystemModel);
+           // Only show the tree, hidding other columns and the header row.
+                ui->Filters_treeView_Directory->setColumnWidth(0,250);
+                ui->Filters_treeView_Directory->setColumnHidden(1,true);
+                ui->Filters_treeView_Directory->setColumnHidden(2,true);
+                ui->Filters_treeView_Directory->setColumnHidden(3,true);
+                ui->Filters_treeView_Directory->setHeaderHidden(true);
+                ui->Filters_treeView_Directory->expandToDepth(1);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::loadStorageList()
+    {
+        //Prepare list for the Storage selection combobox
+        QStringList storageNameListforCombo = storageNameList;
+        storageNameListforCombo.prepend("");
+        fileListModel = new QStringListModel(this);
+        fileListModel->setStringList(storageNameListforCombo);
+        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
+        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::createCatalog()
+    {
         //Launch the cataloging, save it, and show it
 
         //Get inputs
@@ -231,63 +292,6 @@
         ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
         ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
-
-    }
-    //--------------------------------------------------------------------------
-
-//Methods-----------------------------------------------------------------------
-
-    //Load file system for the treeview
-    void MainWindow::loadFileSystem(QString newCatalogPath)
-    {
-            newCatalogPath="/";
-         // Creates a new model
-            fileSystemModel = new QFileSystemModel(this);
-
-         // Set filter to show only directories
-            fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-
-         // QFileSystemModel requires root path
-            QString rootPath ="/";
-            fileSystemModel->setRootPath(rootPath);
-            fileSystemModel->setRootPath(newCatalogPath);
-
-         // Enable/Disable modifying file system
-            //qfilesystemmodel->setReadOnly(true);
-
-
-        //loadFileSystem in the Create screen tree view
-            // Attach the model to the view
-                ui->Create_treeView_Explorer->setModel(fileSystemModel);
-            // Only show the tree, hidding other columns and the header row.
-                ui->Create_treeView_Explorer->setColumnWidth(0,250);
-                ui->Create_treeView_Explorer->setColumnHidden(1,true);
-                ui->Create_treeView_Explorer->setColumnHidden(2,true);
-                ui->Create_treeView_Explorer->setColumnHidden(3,true);
-                ui->Create_treeView_Explorer->setHeaderHidden(true);
-                ui->Create_treeView_Explorer->expandToDepth(1);
-
-        //loadFileSystem in the Filter tab tree view
-            // Attach the model to the view
-                ui->Filters_treeView_Directory->setModel(fileSystemModel);
-           // Only show the tree, hidding other columns and the header row.
-                ui->Filters_treeView_Directory->setColumnWidth(0,250);
-                ui->Filters_treeView_Directory->setColumnHidden(1,true);
-                ui->Filters_treeView_Directory->setColumnHidden(2,true);
-                ui->Filters_treeView_Directory->setColumnHidden(3,true);
-                ui->Filters_treeView_Directory->setHeaderHidden(true);
-                ui->Filters_treeView_Directory->expandToDepth(1);
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::loadStorageList()
-    {
-        //Prepare list for the Storage selection combobox
-        QStringList storageNameListforCombo = storageNameList;
-        storageNameListforCombo.prepend("");
-        fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(storageNameListforCombo);
-        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
-        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
     }
     //--------------------------------------------------------------------------
     void MainWindow::catalogDirectory(QString newCatalogPath,
