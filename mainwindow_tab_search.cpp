@@ -1897,7 +1897,7 @@
             //Query the full list of locations
             QSqlQuery getStorageList;
 
-            QString queryText = "SELECT DISTINCT storageName FROM storage";
+            QString queryText = "SELECT storageName FROM storage";
 
             if ( selectedLocation == tr("All")){
                     queryText = queryText + " ORDER BY storageName";
