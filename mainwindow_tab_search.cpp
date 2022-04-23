@@ -135,10 +135,14 @@
             ui->Search_treeView_FilesFound->setModel(empty);
             ui->Search_listView_CatalogsFound->setModel(empty);
 
+            //Clear results and disable export
+            filesFoundList.clear();
+            ui->Search_pushButton_ExportResults->setEnabled(false);
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ExportResults_clicked()
-        {
+        {          
             QString exportFileName = exportSearchResults();
             QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")
                                                     +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
@@ -1083,6 +1087,9 @@
 
             //Stop animation
             QApplication::restoreOverrideCursor();
+
+            //Enable Export
+            ui->Search_pushButton_ExportResults->setEnabled(true);
 
         }
         //----------------------------------------------------------------------

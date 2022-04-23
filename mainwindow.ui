@@ -1073,7 +1073,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>7</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -2911,7 +2911,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <item>
                     <widget class="QPushButton" name="Search_pushButton_ExportResults">
                      <property name="enabled">
-                      <bool>true</bool>
+                      <bool>false</bool>
                      </property>
                      <property name="minimumSize">
                       <size>
