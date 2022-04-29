@@ -56,8 +56,11 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_ViewCatalog_clicked()
         {
-            openCatalogToExplore();
-            ui->tabWidget->setCurrentIndex(2);
+            if ( selectedCatalogStorage !="EXPORT"){
+                openCatalogToExplore();
+                ui->tabWidget->setCurrentIndex(2);
+            }
+            else QMessageBox::information(this,"Katalog","This Search Export cannot be viewed in Explore yet.");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
@@ -336,8 +339,11 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
-            openCatalogToExplore();
-            ui->tabWidget->setCurrentIndex(2);
+            if ( selectedCatalogStorage !="EXPORT"){
+                openCatalogToExplore();
+                ui->tabWidget->setCurrentIndex(2);
+            }
+            else QMessageBox::information(this,"Katalog","This Search Export cannot be viewed in Explore yet.");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
