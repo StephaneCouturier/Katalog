@@ -138,16 +138,26 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 //                                GROUP BY filePath
 //                                ORDER BY filePath ASC
 //         )");
+
+//        QString querySQL = QLatin1String(R"(
+//                                SELECT DISTINCT (filePath) AS filePath, filePath AS id_file
+//                                FROM file
+//                                GROUP BY filePath
+//                                ORDER BY filePath ASC
+//         )");
+
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (filePath) AS filePath,
-                                        filePath AS id_file
-                                FROM file
+                                SELECT count (DISTINCT (filePath))
+                                FROM filesall
+                                WHERE fileCatalog =:fileCatalog
                                 GROUP BY filePath
                                 ORDER BY filePath ASC
          )");
 
+
+
         query.prepare(querySQL);
-//        query.bindValue(":selectedCatalogPath",selectedCatalogPath);
+        query.bindValue(":fileCatalog","Maxtor_2Tb");
         query.exec();
 
         int idPath = query.record().indexOf("filePath");
@@ -205,22 +215,21 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
                    if(query2.next())
                         nChild = query2.value(0).toInt();
 
-                   //columnData << nChild;
+                   columnData << nChild;
                    columnData << id_file;
 
                    if(lastidx != -1)
                    {
-//                       parents.at(lastidx)->appendChild(new DirectoryTreeItem(columnData, parents.at(lastidx), hash));
+                       parents.at(lastidx)->appendChild(new DirectoryTreeItem(columnData, parents.at(lastidx), hash));
                        parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
                        lastidx = -1;
                    }
                    else
                    {
-//                       parents.last()->appendChild(new DirectoryTreeItem(columnData, parents.last(), hash));
+                       parents.last()->appendChild(new DirectoryTreeItem(columnData, parents.last(), hash));
                        parents <<  parents.last()->child( parents.last()->childCount()-1);
                    }
                }
            }
         }
 }
-
