@@ -626,7 +626,7 @@
                         if (file.exists()) {
                             if (QMessageBox::question(this,
                                                       tr("Confirmation"),
-                                                      tr("A file %& already exists. Do you want to overwrite it?").arg(targetFilePath))
+                                                      tr("A file %& already exists. Overwrite it?").arg(targetFilePath))
                                 == QMessageBox::Yes) {
                                 //overwrite
                             }
@@ -2020,9 +2020,9 @@
             QStringList catalogMetadata;
 
             int result = QMessageBox::warning(this,"Katalog",
-                      tr("Do you want to create a catalog from these results?"
+                      tr("Create a catalog from these results?"
                          "<br/>- Yes: create an idx file and use it to refine your search,"
-                         "<br/>- No: simply export results to a csv file."),
+                         "<br/>- No:  simply export results to a csv file."),
                                               QMessageBox::Yes|QMessageBox::No);
 
             if ( result ==QMessageBox::Yes){
