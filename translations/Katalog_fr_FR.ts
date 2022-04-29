@@ -1209,10 +1209,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>Appareil</translation>
     </message>
     <message>
-        <source>PushButton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search Directory</source>
         <translation>Dossier de recherche</translation>
     </message>
@@ -1249,18 +1245,6 @@ Utilisez une combinaison différente.</translation>
         <translation>sensible à la casse</translation>
     </message>
     <message>
-        <source>load tree simple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>load directory tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les résultats doivent correspondre exactement au texte (sensible à la capitalisation des lettres)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1291,10 +1275,6 @@ Utilisez une combinaison différente.</translation>
     <message>
         <source>Select the folder to move this file</source>
         <translation>Sélectionnez le dossier pour déplacer ce fichier</translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Do you want to overwrite it?</source>
-        <translation>Un fichier %&amp; existe déjà. Voulez-vous l&apos;écraser&#xa0;?</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1360,76 +1340,40 @@ to the trash?</source>
         <source>Cancelled move to folder.</source>
         <translation>Déplacement vers le dossier.annulé.</translation>
     </message>
+    <message>
+        <source>Location / Storage / Catatog</source>
+        <translation>Lieu / Stockage / Catatogue</translation>
+    </message>
+    <message>
+        <source>DEV_Storage_loadTree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No: simply export results to a csv file.</source>
+        <translation type="obsolete">Do you want to create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No: simply export results to a csv file.</translation>
+    </message>
+    <message>
+        <source>Tag this folder</source>
+        <translation>Etiquetter ce dossier</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titre</translation>
+    </message>
+    <message>
+        <source>A file %&amp; already exists. Overwrite it?</source>
+        <translation>Un fichier %&amp; existe déjà. L&apos;écraser ?</translation>
+    </message>
+    <message>
+        <source>Create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No:  simply export results to a csv file.</source>
+        <translation>Créer un catalogue à partir de ces résultats ?&lt;br/&gt;- Oui: créer un fichier idx et l&apos;utiliser pour afiner la recherche,&lt;br/&gt;- Non:  exporter simplement les résultats vers un fichier csv.</translation>
+    </message>
 </context>
 <context>
     <name>StorageTreeModel</name>
     <message>
         <source>Storage</source>
-        <translation>Stockage</translation>
-    </message>
-    <message>
-        <source>StoragePath</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageLocation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storagePath</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageFileSystem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageTotalSpace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageFreeSpace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageBrandModel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageSerialNumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageBuildDate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageContentType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageContainer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageComment</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Stockage</translation>
     </message>
 </context>
 <context>

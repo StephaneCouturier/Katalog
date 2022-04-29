@@ -126,6 +126,7 @@
         refreshCatalogSelectionList(selectedLocation, selectedStorage);
 
         selectedSearchStorage = selectedStorage;
+        selectedSearchLocation = selectedLocation;
 
         //Load matching Catalog
         loadCatalogsToModel();

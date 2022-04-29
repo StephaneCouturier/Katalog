@@ -1166,10 +1166,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PushButton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1204,18 +1200,6 @@ Use a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>load tree simple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>load directory tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The results should match exactly the text (sensitive to capitalization of letters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1245,10 +1229,6 @@ Use a different combinaison.</source>
     </message>
     <message>
         <source>Select the folder to move this file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A file %&amp; already exists. Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1311,75 +1291,28 @@ to the trash?</source>
         <source>Cancelled move to folder.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>StorageTreeModel</name>
     <message>
-        <source>Storage</source>
+        <source>Location / Storage / Catatog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>StoragePath</source>
+        <source>DEV_Storage_loadTree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>storageID</source>
+        <source>Tag this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>storageName</source>
+        <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>storageType</source>
+        <source>A file %&amp; already exists. Overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>storageLocation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storagePath</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageFileSystem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageTotalSpace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageFreeSpace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageBrandModel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageSerialNumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageBuildDate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageContentType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageContainer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>storageComment</source>
+        <source>Create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No:  simply export results to a csv file.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
