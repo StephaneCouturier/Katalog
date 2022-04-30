@@ -5819,26 +5819,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="0">
                <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Records">
                 <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_Load">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Reload the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>Load</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <spacer name="Storage_horizontalSpacer_02">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -5861,6 +5841,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="icon">
                    <iconset theme="document-edit-sign">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_Reload">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Reload the file storing all records</string>
+                  </property>
+                  <property name="text">
+                   <string>Reload</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-refresh">
                     <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>

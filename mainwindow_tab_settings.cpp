@@ -111,6 +111,7 @@
         //Load statistics
         loadStatisticsData();
         loadStatisticsChart();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
@@ -228,26 +229,24 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
-        selectedDeviceTreeName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-        //ui->DEV2_label_Display->setText(clickedName);
+ //       selectedDeviceMethod = "Device treeView";
+        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
 
-        selectedDeviceTreeType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-        //QMessageBox::information(this,"Katalog","type:" + QVariant(clickedType).toString());
-
-        if(selectedDeviceTreeType=="Location"){
-            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceTreeName);
+        if(selectedDeviceType=="Location"){
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceName);
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
         }
-        else if (selectedDeviceTreeType=="Storage"){
+        else if (selectedDeviceType=="Storage"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceTreeName);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceName);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
         }
-        else if (selectedDeviceTreeType=="Catalog"){
+        else if (selectedDeviceType=="Catalog"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceTreeName);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
         }
     }
     //----------------------------------------------------------------------

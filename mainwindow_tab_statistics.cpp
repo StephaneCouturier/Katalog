@@ -290,12 +290,11 @@
                                     WHERE recordType = 'Snapshot'
                                   )");
 
-                //add AND conditions for the selected filters
-                if ( selectedSearchLocation != tr("All") and selectedDeviceTreeType==tr("Location") )
+                if ( selectedSearchLocation != tr("All") and selectedDeviceType==tr("Location") )
                     querySQL = querySQL + " AND storage.storageLocation = '"+selectedSearchLocation+"' ";
-                else if ( selectedSearchStorage != tr("All") and selectedDeviceTreeType==tr("Storage") )
+                else if ( selectedSearchStorage != tr("All") and selectedDeviceType==tr("Storage") )
                     querySQL = querySQL + " AND catalog.catalogStorage = '"+selectedSearchStorage+"' ";
-                else if ( selectedSearchCatalog != tr("All") and selectedDeviceTreeType==tr("Catalog") )
+                else if ( selectedSearchCatalog != tr("All") and selectedDeviceType==tr("Catalog") )
                     querySQL = querySQL + " AND catalog.catalogName = '"+selectedSearchCatalog+"' ";
 
                 //add last part
