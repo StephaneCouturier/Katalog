@@ -1368,6 +1368,10 @@ to the trash?</source>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No:  simply export results to a csv file.</source>
         <translation>Créer un catalogue à partir de ces résultats ?&lt;br/&gt;- Oui: créer un fichier idx et l&apos;utiliser pour afiner la recherche,&lt;br/&gt;- Non:  exporter simplement les résultats vers un fichier csv.</translation>
     </message>
+    <message>
+        <source>Selection</source>
+        <translation>Sélection</translation>
+    </message>
 </context>
 <context>
     <name>StorageTreeModel</name>
