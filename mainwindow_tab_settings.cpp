@@ -228,26 +228,26 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
-        QString clickedName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+        selectedDeviceTreeName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         //ui->DEV2_label_Display->setText(clickedName);
 
-        QString clickedType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+        selectedDeviceTreeType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
         //QMessageBox::information(this,"Katalog","type:" + QVariant(clickedType).toString());
 
-        if(clickedType=="Location"){
-            ui->Filters_comboBox_SelectLocation->setCurrentText(clickedName);
+        if(selectedDeviceTreeType=="Location"){
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceTreeName);
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
         }
-        else if (clickedType=="Storage"){
+        else if (selectedDeviceTreeType=="Storage"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(clickedName);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceTreeName);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
         }
-        else if (clickedType=="Catalog"){
+        else if (selectedDeviceTreeType=="Catalog"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(clickedName);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceTreeName);
         }
     }
     //----------------------------------------------------------------------

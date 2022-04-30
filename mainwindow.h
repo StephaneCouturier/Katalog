@@ -129,6 +129,8 @@ class MainWindow : public QMainWindow
             bool searchInFileCatalogsChecked;
             bool searchInConnectedDriveChecked;
             QString selectedConnectedDrivePath;
+            QString selectedDeviceTreeName;
+            QString selectedDeviceTreeType;
 
         //TAB: Search
             //inputs

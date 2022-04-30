@@ -291,13 +291,11 @@
                                   )");
 
                 //add AND conditions for the selected filters
-                if ( selectedSearchLocation != tr("All") )
+                if ( selectedSearchLocation != tr("All") and selectedDeviceTreeType==tr("Location") )
                     querySQL = querySQL + " AND storage.storageLocation = '"+selectedSearchLocation+"' ";
-
-                if ( selectedSearchStorage != tr("All") )
+                else if ( selectedSearchStorage != tr("All") and selectedDeviceTreeType==tr("Storage") )
                     querySQL = querySQL + " AND catalog.catalogStorage = '"+selectedSearchStorage+"' ";
-
-                if ( selectedSearchCatalog != tr("All") )
+                else if ( selectedSearchCatalog != tr("All") and selectedDeviceTreeType==tr("Catalog") )
                     querySQL = querySQL + " AND catalog.catalogName = '"+selectedSearchCatalog+"' ";
 
                 //add last part
