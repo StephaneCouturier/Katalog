@@ -162,27 +162,18 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QCheckBox" name="Filters_checkBox_SearchInCatalogs">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QLabel" name="Statistics_label_Catalog_3">
               <property name="text">
-               <string>Search in file catalogs</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>Selection</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QWidget" name="Filters_widget_CatalogSelection" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_2">
+               <property name="leftMargin">
+                <number>15</number>
+               </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
@@ -417,6 +408,45 @@
              </widget>
             </item>
             <item>
+             <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_3">
+              <property name="topMargin">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="Line" name="Search_line_SeparateResults_3">
+                <property name="lineWidth">
+                 <number>1</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>0</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Filters_checkBox_SearchInCatalogs">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Search in file catalogs</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
               <property name="topMargin">
                <number>6</number>
@@ -458,6 +488,9 @@
                </sizepolicy>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
+               <property name="leftMargin">
+                <number>15</number>
+               </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
@@ -5786,6 +5819,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="0">
                <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Records">
                 <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_Load">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Reload the file storing all records</string>
+                  </property>
+                  <property name="text">
+                   <string>Load</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-refresh">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <spacer name="Storage_horizontalSpacer_02">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -5808,26 +5861,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="icon">
                    <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_Reload">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Reload the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>Reload</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh">
                     <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
@@ -6108,8 +6141,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="images.qrc"/>
   <include location="icons.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>

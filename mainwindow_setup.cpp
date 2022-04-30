@@ -188,6 +188,7 @@
             //Filters selection
                 //by default, SearchInCatalogs is enabled
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
+                ui->Filters_widget_ConnectedDrives->hide();
                 //switch to SearchInConnectedDrives if it was last choice
                 searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
                 ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
