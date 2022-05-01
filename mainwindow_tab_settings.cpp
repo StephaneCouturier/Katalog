@@ -336,6 +336,7 @@
             //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
             //ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
             //ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            loadStorageTableToFilterTree();
 
             statisticsFilePath = collectionFolder + "/" + "statistics.csv";
             loadStatisticsData();
