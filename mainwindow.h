@@ -236,6 +236,7 @@ class MainWindow : public QMainWindow
             void recordSelectedCatalogStats(QString selectedCatalogName,
                                             int selectedCatalogFileCount,
                                             qint64 selectedCatalogTotalFileSize);
+            void recordCollectionStats();
             void recordAllCatalogStats();
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);

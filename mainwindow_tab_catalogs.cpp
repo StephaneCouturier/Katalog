@@ -348,10 +348,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
         {
-            //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
-            recordAllCatalogStats();
-            QMessageBox::information(this,"Katalog",tr("Snapshot created."));
-
+            recordCollectionStats();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged(){
@@ -628,82 +625,7 @@
          }
          fileOut.close();
     }
-    //--------------------------------------------------------------------------
-    void MainWindow::recordAllCatalogStats()
-    {
-        // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
 
-        QDateTime nowDateTime = QDateTime::currentDateTime();
-        QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
-        //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
-
-        //get the list of catalogs and data
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                        SELECT
-                                            catalogName                 ,
-                                            catalogFileCount            ,
-                                            catalogTotalFileSize
-                                        FROM catalog
-                                        )");
-            query.prepare(querySQL);
-            query.exec();
-
-
-        //create a new record for each catalog
-            QString recordCatalogName;
-            QString recordCatalogFileCount;
-            QString recordCatalogTotalFileSize;
-
-            while (query.next()){
-                    recordCatalogName = query.value(0).toString();
-                    recordCatalogFileCount = query.value(1).toString();
-                    recordCatalogTotalFileSize = query.value(2).toString();
-
-                    QString statisticsLine = nowDateTimeFormatted + "\t"
-                                            + recordCatalogName + "\t"
-                                            + recordCatalogFileCount + "\t"
-                                            + recordCatalogTotalFileSize + "\t"
-                                            + "Snapshot" ;
-
-                    //QMessageBox::information(this,"Katalog","Ok." + statisticsLine);
-
-                    // Stream the values to the file
-                        QFile fileOut( collectionFolder + "/" + statisticsFileName );
-
-                        // Write data
-                        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                            QTextStream stream(&fileOut);
-                            stream << statisticsLine << "\n";
-                         }
-                         fileOut.close();
-
-            }
-
-            //Calculate and report updates since last snapshot
-            /*
-            //Prepare to report changes to the catalog
-            qint64 deltaFileCount = currentCatalogFileCount - previousFileCount;
-            qint64 deltaTotalFileSize = currentCatalogTotalFileSize - previousTotalFileSize;
-
-            //Inform user about the update
-            QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
-                                     "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
-                                     "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
-                                     ).arg(currentCatalogName,
-                                           QString::number(currentCatalogFileCount),
-                                           QString::number(deltaFileCount),
-                                           QLocale().formattedDataSize(currentCatalogTotalFileSize),
-                                           QLocale().formattedDataSize(deltaTotalFileSize))
-                                     ,Qt::TextFormat(Qt::RichText));
-
-            */
-
-            //refresh graphs
-            loadStatisticsData();
-            loadStatisticsChart();
-
-    }
     //--------------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
@@ -1266,3 +1188,122 @@
 
         loadCollection();
     }
+//--------------------------------------------------------------------------
+void MainWindow::recordCollectionStats(){
+        //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+
+        //Get last total file size and number
+        qint64 lastTotalFileSize;
+        qint64 lastTotalFileNumber;
+
+        //get the list of catalogs and data
+            QSqlQuery queryLast;
+            QString queryLastSQL = QLatin1String(R"(
+                                        SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                        FROM statistics
+                                        WHERE dateTime = (SELECT MAX(dateTime)
+                                                            FROM statistics
+                                                            WHERE recordType="Snapshot")
+                                        GROUP BY dateTime
+                                        )");
+            queryLast.prepare(queryLastSQL);
+            queryLast.exec();
+            queryLast.next();
+            lastTotalFileSize   = queryLast.value(0).toLongLong();
+            lastTotalFileNumber = queryLast.value(1).toLongLong();
+
+        //record all current catalog value
+        recordAllCatalogStats();
+
+
+        //Get new total file size and number
+        qint64 newTotalFileSize;
+        qint64 newTotalFileNumber;
+
+        //get the list of catalogs and data
+            QSqlQuery queryNew;
+            QString queryNewSQL = QLatin1String(R"(
+                                        SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                        FROM statistics
+                                        WHERE dateTime = (SELECT MAX(dateTime)
+                                                            FROM statistics
+                                                            WHERE recordType="Snapshot")
+                                        GROUP BY dateTime
+                                        )");
+            queryNew.prepare(queryNewSQL);
+            queryNew.exec();
+            queryNew.next();
+            newTotalFileSize   = queryNew.value(0).toLongLong();
+            newTotalFileNumber = queryNew.value(1).toLongLong();
+
+        //Calculate and inform
+        qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
+        qint64 deltaTotalFileNumber = newTotalFileNumber - lastTotalFileNumber;
+
+        QMessageBox::information(this,"Katalog",tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
+                                 "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                                 "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                                 ).arg(QString::number(newTotalFileNumber),
+                                       QString::number(deltaTotalFileNumber),
+                                       QLocale().formattedDataSize(newTotalFileSize),
+                                       QLocale().formattedDataSize(deltaTotalFileSize)
+                                       )
+                                 ,Qt::TextFormat(Qt::RichText));
+}
+//--------------------------------------------------------------------------
+void MainWindow::recordAllCatalogStats()
+{
+    // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
+
+    QDateTime nowDateTime = QDateTime::currentDateTime();
+    QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+    //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
+
+    //get the list of catalogs and data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT
+                                        catalogName                 ,
+                                        catalogFileCount            ,
+                                        catalogTotalFileSize
+                                    FROM catalog
+                                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+
+    //create a new record for each catalog
+        QString recordCatalogName;
+        QString recordCatalogFileCount;
+        QString recordCatalogTotalFileSize;
+
+        while (query.next()){
+                recordCatalogName = query.value(0).toString();
+                recordCatalogFileCount = query.value(1).toString();
+                recordCatalogTotalFileSize = query.value(2).toString();
+
+                QString statisticsLine = nowDateTimeFormatted + "\t"
+                                        + recordCatalogName + "\t"
+                                        + recordCatalogFileCount + "\t"
+                                        + recordCatalogTotalFileSize + "\t"
+                                        + "Snapshot" ;
+
+                //QMessageBox::information(this,"Katalog","Ok." + statisticsLine);
+
+                // Stream the values to the file
+                    QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+                    // Write data
+                    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                        QTextStream stream(&fileOut);
+                        stream << statisticsLine << "\n";
+                     }
+                     fileOut.close();
+
+        }
+
+        //refresh graphs
+        loadStatisticsData();
+        loadStatisticsChart();
+
+}
