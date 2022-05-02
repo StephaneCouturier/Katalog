@@ -320,6 +320,7 @@
     void MainWindow::loadCollection()
     {
         //Load Storage list and refresh their statistics
+            storageFilePath = collectionFolder + "/" + "storage.csv";
             loadStorageFileToTable();
             loadStorageTableToModel();
             refreshStorageStatistics();

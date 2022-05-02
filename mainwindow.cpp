@@ -62,8 +62,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->setupUi(this);
 
             //Set current version and date
-            currentVersion = "1.11";
-            releaseDate = "2022-04-30";
+            currentVersion = "1.12";
+            releaseDate = "2022-05-01";
             developmentMode = false;
 
             ui->Settings_label_VersionValue->setText(currentVersion);
@@ -133,7 +133,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Search_listView_CatalogsFound->setModel(empty);
 
     //setup tab: Storage
-            storageFilePath = collectionFolder + "/" + "storage.csv";
             loadCollection();
             refreshLocationCollectionFilter();
             loadStorageTableToFilterTree();
