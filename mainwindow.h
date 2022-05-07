@@ -422,17 +422,16 @@ class MainWindow : public QMainWindow
             void on_Catalogs_pushButton_ViewCatalogStats_clicked();
             void on_Catalogs_pushButton_Import_clicked();
             void on_Catalogs_pushButton_DeleteCatalog_clicked();
-            void refreshLocationCollectionFilter();
 
             void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged();
-            //void on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section);
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
             void on_Catalogs_pushButton_SelectPath_clicked();
             void on_Catalogs_pushButton_Snapshot_clicked();
+
         //Create
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);

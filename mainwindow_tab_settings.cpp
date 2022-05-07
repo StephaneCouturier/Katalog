@@ -319,31 +319,35 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
+        //Load search history
+            searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
+            loadSearchHistoryFileToTable();
+            loadSearchHistoryTableToModel();
+
         //Load Storage list and refresh their statistics
             storageFilePath = collectionFolder + "/" + "storage.csv";
             loadStorageFileToTable();
             loadStorageTableToModel();
             refreshStorageStatistics();
 
-       //load Catalog list, Location list, Storage list, Statistics
+       //Load Catalogs list
             loadCatalogFilesToTable();
             loadCatalogsToModel();
 
+       //Load Storage list
             refreshLocationSelectionList();
             refreshStorageSelectionList(tr("All"));
             refreshCatalogSelectionList(tr("All"), tr("All"));
-
-            //restore Search catalog selection
-            //ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
-            //ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
-            //ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
             loadStorageTableToFilterTree();
 
-            statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+       //Load Statistics
+            statisticsFileName = "statistics.csv";
+            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+            loadStatisticsDataTypes();
             loadStatisticsData();
             loadStatisticsChart();
 
-            //hide buttons to force user to select a catalog before allowing any action.
+       //Hide buttons to force user to select a catalog before allowing any action.
             hideCatalogButtons();
     }
     //----------------------------------------------------------------------

@@ -64,10 +64,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             //Set current version and date
             currentVersion = "1.12";
             releaseDate = "2022-05-01";
-            developmentMode = false;
-
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
+
+            //Check if new version is available
+                     checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
+                     if ( checkVersionChoice == true)
+                         checkVersion();
+
+            //Set Development mode
+            developmentMode = false;
+
+            //Hide Development UI items that are not ready for use
+            if(developmentMode==false){
+                hideDevelopmentUIItems();
+            }
 
             //Load languages to the Settings combobox
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
@@ -75,15 +86,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
-            //Always hide some widget at start
+            //Hide some widget by default
             ui->Catalogs_widget_EditCatalog->hide();
 
-            //Hide user interface items that are not ready for use (development).
-            if(developmentMode==false){
-                hideDevelopmentUIItems();
-            }
-
-            //For Linux
+            //For Linux, use KDE libs
             #ifdef Q_OS_LINUX
                 //Set up KDE Menu/Icon actions
                 setupActions();
@@ -108,11 +114,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //Load Settings and intiate values
             loadSettings();
+
+            //Memorize filter selection from setting before refreshing
             QString firstSelectedLocation = selectedSearchLocation;
-            QString firstSelectedStorage =  selectedSearchStorage;
-            QString firstSelectedCatalog = selectedSearchCatalog;
-
-
+            QString firstSelectedStorage  = selectedSearchStorage;
+            QString firstSelectedCatalog  = selectedSearchCatalog;
 
         //Load custom stylesheet
             //for windows, pick a windows common font.
@@ -126,79 +132,67 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-    //setup tab: Search step 1 of 2
-            //Load an empty model to display headers
-            Catalog *empty = new Catalog(this);
-            ui->Search_treeView_FilesFound->setModel(empty);
-            ui->Search_listView_CatalogsFound->setModel(empty);
 
-    //setup tab: Storage
-            loadCollection();
-            refreshLocationCollectionFilter();
-            loadStorageTableToFilterTree();
+    //Load Collection data
+            //Load Collection data from csv files
+                loadCollection();
 
-    //setup tab: Create
-        //Default path to scan
-            ui->Create_lineEdit_NewCatalogPath->setText("/");
+            //Preload last selected catalogs contents to memory
+                if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
+                    preloadCatalogs();
+                }
+            //Load last opened catalog to Explore tab
+                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+                if (selectedCatalogFile != ""){
+                    openCatalogToExplore();
+                }
 
-        //Define path of file containing folders to exclude when cataloging
-            excludeFilePath = collectionFolder +"/"+ "exclude.csv";
 
-        //Always Load the file system for the treeview
-            loadFileSystem("/");
-        //Load the list of Storage devices
-            loadStorageList();
+    //Setup tabs
 
-    //setup tab: Tags
+        //Setup tab: Create
             //Default path to scan
-            ui->Tags_lineEdit_FolderPath->setText("/");
-            loadFileSystemTags(newTagFolderPath);
-            reloadTagsData();
+                ui->Create_lineEdit_NewCatalogPath->setText("/");
 
-    //setup tab: Settings
-        //Load path of last collection used
-            ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
-        //Set file types
-            setFileTypes();
+            //Define path of file containing folders to exclude when cataloging
+                excludeFilePath = collectionFolder +"/"+ "exclude.csv";
+
+            //Always Load the file system for the treeview
+                loadFileSystem("/");
+
+            //Load the list of Storage devices for Create and Catalog tabs
+                loadStorageList();
+
+        //Setup tab: Tags
+                //Default path to scan
+                ui->Tags_lineEdit_FolderPath->setText("/");
+                loadFileSystemTags(newTagFolderPath);
+                reloadTagsData();
+
+        //Setup tab: Settings
+            //Load path of last collection used
+                ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
+
+            //Set file types
+                setFileTypes();
+
+            //Restore filters
+                ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
+                ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
+                ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
+
+        //Setup tab: Search
+                //Load an empty model to display headers
+                Catalog *empty = new Catalog(this);
+                ui->Search_treeView_FilesFound->setModel(empty);
+                ui->Search_listView_CatalogsFound->setModel(empty);
+
+                //Initiate and restore Search values
+                initiateSearchValues();
+
+    //Context menu and other slots and signals
             setupFileContextMenu();
-        //Restore filters
-            ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
-            ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
 
-        //Setup tab: Stats
-            statisticsFileName = "statistics.csv";
-            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
-            loadStatisticsDataTypes();
-            loadStatisticsData();
-            loadStatisticsChart();
-
-                //Check if new version is available
-            checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
-            if ( checkVersionChoice == true)
-                checkVersion();
-
-   //Preload last selected catalogs
-            if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
-                preloadCatalogs();
-            }
-
-    //Load last catalog to explore
-            ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-            if (selectedCatalogFile != ""){
-                openCatalogToExplore();
-            }
-
-    //setup tab: Search step 2 of 2
-            initiateSearchValues();
-            //load search history
-                //Define search history file
-                searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
-
-                loadSearchHistoryFileToTable();
-                loadSearchHistoryTableToModel();
-
-    //other slot and signals
             //Header Order change
             connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
                     this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged()) );
@@ -211,11 +205,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             connect(ui->Search_treeView_History->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
                     this , SLOT(on_Search_treeView_History_HeaderSortOrderChanged()) );
 
-            //Header Size change
-//            connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sectionResized(int,int,int)),
-//                    this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int)) );
-
-    //Restore views sorting
+    //Restore sorting of views
             ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatalogsSortSection,Qt::SortOrder(lastCatalogsSortOrder));
             ui->Storage_treeView_StorageList->QTreeView::sortByColumn(lastStorageSortSection,Qt::SortOrder(lastStorageSortOrder));
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
@@ -232,8 +222,8 @@ MainWindow::~MainWindow()
 //DEV Templates
 /*
 QMessageBox::information(this,"Katalog","Ok.");
-QMessageBox::information(this,"Katalog","stringVariable: \n" + stringVariable);
-QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant(anyVariable).toString());
+QMessageBox::information(this,"Katalog","stringVariable: <br/>" + stringVariable);
+QMessageBox::information(this,"Katalog","anyVariable: <br/>" + QVariant(anyVariable).toString());
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(

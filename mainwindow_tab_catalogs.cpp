@@ -826,30 +826,6 @@
         ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::refreshLocationCollectionFilter()
-    {
-        //Query the full list of locations
-        QSqlQuery getLocationList;
-        getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage ORDER BY storageLocation");
-        getLocationList.exec();
-
-        //Put the results in a list
-        QStringList locationList;
-        while (getLocationList.next()) {
-            locationList << getLocationList.value(0).toString();
-        }
-
-        //Prepare list for the Location combobox
-        QStringList displayLocationList = locationList;
-        //Add the "All" option at the beginning
-        displayLocationList.insert(0,tr("All"));
-
-        //Send the list to the Search combobox model
-        fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(displayLocationList);
-
-    }
-    //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
     {
         //Select file
