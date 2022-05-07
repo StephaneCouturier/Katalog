@@ -794,9 +794,3 @@
         else ui->Storage_label_PercentFree->setText("");
     }
     //--------------------------------------------------------------------------
-
-//DEV-----------------------------------------------------------------------
-    void MainWindow::on_DEV2_pushButton_LoadTree_clicked()
-    {
-        //loadStorageTableToFilterTree();
-    }

@@ -3,31 +3,31 @@
 
 #include <QList>
 #include <QVariant>
+#include <QtSql>
+#include <QVector>
 
 class DirectoryTreeItem
 {
 public:
-    explicit DirectoryTreeItem(const QList<QVariant> &data, DirectoryTreeItem *parentItem = 0, unsigned int id = 0);
+    explicit DirectoryTreeItem(const QVector<QVariant> &data, DirectoryTreeItem *parent = nullptr);
     ~DirectoryTreeItem();
 
-    void appendChild(DirectoryTreeItem *child);
-
-    DirectoryTreeItem *child(int row);
+    DirectoryTreeItem *child(int number);
     int childCount() const;
     int columnCount() const;
     QVariant data(int column) const;
-    int row() const;
-
-    unsigned int getIndex(){return _id;};
-
-    DirectoryTreeItem *parentItem();
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    DirectoryTreeItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
 
 private:
+    QVector<DirectoryTreeItem*> childItems;
+    QVector<QVariant> itemData;
+    DirectoryTreeItem *parentItem;
 
-    QList<DirectoryTreeItem*> m_childItems;
-    QList<QVariant> m_itemData;
-    DirectoryTreeItem *m_parentItem;
-    unsigned int _id;
 };
-
 #endif // DIRECTORYTREEITEM_H

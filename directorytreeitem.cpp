@@ -2,52 +2,116 @@
 
 #include <QStringList>
 
-DirectoryTreeItem::DirectoryTreeItem(const QList<QVariant> &data, DirectoryTreeItem *parent, unsigned int id)
-{
-    m_parentItem = parent;
-    m_itemData = data;
-    _id = id;
-}
+DirectoryTreeItem::DirectoryTreeItem(const QVector<QVariant> &data, DirectoryTreeItem *parent)
+    : itemData(data),
+      parentItem(parent)
+{}
 
 DirectoryTreeItem::~DirectoryTreeItem()
 {
-    qDeleteAll(m_childItems);
+    qDeleteAll(childItems);
 }
 
-void DirectoryTreeItem::appendChild(DirectoryTreeItem *item)
+DirectoryTreeItem *DirectoryTreeItem::child(int number)
 {
-    m_childItems.append(item);
-}
-
-DirectoryTreeItem *DirectoryTreeItem::child(int row)
-{
-    return m_childItems.value(row);
+    if (number < 0 || number >= childItems.size())
+        return nullptr;
+    return childItems.at(number);
 }
 
 int DirectoryTreeItem::childCount() const
 {
-    return m_childItems.count();
+    return childItems.count();
+}
+
+int DirectoryTreeItem::childNumber() const
+{
+    if (parentItem)
+        return parentItem->childItems.indexOf(const_cast<DirectoryTreeItem*>(this));
+    return 0;
 }
 
 int DirectoryTreeItem::columnCount() const
 {
-    return m_itemData.count();
+    return itemData.count();
 }
 
 QVariant DirectoryTreeItem::data(int column) const
 {
-    return m_itemData.value(column);
+    if (column < 0 || column >= itemData.size())
+        return QVariant();
+    return itemData.at(column);
 }
 
-DirectoryTreeItem *DirectoryTreeItem::parentItem()
+bool DirectoryTreeItem::insertChildren(int position, int count, int columns)
 {
-    return m_parentItem;
+    if (position < 0 || position > childItems.size())
+        return false;
+
+    for (int row = 0; row < count; ++row) {
+        QVector<QVariant> data(columns);
+        DirectoryTreeItem *item = new DirectoryTreeItem(data, this);
+        childItems.insert(position, item);
+    }
+
+    return true;
 }
 
-int DirectoryTreeItem::row() const
+bool DirectoryTreeItem::insertColumns(int position, int columns)
 {
-    if (m_parentItem)
-        return m_parentItem->m_childItems.indexOf(const_cast<DirectoryTreeItem*>(this));
+    if (position < 0 || position > itemData.size())
+        return false;
 
-    return 0;
+    for (int column = 0; column < columns; ++column)
+        itemData.insert(position, QVariant());
+
+    for (DirectoryTreeItem *child : qAsConst(childItems))
+        child->insertColumns(position, columns);
+
+    return true;
 }
+
+DirectoryTreeItem *DirectoryTreeItem::parent()
+{
+    return parentItem;
+}
+
+bool DirectoryTreeItem::removeChildren(int position, int count)
+{
+    if (position < 0 || position + count > childItems.size())
+        return false;
+
+    for (int row = 0; row < count; ++row)
+        delete childItems.takeAt(position);
+
+    return true;
+}
+
+bool DirectoryTreeItem::removeColumns(int position, int columns)
+{
+    if (position < 0 || position + columns > itemData.size())
+        return false;
+
+    for (int column = 0; column < columns; ++column)
+        itemData.remove(position);
+
+    for (DirectoryTreeItem *child : qAsConst(childItems))
+        child->removeColumns(position, columns);
+
+    return true;
+}
+
+bool DirectoryTreeItem::setData(int column, const QVariant &value)
+{
+    if (column < 0 || column >= itemData.size())
+        return false;
+
+    itemData[column] = value;
+    return true;
+}
+
+
+
+
+
+

@@ -6020,35 +6020,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="DEV_EXPLORE">
-           <attribute name="icon">
-            <iconset theme="folder-development">
-             <normaloff>.</normaloff>.</iconset>
-           </attribute>
-           <attribute name="title">
-            <string>DEV_EXPLORE</string>
-           </attribute>
-           <widget class="QTreeView" name="DEV_treeView_Directories">
-            <property name="geometry">
-             <rect>
-              <x>30</x>
-              <y>30</y>
-              <width>581</width>
-              <height>591</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QTreeView" name="DEV_treeView_Files">
-            <property name="geometry">
-             <rect>
-              <x>630</x>
-              <y>30</y>
-              <width>301</width>
-              <height>591</height>
-             </rect>
-            </property>
-           </widget>
-          </widget>
           <widget class="QWidget" name="DEV_STORAGE">
            <attribute name="icon">
             <iconset theme="folder-development">

@@ -35,7 +35,7 @@
 #include "catalog.h"
 #include "filesview.h"
 #include "directorytreemodel.h"
-
+#include "exploretreemodel.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -57,20 +57,40 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
         {
-            //Get selected directory name
-            selectedDirectoryName = ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            if(developmentMode==true){
+                //Get selected directory name
+                //selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
+                //QString Name        = ui->DEV_treeView_Directories->model()->index(index.row(), 0, index.parent() ).data().toString();
+                //QString NoItems     = ui->DEV_treeView_Directories->model()->index(index.row(), 1, index.parent() ).data().toString();
+                QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
+                //QMessageBox::information(this,"Katalog","Name, NoItems, fullPath : <br/>" + Name + "<br/>" +NoItems+ "<br/>" +fullPath);
 
-            //Display selected directory name
-            ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+                selectedDirectoryName = fullPath.remove(selectedCatalogPath+"/");
+                //Display selected directory name
+                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
-            //Remember selected directory name
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+                //Remember selected directory name
+                QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
-            tempSelectedTreeviewSource = "flatlist";
+                //Load directory files
+                loadSelectedDirectoryFilesToExplore();
 
-            //Load directory files
-            loadSelectedDirectoryFilesToExplore();
+            }
+            else{
+                //Get selected directory name
+                selectedDirectoryName = ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+                //Display selected directory name
+                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+
+                //Remember selected directory name
+                QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+
+                //Load directory files
+                loadSelectedDirectoryFilesToExplore();
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeView_FileList_HeaderSortOrderChanged(){
@@ -446,7 +466,7 @@
         ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
 
-        ui->DEV_treeView_Directories->setModel(getDirectoriesProxyModel);
+        //ui->DEV_treeView_Directories->setModel(getDirectoriesProxyModel);
 
         //Display number of directories
         QString countSQL = QLatin1String(R"(
@@ -464,11 +484,26 @@
 
         //DEV DirectoryTreeModel --------------------------------
         if(developmentMode==true){
-            DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel();
-            //directorytreeModel->setSelectedCatalogPath(selectedCatalogPath);
-            ui->DEV_treeView_Directories->setModel(directorytreeModel);
-            ui->DEV_treeView_Directories->header()->resizeSection(0,  300);
-            ui->DEV_treeView_Directories->expandAll();
+
+            QString modelToTest = "Explore"; //Storage
+
+            if (modelToTest =="Explore"){
+                ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
+                exploreTreeModel->setModelCatalog(selectedCatalogName,selectedCatalogPath);
+
+                ui->Explore_treeview_Directories->setModel(exploreTreeModel);
+                ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
+                ui->Explore_treeview_Directories->hideColumn(2);
+            }
+            else if (modelToTest =="Storage") {
+                const QStringList headers({tr("Title"),tr("Type")});
+                DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel(headers);
+                directorytreeModel->setModelCatlog("Maxtor_2Tb","/run/media/stephane/Maxtor_2Tb");
+
+                ui->Explore_treeview_Directories->setModel(directorytreeModel);
+                ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
+                ui->Explore_treeview_Directories->expandAll();
+            }
         }
     }
     //----------------------------------------------------------------------
@@ -525,16 +560,7 @@
         ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
         ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
 
-        FilesView *proxyModel3 = new FilesView(this);
-        proxyModel3 = proxyModel2;
-        ui->DEV_treeView_Files->setModel(proxyModel3);
-        //ui->DEV_treeView_Files->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->DEV_treeView_Files->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->DEV_treeView_Files->header()->resizeSection(0, 600); //Name
-        ui->DEV_treeView_Files->header()->resizeSection(1, 110); //Size
-        ui->DEV_treeView_Files->header()->resizeSection(2, 140); //Date
-        ui->DEV_treeView_Files->header()->resizeSection(3, 400); //Path
-
+        //Display count of files
         QString countSQL = QLatin1String(R"(
                             SELECT  count (*)
                             FROM    filesall
@@ -561,4 +587,3 @@
         ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
     }
-

@@ -250,7 +250,7 @@ class MainWindow : public QMainWindow
         //TAB: Explore
             QString selectedDirectoryName;
             //QString selectedCatalogPath;
-            QString tempSelectedTreeviewSource;
+            //QString tempSelectedTreeviewSource;
 
             void openCatalogToExplore();
             void loadCatalogFilesToExplore();
@@ -494,7 +494,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-            void on_DEV2_pushButton_LoadTree_clicked();
+
 };
 
 #endif // MAINWINDOW_H
