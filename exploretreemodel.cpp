@@ -8,7 +8,7 @@ ExploreTreeModel::ExploreTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     QList<QVariant> rootData;
-    rootData << tr("Name") << tr("No of items") << tr("Full path");;
+    rootData << tr("Folder") << tr("No of items") << tr("Full path");;
     rootItem = new ExploreTreeItem(rootData);
     setupModelData(rootItem);
 }
@@ -116,34 +116,20 @@ int ExploreTreeModel::findNode(unsigned int& hash, const QList<ExploreTreeItem*>
     return -1;
 }
 
-
-
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 {
     QList<ExploreTreeItem*> parents;
     parents << parent;
 
-//    QString modelFileCatalog = "Maxtor_2Tb";
-//    QString modelCatalogPath = "/run/media/stephane/Maxtor_2Tb";
-
-//    QString path = "my_db_path";
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//    db.setDatabaseName(path);
-//    if(db.open())
-//    {
-//        QSqlQuery query("SELECT path, id_file FROM file");
-//        int idPath = query.record().indexOf("path");
-//        int idIdx = query.record().indexOf("id_file");
-
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath, id_file, filePath AS fullPath
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath, id_file, filePath AS fullPath
                                 FROM  filesall
                                 WHERE fileCatalog =:fileCatalog
                                 ORDER BY filePath ASC
                             )");
 
-        query.prepare(querySQL);//
+        query.prepare(querySQL);
         query.bindValue(":fileCatalog",modelFileCatalog);
         query.bindValue(":selectedCatalogPath",modelCatalogPath);
         query.exec();
@@ -159,7 +145,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
            int id_file = query.value(idIdx).toInt();
            QString fileFullPath = query.value(idfullPath).toString();
 
-           QStringList nodeString = name.split("/", QString::SkipEmptyParts); // "\\"
+           QStringList nodeString = name.split("/", QString::SkipEmptyParts);
 
            QString temppath = "";
 
@@ -168,7 +154,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
            {
                temppath += nodeString.at(node);
                if(node != nodeString.count() - 1)
-                   temppath += "/"; // "\\"
+                   temppath += "/";
 
                unsigned int hash = qHash(temppath);
                QList<QVariant> columnData;
@@ -197,7 +183,6 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                        sQuery += temppath;
                        sQuery += "%';";
                    }
-
 
                    int nChild = 0;
                    QSqlQuery query2(sQuery);

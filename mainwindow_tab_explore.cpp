@@ -36,6 +36,7 @@
 #include "filesview.h"
 #include "directorytreemodel.h"
 #include "exploretreemodel.h"
+#include "exploretreeview.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -491,7 +492,10 @@
                 ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
                 exploreTreeModel->setModelCatalog(selectedCatalogName,selectedCatalogPath);
 
-                ui->Explore_treeview_Directories->setModel(exploreTreeModel);
+                ExploreTreeView *exploreProxyModel = new ExploreTreeView();
+                exploreProxyModel->setSourceModel(exploreTreeModel);
+
+                ui->Explore_treeview_Directories->setModel(exploreProxyModel);
                 ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
                 ui->Explore_treeview_Directories->hideColumn(2);
             }

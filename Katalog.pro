@@ -67,6 +67,7 @@ SOURCES += \
     directorytreemodel.cpp \
     exploretreeitem.cpp \
     exploretreemodel.cpp \
+    exploretreeview.cpp \
     filesview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -92,6 +93,7 @@ HEADERS += \
     directorytreemodel.h \
     exploretreeitem.h \
     exploretreemodel.h \
+    exploretreeview.h \
     filesview.h \
     mainwindow.h \
     storagetreeitem.h \

@@ -39,5 +39,6 @@
         <file>fallback-icons/view-statistics.png</file>
         <file>fallback-icons/document-preview-archive.png</file>
         <file>fallback-icons/user-trash.png</file>
+        <file>fallback-icons/folder.png</file>
     </qresource>
 </RCC>

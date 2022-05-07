@@ -4182,6 +4182,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="alternatingRowColors">
                      <bool>true</bool>
                     </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>22</width>
+                      <height>22</height>
+                     </size>
+                    </property>
                    </widget>
                   </item>
                  </layout>
@@ -4266,6 +4272,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="alternatingRowColors">
                      <bool>true</bool>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>22</width>
+                      <height>22</height>
+                     </size>
                     </property>
                     <property name="sortingEnabled">
                      <bool>true</bool>
