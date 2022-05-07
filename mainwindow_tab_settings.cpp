@@ -229,7 +229,6 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
- //       selectedDeviceMethod = "Device treeView";
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
 

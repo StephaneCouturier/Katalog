@@ -132,6 +132,8 @@
     void MainWindow::loadStatisticsData()
     {
         // Load the contents of the statistics file into the database
+//        QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + selectedDeviceName);
+//        QMessageBox::information(this,"Katalog","selectedDeviceType: <br/>" + selectedDeviceType);
 
         //clear database table
         QSqlQuery deleteQuery;
@@ -279,7 +281,7 @@
             }
 
             //Getting the collection snapshots data
-            else if(selectedSource ==tr("collection snapshots")){
+            else if(selectedSource == tr("collection snapshots")){
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
@@ -290,11 +292,11 @@
                                     WHERE recordType = 'Snapshot'
                                   )");
 
-                if ( selectedSearchLocation != tr("All") and selectedDeviceType==tr("Location") )
+                if ( selectedSearchLocation != tr("All") and selectedDeviceType=="Location" )
                     querySQL = querySQL + " AND storage.storageLocation = '"+selectedSearchLocation+"' ";
-                else if ( selectedSearchStorage != tr("All") and selectedDeviceType==tr("Storage") )
+                else if ( selectedSearchStorage != tr("All") and selectedDeviceType=="Storage" )
                     querySQL = querySQL + " AND catalog.catalogStorage = '"+selectedSearchStorage+"' ";
-                else if ( selectedSearchCatalog != tr("All") and selectedDeviceType==tr("Catalog") )
+                else if ( selectedSearchCatalog != tr("All") and selectedDeviceType=="Catalog" )
                     querySQL = querySQL + " AND catalog.catalogName = '"+selectedSearchCatalog+"' ";
 
                 //add last part

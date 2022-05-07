@@ -190,7 +190,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
     //Get list of Locations
     QSqlQuery queryLocationList;
     QString queryLocationListSQL = QLatin1String(R"(
-                            SELECT DISTINCT storageLocation,"Location"
+                            SELECT DISTINCT storageLocation,'Location'
                             FROM storage
                             ORDER BY storageLocation ASC
     )");
@@ -215,7 +215,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
         //Add Storage devices
         QSqlQuery queryStorageList;
         QString queryStorageListSQL = QLatin1String(R"(
-                                SELECT storageName,"Storage"
+                                SELECT storageName,'Storage'
                                 FROM storage
                                 WHERE storageLocation=:storageLocation
                                 ORDER BY storageName ASC
@@ -238,7 +238,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
             //Add Catalogs
             QSqlQuery queryCatalogList;
             QString queryCatalogListSQL = QLatin1String(R"(
-                                    SELECT catalogName,"Catalog"
+                                    SELECT catalogName,'Catalog'
                                     FROM catalog
                                     WHERE catalogStorage=:catalogStorage
                                     ORDER BY catalogName ASC
