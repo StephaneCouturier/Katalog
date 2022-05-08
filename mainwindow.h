@@ -249,6 +249,7 @@ class MainWindow : public QMainWindow
 
         //TAB: Explore
             QString selectedDirectoryName;
+            QString selectedDirectoryFullPath;
             //QString selectedCatalogPath;
             //QString tempSelectedTreeviewSource;
 
@@ -258,6 +259,7 @@ class MainWindow : public QMainWindow
             void loadCatalogDirectoriesToExplore();
             int lastExploreSortSection;
             int lastExploreSortOrder;
+            bool optionDisplayFolders;
 
         //TAB: Create
             QFileSystemModel *fileSystemModel;
@@ -360,12 +362,12 @@ class MainWindow : public QMainWindow
                 void on_Collection_lineEdit_CollectionFolder_returnPressed();
 
                 void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
-
+                void on_Settings_comboBox_Theme_currentIndexChanged(int index);
                 void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
-                void on_Settings_comboBox_Theme_currentIndexChanged(int index);
-                void on_Settings_checkBox_CheckVersion_stateChanged();
                 void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
+                void on_Settings_checkBox_CheckVersion_stateChanged();
+                void on_Collection_pushButton_OpenSettingsFile_clicked();
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -445,6 +447,7 @@ class MainWindow : public QMainWindow
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_HeaderSortOrderChanged();
+            void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
 
             //context menu directories
             void on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos);

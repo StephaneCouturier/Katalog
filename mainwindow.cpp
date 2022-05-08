@@ -61,24 +61,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         //Set up the User Interface
             ui->setupUi(this);
 
-            //Set current version and date
-            currentVersion = "1.12";
-            releaseDate = "2022-05-01";
-            ui->Settings_label_VersionValue->setText(currentVersion);
-            ui->Settings_label_DateValue->setText(releaseDate);
-
-            //Check if new version is available
-                     checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
-                     if ( checkVersionChoice == true)
-                         checkVersion();
-
             //Set Development mode
-            developmentMode = false;
+                developmentMode = false;
 
-            //Hide Development UI items that are not ready for use
-            if(developmentMode==false){
-                hideDevelopmentUIItems();
-            }
+                //Hide Development UI items that are not ready for use
+                if(developmentMode==false){
+                    hideDevelopmentUIItems();
+                }
+
+            //Set current version and release date, and check new version
+                currentVersion = "1.12";
+                releaseDate = "2022-05-07";
+                ui->Settings_label_VersionValue->setText(currentVersion);
+                ui->Settings_label_DateValue->setText(releaseDate);
+
+                checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
+                if ( checkVersionChoice == true)
+                    checkVersion();
+
 
             //Load languages to the Settings combobox
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
@@ -173,6 +173,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             //Load path of last collection used
                 ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
 
+
+
             //Set file types
                 setFileTypes();
 
@@ -180,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
                 ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
                 ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
+
+        //Setup tab: Explore
+                ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
 
         //Setup tab: Search
                 //Load an empty model to display headers

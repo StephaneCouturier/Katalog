@@ -264,6 +264,7 @@
             lastSearchSortOrder   = settings.value("Search/lastSearchSortOrder").toInt();
             lastSearchHistorySortSection = settings.value("Search/lastSearchHistorySortSection").toInt();
             lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
+            optionDisplayFolders   = settings.value("Explore/DisplayFolders").toBool();
 
             //ui->Catalogs_treeView_CatalogList->header()->restoreState(settings.value("Catalog/lastCatalogsHeaderSectionSizes").toByteArray());
             //ui->splitter->pos();
