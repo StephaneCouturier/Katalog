@@ -1655,12 +1655,12 @@
 
                             //Get the FileSize from the list if available
                             qint64      lineFileSize;
-                            if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
+                            if (fieldListCount >= 3){lineFileSize = lineFieldList[1].toLongLong();}
                             else lineFileSize = 0;
 
                             //Get the File DateTime from the list if available
                             QDateTime   lineFileDateTime;
-                            if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
+                            if (fieldListCount >= 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
                             else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
                             //Retrieve file info
@@ -1668,7 +1668,7 @@
 
                             // Get the fileDateTime from the list if available
                             QString lineFileDatetime;
-                            if (fieldListCount == 3){
+                            if (fieldListCount >= 3){
                                     lineFileDatetime = lineFieldList[2];}
                             else lineFileDatetime = "";
 
