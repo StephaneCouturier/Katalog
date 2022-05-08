@@ -4408,6 +4408,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <number>0</number>
                </property>
                <item>
+                <widget class="QPushButton" name="Explore_pushButton_Load">
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Reload all catalog information</string>
+                 </property>
+                 <property name="text">
+                  <string>Load</string>
+                 </property>
+                 <property name="icon">
+                  <iconset theme="view-refresh">
+                   <normaloff>.</normaloff>.</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QLabel" name="Explore_label_CatalogNameLabel">
                  <property name="maximumSize">
                   <size>

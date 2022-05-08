@@ -48,43 +48,22 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
         {
-            //if(developmentMode==true){
-                //Get selected directory name
-                //selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
-                //QString NoItems       = ui->DEV_treeView_Directories->model()->index(index.row(), 1, index.parent() ).data().toString();
-                QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
+            //Get selected directory name
+            QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
+            selectedDirectoryFullPath = fullPath;
+            selectedDirectoryName = fullPath.remove(selectedCatalogPath+"/");
 
-                selectedDirectoryFullPath = fullPath;
-                selectedDirectoryName = fullPath.remove(selectedCatalogPath+"/");
+            //Display selected directory name
+            ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
-                //Display selected directory name
-                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+            //Remember selected directory name
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
-                //Remember selected directory name
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
-
-                //Load directory files
-                loadSelectedDirectoryFilesToExplore();
-/*
-            }
-            else{
-                //Get selected directory name
-                selectedDirectoryName = ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
-
-                //Display selected directory name
-                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-
-                //Remember selected directory name
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
-
-                //Load directory files
-                loadSelectedDirectoryFilesToExplore();
-            }
-            */
+            //Load directory files
+            loadSelectedDirectoryFilesToExplore();
         }
-
+        //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
         {
             //Get file from selected row
@@ -130,6 +109,15 @@
             settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Explore_pushButton_Load_clicked()
+        {
+            if (selectedDeviceType=="Catalog" and selectedDeviceName !=selectedCatalogName){
+                QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + selectedDeviceName);
+                selectedCatalogName = selectedDeviceName;
+            }
+            openCatalogToExplore();
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
         {
             optionDisplayFolders = checked;
@@ -139,7 +127,7 @@
         }
         //----------------------------------------------------------------------
 
-    //Context Menu methods - files
+    //Context Menu - files
         void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
         {
             QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
@@ -371,7 +359,7 @@
             }
         }
 
-    //Context Menu methods - directories
+    //Context Menu - directories
         void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
         {
             QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
@@ -404,8 +392,6 @@
             ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
             ui->tabWidget->setCurrentIndex(6);
         }
-
-        //----------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
 

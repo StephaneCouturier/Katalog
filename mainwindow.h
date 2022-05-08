@@ -447,6 +447,7 @@ class MainWindow : public QMainWindow
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_HeaderSortOrderChanged();
+            void on_Explore_pushButton_Load_clicked();
             void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
 
             //context menu directories
