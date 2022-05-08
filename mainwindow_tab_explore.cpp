@@ -50,23 +50,30 @@
             //Get file from selected row
             QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
             QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            QString selectedFile       = selectedFileFolder+"/"+selectedFileName;
+            QString selectedType       = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
 
-            //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));           
+            if(selectedType=="file"){
+                //Open the file (fromLocalFile needed for spaces in file name)
+                QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            }
+            else{
+                //openDirectory
+            }
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
         {
-            if(developmentMode==true){
+            //if(developmentMode==true){
                 //Get selected directory name
                 //selectedDirectoryName = ui->DEV_treeView_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
-                //QString Name        = ui->DEV_treeView_Directories->model()->index(index.row(), 0, index.parent() ).data().toString();
-                //QString NoItems     = ui->DEV_treeView_Directories->model()->index(index.row(), 1, index.parent() ).data().toString();
+                //QString NoItems       = ui->DEV_treeView_Directories->model()->index(index.row(), 1, index.parent() ).data().toString();
                 QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
-                //QMessageBox::information(this,"Katalog","Name, NoItems, fullPath : <br/>" + Name + "<br/>" +NoItems+ "<br/>" +fullPath);
 
+                selectedDirectoryFullPath = fullPath;
                 selectedDirectoryName = fullPath.remove(selectedCatalogPath+"/");
+
                 //Display selected directory name
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
@@ -76,7 +83,7 @@
 
                 //Load directory files
                 loadSelectedDirectoryFilesToExplore();
-
+/*
             }
             else{
                 //Get selected directory name
@@ -92,6 +99,7 @@
                 //Load directory files
                 loadSelectedDirectoryFilesToExplore();
             }
+            */
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeView_FileList_HeaderSortOrderChanged(){
@@ -113,6 +121,15 @@
             settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
+        {
+            optionDisplayFolders = checked;
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Explore/DisplayFolders", optionDisplayFolders);
+            loadSelectedDirectoryFilesToExplore();
+        }
+        //----------------------------------------------------------------------
+
     //Context Menu methods - files
         void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
         {
@@ -372,13 +389,10 @@
         void MainWindow::exploreContextTagFolder()
         {
             QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
-            QString selectedFileFolder =
-                    ui->Explore_label_CatalogPathDisplay->text()
-                  + "/"
-                  + ui->Explore_treeview_Directories->model()->index(index.row(), 0, QModelIndex()).data().toString();
 
-            //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant(selectedFileFolder).toString());
-            ui->Tags_lineEdit_FolderPath->setText(selectedFileFolder);
+            QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
+
+            ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
             ui->tabWidget->setCurrentIndex(6);
         }
 
@@ -440,7 +454,7 @@
         //Load the catalog's directories and display them
 
         //prepare query to load file info
-        QSqlQuery getDirectoriesQuery;
+            QSqlQuery getDirectoriesQuery;
 
             //shorten the paths as they all start with the catalog path
             QString getDirectoriesSQL = QLatin1String(R"(
@@ -455,49 +469,43 @@
             getDirectoriesQuery.exec();
 
         //Prepare model
-        QSqlQueryModel *getDirectoriesQueryModel = new QSqlQueryModel;
-        getDirectoriesQueryModel->setQuery(getDirectoriesQuery);
-        QSortFilterProxyModel *getDirectoriesProxyModel = new QSortFilterProxyModel;
-        getDirectoriesProxyModel->setSourceModel(getDirectoriesQueryModel);
-        getDirectoriesProxyModel->setHeaderData(0, Qt::Horizontal, tr("Directory"));
+            ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
+            exploreTreeModel->setModelCatalog(selectedCatalogName,selectedCatalogPath);
 
-        // Connect model to tree/table view
-        ui->Explore_treeview_Directories->setModel(getDirectoriesProxyModel);
-        ui->Explore_treeview_Directories->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
-        ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
+            ExploreTreeView *exploreProxyModel = new ExploreTreeView();
+            exploreProxyModel->setSourceModel(exploreTreeModel);
+            //ui->Explore_treeview_Directories->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
+            ui->Explore_treeview_Directories->QTreeView::sortByColumn(5,Qt::SortOrder(0));
+            ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
+            //ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
 
-        //ui->DEV_treeView_Directories->setModel(getDirectoriesProxyModel);
+        // Connect model to treeview
+            ui->Explore_treeview_Directories->setModel(exploreProxyModel);
+            ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
+            ui->Explore_treeview_Directories->hideColumn(1);//NoOfItems
+            ui->Explore_treeview_Directories->hideColumn(2);//FullPath
 
-        //Display number of directories
-        QString countSQL = QLatin1String(R"(
-                            SELECT count (DISTINCT (filePath))
-                            FROM filesall
-                            WHERE fileCatalog =:fileCatalog
-                           )");
-        QSqlQuery countQuery;
-        countQuery.prepare(countSQL);
-        countQuery.bindValue(":fileCatalog",selectedCatalogName);
-        countQuery.exec();
-        countQuery.next();
-        ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
+        //Display number of directories and total size
+            QString countSQL = QLatin1String(R"(
+                                SELECT count (DISTINCT (filePath))
+                                FROM filesall
+                                WHERE fileCatalog =:fileCatalog
+                               )");
+            QSqlQuery countQuery;
+            countQuery.prepare(countSQL);
+            countQuery.bindValue(":fileCatalog",selectedCatalogName);
+            countQuery.exec();
+            countQuery.next();
+            ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
 
-
-        //DEV DirectoryTreeModel --------------------------------
+            //DEV DirectoryTreeModel --------------------------------
+/*
         if(developmentMode==true){
 
             QString modelToTest = "Explore"; //Storage
 
             if (modelToTest =="Explore"){
-                ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
-                exploreTreeModel->setModelCatalog(selectedCatalogName,selectedCatalogPath);
 
-                ExploreTreeView *exploreProxyModel = new ExploreTreeView();
-                exploreProxyModel->setSourceModel(exploreTreeModel);
-
-                ui->Explore_treeview_Directories->setModel(exploreProxyModel);
-                ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
-                ui->Explore_treeview_Directories->hideColumn(2);
             }
             else if (modelToTest =="Storage") {
                 const QStringList headers({tr("Title"),tr("Type")});
@@ -509,6 +517,7 @@
                 ui->Explore_treeview_Directories->expandAll();
             }
         }
+*/
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSelectedDirectoryFilesToExplore()
@@ -516,16 +525,56 @@
         //Load the files of the selected directory into the file view
 
         // Load all files and create model
-        QString selectSQL = QLatin1String(R"(
-                            SELECT  fileName,
-                                    fileSize,
-                                    fileDateUpdated,
-                                    filePath,
-                                    fileCatalog
-                            FROM    filesall
-                            WHERE   fileCatalog =:fileCatalog
-                            AND     filePath    =:filePath
-                                        )");
+        QString selectSQL;
+        if(optionDisplayFolders==true){
+            selectSQL = QLatin1String(R"(
+                                    SELECT  		REPLACE(filePath, :selectedDirectoryFullPath||'/', ''),
+                                                    SUM(fileSize),
+                                                    "",
+                                                    filePath,
+                                                    "",
+                                                    "folder" AS Type,
+                                                    "1"||filePath AS orderValue
+                                    FROM    filesall
+                                    WHERE   fileCatalog =:fileCatalog
+                                    AND     filePath  like :folderPath
+
+                                    GROUP BY filePath
+
+                                    UNION
+
+                                    SELECT  		fileName,
+                                                    fileSize,
+                                                    fileDateUpdated,
+                                                    filePath,
+                                                    fileCatalog,
+                                                    "file"  AS Type,
+                                                    "2"||fileName AS orderValue
+                                    FROM    filesall
+                                    WHERE   fileCatalog =:fileCatalog
+                                    AND     filePath    =:filePath
+
+                                    ORDER BY orderValue ASC
+
+                                )");
+            // AND     REPLACE(filePath, :selectedDirectoryFullPath||'/', ''  NOT like "/"
+        }
+        else{
+            selectSQL = QLatin1String(R"(
+                                    SELECT  		fileName,
+                                                    fileSize,
+                                                    fileDateUpdated,
+                                                    filePath,
+                                                    fileCatalog,
+                                                    "file"  AS Type,
+                                                    "2"||fileName AS orderValue
+                                    FROM    filesall
+                                    WHERE   fileCatalog =:fileCatalog
+                                    AND     filePath    =:filePath
+
+                                    ORDER BY orderValue ASC
+                                )");
+        }
 
         //  if selectedDirectoryName="" then no file is loaded
 
@@ -534,12 +583,16 @@
 
         // fill lists depending on directory selection source
         loadCatalogQuery.bindValue(":fileCatalog",selectedCatalogName);
+
         if(selectedCatalogPath==selectedDirectoryName){
             loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{
             loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
         }
+
+        loadCatalogQuery.bindValue(":folderPath",selectedDirectoryFullPath+"/%");
+        loadCatalogQuery.bindValue(":selectedDirectoryFullPath",selectedDirectoryFullPath);
 
         loadCatalogQuery.exec();
 
@@ -554,6 +607,7 @@
         proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
         proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Path"));
         proxyModel2->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+        proxyModel2->setHeaderData(5, Qt::Horizontal, tr("Type"));
 
         // Connect model to tree/table view
         ui->Explore_treeView_FileList->setModel(proxyModel2);
@@ -563,10 +617,12 @@
         ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
         ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
         ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
+        ui->Explore_treeView_FileList->hideColumn(4);
+        ui->Explore_treeView_FileList->hideColumn(5);
 
-        //Display count of files
+        //Display count of files and total size
         QString countSQL = QLatin1String(R"(
-                            SELECT  count (*)
+                            SELECT  count (*), sum(fileSize)
                             FROM    filesall
                             WHERE   fileCatalog =:fileCatalog
                                         )");
@@ -588,6 +644,6 @@
         countQuery.next();
 
         ui->Explore_label_FilesNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
+        ui->Explore_label_TotalSizeLabelDisplay->setText(QLocale().formattedDataSize(countQuery.value(1).toLongLong()));
         ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-
     }
