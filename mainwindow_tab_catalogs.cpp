@@ -57,10 +57,19 @@
         void MainWindow::on_Catalogs_pushButton_ViewCatalog_clicked()
         {
             if ( selectedCatalogStorage !="EXPORT"){
+
+                //Start at the root folder of the catalog
+                selectedDirectoryName     = selectedCatalogPath;
+                selectedDirectoryFullPath = selectedCatalogPath;
+
+                //Load
                 openCatalogToExplore();
+
+                //Go to explore tab
                 ui->tabWidget->setCurrentIndex(2);
             }
-            else QMessageBox::information(this,"Katalog","This Search Export cannot be viewed in Explore yet.");
+            else
+                QMessageBox::information(this,"Katalog","This Search Export cannot be viewed in Explore yet.");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
@@ -340,7 +349,15 @@
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index)
         {
             if ( selectedCatalogStorage !="EXPORT"){
+
+                //Start at the root folder of the catalog
+                selectedDirectoryName     = selectedCatalogPath;
+                selectedDirectoryFullPath = selectedCatalogPath;
+
+                //Load
                 openCatalogToExplore();
+
+                //Go to explore tab
                 ui->tabWidget->setCurrentIndex(2);
             }
             else QMessageBox::information(this,"Katalog","This Search Export cannot be viewed in Explore yet.");
