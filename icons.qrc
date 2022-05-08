@@ -42,5 +42,6 @@
         <file>fallback-icons/folder.png</file>
         <file>fallback-icons/edit-paste-in-place.png</file>
         <file>fallback-icons/address-book-new.png</file>
+        <file>fallback-icons/view-list-tree.png</file>
     </qresource>
 </RCC>

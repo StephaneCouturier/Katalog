@@ -3477,8 +3477,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Catalogs">
            <attribute name="icon">
-            <iconset theme="view-media-playlist">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="address-book-new"/>
            </attribute>
            <attribute name="title">
             <string>Catalogs</string>
@@ -4129,8 +4128,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Explore">
            <attribute name="icon">
-            <iconset theme="folder-text">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="view-list-tree"/>
            </attribute>
            <attribute name="title">
             <string>Explore</string>
