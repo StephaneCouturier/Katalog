@@ -40,5 +40,7 @@
         <file>fallback-icons/document-preview-archive.png</file>
         <file>fallback-icons/user-trash.png</file>
         <file>fallback-icons/folder.png</file>
+        <file>fallback-icons/edit-paste-in-place.png</file>
+        <file>fallback-icons/address-book-new.png</file>
     </qresource>
 </RCC>

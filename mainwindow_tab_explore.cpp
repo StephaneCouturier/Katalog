@@ -646,12 +646,6 @@
         countQuery.prepare(countSQL);
         countQuery.bindValue(":fileCatalog",selectedCatalogName);
 
-//        if(selectedCatalogPath==selectedDirectoryName){
-//            countQuery.bindValue(":filePath",selectedDirectoryName);
-//        }
-//        else
-//            countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
-
         if(selectedCatalogPath==selectedDirectoryName){
             countQuery.bindValue(":filePath",selectedDirectoryName);
         }

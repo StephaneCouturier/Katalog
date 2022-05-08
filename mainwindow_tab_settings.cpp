@@ -31,9 +31,10 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "filesview.h"//test
+
 #include "storagetreemodel.h"
 #include "storageview.h"
+#include "devicetreeview.h"
 
 #include <QSettings>
 #include <QDesktopServices>
@@ -255,10 +256,13 @@
 
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
+        DeviceTreeView *deviceProxyModel = new DeviceTreeView();
+        deviceProxyModel->setSourceModel(storageTreeModel);
+
         //LoadModel
-        ui->Filters_treeView_Devices->setModel(storageTreeModel);
-        ui->Filters_treeView_Devices->header()->resizeSection(0,  300);
-        ui->Filters_treeView_Devices->expandAll();
+        ui->Filters_treeView_Devices->setModel(deviceProxyModel);
+        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
 
         ui->Filters_treeView_Devices->hideColumn(1);
         ui->Filters_treeView_Devices->collapseAll();

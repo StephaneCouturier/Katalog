@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1267</width>
-    <height>727</height>
+    <height>746</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -389,6 +389,12 @@
                  </property>
                  <property name="selectionBehavior">
                   <enum>QAbstractItemView::SelectItems</enum>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>22</width>
+                   <height>22</height>
+                  </size>
                  </property>
                  <property name="rootIsDecorated">
                   <bool>true</bool>
