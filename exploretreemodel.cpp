@@ -130,7 +130,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, '')) AS filePath,
                                                 id_file,
                                                 filePath AS fullPath
                                 FROM  filesall
@@ -144,39 +144,48 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         int idPath = query.record().indexOf("filePath");
         int idIdx = query.record().indexOf("id_file");
-        int idfullPath = query.record().indexOf("fullPath");
+
+        QList<QVariant> columnData;
+
+        //insert catalog root item (single dot folder)
+//        columnData <<"."<<0 <<modelCatalogPath;
+//        parent->appendChild(new ExploreTreeItem(columnData));
+//        parents <<  parents.last()->child( parents.last()->childCount()-1);
+        //remove first(duplicate)
+        //parents.removeFirst();
+        //delete parents.takeAt(2);
 
 
         while (query.next())
         {
            QString name         = query.value(idPath).toString();
+
            int id_file          = query.value(idIdx).toInt();
-           QString folderPath; //   = query.value(idfullPath).toString();
+           QString folderPath;
 
            QStringList nodeString = name.split("/", QString::SkipEmptyParts);
-
            QString temppath = "";
 
            int lastidx = 0;
            for(int node = 0; node < nodeString.count(); ++node)
            {
-               temppath += nodeString.at(node);
-               //if(node != nodeString.count() - 1)
-                   temppath += "/";
+                temppath += nodeString.at(node);
+                //if(node != nodeString.count() - 1)
+                temppath += "/";
 
-               unsigned int hash = qHash(temppath);
-               QList<QVariant> columnData;
+                unsigned int hash = qHash(temppath);
+                columnData.clear();
 
-               columnData << nodeString.at(node);
+                columnData << nodeString.at(node);
 
-               int idx = findNode(hash, parents);
+                int idx = findNode(hash, parents);
 
-               if(idx != -1)
-               {
+                if(idx != -1)
+                {
                     lastidx = idx;
-               }
-               else
-               {
+                }
+                else
+                {
                    QString sQuery =  "";
                    if(node == nodeString.count() - 1)
                    {
@@ -186,7 +195,6 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                    }
                    else
                    {
-
                        sQuery += "SELECT count(*) FROM fileAll WHERE filePath like '";
                        sQuery += temppath;
                        sQuery += "%';";

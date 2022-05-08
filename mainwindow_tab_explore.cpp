@@ -78,12 +78,13 @@
             }
             else{
                 //openDirectory
-                selectedDirectoryName     = selectedDirectoryFullPath.remove(selectedCatalogPath+"/");
                 selectedDirectoryFullPath = selectedFileFolder;
+                selectedDirectoryName     = selectedFileFolder.remove(selectedCatalogPath+"/");
 
                 //Remember selected directory name
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
                 settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+
                 //Reload
                 loadSelectedDirectoryFilesToExplore();
             }
@@ -447,21 +448,6 @@
     void MainWindow::loadCatalogDirectoriesToExplore()
     {
         //Load the catalog's directories and display them
-
-        //prepare query to load file info
-            QSqlQuery getDirectoriesQuery;
-
-            //shorten the paths as they all start with the catalog path
-            QString getDirectoriesSQL = QLatin1String(R"(
-                                            SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', ''))
-                                            FROM filesall
-                                            WHERE   fileCatalog =:fileCatalog
-                                            ORDER BY filePath ASC
-                                        )");
-            getDirectoriesQuery.prepare(getDirectoriesSQL);
-            getDirectoriesQuery.bindValue(":fileCatalog",selectedCatalogName);
-            getDirectoriesQuery.bindValue(":selectedCatalogPath",selectedCatalogPath);
-            getDirectoriesQuery.exec();
 
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
