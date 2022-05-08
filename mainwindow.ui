@@ -582,60 +582,6 @@
               </item>
               <item row="4" column="1">
                <layout class="QGridLayout" name="Settings_gridLayout_Settings_2">
-                <item row="3" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-                  <property name="toolTip">
-                   <string>Always keep one back of each catalog</string>
-                  </property>
-                  <property name="text">
-                   <string>Auto-backup catalogs</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="Settings_label_Data">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Data</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
-                  <property name="toolTip">
-                   <string>Verify if a new version of Katalog is available when starting the app.</string>
-                  </property>
-                  <property name="text">
-                   <string>Check at start up</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="Settings_comboBox_Language"/>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-                  <property name="toolTip">
-                   <string>Keep records of files and size for Statistics</string>
-                  </property>
-                  <property name="text">
-                   <string>Save records</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="Settings_label_Theme">
                   <property name="font">
@@ -645,30 +591,6 @@
                   </property>
                   <property name="text">
                    <string>Theme</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="Settings_label_CheckVersion">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Version</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="Settings_label_Data_2">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Language</string>
                   </property>
                  </widget>
                 </item>
@@ -695,6 +617,69 @@
                   </item>
                  </widget>
                 </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+                  <property name="toolTip">
+                   <string>Keep records of files and size for Statistics</string>
+                  </property>
+                  <property name="text">
+                   <string>Save records</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="Settings_label_CheckVersion">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Version</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                  <property name="toolTip">
+                   <string>Always keep one back of each catalog</string>
+                  </property>
+                  <property name="text">
+                   <string>Auto-backup catalogs</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="Settings_label_Data_2">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Language</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                  <property name="toolTip">
+                   <string>Verify if a new version of Katalog is available when starting the app.</string>
+                  </property>
+                  <property name="text">
+                   <string>Check at start up</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
                 <item row="4" column="1">
                  <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
                   <property name="enabled">
@@ -708,6 +693,53 @@
                   </property>
                   <property name="checked">
                    <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="Settings_comboBox_Language"/>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="Settings_label_Data">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Data</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QPushButton" name="Collection_pushButton_OpenSettingsFile">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Open the collection folder</string>
+                  </property>
+                  <property name="text">
+                   <string>Open</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-open">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="Settings_label_SettingsFile">
+                  <property name="font">
+                   <font>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Open Settings file</string>
                   </property>
                  </widget>
                 </item>
@@ -4135,6 +4167,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="enabled">
                        <bool>true</bool>
                       </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>125</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Directories</string>
                       </property>
@@ -4248,6 +4286,57 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
+                     <spacer name="Explore_horizontalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="Explore_label_TotalSizeLabel">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Total Size</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="Explore_label_TotalSizeLabelDisplay">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <spacer name="Explore_horizontalSpacer_03">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -4259,6 +4348,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </size>
                       </property>
                      </spacer>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
+                      <property name="text">
+                       <string>Display folders</string>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </item>

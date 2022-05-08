@@ -390,6 +390,12 @@
         settings.setValue("Settings/PreloadCatalogs", ui->Settings_checkBox_PreloadCatalogs->isChecked());
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Collection_pushButton_OpenSettingsFile_clicked()
+    {
+        //Open the selected collection folder
+        QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
+    }
+    //----------------------------------------------------------------------
 
 //SETTINGS / About ---------------------------------------------------------
 
