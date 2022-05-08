@@ -246,6 +246,7 @@
             selectedCatalogName   = settings.value("Explore/lastSelectedCatalogName").toString();
             selectedCatalogPath   = settings.value("Explore/lastSelectedCatalogPath").toString();
             selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
+            selectedDirectoryFullPath = selectedCatalogPath + "/" + selectedDirectoryName;
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      

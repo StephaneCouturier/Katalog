@@ -45,23 +45,6 @@
 
 //UI----------------------------------------------------------------------------
 
-        void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
-        {
-            //Get file from selected row
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile       = selectedFileFolder+"/"+selectedFileName;
-            QString selectedType       = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-
-            if(selectedType=="file"){
-                //Open the file (fromLocalFile needed for spaces in file name)
-                QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-            }
-            else{
-                //openDirectory
-            }
-
-        }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
         {
@@ -100,6 +83,32 @@
                 loadSelectedDirectoryFilesToExplore();
             }
             */
+        }
+
+        void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
+        {
+            //Get file from selected row
+            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedFile       = selectedFileFolder+"/"+selectedFileName;
+            QString selectedType       = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+
+            if(selectedType=="file"){
+                //Open the file (fromLocalFile needed for spaces in file name)
+                QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+            }
+            else{
+                //openDirectory
+                selectedDirectoryName     = selectedDirectoryFullPath.remove(selectedCatalogPath+"/");
+                selectedDirectoryFullPath = selectedFileFolder;
+
+                //Remember selected directory name
+                QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+                //Reload
+                loadSelectedDirectoryFilesToExplore();
+            }
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_treeView_FileList_HeaderSortOrderChanged(){
@@ -526,7 +535,9 @@
 
         // Load all files and create model
         QString selectSQL;
+
         if(optionDisplayFolders==true){
+
             selectSQL = QLatin1String(R"(
                                     SELECT  		REPLACE(filePath, :selectedDirectoryFullPath||'/', ''),
                                                     SUM(fileSize),
@@ -588,7 +599,7 @@
             loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{
-            loadCatalogQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+            loadCatalogQuery.bindValue(":filePath",selectedDirectoryFullPath);
         }
 
         loadCatalogQuery.bindValue(":folderPath",selectedDirectoryFullPath+"/%");
@@ -634,11 +645,19 @@
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
         countQuery.bindValue(":fileCatalog",selectedCatalogName);
+
+//        if(selectedCatalogPath==selectedDirectoryName){
+//            countQuery.bindValue(":filePath",selectedDirectoryName);
+//        }
+//        else
+//            countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+
         if(selectedCatalogPath==selectedDirectoryName){
             countQuery.bindValue(":filePath",selectedDirectoryName);
         }
-        else
-            countQuery.bindValue(":filePath",selectedCatalogPath+'/'+selectedDirectoryName);
+        else{
+            countQuery.bindValue(":filePath",selectedDirectoryFullPath);
+        }
 
         countQuery.exec();
         countQuery.next();
