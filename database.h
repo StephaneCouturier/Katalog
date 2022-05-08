@@ -113,7 +113,8 @@
                                         fileSize            REAL,
                                         fileDateUpdated     TEXT,
                                         fileCatalog         TEXT,
-                                        PRIMARY KEY("id_file" AUTOINCREMENT))
+                                        PRIMARY KEY("id_file" AUTOINCREMENT)
+                                    )
                 )");
 
 // FILE (one-off requests) ----------------------------------------------------
