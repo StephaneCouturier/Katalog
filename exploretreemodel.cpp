@@ -8,7 +8,7 @@ ExploreTreeModel::ExploreTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     QList<QVariant> rootData;
-    rootData << tr("Folder") << tr("No of items") << tr("Full path");;
+    rootData << tr("Folder") << tr("No of items") << tr("Full path");
     rootItem = new ExploreTreeItem(rootData);
     setupModelData(rootItem);
 }
@@ -116,6 +116,13 @@ int ExploreTreeModel::findNode(unsigned int& hash, const QList<ExploreTreeItem*>
     return -1;
 }
 
+void ExploreTreeModel::setModelCatalog(QString newModelFileCatalog, QString newModelCatalogPath)
+{
+    modelFileCatalog = newModelFileCatalog;
+    modelCatalogPath = newModelCatalogPath;
+    setupModelData(rootItem);
+}
+
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 {
     QList<ExploreTreeItem*> parents;
@@ -123,12 +130,13 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath, id_file, filePath AS fullPath
+                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', '')) AS filePath,
+                                                id_file,
+                                                filePath AS fullPath
                                 FROM  filesall
                                 WHERE fileCatalog =:fileCatalog
                                 ORDER BY filePath ASC
                             )");
-
         query.prepare(querySQL);
         query.bindValue(":fileCatalog",modelFileCatalog);
         query.bindValue(":selectedCatalogPath",modelCatalogPath);
@@ -141,9 +149,9 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         while (query.next())
         {
-           QString name = query.value(idPath).toString();
-           int id_file = query.value(idIdx).toInt();
-           QString fileFullPath = query.value(idfullPath).toString();
+           QString name         = query.value(idPath).toString();
+           int id_file          = query.value(idIdx).toInt();
+           QString folderPath; //   = query.value(idfullPath).toString();
 
            QStringList nodeString = name.split("/", QString::SkipEmptyParts);
 
@@ -153,7 +161,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
            for(int node = 0; node < nodeString.count(); ++node)
            {
                temppath += nodeString.at(node);
-               if(node != nodeString.count() - 1)
+               //if(node != nodeString.count() - 1)
                    temppath += "/";
 
                unsigned int hash = qHash(temppath);
@@ -191,7 +199,10 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                         nChild = query2.value(0).toInt();
 
                    columnData << nChild;
-                   columnData << fileFullPath;
+
+                   folderPath = modelCatalogPath + "/" + temppath;
+                   folderPath.truncate(folderPath.length()-1);
+                   columnData << folderPath;
 
                    if(lastidx != -1)
                    {
@@ -207,12 +218,4 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                }
            }
         }
-//    }
-}
-
-void ExploreTreeModel::setModelCatalog(QString newModelFileCatalog, QString newModelCatalogPath)
-{
-    modelFileCatalog = newModelFileCatalog;
-    modelCatalogPath = newModelCatalogPath;
-    setupModelData(rootItem);
 }

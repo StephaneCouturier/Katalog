@@ -23,8 +23,8 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
-    QString modelFileCatalog; // = "Maxtor_2Tb";
-    QString modelCatalogPath; // = "/run/media/stephane/Maxtor_2Tb";
+    QString modelFileCatalog;
+    QString modelCatalogPath;
 
     void setModelCatalog(QString newModelFileCatalog, QString newModelCatalogPath);
 
