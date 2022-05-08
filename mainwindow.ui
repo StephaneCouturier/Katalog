@@ -3477,7 +3477,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Catalogs">
            <attribute name="icon">
-            <iconset theme="address-book-new"/>
+            <iconset theme="address-book-new">
+             <normaloff>.</normaloff>.</iconset>
            </attribute>
            <attribute name="title">
             <string>Catalogs</string>
@@ -3701,8 +3702,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Explore</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="folder-text">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="view-list-tree"/>
                   </property>
                  </widget>
                 </item>
@@ -3715,7 +3715,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>View the statistics of the selected catalog</string>
                   </property>
                   <property name="text">
-                   <string>View</string>
+                   <string>Statistics</string>
                   </property>
                   <property name="icon">
                    <iconset theme="office-chart-line">
@@ -3822,8 +3822,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Snapshot</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="office-chart-line">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-save"/>
                   </property>
                  </widget>
                 </item>
@@ -3839,8 +3838,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Import</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="download">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="kontact-import-wizard"/>
                   </property>
                  </widget>
                 </item>
@@ -4128,7 +4126,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Explore">
            <attribute name="icon">
-            <iconset theme="view-list-tree"/>
+            <iconset theme="view-list-tree">
+             <normaloff>.</normaloff>.</iconset>
            </attribute>
            <attribute name="title">
             <string>Explore</string>
