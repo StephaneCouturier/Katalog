@@ -3702,7 +3702,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Explore</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="view-list-tree"/>
+                   <iconset theme="view-list-tree">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -3822,7 +3823,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Snapshot</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-save"/>
+                   <iconset theme="document-save">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -3838,7 +3840,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Import</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="kontact-import-wizard"/>
+                   <iconset theme="kontact-import-wizard">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>

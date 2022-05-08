@@ -497,9 +497,9 @@
 /*
         if(developmentMode==true){
 
-            QString modelToTest = "Explore"; //Storage
+            QString modelToTest = "Storage"; //
 
-            if (modelToTest =="Explore"){
+            if (modelToTest =="Storage"){
 
             }
             else if (modelToTest =="Storage") {
@@ -571,6 +571,11 @@
 
                                     ORDER BY orderValue ASC
                                 )");
+        }
+
+
+        if( selectedCatalogPath == "EXPORT" ){
+            selectedDirectoryFullPath.remove("EXPORT");
         }
 
         //  if selectedDirectoryName="" then no file is loaded

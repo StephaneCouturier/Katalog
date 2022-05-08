@@ -426,7 +426,7 @@ class MainWindow : public QMainWindow
             void on_Catalogs_pushButton_DeleteCatalog_clicked();
 
             void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
-            void on_Catalogs_treeView_CatalogList_doubleClicked(const QModelIndex &index);
+            void on_Catalogs_treeView_CatalogList_doubleClicked();
             void on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged();
 
             void on_Catalogs_pushButton_Save_clicked();
