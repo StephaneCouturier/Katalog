@@ -138,18 +138,7 @@
             connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
             directoryContextMenu.addAction(menuDirectoryAction1);
 
-            QAction* selectedItem = directoryContextMenu.exec(globalPos);
-
-            if (selectedItem)
-            {
-                //something
-                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("ok").toString());
-
-            }
-            else
-            {
-                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("did nothing").toString());
-            }
+            directoryContextMenu.exec(globalPos);
         }
 
         void MainWindow::exploreContextTagFolder()
@@ -251,7 +240,7 @@
                 fileContextMenu.addAction(menuAction8);
             }
 
-            QAction* selectedItem = fileContextMenu.exec(globalPos);
+            fileContextMenu.exec(globalPos);
 
         }
 
