@@ -1628,13 +1628,16 @@
                                                                 filePath,
                                                                 fileSize,
                                                                 fileDateUpdated,
-                                                                fileCatalog )
+                                                                fileCatalog,
+                                                                fileFullPath
+                                                                )
                                                 VALUES(
                                                                 :fileName,
                                                                 :filePath,
                                                                 :fileSize,
                                                                 :fileDateUpdated,
-                                                                :fileCatalog )
+                                                                :fileCatalog,
+                                                                :fileFullPath )
                                             )");
 
                     //process each line of the file
@@ -1679,6 +1682,7 @@
                                 insertQuery.bindValue(":filePath",        fileInfo.path());
                                 insertQuery.bindValue(":fileDateUpdated", lineFileDatetime);
                                 insertQuery.bindValue(":fileCatalog",     sourceCatalogName);
+                                insertQuery.bindValue(":fileFullPath",    lineFilePath);
                                 insertQuery.exec();
                         }
 

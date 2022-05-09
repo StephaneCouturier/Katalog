@@ -128,65 +128,131 @@
         }
         //----------------------------------------------------------------------
 
-    //Context Menu - files
-        void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
+    //Context Menu - directories
+        void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
         {
-            QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
-            QMenu fileContextMenu;
+            QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
+            QMenu directoryContextMenu;
 
-            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
-            connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFile);
-            fileContextMenu.addAction(menuAction1);
+            QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
+            connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
+            directoryContextMenu.addAction(menuDirectoryAction1);
 
-            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
-            connect(menuAction2, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
-            fileContextMenu.addAction(menuAction2);
+            QAction* selectedItem = directoryContextMenu.exec(globalPos);
 
-            fileContextMenu.addSeparator();
-
-            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
-            connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
-            fileContextMenu.addAction(menuAction3);
-
-            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
-            connect( menuAction4,&QAction::triggered, this, &MainWindow::exploreContextCopyAbsolutePath);
-            fileContextMenu.addAction(menuAction4);
-
-            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
-            connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
-            fileContextMenu.addAction(menuAction5);
-
-            QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
-            connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
-            fileContextMenu.addAction(menuAction6);
-
-            fileContextMenu.addSeparator();
-
-            //DEV
-            if (developmentMode == true){
-                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                fileContextMenu.addAction(menuAction7);
-            }
-
-            QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
-            connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
-            fileContextMenu.addAction(menuAction8);
-
-            QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete file")), this);
-            connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
-            fileContextMenu.addAction(menuAction9);
-
-            QAction* selectedItem = fileContextMenu.exec(globalPos);
             if (selectedItem)
             {
                 //something
+                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("ok").toString());
+
             }
             else
             {
                 //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("did nothing").toString());
-
             }
+        }
+
+        void MainWindow::exploreContextTagFolder()
+        {
+            QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
+
+            QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
+
+            ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
+            ui->tabWidget->setCurrentIndex(6);
+        }
+
+    //Context Menu - files
+        void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
+        {
+            //Get tiem type (file or folder)
+            QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
+            QModelIndex tempindex = ui->Explore_treeView_FileList->indexAt(pos);
+            QString selectedType = ui->Explore_treeView_FileList->model()->index(tempindex.row(), 5, QModelIndex()).data().toString();
+
+            QMenu fileContextMenu;
+
+            if (selectedType == "file")
+            {
+                QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
+                connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFile);
+                fileContextMenu.addAction(menuAction1);
+
+                QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+                connect(menuAction2, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
+                fileContextMenu.addAction(menuAction2);
+
+                fileContextMenu.addSeparator();
+
+                QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+                connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
+                fileContextMenu.addAction(menuAction3);
+
+                QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
+                connect( menuAction4,&QAction::triggered, this, &MainWindow::exploreContextCopyAbsolutePath);
+                fileContextMenu.addAction(menuAction4);
+
+                QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
+                connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
+                fileContextMenu.addAction(menuAction5);
+
+                QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
+                connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
+                fileContextMenu.addAction(menuAction6);
+
+                fileContextMenu.addSeparator();
+
+                //DEV
+                if (developmentMode == true){
+                    QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
+                    connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
+                    fileContextMenu.addAction(menuAction7);
+                }
+
+                QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
+                connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
+                fileContextMenu.addAction(menuAction8);
+
+                QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete file")), this);
+                connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
+                fileContextMenu.addAction(menuAction9);
+            }
+            else if (selectedType == "folder")
+            {
+                QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+                connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
+                fileContextMenu.addAction(menuAction1);
+
+                fileContextMenu.addSeparator();
+
+                QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+                connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
+                fileContextMenu.addAction(menuAction3);
+
+                QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder name")), this);
+                connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
+                fileContextMenu.addAction(menuAction5);
+
+                fileContextMenu.addSeparator();
+
+                //DEV
+                if (developmentMode == true){
+                    QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
+                    connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
+                    fileContextMenu.addAction(menuAction7);
+
+                    QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete folder")), this);
+                    connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
+                    fileContextMenu.addAction(menuAction9);
+                }
+
+                QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move folder to Trash")), this);
+                connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
+                fileContextMenu.addAction(menuAction8);
+            }
+
+            QAction* selectedItem = fileContextMenu.exec(globalPos);
+
         }
 
         void MainWindow::exploreContextOpenFile()
@@ -305,23 +371,29 @@
 
         void MainWindow::exploreContextMoveFileToTrash()
         {
+            //Get selected data
             QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+            QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
 
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-
+            //Define what to move to trash
             QString pathInTrash;
+            QString pathToMove;
+            if (selectedType=="file")
+                pathToMove= selectedFilePath;
+            else pathToMove = selectedFileDirectory;
 
-            if (selectedFileName.isEmpty()) {
+            if (selectedFilePath.isEmpty()) {
                 return;
             }
 
+            //confirm and move
             if (QMessageBox::question(this,
                                       tr("Confirmation"),
-                                      tr("Move\n%1\nto the trash?").arg(selectedFile))
+                                      tr("Move\n%1\nto the trash?").arg(pathToMove))
                 == QMessageBox::Yes) {
-                if (QFile::moveToTrash(selectedFile, &pathInTrash)) {
+                if (QFile::moveToTrash(pathToMove, &pathInTrash)) {
                     QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
 
                 } else {
@@ -332,22 +404,30 @@
 
         void MainWindow::exploreContextDeleteFile()
         {
+            //Get selected data
             QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+            QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+            QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
 
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+            //Define what to move to trash
+            QString pathInTrash;
+            QString pathToDelete;
+            if (selectedType=="file")
+                pathToDelete= selectedFilePath;
+            else pathToDelete = selectedFileDirectory;
 
-            if (selectedFileName.isEmpty()) {
+            if (selectedFilePath.isEmpty()) {
                 return;
             }
 
+            //confirm and delete
             if (QMessageBox::question(this,
                                       tr("Confirmation"),
-                                      tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(selectedFile))
+                                      tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(pathToDelete))
                 == QMessageBox::Yes) {
 
-                QFile file(selectedFile);
+                QFile file(pathToDelete);
                 if (file.exists()) {
 
                     file.remove();
@@ -358,40 +438,6 @@
                     QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
                 }
             }
-        }
-
-    //Context Menu - directories
-        void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
-        {
-            QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
-            QMenu directoryContextMenu;
-
-            QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
-            connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
-            directoryContextMenu.addAction(menuDirectoryAction1);
-
-            QAction* selectedItem = directoryContextMenu.exec(globalPos);
-
-            if (selectedItem)
-            {
-                //something
-                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("ok").toString());
-
-            }
-            else
-            {
-                //QMessageBox::information(this,"Katalog","anyVariable: \n" + QVariant("did nothing").toString());
-            }
-        }
-
-        void MainWindow::exploreContextTagFolder()
-        {
-            QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
-
-            QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
-
-            ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
-            ui->tabWidget->setCurrentIndex(6);
         }
 
 //Methods-----------------------------------------------------------------------
@@ -517,7 +563,8 @@
                                                     filePath,
                                                     "",
                                                     "folder" AS Type,
-                                                    "1"||filePath AS orderValue
+                                                    "1"||filePath AS orderValue,
+                                                    fileFullPath
                                     FROM    filesall
                                     WHERE   fileCatalog =:fileCatalog
                                     AND     filePath  like :folderPath
@@ -532,7 +579,8 @@
                                                     filePath,
                                                     fileCatalog,
                                                     "file"  AS Type,
-                                                    "2"||fileName AS orderValue
+                                                    "2"||fileName AS orderValue,
+                                                    fileFullPath
                                     FROM    filesall
                                     WHERE   fileCatalog =:fileCatalog
                                     AND     filePath    =:filePath
@@ -550,7 +598,8 @@
                                                     filePath,
                                                     fileCatalog,
                                                     "file"  AS Type,
-                                                    "2"||fileName AS orderValue
+                                                    "2"||fileName AS orderValue,
+                                                    fileFullPath
                                     FROM    filesall
                                     WHERE   fileCatalog =:fileCatalog
                                     AND     filePath    =:filePath
@@ -593,9 +642,11 @@
         proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));
         proxyModel2->setHeaderData(1, Qt::Horizontal, tr("Size"));
         proxyModel2->setHeaderData(2, Qt::Horizontal, tr("Date"));
-        proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Path"));
+        proxyModel2->setHeaderData(3, Qt::Horizontal, tr("Directory"));
         proxyModel2->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
         proxyModel2->setHeaderData(5, Qt::Horizontal, tr("Type"));
+        proxyModel2->setHeaderData(6, Qt::Horizontal, tr("orderValue"));
+        proxyModel2->setHeaderData(7, Qt::Horizontal, tr("Path"));
 
         // Connect model to tree/table view
         ui->Explore_treeView_FileList->setModel(proxyModel2);
@@ -604,9 +655,11 @@
         ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
         ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
         ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
-        ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Path
-        ui->Explore_treeView_FileList->hideColumn(4);
-        ui->Explore_treeView_FileList->hideColumn(5);
+        ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Directory
+        ui->Explore_treeView_FileList->hideColumn(4); //Catalog
+        ui->Explore_treeView_FileList->hideColumn(5); //Type
+        ui->Explore_treeView_FileList->hideColumn(6); //orderValue
+        ui->Explore_treeView_FileList->hideColumn(7); //Path
 
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(

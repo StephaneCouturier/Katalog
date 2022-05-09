@@ -113,6 +113,7 @@
                                         fileSize            REAL,
                                         fileDateUpdated     TEXT,
                                         fileCatalog         TEXT,
+                                        fileFullPath        TEXT,
                                         PRIMARY KEY("id_file" AUTOINCREMENT)
                                     )
                 )");
@@ -128,6 +129,7 @@
                                         fileSize            REAL,
                                         fileDateUpdated     TEXT,
                                         fileCatalog         TEXT,
+                                        fileFullPath        TEXT,
                                         PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
