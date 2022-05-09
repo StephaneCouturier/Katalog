@@ -112,8 +112,8 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_pushButton_Load_clicked()
         {
+            //reloads catalog to explore at root level
             if (selectedDeviceType=="Catalog" and selectedDeviceName !=selectedCatalogName){
-                QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + selectedDeviceName);
                 selectedCatalogName = selectedDeviceName;
             }
             openCatalogToExplore();
@@ -433,6 +433,11 @@
 
     void MainWindow::openCatalogToExplore()
     {
+        //Start at the root folder of the catalog
+        selectedDirectoryName     = selectedCatalogPath;
+        selectedDirectoryFullPath = selectedCatalogPath;
+
+        //Load
         //Check catalog's number of files and confirm load if too big
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
@@ -478,6 +483,9 @@
         settings.setValue("Explore/lastSelectedCatalogName", selectedCatalogName);
         settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalogPath);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+
+        //Go to explore tab
+        ui->tabWidget->setCurrentIndex(2);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogDirectoriesToExplore()

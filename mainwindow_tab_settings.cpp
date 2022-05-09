@@ -146,6 +146,21 @@
 
         selectedSearchCatalog = selectedCatalog;
 
+        //get catalog source path
+        if (selectedCatalog!=tr("All")){
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT catalogSourcePath
+                                FROM catalog
+                                WHERE catalogName=:catalogName
+                                            )");
+            query.prepare(querySQL);
+            query.bindValue(":catalogName",selectedDeviceName);
+            query.exec();
+            query.next();
+            selectedCatalogPath =query.value(0).toString();
+        }
+
         //Load statistics
         loadStatisticsData();
         loadStatisticsChart();

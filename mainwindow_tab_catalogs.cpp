@@ -343,15 +343,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
-                //Start at the root folder of the catalog
-                selectedDirectoryName     = selectedCatalogPath;
-                selectedDirectoryFullPath = selectedCatalogPath;
-
-                //Load
-                openCatalogToExplore();
-
-                //Go to explore tab
-                ui->tabWidget->setCurrentIndex(2);
+            openCatalogToExplore();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
