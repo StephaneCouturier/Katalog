@@ -44,5 +44,7 @@
         <file>fallback-icons/address-book-new.png</file>
         <file>fallback-icons/view-list-tree.png</file>
         <file>fallback-icons/kontact-import-wizard.png</file>
+        <file>fallback-icons/collapse-all.png</file>
+        <file>fallback-icons/expand-all.png</file>
     </qresource>
 </RCC>
