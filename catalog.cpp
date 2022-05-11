@@ -78,27 +78,6 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
     return QVariant();
 }
 
-// Create a method to populate the model with data:
-void Catalog::populateFileData( const QList<QString> &cfileName,
-                                const QList<qint64>  &cfileSize,
-                                const QList<QString> &cfilePath,
-                                const QList<QString> &cfileDateTime,
-                                const QList<QString> &cfileCatalog)
-{
-    fileName.clear();
-    fileName = cfileName;
-    fileSize.clear();
-    fileSize = cfileSize;
-    filePath.clear();
-    filePath = cfilePath;
-    fileDateTime.clear();
-    fileDateTime = cfileDateTime;
-    fileCatalog.clear();
-    fileCatalog = cfileCatalog;
-
-    return;
-}
-
 void Catalog::setCatalogName(QString selectedCatalogName)
 {
     catalogName = selectedCatalogName;
@@ -146,4 +125,24 @@ void Catalog::loadCatalogMetaData()
     catalogIncludeSymblinks   = query.value(11).toString();
     catalogIsFullDevice       = query.value(12).toString();
     catalogLoadedVersion      = query.value(13).toString();
+}
+
+void Catalog::populateFileData( const QList<QString> &cfileName,
+                                const QList<qint64>  &cfileSize,
+                                const QList<QString> &cfilePath,
+                                const QList<QString> &cfileDateTime,
+                                const QList<QString> &cfileCatalog)
+{
+    fileName.clear();
+    fileName = cfileName;
+    fileSize.clear();
+    fileSize = cfileSize;
+    filePath.clear();
+    filePath = cfilePath;
+    fileDateTime.clear();
+    fileDateTime = cfileDateTime;
+    fileCatalog.clear();
+    fileCatalog = cfileCatalog;
+
+    return;
 }

@@ -90,9 +90,10 @@
 //FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
     {
-            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+        deviceProxyModel->setSelectedDeviceInfo("","");
+        ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+        ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+        ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
     }
     //----------------------------------------------------------------------  
     void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
@@ -190,6 +191,25 @@
         }
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
+    {
+        QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
+
+        if ( iconName == "expand-all"){
+            ui->Filters_treeView_Devices->expandAll();
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/ExpandCollapseDeviceTree", "collapse-all");
+        }
+        else{ //Show
+            ui->Filters_treeView_Devices->collapseAll();
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/ExpandCollapseDeviceTree", "expand-all");
+        }
+    }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
     {
@@ -198,13 +218,15 @@
 
         if(checked==1){
             //Enable Catalogs selection
-            ui->Filters_widget_CatalogSelection->setEnabled(true);
+            ui->Filters_widget_CatalogSelectionBox->setEnabled(true);
+            ui->Filters_widget_CatalogSelectionTree->setEnabled(true);
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
             ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
         }
         else if(ui->Filters_checkBox_SearchInConnectedDrives->isChecked()==true){
             //Disable Catalogs selection
-            ui->Filters_widget_CatalogSelection->setDisabled(true);
+            ui->Filters_widget_CatalogSelectionBox->setDisabled(true);
+            ui->Filters_widget_CatalogSelectionTree->setDisabled(true);
         }
         else{
             //Prevent uncheck if SearchInConnectedDrives is also unchecked
@@ -220,15 +242,18 @@
         if(checked==1){
             //Enable Directory selection
             ui->Filters_widget_ConnectedDrives->setEnabled(true);
-            ui->Filters_widget_CatalogSelection->setDisabled(true);
+            ui->Filters_widget_CatalogSelectionBox->setDisabled(true);
+            ui->Filters_widget_CatalogSelectionTree->setDisabled(true);
             ui->Filters_checkBox_SearchInCatalogs->setChecked(false);
-            ui->Filters_widget_CatalogSelection->hide();
+            ui->Filters_widget_CatalogSelectionBox->hide();
+            ui->Filters_widget_CatalogSelectionTree->hide();
             ui->Filters_widget_ConnectedDrives->show();
         }
         else if(ui->Filters_checkBox_SearchInCatalogs->isChecked()==true){
             //Disable Directory selection
             ui->Filters_widget_ConnectedDrives->setDisabled(true);
-            ui->Filters_widget_CatalogSelection->show();
+            ui->Filters_widget_CatalogSelectionBox->show();
+            ui->Filters_widget_CatalogSelectionTree->show();
             ui->Filters_widget_ConnectedDrives->hide();
         }
         else{
@@ -272,21 +297,29 @@
     {
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+        deviceProxyModel->setSelectedDeviceInfo(selectedDeviceName,selectedDeviceType);
 
         if(selectedDeviceType=="Location"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceName);
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
         }
         else if (selectedDeviceType=="Storage"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceName);
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
         }
         else if (selectedDeviceType=="Catalog"){
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
+
+            ui->Filter_pushButton_Explore->setEnabled(true);
+            ui->Filter_pushButton_Update->setEnabled(true);
 
             activeCatalog->setCatalogName(selectedDeviceName);
             activeCatalog->loadCatalogMetaData();
@@ -299,10 +332,8 @@
     void MainWindow::loadStorageTableToFilterTree()
     {
         const QStringList headers({tr("Title"),tr("Type")});
-
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
-        DeviceTreeView *deviceProxyModel = new DeviceTreeView();
         deviceProxyModel->setSourceModel(storageTreeModel);
 
         //LoadModel
@@ -313,6 +344,17 @@
         ui->Filters_treeView_Devices->hideColumn(1);
         ui->Filters_treeView_Devices->collapseAll();
         ui->Filters_treeView_Devices->header()->hide();
+
+        //Restore Expand or Collapse Device Tree
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        if ( settings.value("Settings/ExpandCollapseDeviceTree") == "expand-all"){
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                ui->Filters_treeView_Devices->collapseAll();
+        }
+        else{
+            ui->Filters_treeView_Devices->expandAll();
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+        }
     }
 
 //SETTINGS / Collection ----------------------------------------------------

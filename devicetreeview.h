@@ -10,8 +10,11 @@ class DeviceTreeView  : public QSortFilterProxyModel
 public:
     DeviceTreeView(QObject *parent = nullptr);
 
+    QString m_selectedDeviceName;
+    QString m_selectedDeviceType;
+    void setSelectedDeviceInfo(QString selectedName,QString selectedType);
+
 private:
-    QString percentBrush;
     QVariant data( const QModelIndex &index, int role ) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 

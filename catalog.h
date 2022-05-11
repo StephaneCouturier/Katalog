@@ -23,12 +23,9 @@
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.h
-// Purpose:     Class/model for the catalog (list of files)
+// Purpose:     Class/model for the catalog (list of files from a device)
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.8
 /////////////////////////////////////////////////////////////////////////////
 */
 

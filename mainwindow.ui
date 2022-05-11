@@ -162,21 +162,83 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QLabel" name="Statistics_label_Catalog_3">
-              <property name="text">
-               <string>Selection</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QLabel" name="Statistics_label_Selection">
+                <property name="text">
+                 <string>Selection</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Reset all filters</string>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-clear-history">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QWidget" name="Filters_widget_CatalogSelection" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_2">
+             <widget class="QWidget" name="Filters_widget_CatalogSelectionBox" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_11">
                <property name="leftMargin">
                 <number>15</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
                </property>
+               <item>
+                <spacer name="Filters_verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>5</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <item>
@@ -207,35 +269,6 @@
                     </size>
                    </property>
                   </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Reset all filters</string>
-                   </property>
-                   <property name="layoutDirection">
-                    <enum>Qt::LeftToRight</enum>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="edit-clear-history">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
                  </item>
                 </layout>
                </item>
@@ -349,26 +382,153 @@
                  <property name="sizeHint" stdset="0">
                   <size>
                    <width>20</width>
-                   <height>5</height>
+                   <height>20</height>
                   </size>
                  </property>
                 </spacer>
                </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="Filters_widget_CatalogSelectionTree" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <property name="leftMargin">
+                <number>15</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
                <item>
-                <widget class="QLabel" name="Filters_label_Catalog_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>60</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Location / Storage / Catatog</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QPushButton" name="Filter_pushButton_Search">
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Go to Search tab to search file in this selection</string>
+                   </property>
+                   <property name="text">
+                    <string>Search</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-find">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Filter_pushButton_Explore">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Open the catalog in the Explore tab</string>
+                   </property>
+                   <property name="text">
+                    <string>Explore</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="view-list-tree">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Filter_pushButton_Update">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Update the content of the Catalog</string>
+                   </property>
+                   <property name="text">
+                    <string>Update</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="media-playlist-repeat">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                 <item>
+                  <widget class="QLabel" name="Filters_label_TreeSelectionTitle">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Location / Storage / Catatog</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Filters_pushButton_TreeExpandCollapse">
+                   <property name="maximumSize">
+                    <size>
+                     <width>35</width>
+                     <height>22</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Show/Hide Filters and Settings</string>
+                   </property>
+                   <property name="statusTip">
+                    <string/>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">padding: 2px 10px;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="expand-all">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QTreeView" name="Filters_treeView_Devices">
@@ -403,7 +563,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="animated">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="expandsOnDoubleClick">
                   <bool>false</bool>
@@ -5830,7 +5990,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="0">
                <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
                 <item>
-                 <widget class="QLabel" name="Statistics_label_Catalog_2">
+                 <widget class="QLabel" name="Statistics_label_Source">
                   <property name="minimumSize">
                    <size>
                     <width>100</width>

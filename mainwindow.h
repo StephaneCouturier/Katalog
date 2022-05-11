@@ -62,6 +62,7 @@
 //#include <KMessageBox>
 
 #include "catalog.h"
+#include "devicetreeview.h"
 
 class KJob;
 #endif
@@ -90,6 +91,7 @@ class MainWindow : public QMainWindow
             bool developmentMode;
 
             Catalog *activeCatalog = new Catalog();
+            DeviceTreeView *deviceProxyModel = new DeviceTreeView();
 
             //UI
             Ui::MainWindow *ui;
@@ -355,6 +357,7 @@ class MainWindow : public QMainWindow
                 void on_Filter_pushButton_Search_clicked();
                 void on_Filter_pushButton_Explore_clicked();
                 void on_Filter_pushButton_Update_clicked();
+                void on_Filters_pushButton_TreeExpandCollapse_clicked();
                 void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);

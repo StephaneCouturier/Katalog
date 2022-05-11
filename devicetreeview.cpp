@@ -47,6 +47,7 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
       filesizeColumnList <<7 <<8;
 
+
     switch ( role )
          {
             case Qt::DisplayRole:
@@ -77,12 +78,16 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 
             case Qt::FontRole:
             {
-//                if (index.column() == 0 ) {
-//                    QFont boldFont;
-//                    boldFont.setBold(true);
-//                    return boldFont;
-//                }
-//                break;
+                QModelIndex idx1 = index.sibling(index.row(), 0);
+                QModelIndex idx2 = index.sibling(index.row(), 1);
+                if (m_selectedDeviceName == QSortFilterProxyModel::data(idx1, Qt::DisplayRole).toString()
+                    and m_selectedDeviceType == QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString() )
+                {
+                    QFont boldFont;
+                    boldFont.setBold(true);
+                    return boldFont;
+                }
+                break;
             }
 
             case Qt::TextAlignmentRole:
@@ -150,4 +155,10 @@ QVariant DeviceTreeView::headerData(int section, Qt::Orientation orientation, in
         }
         return QVariant();
 
+}
+
+void DeviceTreeView::setSelectedDeviceInfo(QString selectedName, QString selectedType)
+{
+    m_selectedDeviceName = selectedName;
+    m_selectedDeviceType = selectedType;
 }
