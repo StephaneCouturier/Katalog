@@ -81,35 +81,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {   //Update the selected catalog
-
-            updateCatalog(selectedCatalogName);
-
-            //Update the related storage
-            if ( selectedCatalogStorage != ""){
-                //get Storage ID
-                QSqlQuery query;
-                QString querySQL = QLatin1String(R"(
-                                    SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
-                                                )");
-                query.prepare(querySQL);
-                query.bindValue(":storageName",selectedCatalogStorage);
-                query.exec();
-                query.next();
-                int selectedCatalogStorageID = query.value(0).toInt();
-                QString selectedCatalogStoragePath =  query.value(1).toString();
-
-                //Update storage
-                if ( selectedCatalogStoragePath!="")
-                    updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
-                else
-                    QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
-
-            }
-
-            //refresh catalog lists
-               loadCatalogFilesToTable();
-               loadCatalogsToModel();
-
+            updateSingleCatalog();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -643,6 +615,37 @@
         //Inform user
         //QMessageBox::information(this,"Katalog","Backup done.\n");
 
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::updateSingleCatalog()
+    {
+        updateCatalog(selectedCatalogName);
+
+        //Update the related storage
+        if ( selectedCatalogStorage != ""){
+            //get Storage ID
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
+                                            )");
+            query.prepare(querySQL);
+            query.bindValue(":storageName",selectedCatalogStorage);
+            query.exec();
+            query.next();
+            int selectedCatalogStorageID = query.value(0).toInt();
+            QString selectedCatalogStoragePath =  query.value(1).toString();
+
+            //Update storage
+            if ( selectedCatalogStoragePath!="")
+                updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
+            else
+                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
+
+        }
+
+        //refresh catalog lists
+           loadCatalogFilesToTable();
+           loadCatalogsToModel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateCatalog(QString catalogName)

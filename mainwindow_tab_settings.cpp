@@ -35,6 +35,7 @@
 #include "storagetreemodel.h"
 #include "storageview.h"
 #include "devicetreeview.h"
+#include "catalog.h"
 
 #include <QSettings>
 #include <QDesktopServices>
@@ -93,7 +94,7 @@
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
     }
-    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------  
     void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
     {
         //save selection in settings file;
@@ -166,6 +167,30 @@
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Filter_pushButton_Search_clicked()
+    {
+        //Go to search tab
+        ui->tabWidget->setCurrentIndex(0);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filter_pushButton_Explore_clicked()
+    {
+        //reloads catalog to explore at root level
+        if (selectedDeviceType=="Catalog"){// and selectedDeviceName !=selectedCatalogName){
+            selectedCatalogName = selectedDeviceName;
+            openCatalogToExplore();
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filter_pushButton_Update_clicked()
+    {
+        //reloads catalog to explore at root level
+        if (selectedDeviceType=="Catalog"){// and selectedDeviceName !=selectedCatalogName
+            updateSingleCatalog();
+        }
+    }
+    //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -184,7 +209,7 @@
         else{
             //Prevent uncheck if SearchInConnectedDrives is also unchecked
             ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
-}
+        }
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
@@ -262,6 +287,12 @@
             ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
             ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
+
+            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->loadCatalogMetaData();
+
+            selectedCatalogName    = activeCatalog->catalogName;
+            selectedCatalogStorage = activeCatalog->catalogStorage;
         }
     }
     //----------------------------------------------------------------------

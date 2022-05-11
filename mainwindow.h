@@ -60,6 +60,9 @@
 #include <KComboBox>
 #include <KXmlGuiWindow>
 //#include <KMessageBox>
+
+#include "catalog.h"
+
 class KJob;
 #endif
 
@@ -85,6 +88,8 @@ class MainWindow : public QMainWindow
             QString releaseDate;
             bool firstRun;
             bool developmentMode;
+
+            Catalog *activeCatalog = new Catalog();
 
             //UI
             Ui::MainWindow *ui;
@@ -241,6 +246,7 @@ class MainWindow : public QMainWindow
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
+            void updateSingleCatalog();
             void updateCatalog(QString catalogName);
             void saveCatalogChanges();
             void importFromVVV();
@@ -345,10 +351,13 @@ class MainWindow : public QMainWindow
                 void on_Filters_pushButton_Filters_Show_clicked();
 
             //Filters
+                void on_Filters_pushButton_ResetGlobal_clicked();
+                void on_Filter_pushButton_Search_clicked();
+                void on_Filter_pushButton_Explore_clicked();
+                void on_Filter_pushButton_Update_clicked();
                 void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
                 void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);
-                void on_Filters_pushButton_ResetGlobal_clicked();
                 void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
                 void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
                 void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);

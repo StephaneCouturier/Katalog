@@ -433,6 +433,9 @@
 
     void MainWindow::openCatalogToExplore()
     {
+        // Start animation while opening
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
         //Start at the root folder of the catalog
         selectedDirectoryName     = selectedCatalogPath;
         selectedDirectoryFullPath = selectedCatalogPath;
@@ -486,6 +489,9 @@
 
         //Go to explore tab
         ui->tabWidget->setCurrentIndex(2);
+
+        //Stop animation
+        QApplication::restoreOverrideCursor();
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCatalogDirectoriesToExplore()

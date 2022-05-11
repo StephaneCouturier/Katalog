@@ -30,6 +30,7 @@
 */
 
 #include "catalog.h"
+#include <QSqlQuery>
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -61,7 +62,6 @@ QVariant Catalog::data(const QModelIndex &index, int role) const
     case 4: return QString(fileCatalog[index.row()]);
     }
     return QVariant();
-
 }
 
 QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role) const
@@ -99,3 +99,51 @@ void Catalog::populateFileData( const QList<QString> &cfileName,
     return;
 }
 
+void Catalog::setCatalogName(QString selectedCatalogName)
+{
+    catalogName = selectedCatalogName;
+}
+
+void Catalog::loadCatalogMetaData()
+{
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                SELECT
+                                    catalogID                   ,
+                                    catalogFilePath             ,
+                                    catalogName                 ,
+                                    catalogDateUpdated          ,
+                                    catalogFileCount            ,
+                                    catalogTotalFileSize        ,
+                                    catalogSourcePath           ,
+                                    catalogFileType             ,
+                                    catalogSourcePathIsActive   ,
+                                    catalogIncludeHidden        ,
+                                    catalogStorage              ,
+                                    storageLocation             ,
+                                    catalogIsFullDevice         ,
+                                    catalogLoadedVersion
+                                FROM catalog
+                                LEFT JOIN storage ON catalogStorage = storageName
+                                WHERE catalogName=:catalogName
+                        )");
+    query.prepare(querySQL);
+    query.bindValue(":catalogName",catalogName);
+    query.exec();
+    query.next();
+
+    catalogID                 = query.value(0).toString();
+    catalogFilePath           = query.value(1).toString();
+    catalogName               = query.value(2).toString();
+    catalogDateUpdated        = query.value(3).toString();
+    catalogSourcePath         = query.value(4).toString();
+    catalogFileCount          = query.value(5).toString();
+    catalogTotalFileSize      = query.value(6).toString();
+    catalogSourcePathIsActive = query.value(7).toString();
+    catalogIncludeHidden      = query.value(8).toString();
+    catalogFileType           = query.value(9).toString();
+    catalogStorage            = query.value(10).toString();
+    catalogIncludeSymblinks   = query.value(11).toString();
+    catalogIsFullDevice       = query.value(12).toString();
+    catalogLoadedVersion      = query.value(13).toString();
+}
