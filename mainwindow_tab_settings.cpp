@@ -180,6 +180,8 @@
         if (selectedDeviceType=="Catalog"){// and selectedDeviceName !=selectedCatalogName){
             selectedCatalogName = selectedDeviceName;
             openCatalogToExplore();
+            //Go to explore tab
+            ui->tabWidget->setCurrentIndex(2);
         }
     }
     //----------------------------------------------------------------------

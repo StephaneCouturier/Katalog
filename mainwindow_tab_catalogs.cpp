@@ -316,6 +316,8 @@
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
             openCatalogToExplore();
+            //Go to explore tab
+            ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()

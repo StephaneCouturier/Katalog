@@ -266,5 +266,31 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
 
         countLocation=countLocation+1;
         countStorage=0;
+        countCatalog=0;
+
+        //Add Catalogs without storage
+        QSqlQuery queryCatalogList;
+        QString queryCatalogListSQL = QLatin1String(R"(
+                                SELECT catalogName,'Catalog'
+                                FROM catalog
+                                WHERE catalogStorage=""
+                                ORDER BY catalogName ASC
+        )");
+        queryCatalogList.prepare(queryCatalogListSQL);
+        queryCatalogList.exec();
+
+        while (queryCatalogList.next())
+        {
+            QVector<QVariant> columnData;
+            columnData << queryCatalogList.value(0).toString();
+            columnData << queryCatalogList.value(1).toString();
+
+            parent->child(0)->child(0)->insertChildren(countCatalog, 1, rootItem->columnCount());
+            for (int column = 0; column < columnData.size(); ++column)
+                parent->child(0)->child(0)->child(countCatalog)->setData(column, columnData[column]);
+
+            countCatalog=countCatalog+1;
+        }
+
     }
 }

@@ -487,9 +487,6 @@
         settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalogPath);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
-        //Go to explore tab
-        ui->tabWidget->setCurrentIndex(2);
-
         //Stop animation
         QApplication::restoreOverrideCursor();
     }
