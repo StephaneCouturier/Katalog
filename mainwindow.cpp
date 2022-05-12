@@ -28,24 +28,15 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
-//Include class headers
-    #include "mainwindow.h"
-    #include "ui_mainwindow.h"
-
-//Include other mainwindow methods
-
-    //Setup and main object classes
-    #include "mainwindow_setup.cpp"
-    //#include "collection.cpp"
-    //#include "storage.cpp"
-
-    //Application tabs
-    #include "mainwindow_tab_search.cpp"
-    #include "mainwindow_tab_create.cpp"
-    #include "mainwindow_tab_catalogs.cpp"
-    #include "mainwindow_tab_storage.cpp"
-    #include "mainwindow_tab_tags.cpp"
+#include "mainwindow_setup.cpp"
+#include "mainwindow_tab_search.cpp"
+#include "mainwindow_tab_create.cpp"
+#include "mainwindow_tab_catalogs.cpp"
+#include "mainwindow_tab_storage.cpp"
+#include "mainwindow_tab_tags.cpp"
 
 #ifdef Q_OS_LINUX
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)

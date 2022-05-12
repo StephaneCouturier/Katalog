@@ -28,7 +28,6 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
-
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QTranslator>
