@@ -125,6 +125,7 @@
     void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
     {
         createCatalog();
+        loadCollection();
     }
     //--------------------------------------------------------------------------
 
@@ -272,7 +273,7 @@
                                   +newCatalogName+"\n" +tr("Source:") + newCatalogPath,
                                   ( tr("Ok") ) );
 
-        //Add new catalog values to the statistics log, if the user has chosen this options.
+        //Add new catalog values to the statistics log, if the user has chosen this option
             if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
 
                 //Save values
