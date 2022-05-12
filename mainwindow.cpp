@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //Set current version and release date, and check new version
                 currentVersion = "1.12";
-                releaseDate = "2022-05-07";
+                releaseDate = "2022-05-11";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -81,13 +81,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
             //Load languages to the Settings combobox
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
-            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
+                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
+                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
+                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
+                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
             //Hide some widget by default
-            ui->Catalogs_widget_EditCatalog->hide();
+                ui->Catalogs_widget_EditCatalog->hide();
 
             //For Linux, use KDE libs
             #ifdef Q_OS_LINUX
@@ -134,6 +134,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
     //Load Collection data
+            //Generate collection file paths
+                searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
+                storageFilePath = collectionFolder + "/" + "storage.csv";
+                statisticsFileName = "statistics.csv";
+                statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+
+            //Create a Storage list if none exist
+                createStorageList();
+
             //Load Collection data from csv files
                 loadCollection();
 

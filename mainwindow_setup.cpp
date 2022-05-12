@@ -355,6 +355,7 @@
             ui->Storage_widget_DeviceForm->hide();
 
         //Settings
+            ui->Filters_widget_CatalogSelectionBox->hide();
 
         //Other tabs
             ui->tabWidget->removeTab(8); //ExploreTreeview

@@ -384,6 +384,7 @@
             saveSettings();
 
             //load the collection for this new folder;
+            createStorageList();
             loadCollection();
 
         }
@@ -412,13 +413,17 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
-        //Load search history
+        //Refresh collection file paths
             searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
+            storageFilePath = collectionFolder + "/" + "storage.csv";
+            statisticsFileName = "statistics.csv";
+            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+
+        //Load search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();
 
         //Load Storage list and refresh their statistics
-            storageFilePath = collectionFolder + "/" + "storage.csv";
             loadStorageFileToTable();
             loadStorageTableToModel();
             refreshStorageStatistics();
@@ -433,9 +438,32 @@
             refreshCatalogSelectionList(tr("All"), tr("All"));
             loadStorageTableToFilterTree();
 
+            //Add a storage device for catalogs without one
+            QSqlQuery queryCatalog;
+            QString queryCatalogSQL = QLatin1String(R"(
+                                    SELECT count(*)
+                                    FROM catalog
+                                    WHERE catalogStorage=""
+                                            )");
+            queryCatalog.prepare(queryCatalogSQL);
+            queryCatalog.exec();
+            queryCatalog.next();
+
+            QSqlQuery queryStorage;
+            QString queryStorageSQL = QLatin1String(R"(
+                                    SELECT count(*)
+                                    FROM storage
+                                    WHERE storageName=""
+                                )");
+            queryStorage.prepare(queryStorageSQL);
+            queryStorage.exec();
+            queryStorage.next();
+
+            if (queryCatalog.value(0).toInt() >0 and queryStorage.value(0).toInt() == 0){
+                addStorageDevice(tr(""));
+            }
+
        //Load Statistics
-            statisticsFileName = "statistics.csv";
-            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
             loadStatisticsDataTypes();
             loadStatisticsData();
             loadStatisticsChart();

@@ -238,6 +238,7 @@ class MainWindow : public QMainWindow
             int lastCatalogsSortOrder;
 
             void loadCollection();
+            void loadCatalogFilesToTable();
             void loadCatalogsToModel();
             int verifyCatalogPath(QString catalogSourcePath);
             void recordSelectedCatalogStats(QString selectedCatalogName,
@@ -303,7 +304,8 @@ class MainWindow : public QMainWindow
             int lastStorageSortSection;
             int lastStorageSortOrder;
 
-            void loadCatalogFilesToTable();
+            void createStorageList();
+            void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
             void loadStorageTableToModel();
             void loadStorageTableToFilterTree();

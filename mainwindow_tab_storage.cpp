@@ -43,53 +43,7 @@
     //Full list ----------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateList_clicked()
     {
-        // Create it, if it does not exist
-        QFile newStorageFile(storageFilePath);
-        if(!newStorageFile.open(QIODevice::ReadOnly)) {
-
-            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
-
-                  QTextStream stream(&newStorageFile);
-
-                  stream << "ID"            << "\t"
-                         << "Name"          << "\t"
-                         << "Type"          << "\t"
-                         << "Location"      << "\t"
-                         << "Path"          << "\t"
-                         << "Label"         << "\t"
-                         << "FileSystem"    << "\t"
-                         << "Total"         << "\t"
-                         << "Free"          << "\t"
-                         << "BrandModel"    << "\t"
-                         << "SerialNumber"  << "\t"
-                         << "BuildDate"     << "\t"
-                         << "ContentType"   << "\t"
-                         << "Container"     << "\t"
-                         << "Comment"       << "\t"
-                         << '\n';
-
-                  newStorageFile.close();
-
-                  ui->Storage_pushButton_Reload->setEnabled(true);
-                  ui->Storage_pushButton_EditAll->setEnabled(true);
-                  //ui->Storage_pushButton_SaveAll->setEnabled(true);
-
-                  QMessageBox::information(this,"Katalog",tr("A storage file was created")+":\n" + newStorageFile.fileName()
-                                           + "\n"+tr("You can edit it now")+".");
-
-                  //Disable button so it cannot be overwritten
-                  ui->Storage_pushButton_CreateList->setEnabled(false);
-                  ui->Storage_pushButton_SaveAll->setEnabled(true);
-
-                  //Even if empty, load it to the model
-                  //loadStorageModel();
-                  loadStorageFileToTable();
-                  loadStorageTableToModel();
-                  refreshStorageStatistics();
-
-            return;
-            }
-        }
+        createStorageList();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Reload_clicked()
@@ -131,76 +85,7 @@
     //With seleted storage -----------------------------------------------------
     void MainWindow::on_Storage_pushButton_New_clicked()
     {
-
-        //Get inputs
-            //max ID
-            QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
-            queryDeviceNumber.exec();
-            queryDeviceNumber.next();
-            int maxID = queryDeviceNumber.value(0).toInt();
-            int newID = maxID + 1;
-
-            //location
-            QString newLocation;
-            if(selectedSearchLocation!=tr("All")){
-                newLocation = selectedSearchLocation;
-            }
-            else
-                newLocation = "";
-
-        //Insert new device with default values
-        QString querySQL = QLatin1String(R"(
-            insert into storage(
-                            storageID,
-                            storageName,
-                            storageType,
-                            storageLocation,
-                            storagePath,
-                            storageLabel,
-                            storageFileSystem,
-                            storageTotalSpace,
-                            storageFreeSpace,
-                            storageBrandModel,
-                            storageSerialNumber,
-                            storageBuildDate,
-                            storageContentType,
-                            storageContainer,
-                            storageComment)
-                      values(
-                            :newID,
-                            " NewDevice",
-                            "",
-                            :newLocation,
-                            "",
-                            "",
-                            "",
-                            0,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "")
-                    )");
-
-        QSqlQuery insertQuery;
-        insertQuery.prepare(querySQL);
-        insertQuery.bindValue(":newID",newID);
-        insertQuery.bindValue(":newLocation",newLocation);
-        insertQuery.exec();
-
-        //load table to model
-        loadStorageTableToModel();
-        saveStorageData();
-
-        //enable save button
-        ui->Storage_pushButton_New->setEnabled(true);
-
-        //Refresh Location list
-        refreshLocationSelectionList();
-
+        addStorageDevice(tr("Storage"));
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
@@ -290,6 +175,132 @@
 
 //Methods-----------------------------------------------------------------------
 
+    void MainWindow::createStorageList()
+    {
+        // Create it, if it does not exist
+        QFile newStorageFile(storageFilePath);
+        if(!newStorageFile.open(QIODevice::ReadOnly)) {
+
+            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                  QTextStream stream(&newStorageFile);
+
+                  stream << "ID"            << "\t"
+                         << "Name"          << "\t"
+                         << "Type"          << "\t"
+                         << "Location"      << "\t"
+                         << "Path"          << "\t"
+                         << "Label"         << "\t"
+                         << "FileSystem"    << "\t"
+                         << "Total"         << "\t"
+                         << "Free"          << "\t"
+                         << "BrandModel"    << "\t"
+                         << "SerialNumber"  << "\t"
+                         << "BuildDate"     << "\t"
+                         << "ContentType"   << "\t"
+                         << "Container"     << "\t"
+                         << "Comment"       << "\t"
+                         << '\n';
+
+                  newStorageFile.close();
+
+                  ui->Storage_pushButton_Reload->setEnabled(true);
+                  ui->Storage_pushButton_EditAll->setEnabled(true);
+                  //ui->Storage_pushButton_SaveAll->setEnabled(true);
+
+//                  QMessageBox::information(this,"Katalog",tr("A storage file was created")+":\n" + newStorageFile.fileName()
+//                                           + "\n"+tr("You can edit it now")+".");
+
+                  //Disable button so it cannot be overwritten
+                  ui->Storage_pushButton_CreateList->setEnabled(false);
+                  ui->Storage_pushButton_SaveAll->setEnabled(true);
+
+                  //Even if empty, load it to the model
+                  loadStorageFileToTable();
+                  loadStorageTableToModel();
+                  refreshStorageStatistics();
+                  addStorageDevice("");
+
+            return;
+            }
+        }
+
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::addStorageDevice(QString deviceName)
+    {
+        //Get inputs
+            //max ID
+            QSqlQuery queryDeviceNumber;
+            queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
+            queryDeviceNumber.exec();
+            queryDeviceNumber.next();
+            int maxID = queryDeviceNumber.value(0).toInt();
+            int newID = maxID + 1;
+
+            //location
+            QString newLocation;
+            if(selectedSearchLocation!=tr("All")){
+                newLocation = selectedSearchLocation;
+            }
+            else
+                newLocation = "";
+
+        //Insert new device with default values
+        QString querySQL = QLatin1String(R"(
+            insert into storage(
+                            storageID,
+                            storageName,
+                            storageType,
+                            storageLocation,
+                            storagePath,
+                            storageLabel,
+                            storageFileSystem,
+                            storageTotalSpace,
+                            storageFreeSpace,
+                            storageBrandModel,
+                            storageSerialNumber,
+                            storageBuildDate,
+                            storageContentType,
+                            storageContainer,
+                            storageComment)
+                      values(
+                            :newID,
+                            :storageName,
+                            "",
+                            :newLocation,
+                            "",
+                            "",
+                            "",
+                            0,
+                            0,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "")
+                    )");
+
+        QSqlQuery insertQuery;
+        insertQuery.prepare(querySQL);
+        insertQuery.bindValue(":newID",newID);
+        insertQuery.bindValue(":newLocation",deviceName);
+        insertQuery.bindValue(":newLocation",newLocation);
+        insertQuery.exec();
+
+        //load table to model
+        loadStorageTableToModel();
+        saveStorageData();
+
+        //enable save button
+        ui->Storage_pushButton_New->setEnabled(true);
+
+        //Refresh Location list
+        refreshLocationSelectionList();
+
+    }
+    //--------------------------------------------------------------------------
     void MainWindow::loadStorageFileToTable()
     {
         //Define storage file and prepare stream
