@@ -459,6 +459,8 @@
                              "This could take one or several minutes to open.<br/>"
                              "Do you want to continue?"),QMessageBox::Yes|QMessageBox::Cancel);
                 if ( result ==QMessageBox::Cancel){
+                    //Stop animation
+                    QApplication::restoreOverrideCursor();
                     return;
                 }
         }
