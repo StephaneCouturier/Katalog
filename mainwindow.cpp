@@ -185,6 +185,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
         //Setup tab: Explore
                 ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
+                ui->Explore_checkBox_DisplaySubFolders->setChecked(optionDisplaySubFolders);
 
         //Setup tab: Search
                 //Load an empty model to display headers

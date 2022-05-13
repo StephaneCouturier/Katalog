@@ -269,6 +269,7 @@ class MainWindow : public QMainWindow
             int lastExploreSortSection;
             int lastExploreSortOrder;
             bool optionDisplayFolders;
+            bool optionDisplaySubFolders;
 
         //TAB: Create
             QFileSystemModel *fileSystemModel;
@@ -463,6 +464,7 @@ class MainWindow : public QMainWindow
             void on_Explore_treeView_FileList_HeaderSortOrderChanged();
             void on_Explore_pushButton_Load_clicked();
             void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
+            void on_Explore_checkBox_DisplaySubFolders_toggled(bool checked);
             void on_Explore_pushButton_OrderFoldersFirst_clicked();
 
             //context menu directories

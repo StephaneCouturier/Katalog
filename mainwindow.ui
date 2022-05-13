@@ -1301,7 +1301,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -4540,6 +4540,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
                       <property name="text">
                        <string>Display folders</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="Explore_checkBox_DisplaySubFolders">
+                      <property name="text">
+                       <string>and all sub-folders</string>
                       </property>
                      </widget>
                     </item>

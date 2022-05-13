@@ -255,23 +255,18 @@
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage
-            lastCatalogsSortSection = settings.value("Catalogs/lastCatlogsSortSection").toInt();
-            lastCatalogsSortOrder   = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
-            lastStorageSortSection = settings.value("Storage/lastStorageSortSection").toInt();
-            lastStorageSortOrder   = settings.value("Storage/lastStorageSortOrder").toInt();
-            lastExploreSortSection = settings.value("Explore/lastExploreSortSection").toInt();
-            lastExploreSortOrder   = settings.value("Explore/lastExploreSortOrder").toInt();
-            lastSearchSortSection = settings.value("Search/lastSearchSortSection").toInt();
-            lastSearchSortOrder   = settings.value("Search/lastSearchSortOrder").toInt();
+            lastCatalogsSortSection      = settings.value("Catalogs/lastCatlogsSortSection").toInt();
+            lastCatalogsSortOrder        = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
+            lastStorageSortSection       = settings.value("Storage/lastStorageSortSection").toInt();
+            lastStorageSortOrder         = settings.value("Storage/lastStorageSortOrder").toInt();
+            lastExploreSortSection       = settings.value("Explore/lastExploreSortSection").toInt();
+            lastExploreSortOrder         = settings.value("Explore/lastExploreSortOrder").toInt();
+            lastSearchSortSection        = settings.value("Search/lastSearchSortSection").toInt();
+            lastSearchSortOrder          = settings.value("Search/lastSearchSortOrder").toInt();
             lastSearchHistorySortSection = settings.value("Search/lastSearchHistorySortSection").toInt();
             lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
-            optionDisplayFolders   = settings.value("Explore/DisplayFolders").toBool();
-
-            //ui->Catalogs_treeView_CatalogList->header()->restoreState(settings.value("Catalog/lastCatalogsHeaderSectionSizes").toByteArray());
-            //ui->splitter->pos();
-            //ui->splitter->move(settings.value("Settings/SplitterPosition").toInt(),1);
-            //ui->splitter->sizePolicy().setHorizontalStretch(settings.value("Settings/SplitterPosition").toInt());
-            //ui->splitter->setSizes(QList<int>() << settings.value("Settings/SplitterPosition").toInt() << settings.value("Settings/SplitterWidth").toInt());
+            optionDisplayFolders         = settings.value("Explore/DisplayFolders").toBool();
+            optionDisplaySubFolders      = settings.value("Explore/DisplaySubFolders").toBool();
 
     }
     //----------------------------------------------------------------------

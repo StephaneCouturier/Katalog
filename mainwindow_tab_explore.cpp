@@ -125,6 +125,16 @@
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Explore/DisplayFolders", optionDisplayFolders);
             loadSelectedDirectoryFilesToExplore();
+            if(checked==true){ui->Explore_checkBox_DisplaySubFolders->setEnabled(true);}
+            else {ui->Explore_checkBox_DisplaySubFolders->setEnabled(false);}
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Explore_checkBox_DisplaySubFolders_toggled(bool checked)
+        {
+            optionDisplaySubFolders = checked;
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Explore/DisplaySubFolders", optionDisplaySubFolders);
+            loadSelectedDirectoryFilesToExplore();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Explore_pushButton_OrderFoldersFirst_clicked()
@@ -573,7 +583,14 @@
                                                     fileFullPath
                                     FROM    filesall
                                     WHERE   fileCatalog =:fileCatalog
-                                    AND     filePath  like :folderPath
+                                    AND     filePath  like :folderPath)");
+            if(optionDisplaySubFolders != true){
+                selectSQL = selectSQL + QLatin1String(R"(
+                                    AND     (REPLACE(filePath, :selectedDirectoryFullPath||'/', ''))  NOT like "%/%"
+                )");
+            }
+
+            selectSQL = selectSQL + QLatin1String(R"(
 
                                     GROUP BY filePath
 
@@ -594,7 +611,7 @@
                                     ORDER BY orderValue ASC
 
                                 )");
-            // AND     REPLACE(filePath, :selectedDirectoryFullPath||'/', ''  NOT like "/"
+            // AND     (REPLACE(filePath, :selectedDirectoryFullPath||'/', ''))  NOT like "%/%"
         }
         else{
             selectSQL = QLatin1String(R"(
