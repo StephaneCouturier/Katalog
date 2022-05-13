@@ -1357,78 +1357,8 @@
                <number>0</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchCriteriaTitleBar">
-                <item>
-                 <widget class="QPushButton" name="Search_pushButton_ShowHideSearchCriteria">
-                  <property name="maximumSize">
-                   <size>
-                    <width>35</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Show/Hide search criteria</string>
-                  </property>
-                  <property name="statusTip">
-                   <string/>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">padding: 2px 10px;</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="go-up">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="Search_label_CatalogsWithResults_3">
-                  <property name="minimumSize">
-                   <size>
-                    <width>215</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">padding-left:10px;</string>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Search criteria</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="Search_horizontalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QWidget" name="Search_widget_SearchCriteria" native="true">
-                <layout class="QVBoxLayout" name="verticalLayout">
+               <widget class="QWidget" name="Search_widget_TextCriteria" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout_13">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -1445,9 +1375,79 @@
                   <number>0</number>
                  </property>
                  <item>
+                  <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchCriteriaTitleBar">
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_ShowHideSearchCriteria">
+                     <property name="maximumSize">
+                      <size>
+                       <width>35</width>
+                       <height>22</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Show/Hide search criteria</string>
+                     </property>
+                     <property name="statusTip">
+                      <string/>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">padding: 2px 10px;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="go-up">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="Search_label_CatalogsWithResults_3">
+                     <property name="minimumSize">
+                      <size>
+                       <width>215</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">padding-left:10px;</string>
+                     </property>
+                     <property name="locale">
+                      <locale language="English" country="UnitedStates"/>
+                     </property>
+                     <property name="text">
+                      <string>Search criteria</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="Search_horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchText">
                    <property name="topMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -1463,7 +1463,7 @@
                      <property name="minimumSize">
                       <size>
                        <width>30</width>
-                       <height>0</height>
+                       <height>40</height>
                       </size>
                      </property>
                      <property name="maximumSize">
@@ -1685,6 +1685,30 @@
                    </item>
                   </layout>
                  </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="Search_widget_SearchCriteria" native="true">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <layout class="QHBoxLayout" name="Search_horizontalLayout_SearchFilters1">
                    <property name="topMargin">
@@ -4553,7 +4577,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QWidget" name="widget_4" native="true">
+             <widget class="QWidget" name="Explore_widget_Information" native="true">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -5009,7 +5033,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <number>0</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_DefineCreate">
                 <item>
                  <widget class="QLabel" name="Create_label_SelectThePath_5">
                   <property name="minimumSize">
@@ -5326,10 +5350,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="Create_verticalLayout_1_SelectPath">
               <item>
-               <layout class="QGridLayout" name="gridLayout_2"/>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout">
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_SourcePath">
                 <item>
                  <widget class="QLabel" name="Create_label_SelectThePath_3">
                   <property name="minimumSize">
@@ -5874,7 +5895,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item row="3" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <layout class="QHBoxLayout" name="Storage_horizontalLayout_ListAndPanel">
               <item>
                <widget class="QTreeView" name="Storage_treeView_StorageList">
                 <property name="alternatingRowColors">
@@ -5892,27 +5913,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QWidget" name="widget_2" native="true">
+               <widget class="QWidget" name="Storage_widget_EditPanel" native="true">
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="0" column="1">
-                  <widget class="QLabel" name="Storage_label_Device">
+                  <widget class="QLabel" name="Storage_label_PanelDevice">
                    <property name="text">
                     <string>Device</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="0" rowspan="2" colspan="3">
-                  <widget class="QWidget" name="Storage_widget_DeviceForm" native="true">
+                  <widget class="QWidget" name="Storage_widget_DevicePanelForm" native="true">
                    <layout class="QVBoxLayout" name="verticalLayout_5">
                     <item>
-                     <widget class="QPushButton" name="pushButton_2">
+                     <widget class="QPushButton" name="Storage_pushButton_PanelNew">
                       <property name="text">
                        <string>New</string>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton">
+                     <widget class="QPushButton" name="Storage_pushButton_PanelSaveAll">
                       <property name="text">
                        <string>Save All</string>
                       </property>
@@ -5935,7 +5956,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </spacer>
                  </item>
                  <item row="0" column="0">
-                  <widget class="QPushButton" name="Storage_pushButton_ShowHide">
+                  <widget class="QPushButton" name="Storage_pushButton_ShowHidePanel">
                    <property name="maximumSize">
                     <size>
                      <width>40</width>
@@ -6267,7 +6288,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </layout>
               </item>
               <item row="8" column="1">
-               <layout class="QVBoxLayout" name="verticalLayout_12">
+               <layout class="QVBoxLayout" name="Tags_verticalLayout_Buttons">
                 <item>
                  <widget class="QPushButton" name="Tags_pushButton_Reload">
                   <property name="maximumSize">
@@ -6324,7 +6345,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_17">
             <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <layout class="QHBoxLayout" name="DEV_horizontalLayout_9">
               <item>
                <widget class="QPushButton" name="DEV2_pushButton_LoadTree">
                 <property name="text">
@@ -6333,7 +6354,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_4">
+               <spacer name="DEV2_horizontalSpacer_4">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6348,7 +6369,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item row="1" column="0">
-             <widget class="QTreeView" name="Filters_treeView_Devices_2">
+             <widget class="QTreeView" name="DEV2_treeView_Devices_2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -6406,8 +6427,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
   <include location="images.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>
