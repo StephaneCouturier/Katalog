@@ -1304,7 +1304,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="iconSize">
            <size>
@@ -4543,6 +4543,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
                       <property name="text">
                        <string>Display folders</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Explore_horizontalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Explore_pushButton_OrderFoldersFirst">
+                      <property name="text">
+                       <string>Order folders first</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="view-sort"/>
                       </property>
                      </widget>
                     </item>
