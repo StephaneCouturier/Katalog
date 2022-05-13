@@ -78,16 +78,16 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 
             case Qt::FontRole:
             {
-                QModelIndex idx1 = index.sibling(index.row(), 0);
-                QModelIndex idx2 = index.sibling(index.row(), 1);
-                if (m_selectedDeviceName == QSortFilterProxyModel::data(idx1, Qt::DisplayRole).toString()
-                    and m_selectedDeviceType == QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString() )
-                {
-                    QFont boldFont;
-                    boldFont.setBold(true);
-                    return boldFont;
-                }
-                break;
+//                QModelIndex idx1 = index.sibling(index.row(), 0);
+//                QModelIndex idx2 = index.sibling(index.row(), 1);
+//                if (m_selectedDeviceName == QSortFilterProxyModel::data(idx1, Qt::DisplayRole).toString()
+//                    and m_selectedDeviceType == QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString() )
+//                {
+//                    QFont boldFont;
+//                    boldFont.setBold(true);
+//                    return boldFont;
+//                }
+//                break;
             }
 
             case Qt::TextAlignmentRole:

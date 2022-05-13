@@ -477,7 +477,6 @@
         }
 
         //Load the files of the Selected Catalog
-        //loadCatalogFilesToExplore();
         loadCatalogFilelistToTable(selectedCatalogName);
 
         loadCatalogDirectoriesToExplore();

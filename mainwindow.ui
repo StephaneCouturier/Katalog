@@ -545,10 +545,10 @@
                   <bool>false</bool>
                  </property>
                  <property name="selectionMode">
-                  <enum>QAbstractItemView::NoSelection</enum>
+                  <enum>QAbstractItemView::SingleSelection</enum>
                  </property>
                  <property name="selectionBehavior">
-                  <enum>QAbstractItemView::SelectItems</enum>
+                  <enum>QAbstractItemView::SelectRows</enum>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -559,11 +559,8 @@
                  <property name="rootIsDecorated">
                   <bool>true</bool>
                  </property>
-                 <property name="sortingEnabled">
-                  <bool>true</bool>
-                 </property>
                  <property name="animated">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="expandsOnDoubleClick">
                   <bool>false</bool>
@@ -4568,7 +4565,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <string>Order folders first</string>
                       </property>
                       <property name="icon">
-                       <iconset theme="view-sort"/>
+                       <iconset theme="view-sort">
+                        <normaloff>.</normaloff>.</iconset>
                       </property>
                      </widget>
                     </item>
