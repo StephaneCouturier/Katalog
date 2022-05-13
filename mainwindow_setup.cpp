@@ -350,9 +350,9 @@
         //Storage
             //DEV: pending a test and development of a function to open Filelight at the requested place
             //ui->Storage_pushButton_OpenFilelight->hide();
-            ui->Storage_pushButton_ShowHide->hide();
-            ui->Storage_label_Device->hide();
-            ui->Storage_widget_DeviceForm->hide();
+            ui->Storage_pushButton_ShowHidePanel->hide();
+            ui->Storage_label_PanelDevice->hide();
+            ui->Storage_widget_DevicePanelForm->hide();
 
         //Settings
             ui->Filters_widget_CatalogSelectionBox->hide();
