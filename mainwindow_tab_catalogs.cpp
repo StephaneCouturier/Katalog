@@ -203,7 +203,7 @@
         void MainWindow::on_Catalogs_pushButton_ViewCatalogStats_clicked()
         {
             ui->Statistics_comboBox_SelectSource->setCurrentText("Updates only");
-            ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
+            //ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
             //Select the type of display "selected catalog"
@@ -485,11 +485,21 @@
                                         )");
 
                 //add AND conditions for the selected filters
-                if ( selectedSearchLocation != tr("All") )
-                    loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
+//                if ( selectedSearchLocation != tr("All") )
+//                    loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
 
-                if ( selectedSearchStorage != tr("All") )
-                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
+//                if ( selectedSearchStorage != tr("All") )
+//                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
+
+            if ( selectedDeviceType == "Location" )
+                loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
+
+            else if ( selectedDeviceType == "Storage" )
+                loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+ selectedDeviceName +"' ";
+
+            else if ( selectedDeviceType == "Catalog" )
+                loadCatalogSQL = loadCatalogSQL + " AND catalogName = '"+ selectedDeviceName +"' ";
+
 
             //Execute query
             QSqlQuery loadCatalogQuery;

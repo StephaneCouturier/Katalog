@@ -50,20 +50,20 @@
 
         //Display selection combo boxes depending on data source
         if (selectedSource ==tr("collection snapshots")){
-            ui->Statistics_label_Catalog->hide();
-            ui->Statistics_comboBox_SelectCatalog->hide();
+//            ui->Statistics_label_Catalog->hide();
+//            ui->Statistics_comboBox_SelectCatalog->hide();
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
         else if(selectedSource ==tr("selected catalog")){
-            ui->Statistics_label_Catalog->show();
-            ui->Statistics_comboBox_SelectCatalog->show();
+//            ui->Statistics_label_Catalog->show();
+//            ui->Statistics_comboBox_SelectCatalog->show();
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
         else if(selectedSource ==tr("storage")){
-            ui->Statistics_label_Catalog->hide();
-            ui->Statistics_comboBox_SelectCatalog->hide();
+//            ui->Statistics_label_Catalog->hide();
+//            ui->Statistics_comboBox_SelectCatalog->hide();
             ui->Statistics_label_DataType->hide();
             ui->Statistics_comboBox_TypeOfData->hide();
         }
@@ -222,8 +222,14 @@
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
 
             //QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
-            QString selectedCatalogforStats = ui->Statistics_comboBox_SelectCatalog->currentText();
             QString selectedStorageforStats = ui->Filters_comboBox_SelectStorage->currentText();
+            QString selectedCatalogforStats = ui->Filters_comboBox_SelectCatalog->currentText();; // activeCatalog->name;//ui->Statistics_comboBox_SelectCatalog->currentText();
+            //            activeCatalog->setCatalogName(selectedCatalogPath);
+            //            activeCatalog->loadCatalogMetaData();
+//            if (selectedDeviceType == "Catalog"){
+//                selectedStorageforStats = activeCatalog->storage;
+//            }
+
             qint64 maxValueGraphRange = 0.0;
             QString displayUnit;
             QLineSeries *series1 = new QLineSeries();
@@ -245,7 +251,6 @@
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":selectedCatalogforStats",selectedCatalogforStats);
                 queryTotalSnapshots.exec();
-
 
                 while (queryTotalSnapshots.next()){
 
@@ -345,13 +350,32 @@
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
                                                     SELECT dateTime, SUM(catalogFileCount), SUM(catalogTotalFileSize)
-                                                    FROM statistics
+                                                    FROM statistics sa
                                                     WHERE recordType = 'Storage'
-                                                    AND catalogName = :selectedStorageforStats
-                                                    GROUP BY datetime
                                                 )");
-                queryTotalSnapshots.prepare(querySQL);
-                queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedStorageforStats);
+//
+//                LEFT JOIN storage so ON sa.catalogName = so.storageName
+//
+//                if (selectedDeviceType == "Location"){
+//                    querySQL = querySQL + " AND storageLocation = :storageLocation ";
+//                    querySQL = querySQL + " GROUP BY datetime ";
+//                    queryTotalSnapshots.prepare(querySQL);
+//                    queryTotalSnapshots.bindValue(":storageLocation",selectedLocation);
+//                }
+
+                if (selectedDeviceType == "Storage"){
+                    querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
+                    querySQL = querySQL + " GROUP BY datetime ";
+                    queryTotalSnapshots.prepare(querySQL);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedStorageforStats);
+                }
+                else if (selectedDeviceType == "Catalog"){
+                    querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
+                    querySQL = querySQL + " GROUP BY datetime ";
+                    queryTotalSnapshots.prepare(querySQL);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storage);
+                }
+
                 queryTotalSnapshots.exec();
 
 

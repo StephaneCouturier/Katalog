@@ -96,6 +96,53 @@
         ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
     }
     //----------------------------------------------------------------------  
+    void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
+    {
+        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+//        deviceProxyModel->setSelectedDeviceInfo(selectedDeviceName,selectedDeviceType);
+//        QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + QVariant(selectedDeviceName).toString());
+//        QMessageBox::information(this,"Katalog","selectedDeviceType: <br/>" + QVariant(selectedDeviceType).toString());
+
+        if(selectedDeviceType=="Location"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceName);
+            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+        }
+        else if (selectedDeviceType=="Storage"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedLocation = tr("All");
+            selectedStorage = selectedDeviceName;
+
+            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceName);
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+
+        }
+        else if (selectedDeviceType=="Catalog"){
+            ui->Filter_pushButton_Explore->setEnabled(true);
+            ui->Filter_pushButton_Update->setEnabled(true);
+
+            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->loadCatalogMetaData();
+
+            selectedCatalogName    = activeCatalog->name;
+            selectedCatalogStorage = activeCatalog->storage;
+
+            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
+            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
+        }
+
+        //Load matching Catalog
+        loadCatalogsToModel();
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
     {
         //save selection in settings file;
@@ -124,7 +171,7 @@
         settings.setValue("LastSearch/SelectedSearchStorage", selectedStorage);
 
         //Get selected Location
-        QString selectedLocation = ui->Filters_comboBox_SelectLocation->currentText();
+        selectedLocation = ui->Filters_comboBox_SelectLocation->currentText();
 
         //Load matching Storage
         refreshCatalogSelectionList(selectedLocation, selectedStorage);
@@ -293,42 +340,6 @@
 
         //Select this directory in the treeview.
         loadFileSystem(selectedConnectedDrivePath);
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
-    {
-        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-        deviceProxyModel->setSelectedDeviceInfo(selectedDeviceName,selectedDeviceType);
-
-        if(selectedDeviceType=="Location"){
-            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceName);
-            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-        }
-        else if (selectedDeviceType=="Storage"){
-            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceName);
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-        }
-        else if (selectedDeviceType=="Catalog"){
-            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
-
-            ui->Filter_pushButton_Explore->setEnabled(true);
-            ui->Filter_pushButton_Update->setEnabled(true);
-
-            activeCatalog->setCatalogName(selectedDeviceName);
-            activeCatalog->loadCatalogMetaData();
-
-            selectedCatalogName    = activeCatalog->catalogName;
-            selectedCatalogStorage = activeCatalog->catalogStorage;
-        }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStorageTableToFilterTree()

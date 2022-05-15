@@ -2006,11 +2006,11 @@
                 QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
                 //Generate list of values
-                if ( catalogListModelForStats->rowCount()!=0)
-                    ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
+//                if ( catalogListModelForStats->rowCount()!=0)
+//                    ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
 
                 //Restore last selection value or default
-                   ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
+//                   ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
 
             //Restore last selection
                ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
