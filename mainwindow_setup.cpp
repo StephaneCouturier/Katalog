@@ -238,7 +238,6 @@
 
             //Restore last statistics values
             ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());
-            ui->Statistics_comboBox_SelectCatalog->setCurrentText(settings.value("Statistics/SelectedCatalog").toString());
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //Restore last opened catalog file to Explore
