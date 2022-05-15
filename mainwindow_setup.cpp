@@ -221,6 +221,9 @@
                     ui->Search_treeView_History->setHidden(true);
             }
 
+            //Expand/Collapse device selection tree
+            deviceTreeExpandState = settings.value("Settings/deviceTreeExpandState").toInt();
+
             //General settings
             ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
             QString themeText = settings.value("Settings/Theme").toString();

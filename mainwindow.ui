@@ -450,7 +450,7 @@
                     </size>
                    </property>
                    <property name="toolTip">
-                    <string>Show/Hide Filters and Settings</string>
+                    <string>Expand 1 level, 2 levels, or collapse</string>
                    </property>
                    <property name="statusTip">
                     <string/>
@@ -1240,7 +1240,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>

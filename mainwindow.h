@@ -139,6 +139,8 @@ class MainWindow : public QMainWindow
             QString selectedConnectedDrivePath;
             QString selectedDeviceName;
             QString selectedDeviceType;
+            int deviceTreeExpandState;
+            void toggleTreeExpandState();
 
         //TAB: Search
             //inputs
@@ -522,7 +524,6 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-
 };
 
 #endif // MAINWINDOW_H

@@ -90,11 +90,19 @@
 //FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
     {
-        deviceProxyModel->setSelectedDeviceInfo("","");
+        //reset filters
         ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
         ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
         ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+
+        //reset device tree
+//        ui->Filters_treeView_Devices->collapseAll();
+//        ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+        deviceTreeExpandState = 1;
+        toggleTreeExpandState();
+
         loadStorageTableToFilterTree();
+
     }
     //----------------------------------------------------------------------  
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
@@ -241,21 +249,35 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
     {
+        toggleTreeExpandState();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::toggleTreeExpandState()
+    {
+        //deviceTreeExpandState values:  0=collapse / 1=exp.level0 / 2=exp.level1
         QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        if ( iconName == "expand-all"){
-            ui->Filters_treeView_Devices->expandAll();
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Settings/ExpandCollapseDeviceTree", "collapse-all");
-        }
-        else{ //Show
-            ui->Filters_treeView_Devices->collapseAll();
+        if ( deviceTreeExpandState == 0 ){
+            //collapsed > expand first level
             ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Settings/ExpandCollapseDeviceTree", "expand-all");
+            ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 1;
+        }
+        else if ( deviceTreeExpandState == 1 ){
+            //expanded first level > expand to second level
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            ui->Filters_treeView_Devices->expandAll();
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 2;
+        }
+        else if ( deviceTreeExpandState == 2 ){
+            //expanded second level > collapse
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Filters_treeView_Devices->collapseAll();
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 0;
         }
     }
     //----------------------------------------------------------------------
@@ -358,15 +380,7 @@
         ui->Filters_treeView_Devices->header()->hide();
 
         //Restore Expand or Collapse Device Tree
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        if ( settings.value("Settings/ExpandCollapseDeviceTree") == "expand-all"){
-                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                ui->Filters_treeView_Devices->collapseAll();
-        }
-        else{
-            ui->Filters_treeView_Devices->expandAll();
-                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-        }
+        toggleTreeExpandState();
     }
 
 //SETTINGS / Collection ----------------------------------------------------
