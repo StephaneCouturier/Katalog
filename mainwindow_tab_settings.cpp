@@ -94,6 +94,7 @@
         ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
         ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
         ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
+        loadStorageTableToFilterTree();
     }
     //----------------------------------------------------------------------  
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
