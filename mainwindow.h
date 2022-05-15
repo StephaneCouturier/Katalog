@@ -127,6 +127,7 @@ class MainWindow : public QMainWindow
             //database
             QSqlRelationalTableModel *storageModel;
             void startDatabase();
+            void populateCalendarTable(QDateTime min, QDateTime max);
 
             //void refreshStorageStatistics();
             bool checkVersionChoice;

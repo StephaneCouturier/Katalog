@@ -39,7 +39,7 @@
 
     //Create table query
             const auto SQL_CREATE_CATALOG = QLatin1String(R"(
-                           create  table  if not exists  catalog(
+                           CREATE TABLE IF NOT EXISTS  catalog(
                                     catalogID  int AUTO_INCREMENT primary key ,
                                     catalogFilePath         TEXT ,
                                     catalogName             TEXT  ,
@@ -58,7 +58,7 @@
 
     //Insert row  query
             const auto SQL_INSERT_CATALOG = QLatin1String(R"(
-                INSERT INTO catalog(
+                            INSERT INTO catalog(
                                     catalogFilePath,
                                     catalogName,
                                     catalogDateUpdated,
@@ -114,7 +114,7 @@
 
     //Create table query
             const auto SQL_CREATE_STORAGE = QLatin1String(R"(
-                           create  table  if not exists  storage(
+                           CREATE TABLE IF NOT EXISTS  storage(
                                 storageID  int  primary key default 0,
                                 storageName         TEXT,
                                 storageType         TEXT,
@@ -152,7 +152,7 @@
 
         //Create table query
                 const auto SQL_CREATE_FILE = QLatin1String(R"(
-                               create  table  if not exists  file(
+                               CREATE TABLE IF NOT EXISTS  file(
                                         id_file             INTEGER,
                                         fileName            TEXT,
                                         filePath            TEXT,
@@ -167,7 +167,7 @@
 
         //Create table query
                 const auto SQL_CREATE_STATISTICS = QLatin1String(R"(
-                               create  table  if not exists  statistics(
+                               CREATE TABLE IF NOT EXISTS  statistics(
                                         dateTime             TEXT,
                                         catalogName          TEXT,
                                         catalogFileCount     REAL,
@@ -181,7 +181,7 @@
 
         //Create table query
                 const auto SQL_CREATE_SEARCH = QLatin1String(R"(
-                               create  table  if not exists  search(
+                               CREATE TABLE IF NOT EXISTS  search(
                                         dateTime            TEXT,
                                         TextChecked         INTEGER,
                                         TextPhrase          TEXT,
@@ -217,11 +217,26 @@
 
         //Create table query
                 const auto SQL_CREATE_TAG = QLatin1String(R"(
-                               create  table  if not exists  tag(
+                               CREATE TABLE IF NOT EXISTS  tag(
                                         Name		TEXT,
                                         Path		TEXT,
                                         Type		TEXT,
                                         dateTime	TEXT
+                                )
+                )");
+
+// STATISTICS ----------------------------------------------------
+
+        //Create table query
+                const auto SQL_CREATE_CALENDAR = QLatin1String(R"(
+                                CREATE TABLE IF NOT EXISTS calendar (
+                                  d date UNIQUE NOT NULL,
+                                  dayofweek INT NOT NULL,
+                                  weekday TEXT NOT NULL,
+                                  quarter INT NOT NULL,
+                                  year INT NOT NULL,
+                                  month INT NOT NULL,
+                                  day INT NOT NULL
                                 )
                 )");
 
@@ -255,6 +270,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.exec(SQL_CREATE_TAG))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_CALENDAR))
         return q.lastError();
 
     return QSqlError();

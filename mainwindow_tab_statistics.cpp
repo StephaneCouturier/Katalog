@@ -132,39 +132,36 @@
     void MainWindow::loadStatisticsData()
     {
         // Load the contents of the statistics file into the database
-//        QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + selectedDeviceName);
-//        QMessageBox::information(this,"Katalog","selectedDeviceType: <br/>" + selectedDeviceType);
 
         //clear database table
-        QSqlQuery deleteQuery;
-        deleteQuery.exec("DELETE FROM statistics");
+            QSqlQuery deleteQuery;
+            deleteQuery.exec("DELETE FROM statistics");
 
         // Get infos stored in the file
-        QFile statisticsFile(statisticsFilePath);
-        if(!statisticsFile.open(QIODevice::ReadOnly)) {
-            //QMessageBox::information(this,"Katalog",tr("No statistic file found."));
-            return;
-        }
+            QFile statisticsFile(statisticsFilePath);
+            if(!statisticsFile.open(QIODevice::ReadOnly)) {
+                return;
+            }
 
-        QTextStream textStream(&statisticsFile);
+            QTextStream textStream(&statisticsFile);
 
         //prepare query to load file info
-        QSqlQuery insertQuery;
-        QString insertSQL = QLatin1String(R"(
-                            INSERT INTO statistics (
-                                            dateTime,
-                                            catalogName,
-                                            catalogFileCount,
-                                            catalogTotalFileSize,
-                                            recordType )
-                            VALUES(
-                                            :dateTime,
-                                            :catalogName,
-                                            :catalogFileCount,
-                                            :catalogTotalFileSize,
-                                            :recordType )
-                                        )");
-        insertQuery.prepare(insertSQL);
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                INSERT INTO statistics (
+                                                dateTime,
+                                                catalogName,
+                                                catalogFileCount,
+                                                catalogTotalFileSize,
+                                                recordType )
+                                VALUES(
+                                                :dateTime,
+                                                :catalogName,
+                                                :catalogFileCount,
+                                                :catalogTotalFileSize,
+                                                :recordType )
+                                            )");
+            insertQuery.prepare(insertSQL);
 
         //set temporary values
             QString     line;
@@ -177,19 +174,18 @@
             qint64      catalogTotalFileSize;
             QString     recordType;
 
-            //skip titles
+        //Skip titles line
             line = textStream.readLine();
 
-        //load file
+        //load file to database
         while (!textStream.atEnd())
         {
             line = textStream.readLine();
             if (line.isNull())
                 break;
             else
-                {  //if (line.left(1)!="<")
-
-                    //Split the string with \t (tabulation) into a list
+                {
+                //Split the string with \t (tabulation) into a list
                     QRegExp tagExp("\t"); //setpattern
                     fieldList.clear();
                     fieldList = line.split(tagExp);
@@ -202,15 +198,16 @@
                         recordType          = fieldList[4];
                     }
 
-                    //Append data to the database
-                    insertQuery.bindValue(":dateTime", dateTime);
-                    insertQuery.bindValue(":catalogName", catalogName);
-                    insertQuery.bindValue(":catalogFileCount", QString::number(catalogFileCount));
-                    insertQuery.bindValue(":catalogTotalFileSize", QString::number(catalogTotalFileSize));
-                    insertQuery.bindValue(":recordType", recordType);
-                    insertQuery.exec();
-                }
+
+                        //Append data to the database
+                        insertQuery.bindValue(":dateTime", dateTime);
+                        insertQuery.bindValue(":catalogName", catalogName);
+                        insertQuery.bindValue(":catalogFileCount", QString::number(catalogFileCount));
+                        insertQuery.bindValue(":catalogTotalFileSize", QString::number(catalogTotalFileSize));
+                        insertQuery.bindValue(":recordType", recordType);
+                        insertQuery.exec();
             }
+        }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsChart()
@@ -415,6 +412,7 @@
 
                    }
             }
+
 
         //Prepare the chart and plot the data
 

@@ -125,11 +125,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
     //Load Collection data
-            //Generate collection file paths
+            //Generate collection file paths and statistics parameters
                 searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
                 storageFilePath = collectionFolder + "/" + "storage.csv";
                 statisticsFileName = "statistics.csv";
                 statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+
+                QDateTime startDate    = QDateTime::fromString("2020-01-01 00:00:00","yyyy-MM-dd hh:mm:ss");;
+                QDateTime today        = QDateTime::currentDateTime();
+                populateCalendarTable(startDate,today);
 
             //Create a Storage list if none exist
                 createStorageList();
