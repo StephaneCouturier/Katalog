@@ -101,8 +101,6 @@
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
 //        deviceProxyModel->setSelectedDeviceInfo(selectedDeviceName,selectedDeviceType);
-//        QMessageBox::information(this,"Katalog","selectedDeviceName: <br/>" + QVariant(selectedDeviceName).toString());
-//        QMessageBox::information(this,"Katalog","selectedDeviceType: <br/>" + QVariant(selectedDeviceType).toString());
 
         if(selectedDeviceType=="Location"){
             ui->Filter_pushButton_Explore->setEnabled(false);

@@ -491,7 +491,12 @@
 //                if ( selectedSearchStorage != tr("All") )
 //                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
-            if ( selectedDeviceType == "Location" )
+            if (     selectedSearchLocation == tr("All")
+                 and selectedSearchStorage  == tr("All")
+                 and selectedSearchCatalog  == tr("All") )
+                {//loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
+            }
+            else if ( selectedDeviceType == "Location" )
                 loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
 
             else if ( selectedDeviceType == "Storage" )
