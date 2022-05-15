@@ -42,20 +42,20 @@ class Catalog : public QAbstractTableModel
 public:
     Catalog(QObject *parent = nullptr);
 
-    QString catalogID,
-            catalogFilePath,
-            catalogName,
-            catalogDateUpdated,
-            catalogSourcePath,
-            catalogFileCount,
-            catalogTotalFileSize,
-            catalogSourcePathIsActive,
-            catalogIncludeHidden,
-            catalogFileType,
-            catalogStorage,
-            catalogIncludeSymblinks,
-            catalogIsFullDevice,
-            catalogLoadedVersion;
+    QString ID,
+            filePath,
+            name,
+            dateUpdated,
+            sourcePath,
+            fileCount,
+            totalFileSize,
+            sourcePathIsActive,
+            includeHidden,
+            fileType,
+            storage,
+            includeSymblinks,
+            isFullDevice,
+            loadedVersion;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -66,18 +66,18 @@ public:
 
     void loadCatalogMetaData();
 
-    void populateFileData(  const QList<QString> &fileName,
-                            const QList<qint64>  &fileSize,
-                            const QList<QString> &filePath,
-                            const QList<QString> &fileDateTime,
-                            const QList<QString> &fileCatalog);
+    void populateFileData(  const QList<QString> &fileNames,
+                            const QList<qint64>  &fileSizes,
+                            const QList<QString> &filePaths,
+                            const QList<QString> &fileDateTimes,
+                            const QList<QString> &fileCatalogs);
 
 private:
-    QList<QString> fileName;
-    QList<qint64>  fileSize;
-    QList<QString> filePath;
-    QList<QString> fileDateTime;
-    QList<QString> fileCatalog;
+    QList<QString> fileNames;
+    QList<qint64>  fileSizes;
+    QList<QString> filePaths;
+    QList<QString> fileDateTimes;
+    QList<QString> fileCatalogs;
 };
 
 #endif // CATALOG_H

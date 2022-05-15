@@ -141,6 +141,10 @@ class MainWindow : public QMainWindow
 
         //TAB: Search
             //inputs
+            QString selectedLocation;
+            QString selectedStorage;
+            QString selectedCatalog;
+
             QString searchText;
             QString regexPattern;
             QString selectedSearchCatalog;
@@ -220,6 +224,7 @@ class MainWindow : public QMainWindow
             QString collectionFolder;
             QStringListModel catalogListModel;
             QStringList catalogFileList;
+
             QString selectedCatalogFile;
             QString selectedCatalogName;
             QString selectedCatalogDateTime;
@@ -233,6 +238,7 @@ class MainWindow : public QMainWindow
             bool    selectedCatalogIsFullDevice;
             QString selectedCatalogLoadedVersion;
             QString selectedStorageLocationFilter;
+
             bool    skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
             int lastCatalogsSortOrder;

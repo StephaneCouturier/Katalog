@@ -40,7 +40,7 @@ Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 int Catalog::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return fileName.length();
+    return fileNames.length();
 }
 
 int Catalog::columnCount(const QModelIndex &parent) const
@@ -55,11 +55,11 @@ QVariant Catalog::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     switch (index.column()){
-    case 0: return QString(fileName[index.row()]);
-    case 1: return qint64 (fileSize[index.row()]);
-    case 3: return QString(filePath[index.row()]);
-    case 2: return QString(fileDateTime[index.row()]);
-    case 4: return QString(fileCatalog[index.row()]);
+    case 0: return QString(fileNames[index.row()]);
+    case 1: return qint64 (fileSizes[index.row()]);
+    case 3: return QString(filePaths[index.row()]);
+    case 2: return QString(fileDateTimes[index.row()]);
+    case 4: return QString(fileCatalogs[index.row()]);
     }
     return QVariant();
 }
@@ -80,7 +80,7 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
 
 void Catalog::setCatalogName(QString selectedCatalogName)
 {
-    catalogName = selectedCatalogName;
+    name = selectedCatalogName;
 }
 
 void Catalog::loadCatalogMetaData()
@@ -107,24 +107,24 @@ void Catalog::loadCatalogMetaData()
                                 WHERE catalogName=:catalogName
                         )");
     query.prepare(querySQL);
-    query.bindValue(":catalogName",catalogName);
+    query.bindValue(":catalogName",name);
     query.exec();
     query.next();
 
-    catalogID                 = query.value(0).toString();
-    catalogFilePath           = query.value(1).toString();
-    catalogName               = query.value(2).toString();
-    catalogDateUpdated        = query.value(3).toString();
-    catalogSourcePath         = query.value(4).toString();
-    catalogFileCount          = query.value(5).toString();
-    catalogTotalFileSize      = query.value(6).toString();
-    catalogSourcePathIsActive = query.value(7).toString();
-    catalogIncludeHidden      = query.value(8).toString();
-    catalogFileType           = query.value(9).toString();
-    catalogStorage            = query.value(10).toString();
-    catalogIncludeSymblinks   = query.value(11).toString();
-    catalogIsFullDevice       = query.value(12).toString();
-    catalogLoadedVersion      = query.value(13).toString();
+    ID                 = query.value(0).toString();
+    filePath           = query.value(1).toString();
+    name               = query.value(2).toString();
+    dateUpdated        = query.value(3).toString();
+    sourcePath         = query.value(4).toString();
+    fileCount          = query.value(5).toString();
+    totalFileSize      = query.value(6).toString();
+    sourcePathIsActive = query.value(7).toString();
+    includeHidden      = query.value(8).toString();
+    fileType           = query.value(9).toString();
+    storage            = query.value(10).toString();
+    includeSymblinks   = query.value(11).toString();
+    isFullDevice       = query.value(12).toString();
+    loadedVersion      = query.value(13).toString();
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
@@ -133,16 +133,16 @@ void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<QString> &cfileDateTime,
                                 const QList<QString> &cfileCatalog)
 {
-    fileName.clear();
-    fileName = cfileName;
-    fileSize.clear();
-    fileSize = cfileSize;
-    filePath.clear();
-    filePath = cfilePath;
-    fileDateTime.clear();
-    fileDateTime = cfileDateTime;
-    fileCatalog.clear();
-    fileCatalog = cfileCatalog;
+    fileNames.clear();
+    fileNames = cfileName;
+    fileSizes.clear();
+    fileSizes = cfileSize;
+    filePaths.clear();
+    filePaths = cfilePath;
+    fileDateTimes.clear();
+    fileDateTimes = cfileDateTime;
+    fileCatalogs.clear();
+    fileCatalogs = cfileCatalog;
 
     return;
 }
