@@ -219,8 +219,8 @@
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
 
             //QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
-            QString selectedStorageforStats = ui->Filters_comboBox_SelectStorage->currentText();
-            QString selectedCatalogforStats = ui->Filters_comboBox_SelectCatalog->currentText();; // activeCatalog->name;//ui->Statistics_comboBox_SelectCatalog->currentText();
+            QString selectedStorageforStats = ui->Filters_label_DisplayStorage->text();
+            QString selectedCatalogforStats = ui->Filters_label_DisplayCatalog->text();; // activeCatalog->name;//ui->Statistics_comboBox_SelectCatalog->currentText();
             //            activeCatalog->setCatalogName(selectedCatalogPath);
             //            activeCatalog->loadCatalogMetaData();
 //            if (selectedDeviceType == "Catalog"){
@@ -370,11 +370,10 @@
                     querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
                     querySQL = querySQL + " GROUP BY datetime ";
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storage);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storageName);
                 }
 
                 queryTotalSnapshots.exec();
-
 
                 while (queryTotalSnapshots.next()){
 
@@ -392,6 +391,7 @@
                        if ( freeSpace > maxValueGraphRange )
                            maxValueGraphRange = freeSpace;
 
+
                        totalSpace = queryTotalSnapshots.value(2).toLongLong();
                        if ( totalSpace > 2000000000 ){
                            totalSpace = totalSpace/1024/1024/1024;
@@ -405,14 +405,12 @@
                        if ( totalSpace > maxValueGraphRange )
                            maxValueGraphRange = totalSpace;
 
-                       series1->append(datetime.toMSecsSinceEpoch(), freeSpace);
+                       series1->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
                        series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
-                       series1->setName("Free Space");
+                       series1->setName("Used Space");
                        series2->setName("Total Space");
-
                    }
             }
-
 
         //Prepare the chart and plot the data
 
@@ -423,6 +421,16 @@
                 chart->addSeries(series2);
             }
             chart->legend()->hide();
+
+            if (selectedDeviceType == "Storage"){
+                selectedCatalogforStats = selectedSearchStorage;
+
+            }
+            else if (selectedDeviceType == "Catalog"){
+                selectedCatalogforStats = activeCatalog->storageName;
+
+            }
+
             chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
                             + selectedTypeOfData + " "
                             +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span>"+ displayUnit+"</p>");
@@ -483,7 +491,6 @@
                 chart->legend()->setBackgroundVisible(true);
                 chart->legend()->setGeometry(QRectF(120, 70, 200, 75));
                 chart->legend()->update();
-
 
             ui->Statistics_chartview_Graph1->setChart(chart);
             ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);

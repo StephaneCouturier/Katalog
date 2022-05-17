@@ -225,32 +225,18 @@
                </property>
                <item>
                 <layout class="QGridLayout" name="gridLayout_2">
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="Filters_comboBox_SelectLocation">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QComboBox" name="Filters_comboBox_SelectStorage">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="Filters_label_Storage">
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
+                     <width>70</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -265,8 +251,14 @@
                   <widget class="QLabel" name="Filters_label_Location">
                    <property name="minimumSize">
                     <size>
-                     <width>70</width>
+                     <width>80</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -281,8 +273,14 @@
                   <widget class="QLabel" name="Filters_label_Catalog">
                    <property name="minimumSize">
                     <size>
-                     <width>60</width>
+                     <width>70</width>
                      <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -293,18 +291,45 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="1">
-                  <widget class="QComboBox" name="Filters_comboBox_SelectCatalog">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="Filters_label_DisplayLocation">
+                   <property name="minimumSize">
+                    <size>
+                     <width>120</width>
+                     <height>0</height>
+                    </size>
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <bold>true</bold>
                     </font>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="Filters_label_DisplayStorage">
+                   <property name="font">
+                    <font>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
+                   <property name="font">
+                    <font>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -2293,7 +2318,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="Search_spinBox_FileTypeMinimumSize">
+                    <widget class="QSpinBox" name="Search_spinBox_MinimumSize">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -3808,7 +3833,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Catalogs_pushButton_ViewCatalog">
+                 <widget class="QPushButton" name="Catalogs_pushButton_ExploreCatalog">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -6384,8 +6409,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
   <include location="images.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>

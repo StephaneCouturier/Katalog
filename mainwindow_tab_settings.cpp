@@ -88,138 +88,17 @@
     //----------------------------------------------------------------------
 
 //FILTERS -------------------------------------------------------------
-    void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
-    {
-        //reset filters
-        ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-        ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-        ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
-
-        //reset device tree
-//        ui->Filters_treeView_Devices->collapseAll();
-//        ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-        deviceTreeExpandState = 1;
-        toggleTreeExpandState();
-
-        loadStorageTableToFilterTree();
-
-    }
-    //----------------------------------------------------------------------  
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-//        deviceProxyModel->setSelectedDeviceInfo(selectedDeviceName,selectedDeviceType);
 
-        if(selectedDeviceType=="Location"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-
-            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedDeviceName);
-            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
-        }
-        else if (selectedDeviceType=="Storage"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-
-            selectedLocation = tr("All");
-            selectedStorage = selectedDeviceName;
-
-            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedDeviceName);
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(tr("All"));
-
-        }
-        else if (selectedDeviceType=="Catalog"){
-            ui->Filter_pushButton_Explore->setEnabled(true);
-            ui->Filter_pushButton_Update->setEnabled(true);
-
-            activeCatalog->setCatalogName(selectedDeviceName);
-            activeCatalog->loadCatalogMetaData();
-
-            selectedCatalogName    = activeCatalog->name;
-            selectedCatalogStorage = activeCatalog->storage;
-
-            ui->Filters_comboBox_SelectLocation->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectStorage->setCurrentText(tr("All"));
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedDeviceName);
-        }
-
-        //Load matching Catalog
-        loadCatalogsToModel();
+        filterFromSelectedDevices();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &selectedLocation)
+    void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
     {
-        //save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedLocation);
-
-        //Load matching Storage
-        refreshStorageSelectionList(selectedLocation);
-        selectedSearchLocation = selectedLocation;
-
-        //Load matching Catalog
-        loadCatalogsToModel();
-        loadStorageTableToModel();
-        refreshStorageStatistics();
-
-        //Load statistics
-        loadStatisticsData();
-        loadStatisticsChart();
-
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &selectedStorage)
-    {
-        //save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchStorage", selectedStorage);
-
-        //Get selected Location
-        selectedLocation = ui->Filters_comboBox_SelectLocation->currentText();
-
-        //Load matching Storage
-        refreshCatalogSelectionList(selectedLocation, selectedStorage);
-
-        selectedSearchStorage = selectedStorage;
-        selectedSearchLocation = selectedLocation;
-
-        //Load matching Catalog
-        loadCatalogsToModel();
-
-        //Load statistics
-        loadStatisticsData();
-        loadStatisticsChart();
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
-    {
-        //save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalog);
-
-        selectedSearchCatalog = selectedCatalog;
-
-        //get catalog source path
-        if (selectedCatalog!=tr("All")){
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                SELECT catalogSourcePath
-                                FROM catalog
-                                WHERE catalogName=:catalogName
-                                            )");
-            query.prepare(querySQL);
-            query.bindValue(":catalogName",selectedDeviceName);
-            query.exec();
-            query.next();
-            selectedCatalogPath =query.value(0).toString();
-        }
-
-        //Load statistics
-        loadStatisticsData();
-        loadStatisticsChart();
+        resetSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filter_pushButton_Search_clicked()
@@ -250,35 +129,6 @@
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
     {
         toggleTreeExpandState();
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::toggleTreeExpandState()
-    {
-        //deviceTreeExpandState values:  0=collapse / 1=exp.level0 / 2=exp.level1
-        QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
-        if ( deviceTreeExpandState == 0 ){
-            //collapsed > expand first level
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 1;
-        }
-        else if ( deviceTreeExpandState == 1 ){
-            //expanded first level > expand to second level
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            ui->Filters_treeView_Devices->expandAll();
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 2;
-        }
-        else if ( deviceTreeExpandState == 2 ){
-            //expanded second level > collapse
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->collapseAll();
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 0;
-        }
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
@@ -363,15 +213,15 @@
         loadFileSystem(selectedConnectedDrivePath);
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadStorageTableToFilterTree()
+    void MainWindow::loadStorageTableToSelectionTreeModel()
     {
         const QStringList headers({tr("Title"),tr("Type")});
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
-        deviceProxyModel->setSourceModel(storageTreeModel);
+        deviceTreeProxyModel->setSourceModel(storageTreeModel);
 
         //LoadModel
-        ui->Filters_treeView_Devices->setModel(deviceProxyModel);
+        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
         ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
         ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
 
@@ -382,6 +232,129 @@
         //Restore Expand or Collapse Device Tree
         toggleTreeExpandState();
     }
+    //----------------------------------------------------------------------
+    void MainWindow::resetSelection()
+    {
+        //reset selected values
+        selectedDeviceType = tr("All");
+        selectedDeviceName = tr("All");
+        selectedStorageLocation   = tr("All");
+        selectedStorageName       = tr("All");
+        selectedCatalogName       = tr("All");
+        ui->Filters_label_DisplayLocation->setText(tr("All"));
+        ui->Filters_label_DisplayStorage->setText(tr("All"));
+        ui->Filters_label_DisplayCatalog->setText(tr("All"));
+        activeCatalog->setCatalogName(tr(""));
+        activeCatalog->loadCatalogMetaData();
+        refreshStorageSelectionList(selectedStorageLocation);
+        refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+
+        //reset device tree
+        deviceTreeExpandState = 1;
+        toggleTreeExpandState();
+
+        loadStorageTableToSelectionTreeModel();
+        filterFromSelectedDevices();
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
+        settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
+        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::toggleTreeExpandState()
+    {
+        //deviceTreeExpandState values:  0=collapse / 1=exp.level0 / 2=exp.level1
+        QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+        if ( deviceTreeExpandState == 0 ){
+            //collapsed > expand first level
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 1;
+        }
+        else if ( deviceTreeExpandState == 1 ){
+            //expanded first level > expand to second level
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            ui->Filters_treeView_Devices->expandAll();
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 2;
+        }
+        else if ( deviceTreeExpandState == 2 ){
+            //expanded second level > collapse
+            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Filters_treeView_Devices->collapseAll();
+            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            deviceTreeExpandState = 0;
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::filterFromSelectedDevices()
+    {
+        if(selectedDeviceType=="Location"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedStorageLocation = selectedDeviceName;
+            selectedStorageName = tr("All");
+            selectedCatalogName = tr("All");
+
+            refreshStorageSelectionList(selectedStorageLocation);
+            refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+        }
+        else if (selectedDeviceType=="Storage"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedStorageLocation = tr("All");
+            selectedStorageName = selectedDeviceName;
+            selectedCatalogName = tr("All");
+
+            refreshStorageSelectionList(selectedStorageLocation);
+            refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+        }
+        else if (selectedDeviceType=="Catalog"){
+            ui->Filter_pushButton_Explore->setEnabled(true);
+            ui->Filter_pushButton_Update->setEnabled(true);
+
+            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->loadCatalogMetaData();
+
+            selectedStorageLocation = tr("All");
+            selectedStorageName = tr("All");
+            selectedCatalogName = activeCatalog->name;
+        }
+
+        //Display selection values and save them
+            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+
+            selectedSearchLocation = selectedStorageLocation; //DEV: duplicate
+            selectedSearchStorage  = selectedStorageName; //DEV: duplicate
+            selectedSearchCatalog  = selectedCatalogName; //DEV: duplicate
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
+            settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
+            settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
+
+
+        //Load matching Catalogs, Storage, Statistics
+            //Load matching Catalogs
+            loadCatalogsTableToModel();
+
+            //Load matching Storage
+            loadStorageTableToModel();
+            updateStorageSelectionStatistics();
+
+            //Load matching Statistics
+            loadStatisticsData();
+            loadStatisticsChart();
+    }
+    //----------------------------------------------------------------------
 
 //SETTINGS / Collection ----------------------------------------------------
 
@@ -413,10 +386,8 @@
 
         }
 
-        //Reset selected catalog values (to avoid actions on the last selected one)
-        selectedCatalogFile="";
-        selectedCatalogName="";
-        selectedCatalogPath="";
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Collection_lineEdit_CollectionFolder_returnPressed()
@@ -446,21 +417,24 @@
         //Load search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();
+//            QMessageBox::information(this,"Katalog","2/SelectedSearchLocation: <br/>" + QVariant(selectedSearchLocation).toString());
+//            QMessageBox::information(this,"Katalog","2/SelectedSearchStorage: <br/>" + QVariant(selectedSearchStorage).toString());
+//            QMessageBox::information(this,"Katalog","2/SelectedSearchCatalog: <br/>" + QVariant(selectedSearchCatalog).toString());
 
         //Load Storage list and refresh their statistics
             loadStorageFileToTable();
             loadStorageTableToModel();
-            refreshStorageStatistics();
+            updateStorageSelectionStatistics();
 
        //Load Catalogs list
             loadCatalogFilesToTable();
-            loadCatalogsToModel();
+            loadCatalogsTableToModel();
 
        //Load Storage list
             refreshLocationSelectionList();
-            refreshStorageSelectionList(tr("All"));
-            refreshCatalogSelectionList(tr("All"), tr("All"));
-            loadStorageTableToFilterTree();
+            refreshStorageSelectionList(selectedSearchLocation);
+            refreshCatalogSelectionList(selectedSearchLocation, selectedSearchStorage);
+            loadStorageTableToSelectionTreeModel();
 
             //Add a storage device for catalogs without one
             QSqlQuery queryCatalog;
@@ -500,7 +474,9 @@
     {
         foreach(sourceCatalog,catalogSelectedList)
                 {
-                    loadCatalogFilelistToTable(sourceCatalog);
+                    selectedCatalog->setCatalogName(sourceCatalog);
+                    selectedCatalog->loadCatalogMetaData();
+                    loadCatalogFilelistToTable(selectedCatalog);
                 }
     }
 

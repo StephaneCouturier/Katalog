@@ -146,10 +146,10 @@ int ExploreTreeModel::findNode(unsigned int& hash, const QList<ExploreTreeItem*>
     return -1;
 }
 
-void ExploreTreeModel::setModelCatalog(QString newModelFileCatalog, QString newModelCatalogPath)
+void ExploreTreeModel::setCatalog(QString newCatalogName, QString newCatalogSourcePath)
 {
-    modelFileCatalog = newModelFileCatalog;
-    modelCatalogPath = newModelCatalogPath;
+    catalogName = newCatalogName;
+    catalogSourcePath = newCatalogSourcePath;
     setupModelData(rootItem);
 }
 
@@ -168,8 +168,8 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                                 ORDER BY filePath ASC
                             )");
         query.prepare(querySQL);
-        query.bindValue(":fileCatalog",modelFileCatalog);
-        query.bindValue(":selectedCatalogPath",modelCatalogPath);
+        query.bindValue(":fileCatalog",catalogName);
+        query.bindValue(":selectedCatalogPath",catalogSourcePath);
         query.exec();
 
         int idPath = query.record().indexOf("filePath");
@@ -238,7 +238,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
                    columnData << nChild;
 
-                   folderPath = modelCatalogPath + "/" + temppath;
+                   folderPath = catalogSourcePath + "/" + temppath;
                    folderPath.truncate(folderPath.length()-1);
                    columnData << folderPath;
 

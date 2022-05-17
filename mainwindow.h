@@ -85,13 +85,13 @@ class MainWindow : public QMainWindow
 
     private:
         //Global
+            //Application version
             QString currentVersion;
             QString releaseDate;
+            bool checkVersionChoice;
+            void checkVersion();
             bool firstRun;
             bool developmentMode;
-
-            Catalog *activeCatalog = new Catalog();
-            DeviceTreeView *deviceProxyModel = new DeviceTreeView();
 
             //UI
             Ui::MainWindow *ui;
@@ -121,38 +121,44 @@ class MainWindow : public QMainWindow
             QStringList fileType_VideoS;
             QStringList fileType_TextS;
             QStringList fileType_current;
-            QString fileTypeSelected;
             void setFileTypes();
 
-            //database
+            //Database
             QSqlRelationalTableModel *storageModel;
             void startDatabase();
             void populateCalendarTable(QDateTime min, QDateTime max);
 
-            //void refreshStorageStatistics();
-            bool checkVersionChoice;
-            void checkVersion();
+            //Objects
+            Catalog *activeCatalog   = new Catalog(); //catalog used for data operation (update, explore, statistics)
+            Catalog *selectedCatalog = new Catalog(); //catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
+            Catalog *tempCatalog   = new Catalog(); //catalog used for search operations in Search screen or temporary operations (list of catalogs)
+            //DEV: Catalog *newCatalog = new Catalog(); //catalog used for catalog creation in Create screen
+            DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
 
-            //Filters
+        //Filters
             bool searchInFileCatalogsChecked;
-            bool searchInConnectedDriveChecked;
-            QString selectedConnectedDrivePath;
+            bool searchInConnectedDriveChecked;           
+            int deviceTreeExpandState;
+
+
             QString selectedDeviceName;
             QString selectedDeviceType;
-            int deviceTreeExpandState;
+
+            QString selectedStorageLocation;
+            QString selectedStorageName;
+            QString selectedCatalogName;
+            QString selectedConnectedDrivePath;
+
             void toggleTreeExpandState();
+            void filterFromSelectedDevices();
+            void resetSelection();
 
         //TAB: Search
-            //inputs
-            QString selectedLocation;
-            QString selectedStorage;
-            QString selectedCatalog;
-
             QString searchText;
             QString regexPattern;
-            QString selectedSearchCatalog;
-            QString selectedSearchStorage;
-            QString selectedSearchLocation;
+            QString selectedSearchLocation;//DEV: duplicate  selectedStorageLocation
+            QString selectedSearchStorage; //DEV: duplicate  selectedStorageName
+            QString selectedSearchCatalog; //DEV: duplicate  selectedCatalogName
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
@@ -228,27 +234,26 @@ class MainWindow : public QMainWindow
             QStringListModel catalogListModel;
             QStringList catalogFileList;
 
-            QString selectedCatalogFile;
-            QString selectedCatalogName;
-            QString selectedCatalogDateTime;
-            QString selectedCatalogPath;
-            qint64  selectedCatalogFileCount;
-            qint64  selectedCatalogTotalFileSize;
-            bool    selectedCatalogIncludeHidden;
-            QString selectedCatalogFileType;
-            QString selectedCatalogStorage;
-            bool    selectedCatalogIncludeSymblinks;
-            bool    selectedCatalogIsFullDevice;
-            QString selectedCatalogLoadedVersion;
+//            QString selectedCatalogFile;
+//            QString selectedCatalogDateTime;
+//            QString selectedCatalogPath;
+//            qint64  selectedCatalogFileCount;
+//            qint64  selectedCatalogTotalFileSize;
+//            bool    selectedCatalogIncludeHidden;
+//            QString selectedCatalogFileType;
+//            QString selectedCatalogStorage;
+//            bool    selectedCatalogIncludeSymblinks;
+//            bool    selectedCatalogIsFullDevice;
+//            QString selectedCatalogLoadedVersion;
             QString selectedStorageLocationFilter;
 
-            bool    skipCatalogUpdateSummary;
+            bool skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
             int lastCatalogsSortOrder;
 
             void loadCollection();
             void loadCatalogFilesToTable();
-            void loadCatalogsToModel();
+            void loadCatalogsTableToModel();
             int verifyCatalogPath(QString catalogSourcePath);
             void recordSelectedCatalogStats(QString selectedCatalogName,
                                             int selectedCatalogFileCount,
@@ -263,7 +268,7 @@ class MainWindow : public QMainWindow
             void saveCatalogChanges();
             void importFromVVV();
 
-            void loadCatalogFilelistToTable(QString sourceCatalogPath);
+            void loadCatalogFilelistToTable(Catalog *catalog);
 
         //TAB: Explore
             QString selectedDirectoryName;
@@ -283,9 +288,14 @@ class MainWindow : public QMainWindow
         //TAB: Create
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
+
+            //DEV: replace by catalog object
             QString newCatalogPath;
             QString newCatalogName;
             QString newCatalogStorage;
+            qint64 newCatalogFileCount;
+            qint64 newCatalogTotalFileSize;
+
             QStringList storageNameList;
             QString excludeFilePath;
 
@@ -303,10 +313,8 @@ class MainWindow : public QMainWindow
 
         //TAB: Storage
             QString storageFilePath;
-            QString selectedStorageName;
             int selectedStorageID;
             QString selectedStorageType;
-            QString selectedStorageLocation;
             QString selectedStoragePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
@@ -318,11 +326,11 @@ class MainWindow : public QMainWindow
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
             void loadStorageTableToModel();
-            void loadStorageTableToFilterTree();
+            void loadStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
             void saveStorageData();
             void updateStorageInfo(int storageID, QString storagePath);
-            void refreshStorageStatistics();
+            void updateStorageSelectionStatistics();
 
         //TAB: Statistics
             QString statisticsFileName;
@@ -370,9 +378,6 @@ class MainWindow : public QMainWindow
                 void on_Filter_pushButton_Explore_clicked();
                 void on_Filter_pushButton_Update_clicked();
                 void on_Filters_pushButton_TreeExpandCollapse_clicked();
-                void on_Filters_comboBox_SelectLocation_currentIndexChanged(const QString &arg1);
-                void on_Filters_comboBox_SelectStorage_currentIndexChanged(const QString &arg1);
-                void on_Filters_comboBox_SelectCatalog_currentIndexChanged(const QString &arg1);
                 void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
                 void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
                 void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
@@ -440,7 +445,7 @@ class MainWindow : public QMainWindow
 
         //Catalogs
             void on_Catalogs_pushButton_Search_clicked();
-            void on_Catalogs_pushButton_ViewCatalog_clicked();
+            void on_Catalogs_pushButton_ExploreCatalog_clicked();
             void on_Catalogs_pushButton_Cancel_clicked();
             void on_Catalogs_pushButton_UpdateCatalog_clicked();
             void on_Catalogs_pushButton_UpdateAllActive_clicked();

@@ -51,7 +51,7 @@
             //Get selected directory name
             QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
             selectedDirectoryFullPath = fullPath;
-            selectedDirectoryName = fullPath.remove(selectedCatalogPath+"/");
+            selectedDirectoryName = fullPath.remove(activeCatalog->sourcePath + "/");
 
             //Display selected directory name
             ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
@@ -79,7 +79,7 @@
             else{
                 //openDirectory
                 selectedDirectoryFullPath = selectedFileFolder;
-                selectedDirectoryName     = selectedFileFolder.remove(selectedCatalogPath+"/");
+                selectedDirectoryName     = selectedFileFolder.remove(activeCatalog->sourcePath + "/");
 
                 //Remember selected directory name
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -452,8 +452,9 @@
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Start at the root folder of the catalog
-        selectedDirectoryName     = selectedCatalogPath;
-        selectedDirectoryFullPath = selectedCatalogPath;
+
+        selectedDirectoryName     = activeCatalog->sourcePath;
+        selectedDirectoryFullPath = activeCatalog->sourcePath;
 
         //Load
         //Check catalog's number of files and confirm load if too big
@@ -464,7 +465,7 @@
                             WHERE catalogName=:catalogName
                                         )");
         query.prepare(querySQL);
-        query.bindValue(":catalogName",selectedCatalogName);
+        query.bindValue(":catalogName",activeCatalog->name);
         query.exec();
         query.next();
         int selectedcatalogFileCount = query.value(0).toInt();
@@ -481,26 +482,26 @@
         }
 
         //selectedCatalogPath: remove the / at the end if any
-        int pathLength = selectedCatalogPath.length();
-        if (selectedCatalogPath.at(pathLength-1)=="/") {
-            selectedCatalogPath.remove(pathLength-1,1);
+        int pathLength = activeCatalog->sourcePath.length();
+        if (activeCatalog->sourcePath.at(pathLength-1)=="/") {
+            //activeCatalog->sourcePath.remove(pathLength-1,1); //DEV:
         }
 
         //Load the files of the Selected Catalog
-        loadCatalogFilelistToTable(selectedCatalogName);
+        loadCatalogFilelistToTable(activeCatalog);
 
         loadCatalogDirectoriesToExplore();
         loadSelectedDirectoryFilesToExplore();
 
         //Go to the Explorer tab
-        ui->Explore_label_CatalogNameDisplay->setText(selectedCatalogName);
-        ui->Explore_label_CatalogPathDisplay->setText(selectedCatalogPath);
+        ui->Explore_label_CatalogNameDisplay->setText(activeCatalog->name);
+        ui->Explore_label_CatalogPathDisplay->setText(activeCatalog->sourcePath);
 
         //Remember last opened catalog
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedCatalogFile", selectedCatalogFile);
-        settings.setValue("Explore/lastSelectedCatalogName", selectedCatalogName);
-        settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalogPath);
+        settings.setValue("Explore/lastSelectedCatalogFile", activeCatalog->filePath);
+        settings.setValue("Explore/lastSelectedCatalogName", activeCatalog->name);
+        settings.setValue("Explore/lastSelectedCatalogPath", activeCatalog->sourcePath);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
         //Stop animation
@@ -513,7 +514,7 @@
 
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
-            exploreTreeModel->setModelCatalog(selectedCatalogName,selectedCatalogPath);
+            exploreTreeModel->setCatalog(activeCatalog->name,activeCatalog->sourcePath);
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);
@@ -632,7 +633,7 @@
         }
 
 
-        if( selectedCatalogPath == "EXPORT" ){
+        if( activeCatalog->sourcePath == "EXPORT" ){
             selectedDirectoryFullPath.remove("EXPORT");
         }
 
@@ -644,7 +645,7 @@
         // fill lists depending on directory selection source
         loadCatalogQuery.bindValue(":fileCatalog",selectedCatalogName);
 
-        if(selectedCatalogPath==selectedDirectoryName){
+        if(activeCatalog->sourcePath == selectedDirectoryName){
             loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{
@@ -689,10 +690,10 @@
 
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(
-                            SELECT  count (*), sum(fileSize)
-                            FROM    filesall
-                            WHERE   fileCatalog =:fileCatalog
-                                        )");
+                                SELECT  count (*), sum(fileSize)
+                                FROM    filesall
+                                WHERE   fileCatalog =:fileCatalog
+                           )");
 
         if (selectedDirectoryName!=""){
             countSQL = countSQL + " AND filePath =:filePath";
@@ -700,9 +701,9 @@
 
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":fileCatalog",selectedCatalogName);
+        countQuery.bindValue(":fileCatalog",activeCatalog->name);
 
-        if(selectedCatalogPath==selectedDirectoryName){
+        if(activeCatalog->sourcePath == selectedDirectoryName){
             countQuery.bindValue(":filePath",selectedDirectoryName);
         }
         else{

@@ -140,14 +140,13 @@
             #endif
 
             selectedSearchLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
-            ui->Filters_comboBox_SelectLocation->setCurrentText(selectedSearchLocation);
+            ui->Filters_label_DisplayLocation->setText(selectedSearchLocation);
 
             selectedSearchStorage   = settings.value("LastSearch/SelectedSearchStorage").toString();
-            ui->Filters_comboBox_SelectStorage->setCurrentText(selectedSearchStorage);
+            ui->Filters_label_DisplayStorage->setText(selectedSearchStorage);
 
             selectedSearchCatalog   = settings.value("LastSearch/SelectedSearchCatalog").toString();
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
-
+            ui->Filters_label_DisplayCatalog->setText(selectedSearchCatalog);
 
             selectedFileType        = settings.value("LastSearch/FileType").toString();
             selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
@@ -243,12 +242,11 @@
             ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
-            //Restore last opened catalog file to Explore
-            selectedCatalogFile   = settings.value("Explore/lastSelectedCatalogFile").toString();
-            selectedCatalogName   = settings.value("Explore/lastSelectedCatalogName").toString();
-            selectedCatalogPath   = settings.value("Explore/lastSelectedCatalogPath").toString();
+            //Restore last opened catalog
+            activeCatalog->setCatalogName(settings.value("Explore/lastSelectedCatalogName").toString());
+            activeCatalog->loadCatalogMetaData();
             selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-            selectedDirectoryFullPath = selectedCatalogPath + "/" + selectedDirectoryName;
+            selectedDirectoryFullPath = activeCatalog->sourcePath + "/" + selectedDirectoryName;
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
@@ -352,7 +350,6 @@
             ui->Storage_widget_DevicePanelForm->hide();
 
         //Settings
-            ui->Filters_widget_CatalogSelectionBox->hide();
 
         //Other tabs
             ui->tabWidget->removeTab(8); //ExploreTreeview

@@ -50,7 +50,7 @@
     {
         loadStorageFileToTable();
         loadStorageTableToModel();
-        refreshStorageStatistics();
+        updateStorageSelectionStatistics();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_EditAll_clicked()
@@ -93,7 +93,7 @@
         //Change tab to show the Search screen
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_comboBox_SelectStorage->setCurrentText(selectedStorageName);
+        ui->Filters_label_DisplayStorage->setText(selectedStorageName);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
@@ -101,7 +101,7 @@
         //Change tab to show the Search screen
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_comboBox_SelectLocation->setCurrentText(selectedStorageLocation);
+        ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
@@ -157,7 +157,7 @@
             saveStorageData();
 
             //Refresh storage statistics
-            refreshStorageStatistics();
+            updateStorageSelectionStatistics();
         }
     }
     //----------------------------------------------------------------------
@@ -218,7 +218,7 @@
                   //Even if empty, load it to the model
                   loadStorageFileToTable();
                   loadStorageTableToModel();
-                  refreshStorageStatistics();
+                  updateStorageSelectionStatistics();
                   addStorageDevice("");
 
             return;
@@ -437,8 +437,16 @@
     {
         storageModel->setTable("storage");
 
-        if ( selectedSearchLocation != tr("All") ){
-            QString tableFilter = "storageLocation = '" + selectedSearchLocation + "'";
+        if ( selectedDeviceType == "Location" ){
+            QString tableFilter = "storageLocation = '" + selectedDeviceName + "'";
+            storageModel->setFilter(tableFilter);
+        }
+        else if ( selectedDeviceType == "Storage" ){
+            QString tableFilter = "storageName = '" + selectedDeviceName + "'";
+            storageModel->setFilter(tableFilter);
+        }
+        else if ( selectedDeviceType == "Catalog" ){
+            QString tableFilter = "storageName = '" + activeCatalog->storageName + "'";
             storageModel->setFilter(tableFilter);
         }
         storageModel->setSort(1, Qt::AscendingOrder);
@@ -662,7 +670,7 @@
         saveStorageData();
 
         //refresh storage statistics
-        refreshStorageStatistics();
+        updateStorageSelectionStatistics();
 
     }
     //--------------------------------------------------------------------------
@@ -678,10 +686,10 @@
         loadStorageTableToModel();
 
         //refresh stats
-        refreshStorageStatistics();
+        updateStorageSelectionStatistics();
 
-        //refresh filter tree
-        loadStorageTableToFilterTree();
+        //refresh selection tree
+        loadStorageTableToSelectionTreeModel();
 
     }
     //--------------------------------------------------------------------------
@@ -764,7 +772,7 @@
         storageFile.close();
     }
     //--------------------------------------------------------------------------
-    void MainWindow::refreshStorageStatistics()
+    void MainWindow::updateStorageSelectionStatistics()
     {
         //Get storage statistics
         QSqlQuery query;

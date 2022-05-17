@@ -253,20 +253,20 @@
         //Refresh the catalog list for the Search screen
         loadCatalogFilesToTable();
         //Refresh the catalog list for the Collection screen
-        loadCatalogsToModel();
+        loadCatalogsTableToModel();
 
 
         //Refresh the catalog list for the combobox of the Search screen
             //Get current search selection
-            selectedSearchLocation = ui->Filters_comboBox_SelectLocation->currentText();
-            selectedSearchStorage = ui->Filters_comboBox_SelectStorage->currentText();
-            selectedSearchCatalog = ui->Filters_comboBox_SelectCatalog->currentText();
+            selectedSearchLocation = ui->Filters_label_DisplayLocation->text();
+            selectedSearchStorage = ui->Filters_label_DisplayStorage->text();
+            selectedSearchCatalog = ui->Filters_label_DisplayCatalog->text();
 
             //Refresh list
             refreshCatalogSelectionList(selectedSearchLocation,selectedSearchStorage);
 
             //Restore selcted catalog
-            ui->Filters_comboBox_SelectCatalog->setCurrentText(selectedSearchCatalog);
+            ui->Filters_label_DisplayCatalog->setText(selectedSearchCatalog);
 
         QMessageBox::information(this, "Katalog",
                                   tr("The new catalog,has been created.\n Name:   ")
@@ -277,7 +277,7 @@
             if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
 
                 //Save values
-                recordSelectedCatalogStats(newCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+                recordSelectedCatalogStats(newCatalogName, newCatalogFileCount, newCatalogTotalFileSize);
 
                 //Reload stats file to refresh values
                 loadStatisticsChart();
@@ -288,7 +288,7 @@
 
         //Disable buttons to force user to select a catalog
         ui->Catalogs_pushButton_Search->setEnabled(false);
-        ui->Catalogs_pushButton_ViewCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
         ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
         ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
         ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
@@ -431,8 +431,8 @@
         fileListModel->setStringList(fileList);
 
         //Set this new catalog as the selected Catalog
-        selectedCatalogFileCount        = catalogFilesNumber;
-        selectedCatalogTotalFileSize    = catalogTotalFileSize;
+        newCatalogFileCount        = catalogFilesNumber;
+        newCatalogTotalFileSize    = catalogTotalFileSize;
 
         QSqlQuery query;
         query.prepare("UPDATE Catalog "

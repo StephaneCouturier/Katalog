@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //Set current version and release date, and check new version
                 currentVersion = "1.12";
-                releaseDate = "2022-05-11";
+                releaseDate = "2022-05-17";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -70,14 +70,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 if ( checkVersionChoice == true)
                     checkVersion();
 
-
             //Load languages to the Settings combobox
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
 
-            //Hide some widget by default
+            //Hide some widgets by default
                 ui->Catalogs_widget_EditCatalog->hide();
 
             //For Linux, use KDE libs
@@ -103,13 +102,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                     settingsFilePath = homePath + "/.config/katalog_settings.ini";
                 }
 
-            //Load Settings and intiate values
+            //Load Settings and apply values
             loadSettings();
-
-            //Memorize filter selection from setting before refreshing
-            QString firstSelectedLocation = selectedSearchLocation;
-            QString firstSelectedStorage  = selectedSearchStorage;
-            QString firstSelectedCatalog  = selectedSearchCatalog;
 
         //Load custom stylesheet
             //for windows, pick a windows common font.
@@ -123,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadCustomThemeLight();
             }
 
-
     //Load Collection data
             //Generate collection file paths and statistics parameters
                 searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
@@ -131,11 +124,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 statisticsFileName = "statistics.csv";
                 statisticsFilePath = collectionFolder + "/" + statisticsFileName;
 
-                QDateTime startDate    = QDateTime::fromString("2020-01-01 00:00:00","yyyy-MM-dd hh:mm:ss");;
-                QDateTime today        = QDateTime::currentDateTime();
-                populateCalendarTable(startDate,today);
+            //DEV: QDateTime startDate    = QDateTime::fromString("2020-01-01 00:00:00","yyyy-MM-dd hh:mm:ss");;
+            //DEV: QDateTime today        = QDateTime::currentDateTime();
+            //DEV: populateCalendarTable(startDate,today);
 
-            //Create a Storage list if none exist
+            //Create a Storage list (if none exists)
                 createStorageList();
 
             //Load Collection data from csv files
@@ -145,12 +138,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
                     preloadCatalogs();
                 }
+
             //Load last opened catalog to Explore tab
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-                if (selectedCatalogFile != ""){
+                if (activeCatalog->filePath != ""){
                     openCatalogToExplore();
                 }
-
 
     //Setup tabs
 
@@ -177,15 +170,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             //Load path of last collection used
                 ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
 
-
-
             //Set file types
                 setFileTypes();
-
-            //Restore filters
-                ui->Filters_comboBox_SelectLocation->setCurrentText(firstSelectedLocation);
-                ui->Filters_comboBox_SelectStorage->setCurrentText(firstSelectedStorage);
-                ui->Filters_comboBox_SelectCatalog->setCurrentText(firstSelectedCatalog);
 
         //Setup tab: Explore
                 ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
@@ -221,7 +207,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
-
 }
 
 MainWindow::~MainWindow()
@@ -233,7 +218,8 @@ MainWindow::~MainWindow()
 /*
 QMessageBox::information(this,"Katalog","Ok.");
 QMessageBox::information(this,"Katalog","stringVariable: <br/>" + stringVariable);
-QMessageBox::information(this,"Katalog","anyVariable: <br/>" + QVariant(anyVariable).toString());
+QMessageBox::information(this,"Katalog","anyVariable: <br/>"
+                              + QVariant(anyVariable).toString());
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(

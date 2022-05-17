@@ -87,24 +87,24 @@ void Catalog::loadCatalogMetaData()
 {
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                SELECT
-                                    catalogID                   ,
-                                    catalogFilePath             ,
-                                    catalogName                 ,
-                                    catalogDateUpdated          ,
-                                    catalogFileCount            ,
-                                    catalogTotalFileSize        ,
-                                    catalogSourcePath           ,
-                                    catalogFileType             ,
-                                    catalogSourcePathIsActive   ,
-                                    catalogIncludeHidden        ,
-                                    catalogStorage              ,
-                                    storageLocation             ,
-                                    catalogIsFullDevice         ,
-                                    catalogLoadedVersion
-                                FROM catalog
-                                LEFT JOIN storage ON catalogStorage = storageName
-                                WHERE catalogName=:catalogName
+                            SELECT
+                                catalogID                   ,
+                                catalogFilePath             ,
+                                catalogName                 ,
+                                catalogDateUpdated          ,
+                                catalogSourcePath           ,
+                                catalogFileCount            ,
+                                catalogTotalFileSize        ,
+                                catalogSourcePathIsActive   ,
+                                catalogIncludeHidden        ,
+                                catalogFileType             ,
+                                catalogStorage              ,
+                                catalogIncludeSymblinks     ,
+                                catalogIsFullDevice         ,
+                                catalogLoadedVersion
+                            FROM catalog
+                            LEFT JOIN storage ON catalogStorage = storageName
+                            WHERE catalogName=:catalogName
                         )");
     query.prepare(querySQL);
     query.bindValue(":catalogName",name);
@@ -116,14 +116,14 @@ void Catalog::loadCatalogMetaData()
     name               = query.value(2).toString();
     dateUpdated        = query.value(3).toString();
     sourcePath         = query.value(4).toString();
-    fileCount          = query.value(5).toString();
-    totalFileSize      = query.value(6).toString();
-    sourcePathIsActive = query.value(7).toString();
-    includeHidden      = query.value(8).toString();
+    fileCount          = query.value(5).toLongLong();
+    totalFileSize      = query.value(6).toLongLong();
+    sourcePathIsActive = query.value(7).toBool();
+    includeHidden      = query.value(8).toBool();
     fileType           = query.value(9).toString();
-    storage            = query.value(10).toString();
-    includeSymblinks   = query.value(11).toString();
-    isFullDevice       = query.value(12).toString();
+    storageName        = query.value(10).toString();
+    includeSymblinks   = query.value(11).toBool();
+    isFullDevice       = query.value(12).toBool();
     loadedVersion      = query.value(13).toString();
 }
 

@@ -42,20 +42,20 @@ class Catalog : public QAbstractTableModel
 public:
     Catalog(QObject *parent = nullptr);
 
-    QString ID,
-            filePath,
-            name,
-            dateUpdated,
-            sourcePath,
-            fileCount,
-            totalFileSize,
-            sourcePathIsActive,
-            includeHidden,
-            fileType,
-            storage,
-            includeSymblinks,
-            isFullDevice,
-            loadedVersion;
+    QString ID;
+    QString filePath;
+    QString name;
+    QString dateUpdated;
+    QString sourcePath;
+    qint64  fileCount;
+    qint64  totalFileSize;
+    bool    sourcePathIsActive;
+    bool    includeHidden;
+    QString fileType;
+    QString storageName;
+    bool    includeSymblinks;
+    bool    isFullDevice;
+    QString loadedVersion;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
