@@ -215,7 +215,7 @@
     //----------------------------------------------------------------------
     void MainWindow::loadStorageTableToSelectionTreeModel()
     {
-        const QStringList headers({tr("Title"),tr("Type")});
+        const QStringList headers({tr("Location / Storage / Catalog"),tr("Type")});
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
         deviceTreeProxyModel->setSourceModel(storageTreeModel);
@@ -417,9 +417,6 @@
         //Load search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();
-//            QMessageBox::information(this,"Katalog","2/SelectedSearchLocation: <br/>" + QVariant(selectedSearchLocation).toString());
-//            QMessageBox::information(this,"Katalog","2/SelectedSearchStorage: <br/>" + QVariant(selectedSearchStorage).toString());
-//            QMessageBox::information(this,"Katalog","2/SelectedSearchCatalog: <br/>" + QVariant(selectedSearchCatalog).toString());
 
         //Load Storage list and refresh their statistics
             loadStorageFileToTable();

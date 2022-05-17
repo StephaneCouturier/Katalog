@@ -177,15 +177,6 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         QList<QVariant> columnData;
 
-        //insert catalog root item (single dot folder)
-//        columnData <<"."<<0 <<modelCatalogPath;
-//        parent->appendChild(new ExploreTreeItem(columnData));
-//        parents <<  parents.last()->child( parents.last()->childCount()-1);
-        //remove first(duplicate)
-        //parents.removeFirst();
-        //delete parents.takeAt(2);
-
-
         while (query.next())
         {
            QString name         = query.value(idPath).toString();

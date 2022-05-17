@@ -496,11 +496,8 @@
                </item>
                <item>
                 <widget class="QTreeView" name="Filters_treeView_Devices">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                 <property name="sizeAdjustPolicy">
+                  <enum>QAbstractScrollArea::AdjustToContents</enum>
                  </property>
                  <property name="editTriggers">
                   <set>QAbstractItemView::NoEditTriggers</set>
@@ -523,11 +520,11 @@
                  <property name="rootIsDecorated">
                   <bool>true</bool>
                  </property>
-                 <property name="animated">
+                 <property name="sortingEnabled">
                   <bool>true</bool>
                  </property>
-                 <property name="expandsOnDoubleClick">
-                  <bool>false</bool>
+                 <property name="animated">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>

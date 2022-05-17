@@ -66,6 +66,7 @@
                 //Start at the root folder of the catalog
                 selectedDirectoryName     = selectedCatalog->sourcePath;
                 selectedDirectoryFullPath = selectedCatalog->sourcePath;
+                selectedCatalogName = selectedCatalog->name;
 
                 //The selected catalog becomes the active catalog
                 //activeCatalog = selectedCatalog;
@@ -313,9 +314,23 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
+            //Start at the root folder of the catalog
+            selectedDirectoryName     = selectedCatalog->sourcePath;
+            selectedDirectoryFullPath = selectedCatalog->sourcePath;
+            selectedCatalogName = selectedCatalog->name;
+
+
+            //The selected catalog becomes the active catalog
+            //activeCatalog = selectedCatalog;
+            activeCatalog->setCatalogName(selectedCatalog->name);
+            activeCatalog->loadCatalogMetaData();
+
+            //Load
             openCatalogToExplore();
+
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()

@@ -28,7 +28,6 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -59,13 +58,11 @@
 #ifdef Q_OS_LINUX
 #include <KComboBox>
 #include <KXmlGuiWindow>
-//#include <KMessageBox>
+class KJob;
+#endif
 
 #include "catalog.h"
 #include "devicetreeview.h"
-
-class KJob;
-#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -139,7 +136,6 @@ class MainWindow : public QMainWindow
             bool searchInFileCatalogsChecked;
             bool searchInConnectedDriveChecked;           
             int deviceTreeExpandState;
-
 
             QString selectedDeviceName;
             QString selectedDeviceType;
