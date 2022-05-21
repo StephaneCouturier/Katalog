@@ -240,8 +240,8 @@
 
             //location
             QString newLocation;
-            if(selectedSearchLocation!=tr("All")){
-                newLocation = selectedSearchLocation;
+            if(selectedStorageLocation != tr("All")){
+                newLocation = selectedStorageLocation;
             }
             else
                 newLocation = "";
@@ -508,17 +508,17 @@
                            WHERE storageName !=''
                                         )");  // ORDER BY storageName
 
-        if ( selectedSearchLocation != tr("All") ){
+        if ( selectedStorageLocation != tr("All") ){
             //AND storageLocation ='DK/Portable'  :storageLocation
             //QMessageBox::information(this,"Katalog","Ok.");
 
-            querySQL = querySQL + " AND storageLocation ='"+selectedSearchLocation+"'";
+            querySQL = querySQL + " AND storageLocation ='" + selectedStorageLocation + "'";
         }
     //        if ( selectedSearchStorage != "All" )
     //            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
         querySQL = querySQL + " ORDER BY storageName ";
-        query.bindValue("storageLocation", selectedSearchLocation);
+        query.bindValue("storageLocation", selectedStorageLocation);
         query.prepare(querySQL);
         query.exec();
         storageNameList.clear();
@@ -784,12 +784,12 @@
                             WHERE storageName !=''
                                         )");
 
-        if ( selectedSearchLocation !=tr("All")){
+        if ( selectedStorageLocation !=tr("All")){
             querySQL = querySQL + " AND storageLocation =:storageLocation";
         }
 
         query.prepare(querySQL);
-        query.bindValue(":storageLocation",selectedSearchLocation);
+        query.bindValue(":storageLocation", selectedStorageLocation);
         query.exec();
         query.next();
 

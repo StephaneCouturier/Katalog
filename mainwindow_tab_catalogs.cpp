@@ -49,7 +49,7 @@
         {
             //Change the selected catalog in Search tab
             ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
-            selectedSearchCatalog = selectedCatalog->name;
+            selectedCatalogName = selectedCatalog->name;
 
             selectedStorageLocation = tr("All");
             ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
@@ -130,11 +130,11 @@
                                             )");
 
                     //add AND conditions for the selected filters
-                    if ( selectedSearchLocation != tr("All") )
-                        querySQL = querySQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
+                    if ( selectedStorageLocation != tr("All") )
+                        querySQL = querySQL + " AND storageLocation = '" + selectedStorageLocation + "' ";
 
-                    if ( selectedSearchStorage != tr("All") )
-                        querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
+                    if ( selectedStorageName != tr("All") )
+                        querySQL = querySQL + " AND catalogStorage = '" + selectedStorageName + "' ";
 
                 //run the query
                 QSqlQuery query;
@@ -506,9 +506,9 @@
 //                if ( selectedSearchStorage != tr("All") )
 //                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
-            if (     selectedSearchLocation == tr("All")
-                 and selectedSearchStorage  == tr("All")
-                 and selectedSearchCatalog  == tr("All") )
+            if (     selectedStorageLocation == tr("All")
+                 and selectedStorageName     == tr("All")
+                 and selectedCatalogName     == tr("All") )
                 {//loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
             }
             else if ( selectedDeviceType == "Location" )
@@ -581,16 +581,16 @@
                                 WHERE catalogName !=''
                                             )");
 
-            if ( selectedSearchLocation !=tr("All")){
+            if ( selectedStorageLocation !=tr("All")){
                 querySQL = querySQL + " AND storageLocation =:storageLocation";
             }
-            if ( selectedSearchStorage !=tr("All")){
+            if ( selectedStorageName !=tr("All")){
                 querySQL = querySQL + " AND catalogStorage =:catalogStorage";
             }
 
             query.prepare(querySQL);
-            query.bindValue(":storageLocation",selectedSearchLocation);
-            query.bindValue(":catalogStorage", selectedSearchStorage);
+            query.bindValue(":storageLocation",selectedStorageLocation);
+            query.bindValue(":catalogStorage", selectedStorageName);
             query.exec();
             query.next();
 

@@ -337,15 +337,10 @@
             ui->Filters_label_DisplayStorage->setText(selectedStorageName);
             ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
 
-            selectedSearchLocation = selectedStorageLocation; //DEV: duplicate
-            selectedSearchStorage  = selectedStorageName; //DEV: duplicate
-            selectedSearchCatalog  = selectedCatalogName; //DEV: duplicate
-
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
             settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
             settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
-
 
         //Load matching Catalogs, Storage, Statistics
             //Load matching Catalogs
@@ -434,8 +429,8 @@
 
        //Load Storage list
             refreshLocationSelectionList();
-            refreshStorageSelectionList(selectedSearchLocation);
-            refreshCatalogSelectionList(selectedSearchLocation, selectedSearchStorage);
+            refreshStorageSelectionList(selectedStorageLocation);
+            refreshCatalogSelectionList(selectedStorageLocation, selectedStorageName);
             loadStorageTableToSelectionTreeModel();
 
             //Add a storage device for catalogs without one

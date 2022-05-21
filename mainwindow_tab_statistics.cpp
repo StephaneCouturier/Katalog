@@ -78,7 +78,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
 
-        selectedSearchCatalog = selectedCatalog;
+        selectedCatalogName = selectedCatalog;
 
         //load the graph
         loadStatisticsChart();
@@ -294,12 +294,12 @@
                                     WHERE recordType = 'Snapshot'
                                   )");
 
-                if ( selectedSearchLocation != tr("All") and selectedDeviceType=="Location" )
-                    querySQL = querySQL + " AND storage.storageLocation = '"+selectedSearchLocation+"' ";
-                else if ( selectedSearchStorage != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL = querySQL + " AND catalog.catalogStorage = '"+selectedSearchStorage+"' ";
-                else if ( selectedSearchCatalog != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL = querySQL + " AND catalog.catalogName = '"+selectedSearchCatalog+"' ";
+                if ( selectedStorageLocation != tr("All") and selectedDeviceType=="Location" )
+                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedStorageLocation + "' ";
+                else if ( selectedStorageName != tr("All") and selectedDeviceType=="Storage" )
+                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedStorageName + "' ";
+                else if ( selectedCatalogName != tr("All") and selectedDeviceType=="Catalog" )
+                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedCatalogName + "' ";
 
                 //add last part
                 querySQL = querySQL + " GROUP BY datetime ";
@@ -423,7 +423,7 @@
             chart->legend()->hide();
 
             if (selectedDeviceType == "Storage"){
-                selectedCatalogforStats = selectedSearchStorage;
+                selectedCatalogforStats = selectedStorageName;
 
             }
             else if (selectedDeviceType == "Catalog"){

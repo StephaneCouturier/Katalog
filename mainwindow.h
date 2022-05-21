@@ -152,9 +152,6 @@ class MainWindow : public QMainWindow
         //TAB: Search
             QString searchText;
             QString regexPattern;
-            QString selectedSearchLocation;//DEV: duplicate  selectedStorageLocation
-            QString selectedSearchStorage; //DEV: duplicate  selectedStorageName
-            QString selectedSearchCatalog; //DEV: duplicate  selectedCatalogName
             QString selectedFileType;
             QString selectedTextCriteria;
             QString selectedSearchIn;
