@@ -469,10 +469,10 @@
         query.exec();
         query.next();
         int selectedcatalogFileCount = query.value(0).toInt();
-        if (selectedcatalogFileCount > 500000){
+        if (selectedcatalogFileCount > 200000){
                 int result = QMessageBox::warning(this,"Katalog",
-                          tr("The selected catalog contains more than 500.000 files.<br/>"
-                             "This could take one or several minutes to open.<br/>"
+                          tr("The selected catalog contains more than 200.000 files.<br/>"
+                             "This may take over one or several minutes to open.<br/>"
                              "Do you want to continue?"),QMessageBox::Yes|QMessageBox::Cancel);
                 if ( result ==QMessageBox::Cancel){
                     //Stop animation

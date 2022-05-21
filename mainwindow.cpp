@@ -217,9 +217,11 @@ MainWindow::~MainWindow()
 //DEV Templates
 /*
 QMessageBox::information(this,"Katalog","Ok.");
-QMessageBox::information(this,"Katalog","stringVariable: <br/>" + stringVariable);
-QMessageBox::information(this,"Katalog","anyVariable: <br/>"
-                              + QVariant(anyVariable).toString());
+QMessageBox::information(this,"Katalog","anyVariable: <br/>" + QVariant(anyVariable).toString());
+QMessageBox::information(this,"Katalog","severalVariables: <br/>"
+                              + QVariant(severalVariables1).toString() + "<br/>"
+                              + QVariant(severalVariables2).toString() + "<br/>"
+                         );
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(

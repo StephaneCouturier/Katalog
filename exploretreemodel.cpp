@@ -161,7 +161,6 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                 SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, '')) AS filePath,
-                                                id_file,
                                                 filePath AS fullPath
                                 FROM  filesall
                                 WHERE fileCatalog =:fileCatalog
@@ -173,7 +172,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         query.exec();
 
         int idPath = query.record().indexOf("filePath");
-        int idIdx = query.record().indexOf("id_file");
+        int idIdx = query.record().indexOf("fullPath");
 
         QList<QVariant> columnData;
 

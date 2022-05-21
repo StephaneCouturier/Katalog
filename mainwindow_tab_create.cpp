@@ -435,12 +435,14 @@
         newCatalogTotalFileSize    = catalogTotalFileSize;
 
         QSqlQuery query;
-        query.prepare("UPDATE Catalog "
-                        "SET catalogIncludeSymblinks =:catalogIncludeSymblinks, "
-                            "catalogFileCount =:catalogFileCount, "
-                            "catalogTotalFileSize =:catalogTotalFileSize "
-                        "WHERE catalogSourcePath =:catalogSourcePath ");
-        //query.bindValue(":catalogIncludeSymblinks", QVariant(includeSymblinks).toString());
+        QString querySQL = QLatin1String(R"(
+                                UPDATE Catalog
+                                SET catalogIncludeSymblinks =:catalogIncludeSymblinks,
+                                    catalogFileCount =:catalogFileCount,
+                                    catalogTotalFileSize =:catalogTotalFileSize
+                                    WHERE catalogSourcePath =:catalogSourcePath
+                            )");
+        query.prepare(querySQL);
         query.bindValue(":catalogFileCount", catalogFilesNumber);
         query.bindValue(":catalogTotalFileSize", catalogTotalFileSize);
         query.bindValue(":catalogSourcePath", newCatalogPath);

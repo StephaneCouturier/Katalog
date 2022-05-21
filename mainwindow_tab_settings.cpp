@@ -110,8 +110,10 @@
     void MainWindow::on_Filter_pushButton_Explore_clicked()
     {
         //reloads catalog to explore at root level
-        if (selectedDeviceType=="Catalog"){// and selectedDeviceName !=selectedCatalogName){
-            selectedCatalogName = selectedDeviceName;
+        if (selectedDeviceType=="Catalog"){
+            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->loadCatalogMetaData();
+
             openCatalogToExplore();
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
@@ -121,8 +123,11 @@
     void MainWindow::on_Filter_pushButton_Update_clicked()
     {
         //reloads catalog to explore at root level
-        if (selectedDeviceType=="Catalog"){// and selectedDeviceName !=selectedCatalogName
-            updateSingleCatalog();
+        if (selectedDeviceType=="Catalog"){
+            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->loadCatalogMetaData();
+
+            updateSingleCatalog(activeCatalog);
         }
     }
     //----------------------------------------------------------------------
@@ -250,7 +255,7 @@
         refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
 
         //reset device tree
-        deviceTreeExpandState = 1;
+        toggleTreeExpandState();
         toggleTreeExpandState();
 
         loadStorageTableToSelectionTreeModel();
