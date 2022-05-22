@@ -93,6 +93,10 @@
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
 
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
+        settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+
         filterFromSelectedDevices();
     }
     //----------------------------------------------------------------------

@@ -494,8 +494,8 @@
                                             storageLocation             ,
                                             catalogIsFullDevice         ,
                                             catalogLoadedVersion
-                                        FROM catalog
-                                        LEFT JOIN storage ON catalogStorage = storageName
+                                        FROM catalog c
+                                        LEFT JOIN storage s ON catalogStorage = storageName
                                         WHERE catalogName !=''
                                         )");
 
@@ -509,10 +509,10 @@
             if (     selectedStorageLocation == tr("All")
                  and selectedStorageName     == tr("All")
                  and selectedCatalogName     == tr("All") )
-                {//loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
+                {//No filtering
             }
             else if ( selectedDeviceType == "Location" )
-                loadCatalogSQL = loadCatalogSQL + " AND storage.storageLocation = '"+ selectedDeviceName +"' ";
+                loadCatalogSQL = loadCatalogSQL + " AND s.storageLocation = '"+ selectedDeviceName +"' ";
 
             else if ( selectedDeviceType == "Storage" )
                 loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+ selectedDeviceName +"' ";

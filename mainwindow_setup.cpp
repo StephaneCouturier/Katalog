@@ -65,67 +65,66 @@
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
     {
-        //Check if a settings file already exists. If not, it is considered first use and one gets generted
-        QFile settingsFile(settingsFilePath);
-        int themeID = 1; //default value for the theme.
-        selectedTab = 3; //default value for the first launch. Create screen
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        //Check if a settings file already exists. If not, it is considered first use and one gets generated
+            QFile settingsFile(settingsFilePath);
+            int themeID = 1; //default value for the theme.
+            selectedTab = 3; //default value for the first launch. Create screen
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        firstRun =false;
+            firstRun =false;
 
-        if (!settingsFile.exists())
-            firstRun =true;
+            if (!settingsFile.exists())
+                firstRun =true;
 
-        collectionFolder = settings.value("LastCollectionFolder").toString();
+            collectionFolder = settings.value("LastCollectionFolder").toString();
 
-        if (collectionFolder == "")
-            firstRun =true;
+            if (collectionFolder == "")
+                firstRun =true;
 
-        if (firstRun == true){
-            //create a file, with default values
-                  //QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                  settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
+            if (firstRun == true){
+                //create a file, with default values
+                settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
 
-            //Set Language and theme
+                //Set Language and theme
 
-            QString userLanguage = QLocale::system().name();
-            settings.setValue("Settings/Language", userLanguage);
+                QString userLanguage = QLocale::system().name();
+                settings.setValue("Settings/Language", userLanguage);
 
-            QString themeName = tr("Katalog Colors (light)");
+                QString themeName = tr("Katalog Colors (light)");
 
-            QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
-                                                       "It seems this is the first run.<br/><br/>"
-                                                       "The following Settings have been applied:<br/>"
-                                                       " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
-                                     + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one.")
-                                     );
-
-            //Language
-            ui->Settings_comboBox_Language->setCurrentText(userLanguage);
-
-            //Collection folder choice
-                //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-                collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                            collectionFolder,
-                                                            QFileDialog::ShowDirsOnly
-                                                            | QFileDialog::DontResolveSymlinks);
-
-                //set the location of the application as a default value if a folder was not provided
-                if (collectionFolder =="")
-                    collectionFolder = QApplication::applicationDirPath();
-
-                //save setting
-                settings.setValue("LastCollectionFolder", collectionFolder);
-
-            //Go to Create screen
-            QMessageBox::information(this,"Katalog",tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
-                                         + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+                QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
+                                                           "It seems this is the first run.<br/><br/>"
+                                                           "The following Settings have been applied:<br/>"
+                                                           " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
+                                         + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one.")
                                          );
 
-            ui->tabWidget->setCurrentIndex(selectedTab);
-        }
+                //Language
+                ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
-        //Load the settings file
+                //Collection folder choice
+                    //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+                    collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                                collectionFolder,
+                                                                QFileDialog::ShowDirsOnly
+                                                                | QFileDialog::DontResolveSymlinks);
+
+                    //set the location of the application as a default value if a folder was not provided
+                    if (collectionFolder =="")
+                        collectionFolder = QApplication::applicationDirPath();
+
+                    //save setting
+                    settings.setValue("LastCollectionFolder", collectionFolder);
+
+                //Go to Create screen
+                QMessageBox::information(this,"Katalog",tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                                             + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+                                             );
+
+                ui->tabWidget->setCurrentIndex(selectedTab);
+            }
+
+        //Load the settings to application variables
 
             //Collection folder
             if (firstRun != true){
@@ -138,6 +137,10 @@
             #else
                     ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
             #endif
+
+            selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
+            selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
+
 
             selectedStorageLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
             ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);

@@ -227,19 +227,6 @@ class MainWindow : public QMainWindow
             QStringListModel catalogListModel;
             QStringList catalogFileList;
 
-//            QString selectedCatalogFile;
-//            QString selectedCatalogDateTime;
-//            QString selectedCatalogPath;
-//            qint64  selectedCatalogFileCount;
-//            qint64  selectedCatalogTotalFileSize;
-//            bool    selectedCatalogIncludeHidden;
-//            QString selectedCatalogFileType;
-//            QString selectedCatalogStorage;
-//            bool    selectedCatalogIncludeSymblinks;
-//            bool    selectedCatalogIsFullDevice;
-//            QString selectedCatalogLoadedVersion;
-            QString selectedStorageLocationFilter;
-
             bool skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
             int lastCatalogsSortOrder;
@@ -266,13 +253,14 @@ class MainWindow : public QMainWindow
         //TAB: Explore
             QString selectedDirectoryName;
             QString selectedDirectoryFullPath;
-            //QString selectedCatalogPath;
-            //QString tempSelectedTreeviewSource;
 
             void openCatalogToExplore();
             void loadCatalogFilesToExplore();
             void loadSelectedDirectoryFilesToExplore();
             void loadCatalogDirectoriesToExplore();
+
+            void loadCatalogDirectoriesToExploreList();
+
             int lastExploreSortSection;
             int lastExploreSortOrder;
             bool optionDisplayFolders;
