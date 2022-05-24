@@ -224,7 +224,7 @@
     //----------------------------------------------------------------------
     void MainWindow::loadStorageTableToSelectionTreeModel()
     {
-        const QStringList headers({tr("Location / Storage / Catalog"),tr("Type")});
+        const QStringList headers({tr("Location / Storage / Catalog"),tr("Type"),tr("Empty")});
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
         deviceTreeProxyModel->setSourceModel(storageTreeModel);
@@ -233,8 +233,8 @@
         ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
         ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
         ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
-
         ui->Filters_treeView_Devices->hideColumn(1);
+        ui->Filters_treeView_Devices->setColumnWidth(2,0);
         ui->Filters_treeView_Devices->collapseAll();
         ui->Filters_treeView_Devices->header()->hide();
 
