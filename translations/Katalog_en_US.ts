@@ -25,13 +25,17 @@
     </message>
 </context>
 <context>
-    <name>DirectoryTreeModel</name>
+    <name>ExploreTreeModel</name>
     <message>
-        <source>Directory</source>
+        <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Path</source>
+        <source>No of items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -246,10 +250,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete the selected catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,10 +447,6 @@
     </message>
     <message>
         <source>Select the type of data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -665,14 +661,6 @@
     </message>
     <message>
         <source>A file was found, but could not be loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A storage file was created</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can edit it now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -992,10 +980,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snapshot created.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>collection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1086,10 +1070,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DEV_EXPLORE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>DEV_STORAGE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,10 +1115,6 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <source>Show/Hide search criteria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1304,10 +1280,6 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A file %&amp; already exists. Overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1317,6 +1289,74 @@ to the trash?</source>
     </message>
     <message>
         <source>Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to Search tab to search file in this selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the catalog in the Explore tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the content of the Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand 1 level, 2 levels, or collapse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Settings file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and all sub-folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order folders first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move folder to Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orderValue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location / Storage / Catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -26,13 +26,20 @@
 </context>
 <context>
     <name>DirectoryTreeModel</name>
+</context>
+<context>
+    <name>ExploreTreeModel</name>
     <message>
-        <source>Directory</source>
-        <translation>Répertoire</translation>
+        <source>Folder</source>
+        <translation>Dossier</translation>
     </message>
     <message>
-        <source>Path</source>
-        <translation>Chemin</translation>
+        <source>No of items</source>
+        <translation>Nombre d&apos;éléments</translation>
+    </message>
+    <message>
+        <source>Full path</source>
+        <translation>Chemin complet</translation>
     </message>
 </context>
 <context>
@@ -92,10 +99,6 @@
     <message>
         <source>Files</source>
         <translation>Fichiers</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>Voir</translation>
     </message>
     <message>
         <source>Last Update</source>
@@ -390,14 +393,6 @@
         <translation>Un fichier a été trouvé, mais il n a pas pu être chargé</translation>
     </message>
     <message>
-        <source>A storage file was created</source>
-        <translation>Un fichier pour stockage a été créé</translation>
-    </message>
-    <message>
-        <source>You can edit it now</source>
-        <translation>Vous pouvez maintenant l&apos;éditer</translation>
-    </message>
-    <message>
         <source>Launch the search of files.</source>
         <translation>Lancer la recherche de fichiers.</translation>
     </message>
@@ -596,10 +591,6 @@
     <message>
         <source>Select the type of data</source>
         <translation>Sélectionner le type de données</translation>
-    </message>
-    <message>
-        <source>Select a catalog</source>
-        <translation>Sélectionner un catalogue</translation>
     </message>
     <message>
         <source>Edit the file storing all records</source>
@@ -1028,10 +1019,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>instantanés de la collection</translation>
     </message>
     <message>
-        <source>Snapshot created.</source>
-        <translation>Instantané créé.</translation>
-    </message>
-    <message>
         <source>collection</source>
         <translation>collection</translation>
     </message>
@@ -1129,10 +1116,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>Doublons trouvés</translation>
     </message>
     <message>
-        <source>DEV_EXPLORE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>DEV_STORAGE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1179,10 +1162,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <source>Show/Hide search criteria</source>
         <translation>Afficher/Masquer les critères de recherche</translation>
-    </message>
-    <message>
-        <source>The selected catalog contains more than 500.000 files.&lt;br/&gt;This could take one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Le catalogue sélectionné contient plus de 500 000 fichiers.&lt;br/&gt;L&apos;ouverture peut prendre une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer ?</translation>
     </message>
     <message>
         <source>Search in connected drives</source>
@@ -1357,10 +1336,6 @@ to the trash?</source>
         <translation>Etiquetter ce dossier</translation>
     </message>
     <message>
-        <source>Title</source>
-        <translation>Titre</translation>
-    </message>
-    <message>
         <source>A file %&amp; already exists. Overwrite it?</source>
         <translation>Un fichier %&amp; existe déjà. L&apos;écraser ?</translation>
     </message>
@@ -1372,13 +1347,77 @@ to the trash?</source>
         <source>Selection</source>
         <translation>Sélection</translation>
     </message>
+    <message>
+        <source>Go to Search tab to search file in this selection</source>
+        <translation>Aller à l&apos;onglet Chercher pour chercher dans cette séléction</translation>
+    </message>
+    <message>
+        <source>Open the catalog in the Explore tab</source>
+        <translation>Ouvrier le catalogue dans l&apos;onglet Explore</translation>
+    </message>
+    <message>
+        <source>Update the content of the Catalog</source>
+        <translation>Mettre à jour le contenu du Catalogue</translation>
+    </message>
+    <message>
+        <source>Expand 1 level, 2 levels, or collapse</source>
+        <translation>Etendre 1 niveau, 2 niveaux ou réduire</translation>
+    </message>
+    <message>
+        <source>Open Settings file</source>
+        <translation>Ouvrir le fichier de Paramètres</translation>
+    </message>
+    <message>
+        <source>Display folders</source>
+        <translation>Afficher les dossiers</translation>
+    </message>
+    <message>
+        <source>and all sub-folders</source>
+        <translation>et tous les sous-dossiers</translation>
+    </message>
+    <message>
+        <source>Order folders first</source>
+        <translation>Trier d&apos;abord les dossiers</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Charger</translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;br/&gt;Un instantané de cette collection a été enregistré :&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Nombre de fichiers&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt;&#xa0;%1 &lt;/b&gt;&lt; /td&gt;&lt;td&gt; (ajoutés&#xa0;: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille totale des fichiers&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt; /b&gt; &lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>Copy folder name</source>
+        <translation>Copier le nom du dossier</translation>
+    </message>
+    <message>
+        <source>Delete folder</source>
+        <translation>Supprimer le dossier</translation>
+    </message>
+    <message>
+        <source>Move folder to Trash</source>
+        <translation>Déplacer le dossier vers la corbeille</translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
+        <translation>Le catalogue sélectionné contient plus de 200&#xa0;000&#xa0;fichiers.&lt;br/&gt;L&apos;ouverture peut prendre plus d&apos;une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer&#xa0;?</translation>
+    </message>
+    <message>
+        <source>orderValue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location / Storage / Catalog</source>
+        <translation>Lieu / Stockage / Catalogue</translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translation>Vide</translation>
+    </message>
 </context>
 <context>
     <name>StorageTreeModel</name>
-    <message>
-        <source>Storage</source>
-        <translation type="vanished">Stockage</translation>
-    </message>
 </context>
 <context>
     <name>Tag</name>
