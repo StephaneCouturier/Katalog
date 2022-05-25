@@ -257,6 +257,8 @@
         activeCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedStorageLocation);
         refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+        ui->Filter_pushButton_Explore->setEnabled(false);
+        ui->Filter_pushButton_Update->setEnabled(false);
 
         //reset device tree
         toggleTreeExpandState();
