@@ -1344,10 +1344,6 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>orderValue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1357,6 +1353,10 @@ to the trash?</source>
     </message>
     <message>
         <source>Empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

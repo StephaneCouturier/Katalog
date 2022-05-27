@@ -30,9 +30,6 @@
     </message>
 </context>
 <context>
-    <name>DirectoryTreeModel</name>
-</context>
-<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="41"/>
@@ -92,7 +89,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="861"/>
         <location filename="../mainwindow_tab_search.cpp" line="890"/>
         <location filename="../mainwindow_tab_search.cpp" line="1048"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="681"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="682"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -130,7 +127,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="859"/>
         <location filename="../mainwindow_tab_search.cpp" line="888"/>
         <location filename="../mainwindow_tab_search.cpp" line="1046"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="679"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="680"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="455"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -471,7 +468,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="858"/>
         <location filename="../mainwindow_tab_search.cpp" line="887"/>
         <location filename="../mainwindow_tab_search.cpp" line="1045"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="678"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="679"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
@@ -500,8 +497,8 @@
     <message>
         <location filename="../mainwindow.ui" line="2534"/>
         <location filename="../mainwindow_tab_storage.cpp" line="457"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="566"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="682"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="567"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="683"/>
         <location filename="../mainwindow_tab_settings.cpp" line="227"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -548,12 +545,12 @@
         <location filename="../mainwindow_tab_settings.cpp" line="253"/>
         <location filename="../mainwindow_tab_settings.cpp" line="254"/>
         <location filename="../mainwindow_tab_settings.cpp" line="255"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="310"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="311"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="320"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="312"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="313"/>
         <location filename="../mainwindow_tab_settings.cpp" line="322"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="334"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="335"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="324"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="336"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="337"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="297"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="299"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="301"/>
@@ -755,7 +752,7 @@
     <message>
         <location filename="../mainwindow.ui" line="6331"/>
         <source>DEV_Storage_loadTree</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_Storage_loadTree</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4039"/>
@@ -770,7 +767,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="1044"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="536"/>
         <location filename="../mainwindow_tab_storage.cpp" line="456"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="677"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="678"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -848,7 +845,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4657"/>
         <location filename="../mainwindow_tab_storage.cpp" line="459"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="684"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="685"/>
         <source>Path</source>
         <translation>Weg</translation>
     </message>
@@ -1259,7 +1256,7 @@
     <message>
         <location filename="../mainwindow.ui" line="6323"/>
         <source>DEV_STORAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_STORAGE</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="95"/>
@@ -1538,7 +1535,7 @@ in den Papierkorb?</translation>
         <location filename="../mainwindow_tab_search.cpp" line="860"/>
         <location filename="../mainwindow_tab_search.cpp" line="889"/>
         <location filename="../mainwindow_tab_search.cpp" line="1047"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="566"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="567"/>
         <source>Folder</source>
         <translation>Ordner</translation>
     </message>
@@ -1925,14 +1922,14 @@ Modify the device to provide one and try again.
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4699"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="680"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="762"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="681"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="763"/>
         <source>Directory</source>
         <translation>Verzeichnis</translation>
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="107"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="368"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="370"/>
         <source>Select the directory for this collection</source>
         <translation>Wählen Sie das Verzeichnis für diese Sammlung</translation>
     </message>
@@ -1969,14 +1966,14 @@ Modify the device to provide one and try again.
         <translation>Verschieben in Ordner fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="485"/>
-        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Der ausgewählte Katalog enthält mehr als 200.000 Dateien.&lt;br/&gt;Das Öffnen kann einige Minuten dauern.&lt;br/&gt;Möchten Sie fortfahren?</translation>
+        <location filename="../mainwindow_tab_explore.cpp" line="486"/>
+        <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
+        <translation>Der ausgewählte Katalog enthält mehr als %1 Dateien.&lt;br/&gt;Das Öffnen kann einige Minuten dauern.&lt;br/&gt;Fortfahren?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="683"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="684"/>
         <source>orderValue</source>
-        <translation type="unfinished"></translation>
+        <translation>orderValue</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="163"/>
@@ -1991,7 +1988,7 @@ Modify the device to provide one and try again.
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="227"/>
         <source>Empty</source>
-        <translation type="unfinished">Leer</translation>
+        <translation>Leer</translation>
     </message>
 </context>
 <context>

@@ -25,9 +25,6 @@
     </message>
 </context>
 <context>
-    <name>DirectoryTreeModel</name>
-</context>
-<context>
     <name>ExploreTreeModel</name>
     <message>
         <source>Folder</source>
@@ -1117,7 +1114,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <source>DEV_STORAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_STORAGE</translation>
     </message>
     <message>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
@@ -1325,7 +1322,7 @@ to the trash?</source>
     </message>
     <message>
         <source>DEV_Storage_loadTree</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_Storage_loadTree</translation>
     </message>
     <message>
         <source>Do you want to create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No: simply export results to a csv file.</source>
@@ -1400,12 +1397,8 @@ to the trash?</source>
         <translation>Déplacer le dossier vers la corbeille</translation>
     </message>
     <message>
-        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Le catalogue sélectionné contient plus de 200&#xa0;000&#xa0;fichiers.&lt;br/&gt;L&apos;ouverture peut prendre plus d&apos;une ou plusieurs minutes.&lt;br/&gt;Voulez-vous continuer&#xa0;?</translation>
-    </message>
-    <message>
         <source>orderValue</source>
-        <translation type="unfinished"></translation>
+        <translation>orderValue</translation>
     </message>
     <message>
         <source>Location / Storage / Catalog</source>
@@ -1415,9 +1408,10 @@ to the trash?</source>
         <source>Empty</source>
         <translation>Vide</translation>
     </message>
-</context>
-<context>
-    <name>StorageTreeModel</name>
+    <message>
+        <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
+        <translation>Le catalogue sélectionné contient plus de %1&#xa0;fichiers.&lt;br/&gt;L&apos;ouverture peut prendre plusieurs minutes.&lt;br/&gt;Continuer&#xa0;?</translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>

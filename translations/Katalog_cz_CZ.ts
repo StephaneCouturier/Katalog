@@ -30,9 +30,6 @@
     </message>
 </context>
 <context>
-    <name>DirectoryTreeModel</name>
-</context>
-<context>
     <name>ExploreTreeModel</name>
     <message>
         <location filename="../exploretreemodel.cpp" line="41"/>
@@ -255,7 +252,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="858"/>
         <location filename="../mainwindow_tab_search.cpp" line="887"/>
         <location filename="../mainwindow_tab_search.cpp" line="1045"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="678"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="679"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -284,8 +281,8 @@
     <message>
         <location filename="../mainwindow.ui" line="2534"/>
         <location filename="../mainwindow_tab_storage.cpp" line="457"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="566"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="682"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="567"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="683"/>
         <location filename="../mainwindow_tab_settings.cpp" line="227"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -332,12 +329,12 @@
         <location filename="../mainwindow_tab_settings.cpp" line="253"/>
         <location filename="../mainwindow_tab_settings.cpp" line="254"/>
         <location filename="../mainwindow_tab_settings.cpp" line="255"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="310"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="311"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="320"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="312"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="313"/>
         <location filename="../mainwindow_tab_settings.cpp" line="322"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="334"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="335"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="324"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="336"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="337"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="297"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="299"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="301"/>
@@ -464,7 +461,7 @@
     <message>
         <location filename="../mainwindow.ui" line="6331"/>
         <source>DEV_Storage_loadTree</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_Storage_loadTree</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
@@ -534,7 +531,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="1044"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="536"/>
         <location filename="../mainwindow_tab_storage.cpp" line="456"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="677"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="678"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -565,7 +562,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="861"/>
         <location filename="../mainwindow_tab_search.cpp" line="890"/>
         <location filename="../mainwindow_tab_search.cpp" line="1048"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="681"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="682"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -672,7 +669,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4657"/>
         <location filename="../mainwindow_tab_storage.cpp" line="459"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="684"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="685"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
@@ -886,7 +883,7 @@
     <message>
         <location filename="../mainwindow.ui" line="6323"/>
         <source>DEV_STORAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>DEV_STORAGE</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="265"/>
@@ -1154,7 +1151,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="859"/>
         <location filename="../mainwindow_tab_search.cpp" line="888"/>
         <location filename="../mainwindow_tab_search.cpp" line="1046"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="679"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="680"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="455"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -1538,7 +1535,7 @@ do koše?</translation>
         <location filename="../mainwindow_tab_search.cpp" line="860"/>
         <location filename="../mainwindow_tab_search.cpp" line="889"/>
         <location filename="../mainwindow_tab_search.cpp" line="1047"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="566"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="567"/>
         <source>Folder</source>
         <translation>Složka</translation>
     </message>
@@ -1640,7 +1637,7 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="107"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="368"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="370"/>
         <source>Select the directory for this collection</source>
         <translation>Vyberte adresář pro tuto kolekci</translation>
     </message>
@@ -1943,8 +1940,8 @@ Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4699"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="680"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="762"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="681"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="763"/>
         <source>Directory</source>
         <translation>Složku</translation>
     </message>
@@ -1969,14 +1966,14 @@ Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
         <translation>Přesunutí do složky se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="485"/>
-        <source>The selected catalog contains more than 200.000 files.&lt;br/&gt;This may take over one or several minutes to open.&lt;br/&gt;Do you want to continue?</source>
-        <translation>Vybraný katalog obsahuje více než 200 000 souborů.&lt;br/&gt;Otevření může trvat jednu nebo několik minut.&lt;br/&gt;Chcete pokračovat?</translation>
+        <location filename="../mainwindow_tab_explore.cpp" line="486"/>
+        <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
+        <translation>Vybraný katalog obsahuje více než %1 souborů.&lt;br/&gt;Otevření může trvat několik minut.&lt;br/&gt;Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="683"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="684"/>
         <source>orderValue</source>
-        <translation type="unfinished"></translation>
+        <translation>orderValue</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="163"/>
