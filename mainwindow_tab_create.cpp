@@ -342,14 +342,16 @@
 
         if (includeHidden == true){
             QDirIterator iterator(directory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
+            while (iterator.hasNext()){              
 
+                 QString dir = iterator.next();
                  //Get file information  (absolute path, size, datetime)
-                QString filePath = iterator.next();
+                 //QString filePath = iterator.next();
+                 QString filePath = iterator.filePath();
 
                 qint64 fileSize;
                 QFile file(filePath);
-                //if (file.open(QIODevice::ReadOnly)){
+
                 fileSize = file.size();
                 catalogTotalFileSize = catalogTotalFileSize + fileSize;
 
@@ -358,14 +360,14 @@
 
                 //exclude if the folder is part of excluded directories
                 bool excludeFile = false;
-                //exclude files in /directory/lowerlevel/file when exclude fodler is in /directory
+                //exclude files in /directory/lowerlevel/file when exclude folder is in /directory
                 for (int i=0; i<excludedFolders.length(); i++) {
                     if(fileInfo.absolutePath().contains(excludedFolders[i]+"/") ){
                         excludeFile = true;
                         break;
                     }
                 }
-                //exclude files in /directory/file when exclude fodler is in /directory
+                //exclude files in /directory/file when exclude folder is in /directory
                 if (excludedFolders.contains(fileInfo.absolutePath())){
                     excludeFile = true;
                 }
@@ -379,12 +381,14 @@
             QDirIterator iterator(directory, fileTypes, QDir::Files, QDirIterator::Subdirectories);
             while (iterator.hasNext()){
 
+                QString dir = iterator.next();
                 //Get file information  (absolute path, size, datetime)
-                QString filePath = iterator.next();
+                //QString filePath = iterator.next();
+                QString filePath = iterator.filePath();
 
                 qint64 fileSize;
                 QFile file(filePath);
-                //if (file.open(QIODevice::ReadOnly)){
+
                 fileSize = file.size();
                 catalogTotalFileSize = catalogTotalFileSize + fileSize;
 
@@ -400,13 +404,13 @@
                         break;
                     }
                 }
-                //exclude files in /directory/file when exclude fodler is in /directory
+                //exclude files in /directory/file when exclude folder is in /directory
                 if (excludedFolders.contains(fileInfo.absolutePath())){
                     excludeFile = true;
                 }
                 //add file to list if not excluded
                 if(excludeFile == false){
-                        fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                    fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
             }
         }
@@ -417,7 +421,7 @@
         ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
 
         //filelist.append("<catalogName>"+newCatalogName);
-        fileList.prepend("<catalogIsFullDevice>" + QVariant(isFullDevice).toString());
+        fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
         fileList.prepend("<catalogStorage>"         + newCatalogStorage);
         fileList.prepend("<catalogFileType>"        + fileType);
