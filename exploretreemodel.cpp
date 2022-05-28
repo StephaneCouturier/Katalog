@@ -180,70 +180,70 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         {
            QString name         = query.value(idPath).toString();
 
-           int id_file          = query.value(idIdx).toInt();
-           QString folderPath;
+                   int id_file          = query.value(idIdx).toInt();
+                   QString folderPath;
 
-           QStringList nodeString = name.split("/", QString::SkipEmptyParts);
-           QString temppath = "";
+                   QStringList nodeString = name.split("/", Qt::SkipEmptyParts);
+                   QString temppath = "";
 
-           int lastidx = 0;
-           for(int node = 0; node < nodeString.count(); ++node)
-           {
-                temppath += nodeString.at(node);
-                //if(node != nodeString.count() - 1)
-                temppath += "/";
-
-                unsigned int hash = qHash(temppath);
-                columnData.clear();
-
-                columnData << nodeString.at(node);
-
-                int idx = findNode(hash, parents);
-
-                if(idx != -1)
-                {
-                    lastidx = idx;
-                }
-                else
-                {
-                   QString sQuery =  "";
-                   if(node == nodeString.count() - 1)
+                   int lastidx = 0;
+                   for(int node = 0; node < nodeString.count(); ++node)
                    {
-                       sQuery += "SELECT count(*) FROM filesall WHERE id_file=";
-                       sQuery += QString::number(id_file);
-                       sQuery += ";";
+                        temppath += nodeString.at(node);
+                        //if(node != nodeString.count() - 1)
+                        temppath += "/";
+
+                        unsigned int hash = qHash(temppath);
+                        columnData.clear();
+
+                        columnData << nodeString.at(node);
+
+                        int idx = findNode(hash, parents);
+
+                        if(idx != -1)
+                        {
+                            lastidx = idx;
+                        }
+                        else
+                        {
+                           QString sQuery =  "";
+                           if(node == nodeString.count() - 1)
+                           {
+                               sQuery += "SELECT count(*) FROM filesall WHERE id_file=";
+                               sQuery += QString::number(id_file);
+                               sQuery += ";";
+                           }
+                           else
+                           {
+                               sQuery += "SELECT count(*) FROM fileAll WHERE filePath like '";
+                               sQuery += temppath;
+                               sQuery += "%';";
+                           }
+
+                           int nChild = 0;
+                           QSqlQuery query2(sQuery);
+
+                           if(query2.next())
+                                nChild = query2.value(0).toInt();
+
+                           columnData << nChild;
+
+                           folderPath = catalogSourcePath + "/" + temppath;
+                           folderPath.truncate(folderPath.length()-1);
+                           columnData << folderPath;
+
+                           if(lastidx != -1)
+                           {
+                               parents.at(lastidx)->appendChild(new ExploreTreeItem(columnData, parents.at(lastidx), hash));
+                               parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
+                               lastidx = -1;
+                           }
+                           else
+                           {
+                               parents.last()->appendChild(new ExploreTreeItem(columnData, parents.last(), hash));
+                               parents <<  parents.last()->child( parents.last()->childCount()-1);
+                           }
+                       }
                    }
-                   else
-                   {
-                       sQuery += "SELECT count(*) FROM fileAll WHERE filePath like '";
-                       sQuery += temppath;
-                       sQuery += "%';";
-                   }
-
-                   int nChild = 0;
-                   QSqlQuery query2(sQuery);
-
-                   if(query2.next())
-                        nChild = query2.value(0).toInt();
-
-                   columnData << nChild;
-
-                   folderPath = catalogSourcePath + "/" + temppath;
-                   folderPath.truncate(folderPath.length()-1);
-                   columnData << folderPath;
-
-                   if(lastidx != -1)
-                   {
-                       parents.at(lastidx)->appendChild(new ExploreTreeItem(columnData, parents.at(lastidx), hash));
-                       parents <<  parents.at(lastidx)->child( parents.at(lastidx)->childCount()-1);
-                       lastidx = -1;
-                   }
-                   else
-                   {
-                       parents.last()->appendChild(new ExploreTreeItem(columnData, parents.last(), hash));
-                       parents <<  parents.last()->child( parents.last()->childCount()-1);
-                   }
-               }
-           }
         }
 }
