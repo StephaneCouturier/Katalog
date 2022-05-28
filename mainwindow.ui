@@ -1262,7 +1262,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="iconSize">
            <size>
@@ -4498,20 +4498,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
-                      <property name="text">
-                       <string>Display folders</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QCheckBox" name="Explore_checkBox_DisplaySubFolders">
-                      <property name="text">
-                       <string>and all sub-folders</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
                      <spacer name="Explore_horizontalSpacer_5">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -4526,17 +4512,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </size>
                       </property>
                      </spacer>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Explore_pushButton_OrderFoldersFirst">
-                      <property name="text">
-                       <string>Order folders first</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="view-sort">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -4573,50 +4548,33 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>35</height>
+                <height>80</height>
                </size>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <layout class="QGridLayout" name="gridLayout_8">
                <property name="topMargin">
                 <number>0</number>
                </property>
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QPushButton" name="Explore_pushButton_Load">
-                 <property name="maximumSize">
+               <item row="0" column="2">
+                <spacer name="Explore_horizontalSpacer_01">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
                   <size>
-                   <width>150</width>
-                   <height>16777215</height>
+                   <width>20</width>
+                   <height>20</height>
                   </size>
                  </property>
-                 <property name="toolTip">
-                  <string>Reload all catalog information</string>
-                 </property>
-                 <property name="text">
-                  <string>Load</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="view-refresh">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </widget>
+                </spacer>
                </item>
-               <item>
-                <widget class="QLabel" name="Explore_label_CatalogNameLabel">
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Catalog</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
+               <item row="0" column="4">
                 <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
                  <property name="font">
                   <font>
@@ -4629,23 +4587,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <spacer name="Explore_horizontalSpacer_01">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
+               <item row="1" column="0">
                 <widget class="QLabel" name="Explore_label_CatalogPathLabel">
                  <property name="maximumSize">
                   <size>
@@ -4654,11 +4596,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </size>
                  </property>
                  <property name="text">
-                  <string>Path</string>
+                  <string>Source Path</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="4">
                 <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
                  <property name="font">
                   <font>
@@ -4671,23 +4613,40 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <spacer name="Explore_horizontalSpacer_04">
+               <item row="0" column="9">
+                <spacer name="Explore_horizontalSpacer_02">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
-                   <height>20</height>
+                   <width>655</width>
+                   <height>19</height>
                   </size>
                  </property>
                 </spacer>
                </item>
-               <item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="Explore_label_CatalogNameLabel">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Catalog</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="10">
+                <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
+                 <property name="text">
+                  <string>Display folders</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
                 <widget class="QLabel" name="Explore_label_CatalogDirectoryLabel">
                  <property name="maximumSize">
                   <size>
@@ -4700,7 +4659,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="2" column="4">
                 <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
                  <property name="font">
                   <font>
@@ -4713,18 +4672,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item>
-                <spacer name="Explore_horizontalSpacer_02">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+               <item row="2" column="10">
+                <widget class="QPushButton" name="Explore_pushButton_OrderFoldersFirst">
+                 <property name="text">
+                  <string>Order folders first</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>655</width>
-                   <height>19</height>
-                  </size>
+                 <property name="icon">
+                  <iconset theme="view-sort">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
-                </spacer>
+                </widget>
+               </item>
+               <item row="1" column="10">
+                <widget class="QCheckBox" name="Explore_checkBox_DisplaySubFolders">
+                 <property name="text">
+                  <string>and all sub-folders</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -6406,8 +6370,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
   <include location="images.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>
