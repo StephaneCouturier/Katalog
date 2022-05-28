@@ -469,11 +469,12 @@
         query.exec();
         query.next();
         int selectedcatalogFileCount = query.value(0).toInt();
-        if (selectedcatalogFileCount > 200000){
+        int numberOfFilesWarningThreshold = 200000;
+        if (selectedcatalogFileCount > numberOfFilesWarningThreshold){
                 int result = QMessageBox::warning(this,"Katalog",
-                          tr("The selected catalog contains more than 200.000 files.<br/>"
-                             "This may take over one or several minutes to open.<br/>"
-                             "Do you want to continue?"),QMessageBox::Yes|QMessageBox::Cancel);
+                          tr("The selected catalog contains more than %1 files.<br/>"
+                             "It may take several minutes to open.<br/>"
+                             "Continue?").arg(QLocale().toString(numberOfFilesWarningThreshold)),QMessageBox::Yes|QMessageBox::Cancel);
                 if ( result ==QMessageBox::Cancel){
                     //Stop animation
                     QApplication::restoreOverrideCursor();
@@ -482,10 +483,10 @@
         }
 
         //selectedCatalogPath: remove the / at the end if any
-        int pathLength = activeCatalog->sourcePath.length();
-        if (activeCatalog->sourcePath.at(pathLength-1)=="/") {
+        //int pathLength = activeCatalog->sourcePath.length();
+        //if (activeCatalog->sourcePath.at(pathLength-1)=="/") {
             //activeCatalog->sourcePath.remove(pathLength-1,1); //DEV:
-        }
+        //}
 
         //Load the files of the Selected Catalog
         loadCatalogFilelistToTable(activeCatalog);
@@ -584,7 +585,9 @@
                                                     fileFullPath
                                     FROM    filesall
                                     WHERE   fileCatalog =:fileCatalog
-                                    AND     filePath  like :folderPath)");
+                                    AND     filePath  like :folderPath
+                        )");
+
             if(optionDisplaySubFolders != true){
                 selectSQL = selectSQL + QLatin1String(R"(
                                     AND     (REPLACE(filePath, :selectedDirectoryFullPath||'/', ''))  NOT like "%/%"
