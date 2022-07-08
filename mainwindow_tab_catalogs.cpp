@@ -60,6 +60,15 @@
             activeCatalog->setCatalogName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
 
+            selectedDeviceName = selectedCatalog->name;
+            selectedDeviceType = "Catalog";
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
+            settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+
+            filterFromSelectedDevices();
+
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
         }
@@ -216,12 +225,36 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_ViewCatalogStats_clicked()
         {
-            ui->Statistics_comboBox_SelectSource->setCurrentText("Updates only");
-            //ui->Statistics_comboBox_SelectCatalog->setCurrentText(selectedCatalogName);
+            //Change the selected catalog in Search tab
+            ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
+            selectedCatalogName = selectedCatalog->name;
+
+            selectedStorageLocation = tr("All");
+            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+
+            selectedStorageName = tr("All");
+            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+
+            activeCatalog->setCatalogName(selectedCatalog->name);
+            activeCatalog->loadCatalogMetaData();
+
+            selectedDeviceName = selectedCatalog->name;
+            selectedDeviceType = "Catalog";
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
+            settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+
+            filterFromSelectedDevices();
+
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
+
             //Select the type of display "selected catalog"
             ui->Statistics_comboBox_SelectSource->setCurrentText(tr("selected catalog"));
+
+            //load the graph
+            loadStatisticsChart();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Import_clicked()
