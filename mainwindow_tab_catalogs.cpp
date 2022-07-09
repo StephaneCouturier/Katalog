@@ -1164,7 +1164,7 @@
                 int updatechoice = QMessageBox::warning(this, "Katalog",
                                     tr("Update the catalog content with the new criteria?\n")
                                          , QMessageBox::Yes
-                                                  | QMessageBox::Cancel);
+                                                  | QMessageBox::No);
                 if ( updatechoice == QMessageBox::Yes){
                     tempCatalog->setCatalogName(newCatalogName);
                     tempCatalog->loadCatalogMetaData();
