@@ -76,20 +76,6 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                 break;
             }
 
-            case Qt::FontRole:
-            {
-//                QModelIndex idx1 = index.sibling(index.row(), 0);
-//                QModelIndex idx2 = index.sibling(index.row(), 1);
-//                if (m_selectedDeviceName == QSortFilterProxyModel::data(idx1, Qt::DisplayRole).toString()
-//                    and m_selectedDeviceType == QSortFilterProxyModel::data(idx2, Qt::DisplayRole).toString() )
-//                {
-//                    QFont boldFont;
-//                    boldFont.setBold(true);
-//                    return boldFont;
-//                }
-//                break;
-            }
-
             case Qt::TextAlignmentRole:
             {
                if ( filecountColumnList.contains(index.column()) )
@@ -99,13 +85,6 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
                break;
-            }
-
-            case Qt::BackgroundRole:
-            {
-//                if (index.column()  == 2)  //change background
-//                    return QBrush(Qt::red);
-//                break;
             }
 
             case Qt::DecorationRole:
@@ -145,12 +124,6 @@ QVariant DeviceTreeView::headerData(int section, Qt::Orientation orientation, in
             case Qt::DisplayRole:
             {
                 return QSortFilterProxyModel::headerData( section, orientation, role) ;
-            }
-            case Qt::BackgroundRole:
-            {
-                if (grayColumnList.contains(section))  //change background
-                    //return QBrush(QColor(245, 245, 245));
-                break;
             }
         }
         return QVariant();
