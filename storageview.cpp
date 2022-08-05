@@ -53,7 +53,7 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
             {
                 //Currency (Euro) columns
                 if( filesizeColumnList.contains(index.column()) ){
-                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
+                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble(),2,QLocale::DataSizeIecFormat));
                 }
 
                 //Numbers columns (without units)
