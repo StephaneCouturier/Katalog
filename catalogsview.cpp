@@ -57,7 +57,7 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
             {
                 //File Size columns
                 if( filesizeColumnList.contains(index.column()) ){
-                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
+                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble(),2,QLocale::DataSizeIecFormat) );
                 }
 
                 //Numbers columns (without units)
