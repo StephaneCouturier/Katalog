@@ -475,6 +475,9 @@
             loadStatisticsData();
             loadStatisticsChart();
 
+       //Load Tags
+            reloadTagsData();
+
        //Hide buttons to force user to select a catalog before allowing any action.
             hideCatalogButtons();
     }
