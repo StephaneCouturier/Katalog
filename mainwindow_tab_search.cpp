@@ -1423,8 +1423,9 @@
                             queryTag.exec();
 
                             //Test if the FilePath contains a path from the list of folders matching the selected tag name
+                            // a slash is added in both value to ensure no result from Tag AB is returned when Tag A is selected
                             while(queryTag.next()){
-                                if ( lineFilePath.contains(queryTag.value(0).toString())==true){
+                                if ( (lineFilePath+"/").contains( queryTag.value(0).toString()+"/" )==true){
                                     fileIsMatchingTag = true;
                                     break;
                                 }
