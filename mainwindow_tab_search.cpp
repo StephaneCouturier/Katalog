@@ -352,6 +352,7 @@
                     ui->Search_comboBox_TextCriteria->setEnabled(true);
                     ui->Search_comboBox_SearchIn->setEnabled(true);
                     ui->Search_lineEdit_Exclude->setEnabled(true);
+                    ui->Search_checkBox_CaseSensitive->setEnabled(true);
             }
             else{
                 #ifdef Q_OS_LINUX
@@ -362,6 +363,7 @@
                     ui->Search_comboBox_TextCriteria->setDisabled(true);
                     ui->Search_comboBox_SearchIn->setDisabled(true);
                     ui->Search_lineEdit_Exclude->setDisabled(true);
+                    ui->Search_checkBox_CaseSensitive->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
