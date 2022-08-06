@@ -43,7 +43,7 @@
 #include <QTreeView>
 #include <QInputDialog>
 #include <QTranslator>
-#include <QDirModel>
+//#include <QDirModel>
 #include <QDateTime>
 #include <QAbstractTableModel>
 #include <QMenu>
@@ -168,6 +168,15 @@ class MainWindow : public QMainWindow
             bool hasDuplicatesOnName;
             bool hasDuplicatesOnSize;
             bool hasDuplicatesOnDateModified;
+            bool searchDuplicatesOnDate;
+            bool searchDuplicatesOnTags;
+            bool searchDuplicatesOnText;
+            bool searchOnDifferences;
+            bool hasDifferencesOnName;
+            bool hasDifferencesOnSize;
+            bool hasDifferencesOnDateModified;
+            QString selectedDifferencesCatalog1;
+            QString selectedDifferencesCatalog2;
             bool searchOnDate;
             bool searchOnTags;
             bool searchOnText;
@@ -192,6 +201,7 @@ class MainWindow : public QMainWindow
             QString searchHistoryFilePath;
             int lastSearchSortSection;
             int lastSearchSortOrder;
+            void refreshDifferencesCatalogSelection();
 
             //search
             QList<QString>  sFileNames;
@@ -403,6 +413,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
+            void on_Search_checkBox_Differences_toggled(bool checked);
             void on_Search_treeView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
             void on_Search_treeView_FilesFound_HeaderSortOrderChanged();
@@ -510,6 +521,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
+
 };
 
 #endif // MAINWINDOW_H

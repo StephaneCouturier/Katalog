@@ -98,6 +98,9 @@
         settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
 
         filterFromSelectedDevices();
+
+        refreshDifferencesCatalogSelection();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ResetGlobal_clicked()
@@ -271,6 +274,9 @@
         settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
         settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
         settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
+
+        refreshDifferencesCatalogSelection();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::toggleTreeExpandState()

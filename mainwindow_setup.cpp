@@ -172,6 +172,12 @@
             hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
             hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
             hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
+            searchOnDifferences      = settings.value("LastSearch/DifferencesOn").toBool();
+            hasDifferencesOnName     = settings.value("LastSearch/hasDifferencesOnName").toBool();
+            hasDifferencesOnSize     = settings.value("LastSearch/hasDifferencesOnSize").toBool();
+            hasDifferencesOnDateModified = settings.value("LastSearch/hasDifferencesOnDateModified").toBool();
+            selectedDifferencesCatalog1 = settings.value("LastSearch/DifferencesCatalog1").toString();
+            selectedDifferencesCatalog2 = settings.value("LastSearch/DifferencesCatalog2").toString();
             selectedConnectedDrivePath  = settings.value("LastSearch/selectedConnectedDrivePath").toString();
             searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
             searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
@@ -298,9 +304,15 @@
 
         settings.setValue("LastSearch/showFoldersOnly", ui->Search_checkBox_ShowFolders->isChecked());
         settings.setValue("LastSearch/DuplicatesOn", ui->Search_checkBox_Duplicates->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnName", ui->Search_checkBox_DuplicateName->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnSize", ui->Search_checkBox_DuplicateSize->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnDateModified", ui->Search_checkBox_DuplicateDateModified->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnName", ui->Search_checkBox_DuplicatesName->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnSize", ui->Search_checkBox_DuplicatesSize->isChecked());
+        settings.setValue("LastSearch/hasDuplicatesOnDateModified", ui->Search_checkBox_DuplicatesDateModified->isChecked());
+        settings.setValue("LastSearch/DifferencesOn", ui->Search_checkBox_Differences->isChecked());
+        settings.setValue("LastSearch/hasDifferencesOnName", ui->Search_checkBox_DifferencesName->isChecked());
+        settings.setValue("LastSearch/hasDifferencesOnSize", ui->Search_checkBox_DifferencesSize->isChecked());
+        settings.setValue("LastSearch/hasDifferencesOnDateModified", ui->Search_checkBox_DifferencesDateModified->isChecked());
+        settings.setValue("LastSearch/DifferencesCatalog1", ui->Search_comboBox_DifferencesCatalog1->currentText());
+        settings.setValue("LastSearch/DifferencesCatalog2", ui->Search_comboBox_DifferencesCatalog2->currentText());
         settings.setValue("LastSearch/searchOnSize", ui->Search_checkBox_Size->isChecked());
         settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
@@ -477,6 +489,8 @@
         ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
 
     }
     //----------------------------------------------------------------------

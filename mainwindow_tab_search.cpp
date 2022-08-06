@@ -107,27 +107,36 @@
             #else
                 ui->Search_lineEdit_SearchText->setText("");
             #endif
+
+            ui->Search_checkBox_Text->setEnabled(true);
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_lineEdit_Exclude->setText(tr(""));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
+
             ui->Search_checkBox_Size->setChecked(false);
             ui->Search_spinBox_MinimumSize->setValue(0);
             ui->Search_spinBox_MaximumSize->setValue(1000);
-
             ui->Search_comboBox_MinSizeUnit->setCurrentText(tr("Bytes"));
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
-            ui->Search_checkBox_ShowFolders->setChecked(false);
-            ui->Search_checkBox_Duplicates->setChecked(false);
-            ui->Search_checkBox_DuplicateName->setChecked(false);
-            ui->Search_checkBox_DuplicateSize->setChecked(false);
-            ui->Search_checkBox_DuplicateDateModified->setChecked(false);
             ui->Search_checkBox_Date->setChecked(false);
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("1970-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
+
+            ui->Search_checkBox_Duplicates->setChecked(false);
+            ui->Search_checkBox_DuplicatesName->setChecked(false);
+            ui->Search_checkBox_DuplicatesSize->setChecked(false);
+            ui->Search_checkBox_DuplicatesDateModified->setChecked(false);
+            ui->Search_checkBox_Differences->setChecked(false);
+            ui->Search_checkBox_DifferencesName->setChecked(false);
+            ui->Search_checkBox_DifferencesSize->setChecked(false);
+            ui->Search_checkBox_DifferencesDateModified->setChecked(false);
+
+            ui->Search_checkBox_ShowFolders->setChecked(false);
+            ui->Search_checkBox_Tags->setChecked(false);
+
             ui->Search_label_NumberResults->setText("");
             ui->Search_label_SizeResults->setText("");
-            ui->Search_checkBox_Text->setEnabled(true);
             ui->Search_pushButton_FileFoundMoreStatistics->setDisabled(true);
 
             //Clear catalog and file results (load an empty model)
@@ -252,21 +261,45 @@
         {
             if(checked==1){
                 ui->Search_checkBox_Duplicates->setChecked(false);
+                ui->Search_checkBox_Differences->setChecked(false);
             }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Duplicates_toggled(bool checked)
         {
             if(checked==1){
-                ui->Search_checkBox_DuplicateName->setEnabled(true);
-                ui->Search_checkBox_DuplicateSize->setEnabled(true);
-                ui->Search_checkBox_DuplicateDateModified->setEnabled(true);
+                ui->Search_checkBox_DuplicatesName->setEnabled(true);
+                ui->Search_checkBox_DuplicatesSize->setEnabled(true);
+                ui->Search_checkBox_DuplicatesDateModified->setEnabled(true);
                 ui->Search_checkBox_ShowFolders->setChecked(false);
+                ui->Search_checkBox_Differences->setChecked(false);
+                ui->Search_checkBox_DifferencesName->setEnabled(false);
+                ui->Search_checkBox_DifferencesSize->setEnabled(false);
+                ui->Search_checkBox_DifferencesDateModified->setEnabled(false);
             }
             else{
-                ui->Search_checkBox_DuplicateName->setDisabled(true);
-                ui->Search_checkBox_DuplicateSize->setDisabled(true);
-                ui->Search_checkBox_DuplicateDateModified->setDisabled(true);
+                ui->Search_checkBox_DuplicatesName->setDisabled(true);
+                ui->Search_checkBox_DuplicatesSize->setDisabled(true);
+                ui->Search_checkBox_DuplicatesDateModified->setDisabled(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_checkBox_DifferencesName->setEnabled(true);
+                ui->Search_checkBox_DifferencesSize->setEnabled(true);
+                ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
+                ui->Search_checkBox_ShowFolders->setChecked(false);
+                ui->Search_checkBox_Duplicates->setChecked(false);
+                ui->Search_checkBox_DuplicatesName->setEnabled(false);
+                ui->Search_checkBox_DuplicatesSize->setEnabled(false);
+                ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
+            }
+            else{
+                ui->Search_checkBox_DifferencesName->setDisabled(true);
+                ui->Search_checkBox_DifferencesSize->setDisabled(true);
+                ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -361,23 +394,34 @@
             hasDuplicatesOnName  = ui->Search_treeView_History->model()->index(index.row(), 17, QModelIndex()).data().toBool();
             hasDuplicatesOnSize  = ui->Search_treeView_History->model()->index(index.row(), 18, QModelIndex()).data().toBool();
             hasDuplicatesOnDateModified = ui->Search_treeView_History->model()->index(index.row(), 19, QModelIndex()).data().toBool();
-            showFoldersOnly      = ui->Search_treeView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
-            searchOnTags         = ui->Search_treeView_History->model()->index(index.row(), 21, QModelIndex()).data().toBool();
-            selectedTag          = ui->Search_treeView_History->model()->index(index.row(), 22, QModelIndex()).data().toString();
+            searchOnDifferences  = ui->Search_treeView_History->model()->index(index.row(), 20, QModelIndex()).data().toBool();
+            hasDifferencesOnName = ui->Search_treeView_History->model()->index(index.row(), 21, QModelIndex()).data().toBool();
+            hasDifferencesOnSize = ui->Search_treeView_History->model()->index(index.row(), 22, QModelIndex()).data().toBool();
+            hasDifferencesOnDateModified = ui->Search_treeView_History->model()->index(index.row(), 23, QModelIndex()).data().toBool();
 
-            searchInFileCatalogsChecked   = ui->Search_treeView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
-            searchInConnectedDriveChecked = ui->Search_treeView_History->model()->index(index.row(), 27, QModelIndex()).data().toBool();
-            selectedDirectoryName = ui->Search_treeView_History->model()->index(index.row(), 28, QModelIndex()).data().toString();
+            QStringList selectedDifferencesCatalogs = ui->Search_treeView_History->model()->index(index.row(), 24, QModelIndex()).data().toString().split("||");
+            if (selectedDifferencesCatalogs.length()>1){
+                selectedDifferencesCatalog1 = selectedDifferencesCatalogs[0];
+                selectedDifferencesCatalog2 = selectedDifferencesCatalogs[1];
+            }
+
+            showFoldersOnly      = ui->Search_treeView_History->model()->index(index.row(), 25, QModelIndex()).data().toBool();
+            searchOnTags         = ui->Search_treeView_History->model()->index(index.row(), 26, QModelIndex()).data().toBool();
+            selectedTag          = ui->Search_treeView_History->model()->index(index.row(), 27, QModelIndex()).data().toString();
+
+            searchInFileCatalogsChecked   = ui->Search_treeView_History->model()->index(index.row(), 31, QModelIndex()).data().toBool();
+            searchInConnectedDriveChecked = ui->Search_treeView_History->model()->index(index.row(), 32, QModelIndex()).data().toBool();
+            selectedDirectoryName = ui->Search_treeView_History->model()->index(index.row(), 33, QModelIndex()).data().toString();
 
             initiateSearchValues();
 
-            selectedStorageLocation  = ui->Search_treeView_History->model()->index(index.row(), 23, QModelIndex()).data().toString();
+            selectedStorageLocation  = ui->Search_treeView_History->model()->index(index.row(), 28, QModelIndex()).data().toString();
             ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
 
-            selectedStorageName   = ui->Search_treeView_History->model()->index(index.row(), 24, QModelIndex()).data().toString();
+            selectedStorageName   = ui->Search_treeView_History->model()->index(index.row(), 29, QModelIndex()).data().toString();
             ui->Filters_label_DisplayStorage->setText(selectedStorageName);
 
-            selectedCatalogName   = ui->Search_treeView_History->model()->index(index.row(), 25, QModelIndex()).data().toString();
+            selectedCatalogName   = ui->Search_treeView_History->model()->index(index.row(), 30, QModelIndex()).data().toString();
             ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
 
         }
@@ -757,6 +801,14 @@
                     searchInFileCatalogsChecked   = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                     searchInConnectedDriveChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
 
+                        //Differences
+                        hasDifferencesOnName         = ui->Search_checkBox_DifferencesName->checkState();
+                        hasDifferencesOnSize         = ui->Search_checkBox_DifferencesSize->checkState();
+                        hasDifferencesOnDateModified = ui->Search_checkBox_DifferencesDateModified->checkState();
+                        selectedDifferencesCatalog1  = ui->Search_comboBox_DifferencesCatalog1->currentText();
+                        selectedDifferencesCatalog2  = ui->Search_comboBox_DifferencesCatalog2->currentText();
+
+
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
                     sizeMultiplierMin=1;
@@ -786,13 +838,25 @@
                         return;;
                     }
 
+
             //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
                 //Process the SEARCH in CATALOGS
                     if (searchInFileCatalogsChecked==true){
                         //List of catalogs to search from: catalogSelectedList
                             //Search every catalog if "All" is selected
                             if ( selectedCatalogName ==tr("All")){
-                                foreach(sourceCatalog,catalogSelectedList)
+                                //For differences, only process with the selected catalog specifically
+                                if (ui->Search_checkBox_Differences->isChecked() ==true){
+                                    QStringList differenceCatalogs;
+                                    differenceCatalogs << selectedDifferencesCatalog1;
+                                    differenceCatalogs << selectedDifferencesCatalog2;
+                                    foreach(sourceCatalog,differenceCatalogs)
+                                        {
+                                            searchFilesInCatalog(sourceCatalog);
+                                        }
+                                }
+                                //Otherwise process all selected globally
+                                else foreach(sourceCatalog,catalogSelectedList)
                                         {
                                             searchFilesInCatalog(sourceCatalog);
                                         }
@@ -935,22 +999,19 @@
                         ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
                     }
 
-                //Save the search parameters to the seetings file
-                saveSettings();
 
                 //Process DUPLICATES -------------------------------
                     //Get inputs
-                        hasDuplicatesOnName         = ui->Search_checkBox_DuplicateName->checkState();
-                        hasDuplicatesOnSize         = ui->Search_checkBox_DuplicateSize->checkState();
-                        hasDuplicatesOnDateModified = ui->Search_checkBox_DuplicateDateModified->checkState();
-
+                        hasDuplicatesOnName         = ui->Search_checkBox_DuplicatesName->checkState();
+                        hasDuplicatesOnSize         = ui->Search_checkBox_DuplicatesSize->checkState();
+                        hasDuplicatesOnDateModified = ui->Search_checkBox_DuplicatesDateModified->checkState();
                     //Process if enabled and criteria are provided
                         if ( ui->Search_checkBox_Duplicates->isChecked() ==true
                              and (     hasDuplicatesOnName==true
                                     or hasDuplicatesOnSize==true
                                     or hasDuplicatesOnDateModified==true)){
 
-                            //Load Search results into the database
+							//Load Search results into the database
                                 //clear database
                                     QSqlQuery deleteQuery;
                                     deleteQuery.exec("DELETE FROM file");
@@ -1059,6 +1120,133 @@
                                 // Display count of files
                                 int fileCount = 0;
                                 while(duplicatesQuery.next()){
+                                    fileCount++;
+                                }
+                                ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
+                                ui->Search_label_NumberResults->setText(QString::number(fileCount));
+
+                        }
+
+                //Process DIFFERENCES -------------------------------
+
+                    //Process if enabled and criteria are provided
+                        if ( ui->Search_checkBox_Differences->isChecked() ==true
+                             and (     hasDifferencesOnName==true
+                                    or hasDifferencesOnSize==true
+                                    or hasDifferencesOnDateModified==true)){
+
+							//Load Search results into the database
+                                //clear database
+                                    QSqlQuery deleteQuery;
+                                    deleteQuery.exec("DELETE FROM file");
+
+                                //prepare query to load file info
+                                    QSqlQuery insertQuery;
+                                    QString insertSQL = QLatin1String(R"(
+                                                        INSERT INTO file (
+                                                                        fileName,
+                                                                        filePath,
+                                                                        fileSize,
+                                                                        fileDateUpdated,
+                                                                        fileCatalog )
+                                                        VALUES(
+                                                                        :fileName,
+                                                                        :filePath,
+                                                                        :fileSize,
+                                                                        :fileDateUpdated,
+                                                                        :fileCatalog )
+                                                                    )");
+                                    insertQuery.prepare(insertSQL);
+
+                                //loop through the result list and populate database
+
+                                    int rows = searchResultsCatalog->rowCount();
+
+                                    for (int i=0; i<rows; i++) {
+
+                                            QString test = searchResultsCatalog->index(i,0).data().toString();
+
+                                            //Append data to the database
+                                            insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
+                                            insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
+                                            insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
+                                            insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.exec();
+
+                                    }
+
+                            //Prepare difference SQL
+                                // Load all files and create model
+                                QString selectSQL;
+
+                                //Generate grouping of fields based on user selection, determining what are duplicates
+                                QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
+
+                                    //same name
+                                    if(hasDifferencesOnName == true){
+                                        groupingFields = groupingFields + "fileName";
+                                    }
+                                    //same size
+                                    if(hasDifferencesOnSize == true){
+                                        groupingFields = groupingFields + "||fileSize";
+                                    }
+                                    //same date modified
+                                    if(hasDifferencesOnDateModified == true){
+                                        groupingFields = groupingFields + "||fileDateUpdated";
+                                    }
+
+                                    //remove starting || if any
+                                    if (groupingFields.startsWith("||"))
+                                        groupingFields.remove(0, 2);
+
+                                //Generate SQL based on grouping of fields
+                                selectSQL = QLatin1String(R"(
+                                                SELECT      fileName,
+                                                            fileSize,
+                                                            fileDateUpdated,
+                                                            filePath,
+                                                            fileCatalog
+                                                FROM file
+                                                WHERE fileCatalog IN (:selectedDifferencesCatalog1, :selectedDifferencesCatalog2)
+                                                AND %1 IN
+                                                    (SELECT %1
+                                                    FROM file
+                                                    GROUP BY %1
+                                                    HAVING count(%1)<2)
+                                                ORDER BY %1
+                                            )").arg(groupingFields);
+
+                                //Run Query and load to model
+                                QSqlQuery differencesQuery;
+                                differencesQuery.prepare(selectSQL);
+                                differencesQuery.bindValue(":selectedDifferencesCatalog1",selectedDifferencesCatalog1);
+                                differencesQuery.bindValue(":selectedDifferencesCatalog2",selectedDifferencesCatalog2);
+                                differencesQuery.exec();
+
+                                QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                                loadCatalogQueryModel->setQuery(differencesQuery);
+
+                                FilesView *fileDifferencesModel = new FilesView(this);
+                                fileDifferencesModel->setSourceModel(loadCatalogQueryModel);
+                                fileDifferencesModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                                fileDifferencesModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                                fileDifferencesModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                                fileDifferencesModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                                fileDifferencesModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+
+                                // Connect model to tree/table view
+                                ui->Search_treeView_FilesFound->setModel(fileDifferencesModel);
+                                ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
+                                ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
+                                ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
+                                ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
+                                ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
+                                ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
+
+                                // Display count of files
+                                int fileCount = 0;
+                                while(differencesQuery.next()){
                                     fileCount++;
                                 }
                                 ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
@@ -1214,6 +1402,7 @@
                         QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
                         qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
                         QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
+
 
                     //Continue if the file is matching the tags
                         if (searchOnTags==true){
@@ -1818,6 +2007,10 @@
                 if (selectedMaximumSize ==0)
                     selectedMaximumSize = 1000;
 
+
+            //Populate Differences combo boxes with selected catalogs
+                refreshDifferencesCatalogSelection();
+
             //Set values
                 ui->Search_checkBox_Text->setChecked(searchOnText);               
                 ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
@@ -1835,14 +2028,21 @@
                 ui->Search_checkBox_Tags->setChecked(searchOnTags);
                 ui->Search_comboBox_Tags->setCurrentText(selectedTag);
                 ui->Search_checkBox_Duplicates->setChecked(searchOnDuplicates);
-                ui->Search_checkBox_DuplicateName->setChecked(hasDuplicatesOnName);
-                ui->Search_checkBox_DuplicateSize->setChecked(hasDuplicatesOnSize);
-                ui->Search_checkBox_DuplicateDateModified->setChecked(hasDuplicatesOnDateModified);
+                ui->Search_checkBox_DuplicatesName->setChecked(hasDuplicatesOnName);
+                ui->Search_checkBox_DuplicatesSize->setChecked(hasDuplicatesOnSize);
+                ui->Search_checkBox_DuplicatesDateModified->setChecked(hasDuplicatesOnDateModified);
+                ui->Search_checkBox_Differences->setChecked(searchOnDifferences);
+                ui->Search_checkBox_DifferencesName->setChecked(hasDifferencesOnName);
+                ui->Search_checkBox_DifferencesSize->setChecked(hasDifferencesOnSize);
+                ui->Search_checkBox_DifferencesDateModified->setChecked(hasDifferencesOnDateModified);
+                ui->Search_comboBox_DifferencesCatalog1->setCurrentText(selectedDifferencesCatalog1);
+                ui->Search_comboBox_DifferencesCatalog2->setCurrentText(selectedDifferencesCatalog2);
                 ui->Search_checkBox_ShowFolders->setChecked(showFoldersOnly);
                 ui->Search_checkBox_CaseSensitive->setChecked(caseSensitive);
                 ui->Filters_lineEdit_SeletedDirectory->setText(selectedConnectedDrivePath);
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(searchInFileCatalogsChecked);
                 ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
+
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshLocationSelectionList()
@@ -1979,16 +2179,17 @@
                 QSettings settings(settingsFilePath, QSettings:: IniFormat);
                 QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
-                //Generate list of values
-//                if ( catalogListModelForStats->rowCount()!=0)
-//                    ui->Statistics_comboBox_SelectCatalog->setModel(catalogListModelForStats);
+        }
 
-                //Restore last selection value or default
-//                   ui->Statistics_comboBox_SelectCatalog->setCurrentText(lastValue);
-
-            //Restore last selection
-               //ui->Filters_comboBox_SelectCatalog->setCurrentText(currentCatalog);
-
+        //--------------------------------------------------------------------------
+        void MainWindow::refreshDifferencesCatalogSelection(){
+            ui->Search_comboBox_DifferencesCatalog1->clear();
+            ui->Search_comboBox_DifferencesCatalog2->clear();
+            foreach(sourceCatalog,catalogSelectedList)
+                    {
+                        ui->Search_comboBox_DifferencesCatalog1->addItem(sourceCatalog);
+                        ui->Search_comboBox_DifferencesCatalog2->addItem(sourceCatalog);
+                    }
         }
 
         //----------------------------------------------------------------------
@@ -2068,63 +2269,73 @@
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                 INSERT INTO search(
-                                    dateTime	,
-                                    TextChecked ,
-                                    TextPhrase	,
-                                    TextCriteria	,
-                                    TextSearchIn	,
-                                    FileType	,
-                                    FileSizeChecked	,
-                                    FileSizeMin	,
-                                    FileSizeMinUnit	,
-                                    FileSizeMax	,
-                                    FileSizeMaxUnit	,
-                                    DateModifiedChecked	,
-                                    DateModifiedMin	,
-                                    DateModifiedMax	,
-                                    DuplicatesChecked	,
-                                    DuplicateName	,
-                                    DuplicateSize	,
-                                    DuplicateDateModified	,
-                                    ShowFolders	,
-                                    TagChecked	,
-                                    Tag     	,
-                                    searchLocation	,
-                                    searchStorage	,
-                                    searchCatalog ,
-                                    SearchCatalogChecked ,
-                                    SearchDirectoryChecked ,
+                                    dateTime,
+                                    TextChecked,
+                                    TextPhrase,
+                                    TextCriteria,
+                                    TextSearchIn,
+                                    FileType,
+                                    FileSizeChecked,
+                                    FileSizeMin,
+                                    FileSizeMinUnit,
+                                    FileSizeMax,
+                                    FileSizeMaxUnit,
+                                    DateModifiedChecked,
+                                    DateModifiedMin,
+                                    DateModifiedMax,
+                                    DuplicatesChecked,
+                                    DuplicatesName,
+                                    DuplicatesSize,
+                                    DuplicatesDateModified,
+                                    DifferencesChecked,
+                                    DifferencesName,
+                                    DifferencesSize,
+                                    DifferencesDateModified,
+                                    DifferencesCatalogs,
+                                    ShowFolders,
+                                    TagChecked,
+                                    Tag,
+                                    searchLocation,
+                                    searchStorage,
+                                    searchCatalog,
+                                    SearchCatalogChecked,
+                                    SearchDirectoryChecked,
                                     SeletedDirectory,
                                     TextExclude,
                                     CaseSensitive
                                 )
                                 VALUES(
-                                    :dateTime	,
-                                    :TextChecked ,
-                                    :TextPhrase	,
-                                    :TextCriteria	,
-                                    :TextSearchIn	,
-                                    :FileType	,
-                                    :FileSizeChecked	,
-                                    :FileSizeMin	,
-                                    :FileSizeMinUnit	,
-                                    :FileSizeMax	,
-                                    :FileSizeMaxUnit	,
-                                    :DateModifiedChecked	,
-                                    :DateModifiedMin	,
-                                    :DateModifiedMax	,
-                                    :DuplicatesChecked	,
-                                    :DuplicateName	,
-                                    :DuplicateSize	,
-                                    :DuplicateDateModified	,
-                                    :ShowFolders	,
-                                    :TagChecked	,
-                                    :Tag     	,
-                                    :searchLocation	,
-                                    :searchStorage	,
-                                    :searchCatalog ,
-                                    :SearchCatalogChecked ,
-                                    :SearchDirectoryChecked ,
+                                    :dateTime,
+                                    :TextChecked,
+                                    :TextPhrase,
+                                    :TextCriteria,
+                                    :TextSearchIn,
+                                    :FileType,
+                                    :FileSizeChecked,
+                                    :FileSizeMin,
+                                    :FileSizeMinUnit,
+                                    :FileSizeMax,
+                                    :FileSizeMaxUnit,
+                                    :DateModifiedChecked,
+                                    :DateModifiedMin,
+                                    :DateModifiedMax,
+                                    :DuplicatesChecked,
+                                    :DuplicatesName,
+                                    :DuplicatesSize,
+                                    :DuplicatesDateModified,
+                                    :DifferencesChecked,
+                                    :DifferencesName,
+                                    :DifferencesSize,
+                                    :DifferencesDateModified,
+                                    :DifferencesCatalogs,
+                                    :ShowFolders,
+                                    :TagChecked,
+                                    :Tag,
+                                    :searchLocation,
+                                    :searchStorage,
+                                    :searchCatalog,
+                                    :SearchCatalogChecked,
+                                    :SearchDirectoryChecked,
                                     :SeletedDirectory,
                                     :TextExclude,
                                     :CaseSensitive
@@ -2153,18 +2364,23 @@
             query.bindValue(":DateModifiedMin",      ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
             query.bindValue(":DateModifiedMax",      ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
             query.bindValue(":DuplicatesChecked",    ui->Search_checkBox_Duplicates->isChecked());
-            query.bindValue(":DuplicateName",        ui->Search_checkBox_DuplicateName->isChecked());
-            query.bindValue(":DuplicateSize",        ui->Search_checkBox_DuplicateSize->isChecked());
-            query.bindValue(":DuplicateDateModified",ui->Search_checkBox_DuplicateDateModified->isChecked());
+            query.bindValue(":DuplicatesName",          ui->Search_checkBox_DuplicatesName->isChecked());
+            query.bindValue(":DuplicatesSize",          ui->Search_checkBox_DuplicatesSize->isChecked());
+            query.bindValue(":DuplicatesDateModified",  ui->Search_checkBox_DuplicatesDateModified->isChecked());
+            query.bindValue(":DifferencesChecked",   ui->Search_checkBox_Differences->isChecked());
+            query.bindValue(":DifferencesName",         ui->Search_checkBox_DifferencesName->isChecked());
+            query.bindValue(":DifferencesSize",         ui->Search_checkBox_DifferencesSize->isChecked());
+            query.bindValue(":DifferencesDateModified", ui->Search_checkBox_DifferencesDateModified->isChecked());
+            query.bindValue(":DifferencesCatalogs",  selectedDifferencesCatalog1+"||"+selectedDifferencesCatalog2);
             query.bindValue(":ShowFolders",          ui->Search_checkBox_ShowFolders->isChecked());
             query.bindValue(":TagChecked",           ui->Search_checkBox_Tags->isChecked());
             query.bindValue(":Tag",                  ui->Search_comboBox_Tags->currentText());
             query.bindValue(":searchLocation",       selectedStorageLocation);
             query.bindValue(":searchStorage",        selectedStorageName);
             query.bindValue(":searchCatalog",        selectedCatalogName);
-            query.bindValue(":SearchCatalogChecked",      ui->Filters_checkBox_SearchInCatalogs->isChecked());
-            query.bindValue(":SearchDirectoryChecked",    ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
-            query.bindValue(":SeletedDirectory",          ui->Filters_lineEdit_SeletedDirectory->text());
+            query.bindValue(":SearchCatalogChecked",    ui->Filters_checkBox_SearchInCatalogs->isChecked());
+            query.bindValue(":SearchDirectoryChecked",  ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
+            query.bindValue(":SeletedDirectory",        ui->Filters_lineEdit_SeletedDirectory->text());
             query.bindValue(":TextExclude",          ui->Search_lineEdit_Exclude->text());
             query.bindValue(":CaseSensitive",        ui->Search_checkBox_CaseSensitive->isChecked());
             query.exec();
@@ -2182,7 +2398,41 @@
             //Query
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT *
+                                SELECT
+                                    dateTime,
+                                    TextChecked,
+                                    TextPhrase,
+                                    TextCriteria,
+                                    TextSearchIn,
+                                    FileType,
+                                    FileSizeChecked,
+                                    FileSizeMin,
+                                    FileSizeMinUnit,
+                                    FileSizeMax,
+                                    FileSizeMaxUnit,
+                                    DateModifiedChecked,
+                                    DateModifiedMin,
+                                    DateModifiedMax,
+                                    DuplicatesChecked,
+                                    DuplicatesName,
+                                    DuplicatesSize,
+                                    DuplicatesDateModified,
+                                    ShowFolders,
+                                    TagChecked,
+                                    Tag,
+                                    searchLocation,
+                                    searchStorage,
+                                    searchCatalog,
+                                    SearchCatalogChecked,
+                                    SearchDirectoryChecked,
+                                    SeletedDirectory,
+                                    TextExclude,
+                                    CaseSensitive,
+                                    DifferencesChecked,
+                                    DifferencesName,
+                                    DifferencesSize,
+                                    DifferencesDateModified,
+                                    DifferencesCatalogs
                                 FROM search
                                 ORDER BY dateTime DESC
                                )");
@@ -2238,12 +2488,20 @@
                 if (line.isNull())
                     break;
                 else
-                    if (line.left(2)!="ID"){//test the validity of the file    //DEV NOT OK
+                    if (line.left(2)!="ID"){//test the validity of the file
 
                         //Split the string with tabulation into a list
                         QStringList fieldList = line.split('\t');
+
                         //add empty values to support the addition of new fields for files from older versions
                         if (fieldList.count()<29){
+                            fieldList.append("");
+                            fieldList.append("");
+                            fieldList.append("");
+                            fieldList.append("");
+                            fieldList.append("");
+                        }
+                        if (fieldList.count()<34){
                             fieldList.append("");
                             fieldList.append("");
                             fieldList.append("");
@@ -2268,9 +2526,14 @@
                                             DateModifiedMin	,
                                             DateModifiedMax	,
                                             DuplicatesChecked	,
-                                            DuplicateName	,
-                                            DuplicateSize	,
-                                            DuplicateDateModified	,
+                                            DuplicatesName	,
+                                            DuplicatesSize	,
+                                            DuplicatesDateModified	,
+                                            DifferencesChecked,
+                                            DifferencesName,
+                                            DifferencesSize,
+                                            DifferencesDateModified,
+                                            DifferencesCatalogs,
                                             ShowFolders	,
                                             TagChecked	,
                                             Tag     	,
@@ -2299,9 +2562,14 @@
                                             :DateModifiedMin	,
                                             :DateModifiedMax	,
                                             :DuplicatesChecked	,
-                                            :DuplicateName	,
-                                            :DuplicateSize	,
-                                            :DuplicateDateModified	,
+                                            :DuplicatesName	,
+                                            :DuplicatesSize	,
+                                            :DuplicatesDateModified	,
+                                            :DifferencesChecked,
+                                            :DifferencesName,
+                                            :DifferencesSize,
+                                            :DifferencesDateModified,
+                                            :DifferencesCatalogs,
                                             :ShowFolders	,
                                             :TagChecked	,
                                             :Tag     	,
@@ -2333,9 +2601,9 @@
                         insertQuery.bindValue(":DateModifiedMin",		fieldList[12]);
                         insertQuery.bindValue(":DateModifiedMax",		fieldList[13]);
                         insertQuery.bindValue(":DuplicatesChecked",		fieldList[14]);
-                        insertQuery.bindValue(":DuplicateName",			fieldList[15]);
-                        insertQuery.bindValue(":DuplicateSize",			fieldList[16]);
-                        insertQuery.bindValue(":DuplicateDateModified", fieldList[17]);
+                        insertQuery.bindValue(":DuplicatesName",		fieldList[15]);
+                        insertQuery.bindValue(":DuplicatesSize",		fieldList[16]);
+                        insertQuery.bindValue(":DuplicatesDateModified",fieldList[17]);
                         insertQuery.bindValue(":ShowFolders", 			fieldList[18]);
                         insertQuery.bindValue(":TagChecked",            fieldList[19]);
                         insertQuery.bindValue(":Tag",                   fieldList[20]);
@@ -2347,6 +2615,11 @@
                         insertQuery.bindValue(":SeletedDirectory",      fieldList[26]);
                         insertQuery.bindValue(":TextExclude",           fieldList[27]);
                         insertQuery.bindValue(":CaseSensitive",         fieldList[28]);
+                        insertQuery.bindValue(":DifferencesChecked",	fieldList[29]);
+                        insertQuery.bindValue(":DifferenceName",		fieldList[30]);
+                        insertQuery.bindValue(":DifferenceSize",		fieldList[31]);
+                        insertQuery.bindValue(":DifferencesDateModified",fieldList[32]);
+                        insertQuery.bindValue(":DifferencesCatalogs",   fieldList[33]);
                         insertQuery.exec();
                     }
             }
@@ -2375,9 +2648,14 @@
                                                     DateModifiedMin,
                                                     DateModifiedMax,
                                                     DuplicatesChecked,
-                                                    DuplicateName,
-                                                    DuplicateSize,
-                                                    DuplicateDateModified,
+                                                    DuplicatesName,
+                                                    DuplicatesSize,
+                                                    DuplicatesDateModified,
+                                                    DifferencesChecked,
+                                                    DifferencesName,
+                                                    DifferencesSize,
+                                                    DifferencesDateModified,
+                                                    DifferencesCatalogs,
                                                     ShowFolders,
                                                     TagChecked,
                                                     Tag,
@@ -2410,9 +2688,9 @@
 //            queryModel->setHeaderData(12, Qt::Horizontal, tr("DateModifiedMin"));
 //            queryModel->setHeaderData(13, Qt::Horizontal, tr("DateModifiedMax"));
 //            queryModel->setHeaderData(14, Qt::Horizontal, tr("DuplicatesChecked"));
-//            queryModel->setHeaderData(15, Qt::Horizontal, tr("DuplicateName"));
-//            queryModel->setHeaderData(16, Qt::Horizontal, tr("DuplicateSize"));
-//            queryModel->setHeaderData(17, Qt::Horizontal, tr("DuplicateDateModified"));
+//            queryModel->setHeaderData(15, Qt::Horizontal, tr("DuplicatesName"));
+//            queryModel->setHeaderData(16, Qt::Horizontal, tr("DuplicatesSize"));
+//            queryModel->setHeaderData(17, Qt::Horizontal, tr("DuplicatesDateModified"));
 //            queryModel->setHeaderData(18, Qt::Horizontal, tr("ShowFolders"));
 //            queryModel->setHeaderData(19, Qt::Horizontal, tr("TagChecked"));
 //            queryModel->setHeaderData(20, Qt::Horizontal, tr("Tag"));
@@ -2427,4 +2705,3 @@
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
 
         }
-
