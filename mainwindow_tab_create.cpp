@@ -312,7 +312,7 @@
         QString directory = newCatalogPath;
         //remove the / at the end if any
         int pathLength = newCatalogPath.length();
-        if (newCatalogPath.at(pathLength-1)=="/") {
+        if (newCatalogPath !="/" and newCatalogPath.at(pathLength-1)=="/") {
             newCatalogPath.remove(pathLength-1,1);
         }
 
