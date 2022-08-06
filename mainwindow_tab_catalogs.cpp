@@ -387,6 +387,17 @@
             settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatalogsSortSection));
             settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
         }
+        //--------------------------------------------------------------------------
+        void MainWindow::hideCatalogButtons()
+        {
+            //Hide buttons
+            ui->Catalogs_pushButton_Search->setEnabled(false);
+            ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
+            ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+            ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
+            ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
+        }
         //----------------------------------------------------------------------
 /*        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section){
 
@@ -420,7 +431,6 @@
             //                    +"\ncurrentSize: \n" + QVariant(currentSize).toString()
             //                    +"\nlastCatalogsHeaderSize: \n" + QVariant(lastCatalogsHeaderSize).toString());
 //            ui->Catalogs_treeView_CatalogList->header()->resizeSection(lastCatalogsHeaderSection,lastCatalogsHeaderSize);
-
         }
 */
 
@@ -662,7 +672,6 @@
          }
          fileOut.close();
     }
-
     //--------------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
     {
@@ -827,17 +836,6 @@
         //Reload stats file
         loadStatisticsChart();
 
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::hideCatalogButtons()
-    {
-        //Hide buttons
-        ui->Catalogs_pushButton_Search->setEnabled(false);
-        ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
-        ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-        ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
-        ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
@@ -1028,10 +1026,10 @@
     {
 
         //Get new values
-            //newCatalogSourcePath: remove the / at the end if any
+            //newCatalogSourcePath: remove the / at the end if any, except for / alone
             QString newCatalogSourcePath = ui->Catalogs_lineEdit_SourcePath->text();
             int pathLength = newCatalogSourcePath.length();
-            if (newCatalogSourcePath.at(pathLength-1)=="/") {
+            if (newCatalogSourcePath !="/" and newCatalogSourcePath.at(pathLength-1)=="/") {
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
 
