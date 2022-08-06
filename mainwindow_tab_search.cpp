@@ -1407,7 +1407,7 @@
 
 
                     //Continue if the file is matching the tags
-                        if (searchOnTags==true){
+                        if (searchOnTags==true and selectedTag!=""){
 
                             bool fileIsMatchingTag = false;
 
