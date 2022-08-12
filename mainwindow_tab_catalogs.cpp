@@ -483,7 +483,7 @@
                 QString value;
                 for (int i=0; i<8; i++) {
                     line = textStream.readLine();
-                    if (line.at(0)=="<"){
+                    if (line !="" and line.at(0)=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
                         if (value =="") catalogValues << "";
                         else catalogValues << value;
@@ -495,6 +495,7 @@
                 int isActive = verifyCatalogPath(catalogValues[0]);
 
                 //Insert a line in the table with available data
+                if(catalogValues.length()>0){
                 QVariant catalogID = addCatalog(query,
                                 catalogFileInfo.filePath(),  //catalogFilePath
                                 catalogFileInfo.completeBaseName(),  //catalogName
@@ -510,7 +511,7 @@
                                 catalogValues[7],  //catalogIsFullDevice
                                 ""  //catalogLoadedVersion
                                 );
-
+                }
                 catalogFile.close();
             }
 
