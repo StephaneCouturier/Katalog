@@ -290,6 +290,7 @@
                 ui->Search_checkBox_DifferencesName->setEnabled(true);
                 ui->Search_checkBox_DifferencesSize->setEnabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
+                ui->Search_widget_DifferencesCatalogs->setHidden(false);
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Duplicates->setChecked(false);
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
@@ -297,6 +298,7 @@
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
             }
             else{
+                ui->Search_widget_DifferencesCatalogs->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
@@ -2034,6 +2036,7 @@
                 ui->Search_checkBox_DuplicatesName->setChecked(hasDuplicatesOnName);
                 ui->Search_checkBox_DuplicatesSize->setChecked(hasDuplicatesOnSize);
                 ui->Search_checkBox_DuplicatesDateModified->setChecked(hasDuplicatesOnDateModified);
+                ui->Search_widget_DifferencesCatalogs->setHidden(true);
                 ui->Search_checkBox_Differences->setChecked(searchOnDifferences);
                 ui->Search_checkBox_DifferencesName->setChecked(hasDifferencesOnName);
                 ui->Search_checkBox_DifferencesSize->setChecked(hasDifferencesOnSize);
