@@ -1185,41 +1185,53 @@
                                 QString selectSQL;
 
                                 //Generate grouping of fields based on user selection, determining what are duplicates
-                                QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
+                                QString groupingFieldsDifferences; // this value should be a concatenation of fields, like "fileName||fileSize"
 
                                     //same name
                                     if(hasDifferencesOnName == true){
-                                        groupingFields = groupingFields + "fileName";
+                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileName";
                                     }
                                     //same size
                                     if(hasDifferencesOnSize == true){
-                                        groupingFields = groupingFields + "||fileSize";
+                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileSize";
                                     }
                                     //same date modified
                                     if(hasDifferencesOnDateModified == true){
-                                        groupingFields = groupingFields + "||fileDateUpdated";
+                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileDateUpdated";
                                     }
 
-                                    //remove starting || if any
-                                    if (groupingFields.startsWith("||"))
-                                        groupingFields.remove(0, 2);
+                                    //remove the || at the start
+                                    if (groupingFieldsDifferences.startsWith("||"))
+                                        groupingFieldsDifferences.remove(0, 2);
 
                                 //Generate SQL based on grouping of fields
                                 selectSQL = QLatin1String(R"(
-                                                SELECT      fileName,
-                                                            fileSize,
-                                                            fileDateUpdated,
-                                                            filePath,
-                                                            fileCatalog
-                                                FROM file
-                                                WHERE fileCatalog IN (:selectedDifferencesCatalog1, :selectedDifferencesCatalog2)
-                                                AND %1 IN
-                                                    (SELECT %1
-                                                    FROM file
-                                                    GROUP BY %1
-                                                    HAVING count(%1)<2)
-                                                ORDER BY %1
-                                            )").arg(groupingFields);
+                                                 SELECT      fileName,
+                                                             fileSize,
+                                                             fileDateUpdated,
+                                                             filePath,
+                                                             fileCatalog
+                                                 FROM file
+                                                 WHERE fileCatalog = :selectedDifferencesCatalog1
+                                                 AND %1 NOT IN(
+                                                     SELECT %1
+                                                     FROM file
+                                                     WHERE fileCatalog = :selectedDifferencesCatalog2
+                                                     )
+                                                 UNION
+                                                 SELECT      fileName,
+                                                             fileSize,
+                                                             fileDateUpdated,
+                                                             filePath,
+                                                             fileCatalog
+                                                 FROM file
+                                                 WHERE fileCatalog = :selectedDifferencesCatalog2
+                                                 AND %1 NOT IN(
+                                                     SELECT %1
+                                                     FROM file
+                                                     WHERE fileCatalog = :selectedDifferencesCatalog1
+                                                     )
+                                 )").arg(groupingFieldsDifferences);
 
                                 //Run Query and load to model
                                 QSqlQuery differencesQuery;
