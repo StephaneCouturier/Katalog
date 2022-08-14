@@ -296,12 +296,14 @@
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(false);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
+                ui->Search_listView_CatalogsFound->setEnabled(false);
             }
             else{
                 ui->Search_widget_DifferencesCatalogs->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
+                ui->Search_listView_CatalogsFound->setEnabled(true);
             }
         }
         //----------------------------------------------------------------------
