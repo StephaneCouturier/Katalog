@@ -491,12 +491,12 @@
                 }
                 if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
 
-                // Verify if path is active (drive connected)
-                int isActive = verifyCatalogPath(catalogValues[0]);
-
-                //Insert a line in the table with available data
                 if(catalogValues.length()>0){
-                QVariant catalogID = addCatalog(query,
+                    // Verify if path is active (drive connected)
+                    int isActive = verifyCatalogPath(catalogValues[0]);
+
+                    //Insert a line in the table with available data
+                    QVariant catalogID = addCatalog(query,
                                 catalogFileInfo.filePath(),  //catalogFilePath
                                 catalogFileInfo.completeBaseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
