@@ -126,10 +126,10 @@ class MainWindow : public QMainWindow
             void populateCalendarTable(QDateTime min, QDateTime max);
 
             //Objects
-            Catalog *activeCatalog   = new Catalog(); //filtered catalog used for data operation (update, explore, statistics)
+            Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)
-            //DEV: Catalog *newCatalog = new Catalog(); //catalog used for catalog creation in Create screen
+            Catalog *newCatalog      = new Catalog(); //catalog used for catalog creation in Create screen
             DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
 
         //Filters
@@ -254,7 +254,7 @@ class MainWindow : public QMainWindow
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
             void updateSingleCatalog(Catalog *catalog);
-            void updateCatalog(Catalog *catalog);
+            void updateCatalogFileList(Catalog *catalog);
             void saveCatalogChanges();
             void importFromVVV();
 
@@ -279,13 +279,6 @@ class MainWindow : public QMainWindow
         //TAB: Create
             QFileSystemModel *fileSystemModel;
             QStringListModel *fileListModel;
-
-            //DEV: replace by catalog object
-            QString newCatalogPath;
-            QString newCatalogName;
-            QString newCatalogStorage;
-            qint64 newCatalogFileCount;
-            qint64 newCatalogTotalFileSize;
 
             QStringList storageNameList;
             QString excludeFilePath;

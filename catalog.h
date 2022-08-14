@@ -62,7 +62,15 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void setCatalogName(QString selectedCatalogName);
+    void setName(QString selectedName);
+    void setSourcePath(QString selectedSourcePath);
+    void setFileCount(qint64 selectedFileCount);
+    void setTotalFileSize(qint64 selectedTotalFileSize);
+    void setIncludeHidden(bool selectedIncludeHidden);
+    void setFileType(QString selectedFileType);
+    void setStorageName(QString selectedStorageName);
+    void setIncludeSymblinks(bool selectedIncludeSymblinks);
+    void setIsFullDevice(bool selectedIsFullDevice);
 
     void loadCatalogMetaData();
 
@@ -71,6 +79,8 @@ public:
                             const QList<QString> &filePaths,
                             const QList<QString> &fileDateTimes,
                             const QList<QString> &fileCatalogs);
+
+    void backupCatalogFile();
 
 private:
     QList<QString> fileNames;

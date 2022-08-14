@@ -252,7 +252,7 @@
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //Restore last opened catalog
-            activeCatalog->setCatalogName(settings.value("Explore/lastSelectedCatalogName").toString());
+            activeCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
             activeCatalog->loadCatalogMetaData();
             selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
             selectedDirectoryFullPath = activeCatalog->sourcePath + "/" + selectedDirectoryName;

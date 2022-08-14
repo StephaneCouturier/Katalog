@@ -37,6 +37,7 @@ Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 
 }
 
+//file list model
 int Catalog::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
@@ -78,11 +79,48 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
     return QVariant();
 }
 
-void Catalog::setCatalogName(QString selectedCatalogName)
+
+//set catalog definition
+void Catalog::setName(QString selectedName)
 {
-    name = selectedCatalogName;
+    name = selectedName;
+}
+void Catalog::setSourcePath(QString selectedSourcePath)
+{
+    sourcePath = selectedSourcePath;
+}
+void Catalog::setFileCount(qint64 selectedFileCount)
+{
+    fileCount = selectedFileCount;
+}
+void Catalog::setTotalFileSize(qint64 selectedTotalFileSize)
+{
+    totalFileSize = selectedTotalFileSize;
+}
+void Catalog::setIncludeHidden(bool selectedIncludeHidden)
+{
+    includeHidden = selectedIncludeHidden;
+}
+void Catalog::setFileType(QString selectedFileType)
+{
+    fileType = selectedFileType;
+}
+void Catalog::setStorageName(QString selectedStorageName)
+{
+    storageName = selectedStorageName;
+}
+void Catalog::setIncludeSymblinks(bool selectedIncludeSymblinks)
+{
+    includeSymblinks = selectedIncludeSymblinks;
+}
+void Catalog::setIsFullDevice(bool selectedIsFullDevice)
+{
+    isFullDevice = selectedIsFullDevice;
 }
 
+
+
+//catalog files data operation
 void Catalog::loadCatalogMetaData()
 {
     QSqlQuery query;

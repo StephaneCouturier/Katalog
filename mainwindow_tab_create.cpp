@@ -55,7 +55,7 @@
         //Pick a directory from a dialog window
 
         //Get current selected path as default path for the dialog window
-        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
+        QString newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
@@ -188,50 +188,57 @@
     {
         //Launch the cataloging, save it, and show it
 
-        //Get inputs
-        newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
-        newCatalogName = ui->Create_lineEdit_NewCatalogName->text();
-        newCatalogStorage = ui->Create_comboBox_StorageSelection->currentText();
-        //get other options
-        bool includeHidden    = ui->Create_checkBox_IncludeHidden->isChecked();
-        bool includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-        bool isFullDevice     = ui->Create_checkBox_isFullDevice->isChecked();
+        //get inputs and set values of the newCatalog
+        newCatalog->setName(ui->Create_lineEdit_NewCatalogName->text());
+        newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
+        newCatalog->setIncludeHidden(ui->Create_checkBox_IncludeHidden->isChecked());
+
+        newCatalog->setStorageName(ui->Create_comboBox_StorageSelection->currentText());
+        newCatalog->setIncludeSymblinks(ui->Create_checkBox_IncludeSymblinks->isChecked());
+        newCatalog->setIsFullDevice(ui->Create_checkBox_isFullDevice->isChecked());
+
 
         // Get the file type for the catalog
         QStringList fileTypes;
         QString selectedCreateFileType;
         if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
                 fileTypes = fileType_Image;
-                selectedCreateFileType = "Image";}
+                newCatalog->fileType = "Image";}
         else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
                 fileTypes = fileType_Audio;
-                selectedCreateFileType = "Audio";}
+                newCatalog->fileType = "Audio";}
          else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
                 fileTypes = fileType_Video;
-                selectedCreateFileType = "Video";}
+                newCatalog->fileType = "Video";}
         else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
                 fileTypes = fileType_Text;
-                selectedCreateFileType = "Text";}
+                newCatalog->fileType = "Text";}
         else    fileTypes.clear();
 
         //check if the file already exists
-        QString fullCatalogPath = collectionFolder + "/" + newCatalogName + ".idx";
+        QString fullCatalogPath = collectionFolder + "/" + newCatalog->name + ".idx";
         QFile file(fullCatalogPath);
         if (file.exists()==true){
             QMessageBox::information(this, "Katalog",
                                      tr("There is already a catalog with this name:")
-                                        + newCatalogName
+                                        + newCatalog->name
                                         + "\n"+tr("Choose a different name."),
                                      ( tr("Ok") ) );
             return;
         }
 
         //Catalog files
-        if (newCatalogName!="" and newCatalogPath!="")
-                catalogDirectory(newCatalogPath,includeHidden, selectedCreateFileType, fileTypes, newCatalogStorage, includeSymblinks, isFullDevice);
+        if (newCatalog->name!="" and newCatalog->sourcePath!="")
+                catalogDirectory(newCatalog->sourcePath,
+                                 newCatalog->includeHidden,
+                                 newCatalog->fileType,
+                                 fileTypes,
+                                 newCatalog->storageName,
+                                 newCatalog->includeSymblinks,
+                                 newCatalog->isFullDevice);
         else QMessageBox::warning(this, "Katalog",
                                   tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
-                                  +newCatalogName+"\n"+tr("Path:")+newCatalogPath,
+                                  +newCatalog->name+"\n"+tr("Path:")+newCatalog->sourcePath,
                                   ( tr("Ok") ) );
 
         //Check if no files where found, and let the user decide what to do
@@ -248,7 +255,7 @@
             }
         }
         //Save the catalog to a new file
-        saveCatalogToNewFile(newCatalogName);
+        saveCatalogToNewFile(newCatalog->name);
 
         //Refresh the catalog list for the Search screen
         loadCatalogFilesToTable();
@@ -270,14 +277,14 @@
 
         QMessageBox::information(this, "Katalog",
                                   tr("The new catalog,has been created.\n Name:   ")
-                                  +newCatalogName+"\n" +tr("Source:") + newCatalogPath,
+                                  +newCatalog->name + "\n" +tr("Source:") + newCatalog->sourcePath,
                                   ( tr("Ok") ) );
 
         //Add new catalog values to the statistics log, if the user has chosen this option
             if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
 
                 //Save values
-                recordSelectedCatalogStats(newCatalogName, newCatalogFileCount, newCatalogTotalFileSize);
+                recordSelectedCatalogStats(newCatalog->name, newCatalog->fileCount, newCatalog->totalFileSize);
 
                 //Reload stats file to refresh values
                 loadStatisticsChart();
@@ -310,7 +317,7 @@
 
         // Get directory to catalog
         QString directory = newCatalogPath;
-        //remove the / at the end if any
+        //remove the / at the end if any except for root path
         int pathLength = newCatalogPath.length();
         if (newCatalogPath !="/" and newCatalogPath.at(pathLength-1)=="/") {
             newCatalogPath.remove(pathLength-1,1);
@@ -344,11 +351,8 @@
             QDirIterator iterator(directory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
             while (iterator.hasNext()){              
 
-                 QString dir = iterator.next();
-                 //Get file information  (absolute path, size, datetime)
-                 //QString filePath = iterator.next();
-                 QString filePath = iterator.filePath();
-
+                QString dir = iterator.next();
+                QString filePath = iterator.filePath();
                 qint64 fileSize;
                 QFile file(filePath);
 
@@ -382,10 +386,7 @@
             while (iterator.hasNext()){
 
                 QString dir = iterator.next();
-                //Get file information  (absolute path, size, datetime)
-                //QString filePath = iterator.next();
                 QString filePath = iterator.filePath();
-
                 qint64 fileSize;
                 QFile file(filePath);
 
@@ -418,8 +419,9 @@
         //Display and store file number
         //Count the number of files
         int catalogFilesNumber = fileList.count();
-        ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);
+        ui->Explore_label_FilesNumberDisplay->setNum(catalogFilesNumber);      
 
+        //Create/Update file
         //filelist.append("<catalogName>"+newCatalogName);
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
@@ -435,8 +437,8 @@
         fileListModel->setStringList(fileList);
 
         //Set this new catalog as the selected Catalog
-        newCatalogFileCount        = catalogFilesNumber;
-        newCatalogTotalFileSize    = catalogTotalFileSize;
+        newCatalog->fileCount        = catalogFilesNumber;
+        newCatalog->totalFileSize    = catalogTotalFileSize;
 
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(

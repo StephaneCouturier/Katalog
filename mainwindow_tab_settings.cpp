@@ -118,7 +118,7 @@
     {
         //reloads catalog to explore at root level
         if (selectedDeviceType=="Catalog"){
-            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->setName(selectedDeviceName);
             activeCatalog->loadCatalogMetaData();
 
             openCatalogToExplore();
@@ -131,7 +131,7 @@
     {
         //reloads catalog to explore at root level
         if (selectedDeviceType=="Catalog"){
-            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->setName(selectedDeviceName);
             activeCatalog->loadCatalogMetaData();
 
             updateSingleCatalog(activeCatalog);
@@ -256,7 +256,7 @@
         ui->Filters_label_DisplayLocation->setText(tr("All"));
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
-        activeCatalog->setCatalogName(tr(""));
+        activeCatalog->setName(tr(""));
         activeCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedStorageLocation);
         refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
@@ -336,7 +336,7 @@
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
 
-            activeCatalog->setCatalogName(selectedDeviceName);
+            activeCatalog->setName(selectedDeviceName);
             activeCatalog->loadCatalogMetaData();
 
             selectedStorageLocation = tr("All");
@@ -486,7 +486,7 @@
     {
         foreach(sourceCatalog,catalogSelectedList)
                 {
-                    selectedCatalog->setCatalogName(sourceCatalog);
+                    selectedCatalog->setName(sourceCatalog);
                     selectedCatalog->loadCatalogMetaData();
                     loadCatalogFilelistToTable(selectedCatalog);
                 }

@@ -57,7 +57,7 @@
             selectedStorageName = tr("All");
             ui->Filters_label_DisplayStorage->setText(selectedStorageName);
 
-            activeCatalog->setCatalogName(selectedCatalog->name);
+            activeCatalog->setName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
 
             selectedDeviceName = selectedCatalog->name;
@@ -81,7 +81,7 @@
                 selectedCatalogName       = selectedCatalog->name;
 
                 //The selected catalog becomes the active catalog
-                activeCatalog->setCatalogName(selectedCatalog->name);
+                activeCatalog->setName(selectedCatalog->name);
                 activeCatalog->loadCatalogMetaData();
 
                 //Load
@@ -167,9 +167,9 @@
                     }
                     else{
                         //Update catalog
-                        tempCatalog->setCatalogName(catalogName);
+                        tempCatalog->setName(catalogName);
                         tempCatalog->loadCatalogMetaData();
-                        updateCatalog(tempCatalog);
+                        updateCatalogFileList(tempCatalog);
 
                        //Update storage
                         QString selectedCatalogStorage = query.value(3).toString();
@@ -235,7 +235,7 @@
             selectedStorageName = tr("All");
             ui->Filters_label_DisplayStorage->setText(selectedStorageName);
 
-            activeCatalog->setCatalogName(selectedCatalog->name);
+            activeCatalog->setName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
 
             selectedDeviceName = selectedCatalog->name;
@@ -303,7 +303,7 @@
         void MainWindow::on_Catalogs_pushButton_SelectPath_clicked()
         {
             //Get current selected path as default path for the dialog window
-            newCatalogPath = ui->Catalogs_lineEdit_SourcePath->text();
+            QString newCatalogPath = ui->Catalogs_lineEdit_SourcePath->text();
 
             //Open a dialog for the user to select the directory to be cataloged. Only show directories.
             QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
@@ -327,7 +327,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
         {
-            selectedCatalog->setCatalogName(ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString());
+            selectedCatalog->setName(ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString());
             selectedCatalog->loadCatalogMetaData();
 
             // Display buttons
@@ -359,7 +359,7 @@
 
             //The selected catalog becomes the active catalog
             //activeCatalog = selectedCatalog;
-            activeCatalog->setCatalogName(selectedCatalog->name);
+            activeCatalog->setName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
 
             //Load
@@ -695,7 +695,7 @@
     void MainWindow::updateSingleCatalog(Catalog *catalog)
     {
         //Update catalog file
-        updateCatalog(catalog);
+        updateCatalogFileList(catalog);
 
         //Update its storage
         if ( catalog->storageName != ""){
@@ -724,7 +724,7 @@
            loadCatalogsTableToModel();
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateCatalog(Catalog *catalog)
+    void MainWindow::updateCatalogFileList(Catalog *catalog)
     {
         //Check if the update can be done, inform the user otherwise.
             //Deal with old versions, where necessary info may have not have been available
@@ -751,7 +751,6 @@
             if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
                 backupCatalog(catalog->filePath);
             }
-
 
         //Capture previous FileCount and TotalFileSize to report the changes after the update
             qint64 previousFileCount = catalog->fileCount;
@@ -956,6 +955,7 @@
                     QString formerCatalogName = listCatalogQuery.value(0).toString();
 
                 //Generate a name for the file itself, without specical characters
+                    QString newCatalogName;
                     newCatalogName = formerCatalogName;
                     newCatalogName.replace("/","_");
                     newCatalogName.replace("\\","_");
@@ -1165,9 +1165,9 @@
                                          , QMessageBox::Yes
                                                   | QMessageBox::No);
                 if ( updatechoice == QMessageBox::Yes){
-                    tempCatalog->setCatalogName(newCatalogName);
+                    tempCatalog->setName(newCatalogName);
                     tempCatalog->loadCatalogMetaData();
-                    updateCatalog(tempCatalog);
+                    updateCatalogFileList(tempCatalog);
                 }
             }
 
