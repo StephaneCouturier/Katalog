@@ -1803,9 +1803,9 @@
                         deleteQuery.bindValue(":fileCatalog",catalog->name);
                         deleteQuery.exec();
 
-                        //prepare insert query
-                        QSqlQuery insertQuery;
-                        QString insertSQL = QLatin1String(R"(
+                        //prepare insert query for filesall
+                        QSqlQuery insertFilesallQuery;
+                        QString insertFilesallSQL = QLatin1String(R"(
                                                 INSERT INTO filesall (
                                                                 fileName,
                                                                 filePath,
@@ -1822,6 +1822,21 @@
                                                                 :fileCatalog,
                                                                 :fileFullPath )
                                             )");
+
+                        //prepare insert query for folder
+                                               QSqlQuery insertFolderQuery;
+                                               QString insertFolderSQL = QLatin1String(R"(
+                                                       INSERT INTO folder(
+                                                               folderHash,
+                                                               folderCatalogName,
+                                                               folderPath
+                                                                         )
+                                                       VALUES(
+                                                              :folderHash,
+                                                              :folderCatalogName,
+                                                              :folderPath)
+                                                                   )");
+
 
                     //process each line of the file
                         while (true){
@@ -1858,15 +1873,26 @@
                                     lineFileDatetime = lineFieldList[2];}
                             else lineFileDatetime = "";
 
+
+                            QString folder = fileInfo.path();
+                            QString folderHash = QVariant(qHash(folder)).toString();
+
+                             //Load folder into the database
+                                 insertFolderQuery.prepare(insertFolderSQL);
+                                 insertFolderQuery.bindValue(":folderHash",      folderHash);
+                                 insertFolderQuery.bindValue(":folderCatalogName",   catalog->name);
+                                 insertFolderQuery.bindValue(":folderPath",      folder);
+                                 insertFolderQuery.exec();
+
                             //Load file into the database
-                                insertQuery.prepare(insertSQL);
-                                insertQuery.bindValue(":fileName",        fileInfo.fileName());
-                                insertQuery.bindValue(":fileSize",        lineFileSize);
-                                insertQuery.bindValue(":filePath",        fileInfo.path());
-                                insertQuery.bindValue(":fileDateUpdated", lineFileDatetime);
-                                insertQuery.bindValue(":fileCatalog",     catalog->name);
-                                insertQuery.bindValue(":fileFullPath",    lineFilePath);
-                                insertQuery.exec();
+                                insertFilesallQuery.prepare(insertFilesallSQL);
+                                insertFilesallQuery.bindValue(":fileName",        fileInfo.fileName());
+                                insertFilesallQuery.bindValue(":fileSize",        lineFileSize);
+                                insertFilesallQuery.bindValue(":filePath",        folder ); //DEV: replace later by folderHash
+                                insertFilesallQuery.bindValue(":fileDateUpdated", lineFileDatetime);
+                                insertFilesallQuery.bindValue(":fileCatalog",     catalog->name);
+                                insertFilesallQuery.bindValue(":fileFullPath",    lineFilePath);
+                                insertFilesallQuery.exec();
                         }
 
                     //update catalog loadedversion

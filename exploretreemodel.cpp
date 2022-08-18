@@ -158,18 +158,32 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
     QList<ExploreTreeItem*> parents;
     parents << parent;
 
+//        QSqlQuery query;
+//        QString querySQL = QLatin1String(R"(
+//                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, '')) AS filePath,
+//                                                filePath AS fullPath
+//                                FROM  filesall
+//                                WHERE fileCatalog =:fileCatalog
+//                                ORDER BY filePath ASC
+//                            )");
+//        query.prepare(querySQL);
+//        query.bindValue(":fileCatalog",catalogName);
+//        query.bindValue(":selectedCatalogPath",catalogSourcePath);
+//        query.exec();
+
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath, '')) AS filePath,
-                                                filePath AS fullPath
-                                FROM  filesall
-                                WHERE fileCatalog =:fileCatalog
-                                ORDER BY filePath ASC
+                                SELECT DISTINCT (REPLACE(folderPath, :selectedCatalogPath, '')) AS filePath,
+                                       folderPath AS fullPath
+                                FROM  folder
+                             WHERE folderCatalogName=:folderCatalogName
+                                ORDER BY folderPath ASC
                             )");
         query.prepare(querySQL);
-        query.bindValue(":fileCatalog",catalogName);
+        query.bindValue(":folderCatalogName", catalogName);
         query.bindValue(":selectedCatalogPath",catalogSourcePath);
         query.exec();
+
 
         int idPath = query.record().indexOf("filePath");
         int idIdx = query.record().indexOf("fullPath");
