@@ -144,8 +144,7 @@
                                         fileDateUpdated     TEXT,
                                         fileCatalog         TEXT,
                                         fileFullPath        TEXT,
-                                        PRIMARY KEY("id_file" AUTOINCREMENT)
-                                    )
+                                        PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
 // FILE (one-off requests) ----------------------------------------------------
@@ -163,6 +162,18 @@
                                         PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
+
+// FOLDER ---------------------------------------------------------------------
+
+                //Create table query
+                        const auto SQL_CREATE_FOLDER = QLatin1String(R"(
+                                       CREATE TABLE IF NOT EXISTS  folder(
+                                                folderHash          TEXT,
+                                                folderCatalogName   TEXT,
+                                                folderPath          TEXT)
+                        )");
+
+
 // STATISTICS ------------------------------------------------
 
         //Create table query
@@ -172,8 +183,7 @@
                                         catalogName          TEXT,
                                         catalogFileCount     REAL,
                                         catalogTotalFileSize REAL,
-                                        recordType TEXT
-                                    )
+                                        recordType TEXT)
                 )");
 
 
@@ -226,8 +236,7 @@
                                         Name		TEXT,
                                         Path		TEXT,
                                         Type		TEXT,
-                                        dateTime	TEXT
-                                )
+                                        dateTime	TEXT)
                 )");
 
 // STATISTICS ----------------------------------------------------
@@ -241,8 +250,7 @@
                                   quarter INT NOT NULL,
                                   year INT NOT NULL,
                                   month INT NOT NULL,
-                                  day INT NOT NULL
-                                )
+                                  day INT NOT NULL)
                 )");
 
 // Database initialization ------------------------------------------------
@@ -266,6 +274,9 @@ QSqlError initializeDatabase()
         return q.lastError();
 
     if (!q.exec(SQL_CREATE_FILESALL))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_FOLDER))
         return q.lastError();
 
     if (!q.exec(SQL_CREATE_STATISTICS))
