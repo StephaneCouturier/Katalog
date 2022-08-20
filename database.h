@@ -40,7 +40,6 @@
     //Create table query
             const auto SQL_CREATE_CATALOG = QLatin1String(R"(
                            CREATE TABLE IF NOT EXISTS  catalog(
-                                    catalogID  int AUTO_INCREMENT primary key ,
                                     catalogFilePath         TEXT ,
                                     catalogName             TEXT  ,
                                     catalogDateUpdated      TEXT  ,
@@ -53,12 +52,13 @@
                                     catalogStorage          TEXT  ,
                                     catalogIncludeSymblinks TEXT,
                                     catalogIsFullDevice     TEXT,
-                                    catalogLoadedVersion    TEXT)
+                                    catalogLoadedVersion    TEXT,
+                                    PRIMARY KEY("catalogName"))
             )");
 
     //Insert row  query
             const auto SQL_INSERT_CATALOG = QLatin1String(R"(
-                            INSERT INTO catalog(
+                            INSERT OR IGNORE INTO catalog(
                                     catalogFilePath,
                                     catalogName,
                                     catalogDateUpdated,
@@ -255,11 +255,17 @@
 
 // Database initialization ------------------------------------------------
 
-QSqlError initializeDatabase()
+QSqlError initializeDatabase(QString databaseMode)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(":memory:");
-    //db.setDatabaseName("/home/stephane/Development/katalog.db");
+
+    //databaseMode = "File";
+    if (databaseMode=="Memory"){
+        db.setDatabaseName(":memory:");
+    }
+    else if (databaseMode=="File"){
+        db.setDatabaseName("/home/stephane/Development/katalog.db");
+    }
 
     if (!db.open())
         return db.lastError();
@@ -267,13 +273,16 @@ QSqlError initializeDatabase()
     QStringList tables = db.tables();
 
     QSqlQuery q;
+    if (!q.exec(SQL_CREATE_CATALOG))
+        return q.lastError();
+
     if (!q.exec(SQL_CREATE_STORAGE))
         return q.lastError();
 
-    if (!q.exec(SQL_CREATE_FILE))
+    if (!q.exec(SQL_CREATE_FILESALL))
         return q.lastError();
 
-    if (!q.exec(SQL_CREATE_FILESALL))
+    if (!q.exec(SQL_CREATE_FILE))
         return q.lastError();
 
     if (!q.exec(SQL_CREATE_FOLDER))
@@ -293,5 +302,6 @@ QSqlError initializeDatabase()
 
     return QSqlError();
 }
+
 
 #endif // DATABASE_H

@@ -100,9 +100,11 @@ class MainWindow : public QMainWindow
 
             //Application settings
             QString settingsFilePath;
+            //QString
             void loadSettings();
             void saveSettings();
             void preloadCatalogs();
+
 
             //Parameters
             QString fileName;
@@ -122,7 +124,8 @@ class MainWindow : public QMainWindow
 
             //Database
             QSqlRelationalTableModel *storageModel;
-            void startDatabase();
+            QString databaseMode;
+            void startDatabase(QString databaseMode); //databaseMode is Memory or File
             void populateCalendarTable(QDateTime min, QDateTime max);
 
             //Objects

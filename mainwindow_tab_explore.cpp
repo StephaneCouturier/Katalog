@@ -482,15 +482,10 @@
                 }
         }
 
-        //selectedCatalogPath: remove the / at the end if any
-        //int pathLength = activeCatalog->sourcePath.length();
-        //if (activeCatalog->sourcePath.at(pathLength-1)=="/") {
-            //activeCatalog->sourcePath.remove(pathLength-1,1); //DEV:
-        //}
-
         //Load the files of the Selected Catalog
         loadCatalogFilelistToTable(activeCatalog);
 
+        //Load folders and files to the screen
         loadCatalogDirectoriesToExplore();
         loadSelectedDirectoryFilesToExplore();
 

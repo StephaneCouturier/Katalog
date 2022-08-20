@@ -126,7 +126,6 @@ void Catalog::loadCatalogMetaData()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT
-                                catalogID                   ,
                                 catalogFilePath             ,
                                 catalogName                 ,
                                 catalogDateUpdated          ,
@@ -149,20 +148,19 @@ void Catalog::loadCatalogMetaData()
     query.exec();
     query.next();
 
-    ID                 = query.value(0).toString();
-    filePath           = query.value(1).toString();
-    name               = query.value(2).toString();
-    dateUpdated        = query.value(3).toString();
-    sourcePath         = query.value(4).toString();
-    fileCount          = query.value(5).toLongLong();
-    totalFileSize      = query.value(6).toLongLong();
-    sourcePathIsActive = query.value(7).toBool();
-    includeHidden      = query.value(8).toBool();
-    fileType           = query.value(9).toString();
-    storageName        = query.value(10).toString();
-    includeSymblinks   = query.value(11).toBool();
-    isFullDevice       = query.value(12).toBool();
-    loadedVersion      = query.value(13).toString();
+    filePath           = query.value(0).toString();
+    name               = query.value(1).toString();
+    dateUpdated        = query.value(2).toString();
+    sourcePath         = query.value(3).toString();
+    fileCount          = query.value(4).toLongLong();
+    totalFileSize      = query.value(5).toLongLong();
+    sourcePathIsActive = query.value(6).toBool();
+    includeHidden      = query.value(7).toBool();
+    fileType           = query.value(8).toString();
+    storageName        = query.value(9).toString();
+    includeSymblinks   = query.value(10).toBool();
+    isFullDevice       = query.value(11).toBool();
+    loadedVersion      = query.value(12).toString();
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,

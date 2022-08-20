@@ -345,30 +345,34 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Search
+
+
+
         //Catalogs
+            //DEV: preparing catalog-device relation
+            ui->Catalogs_checkBox_isFullDevice->hide();
+
+        //Explore
 
         //Create
             //DEV: the option to include symblinks is not working yet
             ui->Create_checkBox_IncludeSymblinks->hide();
             ui->Create_checkBox_isFullDevice->hide();
 
-        //Catalogs
-            ui->Catalogs_checkBox_isFullDevice->hide();
-
-        //Explore
-
         //Storage
-            //DEV: pending a test and development of a function to open Filelight at the requested place
-            //ui->Storage_pushButton_OpenFilelight->hide();
+            //DEV: panel to edit the storage in a form
             ui->Storage_pushButton_ShowHidePanel->hide();
             ui->Storage_label_PanelDevice->hide();
             ui->Storage_widget_DevicePanelForm->hide();
 
         //Settings
+            //DEV: option to switch database mode between memory and file
+            ui->Settings_comboBox_DatabaseMode->hide();
+            ui->Settings_label_DatabaseMode->hide();
 
         //Other tabs
-            ui->tabWidget->removeTab(8); //ExploreTreeview
-            ui->tabWidget->removeTab(7); //ExploreTreeview
+            //DEV: Treeview
+            ui->tabWidget->removeTab(7);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
@@ -494,7 +498,7 @@
 
     }
     //----------------------------------------------------------------------
-    void MainWindow::startDatabase()
+    void MainWindow::startDatabase(QString databaseMode)
     {
         if (!QSqlDatabase::drivers().contains("QSQLITE"))
             QMessageBox::critical(
@@ -504,7 +508,7 @@
                         );
 
         // Initialize the database:
-        QSqlError err = initializeDatabase();
+        QSqlError err = initializeDatabase(databaseMode);
         if (err.type() != QSqlError::NoError) {
             //showError(err);
             return;

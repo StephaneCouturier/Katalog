@@ -45,12 +45,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 #endif
    , ui(new Ui::MainWindow)
 {
-    //setup: start database
-            startDatabase();
+    //setup: start database (mode is Memory of File)
+            databaseMode = "Memory";
+            //databaseMode = "File";//DEV
+            startDatabase(databaseMode);
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
+
+            //Set
 
             //Set Development mode
                 developmentMode = false;
@@ -61,8 +65,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 }
 
             //Set current version and release date, and check new version
-                currentVersion = "1.12";
-                releaseDate = "2022-05-28";
+                currentVersion = "1.13";
+                releaseDate = "2022-08-18";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -161,8 +165,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 loadStorageList();
 
         //Setup tab: Tags
-                //Default path to scan
+                //Set Default path to scan
                 ui->Tags_lineEdit_FolderPath->setText("/");
+
                 loadFileSystemTags(newTagFolderPath);
                 reloadTagsData();
 
