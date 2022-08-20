@@ -1324,10 +1324,6 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1357,6 +1353,30 @@ to the trash?</source>
     </message>
     <message>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the Text criteria in the Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalog 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalog2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

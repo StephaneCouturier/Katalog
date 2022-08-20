@@ -717,7 +717,7 @@
     </message>
     <message>
         <source>Define if the search text should be used to look only in file names, or folder paths, or both.</source>
-        <translation>Défniir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
+        <translation>Définir si le texte de recherche doit être utilisé pour chercher dans les noms de fichier, ou les chemins de dossiers, ou les deux.</translation>
     </message>
     <message>
         <source>Define how the search text should be used.</source>
@@ -1377,10 +1377,6 @@ to the trash?</source>
         <translation>Trier d&apos;abord les dossiers</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation>Charger</translation>
-    </message>
-    <message>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Un instantané de cette collection a été enregistré :&lt;br/&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Nombre de fichiers&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt;&#xa0;%1 &lt;/b&gt;&lt; /td&gt;&lt;td&gt; (ajoutés&#xa0;: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille totale des fichiers&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt; /b&gt; &lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -1411,6 +1407,30 @@ to the trash?</source>
     <message>
         <source>The selected catalog contains more than %1 files.&lt;br/&gt;It may take several minutes to open.&lt;br/&gt;Continue?</source>
         <translation>Le catalogue sélectionné contient plus de %1&#xa0;fichiers.&lt;br/&gt;L&apos;ouverture peut prendre plusieurs minutes.&lt;br/&gt;Continuer&#xa0;?</translation>
+    </message>
+    <message>
+        <source>Database mode</source>
+        <translation>Mode de la base de données</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation>Mémoire</translation>
+    </message>
+    <message>
+        <source>Use the Text criteria in the Search</source>
+        <translation>Utilisez les critères de texte dans la recherche</translation>
+    </message>
+    <message>
+        <source>Differences on</source>
+        <translation>Différences sur</translation>
+    </message>
+    <message>
+        <source>Catalog 1</source>
+        <translation>Catalogue 1</translation>
+    </message>
+    <message>
+        <source>Catalog2</source>
+        <translation>Catalogue 2</translation>
     </message>
 </context>
 <context>
