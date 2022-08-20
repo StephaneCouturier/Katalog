@@ -34,18 +34,18 @@ requires(qtConfig(tableview))
 requires(qtConfig(treeview))
 requires(qtConfig(listview))
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 #KF5 Libraries
 linux: {
-QT       += KCoreAddons
-QT       += KI18n
-QT       += KXmlGui
-QT       += KTextWidgets
-QT       += KConfigWidgets
-QT       += KWidgetsAddons
-QT       += KIOCore
-QT       += KCompletion
+            QT       += KCoreAddons
+            QT       += KI18n
+            QT       += KXmlGui
+            QT       += KConfigWidgets
+            QT       += KWidgetsAddons
+            QT       += KIOCore
+            QT       += KCompletion
 }
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
@@ -116,6 +116,8 @@ TRANSLATIONS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+TARGET = Katalog.bin
 
 RESOURCES += \
     icons.qrc \
