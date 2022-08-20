@@ -162,17 +162,15 @@
                                         PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
-
 // FOLDER ---------------------------------------------------------------------
 
-                //Create table query
-                        const auto SQL_CREATE_FOLDER = QLatin1String(R"(
-                                       CREATE TABLE IF NOT EXISTS  folder(
-                                                folderHash          TEXT,
-                                                folderCatalogName   TEXT,
-                                                folderPath          TEXT)
-                        )");
-
+        //Create table query
+                const auto SQL_CREATE_FOLDER = QLatin1String(R"(
+                               CREATE TABLE IF NOT EXISTS  folder(
+                                        folderHash          TEXT,
+                                        folderCatalogName   TEXT,
+                                        folderPath          TEXT)
+                )");
 
 // STATISTICS ------------------------------------------------
 
@@ -185,7 +183,6 @@
                                         catalogTotalFileSize REAL,
                                         recordType TEXT)
                 )");
-
 
 // SEARCH ----------------------------------------------------
 
@@ -239,19 +236,6 @@
                                         dateTime	TEXT)
                 )");
 
-// STATISTICS ----------------------------------------------------
-
-        //Create table query
-                const auto SQL_CREATE_CALENDAR = QLatin1String(R"(
-                                CREATE TABLE IF NOT EXISTS calendar (
-                                  d date UNIQUE NOT NULL,
-                                  dayofweek INT NOT NULL,
-                                  weekday TEXT NOT NULL,
-                                  quarter INT NOT NULL,
-                                  year INT NOT NULL,
-                                  month INT NOT NULL,
-                                  day INT NOT NULL)
-                )");
 
 // Database initialization ------------------------------------------------
 
@@ -295,9 +279,6 @@ QSqlError initializeDatabase(QString databaseMode)
         return q.lastError();
 
     if (!q.exec(SQL_CREATE_TAG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_CALENDAR))
         return q.lastError();
 
     return QSqlError();

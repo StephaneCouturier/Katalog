@@ -378,7 +378,7 @@
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
 
-        //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( dir !=""){
 
             collectionFolder = dir;
@@ -392,7 +392,26 @@
             //save Settings for the new collection folder value;
             saveSettings();
 
-            //load the collection for this new folder;
+            //load the collection from this new folder;
+                //Clear database if mode is Memory
+                if(databaseMode=="Memory"){
+                    //Clear current entires from the tables
+                        QSqlQuery queryDelete;
+                        queryDelete.exec("DELETE FROM catalog");
+                        queryDelete.exec("DELETE FROM storage");
+                        queryDelete.exec("DELETE FROM filesall");
+                        queryDelete.exec("DELETE FROM file");
+                        queryDelete.exec("DELETE FROM folder");
+                        queryDelete.exec("DELETE FROM statistics");
+                        queryDelete.exec("DELETE FROM search");
+                        queryDelete.exec("DELETE FROM tag");
+                }
+                if(databaseMode=="File"){
+                    //Open database file
+                    //DEV
+                    QMessageBox::warning(this,"Katalog","Database was not changed.");
+                }
+
             createStorageList();
             loadCollection();
 

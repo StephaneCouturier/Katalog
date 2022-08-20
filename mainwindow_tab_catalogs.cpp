@@ -439,11 +439,6 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
-        //Clear current entires of the catalog table
-            QSqlQuery queryDelete;
-            queryDelete.prepare( "DELETE FROM catalog" );
-            queryDelete.exec();
-
         //Prepare table and insert query
             QSqlQuery query;
             if (!query.exec(SQL_CREATE_CATALOG)){
