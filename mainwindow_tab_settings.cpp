@@ -413,6 +413,7 @@
                 }
 
             createStorageList();
+            generateCollectionFilesPaths();
             loadCollection();
 
         }
@@ -439,12 +440,6 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
-        //Refresh collection file paths
-            searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
-            storageFilePath = collectionFolder + "/" + "storage.csv";
-            statisticsFileName = "statistics.csv";
-            statisticsFilePath = collectionFolder + "/" + statisticsFileName;
-
         //Load search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();

@@ -122,11 +122,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             }
 
     //Load Collection data
-            //Generate collection file paths and statistics parameters
-                searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
-                storageFilePath = collectionFolder + "/" + "storage.csv";
-                statisticsFileName = "statistics.csv";
-                statisticsFilePath = collectionFolder + "/" + statisticsFileName;
+            //Generate collection files paths and statistics parameters
+            generateCollectionFilesPaths();
 
             //DEV: QDateTime startDate    = QDateTime::fromString("2020-01-01 00:00:00","yyyy-MM-dd hh:mm:ss");;
             //DEV: QDateTime today        = QDateTime::currentDateTime();
@@ -154,9 +151,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         //Setup tab: Create
             //Default path to scan
                 ui->Create_lineEdit_NewCatalogPath->setText("/");
-
-            //Define path of file containing folders to exclude when cataloging
-                excludeFilePath = collectionFolder +"/"+ "exclude.csv";
 
             //Always Load the file system for the treeview
                 loadFileSystem("/");

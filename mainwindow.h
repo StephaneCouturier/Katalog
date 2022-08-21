@@ -104,7 +104,7 @@ class MainWindow : public QMainWindow
             void loadSettings();
             void saveSettings();
             void preloadCatalogs();
-
+            void generateCollectionFilesPaths();
 
             //Parameters
             QString fileName;
