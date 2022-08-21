@@ -673,6 +673,5 @@
         statisticsFileName = "statistics.csv";
         statisticsFilePath = collectionFolder + "/" + statisticsFileName;
         excludeFilePath = collectionFolder +"/"+ "exclude.csv";
-        QMessageBox::information(this,"Katalog","excludeFilePath: <br/>" + QVariant(excludeFilePath).toString());
     }
     //----------------------------------------------------------------------
