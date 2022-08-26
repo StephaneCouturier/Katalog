@@ -169,7 +169,8 @@
                                CREATE TABLE IF NOT EXISTS  folder(
                                         folderHash          TEXT,
                                         folderCatalogName   TEXT,
-                                        folderPath          TEXT)
+                                        folderPath          TEXT,
+                                        PRIMARY KEY(folderHash,folderCatalogName))
                 )");
 
 // STATISTICS ------------------------------------------------

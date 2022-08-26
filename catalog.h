@@ -43,8 +43,8 @@ public:
     Catalog(QObject *parent = nullptr);
 
     QString ID;
-    QString filePath;
     QString name;
+    QString filePath;
     QString dateUpdated;
     QString sourcePath;
     qint64  fileCount;
@@ -63,6 +63,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     void setName(QString selectedName);
+    void setFilePath(QString selectedFilePath);
     void setSourcePath(QString selectedSourcePath);
     void setFileCount(qint64 selectedFileCount);
     void setTotalFileSize(qint64 selectedTotalFileSize);
@@ -71,6 +72,7 @@ public:
     void setStorageName(QString selectedStorageName);
     void setIncludeSymblinks(bool selectedIncludeSymblinks);
     void setIsFullDevice(bool selectedIsFullDevice);
+    void setLoadedVersion(QString dateTime);
 
     void loadCatalogMetaData();
 
@@ -80,7 +82,7 @@ public:
                             const QList<QString> &fileDateTimes,
                             const QList<QString> &fileCatalogs);
 
-    void backupCatalogFile();
+    //DEV: void backupCatalogFile();
 
 private:
     QList<QString> fileNames;

@@ -132,7 +132,6 @@ class MainWindow : public QMainWindow
             Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)
-            Catalog *newCatalog      = new Catalog(); //catalog used for catalog creation in Create screen
             DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
 
         //Filters
@@ -288,13 +287,7 @@ class MainWindow : public QMainWindow
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
-            void catalogDirectory(QString newCatalogPath,
-                                  bool includeHidden,
-                                  QString fileType,
-                                  QStringList fileTypes,
-                                  QString newCatalogStorage,
-                                  bool includeSymblinks,
-                                  bool isFullDevice);
+            void catalogDirectory(Catalog *catalog);
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
 

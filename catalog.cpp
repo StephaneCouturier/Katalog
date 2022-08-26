@@ -85,9 +85,19 @@ void Catalog::setName(QString selectedName)
 {
     name = selectedName;
 }
+void Catalog::setFilePath(QString selectedFilePath)
+{
+    filePath = selectedFilePath;
+}
 void Catalog::setSourcePath(QString selectedSourcePath)
 {
     sourcePath = selectedSourcePath;
+
+    //remove the / at the end if any, except for root path
+    int pathLength = sourcePath.length();
+    if (sourcePath !="/" and sourcePath.at(pathLength-1)=="/") {
+        sourcePath.remove(pathLength-1,1);
+    }
 }
 void Catalog::setFileCount(qint64 selectedFileCount)
 {
@@ -117,7 +127,10 @@ void Catalog::setIsFullDevice(bool selectedIsFullDevice)
 {
     isFullDevice = selectedIsFullDevice;
 }
-
+void Catalog::setLoadedVersion(QString dateTimeString)
+{
+    loadedVersion = dateTimeString;
+}
 
 
 //catalog files data operation
