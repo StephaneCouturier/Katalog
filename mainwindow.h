@@ -348,7 +348,7 @@ class MainWindow : public QMainWindow
                 //Main tabs
                 void on_tabWidget_currentChanged(int index);
                 void on_splitter_splitterMoved();
-                void on_Filters_tabWidget_currentChanged(int index);
+                void on_FiltersTabWidgetCurrentChanged(int index);
                 void on_Filters_pushButton_Filters_Hide_clicked();
                 void on_Filters_pushButton_Filters_Show_clicked();
 
@@ -391,7 +391,7 @@ class MainWindow : public QMainWindow
             void on_Search_lineEdit_SearchText_returnPressed();
 
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
-            void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
+            void on_SearchTreeViewFilesFoundClicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
             void on_Search_pushButton_ShowHideSearchCriteria_clicked();
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
@@ -405,8 +405,8 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Differences_toggled(bool checked);
             void on_Search_treeView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
-            void on_Search_treeView_FilesFound_HeaderSortOrderChanged();
-            void on_Search_treeView_History_HeaderSortOrderChanged();
+            void on_SearchTreeViewFilesFoundHeaderSortOrderChanged();
+            void on_SearchTreeViewHistoryHeaderSortOrderChanged();
             void on_Search_splitter_Results_splitterMoved();
 
             void setupFileContextMenu();
@@ -437,7 +437,7 @@ class MainWindow : public QMainWindow
 
             void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
             void on_Catalogs_treeView_CatalogList_doubleClicked();
-            void on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged();
+            void on_CatalogsTreeViewCatalogListHeaderSortOrderChanged();
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
@@ -456,11 +456,11 @@ class MainWindow : public QMainWindow
             void on_Explore_splitter_splitterMoved();
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
             void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
-            void on_Explore_treeView_FileList_HeaderSortOrderChanged();
-            void on_Explore_pushButton_Load_clicked();
+            void on_ExplorePushButtonLoadClicked();
             void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
             void on_Explore_checkBox_DisplaySubFolders_toggled(bool checked);
             void on_Explore_pushButton_OrderFoldersFirst_clicked();
+            void on_ExploreTreeViewFileListHeaderSortOrderChanged();
 
             //context menu directories
             void on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos);
@@ -477,7 +477,6 @@ class MainWindow : public QMainWindow
             void exploreContextMoveFileToFolder();
             void exploreContextMoveFileToTrash();
             void exploreContextDeleteFile();
-
         //Storage
             void on_Storage_pushButton_CreateList_clicked();
             void on_Storage_pushButton_Reload_clicked();
@@ -492,13 +491,13 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_CreateCatalog_clicked();
 
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
-            void on_Storage_treeView_StorageList_HeaderSortOrderChanged();
+            void on_StorageTreeViewStorageListHeaderSortOrderChanged();
 
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectSource_currentIndexChanged(const QString &selectedSource);
-            void on_Statistics_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog);
+            void on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog);
             void on_Statistics_comboBox_TypeOfData_currentIndexChanged(const QString &typeOfData);
 
         //Tags

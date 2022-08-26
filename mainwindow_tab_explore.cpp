@@ -91,7 +91,7 @@
 
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Explore_treeView_FileList_HeaderSortOrderChanged(){
+        void MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged(){
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             QHeaderView *exploreTreeHeader = ui->Explore_treeView_FileList->header();
@@ -110,7 +110,7 @@
             settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Explore_pushButton_Load_clicked()
+        void MainWindow::on_ExplorePushButtonLoadClicked()
         {
             //reloads catalog to explore at root level
             if (selectedDeviceType=="Catalog" and selectedDeviceName !=selectedCatalogName){

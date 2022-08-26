@@ -157,7 +157,7 @@
                                                     +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
+        void MainWindow::on_SearchTreeViewFilesFoundClicked(const QModelIndex &index)
         {
             //Get file from selected row
             QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
@@ -454,7 +454,7 @@
                                      ,Qt::TextFormat(Qt::RichText));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_treeView_FilesFound_HeaderSortOrderChanged(){
+        void MainWindow::on_SearchTreeViewFilesFoundHeaderSortOrderChanged(){
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             QHeaderView *searchTreeHeader = ui->Search_treeView_FilesFound->header();
@@ -466,7 +466,7 @@
             settings.setValue("Search/lastSearchSortOrder",   QString::number(lastSearchSortOrder));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_treeView_History_HeaderSortOrderChanged(){
+        void MainWindow::on_SearchTreeViewHistoryHeaderSortOrderChanged(){
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             QHeaderView *searchHistoryTreeHeader = ui->Search_treeView_History->header();
@@ -1917,7 +1917,7 @@
                 }
             }
             else{
-                //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + searchCatalog->loadedVersion);
+                QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + catalog->loadedVersion);
             }
 
         }

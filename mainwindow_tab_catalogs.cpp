@@ -272,6 +272,14 @@
                 if ( result ==QMessageBox::Yes){
                     QFile file (selectedCatalog->filePath);
                     file.moveToTrash();
+
+                    if(databaseMode=="Memory"){
+                        //Clear current entires from the tables
+                            QSqlQuery queryDelete;
+                            queryDelete.exec("DELETE FROM catalog");
+                    }
+
+                    loadCatalogFilesToTable();
                     loadCatalogsTableToModel();
                     refreshCatalogSelectionList("","");
                 }
@@ -279,8 +287,8 @@
             else QMessageBox::information(this,"Katalog",tr("Select a catalog above first."));
 
             //refresh catalog lists
-               loadCatalogFilesToTable();
-               loadCatalogsTableToModel();
+//               loadCatalogFilesToTable();
+//               loadCatalogsTableToModel();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Open_clicked()
@@ -375,7 +383,7 @@
             recordCollectionStats();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged(){
+        void MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged(){
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
@@ -496,8 +504,8 @@
                                 catalogFileInfo.completeBaseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
                                 catalogValues[0], //catalogSourcePath
-                                catalogValues[1].toInt(), //catalogFileCount
-                                catalogValues[2].toLongLong(), //catalogTotalFileSize
+                                catalogValues[2].toInt(), //catalogFileCount
+                                catalogValues[1].toLongLong(), //catalogTotalFileSize
                                 isActive,         //catalogSourcePathIsActive
                                 catalogValues[3], //catalogIncludeHidden
                                 catalogValues[4], //catalogFileType
@@ -537,13 +545,6 @@
                                         LEFT JOIN storage s ON catalogStorage = storageName
                                         WHERE catalogName !=''
                                         )");
-
-                //add AND conditions for the selected filters
-//                if ( selectedSearchLocation != tr("All") )
-//                    loadCatalogSQL = loadCatalogSQL + " AND storageLocation = '"+selectedSearchLocation+"' ";
-
-//                if ( selectedSearchStorage != tr("All") )
-//                    loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
             if (     selectedStorageLocation == tr("All")
                  and selectedStorageName     == tr("All")
@@ -608,8 +609,8 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Loaded Version
 
             //Hide columns
-            ui->Catalogs_treeView_CatalogList->hideColumn(11); //FullDevice
-            ui->Catalogs_treeView_CatalogList->hideColumn(12); //Loaded Version
+            ui->Catalogs_treeView_CatalogList->hideColumn(11); //isFullDevice
+            //ui->Catalogs_treeView_CatalogList->hideColumn(12); //Loaded Version
 
             //Populate catalogs statistics
             QSqlQuery query;
@@ -742,7 +743,7 @@
             return;
             }
 
-        //BackUp the file before is the option is selected
+        //BackUp the file before, if the option is selected
             if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
                 backupCatalog(catalog->filePath);
             }
@@ -751,19 +752,7 @@
             qint64 previousFileCount = catalog->fileCount;
             qint64 previousTotalFileSize = catalog->totalFileSize;
 
-        //Define the type of files to be included
-            QStringList fileTypes;
-            if      ( catalog->fileType == "Image")
-                                    fileTypes = fileType_Image;
-            else if ( catalog->fileType == "Audio")
-                                    fileTypes = fileType_Audio;
-            else if ( catalog->fileType == "Video")
-                                    fileTypes = fileType_Video;
-            else if ( catalog->fileType == "Text")
-                                    fileTypes = fileType_Text;
-            else                    fileTypes.clear();
-
-        //
+        //Process if dir exists
         QDir dir (catalog->sourcePath);
         if (dir.exists()==true){
             ///Warning and choice if the result is 0 files
@@ -779,20 +768,10 @@
                 }
             }
 
-            //catalog the directory
-            catalogDirectory(catalog->sourcePath,
-                             catalog->includeHidden,
-                             catalog->fileType,
-                             fileTypes,
-                             catalog->storageName,
-                             catalog->includeSymblinks,
-                             catalog->isFullDevice);
+            //catalog the directory and save it to the file
+            catalogDirectory(catalog);
 
             saveCatalogToNewFile(catalog->name);
-
-            //reload catalogs metadata
-            loadCatalogFilesToTable();
-            catalog->loadCatalogMetaData();
 
             //Prepare to report changes to the catalog
             qint64 deltaFileCount     = catalog->fileCount     - previousFileCount;
@@ -823,12 +802,13 @@
                                      );
         }
 
+        //record catalog statistics if option is selected
         if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true )
             recordSelectedCatalogStats(catalog->name, catalog->fileCount, catalog->totalFileSize);
 
-        //Refresh the collection view
+        //Refresh data to UI
+        loadCatalogFilesToTable();
         loadCatalogsTableToModel();
-        //Reload stats file
         loadStatisticsChart();
 
     }

@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     //setup: start database (mode is Memory of File)
             databaseMode = "Memory";
-            //databaseMode = "File";//DEV
+            //databaseMode = "File";//DEV only
             startDatabase(databaseMode);
 
     //Set up the interface globally

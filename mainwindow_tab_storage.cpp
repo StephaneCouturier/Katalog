@@ -161,7 +161,7 @@
         }
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Storage_treeView_StorageList_HeaderSortOrderChanged(){
+    void MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged(){
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         QHeaderView *storageTreeHeader = ui->Storage_treeView_StorageList->header();

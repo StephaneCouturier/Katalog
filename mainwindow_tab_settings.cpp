@@ -61,7 +61,7 @@
         settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Filters_tabWidget_currentChanged(int index)
+    void MainWindow::on_FiltersTabWidgetCurrentChanged(int index)
     {
         int selectedFiltersTab = index;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);

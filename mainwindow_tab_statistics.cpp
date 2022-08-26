@@ -72,7 +72,7 @@
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Statistics_comboBox_SelectCatalog_currentIndexChanged(const QString &selectedCatalog)
+    void MainWindow::on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog)
     {
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
