@@ -2029,6 +2029,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </item>
                    <item>
                     <widget class="QLabel" name="Search_label_LinkImage08">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                        <horstretch>0</horstretch>

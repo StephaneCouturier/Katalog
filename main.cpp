@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
              i18n("(c) 2021 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
              // Optional text shown in the About box.
              // Can contain any information desired. (otherText)
-             i18n(""),
+             i18n("-"),
              // The program homepage string. (homePageAddress = QString())
              QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
              // The bug report address
