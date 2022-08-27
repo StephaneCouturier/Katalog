@@ -1917,7 +1917,7 @@
                 }
             }
             else{
-                QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + catalog->loadedVersion);
+                //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + catalog->loadedVersion);
             }
 
         }
