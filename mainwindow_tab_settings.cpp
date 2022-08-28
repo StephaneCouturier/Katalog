@@ -435,6 +435,8 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Collection_pushButton_Reload_clicked()
     {
+        createStorageList();
+        generateCollectionFilesPaths();
         loadCollection();
     }
     //----------------------------------------------------------------------

@@ -477,14 +477,14 @@
                 }
 
                 //Prepare a textsteam for the file
-                QTextStream textStream(&catalogFile);
+                QTextStream textStreamCatalogs(&catalogFile);
 
                 //Read the first 8 lines and put values in a stringlist
                 QStringList catalogValues;
                 QString line;
                 QString value;
                 for (int i=0; i<8; i++) {
-                    line = textStream.readLine();
+                    line = textStreamCatalogs.readLine();
                     if (line !="" and line.at(0)=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
                         if (value =="") catalogValues << "";
@@ -1011,6 +1011,7 @@
             bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
             QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
             QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();
+
             bool isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
@@ -1083,7 +1084,6 @@
             QString currentCatalogName = selectedCatalogFileInfo.baseName();
             QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
 
-
             //Rename the catalog file
             if (newCatalogName != currentCatalogName){
 
@@ -1126,9 +1126,6 @@
                     }
             }
 
-        //Refresh data
-            loadCatalogFilesToTable();
-
         //Launch update if catalog is active and changes impact the contents (path, type, hidden)
             if (       newCatalogSourcePath    != selectedCatalog->filePath
                     or newCatalogIncludeHidden != selectedCatalog->includeHidden
@@ -1145,8 +1142,17 @@
                 }
             }
 
-        ui->Catalogs_widget_EditCatalog->hide();
-        loadCollection();
+        //Hide edition section
+            ui->Catalogs_widget_EditCatalog->hide();
+
+        //Refresh data
+            if(databaseMode=="Memory"){
+                QSqlQuery queryDelete;
+                queryDelete.exec("DELETE FROM catalog");
+            }
+            createStorageList();
+            generateCollectionFilesPaths();
+            loadCollection();
     }
 //--------------------------------------------------------------------------
 void MainWindow::recordCollectionStats(){
