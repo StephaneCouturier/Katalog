@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             //Set current version and release date, and check new version
                 currentVersion = "1.13";
-                releaseDate = "2022-08-18";
+                releaseDate = "2022-08-31";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -123,11 +123,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     //Load Collection data
             //Generate collection files paths and statistics parameters
-            generateCollectionFilesPaths();
-
-            //DEV: QDateTime startDate    = QDateTime::fromString("2020-01-01 00:00:00","yyyy-MM-dd hh:mm:ss");;
-            //DEV: QDateTime today        = QDateTime::currentDateTime();
-            //DEV: populateCalendarTable(startDate,today);
+                generateCollectionFilesPaths();
 
             //Create a Storage list (if none exists)
                 createStorageList();

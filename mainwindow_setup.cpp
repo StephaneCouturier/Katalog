@@ -669,9 +669,9 @@
     void MainWindow::generateCollectionFilesPaths()
     {
         searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
-        storageFilePath = collectionFolder + "/" + "storage.csv";
-        statisticsFileName = "statistics.csv";
-        statisticsFilePath = collectionFolder + "/" + statisticsFileName;
-        excludeFilePath = collectionFolder +"/"+ "exclude.csv";
+        storageFilePath       = collectionFolder + "/" + "storage.csv";
+        statisticsFileName    = "statistics.csv";
+        statisticsFilePath    = collectionFolder + "/" + statisticsFileName;
+        excludeFilePath       = collectionFolder + "/" + "exclude.csv";
     }
     //----------------------------------------------------------------------

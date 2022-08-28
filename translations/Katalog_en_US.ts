@@ -821,10 +821,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Source:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No catalog found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1377,6 +1373,10 @@ to the trash?</source>
     </message>
     <message>
         <source>Catalog2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source:   </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

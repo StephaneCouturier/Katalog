@@ -822,10 +822,6 @@
 Nom :   </translation>
     </message>
     <message>
-        <source>Source:</source>
-        <translation>Source :</translation>
-    </message>
-    <message>
         <source>No catalog found.</source>
         <translation>Aucun catalogue trouvé.</translation>
     </message>
@@ -1431,6 +1427,10 @@ to the trash?</source>
     <message>
         <source>Catalog2</source>
         <translation>Catalogue 2</translation>
+    </message>
+    <message>
+        <source>Source:   </source>
+        <translation>Source :   </translation>
     </message>
 </context>
 <context>
