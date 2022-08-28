@@ -82,8 +82,6 @@ public:
                             const QList<QString> &fileDateTimes,
                             const QList<QString> &fileCatalogs);
 
-    //DEV: void backupCatalogFile();
-
 private:
     QList<QString> fileNames;
     QList<qint64>  fileSizes;
