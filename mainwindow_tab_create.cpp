@@ -531,8 +531,8 @@
         fileList.prepend("<catalogStorage>"         + catalog->storageName);
         fileList.prepend("<catalogFileType>"        + catalog->fileType);
         fileList.prepend("<catalogIncludeHidden>"   + QVariant(catalog->includeHidden).toString());
-        fileList.prepend("<catalogFileCount>"       + QString::number(catalog->fileCount));
         fileList.prepend("<catalogTotalFileSize>"   + QString::number(catalog->totalFileSize));
+        fileList.prepend("<catalogFileCount>"       + QString::number(catalog->fileCount));
         fileList.prepend("<catalogSourcePath>"      + catalog->sourcePath);
 
         //Define and populate a model

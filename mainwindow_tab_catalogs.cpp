@@ -35,7 +35,6 @@
 #include "catalog.h"
 #include "catalogsview.h"
 #include "database.h"
-#include "filesview.h"
 
 #include <QTextStream>
 #include <QDesktopServices>
@@ -458,10 +457,10 @@
                 return;}
 
         //Iterate in the directory to create a list of files and sort it
-            QStringList fileTypes;
-            fileTypes << "*.idx";
+            QStringList catalogFileExtensions;
+            catalogFileExtensions << "*.idx";
 
-            QDirIterator iterator(collectionFolder, fileTypes, QDir::Files, QDirIterator::Subdirectories);
+            QDirIterator iterator(collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
             while (iterator.hasNext()){
 
                 // Iterate to the next file
@@ -504,8 +503,8 @@
                                 catalogFileInfo.completeBaseName(),  //catalogName
                                 catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
                                 catalogValues[0], //catalogSourcePath
-                                catalogValues[2].toInt(), //catalogFileCount
-                                catalogValues[1].toLongLong(), //catalogTotalFileSize
+                                catalogValues[1].toInt(), //catalogFileCount
+                                catalogValues[2].toLongLong(), //catalogTotalFileSize
                                 isActive,         //catalogSourcePathIsActive
                                 catalogValues[3], //catalogIncludeHidden
                                 catalogValues[4], //catalogFileType
