@@ -50,6 +50,48 @@
         <number>0</number>
        </property>
        <item>
+        <spacer name="Filters_verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>6</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Filters_pushButton_Filters_Show">
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Show/Hide Filters and Settings</string>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="go-next">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="ShowFilters_verticalSpacer_WhenFiltersHidden_1">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -62,52 +104,10 @@
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QPushButton" name="Filters_pushButton_Filters_Show">
-         <property name="maximumSize">
-          <size>
-           <width>35</width>
-           <height>22</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Show/Hide Filters and Settings</string>
-         </property>
-         <property name="statusTip">
-          <string/>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">padding: 2px 10px;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icons.qrc">
-           <normaloff>:/fallback-icons/go-next.png</normaloff>:/fallback-icons/go-next.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ShowFilters_verticalSpacer_WhenFiltersHidden_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>7</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="2">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -138,1099 +138,492 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item row="1" column="0">
-         <widget class="QTabWidget" name="splitter_widget_Filters_tabWidget">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
+        <item row="3" column="0">
+         <widget class="QWidget" name="Filters_widget" native="true">
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
-          <property name="tabPosition">
-           <enum>QTabWidget::North</enum>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="Filters_tab1_Filters">
-           <attribute name="icon">
-            <iconset theme="view-filter">
-             <normaloff>.</normaloff>.</iconset>
-           </attribute>
-           <attribute name="title">
-            <string>Filters</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QLabel" name="Statistics_label_Selection">
-                <property name="text">
-                 <string>Selection</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Reset all filters</string>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-clear-history">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QWidget" name="Filters_widget_CatalogSelectionBox" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <property name="leftMargin">
-                <number>15</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <layout class="QGridLayout" name="gridLayout_2">
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="Filters_label_Storage">
-                   <property name="minimumSize">
-                    <size>
-                     <width>70</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Storage</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="Filters_label_Location">
-                   <property name="minimumSize">
-                    <size>
-                     <width>80</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Location</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="Filters_label_Catalog">
-                   <property name="minimumSize">
-                    <size>
-                     <width>70</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Catalog</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="Filters_label_DisplayLocation">
-                   <property name="minimumSize">
-                    <size>
-                     <width>120</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="Filters_label_DisplayStorage">
-                   <property name="font">
-                    <font>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
-                   <property name="font">
-                    <font>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <spacer name="Filters_verticalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QWidget" name="Filters_widget_CatalogSelectionTree" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <property name="leftMargin">
-                <number>15</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_10">
-                 <item>
-                  <widget class="QPushButton" name="Filter_pushButton_Search">
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="toolTip">
-                    <string>Go to Search tab to search file in this selection</string>
-                   </property>
-                   <property name="text">
-                    <string>Search</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="edit-find">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Filter_pushButton_Explore">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="toolTip">
-                    <string>Open the catalog in the Explore tab</string>
-                   </property>
-                   <property name="text">
-                    <string>Explore</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="view-list-tree">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Filter_pushButton_Update">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>8</pointsize>
-                    </font>
-                   </property>
-                   <property name="toolTip">
-                    <string>Update the content of the Catalog</string>
-                   </property>
-                   <property name="text">
-                    <string>Update</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="media-playlist-repeat">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_12">
-                 <item>
-                  <widget class="QLabel" name="Filters_label_TreeSelectionTitle">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Location / Storage / Catatog</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Filters_pushButton_TreeExpandCollapse">
-                   <property name="maximumSize">
-                    <size>
-                     <width>35</width>
-                     <height>22</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Expand 1 level, 2 levels, or collapse</string>
-                   </property>
-                   <property name="statusTip">
-                    <string/>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 2px 10px;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="expand-all">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QTreeView" name="Filters_treeView_Devices">
-                 <property name="sizeAdjustPolicy">
-                  <enum>QAbstractScrollArea::AdjustToContents</enum>
-                 </property>
-                 <property name="editTriggers">
-                  <set>QAbstractItemView::NoEditTriggers</set>
-                 </property>
-                 <property name="alternatingRowColors">
-                  <bool>false</bool>
-                 </property>
-                 <property name="selectionBehavior">
-                  <enum>QAbstractItemView::SelectRows</enum>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>22</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="rootIsDecorated">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sortingEnabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="animated">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_3">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="Filters_widget_CatalogSelectionBox" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <property name="leftMargin">
+               <number>15</number>
+              </property>
               <property name="topMargin">
-               <number>6</number>
+               <number>0</number>
               </property>
               <item>
-               <widget class="Line" name="Search_line_SeparateResults_3">
-                <property name="lineWidth">
-                 <number>1</number>
-                </property>
-                <property name="midLineWidth">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Filters_checkBox_SearchInCatalogs">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Search in file catalogs</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
-              <property name="topMargin">
-               <number>6</number>
-              </property>
-              <item>
-               <widget class="Line" name="Search_line_SeparateResults_2">
-                <property name="lineWidth">
-                 <number>1</number>
-                </property>
-                <property name="midLineWidth">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="Filters_checkBox_SearchInConnectedDrives">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Search in connected drives</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QWidget" name="Filters_widget_ConnectedDrives" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <property name="leftMargin">
-                <number>15</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <layout class="QHBoxLayout" name="Create_horizontalLayout_Input_2">
-                 <item>
-                  <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Filter_pushButton_PickPath">
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Select the path</string>
-                   </property>
-                   <property name="text">
-                    <string>Select</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="edit-select">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QTreeView" name="Filters_treeView_Directory">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="Filters_tab_Settings">
-           <attribute name="icon">
-            <iconset theme="configure">
-             <normaloff>.</normaloff>.</iconset>
-           </attribute>
-           <attribute name="title">
-            <string>Settings</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <item row="1" column="0">
-             <spacer name="Settings_verticalSpacer_07">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="2" column="0">
-             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
-              <item row="3" column="1">
-               <widget class="QLabel" name="Settings_label_Theme_2">
-                <property name="text">
-                 <string>(requires to restart)</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2">
-                <item row="5" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolTip">
-                   <string>Preload last selected catalogs at start-up to accelerate next search</string>
-                  </property>
-                  <property name="text">
-                   <string>Preload last catalogs</string>
-                  </property>
-                  <property name="checked">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-                  <property name="toolTip">
-                   <string>Keep records of files and size for Statistics</string>
-                  </property>
-                  <property name="text">
-                   <string>Save records</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="0">
-                 <widget class="QLabel" name="Settings_label_CheckVersion">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Version</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QComboBox" name="Settings_comboBox_Theme">
+               <layout class="QGridLayout" name="gridLayout_2">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="Filters_label_Storage">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>30</height>
+                    <width>70</width>
+                    <height>0</height>
                    </size>
                   </property>
-                  <property name="toolTip">
-                   <string>Select a theme</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-                  <property name="toolTip">
-                   <string>Always keep one back of each catalog</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
                   <property name="text">
-                   <string>Auto-backup catalogs</string>
+                   <string>Storage</string>
                   </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="Settings_label_Data">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Data</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="0">
-                 <widget class="QLabel" name="Settings_label_SettingsFile">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Open Settings file</string>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QLabel" name="Settings_label_Data_2">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
+                 <widget class="QLabel" name="Filters_label_Location">
+                  <property name="minimumSize">
+                   <size>
+                    <width>80</width>
+                    <height>0</height>
+                   </size>
                   </property>
-                  <property name="text">
-                   <string>Language</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="Settings_comboBox_Language"/>
-                </item>
-                <item row="8" column="1">
-                 <widget class="QPushButton" name="Collection_pushButton_OpenSettingsFile">
                   <property name="maximumSize">
                    <size>
-                    <width>150</width>
+                    <width>30</width>
                     <height>16777215</height>
                    </size>
                   </property>
-                  <property name="toolTip">
-                   <string>Open the collection folder</string>
-                  </property>
                   <property name="text">
-                   <string>Open</string>
+                   <string>Location</string>
                   </property>
-                  <property name="icon">
-                   <iconset theme="document-open">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="1">
-                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
-                  <property name="toolTip">
-                   <string>Verify if a new version of Katalog is available when starting the app.</string>
-                  </property>
-                  <property name="text">
-                   <string>Check at start up</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="Settings_label_Theme">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Theme</string>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="Settings_label_DatabaseMode">
-                  <property name="font">
-                   <font>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Database mode</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
+                 <widget class="QLabel" name="Filters_label_Catalog">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>30</height>
+                    <width>70</width>
+                    <height>0</height>
                    </size>
                   </property>
-                  <property name="toolTip">
-                   <string>Select a theme</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>Memory</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>File</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="Settings_label_Settings">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Settings</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="Line" name="Settings_line_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="0">
-             <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
-              <item>
-               <widget class="QLabel" name="Catalogs_label_CurrentFolder">
-                <property name="font">
-                 <font>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Collection folder</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="Settings_line_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder">
-                <property name="font">
-                 <font>
-                  <pointsize>8</pointsize>
-                 </font>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Select a different Collection folder</string>
-                </property>
-                <property name="text">
-                 <string>Select</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-select">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Collection_pushButton_Reload">
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Reload all catalog information</string>
-                </property>
-                <property name="text">
-                 <string>Reload</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="view-refresh">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Open the collection folder</string>
-                </property>
-                <property name="text">
-                 <string>Open</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-open">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="4" column="0">
-             <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
-              <item>
-               <widget class="Line" name="Settings_line_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="Settings_label_About">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>About</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QGridLayout" name="Settings_gridLayout_About">
-                <item row="0" column="2">
-                 <widget class="QLabel" name="Settings_label_VersionValue">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                    <bold>true</bold>
-                   </font>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
                   <property name="text">
-                   <string>Version</string>
+                   <string>Catalog</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="indent">
-                   <number>10</number>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="Settings_label_VersionTitle">
-                  <property name="maximumSize">
+                 <widget class="QLabel" name="Filters_label_DisplayLocation">
+                  <property name="minimumSize">
                    <size>
-                    <width>75</width>
-                    <height>16777215</height>
+                    <width>120</width>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>10</pointsize>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Version</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLabel" name="Settings_label_DateTitle">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Date</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="2">
-                 <widget class="QPushButton" name="Settings_pushButton_Wiki">
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Katalog's Wiki</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="internet-web-browser">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QLabel" name="Settings_label_DateValue">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
-                   <string>Date</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="indent">
-                   <number>10</number>
+                   <string/>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="2">
-                 <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="Filters_label_DisplayStorage">
+                  <property name="font">
+                   <font>
+                    <bold>true</bold>
+                   </font>
                   </property>
                   <property name="text">
-                   <string>Release Notes</string>
+                   <string/>
                   </property>
-                  <property name="icon">
-                   <iconset theme="internet-web-browser">
-                    <normaloff>.</normaloff>.</iconset>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="Filters_label_DisplayCatalog">
+                  <property name="font">
+                   <font>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
              </layout>
-            </item>
-            <item row="3" column="0">
-             <spacer name="Settings_verticalSpacer_04">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="5" column="0">
-             <spacer name="Settings_verticalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QWidget" name="splitter_widget_Filters_Hide" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
-           </property>
+            </widget>
+           </item>
            <item>
-            <spacer name="Search_horizontalSpacer_16">
+            <spacer name="Filters_verticalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
+              <enum>QSizePolicy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>30</width>
-               <height>20</height>
+               <width>20</width>
+               <height>10</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
+            <widget class="QWidget" name="Filters_widget_CatalogSelectionTree" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <property name="leftMargin">
+               <number>15</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QPushButton" name="Filter_pushButton_Search">
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Go to Search tab to search file in this selection</string>
+                  </property>
+                  <property name="text">
+                   <string>Search</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-find">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filter_pushButton_Explore">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Open the catalog in the Explore tab</string>
+                  </property>
+                  <property name="text">
+                   <string>Explore</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-list-tree">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filter_pushButton_Update">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Update the content of the Catalog</string>
+                  </property>
+                  <property name="text">
+                   <string>Update</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="media-playlist-repeat">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <item>
+                 <widget class="QLabel" name="Filters_label_TreeSelectionTitle">
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Location / Storage / Catatog</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filters_pushButton_TreeExpandCollapse">
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Expand 1 level, 2 levels, or collapse</string>
+                  </property>
+                  <property name="statusTip">
+                   <string/>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding: 2px 10px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="expand-all">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QTreeView" name="Filters_treeView_Devices">
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>false</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>22</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="rootIsDecorated">
+                 <bool>true</bool>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="animated">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_3">
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="Line" name="Search_line_SeparateResults_3">
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="Filters_checkBox_SearchInCatalogs">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Search in file catalogs</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="Line" name="Search_line_SeparateResults_2">
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="Filters_checkBox_SearchInConnectedDrives">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Search in connected drives</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="Filters_widget_ConnectedDrives" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <property name="leftMargin">
+               <number>15</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_Input_2">
+                <item>
+                 <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Filter_pushButton_PickPath">
+                  <property name="maximumSize">
+                   <size>
+                    <width>120</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Select the path</string>
+                  </property>
+                  <property name="text">
+                   <string>Select</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-select">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QTreeView" name="Filters_treeView_Directory">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QWidget" name="splitter_widget_Filters_Hide" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item>
             <widget class="QPushButton" name="Filters_pushButton_Filters_Hide">
              <property name="maximumSize">
               <size>
-               <width>35</width>
+               <width>28</width>
                <height>22</height>
               </size>
              </property>
@@ -1241,7 +634,7 @@
               <string/>
              </property>
              <property name="styleSheet">
-              <string notr="true">padding: 2px 10px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string/>
@@ -1252,8 +645,83 @@
              </property>
             </widget>
            </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <item>
+              <widget class="QLabel" name="Filters_label_Selection">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Selection</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Filters_pushButton_ResetGlobal">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Reset all filters</string>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="edit-clear-history">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </widget>
+        </item>
+        <item row="1" column="0">
+         <spacer name="Filters_verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>3</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -1301,6 +769,9 @@
             <width>22</width>
             <height>22</height>
            </size>
+          </property>
+          <property name="elideMode">
+           <enum>Qt::ElideRight</enum>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -6688,26 +6159,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="DEV_STORAGE">
+          <widget class="QWidget" name="tab_Settings">
            <attribute name="icon">
-            <iconset theme="folder-development">
+            <iconset theme="configure">
              <normaloff>.</normaloff>.</iconset>
            </attribute>
            <attribute name="title">
-            <string>DEV_STORAGE</string>
+            <string>Settings</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_17">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="DEV_horizontalLayout_9">
-              <item>
-               <widget class="QPushButton" name="DEV2_pushButton_LoadTree">
-                <property name="text">
-                 <string>DEV_Storage_loadTree</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="DEV2_horizontalSpacer_4">
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="2" column="0">
+             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
+              <item row="4" column="3">
+               <spacer name="horizontalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6719,41 +6183,586 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </spacer>
               </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="Settings_label_Settings">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Settings</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="Settings_label_Theme_2">
+                <property name="text">
+                 <string>(requires to restart)</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2">
+                <item row="1" column="0">
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="9" column="0">
+                 <widget class="QLabel" name="Settings_label_SettingsFile">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Open Settings file</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QComboBox" name="Settings_comboBox_Theme">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Select a theme</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="9" column="1">
+                 <widget class="QPushButton" name="Collection_pushButton_OpenSettingsFile">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Open the collection folder</string>
+                  </property>
+                  <property name="text">
+                   <string>Open</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-open">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="Settings_label_Data">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Data</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                  <property name="toolTip">
+                   <string>Always keep one back of each catalog</string>
+                  </property>
+                  <property name="text">
+                   <string>Auto-backup catalogs</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolTip">
+                   <string>Preload last selected catalogs at start-up to accelerate next search</string>
+                  </property>
+                  <property name="text">
+                   <string>Preload last catalogs</string>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="Settings_label_Data_2">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Language</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="Settings_label_DatabaseMode">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Database mode</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Select a theme</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Memory</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>File</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QLabel" name="Settings_label_Theme">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Theme</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="Settings_comboBox_Language"/>
+                </item>
+                <item row="7" column="0">
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+                  <property name="toolTip">
+                   <string>Keep records of files and size for Statistics</string>
+                  </property>
+                  <property name="text">
+                   <string>Save records</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="1">
+               <widget class="Line" name="Settings_line_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item row="1" column="0">
-             <widget class="QTreeView" name="DEV2_treeView_Devices_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <spacer name="Settings_verticalSpacer_07">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="alternatingRowColors">
-               <bool>false</bool>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
               </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::NoSelection</enum>
+             </spacer>
+            </item>
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
+              <item>
+               <widget class="QLabel" name="Catalogs_label_CurrentFolder">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Collection folder</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="Settings_line_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Collection_lineEdit_CollectionFolder">
+                <property name="font">
+                 <font>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_pushButton_SelectFolder">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Select a different Collection folder</string>
+                </property>
+                <property name="text">
+                 <string>Select</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-select">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_pushButton_Reload">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Reload all catalog information</string>
+                </property>
+                <property name="text">
+                 <string>Reload</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="view-refresh">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Collection_pushButton_OpenFolder">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Open the collection folder</string>
+                </property>
+                <property name="text">
+                 <string>Open</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="0">
+             <spacer name="Settings_verticalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectItems</enum>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
               </property>
-              <property name="rootIsDecorated">
-               <bool>true</bool>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
               </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
+             </spacer>
+            </item>
+            <item row="3" column="0">
+             <spacer name="Settings_verticalSpacer_04">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
-              <property name="animated">
-               <bool>true</bool>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="expandsOnDoubleClick">
-               <bool>false</bool>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
               </property>
-             </widget>
+             </spacer>
+            </item>
+            <item row="4" column="0">
+             <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
+              <item>
+               <widget class="Line" name="Settings_line_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Settings_label_About">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>About</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="Settings_gridLayout_About">
+                <item row="2" column="1">
+                 <widget class="QLabel" name="Settings_label_DateTitle">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Date</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="2">
+                 <widget class="QPushButton" name="Settings_pushButton_Wiki">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Katalog's Wiki</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="internet-web-browser">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="Settings_label_VersionValue">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Version</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="indent">
+                   <number>10</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="Settings_label_VersionTitle">
+                  <property name="maximumSize">
+                   <size>
+                    <width>75</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Version</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Release Notes</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="internet-web-browser">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLabel" name="Settings_label_DateValue">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Date</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="indent">
+                   <number>10</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                  <property name="toolTip">
+                   <string>Verify if a new version of Katalog is available when starting the app.</string>
+                  </property>
+                  <property name="text">
+                   <string>Check at start up</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -6781,7 +6790,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
  </customwidgets>
  <resources>
   <include location="images.qrc"/>
-  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>

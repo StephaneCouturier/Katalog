@@ -538,26 +538,6 @@
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
 
-        //DEV DirectoryTreeModel --------------------------------
-
-            if(developmentMode==true){
-
-                QString modelToTest = "Storage"; //
-
-                if (modelToTest !="Storage"){
-
-                }
-                else if (modelToTest =="Storage") {
-                    const QStringList headers({tr("Folder"),tr("Type")});
-                    DirectoryTreeModel *directorytreeModel = new DirectoryTreeModel(headers);
-                    directorytreeModel->setModelCatlog("TestDevice","/run/media/stephane/TestDevice");
-
-                    ui->DEV2_treeView_Devices_2->setModel(directorytreeModel);
-                    ui->DEV2_treeView_Devices_2->header()->resizeSection(0,  300);
-                    ui->DEV2_treeView_Devices_2->expandAll();
-                }
-            }
-/* */
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSelectedDirectoryFilesToExplore()

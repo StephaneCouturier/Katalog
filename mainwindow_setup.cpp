@@ -260,7 +260,7 @@
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
             int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
-            ui->splitter_widget_Filters_tabWidget->setCurrentIndex(selectedTabGlobal);
+            //ui->splitter_widget_Filters_tabWidget->setCurrentIndex(selectedTabGlobal);
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage
@@ -344,15 +344,9 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
-        //Search
-
-
-
         //Catalogs
             //DEV: preparing catalog-device relation
             ui->Catalogs_checkBox_isFullDevice->hide();
-
-        //Explore
 
         //Create
             //DEV: the option to include symblinks is not working yet
@@ -370,9 +364,6 @@
             ui->Settings_comboBox_DatabaseMode->hide();
             ui->Settings_label_DatabaseMode->hide();
 
-        //Other tabs
-            //DEV: Treeview
-            ui->tabWidget->removeTab(7);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
@@ -415,7 +406,11 @@
 
          );
 
-        ui->splitter_widget_Filters_tabWidget->setStyleSheet(
+        ui->Filters_label_Selection->setStyleSheet(
+                    "color: #095676;"
+                  );
+
+        ui->Filters_widget->setStyleSheet(
             "QComboBox             { background-color: #FFF; padding-left: 6px; }"
             "QLabel                { color: #095676; }"
             "QTabBar::tab          { height: 30px; }"
@@ -427,7 +422,7 @@
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
 
          );
-		 
+
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; color: #fff; } "
