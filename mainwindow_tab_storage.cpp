@@ -32,10 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "database.h"
-
 #include "storageview.h"
-#include "storagetreemodel.h"
-#include "directorytreemodel.h"
 
 #include <QDesktopServices>
 
