@@ -108,7 +108,7 @@
                 ui->Search_lineEdit_SearchText->setText("");
             #endif
 
-            ui->Search_checkBox_Text->setEnabled(true);
+            ui->Search_checkBox_FileCriteria->setEnabled(true);
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_lineEdit_Exclude->setText(tr(""));
@@ -345,36 +345,51 @@
             }
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_checkBox_Text_toggled(bool checked)
+        void MainWindow::on_Search_checkBox_FileName_toggled(bool checked)
         {
-            if(checked==1){
+            if(checked==true){
+                ui->Search_widget_FileNameCriteria->setHidden(false);
                 #ifdef Q_OS_LINUX
                     ui->Search_kcombobox_SearchText->setEnabled(true);
                 #else
                     ui->Search_lineEdit_SearchText->setEnabled(true);
                 #endif
-                    ui->Search_comboBox_TextCriteria->setEnabled(true);
-                    ui->Search_comboBox_SearchIn->setEnabled(true);
-                    ui->Search_lineEdit_Exclude->setEnabled(true);
-                    ui->Search_checkBox_CaseSensitive->setEnabled(true);
             }
             else{
+                ui->Search_widget_FileNameCriteria->setHidden(true);
                 #ifdef Q_OS_LINUX
                     ui->Search_kcombobox_SearchText->setDisabled(true);
                 #else
                     ui->Search_lineEdit_SearchText->setDisabled(true);
                 #endif
-                    ui->Search_comboBox_TextCriteria->setDisabled(true);
-                    ui->Search_comboBox_SearchIn->setDisabled(true);
-                    ui->Search_lineEdit_Exclude->setDisabled(true);
-                    ui->Search_checkBox_CaseSensitive->setDisabled(true);
+            }
+
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_FileCriteria_toggled(bool checked)
+        {
+            if(checked==true){
+                ui->Search_widget_FileCriteria->setHidden(false);
+            }
+            else{
+                ui->Search_widget_FileCriteria->setHidden(true);
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_FolderCriteria_toggled(bool checked)
+        {
+            if(checked==true){
+                ui->Search_widget_FolderCriteria->setHidden(false);
+            }
+            else{
+                ui->Search_widget_FolderCriteria->setHidden(true);
             }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {
             //Restore the criteria of the selected search history
-            searchOnText         = ui->Search_treeView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
+            searchOnFileCriteria         = ui->Search_treeView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
 
             QString TextPhrase   = ui->Search_treeView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
             #ifdef Q_OS_LINUX
@@ -800,7 +815,9 @@
                     searchOnSize           = ui->Search_checkBox_Size->isChecked();
                     searchOnDate           = ui->Search_checkBox_Date->isChecked();
                     searchOnTags           = ui->Search_checkBox_Tags->isChecked();
-                    searchOnText           = ui->Search_checkBox_Text->isChecked();
+                    searchOnFileName       = ui->Search_checkBox_FileName->isChecked();
+                    searchOnFileCriteria   = ui->Search_checkBox_FileCriteria->isChecked();
+                    searchOnFolderCriteria = ui->Search_checkBox_FolderCriteria->isChecked();
                     selectedTag            = ui->Search_comboBox_Tags->currentText();
                     caseSensitive          = ui->Search_checkBox_CaseSensitive->isChecked();
 
@@ -902,7 +919,7 @@
                     Catalog *searchResultsCatalog = new Catalog(this);
 
                     // Populate model with folders only if this option is selected
-                    if ( ui->Search_checkBox_ShowFolders->isChecked()==true )
+                    if ( searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
                     {
 
                         sFilePaths.removeDuplicates();
@@ -1012,7 +1029,7 @@
                         hasDuplicatesOnSize         = ui->Search_checkBox_DuplicatesSize->checkState();
                         hasDuplicatesOnDateModified = ui->Search_checkBox_DuplicatesDateModified->checkState();
                     //Process if enabled and criteria are provided
-                        if ( ui->Search_checkBox_Duplicates->isChecked() ==true
+                        if ( searchOnFileCriteria==true and ui->Search_checkBox_Duplicates->isChecked() ==true
                              and (     hasDuplicatesOnName==true
                                     or hasDuplicatesOnSize==true
                                     or hasDuplicatesOnDateModified==true)){
@@ -1136,7 +1153,7 @@
                 //Process DIFFERENCES -------------------------------
 
                     //Process if enabled and criteria are provided
-                        if ( ui->Search_checkBox_Differences->isChecked() ==true
+                        if ( searchOnFileCriteria==true and ui->Search_checkBox_Differences->isChecked() ==true
                              and (     hasDifferencesOnName==true
                                     or hasDifferencesOnSize==true
                                     or hasDifferencesOnDateModified==true)){
@@ -1392,12 +1409,12 @@
                                                     )");
 
                     //Add matching size range
-                    if (searchOnSize==true){
+                    if (searchOnFileCriteria==true and searchOnSize==true){
                         getFilesQuerySQL = getFilesQuerySQL+" AND fileSize>=:fileSizeMin ";
                         getFilesQuerySQL = getFilesQuerySQL+" AND fileSize<=:fileSizeMax ";
                     }
                     //Add matching date range
-                    if (searchOnDate==true){
+                    if (searchOnFileCriteria==true and searchOnDate==true){
                         getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated>=:fileDateUpdatedMin ";
                         getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated<=:fileDateUpdatedMax ";
                     }
@@ -1423,7 +1440,7 @@
 
 
                     //Continue if the file is matching the tags
-                        if (searchOnTags==true and selectedTag!=""){
+                        if (searchOnFolderCriteria==true and searchOnTags==true and selectedTag!=""){
 
                             bool fileIsMatchingTag = false;
 
@@ -1454,7 +1471,7 @@
                         }
 
                     //Finally, verify the text search criteria
-                        if (searchOnText==true){
+                        if (searchOnFileName==true){
                             //Depending on the "Search in" criteria,
                             //reduce the abosulte path to the required text string and match the search text
                             if(selectedSearchIn == tr("File names only"))
@@ -1689,7 +1706,7 @@
                         }
 
                     //Finally, verify the text search criteria
-                    if (searchOnText==true){
+                    if (searchOnFileName==true){
                         //Depending on the "Search in" criteria,
                         //reduce the abosulte path to the reaquired text string and match the search text
                         if(selectedSearchIn == tr("File names only"))
@@ -2057,7 +2074,9 @@
                 refreshDifferencesCatalogSelection();
 
             //Set values
-                ui->Search_checkBox_Text->setChecked(searchOnText);               
+                ui->Search_checkBox_FileName->setChecked(searchOnFileName);
+                ui->Search_checkBox_FileCriteria->setChecked(searchOnFileCriteria);
+                ui->Search_checkBox_FolderCriteria->setChecked(searchOnFolderCriteria);
                 ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
                 ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
                 ui->Search_lineEdit_Exclude->setText(selectedSearchExclude);
@@ -2390,7 +2409,7 @@
 
             query.prepare(querySQL);
             query.bindValue(":dateTime",             searchDateTime);
-            query.bindValue(":TextChecked",          ui->Search_checkBox_Text->isChecked());
+            query.bindValue(":TextChecked",          ui->Search_checkBox_FileCriteria->isChecked());
 
             #ifdef Q_OS_LINUX
             query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());

@@ -164,8 +164,12 @@
             searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
             searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
-            if ( settings.value("LastSearch/searchOnText").toString() =="") searchOnText=true;
-            else searchOnText       = settings.value("LastSearch/searchOnText").toBool();
+            if ( settings.value("LastSearch/searchOnFileName").toString() =="") searchOnFileName=true;
+            else searchOnFileName       = settings.value("LastSearch/searchOnFileName").toBool();
+            if ( settings.value("LastSearch/searchOnFileCriteria").toString() =="") searchOnFileCriteria=true;
+            else searchOnFileCriteria       = settings.value("LastSearch/searchOnFileCriteria").toBool();
+            if ( settings.value("LastSearch/searchOnFolderCriteria").toString() =="") searchOnFolderCriteria=true;
+            else searchOnFolderCriteria       = settings.value("LastSearch/searchOnFolderCriteria").toBool();
             showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
             selectedTag             = settings.value("LastSearch/SearchTag").toString();
             searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
@@ -259,8 +263,6 @@
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();                      
-            int selectedTabGlobal = settings.value("Settings/selectedTabGlobal").toInt();
-            //ui->splitter_widget_Filters_tabWidget->setCurrentIndex(selectedTabGlobal);
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage
@@ -317,7 +319,9 @@
         settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-        settings.setValue("LastSearch/searchOnText", ui->Search_checkBox_Text->isChecked());
+        settings.setValue("LastSearch/searchOnFileName", ui->Search_checkBox_FileName->isChecked());
+        settings.setValue("LastSearch/searchOnFileCriteria", ui->Search_checkBox_FileCriteria->isChecked());
+        settings.setValue("LastSearch/searchOnFolderCriteria", ui->Search_checkBox_FolderCriteria->isChecked());
         settings.setValue("LastSearch/searchOnTags", ui->Search_checkBox_Tags->isChecked());
         settings.setValue("LastSearch/SearchTag", ui->Search_comboBox_Tags->currentText());
         settings.setValue("LastSearch/CaseSensitive", ui->Search_checkBox_CaseSensitive->isChecked());
@@ -368,7 +372,7 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
     {       
-        //colors:
+        //Standard colors:
             //blue light	39b2e5
             //blue dark		10a2df  0D79A6
             //green light	81d41a
@@ -378,21 +382,22 @@
             //purple light	a1467e
             //purple dark	8b1871
 
-        /* blue tabwidget bar */
+        //Tab widget, including combo boxes and buttons
+
             if(developmentMode==true){
                 QFile file(":styles/tabwidget_dev.css");
                 file.open(QFile::ReadOnly);
-                QString styleSheet = QLatin1String(file.readAll());
-                ui->tabWidget->setStyleSheet(styleSheet);
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
             }
             else{
                 QFile file(":styles/tabwidget_blue.css");
                 file.open(QFile::ReadOnly);
-                QString styleSheet = QLatin1String(file.readAll());
-                ui->tabWidget->setStyleSheet(styleSheet);
+                QString tabwidgetStyleSheet = QLatin1String(file.readAll());
+                ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
             }
-			  
-        /* filters widgets */
+
+        //Filters widget
         ui->main_widget_ShowFilters->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
@@ -420,52 +425,44 @@
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-
          );
 
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; color: #fff; } "
-                "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #81d41a; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
               );
         ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; color: #fff; } "
-                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; color: #fff; border: 1px solid #AAA; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
               );
         ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; color: #fff; } "
-                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
               );
         ui->Storage_pushButton_Update->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; color: #fff; } "
-                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
               );
         ui->Catalogs_pushButton_Save->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; color: #fff; } "
-                "QPushButton::hover    { background-color: #ff8000; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #e36600; color: #fff; border: 1px solid #e36600; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; color: #fff; border: 1px solid #AAA; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
               );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
-                "QPushButton           { background-color: #81d41a; color: #fff; } "
-                "QPushButton::hover    { background-color: #81d41a; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background-color: #43bf0c; color: #fff; border: 1px solid #43bf0c; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
               );
 
-//        ui->splitter->setStyleSheet(
-//                "QSplitter::handle     { background: qlineargradient(spread:pad, x1:0 y1:0, x2:0 y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(13, 121, 166, 255));"
-//                                        "margin-top: 300px;"
-//                                        "margin-bottom: 300px;"
-//                                        "border-radius: 4px;"
-//                                       "}"
-//                );
-
-        //line and other UI items
+        //Lines
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
@@ -478,9 +475,9 @@
         ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
         ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
-        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
-        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
         ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
         ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
@@ -489,10 +486,163 @@
         ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
         ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
-        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
 
     }
     //----------------------------------------------------------------------
+    void MainWindow::loadCustomThemeDark()
+    {
+        //Standard colors:
+            //blue light	39b2e5
+            //blue dark		10a2df  0D79A6
+            //green light	81d41a
+            //green dark	43bf0c
+            //orange light	ff8000
+            //orange dark	e36600
+            //purple light	a1467e
+            //purple dark	8b1871
+
+        //Tab widget, including combo boxes and buttons
+
+            QString styleSheetText = QLatin1String(R"(
+                        QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
+                        QTabWidget::tab-bar   { left: 0px;  }
+
+                        QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6;
+                                                border-top-left-radius:   3px;
+                                                border-top-right-radius: 3px;
+                                              }
+                        QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
+
+                        QTabBar:tab:first     { margin-left:  6px; }
+                        QTabBar::tab          { background-color: #0D79A6; color: #000;
+                                                padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
+                                                margin-top: 6px; margin-bottom: 0px;
+                                                border-top-left-radius:   3px;
+                                                border-top-right-radius: 3px;
+                        }
+
+                        QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
+
+                        QTabBar::tab:selected { background-color: #2a2e32; color: #FFF;
+                                                /*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #8b1871, stop: 1 #eff0f1); */
+                        }
+
+                        QTabBar::tab:!selected{  }
+
+
+            )");
+
+            ui->tabWidget->setStyleSheet(styleSheetText);
+
+
+        //Filters widget
+//        ui->main_widget_ShowFilters->setStyleSheet(
+//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+//         );
+
+//        ui->splitter_widget_Filters_Hide->setStyleSheet(
+//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+
+//         );
+
+//        ui->Filters_label_Selection->setStyleSheet(
+//                    "color: #095676;"
+//                  );
+
+//        ui->Filters_widget->setStyleSheet(
+//            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
+//            "QLabel                { color: #095676; }"
+//            "QTabBar::tab          { height: 30px; }"
+//            "QTabWidget::tab-bar   { left: 0px; }"
+//            "QTabWidget            { padding: 0px; margin: 0px; }"
+
+//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
+//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
+//         );
+
+        //Colored buttons
+//        ui->Search_pushButton_Search->setStyleSheet(
+//                "QPushButton           { background-color: #81d41a; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+//              );
+//        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
+//                "QPushButton           { background-color: #ff8000; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+//              );
+//        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
+//                "QPushButton           { background-color: #ff8000; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//              );
+//        ui->Storage_pushButton_Update->setStyleSheet(
+//                "QPushButton           { background-color: #ff8000; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+//              );
+//        ui->Catalogs_pushButton_Save->setStyleSheet(
+//                "QPushButton           { background-color: #ff8000; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+//              );
+//        ui->Create_pushButton_CreateCatalog->setStyleSheet(
+//                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
+//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+//              );
+
+        //Lines
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+        ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
+        ui->Catalogs_line_SeparateSummary_02->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+        ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
+
+        //Doted lines on Search screen
+        ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage02->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage03->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage04->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage05->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage06->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage07->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage08->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage09->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) repeat-x left; } ");
+        ui->Search_label_LinkImage10->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage11->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage12->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage13->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
+        ui->Search_label_LinkImage14->setStyleSheet("QLabel { background: url(:/images/link_blue/link-h.png) repeat-x left; } ");
+        ui->Search_label_LinkImage15->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage16->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage17->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage18->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage19->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage20->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-end.png) no-repeat left; } ");
+        ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+        ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+
+    }
+    //----------------------------------------------------------------------
+
+
     void MainWindow::startDatabase(QString databaseMode)
     {
         if (!QSqlDatabase::drivers().contains("QSQLITE"))

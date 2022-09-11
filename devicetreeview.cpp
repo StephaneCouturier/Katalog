@@ -100,7 +100,6 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     }
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
-                        //return QIcon(":/images/drive_gray.png");
                     }
                     else if( type=="Catalog" ){
                         return QIcon(QIcon::fromTheme("address-book-new"));

@@ -107,7 +107,7 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
             {
                 //Filename column
                 if( index.column()==1 ){
-                    return QIcon(":/images/drive_blue.png");
+                    return QIcon(QIcon::fromTheme("drive-harddisk")/*":/images/drive_blue.png"*/);
                 }
 
                 break;

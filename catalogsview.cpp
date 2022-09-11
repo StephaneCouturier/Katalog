@@ -116,10 +116,10 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
                     QModelIndex idx = index.sibling(index.row(), 7);
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
-                        return QIcon(":/images/drive_green.png");
+                        return QIcon(QIcon::fromTheme("address-book-new")/*":/images/drive_green.png"*/);
                     }
                     else
-                        return QIcon(":/images/drive_gray.png");
+                        return QIcon(QIcon::fromTheme("address-book-new")/*":/images/drive_gray.png"*/);
                 }
                 break;
             }

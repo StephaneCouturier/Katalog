@@ -1,24 +1,25 @@
 QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
-QTabWidget::tab-bar   { left: 0px; }
+QTabWidget::tab-bar   { left: 0px;  }
 
-QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6; qproperty-drawBase:0; outline: none;}
-
-QTabBar::pane         { border-bottom: 0px solid #C2C7CB;          }
-
-QTabBar::tab          { background-color: #0D79A6 ; color: #F2F2F2; 
-                        padding: 2px; padding-left: 2px; padding-right: 20px; 
-                        border: 1px solid #0D79A6; border-bottom: 0px;
-                        border-top-left-radius:  2px;
-                        border-top-right-radius: 2px;
-                        margin-top: 4px; margin-left: 2px; margin-bottom: 4px;
+QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6; 
+                        border-top-left-radius:   3px;
+                        border-top-right-radius: 3px;
                       }
+QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
 
-QTabBar::tab:selected { background-color: #095676; color: #FFF;}
-                        
+QTabBar:tab:first     { margin-left:  6px; }
+QTabBar::tab          { background-color: #0D79A6; color: #FFF;    
+                        padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
+                        margin-top: 6px; margin-bottom: 0px; 
+                        border-top-left-radius:   3px;
+                        border-top-right-radius: 3px;
+}
+
+QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
+
+QTabBar::tab:selected { background-color: #eff0f1; color: #000;}
+
 QTabBar::tab:!selected{  }
-
-QTabBar::tab::hover   { background-color: #095676; color: #FFF;}
-
 
 QLabel                { color: #095676; }
 

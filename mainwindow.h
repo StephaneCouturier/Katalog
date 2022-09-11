@@ -93,6 +93,7 @@ class MainWindow : public QMainWindow
             //UI
             Ui::MainWindow *ui;
             void loadCustomThemeLight();
+            void loadCustomThemeDark();
             void hideDevelopmentUIItems();
 
             //KDE menus/icons
@@ -181,7 +182,9 @@ class MainWindow : public QMainWindow
             QString selectedDifferencesCatalog2;
             bool searchOnDate;
             bool searchOnTags;
-            bool searchOnText;
+            bool searchOnFileName;
+            bool searchOnFileCriteria;
+            bool searchOnFolderCriteria;
             QDateTime selectedDateMin;
             QDateTime selectedDateMax;
             bool showFoldersOnly;
@@ -396,13 +399,18 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_ShowHideSearchCriteria_clicked();
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
             void on_Search_pushButton_ShowHideSearchHistory_clicked();
-            void on_Search_checkBox_ShowFolders_toggled(bool checked);
-            void on_Search_checkBox_Text_toggled(bool checked);
+
+            void on_Search_checkBox_FileName_toggled(bool checked);
+
+            void on_Search_checkBox_FileCriteria_toggled(bool checked);
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
             void on_Search_checkBox_Differences_toggled(bool checked);
+
+            void on_Search_checkBox_ShowFolders_toggled(bool checked);
+
             void on_Search_treeView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
             void on_SearchTreeViewFilesFoundHeaderSortOrderChanged();
@@ -510,6 +518,7 @@ class MainWindow : public QMainWindow
 
         //DEV
 
+            void on_Search_checkBox_FolderCriteria_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
