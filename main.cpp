@@ -52,7 +52,6 @@ int main(int argc, char *argv[])
         //Define Setting file path and name
         QString settingsFilePath = homePath + "/.config/katalog_settings.ini";
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
         QString userLanguage = settings.value("Settings/Language").toString();
 
         //Define a language for the first run (no value in the settings file)

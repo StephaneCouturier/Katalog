@@ -101,7 +101,6 @@ class MainWindow : public QMainWindow
 
             //Application settings
             QString settingsFilePath;
-            //QString
             void loadSettings();
             void saveSettings();
             void preloadCatalogs();
@@ -519,6 +518,7 @@ class MainWindow : public QMainWindow
         //DEV
 
             void on_Search_checkBox_FolderCriteria_toggled(bool checked);
+            void on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H

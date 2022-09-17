@@ -546,6 +546,12 @@
         QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &selectedDatabaseMode)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/databaseMode", selectedDatabaseMode);
+    }
+    //----------------------------------------------------------------------
 
 //SETTINGS / About ---------------------------------------------------------
 

@@ -64,6 +64,7 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
+
     {
         //Check if a settings file already exists. If not, it is considered first use and one gets generated
             QFile settingsFile(settingsFilePath);
@@ -262,7 +263,7 @@
             selectedDirectoryFullPath = activeCatalog->sourcePath + "/" + selectedDirectoryName;
 
             //last tab selected
-            selectedTab = settings.value("Settings/selectedTab").toInt();                      
+            selectedTab = settings.value("Settings/selectedTab").toInt();
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore last sort order for the catalogs and storage

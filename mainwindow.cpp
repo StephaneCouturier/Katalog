@@ -39,11 +39,10 @@
 #include "mainwindow_tab_tags.cpp"
 
 #ifdef Q_OS_LINUX
-MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent), ui(new Ui::MainWindow)
 #else
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 #endif
-   , ui(new Ui::MainWindow)
 {
     //setup: start database (mode is Memory of File)
             databaseMode = "Memory";
@@ -65,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 }
 
             //Set current version and release date, and check new version
-                currentVersion = "1.13";
-                releaseDate = "2022-08-31";
+                currentVersion = "1.143";
+                releaseDate = "2022-09-31";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
