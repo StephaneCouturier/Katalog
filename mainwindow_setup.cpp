@@ -187,6 +187,7 @@
             searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
             searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
             caseSensitive = settings.value("LastSearch/CaseSensitive").toBool();
+            graphicStartDate = settings.value("Statistics/graphStartDate").toString();
 
             //Restore Splitters
             if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1){
@@ -265,6 +266,9 @@
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();
             ui->tabWidget->setCurrentIndex(selectedTab);
+
+            //Restore Statistics settings
+            ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
 
             //Restore last sort order for the catalogs and storage
             lastCatalogsSortSection      = settings.value("Catalogs/lastCatlogsSortSection").toInt();

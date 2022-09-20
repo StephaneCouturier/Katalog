@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1158</width>
-    <height>872</height>
+    <height>891</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -243,6 +243,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -255,6 +256,7 @@
                  <widget class="QLabel" name="Filters_label_DisplayStorage">
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -267,6 +269,7 @@
                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -655,6 +658,7 @@
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -3562,6 +3566,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -3614,6 +3619,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -4016,6 +4022,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4054,6 +4061,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4087,6 +4095,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4669,6 +4678,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
+                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4760,6 +4770,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
+                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4811,6 +4822,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
+                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4914,6 +4926,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -4940,6 +4953,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -4999,6 +5013,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -5812,6 +5827,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5842,6 +5858,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5869,6 +5886,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5896,6 +5914,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -6329,6 +6348,64 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="3" column="0">
                <widget class="QtCharts::QChartView" name="Statistics_chartview_Graph1"/>
               </item>
+              <item row="2" column="0">
+               <widget class="Line" name="Statistics_line_Separate">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Records">
+                <item>
+                 <spacer name="Storage_horizontalSpacer_02">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
+                  <property name="toolTip">
+                   <string>Edit the file storing all records</string>
+                  </property>
+                  <property name="text">
+                   <string>Edit records</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-edit-sign">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_Reload">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Reload the file storing all records</string>
+                  </property>
+                  <property name="text">
+                   <string>Reload</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-refresh">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
               <item row="0" column="0">
                <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Selection">
                 <item>
@@ -6432,17 +6509,56 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </item>
                </layout>
               </item>
-              <item row="2" column="0">
-               <widget class="Line" name="Statistics_line_Separate">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <layout class="QHBoxLayout" name="Statistics_horizontalLayout_Records">
+              <item row="4" column="0">
+               <layout class="QHBoxLayout" name="Statistics_horizontalLayout_GraphParameters">
                 <item>
-                 <spacer name="Storage_horizontalSpacer_02">
+                 <widget class="QLabel" name="Statistics_label_GraphicStartDate">
+                  <property name="minimumSize">
+                   <size>
+                    <width>150</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Graphic Start Date</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="Statistics_lineEdit_GraphicStartDate">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_ClearDate">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-clear-history"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_PickDate">
+                  <property name="text">
+                   <string>Pick date</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCalendarWidget" name="Statistics_calendarWidget"/>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_9">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -6453,40 +6569,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </size>
                   </property>
                  </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
-                  <property name="toolTip">
-                   <string>Edit the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>Edit records</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_Reload">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Reload the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>Reload</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="view-refresh">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
-                 </widget>
                 </item>
                </layout>
               </item>
@@ -6713,6 +6795,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -6751,6 +6834,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6812,6 +6896,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6867,6 +6952,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6880,6 +6966,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6916,6 +7003,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7000,6 +7088,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -7135,6 +7224,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -7153,6 +7243,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7192,6 +7283,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -7217,6 +7309,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7250,6 +7343,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -7307,15 +7401,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QtCharts::QChartView</class>
    <extends>QGraphicsView</extends>
    <header location="global">QtCharts/QChartView&gt;
 #include &lt;QtCharts/chartsnamespace.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

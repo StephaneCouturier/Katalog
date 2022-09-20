@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 }
 
             //Set current version and release date, and check new version
-                currentVersion = "1.143";
+                currentVersion = "1.14";
                 releaseDate = "2022-09-31";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Hide some widgets by default
                 ui->Catalogs_widget_EditCatalog->hide();
+                ui->Statistics_calendarWidget->hide();
 
             //For Linux, use KDE libs
             #ifdef Q_OS_LINUX

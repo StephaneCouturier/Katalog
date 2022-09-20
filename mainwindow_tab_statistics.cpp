@@ -106,6 +106,50 @@
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Statistics_lineEdit_GraphicStartDate_returnPressed()
+    {
+        graphicStartDate = ui->Statistics_lineEdit_GraphicStartDate->text();
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+
+        //load the graph
+        loadStatisticsChart();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Statistics_pushButton_ClearDate_clicked()
+    {
+        graphicStartDate = "";
+        ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+
+        //load the graph
+        loadStatisticsChart();
+
+        ui->Statistics_calendarWidget->hide();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Statistics_calendarWidget_clicked(const QDate &date)
+    {
+        graphicStartDate = QVariant(date).toString();
+        ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+
+        //load the graph
+        loadStatisticsChart();
+
+        ui->Statistics_calendarWidget->hide();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Statistics_pushButton_PickDate_clicked()
+    {
+        ui->Statistics_calendarWidget->setHidden(false);
+    }
+    //----------------------------------------------------------------------
 
 //Methods-------------------------------------------------------------------
 
@@ -245,8 +289,13 @@
                                     WHERE catalogName = :selectedCatalogforStats
                                     AND recordType != 'Storage'
                                   )");
+                if ( graphicStartDate != "" ){
+                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                }
+
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":selectedCatalogforStats",selectedCatalogforStats);
+                queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){
@@ -301,10 +350,15 @@
                 else if ( selectedCatalogName != tr("All") and selectedDeviceType=="Catalog" )
                     querySQL = querySQL + " AND catalog.catalogName = '" + selectedCatalogName + "' ";
 
+                if ( graphicStartDate != "" ){
+                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                }
+
                 //add last part
                 querySQL = querySQL + " GROUP BY datetime ";
 
                 queryTotalSnapshots.prepare(querySQL);
+                queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){
@@ -360,6 +414,10 @@
 //                    queryTotalSnapshots.bindValue(":storageLocation",selectedLocation);
 //                }
 
+                if ( graphicStartDate != "" ){
+                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                }
+
                 if (selectedDeviceType == "Storage"){
                     querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
                     querySQL = querySQL + " GROUP BY datetime ";
@@ -373,6 +431,7 @@
                     queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storageName);
                 }
 
+                queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){

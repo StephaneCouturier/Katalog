@@ -320,6 +320,7 @@ class MainWindow : public QMainWindow
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
+            QString graphicStartDate;
             void loadStatisticsDataTypes();
             void loadStatisticsData();
             void loadStatisticsChart();
@@ -371,6 +372,7 @@ class MainWindow : public QMainWindow
                 void on_Collection_pushButton_Reload_clicked();
                 void on_Collection_pushButton_OpenFolder_clicked();
                 void on_Collection_lineEdit_CollectionFolder_returnPressed();
+                void on_Collection_pushButton_OpenSettingsFile_clicked();
 
                 void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
                 void on_Settings_comboBox_Theme_currentIndexChanged(int index);
@@ -378,7 +380,7 @@ class MainWindow : public QMainWindow
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
                 void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
                 void on_Settings_checkBox_CheckVersion_stateChanged();
-                void on_Collection_pushButton_OpenSettingsFile_clicked();
+                void on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &arg1);
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -409,6 +411,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Differences_toggled(bool checked);
 
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
+            void on_Search_checkBox_FolderCriteria_toggled(bool checked);
 
             void on_Search_treeView_History_activated(const QModelIndex &index);
             void on_Search_pushButton_FileFoundMoreStatistics_clicked();
@@ -484,6 +487,7 @@ class MainWindow : public QMainWindow
             void exploreContextMoveFileToFolder();
             void exploreContextMoveFileToTrash();
             void exploreContextDeleteFile();
+
         //Storage
             void on_Storage_pushButton_CreateList_clicked();
             void on_Storage_pushButton_Reload_clicked();
@@ -496,7 +500,6 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_SearchStorage_clicked();
             void on_Storage_pushButton_SearchLocation_clicked();
             void on_Storage_pushButton_CreateCatalog_clicked();
-
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
 
@@ -506,6 +509,10 @@ class MainWindow : public QMainWindow
             void on_Statistics_comboBox_SelectSource_currentIndexChanged(const QString &selectedSource);
             void on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog);
             void on_Statistics_comboBox_TypeOfData_currentIndexChanged(const QString &typeOfData);
+            void on_Statistics_lineEdit_GraphicStartDate_returnPressed();
+            void on_Statistics_pushButton_ClearDate_clicked();
+            void on_Statistics_pushButton_PickDate_clicked();
+            void on_Statistics_calendarWidget_clicked(const QDate &date);
 
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();
@@ -517,8 +524,6 @@ class MainWindow : public QMainWindow
 
         //DEV
 
-            void on_Search_checkBox_FolderCriteria_toggled(bool checked);
-            void on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H
