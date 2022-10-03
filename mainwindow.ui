@@ -243,7 +243,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -256,7 +255,6 @@
                  <widget class="QLabel" name="Filters_label_DisplayStorage">
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -269,7 +267,6 @@
                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -658,7 +655,6 @@
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -772,7 +768,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>7</number>
           </property>
           <property name="iconSize">
            <size>
@@ -3566,7 +3562,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
-                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -3619,7 +3614,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
-                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -4022,7 +4016,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4061,7 +4054,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4095,7 +4087,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4678,7 +4669,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4770,7 +4760,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4822,7 +4811,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <property name="font">
                        <font>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -4926,7 +4914,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -4953,7 +4940,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -5013,7 +4999,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -5827,7 +5812,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5858,7 +5842,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5886,7 +5869,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -5914,7 +5896,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -6543,7 +6524,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-clear-history"/>
+                   <iconset theme="edit-clear-history">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -6776,7 +6758,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <number>0</number>
             </property>
             <item row="2" column="0">
-             <layout class="QGridLayout" name="Settings_gridLayout_Settings">
+             <layout class="QGridLayout" name="Settings_gridLayout_Options">
+              <property name="leftMargin">
+               <number>12</number>
+              </property>
               <item row="4" column="3">
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
@@ -6795,7 +6780,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -6834,7 +6818,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6896,7 +6879,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6952,7 +6934,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -6966,7 +6947,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7003,7 +6983,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7083,12 +7062,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="Settings_verticalLayout_Collection">
+              <property name="leftMargin">
+               <number>12</number>
+              </property>
+              <property name="topMargin">
+               <number>12</number>
+              </property>
               <item>
                <widget class="QLabel" name="Catalogs_label_CurrentFolder">
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -7212,6 +7196,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item row="4" column="0">
              <layout class="QVBoxLayout" name="Settings_verticalLayout_About">
+              <property name="leftMargin">
+               <number>12</number>
+              </property>
               <item>
                <widget class="Line" name="Settings_line_3">
                 <property name="orientation">
@@ -7224,7 +7211,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -7243,7 +7229,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7283,7 +7268,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -7309,7 +7293,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>50</weight>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -7343,7 +7326,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="font">
                    <font>
                     <pointsize>10</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
