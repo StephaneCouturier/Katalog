@@ -29,25 +29,24 @@
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
-QT       += core widgets gui sql charts network
-requires(qtConfig(tableview))
-requires(qtConfig(treeview))
-requires(qtConfig(listview))
+    QT  += core widgets gui sql charts network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+    requires(qtConfig(tableview))
+    requires(qtConfig(treeview))
+    requires(qtConfig(listview))
 
 #KF5 Libraries
 linux: {
-            QT       += KCoreAddons
-            QT       += KI18n
-            QT       += KXmlGui
-            QT       += KConfigWidgets
-            QT       += KWidgetsAddons
-            QT       += KIOCore
-            QT       += KCompletion
+    QT += KCoreAddons
+    QT += KI18n
+    QT += KXmlGui
+    QT += KConfigWidgets
+    QT += KWidgetsAddons
+    QT += KIOCore
+    QT += KCompletion
 }
 
-CONFIG += c++11
+#CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
