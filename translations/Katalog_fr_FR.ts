@@ -122,10 +122,6 @@
         <translation>Sélectionner</translation>
     </message>
     <message>
-        <source>Filters</source>
-        <translation>Filtres</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -1109,10 +1105,6 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>Doublons trouvés</translation>
     </message>
     <message>
-        <source>DEV_STORAGE</source>
-        <translation>DEV_STORAGE</translation>
-    </message>
-    <message>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Vérifier si une nouvelle version de Katalog est disponible au démarrage de l&apos;application.</translation>
     </message>
@@ -1317,10 +1309,6 @@ to the trash?</source>
         <translation>Lieu / Stockage / Catatogue</translation>
     </message>
     <message>
-        <source>DEV_Storage_loadTree</source>
-        <translation>DEV_Storage_loadTree</translation>
-    </message>
-    <message>
         <source>Do you want to create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No: simply export results to a csv file.</source>
         <translation type="obsolete">Do you want to create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No: simply export results to a csv file.</translation>
     </message>
@@ -1431,6 +1419,34 @@ to the trash?</source>
     <message>
         <source>Source:   </source>
         <translation>Source :   </translation>
+    </message>
+    <message>
+        <source>File name</source>
+        <translation>Name de fichier</translation>
+    </message>
+    <message>
+        <source>File criteria</source>
+        <translation>Critère de fichiers</translation>
+    </message>
+    <message>
+        <source>Folder criteria</source>
+        <translation>Critères de dossier</translation>
+    </message>
+    <message>
+        <source>Graphic Start Date</source>
+        <translation>Date de début du graphique</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <source>Katalog Colors (dark)</source>
+        <translation>Katalog Colors (sombre)</translation>
+    </message>
+    <message>
+        <source>Select date</source>
+        <translation>Séctionner une date</translation>
     </message>
 </context>
 <context>

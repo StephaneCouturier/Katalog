@@ -498,10 +498,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1066,10 +1062,6 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DEV_STORAGE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1268,10 +1260,6 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DEV_Storage_loadTree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tag this folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1377,6 +1365,34 @@ to the trash?</source>
     </message>
     <message>
         <source>Source:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File criteria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder criteria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graphic Start Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Katalog Colors (dark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
