@@ -768,7 +768,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>7</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -6532,7 +6532,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <widget class="QPushButton" name="Statistics_pushButton_PickDate">
                   <property name="text">
-                   <string>Pick date</string>
+                   <string>Select date</string>
                   </property>
                  </widget>
                 </item>

@@ -1,9 +1,9 @@
 QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
-QTabWidget::tab-bar   { left: 0px;  }
+QTabWidget::tab-bar   { left: 0px; height: 38px; }
 
 QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6; 
                         border-top-left-radius:   3px;
-                        border-top-right-radius: 3px;
+                        border-top-right-radius: 3px; border-bottom: 0px solid #C2C7CB;
                       }
 QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
 
@@ -28,4 +28,4 @@ QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b
 QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}
 
 QComboBox             { padding: 0px 0px; margin: 0px; }
-QComboBox             { background-color: #FFF; padding-left: 6px; }
+QComboBox             { padding-left: 6px; }

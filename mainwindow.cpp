@@ -120,7 +120,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
                 loadCustomThemeLight();
             }
-
+            else if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (dark)") ){
+                loadCustomThemeDark();
+            }
     //Load Collection data
             //Generate collection files paths and statistics parameters
                 generateCollectionFilesPaths();

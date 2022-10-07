@@ -516,11 +516,11 @@
         //Tab widget, including combo boxes and buttons
 
             QString styleSheetText = QLatin1String(R"(
-                        QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
-                        QTabWidget::tab-bar   { left: 0px;  }
+                        QTabWidget            { padding: 10px; margin: 0px; background-color: #095676; }
+                        QTabWidget::tab-bar   { left: 0px; height: 38px;}
 
                         QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6;
-                                                border-top-left-radius:   3px;
+                                                border-top-left-radius:  3px;
                                                 border-top-right-radius: 3px;
                                               }
                         QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
@@ -529,7 +529,7 @@
                         QTabBar::tab          { background-color: #0D79A6; color: #000;
                                                 padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
                                                 margin-top: 6px; margin-bottom: 0px;
-                                                border-top-left-radius:   3px;
+                                                border-top-left-radius:  3px;
                                                 border-top-right-radius: 3px;
                         }
 
@@ -541,76 +541,44 @@
 
                         QTabBar::tab:!selected{  }
 
-
             )");
 
             ui->tabWidget->setStyleSheet(styleSheetText);
 
-
-        //Filters widget
-//        ui->main_widget_ShowFilters->setStyleSheet(
-//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-//         );
-
-//        ui->splitter_widget_Filters_Hide->setStyleSheet(
-//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-
-//         );
-
-//        ui->Filters_label_Selection->setStyleSheet(
-//                    "color: #095676;"
-//                  );
-
-//        ui->Filters_widget->setStyleSheet(
-//            "QComboBox             { background-color: #FFF; padding-left: 6px; }"
-//            "QLabel                { color: #095676; }"
-//            "QTabBar::tab          { height: 30px; }"
-//            "QTabWidget::tab-bar   { left: 0px; }"
-//            "QTabWidget            { padding: 0px; margin: 0px; }"
-
-//            "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
-//            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//            "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
-//         );
-
         //Colored buttons
-//        ui->Search_pushButton_Search->setStyleSheet(
-//                "QPushButton           { background-color: #81d41a; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
-//              );
-//        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
-//                "QPushButton           { background-color: #ff8000; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-//              );
-//        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
-//                "QPushButton           { background-color: #ff8000; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//              );
-//        ui->Storage_pushButton_Update->setStyleSheet(
-//                "QPushButton           { background-color: #ff8000; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-//              );
-//        ui->Catalogs_pushButton_Save->setStyleSheet(
-//                "QPushButton           { background-color: #ff8000; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-//              );
-//        ui->Create_pushButton_CreateCatalog->setStyleSheet(
-//                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
-//                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-//              );
+        ui->Search_pushButton_Search->setStyleSheet(
+                "QPushButton           { background-color: #81d41a; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Catalogs_pushButton_UpdateCatalog->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Catalogs_pushButton_UpdateAllActive->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Storage_pushButton_Update->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Catalogs_pushButton_Save->setStyleSheet(
+                "QPushButton           { background-color: #ff8000; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+              );
+        ui->Create_pushButton_CreateCatalog->setStyleSheet(
+                "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
+                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+              );
 
         //Lines
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
