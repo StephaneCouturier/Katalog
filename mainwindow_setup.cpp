@@ -247,6 +247,7 @@
             }
             else
                 themeID = settings.value("Settings/Theme").toInt();
+
             ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());
             ui->Settings_comboBox_Language->setCurrentText(settings.value("Settings/Language").toString());
             ui->Settings_checkBox_CheckVersion->setChecked(settings.value("Settings/CheckVersion", true).toBool());
@@ -284,6 +285,8 @@
             optionDisplayFolders         = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders      = settings.value("Explore/DisplaySubFolders").toBool();
 
+            //Restore Settings
+            ui->Settings_comboBox_DatabaseMode->setCurrentText(databaseMode);
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()

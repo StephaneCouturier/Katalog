@@ -44,16 +44,33 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent), ui(new Ui::Main
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 #endif
 {
-    //setup: start database (mode is Memory of File)
-            databaseMode = "Memory";
+    //Prepare paths and user setting file
+        //Get user home path and application dir path
+        QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        QString homePath = standardsPaths[0];
+        QString applicationDirPath = QCoreApplication::applicationDirPath();
+
+        //Define Setting file path and name
+            //For portable mode, check if there is a settings file located with the executable
+            settingsFilePath = applicationDirPath + "/katalog_settings.ini";
+            QFile settingsFile(settingsFilePath);
+            if(!settingsFile.exists()) {
+                //otherwise fall back to default katalog_settings path
+                settingsFilePath = homePath + "/.config/katalog_settings.ini";
+            }
+
+    //Set up database. Modes are "Memory" (the database is only in memory) of "File" (the database is an actual file)
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            //QString databaseMode2 = settings.value("Settings/databaseMode").toString();
+            //QMessageBox::information(this,"Katalog","databaseMode2: <br/>" + QVariant(databaseMode2).toString());
             //databaseMode = "File";//DEV only
+            //databaseMode = "Memory";
+            databaseMode = settings.value("Settings/databaseMode").toString();
             startDatabase(databaseMode);
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
-
-            //Set
 
             //Set Development mode
                 developmentMode = false;
@@ -64,8 +81,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 }
 
             //Set current version and release date, and check new version
-                currentVersion = "1.14";
-                releaseDate = "2022-09-31";
+                currentVersion = "1.15";
+                releaseDate = "2022-10-31";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -73,11 +90,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 if ( checkVersionChoice == true)
                     checkVersion();
 
-            //Load languages to the Settings combobox
+            //Load languages to the Settings combobox, keeping the user's selection
+                QString userLanguage = settings.value("Settings/Language").toString();
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
+                ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
             //Hide some widgets by default
                 ui->Catalogs_widget_EditCatalog->hide();
@@ -91,22 +110,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->Search_lineEdit_SearchText->hide();
             #endif
 
-        //Load user settings
-            //Get user home path and application dir path
-            QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-            QString homePath = standardsPaths[0];
-            QString applicationDirPath = QCoreApplication::applicationDirPath();
-
-            //Define Setting file path and name
-                //For portable mode, check if there is a settings file located with the executable
-                settingsFilePath = applicationDirPath + "/katalog_settings.ini";
-                QFile settingsFile(settingsFilePath);
-                if(!settingsFile.exists()) {
-                    //otherwise fall back to default katalog_settings path
-                    settingsFilePath = homePath + "/.config/katalog_settings.ini";
-                }
-
-            //Load Settings and apply values
+            //Load all other Settings and apply values
             loadSettings();
 
         //Load custom stylesheet
