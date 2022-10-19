@@ -446,6 +446,10 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
+        //Clear catalog table
+            QSqlQuery queryDelete;
+            queryDelete.prepare( "DELETE FROM catalog" );
+
         //Prepare table and insert query
             QSqlQuery query;
             if (!query.exec(SQL_CREATE_CATALOG)){
@@ -564,6 +568,7 @@
             QSqlQuery loadCatalogQuery;
             loadCatalogQuery.prepare(loadCatalogSQL);
             loadCatalogQuery.exec();
+loadCatalogQuery.next();
 
             //Format and send to Treeview
             QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
@@ -642,7 +647,6 @@
     int MainWindow::verifyCatalogPath(QString catalogSourcePath)
     {
         // Verify that the catalog path is accessible (so the related drive is mounted), returns true/false
-
         QDir dir(catalogSourcePath);
         int status = dir.exists();
         return status;
@@ -999,20 +1003,19 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogChanges()
     {
-
         //Get new values
-            //newCatalogSourcePath: remove the / at the end if any, except for / alone
-            QString newCatalogSourcePath = ui->Catalogs_lineEdit_SourcePath->text();
-            int pathLength = newCatalogSourcePath.length();
+            //newCatalogSourcePath: remove the / at the end if any, except for / alone (root directory in linux)
+            QString newCatalogSourcePath    = ui->Catalogs_lineEdit_SourcePath->text();
+            int     pathLength              = newCatalogSourcePath.length();
             if (newCatalogSourcePath !="/" and newCatalogSourcePath.at(pathLength-1)=="/") {
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
 
-            bool newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
-            QString newCatalogFileType   = ui->Catalogs_comboBox_FileType->currentText();
-            QString newCatalogStorage    = ui->Catalogs_comboBox_Storage->currentText();
+            bool    newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
+            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->currentText();
+            QString newCatalogStorage       = ui->Catalogs_comboBox_Storage->currentText();
 
-            bool isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
+            bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
             //save catalogs
@@ -1024,18 +1027,17 @@
                 return;
             }
 
-        //Write changes to catalog file
-            // open file
-            QFile file(selectedCatalog->filePath);
-            if(file.open(QIODevice::ReadWrite | QIODevice::Text))
+        //Write changes to catalog file (update headers only)
+
+            QFile catalogFile(selectedCatalog->filePath);
+            if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
             {
                 QString fullFileText;
-                QTextStream textStream(&file);
-                //DEV: int lineNumber = 0;
+                QTextStream textStream(&catalogFile);
+
                 while(!textStream.atEnd())
                 {
                     QString line = textStream.readLine();
-                    //lineNumber = lineNumber + 1;
                     //DEV: bool addedIsFullDevice = false;
 
                     //add file data line
@@ -1044,7 +1046,9 @@
                             and !line.startsWith("<catalogFileType")
                             and !line.startsWith("<catalogStorage")
                             and !line.startsWith("<catalogIsFullDevice"))
+                    {
                         fullFileText.append(line + "\n");
+                    }
                     else{
                         //add meta-data. The ifs must be in the correct order of the meta-data lines
                         if(line.startsWith("<catalogSourcePath>"))
@@ -1070,9 +1074,10 @@
                     //DEV:      fullFileText.prepend("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
                     //DEV: }
                 }
-                file.resize(0);
+                catalogFile.resize(0);
                 textStream << fullFileText;
-                file.close();
+                catalogFile.close();
+                loadCollection();
             }
             else {
                 QMessageBox::information(this,"Katalog",tr("Could not open file."));
@@ -1087,18 +1092,18 @@
             //Rename the catalog file
             if (newCatalogName != currentCatalogName){
 
-                //generate the full new name of the
-                QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+//                //rename the file name
+//                QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+//                QFile::rename(selectedCatalog->filePath, newCatalogFullName);
+                    selectedCatalog->renameCatalog(newCatalogName);
 
-                QFile::rename(selectedCatalog->filePath, newCatalogFullName);
-
-                 //refresh catalog lists
+//                 //refresh catalog lists
                     loadCatalogFilesToTable();
                     loadCatalogsTableToModel();
                     //LoadCatalogFileList();
                     refreshCatalogSelectionList("","");
 
-                //Rename in statistics
+//                //Rename in statistics
 
                     int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
                                              , QMessageBox::Yes | QMessageBox::No);
@@ -1127,10 +1132,10 @@
             }
 
         //Launch update if catalog is active and changes impact the contents (path, type, hidden)
-            if (       newCatalogSourcePath    != selectedCatalog->filePath
+            if (       newCatalogSourcePath    != selectedCatalog->sourcePath
                     or newCatalogIncludeHidden != selectedCatalog->includeHidden
-                    or newCatalogFileType      != selectedCatalog->fileType){
-
+                    or newCatalogFileType      != selectedCatalog->fileType)
+            {
                 int updatechoice = QMessageBox::warning(this, "Katalog",
                                     tr("Update the catalog content with the new criteria?\n")
                                          , QMessageBox::Yes
@@ -1146,130 +1151,130 @@
             ui->Catalogs_widget_EditCatalog->hide();
 
         //Refresh data
-            if(databaseMode=="Memory"){
-                QSqlQuery queryDelete;
-                queryDelete.exec("DELETE FROM catalog");
-            }
+//            if(databaseMode=="Memory"){
+//                QSqlQuery queryDelete;
+//                queryDelete.exec("DELETE FROM catalog");
+//            }
             createStorageList();
             generateCollectionFilesPaths();
             loadCollection();
     }
-//--------------------------------------------------------------------------
-void MainWindow::recordCollectionStats(){
-        //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
+    //--------------------------------------------------------------------------
+    void MainWindow::recordCollectionStats(){
+            //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
 
-        //Get last total file size and number
-        qint64 lastTotalFileSize;
-        qint64 lastTotalFileNumber;
+            //Get last total file size and number
+            qint64 lastTotalFileSize;
+            qint64 lastTotalFileNumber;
+
+            //get the list of catalogs and data
+                QSqlQuery queryLast;
+                QString queryLastSQL = QLatin1String(R"(
+                                            SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                            FROM statistics
+                                            WHERE dateTime = (SELECT MAX(dateTime)
+                                                                FROM statistics
+                                                                WHERE recordType="Snapshot")
+                                            GROUP BY dateTime
+                                            )");
+                queryLast.prepare(queryLastSQL);
+                queryLast.exec();
+                queryLast.next();
+                lastTotalFileSize   = queryLast.value(0).toLongLong();
+                lastTotalFileNumber = queryLast.value(1).toLongLong();
+
+            //record all current catalog value
+            recordAllCatalogStats();
+
+
+            //Get new total file size and number
+            qint64 newTotalFileSize;
+            qint64 newTotalFileNumber;
+
+            //get the list of catalogs and data
+                QSqlQuery queryNew;
+                QString queryNewSQL = QLatin1String(R"(
+                                            SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                            FROM statistics
+                                            WHERE dateTime = (SELECT MAX(dateTime)
+                                                                FROM statistics
+                                                                WHERE recordType="Snapshot")
+                                            GROUP BY dateTime
+                                            )");
+                queryNew.prepare(queryNewSQL);
+                queryNew.exec();
+                queryNew.next();
+                newTotalFileSize   = queryNew.value(0).toLongLong();
+                newTotalFileNumber = queryNew.value(1).toLongLong();
+
+            //Calculate and inform
+            qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
+            qint64 deltaTotalFileNumber = newTotalFileNumber - lastTotalFileNumber;
+
+            QMessageBox::information(this,"Katalog",tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
+                                     "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                                     "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                                     ).arg(QString::number(newTotalFileNumber),
+                                           QString::number(deltaTotalFileNumber),
+                                           QLocale().formattedDataSize(newTotalFileSize),
+                                           QLocale().formattedDataSize(deltaTotalFileSize)
+                                           )
+                                     ,Qt::TextFormat(Qt::RichText));
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::recordAllCatalogStats()
+    {
+        // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
+
+        QDateTime nowDateTime = QDateTime::currentDateTime();
+        QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+        //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
 
         //get the list of catalogs and data
-            QSqlQuery queryLast;
-            QString queryLastSQL = QLatin1String(R"(
-                                        SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
-                                        FROM statistics
-                                        WHERE dateTime = (SELECT MAX(dateTime)
-                                                            FROM statistics
-                                                            WHERE recordType="Snapshot")
-                                        GROUP BY dateTime
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        SELECT
+                                            catalogName                 ,
+                                            catalogFileCount            ,
+                                            catalogTotalFileSize
+                                        FROM catalog
                                         )");
-            queryLast.prepare(queryLastSQL);
-            queryLast.exec();
-            queryLast.next();
-            lastTotalFileSize   = queryLast.value(0).toLongLong();
-            lastTotalFileNumber = queryLast.value(1).toLongLong();
-
-        //record all current catalog value
-        recordAllCatalogStats();
+            query.prepare(querySQL);
+            query.exec();
 
 
-        //Get new total file size and number
-        qint64 newTotalFileSize;
-        qint64 newTotalFileNumber;
+        //create a new record for each catalog
+            QString recordCatalogName;
+            QString recordCatalogFileCount;
+            QString recordCatalogTotalFileSize;
 
-        //get the list of catalogs and data
-            QSqlQuery queryNew;
-            QString queryNewSQL = QLatin1String(R"(
-                                        SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
-                                        FROM statistics
-                                        WHERE dateTime = (SELECT MAX(dateTime)
-                                                            FROM statistics
-                                                            WHERE recordType="Snapshot")
-                                        GROUP BY dateTime
-                                        )");
-            queryNew.prepare(queryNewSQL);
-            queryNew.exec();
-            queryNew.next();
-            newTotalFileSize   = queryNew.value(0).toLongLong();
-            newTotalFileNumber = queryNew.value(1).toLongLong();
+            while (query.next()){
+                    recordCatalogName = query.value(0).toString();
+                    recordCatalogFileCount = query.value(1).toString();
+                    recordCatalogTotalFileSize = query.value(2).toString();
 
-        //Calculate and inform
-        qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
-        qint64 deltaTotalFileNumber = newTotalFileNumber - lastTotalFileNumber;
+                    QString statisticsLine = nowDateTimeFormatted + "\t"
+                                            + recordCatalogName + "\t"
+                                            + recordCatalogFileCount + "\t"
+                                            + recordCatalogTotalFileSize + "\t"
+                                            + "Snapshot" ;
 
-        QMessageBox::information(this,"Katalog",tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
-                                 "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
-                                 "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                                 ).arg(QString::number(newTotalFileNumber),
-                                       QString::number(deltaTotalFileNumber),
-                                       QLocale().formattedDataSize(newTotalFileSize),
-                                       QLocale().formattedDataSize(deltaTotalFileSize)
-                                       )
-                                 ,Qt::TextFormat(Qt::RichText));
-}
-//--------------------------------------------------------------------------
-void MainWindow::recordAllCatalogStats()
-{
-    // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
+                    //QMessageBox::information(this,"Katalog","Ok." + statisticsLine);
 
-    QDateTime nowDateTime = QDateTime::currentDateTime();
-    QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
-    //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
+                    // Stream the values to the file
+                        QFile fileOut( collectionFolder + "/" + statisticsFileName );
 
-    //get the list of catalogs and data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                        catalogName                 ,
-                                        catalogFileCount            ,
-                                        catalogTotalFileSize
-                                    FROM catalog
-                                    )");
-        query.prepare(querySQL);
-        query.exec();
+                        // Write data
+                        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                            QTextStream stream(&fileOut);
+                            stream << statisticsLine << "\n";
+                         }
+                         fileOut.close();
 
+            }
 
-    //create a new record for each catalog
-        QString recordCatalogName;
-        QString recordCatalogFileCount;
-        QString recordCatalogTotalFileSize;
+            //refresh graphs
+            loadStatisticsData();
+            loadStatisticsChart();
 
-        while (query.next()){
-                recordCatalogName = query.value(0).toString();
-                recordCatalogFileCount = query.value(1).toString();
-                recordCatalogTotalFileSize = query.value(2).toString();
-
-                QString statisticsLine = nowDateTimeFormatted + "\t"
-                                        + recordCatalogName + "\t"
-                                        + recordCatalogFileCount + "\t"
-                                        + recordCatalogTotalFileSize + "\t"
-                                        + "Snapshot" ;
-
-                //QMessageBox::information(this,"Katalog","Ok." + statisticsLine);
-
-                // Stream the values to the file
-                    QFile fileOut( collectionFolder + "/" + statisticsFileName );
-
-                    // Write data
-                    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                        QTextStream stream(&fileOut);
-                        stream << statisticsLine << "\n";
-                     }
-                     fileOut.close();
-
-        }
-
-        //refresh graphs
-        loadStatisticsData();
-        loadStatisticsChart();
-
-}
+    }

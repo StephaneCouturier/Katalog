@@ -31,6 +31,7 @@
 
 #include "catalog.h"
 #include <QSqlQuery>
+#include <QFileInfo>
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -175,6 +176,19 @@ void Catalog::loadCatalogMetaData()
     isFullDevice       = query.value(11).toBool();
     loadedVersion      = query.value(12).toString();
 }
+
+
+void Catalog::renameCatalog(QString newCatalogName)
+{
+        //rename value of current object
+        name = newCatalogName;
+
+        //rename file
+        QFileInfo catalogFileInfo(filePath);
+        QString newCatalogFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+        QFile::rename(filePath, newCatalogFilePath);
+}
+
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<qint64>  &cfileSize,

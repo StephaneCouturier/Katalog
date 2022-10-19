@@ -383,16 +383,16 @@
 
             collectionFolder = dir;
 
-            //set the new path in Colletion tab
+            //Set the new path in Settings tab
             ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
 
-            //redefine the path of the Storage file
+            //Redefine the path of the Storage file
             storageFilePath = collectionFolder + "/" + "storage.csv";
 
-            //save Settings for the new collection folder value;
+            //Save Settings for the new collection folder value;
             saveSettings();
 
-            //load the collection from this new folder;
+            //Load the collection from this new folder;
                 //Clear database if mode is Memory
                 if(databaseMode=="Memory"){
                     //Clear current entires from the tables
@@ -442,6 +442,17 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
+        //Clear database
+            QSqlQuery queryDelete;
+            queryDelete.exec("DELETE FROM catalog");
+            queryDelete.exec("DELETE FROM storage");
+            queryDelete.exec("DELETE FROM filesall");
+            queryDelete.exec("DELETE FROM file");
+            queryDelete.exec("DELETE FROM folder");
+            queryDelete.exec("DELETE FROM statistics");
+            queryDelete.exec("DELETE FROM search");
+            queryDelete.exec("DELETE FROM tag");
+
         //Load search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();

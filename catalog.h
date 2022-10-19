@@ -75,6 +75,7 @@ public:
     void setLoadedVersion(QString dateTime);
 
     void loadCatalogMetaData();
+    void renameCatalog(QString newCatalogName);
 
     void populateFileData(  const QList<QString> &fileNames,
                             const QList<qint64>  &fileSizes,
