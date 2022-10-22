@@ -1793,8 +1793,8 @@
         void MainWindow::loadCatalogFilelistToTable(Catalog *catalog)
         {
             //Verify if the lastest version of the catalog is already in memory
-            QDateTime dateTime1 = QDateTime::fromString(catalog->loadedVersion, "yyyy-MM-dd hh:mm:ss");
-            QDateTime dateTime2 = QDateTime::fromString(catalog->dateUpdated,   "yyyy-MM-dd hh:mm:ss");
+            QDateTime dateTime1 = QDateTime::fromString(catalog->dateLoaded, "yyyy-MM-dd hh:mm:ss");
+            QDateTime dateTime2 = QDateTime::fromString(catalog->dateUpdated,"yyyy-MM-dd hh:mm:ss");
 
             //Load catalog if latest version is not already in memory
             if ( dateTime1 < dateTime2){
@@ -1914,16 +1914,17 @@
 
                     //update catalog loadedversion
                         QDateTime nowDateTime = QDateTime::currentDateTime();
+                        catalog->setDateLoaded(nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
 
                         QSqlQuery catalogQuery;
                         QString catalogQuerySQL = QLatin1String(R"(
                                                     UPDATE catalog
-                                                    SET catalogLoadedVersion =:catalogLoadedVersion
+                                                    SET catalogLoadedVersion =:catalogDateLoaded
                                                     WHERE catalogName =:catalogName
                                                   )");
                         catalogQuery.prepare(catalogQuerySQL);
-                        catalogQuery.bindValue(":catalogLoadedVersion", nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
-                        catalogQuery.bindValue(":catalogName",     catalog->name);
+                        catalogQuery.bindValue(":catalogDateLoaded", catalog->dateLoaded);
+                        catalogQuery.bindValue(":catalogName",       catalog->name);
                         catalogQuery.exec();
 
                     //refresh catalogs screen

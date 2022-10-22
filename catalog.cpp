@@ -128,9 +128,9 @@ void Catalog::setIsFullDevice(bool selectedIsFullDevice)
 {
     isFullDevice = selectedIsFullDevice;
 }
-void Catalog::setLoadedVersion(QString dateTimeString)
+void Catalog::setDateLoaded(QString dateTimeString)
 {
-    loadedVersion = dateTimeString;
+    dateLoaded = dateTimeString;
 }
 
 
@@ -174,7 +174,7 @@ void Catalog::loadCatalogMetaData()
     storageName        = query.value(9).toString();
     includeSymblinks   = query.value(10).toBool();
     isFullDevice       = query.value(11).toBool();
-    loadedVersion      = query.value(12).toString();
+    dateLoaded         = query.value(12).toString();
 }
 
 
@@ -187,6 +187,7 @@ void Catalog::renameCatalog(QString newCatalogName)
         QFileInfo catalogFileInfo(filePath);
         QString newCatalogFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
         QFile::rename(filePath, newCatalogFilePath);
+        filePath = newCatalogFilePath;
 }
 
 

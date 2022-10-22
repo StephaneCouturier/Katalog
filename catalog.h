@@ -55,7 +55,7 @@ public:
     QString storageName;
     bool    includeSymblinks;
     bool    isFullDevice;
-    QString loadedVersion;
+    QString dateLoaded;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -72,7 +72,7 @@ public:
     void setStorageName(QString selectedStorageName);
     void setIncludeSymblinks(bool selectedIncludeSymblinks);
     void setIsFullDevice(bool selectedIsFullDevice);
-    void setLoadedVersion(QString dateTime);
+    void setDateLoaded(QString dateTime);
 
     void loadCatalogMetaData();
     void renameCatalog(QString newCatalogName);

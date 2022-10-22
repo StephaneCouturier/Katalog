@@ -198,7 +198,7 @@
             newCatalog->setStorageName(ui->Create_comboBox_StorageSelection->currentText());
             newCatalog->setIncludeSymblinks(ui->Create_checkBox_IncludeSymblinks->isChecked());
             newCatalog->setIsFullDevice(ui->Create_checkBox_isFullDevice->isChecked());
-            newCatalog->setLoadedVersion(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            newCatalog->setDateLoaded(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
             newCatalog->setFileCount(0);
             newCatalog->setTotalFileSize(0);
 
@@ -253,16 +253,16 @@
 
 
             //Update the new catalog loadedversion to indicate that files are already in memory
-            QSqlQuery queryUpdateLoadedVersion;
-            QString queryUpdateLoadedVersionSQL = QLatin1String(R"(
+            QSqlQuery queryUpdateDateLoaded;
+            QString queryUpdateDateLoadedSQL = QLatin1String(R"(
                                                     UPDATE catalog
-                                                    SET catalogLoadedVersion=:catalogLoadedVersion
+                                                    SET catalogLoadedVersion=:catalogDateLoaded
                                                     WHERE catalogName=:catalogName
                                             )");
-            queryUpdateLoadedVersion.prepare(queryUpdateLoadedVersionSQL);
-            queryUpdateLoadedVersion.bindValue(":catalogLoadedVersion",newCatalog->loadedVersion);
-            queryUpdateLoadedVersion.bindValue(":catalogName",newCatalog->name);
-            queryUpdateLoadedVersion.exec();
+            queryUpdateDateLoaded.prepare(queryUpdateDateLoadedSQL);
+            queryUpdateDateLoaded.bindValue(":catalogDateLoaded",newCatalog->dateLoaded);
+            queryUpdateDateLoaded.bindValue(":catalogName",newCatalog->name);
+            queryUpdateDateLoaded.exec();
 
             //Add new catalog values to the statistics log, if the user has chosen this option
                 if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
@@ -553,6 +553,21 @@
         query.bindValue(":catalogTotalFileSize", catalog->totalFileSize);
         query.bindValue(":catalogName", catalog->name);
         query.exec();
+
+        //update catalog loadedversion
+            QDateTime nowDateTime = QDateTime::currentDateTime();
+            catalog->setDateLoaded(nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+
+            QSqlQuery catalogQuery;
+            QString catalogQuerySQL = QLatin1String(R"(
+                                        UPDATE catalog
+                                        SET catalogLoadedVersion =:catalogDateLoaded
+                                        WHERE catalogName =:catalogName
+                                      )");
+            catalogQuery.prepare(catalogQuerySQL);
+            catalogQuery.bindValue(":catalogDateLoaded", catalog->dateLoaded);
+            catalogQuery.bindValue(":catalogName",       catalog->name);
+            catalogQuery.exec();
 
         //Stop animation
         QApplication::restoreOverrideCursor();

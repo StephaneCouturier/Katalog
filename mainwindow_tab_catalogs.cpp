@@ -588,7 +588,7 @@ loadCatalogQuery.next();
             proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
-            proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Loaded Version"));
+            proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Date Loaded"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -1004,21 +1004,26 @@ loadCatalogQuery.next();
     void MainWindow::saveCatalogChanges()
     {
         //Get new values
-            //newCatalogSourcePath: remove the / at the end if any, except for / alone (root directory in linux)
+            //get previous and new names
+            QFileInfo selectedCatalogFileInfo(selectedCatalog->filePath);
+            QString currentCatalogName = selectedCatalogFileInfo.baseName();
+            QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
+
+            //get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
             QString newCatalogSourcePath    = ui->Catalogs_lineEdit_SourcePath->text();
             int     pathLength              = newCatalogSourcePath.length();
             if (newCatalogSourcePath !="/" and newCatalogSourcePath.at(pathLength-1)=="/") {
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
 
-            bool    newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
-            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->currentText();
             QString newCatalogStorage       = ui->Catalogs_comboBox_Storage->currentText();
+            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->currentText();
+            bool    newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
 
             bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
-            //save catalogs
+        //Confirm save changes
             int result = QMessageBox::warning(this, "Katalog",
                                 tr("Save changes to the definition of the catalog?\n")
                                      +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
@@ -1026,6 +1031,32 @@ loadCatalogQuery.next();
             if ( result == QMessageBox::Cancel){
                 return;
             }
+
+        //Write changes to database
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                    UPDATE catalog
+                                    SET
+                                        catalogSourcePath =:newCatalogSourcePath,
+                                        catalogStorage =:newCatalogStorage,
+                                        catalogFileType =:newCatalogFileType,
+                                        catalogIncludeHidden =:newCatalogIncludeHidden
+                                    WHERE catalogName =:catalogName
+                                )");
+            //catalogName =:newCatalogName,
+            //DEV: catalogIncludeSymblinks =: newIncludeSymblinks;
+
+            query.prepare(querySQL);
+            //query.bindValue(":newCatalogName",          newCatalogName);
+            query.bindValue(":newCatalogSourcePath",    newCatalogSourcePath);
+            query.bindValue(":newCatalogStorage",       newCatalogStorage);
+            query.bindValue(":newCatalogFileType",      newCatalogFileType);
+            query.bindValue(":newCatalogIncludeHidden", newCatalogIncludeHidden);
+            query.bindValue(":catalogName",             currentCatalogName);
+            //DEV:query.bindValue(":catalogIncludeSymblinks", selectedCatalog->includeSymblinks);
+            query.exec();
+
+            loadCatalogsTableToModel();
 
         //Write changes to catalog file (update headers only)
 
@@ -1077,19 +1108,12 @@ loadCatalogQuery.next();
                 catalogFile.resize(0);
                 textStream << fullFileText;
                 catalogFile.close();
-                loadCollection();
             }
             else {
                 QMessageBox::information(this,"Katalog",tr("Could not open file."));
             }
 
-        //Rename catalog
-            //Get info from the selected catalog
-            QFileInfo selectedCatalogFileInfo(selectedCatalog->filePath);
-            QString currentCatalogName = selectedCatalogFileInfo.baseName();
-            QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
-
-            //Rename the catalog file
+        //Rename the catalog file
             if (newCatalogName != currentCatalogName){
 
 //                //rename the file name
@@ -1131,7 +1155,7 @@ loadCatalogQuery.next();
                     }
             }
 
-        //Launch update if catalog is active and changes impact the contents (path, type, hidden)
+        //Launch update if changes impact the contents (path, file type, hidden)
             if (       newCatalogSourcePath    != selectedCatalog->sourcePath
                     or newCatalogIncludeHidden != selectedCatalog->includeHidden
                     or newCatalogFileType      != selectedCatalog->fileType)
@@ -1147,17 +1171,12 @@ loadCatalogQuery.next();
                 }
             }
 
+        //Refresh
+            loadCatalogsTableToModel();
+
         //Hide edition section
             ui->Catalogs_widget_EditCatalog->hide();
 
-        //Refresh data
-//            if(databaseMode=="Memory"){
-//                QSqlQuery queryDelete;
-//                queryDelete.exec("DELETE FROM catalog");
-//            }
-            createStorageList();
-            generateCollectionFilesPaths();
-            loadCollection();
     }
     //--------------------------------------------------------------------------
     void MainWindow::recordCollectionStats(){
