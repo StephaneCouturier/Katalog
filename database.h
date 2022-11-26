@@ -240,7 +240,7 @@
 
 // Database initialization ------------------------------------------------
 
-QSqlError initializeDatabase(QString databaseMode)
+QSqlError initializeDatabase(QString databaseMode, QString databaseFilePath)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -249,7 +249,9 @@ QSqlError initializeDatabase(QString databaseMode)
         db.setDatabaseName(":memory:");
     }
     else if (databaseMode=="File"){
-        db.setDatabaseName("/home/stephane/Development/katalog.db");
+
+        /*TEMPDEV*/databaseFilePath = "/home/stephane/Development/katalog.db";
+        db.setDatabaseName(databaseFilePath);
     }
 
     if (!db.open())
