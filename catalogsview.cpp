@@ -23,10 +23,9 @@
 * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalogview.cpp
-// Purpose:     class to create a model used to display catalogs and their attributes
+// Purpose:     class to create a proxy model to display catalogs and their attributes
 // Description:
 // Author:      Stephane Couturier
-// Version:     1.00
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "catalogsview.h"
@@ -48,8 +47,8 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
     //Define list of column per type of data
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
       filecountColumnList <<3;
-      filesizeColumnList <<4;
-      //percentColumnList <<5;
+      filesizeColumnList  <<4;
+      //percentColumnList <<5; //DEV: for future % columns
 
     switch ( role )
          {
@@ -65,13 +64,17 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");
                 }
 
-                //Percent columns
-                else if( percentColumnList.contains(index.column()) ){
-                    if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
-                        return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
-                    else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
-                        return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
+                //Percent columns //DEV: for future % columns
+//                else if( percentColumnList.contains(index.column()) ){
+//                    if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
+//                        return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
+//                    else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
+//                        return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
+//                }
 
+                //Text columns
+                if( index.column() == 6 ){
+                    return tr(QSortFilterProxyModel::data(index, role).toString().toUtf8());
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;
@@ -81,7 +84,7 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 
             case Qt::FontRole:
             {
-                if (index.column() == 0 ) { //change font only for columns 0
+                if (index.column() == 0 ) {
                     QFont boldFont;
                     boldFont.setBold(true);
                     return boldFont;
