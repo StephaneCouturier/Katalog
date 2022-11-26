@@ -43,7 +43,6 @@
 #include <QTreeView>
 #include <QInputDialog>
 #include <QTranslator>
-//#include <QDirModel>
 #include <QDateTime>
 #include <QAbstractTableModel>
 #include <QMenu>
@@ -54,11 +53,10 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QMessageBox>
-#include <QTranslator>
 #ifdef Q_OS_LINUX
-#include <KComboBox>
-#include <KXmlGuiWindow>
-class KJob;
+    #include <KComboBox>
+    #include <KXmlGuiWindow>
+    class KJob;
 #endif
 
 #include "catalog.h"
@@ -125,7 +123,7 @@ class MainWindow : public QMainWindow
             //Database
             QSqlRelationalTableModel *storageModel;
             QString databaseMode;
-            void startDatabase(QString databaseMode); //databaseMode is Memory or File
+            void startDatabase();
             void populateCalendarTable(QDateTime min, QDateTime max);
 
             //Objects
@@ -357,6 +355,7 @@ class MainWindow : public QMainWindow
 
             //Filters
                 void on_Filters_pushButton_ResetGlobal_clicked();
+                void on_Filters_pushButton_ReloadCollection_clicked();
                 void on_Filter_pushButton_Search_clicked();
                 void on_Filter_pushButton_Explore_clicked();
                 void on_Filter_pushButton_Update_clicked();
@@ -395,7 +394,7 @@ class MainWindow : public QMainWindow
             void on_Search_lineEdit_SearchText_returnPressed();
 
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
-            void on_SearchTreeViewFilesFoundClicked(const QModelIndex &index);
+            void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
             void on_Search_pushButton_ShowHideSearchCriteria_clicked();
             void on_Search_pushButton_ShowHideCatalogResults_clicked();
@@ -465,7 +464,7 @@ class MainWindow : public QMainWindow
         //Explore
             void on_Explore_splitter_splitterMoved();
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
-            void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
+                        void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_ExplorePushButtonLoadClicked();
             void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
             void on_Explore_checkBox_DisplaySubFolders_toggled(bool checked);
@@ -493,7 +492,7 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_Reload_clicked();
             void on_Storage_pushButton_EditAll_clicked();
             void on_Storage_pushButton_SaveAll_clicked();
-            void on_Storage_pushButton_New_clicked();
+                        void on_Storage_pushButton_New_clicked();
             void on_Storage_pushButton_OpenFilelight_clicked();
             void on_Storage_pushButton_Update_clicked();
             void on_Storage_pushButton_Delete_clicked();

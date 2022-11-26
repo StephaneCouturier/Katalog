@@ -619,17 +619,27 @@
     //----------------------------------------------------------------------
 
 
-    void MainWindow::startDatabase(QString databaseMode)
-    {
+    void MainWindow::startDatabase()
+    {       
+        //Check Sqlite driver
         if (!QSqlDatabase::drivers().contains("QSQLITE"))
             QMessageBox::critical(
                         this,
                         "Unable to load database",
-                        "This demo needs the SQLITE driver"
+                        "The SQLITE driver was not loaded."
                         );
 
+        //Get databaseMode ("Memory" or "File") and file path
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        //DEV: databaseMode = settings.value("Settings/databaseMode").toString();
+        //DEV: if (databaseMode=="")
+            databaseMode = "Memory";
+
+        QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
+        QString databaseFilePath = lastCollectionFolder + "katalog.db";
+
         // Initialize the database:
-        QSqlError err = initializeDatabase(databaseMode);
+        QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
         if (err.type() != QSqlError::NoError) {
             //showError(err);
             return;
