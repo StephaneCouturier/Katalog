@@ -170,7 +170,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         query.bindValue(":folderCatalogName", catalogName);
         query.bindValue(":selectedCatalogPath",catalogSourcePath);
         query.exec();
-
+query.next();
 
         int idPath = query.record().indexOf("filePath");
         int idIdx = query.record().indexOf("fullPath");
