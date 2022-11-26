@@ -157,7 +157,7 @@
                                                     +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_SearchTreeViewFilesFoundClicked(const QModelIndex &index)
+        void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
         {
             //Get file from selected row
             QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
@@ -805,7 +805,7 @@
                     selectedTextCriteria   = ui->Search_comboBox_TextCriteria->currentText();
                     selectedSearchIn       = ui->Search_comboBox_SearchIn->currentText();
                     selectedSearchExclude  = ui->Search_lineEdit_Exclude->text();
-                    selectedFileType       = ui->Search_comboBox_FileType->currentText();
+                    selectedFileType       = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
                     selectedMinimumSize    = ui->Search_spinBox_MinimumSize->value();
                     selectedMaximumSize    = ui->Search_spinBox_MaximumSize->value();
                     selectedMinSizeUnit    = ui->Search_comboBox_MinSizeUnit->currentText();
@@ -1341,18 +1341,18 @@
                     regexPattern = regexSearchtext;
 
                 //Prepare the regexFileType for file types
-                if(selectedFileType !=tr("All")){
+                if(selectedFileType !="All"){
                     //Get the list of file extension and join it into one string
-                    if(selectedFileType ==tr("Audio")){
+                    if(selectedFileType =="Audio"){
                                 regexFileType = fileType_AudioS.join("|");
                     }
-                    if(selectedFileType ==tr("Image")){
+                    if(selectedFileType =="Image"){
                                 regexFileType = fileType_ImageS.join("|");
                     }
-                    if(selectedFileType ==tr("Text")){
+                    if(selectedFileType =="Text"){
                                 regexFileType = fileType_TextS.join("|");
                     }
-                    if(selectedFileType ==tr("Video")){
+                    if(selectedFileType =="Video"){
                                 regexFileType = fileType_VideoS.join("|");
                     }
 
@@ -1361,6 +1361,7 @@
 
                     //Add the file type expression to the regex
                     regexPattern = regexSearchtext  + "(" + regexFileType + ")";
+
                  }
 
                 //Add the words to exclude to the regex
@@ -2053,6 +2054,19 @@
         //Set up
         void MainWindow::initiateSearchValues()
         {
+            //Add filetype English value additionally to the displayed/translated value
+                ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+                ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+                ui->Search_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+                ui->Search_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+                ui->Search_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+
+                ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+                ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+                ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+                ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+                ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+
             //Prepare list of size units for the Catalog selection combobox
             // the first line is the one displayed by default
                 ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
@@ -2070,7 +2084,6 @@
                 if (selectedMaximumSize ==0)
                     selectedMaximumSize = 1000;
 
-
             //Populate Differences combo boxes with selected catalogs
                 refreshDifferencesCatalogSelection();
 
@@ -2081,7 +2094,7 @@
                 ui->Search_comboBox_TextCriteria->setCurrentText(selectedTextCriteria);
                 ui->Search_comboBox_SearchIn->setCurrentText(selectedSearchIn);
                 ui->Search_lineEdit_Exclude->setText(selectedSearchExclude);
-                ui->Search_comboBox_FileType->setCurrentText(selectedFileType);
+                ui->Search_comboBox_FileType->setCurrentText(tr(selectedFileType.toUtf8()));
                 ui->Search_spinBox_MinimumSize->setValue(selectedMinimumSize);
                 ui->Search_spinBox_MaximumSize->setValue(selectedMaximumSize);
                 ui->Search_comboBox_MinSizeUnit->setCurrentText(selectedMinSizeUnit);
