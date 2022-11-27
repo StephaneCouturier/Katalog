@@ -203,7 +203,6 @@
             newCatalog->setTotalFileSize(0);
 
             //Get the file type for the catalog
-            QString selectedCreateFileType;
             if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
                     newCatalog->fileType = "Image";}
             else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
@@ -213,7 +212,7 @@
             else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
                     newCatalog->fileType = "Text";}
             else
-                    newCatalog->fileType = "";
+                    newCatalog->fileType = "All";
 
             //Check if the catalog (file) already exists
             QFile file(newCatalog->filePath);
@@ -248,10 +247,6 @@
                 }
             }
 
-            //Save the catalog and contents to a new file
-            saveCatalogToNewFile(newCatalog->name);
-
-
             //Update the new catalog loadedversion to indicate that files are already in memory
             QSqlQuery queryUpdateDateLoaded;
             QString queryUpdateDateLoadedSQL = QLatin1String(R"(
@@ -285,7 +280,7 @@
                 //Get current search selection
                 selectedStorageLocation = ui->Filters_label_DisplayLocation->text();
                 selectedStorageName     = ui->Filters_label_DisplayStorage->text();
-                selectedCatalogName = ui->Filters_label_DisplayCatalog->text();
+                selectedCatalogName     = ui->Filters_label_DisplayCatalog->text();
 
                 //Refresh list
                 refreshCatalogSelectionList(selectedStorageLocation, selectedStorageName);
@@ -319,6 +314,7 @@
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Define the extensions of files to be included
+
         QStringList fileExtensions;
         if      ( catalog->fileType == "Image")
                                 fileExtensions = fileType_Image;
@@ -554,7 +550,7 @@
         query.bindValue(":catalogName", catalog->name);
         query.exec();
 
-        //update catalog loadedversion
+        //update catalog date loaded
             QDateTime nowDateTime = QDateTime::currentDateTime();
             catalog->setDateLoaded(nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
 
