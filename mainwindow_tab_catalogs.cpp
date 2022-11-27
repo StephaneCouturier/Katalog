@@ -511,7 +511,7 @@
                                 catalogValues[2].toLongLong(), //catalogTotalFileSize
                                 isActive,         //catalogSourcePathIsActive
                                 catalogValues[3], //catalogIncludeHidden
-                                catalogValues[4], //catalogFileType
+                                catalogValues[4], //translated catalogFileType
                                 catalogValues[5], //catalogStorage
                                 catalogValues[6], //catalogIncludeSymblinks
                                 catalogValues[7],  //catalogIsFullDevice
@@ -568,7 +568,6 @@
             QSqlQuery loadCatalogQuery;
             loadCatalogQuery.prepare(loadCatalogSQL);
             loadCatalogQuery.exec();
-loadCatalogQuery.next();
 
             //Format and send to Treeview
             QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
@@ -693,7 +692,7 @@ loadCatalogQuery.next();
     //--------------------------------------------------------------------------
     void MainWindow::updateSingleCatalog(Catalog *catalog)
     {
-        //Update catalog file
+        //Update catalog file list
         updateCatalogFileList(catalog);
 
         //Update its storage
@@ -718,9 +717,10 @@ loadCatalogQuery.next();
 
         }
 
-        //refresh catalog lists
+        //Refresh catalog lists
            loadCatalogFilesToTable();
            loadCatalogsTableToModel();
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateCatalogFileList(Catalog *catalog)
@@ -1017,7 +1017,7 @@ loadCatalogQuery.next();
             }
 
             QString newCatalogStorage       = ui->Catalogs_comboBox_Storage->currentText();
-            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->currentText();
+            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
             bool    newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
 
             bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
@@ -1172,6 +1172,7 @@ loadCatalogQuery.next();
             }
 
         //Refresh
+            loadCatalogFilesToTable();
             loadCatalogsTableToModel();
 
         //Hide edition section
