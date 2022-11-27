@@ -440,6 +440,13 @@
         loadCollection();
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Filters_pushButton_ReloadCollection_clicked()
+    {
+        createStorageList();
+        generateCollectionFilesPaths();
+        loadCollection();
+    }
+    //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
         //Clear database

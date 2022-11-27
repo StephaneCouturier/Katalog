@@ -705,6 +705,32 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="Filters_pushButton_ReloadCollection">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Reload all catalog information</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="view-refresh">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -1829,7 +1855,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>135</width>
+                       <width>200</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -6438,11 +6464,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <property name="text">
                     <string>storage</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>TESTCOMBINED</string>
                    </property>
                   </item>
                  </widget>
