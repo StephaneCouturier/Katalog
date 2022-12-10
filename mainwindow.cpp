@@ -59,18 +59,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
 
-    //Set up database. Modes are "Memory" (the database is only in memory) of "File" (the database is an actual file)
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            //QString databaseMode2 = settings.value("Settings/databaseMode").toString();
-            //QMessageBox::information(this,"Katalog","databaseMode2: <br/>" + QVariant(databaseMode2).toString());
-            //databaseMode = "File";//DEV only
-            //databaseMode = "Memory";
-            databaseMode = settings.value("Settings/databaseMode").toString();
-            startDatabase(databaseMode);
+    //Set up database ("Memory only" or "File" modes)
+            //QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            //DEV: databaseMode = settings.value("Settings/databaseMode").toString();
+            //DEV: if (databaseMode=="")
+            //DEV:     databaseMode = "Memory";
+        startDatabase();
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
+
+            //Set current version and release date, and check new version
+                currentVersion = "1.15";
+                releaseDate = "2022-12-10";
+                ui->Settings_label_VersionValue->setText(currentVersion);
+                ui->Settings_label_DateValue->setText(releaseDate);
 
             //Set Development mode
                 developmentMode = false;
@@ -80,17 +84,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     hideDevelopmentUIItems();
                 }
 
-            //Set current version and release date, and check new version
-                currentVersion = "1.15";
-                releaseDate = "2022-10-31";
-                ui->Settings_label_VersionValue->setText(currentVersion);
-                ui->Settings_label_DateValue->setText(releaseDate);
-
+                //Check for new version
                 checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
                 if ( checkVersionChoice == true)
                     checkVersion();
 
             //Load languages to the Settings combobox, keeping the user's selection
+                QSettings settings(settingsFilePath, QSettings:: IniFormat);
                 QString userLanguage = settings.value("Settings/Language").toString();
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
@@ -117,7 +117,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             //for windows, pick a windows common font.
             #ifdef Q_OS_WIN
             ui->tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
-            ui->splitter_widget_Filters_tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
+            ui->splitter_widget_Filters->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
             //load custom Katalog stylesheet instead of default theme
