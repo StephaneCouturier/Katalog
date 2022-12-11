@@ -1269,10 +1269,6 @@ Utilisez une combinaison différente.</translation>
         <translation>Échec de la suppression.</translation>
     </message>
     <message>
-        <source>Loaded Version</source>
-        <translation>Version chargée</translation>
-    </message>
-    <message>
         <source>Move to folder failed.</source>
         <translation>Échec du déplacement vers le dossier.</translation>
     </message>
@@ -1447,6 +1443,10 @@ to the trash?</source>
     <message>
         <source>Select date</source>
         <translation>Séctionner une date</translation>
+    </message>
+    <message>
+        <source>Date Loaded</source>
+        <translation>Date de chargement</translation>
     </message>
 </context>
 <context>

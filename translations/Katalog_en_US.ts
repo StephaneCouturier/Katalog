@@ -1224,10 +1224,6 @@ Use a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loaded Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move to folder failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1393,6 +1389,10 @@ to the trash?</source>
     </message>
     <message>
         <source>Select date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date Loaded</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

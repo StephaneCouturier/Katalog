@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Set current version and release date, and check new version
                 currentVersion = "1.15";
-                releaseDate = "2022-12-10";
+                releaseDate = "2022-12-11";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
