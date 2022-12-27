@@ -250,16 +250,16 @@
         //reset selected values
         selectedDeviceType = tr("All");
         selectedDeviceName = tr("All");
-        selectedStorageLocation   = tr("All");
-        selectedStorageName       = tr("All");
-        selectedCatalogName       = tr("All");
+        selectedFilterStorageLocation = tr("All");
+        selectedFilterStorageName     = tr("All");
+        selectedFilterCatalogName     = tr("All");
         ui->Filters_label_DisplayLocation->setText(tr("All"));
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
         activeCatalog->setName(tr(""));
         activeCatalog->loadCatalogMetaData();
-        refreshStorageSelectionList(selectedStorageLocation);
-        refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+        refreshStorageSelectionList(selectedFilterStorageLocation);
+        refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
 
@@ -271,9 +271,9 @@
         filterFromSelectedDevices();
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
-        settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
-        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
+        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
+        settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
+        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
 
         refreshDifferencesCatalogSelection();
 
@@ -314,23 +314,23 @@
             ui->Filter_pushButton_Explore->setEnabled(false);
             ui->Filter_pushButton_Update->setEnabled(false);
 
-            selectedStorageLocation = selectedDeviceName;
-            selectedStorageName = tr("All");
-            selectedCatalogName = tr("All");
+            selectedFilterStorageLocation = selectedDeviceName;
+            selectedFilterStorageName = tr("All");
+            selectedFilterCatalogName = tr("All");
 
-            refreshStorageSelectionList(selectedStorageLocation);
-            refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+            refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         }
         else if (selectedDeviceType=="Storage"){
             ui->Filter_pushButton_Explore->setEnabled(false);
             ui->Filter_pushButton_Update->setEnabled(false);
 
-            selectedStorageLocation = tr("All");
-            selectedStorageName = selectedDeviceName;
-            selectedCatalogName = tr("All");
+            selectedFilterStorageLocation = tr("All");
+            selectedFilterStorageName = selectedDeviceName;
+            selectedFilterCatalogName = tr("All");
 
-            refreshStorageSelectionList(selectedStorageLocation);
-            refreshCatalogSelectionList(selectedStorageLocation,selectedStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+            refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         }
         else if (selectedDeviceType=="Catalog"){
             ui->Filter_pushButton_Explore->setEnabled(true);
@@ -339,20 +339,20 @@
             activeCatalog->setName(selectedDeviceName);
             activeCatalog->loadCatalogMetaData();
 
-            selectedStorageLocation = tr("All");
-            selectedStorageName = tr("All");
-            selectedCatalogName = activeCatalog->name;
+            selectedFilterStorageLocation = tr("All");
+            selectedFilterStorageName = tr("All");
+            selectedFilterCatalogName = activeCatalog->name;
         }
 
         //Display selection values and save them
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
+            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
-            settings.setValue("LastSearch/SelectedSearchStorage",  selectedStorageName);
-            settings.setValue("LastSearch/SelectedSearchCatalog",  selectedCatalogName);
+            settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
+            settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
+            settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
 
         //Load matching Catalogs, Storage, Statistics
             //Load matching Catalogs
@@ -475,8 +475,8 @@
 
        //Load Storage list
             refreshLocationSelectionList();
-            refreshStorageSelectionList(selectedStorageLocation);
-            refreshCatalogSelectionList(selectedStorageLocation, selectedStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
             loadStorageTableToSelectionTreeModel();
 
             //Add a storage device for catalogs without one

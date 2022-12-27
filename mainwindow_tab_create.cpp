@@ -278,15 +278,15 @@
 
             //Refresh the catalog list for the combobox of the Search screen
                 //Get current search selection
-                selectedStorageLocation = ui->Filters_label_DisplayLocation->text();
-                selectedStorageName     = ui->Filters_label_DisplayStorage->text();
-                selectedCatalogName     = ui->Filters_label_DisplayCatalog->text();
+                selectedFilterStorageLocation = ui->Filters_label_DisplayLocation->text();
+                selectedFilterStorageName     = ui->Filters_label_DisplayStorage->text();
+                selectedFilterCatalogName     = ui->Filters_label_DisplayCatalog->text();
 
                 //Refresh list
-                refreshCatalogSelectionList(selectedStorageLocation, selectedStorageName);
+                refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
 
                 //Restore selcted catalog
-                ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+                ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
             //Change tab to show the result of the catalog creation
             ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab

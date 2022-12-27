@@ -60,6 +60,7 @@
 #endif
 
 #include "catalog.h"
+#include "storage.h"
 #include "devicetreeview.h"
 
 QT_BEGIN_NAMESPACE
@@ -131,6 +132,7 @@ class MainWindow : public QMainWindow
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)
             DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
+            Storage *selectedStorage = new Storage(); //selected storage used for individual storage operation in Storage screen (update)
 
         //Filters
             bool searchInFileCatalogsChecked;
@@ -140,9 +142,9 @@ class MainWindow : public QMainWindow
             QString selectedDeviceName;
             QString selectedDeviceType;
 
-            QString selectedStorageLocation;
-            QString selectedStorageName;
-            QString selectedCatalogName;
+            QString selectedFilterStorageLocation;
+            QString selectedFilterStorageName;
+            QString selectedFilterCatalogName;
             QString selectedConnectedDrivePath;
 
             void toggleTreeExpandState();
@@ -293,9 +295,6 @@ class MainWindow : public QMainWindow
 
         //TAB: Storage
             QString storageFilePath;
-            int selectedStorageID;
-            QString selectedStorageType;
-            QString selectedStoragePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             QStringList locationCatalogList;
@@ -309,7 +308,7 @@ class MainWindow : public QMainWindow
             void loadStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
             void saveStorageData();
-            void updateStorageInfo(int storageID, QString storagePath);
+            void updateStorageInfo(int storageID);
             void updateStorageSelectionStatistics();
 
         //TAB: Statistics

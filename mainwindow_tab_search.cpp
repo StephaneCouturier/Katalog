@@ -173,14 +173,14 @@
             //Refine the seach with the selction of one of the catalogs that have results
 
             //Get file from selected row
-            selectedCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+            selectedFilterCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
-            selectedStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            selectedFilterStorageLocation = tr("All");
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
 
-            selectedStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            selectedFilterStorageName = tr("All");
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
             //Seach again but only on the selected catalog
             searchFiles();
@@ -436,14 +436,14 @@
 
             initiateSearchValues();
 
-            selectedStorageLocation  = ui->Search_treeView_History->model()->index(index.row(), 28, QModelIndex()).data().toString();
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            selectedFilterStorageLocation  = ui->Search_treeView_History->model()->index(index.row(), 28, QModelIndex()).data().toString();
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
 
-            selectedStorageName   = ui->Search_treeView_History->model()->index(index.row(), 29, QModelIndex()).data().toString();
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            selectedFilterStorageName   = ui->Search_treeView_History->model()->index(index.row(), 29, QModelIndex()).data().toString();
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
-            selectedCatalogName   = ui->Search_treeView_History->model()->index(index.row(), 30, QModelIndex()).data().toString();
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+            selectedFilterCatalogName   = ui->Search_treeView_History->model()->index(index.row(), 30, QModelIndex()).data().toString();
+            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
         }
         //----------------------------------------------------------------------
@@ -867,7 +867,7 @@
                     if (searchInFileCatalogsChecked==true){
                         //List of catalogs to search from: catalogSelectedList
                             //Search every catalog if "All" is selected
-                            if ( selectedCatalogName ==tr("All")){
+                            if ( selectedFilterCatalogName ==tr("All")){
                                 //For differences, only process with the selected catalog specifically
                                 if (ui->Search_checkBox_Differences->isChecked() ==true){
                                     QStringList differenceCatalogs;
@@ -887,7 +887,7 @@
 
                             //Otherwise just search files in the selected catalog
                             else{
-                                searchFilesInCatalog(selectedCatalogName);
+                                searchFilesInCatalog(selectedFilterCatalogName);
                             }
                     }
                     //Process the SEARCH in SELECTED DIRECTORY
@@ -2454,9 +2454,9 @@
             query.bindValue(":ShowFolders",          ui->Search_checkBox_ShowFolders->isChecked());
             query.bindValue(":TagChecked",           ui->Search_checkBox_Tags->isChecked());
             query.bindValue(":Tag",                  ui->Search_comboBox_Tags->currentText());
-            query.bindValue(":searchLocation",       selectedStorageLocation);
-            query.bindValue(":searchStorage",        selectedStorageName);
-            query.bindValue(":searchCatalog",        selectedCatalogName);
+            query.bindValue(":searchLocation",       selectedFilterStorageLocation);
+            query.bindValue(":searchStorage",        selectedFilterStorageName);
+            query.bindValue(":searchCatalog",        selectedFilterCatalogName);
             query.bindValue(":SearchCatalogChecked",    ui->Filters_checkBox_SearchInCatalogs->isChecked());
             query.bindValue(":SearchDirectoryChecked",  ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
             query.bindValue(":SeletedDirectory",        ui->Filters_lineEdit_SeletedDirectory->text());

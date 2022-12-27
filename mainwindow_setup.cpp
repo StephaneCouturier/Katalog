@@ -143,14 +143,14 @@
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
 
 
-            selectedStorageLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            selectedFilterStorageLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
 
-            selectedStorageName   = settings.value("LastSearch/SelectedSearchStorage").toString();
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            selectedFilterStorageName   = settings.value("LastSearch/SelectedSearchStorage").toString();
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
-            selectedCatalogName   = settings.value("LastSearch/SelectedSearchCatalog").toString();
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalogName);
+            selectedFilterCatalogName   = settings.value("LastSearch/SelectedSearchCatalog").toString();
+            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
             selectedFileType        = settings.value("LastSearch/FileType").toString();
             selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
@@ -299,9 +299,9 @@
         #else        
             settings.setValue("LastSearch/SearchText", ui->Search_lineEdit_SearchText->text());
         #endif
-        settings.setValue("LastSearch/SelectedSearchCatalog", selectedCatalogName);
-        settings.setValue("LastSearch/SelectedSearchStorage", selectedStorageName);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedStorageLocation);
+        settings.setValue("LastSearch/SelectedSearchCatalog", selectedFilterCatalogName);
+        settings.setValue("LastSearch/SelectedSearchStorage", selectedFilterStorageName);
+        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
         settings.setValue("LastSearch/FileType", selectedFileType);
         settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
         settings.setValue("LastSearch/SearchIn", selectedSearchIn);

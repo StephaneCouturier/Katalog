@@ -78,7 +78,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
 
-        selectedCatalogName = selectedCatalog;
+        selectedFilterCatalogName = selectedCatalog;
 
         //load the graph
         loadStatisticsChart();
@@ -343,12 +343,12 @@
                                     WHERE recordType = 'Snapshot'
                                   )");
 
-                if ( selectedStorageLocation != tr("All") and selectedDeviceType=="Location" )
-                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedStorageLocation + "' ";
-                else if ( selectedStorageName != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedStorageName + "' ";
-                else if ( selectedCatalogName != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedCatalogName + "' ";
+                if ( selectedStorage->location != tr("All") and selectedDeviceType=="Location" )
+                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedStorage->location + "' ";
+                else if ( selectedStorage->name != tr("All") and selectedDeviceType=="Storage" )
+                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedStorage->name + "' ";
+                else if ( selectedFilterCatalogName != tr("All") and selectedDeviceType=="Catalog" )
+                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedFilterCatalogName + "' ";
 
                 if ( graphicStartDate != "" ){
                      querySQL = querySQL + " AND dateTime > :graphStartDate ";
@@ -482,7 +482,7 @@
             chart->legend()->hide();
 
             if (selectedDeviceType == "Storage"){
-                selectedCatalogforStats = selectedStorageName;
+                selectedCatalogforStats = selectedFilterStorageName;
 
             }
             else if (selectedDeviceType == "Catalog"){

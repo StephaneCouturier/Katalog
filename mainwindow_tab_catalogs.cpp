@@ -48,13 +48,13 @@
         {
             //Change the selected catalog in Search tab
             ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
-            selectedCatalogName = selectedCatalog->name;
+            selectedFilterCatalogName = selectedCatalog->name;
 
-            selectedStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            selectedFilterStorageLocation = tr("All");
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
 
-            selectedStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            selectedFilterStorageName = tr("All");
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
             activeCatalog->setName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
@@ -77,7 +77,7 @@
                 //Start at the root folder of the catalog
                 selectedDirectoryName     = selectedCatalog->sourcePath;
                 selectedDirectoryFullPath = selectedCatalog->sourcePath;
-                selectedCatalogName       = selectedCatalog->name;
+                selectedFilterCatalogName       = selectedCatalog->name;
 
                 //The selected catalog becomes the active catalog
                 activeCatalog->setName(selectedCatalog->name);
@@ -92,7 +92,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
         {
-            ui->Catalogs_lineEdit_Name->setText(selectedCatalogName);
+            ui->Catalogs_lineEdit_Name->setText(selectedFilterCatalogName);
             ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
             ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
@@ -138,11 +138,11 @@
                                             )");
 
                     //add AND conditions for the selected filters
-                    if ( selectedStorageLocation != tr("All") )
-                        querySQL = querySQL + " AND storageLocation = '" + selectedStorageLocation + "' ";
+                    if ( selectedFilterStorageLocation != tr("All") )
+                        querySQL = querySQL + " AND storageLocation = '" + selectedFilterStorageLocation + "' ";
 
-                    if ( selectedStorageName != tr("All") )
-                        querySQL = querySQL + " AND catalogStorage = '" + selectedStorageName + "' ";
+                    if ( selectedFilterStorageName != tr("All") )
+                        querySQL = querySQL + " AND catalogStorage = '" + selectedFilterStorageName + "' ";
 
                 //run the query
                 QSqlQuery query;
@@ -189,7 +189,7 @@
 
                            //Update storage
                            if ( selectedCatalogStoragePath!="")
-                               updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
+                               updateStorageInfo(selectedCatalogStorageID);
                            else
                                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
 
@@ -226,13 +226,13 @@
         {
             //Change the selected catalog in Search tab
             ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
-            selectedCatalogName = selectedCatalog->name;
+            selectedFilterCatalogName = selectedCatalog->name;
 
-            selectedStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+            selectedFilterStorageLocation = tr("All");
+            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
 
-            selectedStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+            selectedFilterStorageName = tr("All");
+            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
             activeCatalog->setName(selectedCatalog->name);
             activeCatalog->loadCatalogMetaData();
@@ -361,7 +361,7 @@
             //Start at the root folder of the catalog
             selectedDirectoryName     = selectedCatalog->sourcePath;
             selectedDirectoryFullPath = selectedCatalog->sourcePath;
-            selectedCatalogName = selectedCatalog->name;
+            selectedFilterCatalogName = selectedCatalog->name;
 
 
             //The selected catalog becomes the active catalog
@@ -549,9 +549,9 @@
                                         WHERE catalogName !=''
                                         )");
 
-            if (     selectedStorageLocation == tr("All")
-                 and selectedStorageName     == tr("All")
-                 and selectedCatalogName     == tr("All") )
+            if (     selectedFilterStorageLocation == tr("All")
+                 and selectedFilterStorageName     == tr("All")
+                 and selectedFilterCatalogName     == tr("All") )
                 {//No filtering
             }
             else if ( selectedDeviceType == "Location" )
@@ -624,16 +624,16 @@
                                 WHERE catalogName !=''
                                             )");
 
-            if ( selectedStorageLocation !=tr("All")){
+            if ( selectedFilterStorageLocation !=tr("All")){
                 querySQL = querySQL + " AND storageLocation =:storageLocation";
             }
-            if ( selectedStorageName !=tr("All")){
+            if ( selectedFilterStorageName !=tr("All")){
                 querySQL = querySQL + " AND catalogStorage =:catalogStorage";
             }
 
             query.prepare(querySQL);
-            query.bindValue(":storageLocation",selectedStorageLocation);
-            query.bindValue(":catalogStorage", selectedStorageName);
+            query.bindValue(":storageLocation",selectedFilterStorageLocation);
+            query.bindValue(":catalogStorage", selectedFilterStorageName);
             query.exec();
             query.next();
 
@@ -711,9 +711,9 @@
 
             //Update storage
             if ( selectedCatalogStoragePath!="")
-                updateStorageInfo(selectedCatalogStorageID,selectedCatalogStoragePath);
-            else
-                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalog->storageName));
+                updateStorageInfo(selectedCatalogStorageID);
+//            else
+//                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalog->storageName));
 
         }
 

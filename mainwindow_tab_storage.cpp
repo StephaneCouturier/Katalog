@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 #include "storageview.h"
+#include "storage.h"
 
 #include <QDesktopServices>
 
@@ -63,10 +64,8 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
     {
-        selectedStorageID       = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
-        selectedStorageName     = ui->Storage_treeView_StorageList->model()->index(index.row(), 1, QModelIndex()).data().toString();
-        selectedStorageLocation = ui->Storage_treeView_StorageList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-        selectedStoragePath     = ui->Storage_treeView_StorageList->model()->index(index.row(), 4, QModelIndex()).data().toString();
+        selectedStorage->setID(ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt());
+        selectedStorage->loadStorageMetaData();
 
         //display buttons
         ui->Storage_pushButton_SearchStorage->setEnabled(true);
@@ -90,7 +89,7 @@
         //Change tab to show the Search screen
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_label_DisplayStorage->setText(selectedStorageName);
+        ui->Filters_label_DisplayStorage->setText(selectedStorage->name);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_SearchLocation_clicked()
@@ -98,18 +97,18 @@
         //Change tab to show the Search screen
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_label_DisplayLocation->setText(selectedStorageLocation);
+        ui->Filters_label_DisplayLocation->setText(selectedStorage->location);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
     {
         //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-        ui->Create_lineEdit_NewCatalogPath->setText(selectedStoragePath);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorageName);
-        ui->Create_lineEdit_NewCatalogName->setText(selectedStorageName);
+        ui->Create_lineEdit_NewCatalogPath->setText(selectedStorage->path);
+        ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorage->name);
+        ui->Create_lineEdit_NewCatalogName->setText(selectedStorage->name);
 
         //Select this directory in the treeview.
-        loadFileSystem(selectedStoragePath);
+        loadFileSystem(selectedStorage->path);
 
         //Change tab to show the result of the catalog creation
         ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create catalog tab
@@ -119,7 +118,7 @@
     void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
     {
         #ifdef Q_OS_LINUX
-                QProcess::startDetached("filelight", QStringList() << selectedStoragePath);
+                QProcess::startDetached("filelight", QStringList() << selectedStorage->path);
         #else
                 QProcess::startDetached("filelight", QStringList() << selectedStoragePath);
         #endif
@@ -127,7 +126,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
-        updateStorageInfo(selectedStorageID, selectedStoragePath);
+        updateStorageInfo(selectedStorage->ID);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Delete_clicked()
@@ -137,14 +136,14 @@
                    "<table>"
                    "<tr><td>ID:   </td><td><b> %1 </td></tr>"
                    "<tr><td>Name: </td><td><b> %2 </td></tr>"
-                   "</table>").arg(QString::number(selectedStorageID),selectedStorageName)
+                   "</table>").arg(QString::number(selectedStorage->ID),selectedStorage->name)
                   ,QMessageBox::Yes|QMessageBox::Cancel);
 
         if ( result ==QMessageBox::Yes){
 
             //Delete from the table
             QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorageID) );
+            queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorage->ID) );
             queryDeviceNumber.exec();
 
             //Reload data to model
@@ -237,8 +236,8 @@
 
             //location
             QString newLocation;
-            if(selectedStorageLocation != tr("All")){
-                newLocation = selectedStorageLocation;
+            if(selectedStorage->location != tr("All")){
+                newLocation = selectedStorage->location;
             }
             else
                 newLocation = "";
@@ -505,17 +504,17 @@
                            WHERE storageName !=''
                                         )");  // ORDER BY storageName
 
-        if ( selectedStorageLocation != tr("All") ){
+        if ( selectedStorage->location != tr("All") ){
             //AND storageLocation ='DK/Portable'  :storageLocation
             //QMessageBox::information(this,"Katalog","Ok.");
 
-            querySQL = querySQL + " AND storageLocation ='" + selectedStorageLocation + "'";
+            querySQL = querySQL + " AND storageLocation ='" + selectedStorage->location + "'";
         }
     //        if ( selectedSearchStorage != "All" )
     //            querySQL = querySQL + " AND catalogStorage = '"+selectedSearchStorage+"' ";
 
         querySQL = querySQL + " ORDER BY storageName ";
-        query.bindValue("storageLocation", selectedStorageLocation);
+        query.bindValue("storageLocation", selectedStorage->location);
         query.prepare(querySQL);
         query.exec();
         storageNameList.clear();
@@ -527,35 +526,18 @@
     }
 
     //--------------------------------------------------------------------------
-    void MainWindow::updateStorageInfo(int storageID, QString storagePath)
+    void MainWindow::updateStorageInfo(int storageID)
     {
         //Get current values for comparison later
-            QString getStorageInfoSQL = QLatin1String(R"(
-                                        SELECT  storageID,
-                                                storageName,
-                                                storageLocation,
-                                                storageFreeSpace,
-                                                storageTotalSpace
-                                        FROM storage
-                                        WHERE storageID =:storageID
-                                        )");
-
-            QSqlQuery getStorageInfoQuery;
-            getStorageInfoQuery.prepare(getStorageInfoSQL);
-            getStorageInfoQuery.bindValue(":storageID", storageID);
-            getStorageInfoQuery.exec();
-            getStorageInfoQuery.next();
-
-            qint64 previousStorageFreeSpace  = getStorageInfoQuery.value(3).toLongLong();
-            qint64 previousStorageTotalSpace = getStorageInfoQuery.value(4).toLongLong();
+            qint64 previousStorageFreeSpace  = selectedStorage->freeSpace;
+            qint64 previousStorageTotalSpace = selectedStorage->totalSpace;
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-            selectedStorageName = getStorageInfoQuery.value(1).toString();
 
         //verify if path is available / not empty
-        QDir dir (storagePath);
+        QDir dir (selectedStorage->path);
 
             //Warning if no Path is provided
-            if ( storagePath=="" ){
+            if ( selectedStorage->path == "" ){
                 QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
                                               "Modify the device to provide one and try again.\n")
                                               );
@@ -575,15 +557,15 @@
             }
 
         //Get device information
-            QStorageInfo storage;
-            storage.setPath(storagePath);
-            if (storage.isReadOnly())
-                qDebug() << "isReadOnly:" << storage.isReadOnly();
+            QStorageInfo storageInfo;
+            storageInfo.setPath(selectedStorage->path);
+            if (storageInfo.isReadOnly())
+                qDebug() << "isReadOnly:" << storageInfo.isReadOnly();
 
-            qint64 sizeTotal = storage.bytesTotal();
-            qint64 sizeAvailable = storage.bytesAvailable();
-            QString storageName = storage.name();
-            QString storageFS = storage.fileSystemType();
+            qint64 sizeTotal = storageInfo.bytesTotal();
+            qint64 sizeAvailable = storageInfo.bytesAvailable();
+            QString storageName = storageInfo.name();
+            QString storageFS = storageInfo.fileSystemType();
 
         //get confirmation for the update
             if (sizeTotal == -1 ){
@@ -605,7 +587,7 @@
             QDateTime nowDateTime = QDateTime::currentDateTime();
 
             QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                    + selectedStorageName + "\t"
+                                    + selectedStorage->name + "\t"
                                     + QString::number(sizeAvailable) + "\t"
                                     + QString::number(sizeTotal) + "\t"
                                     + "Storage" ;
@@ -649,14 +631,14 @@
                                               "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
                                               "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
                                       "</table>"
-                                      ).arg(selectedStorageName,
+                                      ).arg(selectedStorage->name,
                                             QLocale().formattedDataSize(newStorageUsedSpace),
                                             QLocale().formattedDataSize(deltaStorageUsedSpace),
                                             QLocale().formattedDataSize(newStorageFreeSpace),
                                             QLocale().formattedDataSize(deltaStorageFreeSpace),
                                             QLocale().formattedDataSize(newStorageTotalSpace),
                                             QLocale().formattedDataSize(deltaStorageTotalSpace),
-                                            selectedStorageName)
+                                            selectedStorage->name)
                                       ,Qt::TextFormat(Qt::RichText));
              }
 
@@ -781,12 +763,12 @@
                             WHERE storageName !=''
                                         )");
 
-        if ( selectedStorageLocation !=tr("All")){
+        if ( selectedStorage->location !=tr("All")){
             querySQL = querySQL + " AND storageLocation =:storageLocation";
         }
 
         query.prepare(querySQL);
-        query.bindValue(":storageLocation", selectedStorageLocation);
+        query.bindValue(":storageLocation", selectedStorage->location);
         query.exec();
         query.next();
 

@@ -113,8 +113,8 @@
         void MainWindow::on_ExplorePushButtonLoadClicked()
         {
             //reloads catalog to explore at root level
-            if (selectedDeviceType=="Catalog" and selectedDeviceName !=selectedCatalogName){
-                selectedCatalogName = selectedDeviceName;
+            if (selectedDeviceType=="Catalog" and selectedDeviceName != selectedFilterCatalogName){
+                selectedFilterCatalogName = selectedDeviceName;
             }
             openCatalogToExplore();
         }
@@ -533,7 +533,7 @@
                                )");
             QSqlQuery countQuery;
             countQuery.prepare(countSQL);
-            countQuery.bindValue(":fileCatalog",selectedCatalogName);
+            countQuery.bindValue(":fileCatalog",selectedFilterCatalogName);
             countQuery.exec();
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
@@ -621,7 +621,7 @@
         loadCatalogQuery.prepare(selectSQL);
 
         // fill lists depending on directory selection source
-        loadCatalogQuery.bindValue(":fileCatalog",selectedCatalogName);
+        loadCatalogQuery.bindValue(":fileCatalog",selectedFilterCatalogName);
 
         if(activeCatalog->sourcePath == selectedDirectoryName){
             loadCatalogQuery.bindValue(":filePath",selectedDirectoryName);
@@ -717,7 +717,7 @@
                                             ORDER BY filePath ASC
                                         )");
             getDirectoriesQuery.prepare(getDirectoriesSQL);
-            getDirectoriesQuery.bindValue(":fileCatalog",selectedCatalogName);
+            getDirectoriesQuery.bindValue(":fileCatalog",selectedFilterCatalogName);
             getDirectoriesQuery.bindValue(":selectedCatalogPath",activeCatalog->sourcePath);
             getDirectoriesQuery.exec();
 
@@ -742,7 +742,7 @@
                            )");
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":fileCatalog",selectedCatalogName);
+        countQuery.bindValue(":fileCatalog",selectedFilterCatalogName);
         countQuery.exec();
         countQuery.next();
         ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
