@@ -29,7 +29,7 @@
 #/////////////////////////////////////////////////////////////////////////////
 
 #QT Libraries
-    QT  += core widgets gui sql charts network
+    QT  += core widgets gui sql charts network multimedia
 
     requires(qtConfig(tableview))
     requires(qtConfig(treeview))
