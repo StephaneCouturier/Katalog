@@ -188,8 +188,11 @@
                            QString selectedCatalogStoragePath =  query.value(1).toString();
 
                            //Update storage
-                           if ( selectedCatalogStoragePath!="")
-                               updateStorageInfo(selectedCatalogStorageID);
+                           if ( selectedCatalogStoragePath!=""){
+                               tempStorage->setID(selectedCatalogStorageID);
+                               tempStorage->loadStorageMetaData();
+                               updateStorageInfo(tempStorage);
+                           }
                            else
                                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
 
@@ -710,8 +713,11 @@
             QString selectedCatalogStoragePath =  query.value(1).toString();
 
             //Update storage
-            if ( selectedCatalogStoragePath!="")
-                updateStorageInfo(selectedCatalogStorageID);
+            if ( selectedCatalogStoragePath!=""){
+                tempStorage->setID(selectedCatalogStorageID);
+                tempStorage->loadStorageMetaData();
+                updateStorageInfo(tempStorage);
+            }
 //            else
 //                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalog->storageName));
 

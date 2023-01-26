@@ -93,9 +93,6 @@ void Storage::updateStorageInfo()
         storageInfo.setPath(path);
 
         qint64 bytesTotal = storageInfo.bytesTotal();
-//        qint64 sizeAvailable = storageInfo.bytesAvailable();
-//        QString storageName = storageInfo.name();
-//        QString storageFS = storageInfo.fileSystemType();
 
     //Get confirmation for the update
         if (bytesTotal == -1 ){
@@ -115,21 +112,10 @@ void Storage::updateStorageInfo()
                                         WHERE storageID = :storageID
                                         )");
         queryTotalSpace.prepare(queryTotalSpaceSQL);
-//        queryTotalSpace.bindValue(":storageTotalSpace",QString::number(sizeTotal));
-//        queryTotalSpace.bindValue(":storageFreeSpace",QString::number(sizeAvailable));
-//        queryTotalSpace.bindValue(":storageLabel",storageInfo.name());
-//        queryTotalSpace.bindValue(":storageFileSystem",QString::number(sizeTotal));
         queryTotalSpace.bindValue(":storageTotalSpace",QString::number(storageInfo.bytesTotal()));
         queryTotalSpace.bindValue(":storageFreeSpace",QString::number(storageInfo.bytesAvailable()));
         queryTotalSpace.bindValue(":storageLabel",storageInfo.name());
         queryTotalSpace.bindValue(":storageFileSystem",storageInfo.fileSystemType());
         queryTotalSpace.exec();
 
-    //    queryTotalSpace.prepare( "UPDATE storage "
-    //                             "SET storageTotalSpace = " + QString::number(sizeTotal) + ","
-    //                              "storageFreeSpace = " + QString::number(sizeAvailable) + ","
-    //                              "storageLabel = '" + storageName +"',"
-    //                              "storageFileSystem = '" + storageFS +"'"
-    //                          + " WHERE storageID = " + QString::number(ID) );
-    //    queryTotalSpace.exec();
 }

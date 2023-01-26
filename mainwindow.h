@@ -53,6 +53,8 @@
 #include <QtSql>
 #include <QStandardPaths>
 #include <QMessageBox>
+#include <QMediaPlayer>
+#include <QMediaMetaData>
 #ifdef Q_OS_LINUX
     #include <KComboBox>
     #include <KXmlGuiWindow>
@@ -133,6 +135,7 @@ class MainWindow : public QMainWindow
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)
             DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
             Storage *selectedStorage = new Storage(); //selected storage used for individual storage operation in Storage screen (update)
+            Storage *tempStorage = new Storage(); //temporary storage used for individual storage operation in Storage screen (update)
 
         //Filters
             bool searchInFileCatalogsChecked;
@@ -287,11 +290,16 @@ class MainWindow : public QMainWindow
             QStringList storageNameList;
             QString excludeFilePath;
 
+            QMediaPlayer *m_player;
+
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
             void catalogDirectory(Catalog *catalog);
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
+
+            void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+            void getMetaData(QMediaPlayer *player);
 
         //TAB: Storage
             QString storageFilePath;
@@ -308,7 +316,7 @@ class MainWindow : public QMainWindow
             void loadStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
             void saveStorageData();
-            void updateStorageInfo(int storageID);
+            void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
 
         //TAB: Statistics
@@ -521,7 +529,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-
+            void on_Storage_pushButton_TestMedia_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -36,6 +36,10 @@
 #include "storage.h"
 
 #include <QDesktopServices>
+#include <QtMultimedia>
+#include <QtMultimedia/QMediaMetaData>
+#include <QMediaMetaData>
+#include <QStringListModel>
 
 //UI----------------------------------------------------------------------------
     //Full list ----------------------------------------------------------------
@@ -126,7 +130,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
-        updateStorageInfo(selectedStorage->ID);
+        updateStorageInfo(selectedStorage);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Delete_clicked()
@@ -526,11 +530,11 @@
     }
 
     //--------------------------------------------------------------------------
-    void MainWindow::updateStorageInfo(int storageID)
+    void MainWindow::updateStorageInfo(Storage* storage)
     {
         //Get current values for comparison later
-            qint64 previousStorageFreeSpace  = selectedStorage->freeSpace;
-            qint64 previousStorageTotalSpace = selectedStorage->totalSpace;
+            qint64 previousStorageFreeSpace  = storage->freeSpace;
+            qint64 previousStorageTotalSpace = storage->totalSpace;
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
 
         //verify if path is available / not empty
@@ -558,38 +562,46 @@
 
         //Get device information
             QStorageInfo storageInfo;
-            storageInfo.setPath(selectedStorage->path);
+            storageInfo.setPath(storage->path);
             if (storageInfo.isReadOnly())
                 qDebug() << "isReadOnly:" << storageInfo.isReadOnly();
 
-            qint64 sizeTotal = storageInfo.bytesTotal();
-            qint64 sizeAvailable = storageInfo.bytesAvailable();
-            QString storageName = storageInfo.name();
-            QString storageFS = storageInfo.fileSystemType();
+            qint64 newSizeTotal = storageInfo.bytesTotal();
+            qint64 newSizeAvailable = storageInfo.bytesAvailable();
+            QString newStorageName = storageInfo.name();
+            QString newStorageFS = storageInfo.fileSystemType();
 
         //get confirmation for the update
-            if (sizeTotal == -1 ){
+            if (newSizeTotal == -1 ){
                 QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
                 return;
             }
 
         //SQL updates
-            QSqlQuery queryTotalSpace;
-            queryTotalSpace.prepare( "UPDATE storage "
-                                     "SET storageTotalSpace = " + QString::number(sizeTotal) + ","
-                                      "storageFreeSpace = " + QString::number(sizeAvailable) + ","
-                                      "storageLabel = '" + storageName +"',"
-                                      "storageFileSystem = '" + storageFS +"'"
-                                  + " WHERE storageID = " + QString::number(storageID) );
-            queryTotalSpace.exec();
+            QSqlQuery queryUpdateStorage;
+            QString queryUpdateStorageSQL = QLatin1String(R"(
+                                                UPDATE storage
+                                                SET storageTotalSpace = :storageTotalSpace,
+                                                    storageFreeSpace  = :storageFreeSpace,
+                                                    storageLabel      = :storageLabel,
+                                                    storageFileSystem = :storageFileSystem
+                                                WHERE storageID = :storageID
+                                            )");
+            queryUpdateStorage.prepare(queryUpdateStorageSQL);
+            queryUpdateStorage.bindValue(":storageTotalSpace", QString::number(newSizeTotal));
+            queryUpdateStorage.bindValue(":storageFreeSpace", QString::number(newSizeAvailable));
+            queryUpdateStorage.bindValue(":storageLabel", newStorageName);
+            queryUpdateStorage.bindValue(":storageFileSystem", newStorageFS);
+            queryUpdateStorage.bindValue(":storageID", QString::number(storage->ID));
+            queryUpdateStorage.exec();
 
         //Add values to statistics
             QDateTime nowDateTime = QDateTime::currentDateTime();
 
             QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                    + selectedStorage->name + "\t"
-                                    + QString::number(sizeAvailable) + "\t"
-                                    + QString::number(sizeTotal) + "\t"
+                                    + storage->name + "\t"
+                                    + QString::number(newSizeAvailable) + "\t"
+                                    + QString::number(newSizeTotal) + "\t"
                                     + "Storage" ;
 
             // Stream the list to the file
@@ -610,7 +622,7 @@
                              WHERE storageID =:storageID
                              )");
              query.prepare(querySQL);
-             query.bindValue(":storageID", storageID);
+             query.bindValue(":storageID", storage->ID);
              query.exec();
              query.next();
 
@@ -631,7 +643,7 @@
                                               "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
                                               "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
                                       "</table>"
-                                      ).arg(selectedStorage->name,
+                                      ).arg(storage->name,
                                             QLocale().formattedDataSize(newStorageUsedSpace),
                                             QLocale().formattedDataSize(deltaStorageUsedSpace),
                                             QLocale().formattedDataSize(newStorageFreeSpace),
@@ -791,4 +803,84 @@
         ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
         else ui->Storage_label_PercentFree->setText("");
     }
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+    void MainWindow::on_Storage_pushButton_TestMedia_clicked()
+    {
+        QString filePath;
+        //filePath ="/home/stephane/Vidéos/COPY/test6.mp4";
+        filePath ="/home/stephane/Vidéos/COPY/test2.mkv";
+        //filePath ="/home/stephane/Vidéos/COPY/test3.mp3";
+        //filePath ="/home/stephane/Vidéos/COPY/test5.mkv";
+
+        QFile mediaFile(filePath);
+        if(mediaFile.exists()==true){
+
+            QMessageBox::information(this,"Katalog","File exists");
+            m_player = new QMediaPlayer(this);
+            connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+
+            //m_player->setSource(QUrl::fromLocalFile(filePath));
+            QMediaContent mediaFile(QUrl::fromLocalFile(filePath));
+            m_player->setMedia(mediaFile);
+
+            QVariant avail = m_player->availability();
+            QMessageBox::information(this,"Katalog","avail:" + avail.toString());
+
+        }
+    }
+
+    void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
+    {
+        QMessageBox::information(this,"Katalog","onMediaStatusChanged");
+
+        if (status == QMediaPlayer::LoadedMedia)
+            getMetaData(m_player);
+    }
+
+    void MainWindow::getMetaData(QMediaPlayer *player)
+    {
+        QMessageBox::information(this,"Katalog","getMetaData");
+
+
+        //QMediaMetaData metadatalist = player->metaData();
+        QStringList datalist;
+        QStringListModel* listModel = new QStringListModel(this);
+
+        // Get the list of keys there is metadata available for
+        QStringList metadatalist = player->availableMetaData();
+
+       // Get the size of the list
+         int list_size = metadatalist.size();
+
+         //qDebug() << player->isMetaDataAvailable() << list_size;
+
+         // Define variables to store metadata key and value
+         QString metadata_key;
+         QVariant var_data;
+
+         for (int indx = 0; indx < list_size; indx++)
+         {
+           // Get the key from the list
+           metadata_key = metadatalist.at(indx);
+
+           // Get the value for the key
+           var_data = player->metaData(metadata_key);
+
+           datalist << metadata_key << var_data.toString();
+           //qDebug() << metadata_key << var_data.toString();
+         }
+
+//        for(int i=0; i<30; i++){
+//            datalist<<metadatalist.metaDataKeyToString(QMediaMetaData::Key(i));
+//            datalist<<metadatalist.stringValue(QMediaMetaData::Key(i));
+//            datalist<<"";
+//        }
+
+        listModel->setStringList(datalist);
+        ui->Storage_listView_Media->setModel(listModel);
+
+        QMessageBox::information(this,"MEDIATEST","Done.");
+
+     }
