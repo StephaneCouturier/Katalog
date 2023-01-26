@@ -343,12 +343,12 @@
                                     WHERE recordType = 'Snapshot'
                                   )");
 
-                if ( selectedStorage->location != tr("All") and selectedDeviceType=="Location" )
-                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedStorage->location + "' ";
-                else if ( selectedStorage->name != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedStorage->name + "' ";
-                else if ( selectedFilterCatalogName != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedFilterCatalogName + "' ";
+                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" )
+                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedDeviceName + "' ";
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" )
+                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedDeviceName + "' ";
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
+                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedDeviceName + "' ";
 
                 if ( graphicStartDate != "" ){
                      querySQL = querySQL + " AND dateTime > :graphStartDate ";
