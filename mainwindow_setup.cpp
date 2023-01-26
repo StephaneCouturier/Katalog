@@ -44,7 +44,6 @@
 #ifdef Q_OS_LINUX
     #include <KActionCollection>
     #include <KIO/Job>
-    #include <KMessageBox>
     #include <KLocalizedString>
 #endif
 
@@ -52,15 +51,15 @@
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
         connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(const QPoint&)));
+            this, SLOT(ShowContextMenu(QPoint)));
 
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(const QPoint&)));
+            this, SLOT(ShowContextMenu(QPoint)));
 
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(ui->Explore_treeview_Directories, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(const QPoint&)));
+            this, SLOT(ShowContextMenu(QPoint)));
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
@@ -370,7 +369,8 @@
             ui->Storage_pushButton_ShowHidePanel->hide();
             ui->Storage_label_PanelDevice->hide();
             ui->Storage_widget_DevicePanelForm->hide();
-
+            ui->Storage_pushButton_TestMedia->hide();
+            ui->Storage_listView_Media->hide();
         //Settings
             //DEV: option to switch database mode between memory and file
             ui->Settings_comboBox_DatabaseMode->hide();

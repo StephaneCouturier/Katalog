@@ -1849,7 +1849,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <widget class="QCheckBox" name="Search_checkBox_FileCriteria">
                      <property name="minimumSize">
                       <size>
-                       <width>70</width>
+                       <width>100</width>
                        <height>0</height>
                       </size>
                      </property>
@@ -3233,13 +3233,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <widget class="QCheckBox" name="Search_checkBox_FolderCriteria">
                      <property name="minimumSize">
                       <size>
-                       <width>70</width>
+                       <width>100</width>
                        <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>135</width>
+                       <width>200</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -6289,7 +6289,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </widget>
                  </item>
-                 <item row="3" column="2">
+                 <item row="4" column="2">
                   <spacer name="spacer">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
@@ -6327,6 +6327,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <normaloff>.</normaloff>.</iconset>
                    </property>
                   </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QPushButton" name="Storage_pushButton_TestMedia">
+                   <property name="text">
+                    <string>TEST MEDIA</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QListView" name="Storage_listView_Media"/>
                  </item>
                 </layout>
                </widget>
