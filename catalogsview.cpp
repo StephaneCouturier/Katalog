@@ -34,6 +34,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <QFileIconProvider>
+//#include <QCoreApplication>
 
 CatalogsView::CatalogsView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -45,9 +46,10 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 {
 
     //Define list of column per type of data
-    QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
+    QList<int> filesizeColumnList, filecountColumnList, percentColumnList, centerColumnList;
       filecountColumnList <<3;
       filesizeColumnList  <<4;
+      centerColumnList    <<6 <<7 <<8;
       //percentColumnList <<5; //DEV: for future % columns
 
     switch ( role )
@@ -74,7 +76,15 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 
                 //Text columns
                 if( index.column() == 6 ){
-                    return tr(QSortFilterProxyModel::data(index, role).toString().toUtf8());
+                    // Get the original text
+                    QString text = QSortFilterProxyModel::data(index, role).toString();
+                    //QString translated = QCoreApplication::translate("CatalogsView", text.toUtf8());
+
+                    // Translate the text
+                    return tr(text.toUtf8());
+                    //return "test: "+QObject::tr(text.toUtf8());
+                    //return  QCoreApplication::translate(text.toUtf8(), "CatalogsView");
+                    //return translated;
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;
@@ -103,6 +113,8 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                if ( percentColumnList.contains(index.column()) )
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
+               if ( centerColumnList.contains(index.column()) )
+                   return QVariant ( Qt::AlignVCenter | Qt::AlignCenter );
                break;
             }
 
@@ -115,7 +127,6 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 
             case Qt::DecorationRole:
             {
-                //Filename column
                 if( index.column()==0 ){
                     QModelIndex idx = index.sibling(index.row(), 7);
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
