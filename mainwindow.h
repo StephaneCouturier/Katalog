@@ -262,7 +262,7 @@ class MainWindow : public QMainWindow
             void hideCatalogButtons();
             void updateSingleCatalog(Catalog *catalog);
             void updateCatalogFileList(Catalog *catalog);
-            void saveCatalogChanges();
+            void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
 
             void loadCatalogFilelistToTable(Catalog *catalog);

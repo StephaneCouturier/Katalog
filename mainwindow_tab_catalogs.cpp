@@ -330,7 +330,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
-            saveCatalogChanges();
+            saveCatalogChanges(selectedCatalog);
         }
         //----------------------------------------------------------------------
 
@@ -356,6 +356,7 @@
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
             ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
+            ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
 
         }
@@ -584,7 +585,7 @@
                                             storageLocation             ,
                                             catalogIsFullDevice         ,
                                             catalogLoadedVersion        ,
-                                            catalogIncludeMetaData
+                                            catalogIncludeMetadata
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalogStorage = storageName
                                         WHERE catalogName !=''
@@ -652,6 +653,7 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Loaded Version
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(13, 50); //Loaded Version
 
             //Hide columns
             ui->Catalogs_treeView_CatalogList->hideColumn(11); //isFullDevice
@@ -1045,12 +1047,10 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::saveCatalogChanges()
+    void MainWindow::saveCatalogChanges(Catalog *catalog)
     {
         //Get new values
-            //get previous and new names
-            QFileInfo selectedCatalogFileInfo(selectedCatalog->filePath);
-            QString currentCatalogName = selectedCatalogFileInfo.baseName();
+            //get new name
             QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
 
             //get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
@@ -1060,9 +1060,10 @@
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
 
-            QString newCatalogStorage       = ui->Catalogs_comboBox_Storage->currentText();
-            QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-            QString newCatalogIncludeHidden = QVariant(ui->Catalogs_checkBox_IncludeHidden->isChecked()).toString();
+            QString newCatalogStorage         = ui->Catalogs_comboBox_Storage->currentText();
+            QString newCatalogFileType        = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+            QString newCatalogIncludeHidden   = QVariant(ui->Catalogs_checkBox_IncludeHidden->isChecked()).toString();
+            QString newCatalogIncludeMetadata = QVariant(ui->Catalogs_checkBox_IncludeMetadata->isChecked()).toString();
 
             bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
@@ -1084,27 +1085,27 @@
                                         catalogSourcePath =:newCatalogSourcePath,
                                         catalogStorage =:newCatalogStorage,
                                         catalogFileType =:newCatalogFileType,
-                                        catalogIncludeHidden =:newCatalogIncludeHidden
+                                        catalogIncludeHidden =:newCatalogIncludeHidden,
+                                        catalogIncludeMetadata =:newCatalogIncludeMetadata
                                     WHERE catalogName =:catalogName
                                 )");
-            //catalogName =:newCatalogName,
             //DEV: catalogIncludeSymblinks =: newIncludeSymblinks;
 
             query.prepare(querySQL);
-            //query.bindValue(":newCatalogName",          newCatalogName);
-            query.bindValue(":newCatalogSourcePath",    newCatalogSourcePath);
-            query.bindValue(":newCatalogStorage",       newCatalogStorage);
-            query.bindValue(":newCatalogFileType",      newCatalogFileType);
-            query.bindValue(":newCatalogIncludeHidden", newCatalogIncludeHidden);
-            query.bindValue(":catalogName",             currentCatalogName);
-            //DEV:query.bindValue(":catalogIncludeSymblinks", selectedCatalog->includeSymblinks);
+            query.bindValue(":newCatalogSourcePath",        newCatalogSourcePath);
+            query.bindValue(":newCatalogStorage",           newCatalogStorage);
+            query.bindValue(":newCatalogFileType",          newCatalogFileType);
+            query.bindValue(":newCatalogIncludeHidden",     newCatalogIncludeHidden);
+            query.bindValue(":newCatalogIncludeMetadata",   newCatalogIncludeMetadata);
+            query.bindValue(":catalogName",                 catalog->name);
+            //DEV:query.bindValue(":catalogIncludeSymblinks", catalog->includeSymblinks);
             query.exec();
 
             loadCatalogsTableToModel();
 
         //Write changes to catalog file (update headers only)
 
-            QFile catalogFile(selectedCatalog->filePath);
+            QFile catalogFile(catalog->filePath);
             if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
             {
                 QString fullFileText;
@@ -1120,7 +1121,9 @@
                             and !line.startsWith("<catalogIncludeHidden")
                             and !line.startsWith("<catalogFileType")
                             and !line.startsWith("<catalogStorage")
-                            and !line.startsWith("<catalogIsFullDevice"))
+                            and !line.startsWith("<catalogIsFullDevice")
+                            and !line.startsWith("<catalogIncludeMetadata")
+                            )
                     {
                         fullFileText.append(line + "\n");
                     }
@@ -1142,7 +1145,10 @@
                                 fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
                             //DEV: addedIsFullDevice = true;
                         }
-
+                        if(line.startsWith("<catalogIncludeMetadata>")){
+                                fullFileText.append("<catalogIncludeMetadata>" + newCatalogIncludeMetadata +"\n");
+                            //DEV: addedIsFullDevice = true;
+                        }
                     }
                     //DEV: if(addedIsFullDevice ==false){
                     //DEV:      //add missing line
@@ -1158,51 +1164,46 @@
             }
 
         //Rename the catalog file
-            if (newCatalogName != currentCatalogName){
+            if (newCatalogName != catalog->name){
 
-//                //rename the file name
-//                QString newCatalogFullName = selectedCatalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
-//                QFile::rename(selectedCatalog->filePath, newCatalogFullName);
-                    selectedCatalog->renameCatalog(newCatalogName);
+                catalog->renameCatalog(newCatalogName);
+                loadCatalogFilesToTable();
+                loadCatalogsTableToModel();
+                refreshCatalogSelectionList("","");
 
-//                 //refresh catalog lists
-                    loadCatalogFilesToTable();
-                    loadCatalogsTableToModel();
-                    //LoadCatalogFileList();
-                    refreshCatalogSelectionList("","");
+                //Rename in statistics
 
-//                //Rename in statistics
+                int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
+                                         , QMessageBox::Yes | QMessageBox::No);
 
-                    int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
-                                             , QMessageBox::Yes | QMessageBox::No);
-
-                    if (renameChoice == QMessageBox::Yes){
-                        QFile f(statisticsFilePath);
-                        if(f.open(QIODevice::ReadWrite | QIODevice::Text))
+                if (renameChoice == QMessageBox::Yes){
+                    QFile f(statisticsFilePath);
+                    if(f.open(QIODevice::ReadWrite | QIODevice::Text))
+                    {
+                        QString s;
+                        QTextStream t(&f);
+                        while(!t.atEnd())
                         {
-                            QString s;
-                            QTextStream t(&f);
-                            while(!t.atEnd())
-                            {
-                                QString line = t.readLine();
-                                QStringList lineParts = line.split("\t");
-                                if (lineParts[1]==currentCatalogName){
-                                    lineParts[1]= newCatalogName;
-                                    line = lineParts.join("\t");
-                                }
-                                s.append(line + "\n");
+                            QString line = t.readLine();
+                            QStringList lineParts = line.split("\t");
+                            if (lineParts[1]==catalog->name){
+                                lineParts[1]= newCatalogName;
+                                line = lineParts.join("\t");
                             }
-                            f.resize(0);
-                            t << s;
-                            f.close();
+                            s.append(line + "\n");
                         }
+                        f.resize(0);
+                        t << s;
+                        f.close();
                     }
+                }
             }
 
         //Launch update if changes impact the contents (path, file type, hidden)
-            if (       newCatalogSourcePath    != selectedCatalog->sourcePath
-                    or newCatalogIncludeHidden != selectedCatalog->includeHidden
-                    or newCatalogFileType      != selectedCatalog->fileType)
+            if (       newCatalogSourcePath      != catalog->sourcePath
+                    or newCatalogIncludeHidden   != catalog->includeHidden
+                    or newCatalogIncludeMetadata != catalog->includeMetadata
+                    or newCatalogFileType        != catalog->fileType)
             {
                 int updatechoice = QMessageBox::warning(this, "Katalog",
                                     tr("Update the catalog content with the new criteria?\n")
