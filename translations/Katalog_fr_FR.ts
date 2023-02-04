@@ -953,7 +953,7 @@ This could mean that the source is empty or the device is not mounted to this fo
     </message>
     <message>
         <source>Include Hidden Files</source>
-        <translation>Incure les Fichiers Cachés</translation>
+        <translation>Inclure les Fichiers Cachés</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1447,6 +1447,22 @@ to the trash?</source>
     <message>
         <source>Date Loaded</source>
         <translation>Date de chargement</translation>
+    </message>
+    <message>
+        <source>Include Metadata</source>
+        <translation>Inclure les metadonnées</translation>
+    </message>
+    <message>
+        <source>Include Media files metadata</source>
+        <translation>Inclure les metadonnées des fichiers média</translation>
+    </message>
+    <message>
+        <source>TEST MEDIA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inc.Metadata</source>
+        <translation>Inc.Métadonnées</translation>
     </message>
 </context>
 <context>

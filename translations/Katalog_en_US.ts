@@ -1395,6 +1395,22 @@ to the trash?</source>
         <source>Date Loaded</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Include Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Media files metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TEST MEDIA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inc.Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Tag</name>
