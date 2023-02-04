@@ -35,257 +35,198 @@
 #include <QLocale>
 #include <QMessageBox>
 
-// Catalog -----------------------------------------------------------------
+//CREATE TABLES -----------------------------------------------------------------
 
-    //Create table query
+        // CATALOG --------------------------------------------------------------
+
             const auto SQL_CREATE_CATALOG = QLatin1String(R"(
-                           CREATE TABLE IF NOT EXISTS  catalog(
-                                    catalogFilePath         TEXT ,
-                                    catalogName             TEXT  ,
-                                    catalogDateUpdated      TEXT  ,
-                                    catalogSourcePath       TEXT  ,
-                                    catalogFileCount        REAL  ,
-                                    catalogTotalFileSize    REAL ,
-                                    catalogSourcePathIsActive  REAL ,
-                                    catalogIncludeHidden    TEXT  ,
-                                    catalogFileType         TEXT  ,
-                                    catalogStorage          TEXT  ,
-                                    catalogIncludeSymblinks TEXT,
-                                    catalogIsFullDevice     TEXT,
-                                    catalogLoadedVersion    TEXT,
-                                    PRIMARY KEY("catalogName"))
+                       CREATE TABLE IF NOT EXISTS catalog(
+                            catalogFilePath             TEXT,
+                            catalogName                 TEXT,
+                            catalogDateUpdated          TEXT,
+                            catalogSourcePath           TEXT,
+                            catalogFileCount            REAL,
+                            catalogTotalFileSize        REAL,
+                            catalogSourcePathIsActive   REAL,
+                            catalogIncludeHidden        TEXT,
+                            catalogFileType             TEXT,
+                            catalogStorage              TEXT,
+                            catalogIncludeSymblinks     TEXT,
+                            catalogIsFullDevice         TEXT,
+                            catalogLoadedVersion        TEXT,
+                            catalogIncludeMetadata      TEXT,
+                            PRIMARY KEY("catalogName"))
             )");
 
-    //Insert row  query
-            const auto SQL_INSERT_CATALOG = QLatin1String(R"(
-                            INSERT OR IGNORE INTO catalog(
-                                    catalogFilePath,
-                                    catalogName,
-                                    catalogDateUpdated,
-                                    catalogSourcePath,
-                                    catalogFileCount,
-                                    catalogTotalFileSize,
-                                    catalogSourcePathIsActive,
-                                    catalogIncludeHidden,
-                                    catalogFileType,
-                                    catalogStorage,
-                                    catalogIncludeSymblinks,
-                                    catalogIsFullDevice,
-                                    catalogLoadedVersion)
-                                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            )");
+        // STORAGE --------------------------------------------------------------
 
-    //Insert row binding
-            inline QVariant addCatalog( QSqlQuery &q,
-                                        QString catalogFilePath,
-                                        QString catalogName,
-                                        QString catalogDateUpdated,
-                                        QString catalogSourcePath,
-                                        qint64 catalogFileCount,
-                                        qint64 catalogTotalFileSize,
-                                        int catalogSourcePathIsActive,
-                                        QString catalogIncludeHidden,
-                                        QString catalogFileType,
-                                        QString catalogStorage,
-                                        QString catalogIncludeSymblinks,
-                                        QString catalogIsFullDevice,
-                                        QString catalogLoadedVersion
-                            )
-                        {
-
-                            q.addBindValue(catalogFilePath);
-                            q.addBindValue(catalogName);
-                            q.addBindValue(catalogDateUpdated);
-                            q.addBindValue(catalogSourcePath);
-                            q.addBindValue(catalogFileCount);
-                            q.addBindValue(catalogTotalFileSize);
-                            q.addBindValue(catalogSourcePathIsActive);
-                            q.addBindValue(catalogIncludeHidden);
-                            q.addBindValue(catalogFileType);
-                            q.addBindValue(catalogStorage);
-                            q.addBindValue(catalogIncludeSymblinks);
-                            q.addBindValue(catalogIsFullDevice);
-                            q.addBindValue(catalogLoadedVersion);
-                            q.exec();
-                            return 0;
-                        }
-
-// Storage --------------------------------------------------------------
-
-    //Create table query
             const auto SQL_CREATE_STORAGE = QLatin1String(R"(
-                           CREATE TABLE IF NOT EXISTS  storage(
-                                storageID  int  primary key default 0,
-                                storageName         TEXT,
-                                storageType         TEXT,
-                                storageLocation     TEXT,
-                                storagePath         TEXT,
-                                storageLabel        TEXT,
-                                storageFileSystem   TEXT,
-                                storageTotalSpace   REAL default 0,
-                                storageFreeSpace    REAL default 0,
-                                storageBrandModel   TEXT,
-                                storageSerialNumber TEXT,
-                                storageBuildDate    TEXT,
-                                storageContentType  TEXT,
-                                storageContainer    TEXT,
-                                storageComment      TEXT)
+                       CREATE TABLE IF NOT EXISTS storage(
+                            storageID  int  primary key default 0,
+                            storageName         TEXT,
+                            storageType         TEXT,
+                            storageLocation     TEXT,
+                            storagePath         TEXT,
+                            storageLabel        TEXT,
+                            storageFileSystem   TEXT,
+                            storageTotalSpace   REAL default 0,
+                            storageFreeSpace    REAL default 0,
+                            storageBrandModel   TEXT,
+                            storageSerialNumber TEXT,
+                            storageBuildDate    TEXT,
+                            storageContentType  TEXT,
+                            storageContainer    TEXT,
+                            storageComment      TEXT)
             )");
 
-// FILESALL (storing all catalogs files)----------------------------------------------------
+        // FILESALL (storing all catalogs files)---------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_FILESALL = QLatin1String(R"(
-                               create  table  if not exists  filesall(
-                                        id_file             INTEGER,
-                                        fileName            TEXT,
-                                        filePath            TEXT,
-                                        fileSize            REAL,
-                                        fileDateUpdated     TEXT,
-                                        fileCatalog         TEXT,
-                                        fileFullPath        TEXT,
-                                        PRIMARY KEY("id_file" AUTOINCREMENT))
+            const auto SQL_CREATE_FILESALL = QLatin1String(R"(
+                       CREATE TABLE IF NOT EXISTS filesall(
+                            id_file             INTEGER,
+                            fileName            TEXT,
+                            filePath            TEXT,
+                            fileSize            REAL,
+                            fileDateUpdated     TEXT,
+                            fileCatalog         TEXT,
+                            fileFullPath        TEXT,
+                            PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
-// FILE (one-off requests) ----------------------------------------------------
+        // FILE (one-off requests) ----------------------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_FILE = QLatin1String(R"(
-                               CREATE TABLE IF NOT EXISTS  file(
-                                        id_file             INTEGER,
-                                        fileName            TEXT,
-                                        filePath            TEXT,
-                                        fileSize            REAL,
-                                        fileDateUpdated     TEXT,
-                                        fileCatalog         TEXT,
-                                        fileFullPath        TEXT,
-                                        PRIMARY KEY("id_file" AUTOINCREMENT))
-                )");
+            const auto SQL_CREATE_FILE = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  file(
+                            id_file             INTEGER,
+                            fileName            TEXT,
+                            filePath            TEXT,
+                            fileSize            REAL,
+                            fileDateUpdated     TEXT,
+                            fileCatalog         TEXT,
+                            fileFullPath        TEXT,
+                            PRIMARY KEY("id_file" AUTOINCREMENT))
+            )");
 
-// FOLDER ---------------------------------------------------------------------
+        // FOLDER ---------------------------------------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_FOLDER = QLatin1String(R"(
-                               CREATE TABLE IF NOT EXISTS  folder(
-                                        folderHash          TEXT,
-                                        folderCatalogName   TEXT,
-                                        folderPath          TEXT,
-                                        PRIMARY KEY(folderHash,folderCatalogName))
-                )");
+            const auto SQL_CREATE_FOLDER = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  folder(
+                            folderHash          TEXT,
+                            folderCatalogName   TEXT,
+                            folderPath          TEXT,
+                            PRIMARY KEY(folderHash,folderCatalogName))
+            )");
 
-// STATISTICS ------------------------------------------------
+        // STATISTICS -----------------------------------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_STATISTICS = QLatin1String(R"(
-                               CREATE TABLE IF NOT EXISTS  statistics(
-                                        dateTime             TEXT,
-                                        catalogName          TEXT,
-                                        catalogFileCount     REAL,
-                                        catalogTotalFileSize REAL,
-                                        recordType TEXT)
-                )");
+            const auto SQL_CREATE_STATISTICS = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  statistics(
+                            dateTime             TEXT,
+                            catalogName          TEXT,
+                            catalogFileCount     REAL,
+                            catalogTotalFileSize REAL,
+                            recordType TEXT)
+            )");
 
-// SEARCH ----------------------------------------------------
+        // SEARCH ---------------------------------------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_SEARCH = QLatin1String(R"(
-                               CREATE TABLE IF NOT EXISTS  search(
-                                        dateTime            TEXT,
-                                        TextChecked         INTEGER,
-                                        TextPhrase          TEXT,
-                                        TextCriteria        TEXT,
-                                        TextSearchIn        TEXT,
-                                        FileType            TEXT,
-                                        FileSizeChecked     INTEGER,
-                                        FileSizeMin         INTEGER,
-                                        FileSizeMinUnit     INTEGER,
-                                        FileSizeMax         INTEGER,
-                                        FileSizeMaxUnit     INTEGER,
-                                        DateModifiedChecked	INTEGER,
-                                        DateModifiedMin     TEXT,
-                                        DateModifiedMax     TEXT,
-                                        DuplicatesChecked	INTEGER,
-                                        DuplicatesName      INTEGER,
-                                        DuplicatesSize      INTEGER,
-                                        DuplicatesDateModified   INTEGER,
-                                        DifferencesChecked	INTEGER,
-                                        DifferencesName     INTEGER,
-                                        DifferencesSize     INTEGER,
-                                        DifferencesDateModified  INTEGER,
-                                        DifferencesCatalogs TEXT,
-                                        ShowFolders         INTEGER,
-                                        TagChecked          INTEGER,
-                                        Tag                 TEXT,
-                                        searchLocation      TEXT,
-                                        searchStorage       TEXT,
-                                        searchCatalog       TEXT,
-                                        SearchCatalogChecked    INTEGER,
-                                        SearchDirectoryChecked  INTEGER,
-                                        SeletedDirectory    TEXT,
-                                        TextExclude         TEXT,
-                                        CaseSensitive       INTEGER)
-                )");
+            const auto SQL_CREATE_SEARCH = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  search(
+                            dateTime                TEXT,
+                            TextChecked             INTEGER,
+                            TextPhrase              TEXT,
+                            TextCriteria            TEXT,
+                            TextSearchIn            TEXT,
+                            FileType                TEXT,
+                            FileSizeChecked         INTEGER,
+                            FileSizeMin             INTEGER,
+                            FileSizeMinUnit         INTEGER,
+                            FileSizeMax             INTEGER,
+                            FileSizeMaxUnit         INTEGER,
+                            DateModifiedChecked     INTEGER,
+                            DateModifiedMin         TEXT,
+                            DateModifiedMax         TEXT,
+                            DuplicatesChecked       INTEGER,
+                            DuplicatesName          INTEGER,
+                            DuplicatesSize          INTEGER,
+                            DuplicatesDateModified  INTEGER,
+                            DifferencesChecked      INTEGER,
+                            DifferencesName         INTEGER,
+                            DifferencesSize         INTEGER,
+                            DifferencesDateModified INTEGER,
+                            DifferencesCatalogs     TEXT,
+                            ShowFolders             INTEGER,
+                            TagChecked              INTEGER,
+                            Tag                     TEXT,
+                            searchLocation          TEXT,
+                            searchStorage           TEXT,
+                            searchCatalog           TEXT,
+                            SearchCatalogChecked    INTEGER,
+                            SearchDirectoryChecked  INTEGER,
+                            SeletedDirectory        TEXT,
+                            TextExclude             TEXT,
+                            CaseSensitive           INTEGER)
+            )");
 
-// TAG ----------------------------------------------------
+        // TAG ------------------------------------------------------------------
 
-        //Create table query
-                const auto SQL_CREATE_TAG = QLatin1String(R"(
-                               CREATE TABLE IF NOT EXISTS  tag(
-                                        Name		TEXT,
-                                        Path		TEXT,
-                                        Type		TEXT,
-                                        dateTime	TEXT)
-                )");
+            const auto SQL_CREATE_TAG = QLatin1String(R"(
+                       CREATE TABLE IF NOT EXISTS  tag(
+                            Name		TEXT,
+                            Path		TEXT,
+                            Type		TEXT,
+                            dateTime	TEXT)
+            )");
 
+//-------------------------------------------------------------------------------
+// Database initialization ------------------------------------------------------
 
-// Database initialization ------------------------------------------------
+    QSqlError initializeDatabase(QString databaseMode, QString databaseFilePath)
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
-QSqlError initializeDatabase(QString databaseMode, QString databaseFilePath)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        //databaseMode = "File";
+        if (databaseMode=="Memory"){
+            db.setDatabaseName(":memory:");
+        }
+        else if (databaseMode=="File"){
 
-    //databaseMode = "File";
-    if (databaseMode=="Memory"){
-        db.setDatabaseName(":memory:");
+            /*TEMPDEV*/databaseFilePath = "/home/stephane/Development/katalog.db";
+            db.setDatabaseName(databaseFilePath);
+        }
+
+        if (!db.open())
+            return db.lastError();
+
+        QStringList tables = db.tables();
+
+        QSqlQuery q;
+        if (!q.exec(SQL_CREATE_CATALOG))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STORAGE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FILESALL))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FILE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FOLDER))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STATISTICS))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_SEARCH))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_TAG))
+            return q.lastError();
+
+        return QSqlError();
     }
-    else if (databaseMode=="File"){
-
-        /*TEMPDEV*/databaseFilePath = "/home/stephane/Development/katalog.db";
-        db.setDatabaseName(databaseFilePath);
-    }
-
-    if (!db.open())
-        return db.lastError();
-
-    QStringList tables = db.tables();
-
-    QSqlQuery q;
-    if (!q.exec(SQL_CREATE_CATALOG))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_STORAGE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FILESALL))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FILE))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_FOLDER))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_STATISTICS))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_SEARCH))
-        return q.lastError();
-
-    if (!q.exec(SQL_CREATE_TAG))
-        return q.lastError();
-
-    return QSqlError();
-}
 
 
 #endif // DATABASE_H

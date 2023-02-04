@@ -132,7 +132,10 @@ void Catalog::setDateLoaded(QString dateTimeString)
 {
     dateLoaded = dateTimeString;
 }
-
+void Catalog::setIncludeMetadata(bool selectedIncludeMetadata)
+{
+    includeMetadata = selectedIncludeMetadata;
+}
 
 //catalog files data operation
 void Catalog::loadCatalogMetaData()
@@ -152,7 +155,8 @@ void Catalog::loadCatalogMetaData()
                                 catalogStorage              ,
                                 catalogIncludeSymblinks     ,
                                 catalogIsFullDevice         ,
-                                catalogLoadedVersion
+                                catalogLoadedVersion        ,
+                                catalogIncludeMetadata
                             FROM catalog
                             LEFT JOIN storage ON catalogStorage = storageName
                             WHERE catalogName=:catalogName
@@ -175,8 +179,8 @@ void Catalog::loadCatalogMetaData()
     includeSymblinks   = query.value(10).toBool();
     isFullDevice       = query.value(11).toBool();
     dateLoaded         = query.value(12).toString();
+    includeMetadata    = query.value(13).toBool();
 }
-
 
 void Catalog::renameCatalog(QString newCatalogName)
 {
@@ -189,7 +193,6 @@ void Catalog::renameCatalog(QString newCatalogName)
         QFile::rename(filePath, newCatalogFilePath);
         filePath = newCatalogFilePath;
 }
-
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<qint64>  &cfileSize,

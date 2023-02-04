@@ -298,9 +298,6 @@ class MainWindow : public QMainWindow
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
 
-            void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
-            void getMetaData(QMediaPlayer *player);
-
         //TAB: Storage
             QString storageFilePath;
             int     selectedStorageIndexRow;
@@ -461,6 +458,10 @@ class MainWindow : public QMainWindow
             void on_Catalogs_pushButton_Snapshot_clicked();
 
         //Create
+            void getFileMetadata();
+            void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+            void getMetaData(QMediaPlayer *player);
+
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
             void on_Create_pushButton_EditExcludeList_clicked();

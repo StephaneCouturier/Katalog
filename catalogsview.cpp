@@ -49,7 +49,7 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
     QList<int> filesizeColumnList, filecountColumnList, percentColumnList, centerColumnList;
       filecountColumnList <<3;
       filesizeColumnList  <<4;
-      centerColumnList    <<6 <<7 <<8;
+      centerColumnList    <<6 <<7 <<8 <<11;
       //percentColumnList <<5; //DEV: for future % columns
 
     switch ( role )

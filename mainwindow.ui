@@ -4358,7 +4358,90 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <layout class="QGridLayout" name="gridLayout_16">
                <item row="1" column="0">
                 <layout class="QGridLayout" name="Catalogs_gridLayout">
-                 <item row="3" column="8">
+                 <item row="0" column="6">
+                  <widget class="QLabel" name="Catalogs_label_Storage">
+                   <property name="text">
+                    <string>Storage</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3">
+                  <widget class="QPushButton" name="Catalogs_pushButton_SelectPath">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>Select</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-select">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="Catalogs_label_NameTitle">
+                   <property name="text">
+                    <string>Name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="10">
+                  <spacer name="Catalogs_horizontalSpacer_09">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="2" column="0">
+                  <spacer name="Catalogs_horizontalSpacer_08">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="7">
+                  <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="Catalogs_label_SourcePath">
+                   <property name="text">
+                    <string>Source Path</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLineEdit" name="Catalogs_lineEdit_Name">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="8">
                   <widget class="QPushButton" name="Catalogs_pushButton_Cancel">
                    <property name="minimumSize">
                     <size>
@@ -4381,18 +4464,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="6">
-                  <widget class="QLabel" name="Catalogs_label_Storage">
-                   <property name="text">
-                    <string>Storage</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="7">
-                  <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
-                 </item>
-                 <item row="2" column="0">
-                  <spacer name="Catalogs_horizontalSpacer_08">
+                 <item row="2" column="5">
+                  <spacer name="Catalogs_horizontalSpacer_06">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -4407,15 +4480,36 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </spacer>
                  </item>
-                 <item row="2" column="8">
-                  <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="text">
-                    <string>Include Hidden Files</string>
-                   </property>
-                  </widget>
+                 <item row="4" column="2">
+                  <layout class="QHBoxLayout" name="Catalog_horizontalLayout_4">
+                   <item>
+                    <widget class="QPushButton" name="Catalogs_pushButton_Open">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Open in text editor</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="document-edit-sign">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="Catalog_horizontalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                  <item row="2" column="7">
                   <widget class="QComboBox" name="Catalogs_comboBox_FileType">
@@ -4462,7 +4556,27 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </item>
                   </widget>
                  </item>
-                 <item row="3" column="7">
+                 <item row="2" column="2">
+                  <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="6">
+                  <widget class="QLabel" name="Catalogs_label_FileType">
+                   <property name="text">
+                    <string>File Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="7">
                   <widget class="QPushButton" name="Catalogs_pushButton_Save">
                    <property name="minimumSize">
                     <size>
@@ -4485,13 +4599,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="1">
-                  <widget class="QLabel" name="Catalogs_label_SourcePath">
-                   <property name="text">
-                    <string>Source Path</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="8">
                   <widget class="QCheckBox" name="Catalogs_checkBox_isFullDevice">
                    <property name="text">
@@ -4499,122 +4606,25 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="2">
-                  <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="6">
-                  <widget class="QLabel" name="Catalogs_label_FileType">
-                   <property name="text">
-                    <string>File Type</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="5">
-                  <spacer name="Catalogs_horizontalSpacer_06">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLineEdit" name="Catalogs_lineEdit_Name">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="Catalogs_label_NameTitle">
-                   <property name="text">
-                    <string>Name</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="10">
-                  <spacer name="Catalogs_horizontalSpacer_09">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="2" column="3">
-                  <widget class="QPushButton" name="Catalogs_pushButton_SelectPath">
+                 <item row="3" column="8">
+                  <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
                    <property name="enabled">
                     <bool>true</bool>
                    </property>
                    <property name="text">
-                    <string>Select</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="edit-select">
-                     <normaloff>.</normaloff>.</iconset>
+                    <string>Include Hidden Files</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="2">
-                  <layout class="QHBoxLayout" name="Catalog_horizontalLayout_4">
-                   <item>
-                    <widget class="QPushButton" name="Catalogs_pushButton_Open">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Open in text editor</string>
-                     </property>
-                     <property name="icon">
-                      <iconset theme="document-edit-sign">
-                       <normaloff>.</normaloff>.</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="Catalog_horizontalSpacer_10">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
+                 <item row="2" column="8">
+                  <widget class="QCheckBox" name="Catalogs_checkBox_IncludeMetadata">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>Include Metadata</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -5307,6 +5317,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QCheckBox" name="Create_checkBox_IncludeHidden">
                   <property name="text">
                    <string>Include Hidden files</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="Create_checkBox_IncludeMetadata">
+                  <property name="text">
+                   <string>Include Media files metadata</string>
                   </property>
                  </widget>
                 </item>

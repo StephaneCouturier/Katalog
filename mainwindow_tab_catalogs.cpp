@@ -103,6 +103,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {   //Update the selected catalog
+            skipCatalogUpdateSummary= false;
             updateSingleCatalog(selectedCatalog);
         }
         //----------------------------------------------------------------------
@@ -459,10 +460,6 @@
                 QMessageBox::information(this,"Katalog","problem to create the table.");
                 return;}
 
-            if (!query.prepare(SQL_INSERT_CATALOG)){
-                QMessageBox::information(this,"Katalog","problem to insert rows.");
-                return;}
-
         //Iterate in the directory to create a list of files and sort it
             QStringList catalogFileExtensions;
             catalogFileExtensions << "*.idx";
@@ -490,7 +487,7 @@
                 QStringList catalogValues;
                 QString line;
                 QString value;
-                for (int i=0; i<8; i++) {
+                for (int i=0; i<9; i++) {
                     line = textStreamCatalogs.readLine();
                     if (line !="" and line.at(0)=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
@@ -499,27 +496,67 @@
                     }
                 }
                 if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
+                if (catalogValues.count()==8) catalogValues << "false"; //for older catalog without includeMetadata
 
                 if(catalogValues.length()>0){
                     // Verify if path is active (drive connected)
                     int isActive = verifyCatalogPath(catalogValues[0]);
 
                     //Insert a line in the table with available data
-                    QVariant catalogID = addCatalog(query,
-                                catalogFileInfo.filePath(),  //catalogFilePath
-                                catalogFileInfo.completeBaseName(),  //catalogName
-                                catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"), //catalogDateUpdated
-                                catalogValues[0], //catalogSourcePath
-                                catalogValues[1].toInt(), //catalogFileCount
-                                catalogValues[2].toLongLong(), //catalogTotalFileSize
-                                isActive,         //catalogSourcePathIsActive
-                                catalogValues[3], //catalogIncludeHidden
-                                catalogValues[4], //translated catalogFileType
-                                catalogValues[5], //catalogStorage
-                                catalogValues[6], //catalogIncludeSymblinks
-                                catalogValues[7],  //catalogIsFullDevice
-                                ""  //catalogLoadedVersion
-                                );
+
+                    //prepare insert query for filesall
+                    QSqlQuery insertCatalogQuery;
+                    QString insertCatalogQuerySQL = QLatin1String(R"(
+                                            INSERT OR IGNORE INTO catalog (
+                                                            catalogFilePath,
+                                                            catalogName,
+                                                            catalogDateUpdated,
+                                                            catalogSourcePath,
+                                                            catalogFileCount,
+                                                            catalogTotalFileSize,
+                                                            catalogSourcePathIsActive,
+                                                            catalogIncludeHidden,
+                                                            catalogFileType,
+                                                            catalogStorage,
+                                                            catalogIncludeSymblinks,
+                                                            catalogIsFullDevice,
+                                                            catalogLoadedVersion,
+                                                            catalogIncludeMetadata
+                                                            )
+                                            VALUES(
+                                                            :catalogFilePath,
+                                                            :catalogName,
+                                                            :catalogDateUpdated,
+                                                            :catalogSourcePath,
+                                                            :catalogFileCount,
+                                                            :catalogTotalFileSize,
+                                                            :catalogSourcePathIsActive,
+                                                            :catalogIncludeHidden,
+                                                            :catalogFileType,
+                                                            :catalogStorage,
+                                                            :catalogIncludeSymblinks,
+                                                            :catalogIsFullDevice,
+                                                            :catalogLoadedVersion,
+                                                            :catalogIncludeMetadata )
+                                        )");
+
+                    insertCatalogQuery.prepare(insertCatalogQuerySQL);
+                    insertCatalogQuery.bindValue(":catalogFilePath",catalogFileInfo.filePath());
+                    insertCatalogQuery.bindValue(":catalogName",catalogFileInfo.completeBaseName());
+                    insertCatalogQuery.bindValue(":catalogDateUpdated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+                    insertCatalogQuery.bindValue(":catalogSourcePath",catalogValues[0]);
+                    insertCatalogQuery.bindValue(":catalogFileCount",catalogValues[1].toInt());
+                    insertCatalogQuery.bindValue(":catalogTotalFileSize",catalogValues[2].toLongLong());
+                    insertCatalogQuery.bindValue(":catalogSourcePathIsActive",isActive);
+                    insertCatalogQuery.bindValue(":catalogIncludeHidden",catalogValues[3]);
+                    insertCatalogQuery.bindValue(":catalogFileType",catalogValues[4]);
+                    insertCatalogQuery.bindValue(":catalogStorage",catalogValues[5]);
+                    insertCatalogQuery.bindValue(":catalogIncludeSymblinks",catalogValues[6]);
+                    insertCatalogQuery.bindValue(":catalogIsFullDevice",catalogValues[7]);
+                    insertCatalogQuery.bindValue(":catalogLoadedVersion","");
+                    insertCatalogQuery.bindValue(":catalogIncludeMetadata",catalogValues[8]);
+                    insertCatalogQuery.exec();
+
                 }
                 catalogFile.close();
             }
@@ -546,7 +583,8 @@
                                             catalogStorage              ,
                                             storageLocation             ,
                                             catalogIsFullDevice         ,
-                                            catalogLoadedVersion
+                                            catalogLoadedVersion        ,
+                                            catalogIncludeMetaData
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalogStorage = storageName
                                         WHERE catalogName !=''
@@ -591,6 +629,7 @@
             proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
             proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Date Loaded"));
+            proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("Inc.Metadata"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -788,7 +827,7 @@
 
             //Inform user about the update
             if(skipCatalogUpdateSummary !=true){
-            QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
+                QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
                                      "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
                                      "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
                                      ).arg(catalog->name,
@@ -798,7 +837,6 @@
                                            QLocale().formattedDataSize(deltaTotalFileSize))
                                      ,Qt::TextFormat(Qt::RichText));
             }
-
         }
         else {
             QMessageBox::information(this,"Katalog",tr("The catalog %1 cannot be updated.\n"

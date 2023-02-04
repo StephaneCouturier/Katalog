@@ -201,6 +201,7 @@
             newCatalog->setDateLoaded(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
             newCatalog->setFileCount(0);
             newCatalog->setTotalFileSize(0);
+            newCatalog->setIncludeMetadata(ui->Create_checkBox_IncludeMetadata->isChecked());
 
             //Get the file type for the catalog
             if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
@@ -380,6 +381,12 @@
                 if(excludeFile == false){
                         fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
+
+//Include Media File Metadata
+                //Include Media File Metadata
+                if(catalog->includeMetadata == true){
+                    QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                }
             }
         }
         else{
@@ -413,6 +420,12 @@
                 //add file to list if not excluded
                 if(excludeFile == false){
                     fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
+
+//Include Media File Metadata
+                //Include Media File Metadata
+                if(catalog->includeMetadata == true){
+                    QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
                 }
             }
         }
@@ -522,6 +535,7 @@
         }
 
         //Prepare the catalog file data, adding first the catalog metadata at the beginning
+        fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(catalog->includeSymblinks).toString());
         fileList.prepend("<catalogStorage>"         + catalog->storageName);
@@ -593,5 +607,60 @@
     }
     //--------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------
 
+    void MainWindow::getFileMetadata()
+    {
+        QString filePath;
+        //filePath ="/home/stephane/Vidéos/COPY/test6.mp4";
+        //filePath ="/home/stephane/Vidéos/COPY/test2.mkv";
+        filePath ="/home/stephane/Vidéos/COPY/test3.mp3";
+        //filePath ="/home/stephane/Vidéos/COPY/test5.mkv";
 
+        QFile mediaFile(filePath);
+        if(mediaFile.exists()==true){
+
+            m_player = new QMediaPlayer(this);
+            connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+
+            //6     m_player->setSource(QUrl::fromLocalFile(filePath));
+            QMediaContent mediaFile(QUrl::fromLocalFile(filePath));
+            m_player->setMedia(mediaFile);
+        }
+    }
+
+    void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
+    {
+        if (status == QMediaPlayer::LoadedMedia)
+            getMetaData(m_player);
+    }
+
+    void MainWindow::getMetaData(QMediaPlayer *player)
+    {
+        //QMessageBox::information(this,"Katalog","getMetaData");
+        QStringList datalist;
+        QStringListModel* listModel = new QStringListModel(this);
+
+        // Get the list of keys there is metadata available for
+        QStringList metadatalist = player->availableMetaData();
+
+       // Get the size of the list
+         int list_size = metadatalist.size();
+
+         // Define variables to store metadata key and value
+         QString metadata_key;
+         QVariant var_data;
+
+         for (int indx = 0; indx < list_size; indx++)
+         {
+           // Get the key from the list
+           metadata_key = metadatalist.at(indx);
+
+           // Get the value for the key
+           var_data = player->metaData(metadata_key);
+           datalist << metadata_key << var_data.toString();
+         }
+
+        listModel->setStringList(datalist);
+        ui->Storage_listView_Media->setModel(listModel);
+     }
