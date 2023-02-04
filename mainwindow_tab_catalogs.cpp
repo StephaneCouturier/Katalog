@@ -1062,7 +1062,7 @@
 
             QString newCatalogStorage       = ui->Catalogs_comboBox_Storage->currentText();
             QString newCatalogFileType      = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-            bool    newCatalogIncludeHidden = ui->Catalogs_checkBox_IncludeHidden->checkState();
+            QString newCatalogIncludeHidden = QVariant(ui->Catalogs_checkBox_IncludeHidden->isChecked()).toString();
 
             bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
