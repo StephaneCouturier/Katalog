@@ -46,5 +46,6 @@
         <file>fallback-icons/kontact-import-wizard.png</file>
         <file>fallback-icons/collapse-all.png</file>
         <file>fallback-icons/expand-all.png</file>
+        <file>fallback-icons/dialog-ok-apply.png</file>
     </qresource>
 </RCC>
