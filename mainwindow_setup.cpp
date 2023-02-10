@@ -641,7 +641,7 @@
         // Initialize the database:
         QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
         if (err.type() != QSqlError::NoError) {
-            //showError(err);
+            QMessageBox::information(this,"Katalog","initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
             return;
         }
 
