@@ -230,7 +230,7 @@
             else
                 {
                 //Split the string with \t (tabulation) into a list
-                    QRegExp tagExp("\t"); //setpattern
+                    QRegularExpression tagExp("\t"); //setpattern
                     fieldList.clear();
                     fieldList = line.split(tagExp);
                     fieldListCount = fieldList.count();

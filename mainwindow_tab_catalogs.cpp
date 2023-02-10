@@ -491,7 +491,7 @@
                 QString value;
                 for (int i=0; i<9; i++) {
                     line = textStreamCatalogs.readLine();
-                    if (line !="" and line.at(0)=="<"){
+                    if (line !="" and QVariant(line.at(0)).toString()=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
                         if (value =="") catalogValues << "";
                         else catalogValues << value;
@@ -1057,7 +1057,7 @@
             //get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
             QString newCatalogSourcePath    = ui->Catalogs_lineEdit_SourcePath->text();
             int     pathLength              = newCatalogSourcePath.length();
-            if (newCatalogSourcePath !="/" and newCatalogSourcePath.at(pathLength-1)=="/") {
+            if (newCatalogSourcePath !="/" and QVariant(newCatalogSourcePath.at(pathLength-1)).toString()=="/") {
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
 
@@ -1202,8 +1202,8 @@
 
         //Update the list of file if the changes impact the contents (i.e. path, file type, hidden)
             if (       newCatalogSourcePath      != catalog->sourcePath
-                    or newCatalogIncludeHidden   != catalog->includeHidden
-                    or newCatalogIncludeMetadata != catalog->includeMetadata
+                    or newCatalogIncludeHidden   != QVariant(catalog->includeHidden).toString()
+                    or newCatalogIncludeMetadata != QVariant(catalog->includeMetadata).toString()
                     or newCatalogFileType        != catalog->fileType)
             {
                 int updatechoice = QMessageBox::warning(this, "Katalog",

@@ -815,5 +815,4 @@
 
         setMediaFile(filePath);
 
-        QMessageBox::information(this,"Katalog","fileMetadata:<br/>" + fileMetadataString);
     }

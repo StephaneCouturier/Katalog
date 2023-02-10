@@ -35,6 +35,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QDesktopServices>
+#include <QMediaMetaData>
 
 //UI----------------------------------------------------------------------------
 
@@ -483,7 +484,7 @@
                                                   :folderPath)
                                                        )");
             //Iterrate through the file list
-            QRegExp lineCatalogFileSplitExp("\t");
+            QRegularExpression lineCatalogFileSplitExp("\t");
             for(int i=0; i<fileList.count(); i++){
             //fileList[i]
 
@@ -515,7 +516,7 @@
 
 
                 QString folder = fileInfo.path();
-                QString folderHash = QVariant(qHash(folder)).toString();
+                QString folderHash = QString::number(qHash(folder));
 
                  //Load folder into the database
                      insertFolderQuery.prepare(insertFolderSQL);
@@ -616,12 +617,13 @@
         QFile mediaFile(filePath);
         if(mediaFile.exists()==true){
 
+            QMessageBox::information(this,"Katalog","file exists :<br/>" + filePath);
+
             m_player = new QMediaPlayer(this);
             connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
-            //qt6: m_player->setSource(QUrl::fromLocalFile(filePath));
-            QMediaContent mediaFile(QUrl::fromLocalFile(filePath));
-            m_player->setMedia(mediaFile);
+            m_player->setSource(QUrl::fromLocalFile(filePath));
+
         }
     }
 
@@ -633,35 +635,13 @@
 
     void MainWindow::getMetaData(QMediaPlayer *player)
     {
-        //QMessageBox::information(this,"Katalog","getMetaData");
-        QStringList datalist;
-        QStringListModel* listModel = new QStringListModel(this);
+        QMessageBox::information(this,"Katalog","getMetaData");
 
-        // Get the list of keys there is metadata available for
-        QStringList metadatalist = player->availableMetaData();
+        QMediaMetaData metaData = player->metaData();
 
-       // Get the size of the list
-         int list_size = metadatalist.size();
+        QVariant resolution = metaData.value(QMediaMetaData::Resolution);
+        QMessageBox::information(this,"Katalog","resolution:<br/>" + resolution.toString());
 
-         // Define variables to store metadata key and value
-         QString metadata_key;
-         QVariant var_data;
-
-         for (int indx = 0; indx < list_size; indx++)
-         {
-           // Get the key from the list
-           metadata_key = metadatalist.at(indx);
-
-           // Get the value for the key
-           var_data = player->metaData(metadata_key);
-           datalist << metadata_key << var_data.toString();
-         }
-
-        listModel->setStringList(datalist);
-        ui->Storage_listView_Media->setModel(listModel);
-
-        fileMetadataString = QVariant(datalist[0]).toString();
-
-        QMessageBox::information(this,"Katalog","fileMetadata string:<br/>" + fileMetadataString);
-
+        QVariant resolution4 = player->metaData()[QMediaMetaData::Duration];
+        QMessageBox::information(this,"Katalog","resolution4: Duration<br/>" + resolution4.toString());
      }

@@ -6356,7 +6356,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="0" column="0">
              <layout class="QGridLayout" name="Statistics_gridLayout">
               <item row="3" column="0">
-               <widget class="QtCharts::QChartView" name="Statistics_chartview_Graph1"/>
+               <widget class="QChartView" name="Statistics_chartview_Graph1"/>
               </item>
               <item row="2" column="0">
                <widget class="Line" name="Statistics_line_Separate">
@@ -7412,10 +7412,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QtCharts::QChartView</class>
+   <class>QChartView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">QtCharts/QChartView&gt;
-#include &lt;QtCharts/chartsnamespace.h</header>
+   <header>QChartView</header>
   </customwidget>
  </customwidgets>
  <resources>

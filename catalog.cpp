@@ -96,9 +96,9 @@ void Catalog::setSourcePath(QString selectedSourcePath)
 
     //remove the / at the end if any, except for root path
     int pathLength = sourcePath.length();
-    if (sourcePath !="/" and sourcePath.at(pathLength-1)=="/") {
-        sourcePath.remove(pathLength-1,1);
-    }
+//    if (sourcePath !="/" and sourcePath.at(pathLength-1)=="/") {
+//        sourcePath.remove(pathLength-1,1);
+//    }
 }
 void Catalog::setFileCount(qint64 selectedFileCount)
 {

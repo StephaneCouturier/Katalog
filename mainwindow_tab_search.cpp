@@ -1325,7 +1325,7 @@
                     else if(selectedTextCriteria == tr("All Words")){
                         QString searchTextToSplit = searchText;
                         QString groupRegEx = "";
-                        QRegExp lineSplitExp(" ");
+                        QRegularExpression lineSplitExp(" ");
                         QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                         int numberOfSearchWords = lineFieldList.count();
                         //build regex group for one word
@@ -1370,7 +1370,7 @@
                     //Prepare
                     QString searchTextToSplit = selectedSearchExclude;
                     QString excludeGroupRegEx = "";
-                    QRegExp lineSplitExp(" ");
+                    QRegularExpression lineSplitExp(" ");
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
 
@@ -1554,7 +1554,7 @@
                 else if(selectedTextCriteria == tr("All Words")){
                     QString searchTextToSplit = searchText;
                     QString groupRegEx = "";
-                    QRegExp lineSplitExp(" ");
+                    QRegularExpression lineSplitExp(" ");
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
                     //build regex group for one word
@@ -1598,7 +1598,7 @@
                 //Prepare
                 QString searchTextToSplit = selectedSearchExclude;
                 QString excludeGroupRegEx = "";
-                QRegExp lineSplitExp(" ");
+                QRegularExpression lineSplitExp(" ");
                 QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                 int numberOfSearchWords = lineFieldList.count();
 
@@ -1643,7 +1643,7 @@
                         //QRegularExpressionMatch matchFileType;
 
                         //Split the line text with tabulations into a list
-                        QRegExp     lineSplitExp("\t");
+                        QRegularExpression     lineSplitExp("\t");
                         QStringList lineFieldList  = line.split(lineSplitExp);
                         int         fieldListCount = lineFieldList.count();
 
@@ -1808,7 +1808,7 @@
                     //Set up a text stream from the file's data
                     QTextStream streamCatalogFile(&catalogFile);
                     QString lineCatalogFile;
-                    QRegExp lineCatalogFileSplitExp("\t");
+                    QRegularExpression lineCatalogFileSplitExp("\t");
 
                     //Prepare database and queries
                         //clear database from old version of catalog
@@ -1891,9 +1891,8 @@
                                     lineFileDatetime = lineFieldList[2];}
                             else lineFileDatetime = "";
 
-
                             QString folder = fileInfo.path();
-                            QString folderHash = QVariant(qHash(folder)).toString();
+                            QString folderHash = QString::number(qHash(folder));
 
                              //Load folder into the database
                                  insertFolderQuery.prepare(insertFolderSQL);
