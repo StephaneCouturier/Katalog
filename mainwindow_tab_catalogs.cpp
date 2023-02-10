@@ -454,6 +454,7 @@
         //Clear catalog table
             QSqlQuery queryDelete;
             queryDelete.prepare( "DELETE FROM catalog" );
+            queryDelete.exec();
 
         //Prepare table and insert query
             QSqlQuery query;
@@ -581,11 +582,11 @@
                                             catalogFileType             ,
                                             catalogSourcePathIsActive   ,
                                             catalogIncludeHidden        ,
+                                            catalogIncludeMetadata      ,
                                             catalogStorage              ,
                                             storageLocation             ,
                                             catalogIsFullDevice         ,
-                                            catalogLoadedVersion        ,
-                                            catalogIncludeMetadata
+                                            catalogLoadedVersion
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalogStorage = storageName
                                         WHERE catalogName !=''
@@ -626,11 +627,11 @@
             proxyResultsModel->setHeaderData(6, Qt::Horizontal, tr("File Type"));
             proxyResultsModel->setHeaderData(7, Qt::Horizontal, tr("Active"));
             proxyResultsModel->setHeaderData(8, Qt::Horizontal, tr("Inc.Hidden"));
-            proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Storage"));
-            proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Location"));
-            proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
-            proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Date Loaded"));
-            proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("Inc.Metadata"));
+            proxyResultsModel->setHeaderData(9, Qt::Horizontal, tr("Inc.Metadata"));
+            proxyResultsModel->setHeaderData(10,Qt::Horizontal, tr("Storage"));
+            proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Location"));
+            proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Full Device"));
+            proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("Last Loaded"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -648,16 +649,16 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(5, 300); //Path
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(7,  50); //Active
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //include
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(9, 150); //Storage
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Location
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Loaded Version
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(13, 50); //Loaded Version
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //includeHidden
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(9,  50); //includeMetadata
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(10,150); //Storage
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(11,150); //Location
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(12, 50); //FullDevice
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(13,150); //Last Loaded
 
             //Hide columns
-            ui->Catalogs_treeView_CatalogList->hideColumn(11); //isFullDevice
-            //ui->Catalogs_treeView_CatalogList->hideColumn(12); //Loaded Version
+            ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
+            ui->Catalogs_treeView_CatalogList->hideColumn(13); //Loaded Version
 
             //Populate catalogs statistics
             QSqlQuery query;
@@ -1077,7 +1078,7 @@
                 return;
             }
 
-        //Write changes to database
+        //Write changes to database (except change of name)
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                     UPDATE catalog
@@ -1128,7 +1129,7 @@
                         fullFileText.append(line + "\n");
                     }
                     else{
-                        //add meta-data. The ifs must be in the correct order of the meta-data lines
+                        //add catalog meta-data. The ifs must be in the correct order of the meta-data lines
                         if(line.startsWith("<catalogSourcePath>"))
                                 fullFileText.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
 
@@ -1199,7 +1200,7 @@
                 }
             }
 
-        //Launch update if changes impact the contents (path, file type, hidden)
+        //Update the list of file if the changes impact the contents (i.e. path, file type, hidden)
             if (       newCatalogSourcePath      != catalog->sourcePath
                     or newCatalogIncludeHidden   != catalog->includeHidden
                     or newCatalogIncludeMetadata != catalog->includeMetadata

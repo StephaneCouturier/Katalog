@@ -807,5 +807,13 @@
 
     void MainWindow::on_Storage_pushButton_TestMedia_clicked()
     {
-        getFileMetadata();
+        QString filePath;
+        //filePath ="/home/stephane/Vidéos/COPY/test6.mp4";
+        //filePath ="/home/stephane/Vidéos/COPY/test2.mkv";
+        //filePath ="/home/stephane/Vidéos/COPY/test3.mp3";
+        filePath ="/home/stephane/Vidéos/COPY/test5.mkv";
+
+        setMediaFile(filePath);
+
+        QMessageBox::information(this,"Katalog","fileMetadata:<br/>" + fileMetadataString);
     }

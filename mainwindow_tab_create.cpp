@@ -385,7 +385,8 @@
 //Include Media File Metadata
                 //Include Media File Metadata
                 if(catalog->includeMetadata == true){
-                    QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                    //setMediaFile(filePath);
+                    //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
                 }
             }
         }
@@ -425,7 +426,8 @@
 //Include Media File Metadata
                 //Include Media File Metadata
                 if(catalog->includeMetadata == true){
-                    QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                    setMediaFile(filePath);
+                    //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
                 }
             }
         }
@@ -609,21 +611,15 @@
 
 //--------------------------------------------------------------------------
 
-    void MainWindow::getFileMetadata()
+    void MainWindow::setMediaFile(QString filePath)
     {
-        QString filePath;
-        //filePath ="/home/stephane/Vidéos/COPY/test6.mp4";
-        //filePath ="/home/stephane/Vidéos/COPY/test2.mkv";
-        filePath ="/home/stephane/Vidéos/COPY/test3.mp3";
-        //filePath ="/home/stephane/Vidéos/COPY/test5.mkv";
-
         QFile mediaFile(filePath);
         if(mediaFile.exists()==true){
 
             m_player = new QMediaPlayer(this);
             connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
-            //6     m_player->setSource(QUrl::fromLocalFile(filePath));
+            //qt6: m_player->setSource(QUrl::fromLocalFile(filePath));
             QMediaContent mediaFile(QUrl::fromLocalFile(filePath));
             m_player->setMedia(mediaFile);
         }
@@ -663,4 +659,9 @@
 
         listModel->setStringList(datalist);
         ui->Storage_listView_Media->setModel(listModel);
+
+        fileMetadataString = QVariant(datalist[0]).toString();
+
+        QMessageBox::information(this,"Katalog","fileMetadata string:<br/>" + fileMetadataString);
+
      }

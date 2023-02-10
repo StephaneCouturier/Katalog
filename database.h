@@ -26,14 +26,12 @@
 // Purpose:     database queries
 // Description:
 // Author:      Stephane Couturier
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 */
 #ifndef DATABASE_H
 #define DATABASE_H
 
 #include <QtSql>
-#include <QLocale>
-#include <QMessageBox>
 
 //CREATE TABLES -----------------------------------------------------------------
 
@@ -115,6 +113,17 @@
                             folderCatalogName   TEXT,
                             folderPath          TEXT,
                             PRIMARY KEY(folderHash,folderCatalogName))
+            )");
+
+        // METADATA -------------------------------------------------------------
+
+            const auto SQL_CREATE_METADATA = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  metadata(
+                            catalogName         TEXT,
+                            fileName            TEXT,
+                            filePath            TEXT,
+                            field               TEXT,
+                            value               TEXT)
             )");
 
         // STATISTICS -----------------------------------------------------------
@@ -214,6 +223,9 @@
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_FOLDER))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_METADATA))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_STATISTICS))

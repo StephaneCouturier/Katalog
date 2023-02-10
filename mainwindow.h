@@ -290,6 +290,9 @@ class MainWindow : public QMainWindow
             QStringList storageNameList;
             QString excludeFilePath;
 
+            QString fileMetadataString;
+            //QMediaMetaData mediaMetadata;
+
             QMediaPlayer *m_player;
 
             void loadFileSystem(QString newCatalogPath);
@@ -458,7 +461,7 @@ class MainWindow : public QMainWindow
             void on_Catalogs_pushButton_Snapshot_clicked();
 
         //Create
-            void getFileMetadata();
+            void setMediaFile(QString filePath);
             void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
             void getMetaData(QMediaPlayer *player);
 
