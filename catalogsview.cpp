@@ -34,7 +34,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <QFileIconProvider>
-//#include <QCoreApplication>
+#include <QCoreApplication>
 
 CatalogsView::CatalogsView(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -46,11 +46,12 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 {
 
     //Define list of column per type of data
-    QList<int> filesizeColumnList, filecountColumnList, percentColumnList, centerColumnList;
-      filecountColumnList <<3;
-      filesizeColumnList  <<4;
-      centerColumnList    <<6 <<7 <<8 <<11;
-      //percentColumnList <<5; //DEV: for future % columns
+        QList<int> filesizeColumnList, filecountColumnList, booleanColumnList;
+        filecountColumnList <<3;
+        filesizeColumnList  <<4;
+        booleanColumnList   <<7 <<8 <<9;
+    //temporary string
+        QString tempText;
 
     switch ( role )
          {
@@ -61,30 +62,23 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                     return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble(),2,QLocale::DataSizeIecFormat) );
                 }
 
-                //Numbers columns (without units)
+                //Numbers columns (no unit)
                 else if( filecountColumnList.contains(index.column()) ){
                     return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 0)  + "  ");
                 }
 
-                //Percent columns //DEV: for future % columns
-//                else if( percentColumnList.contains(index.column()) ){
-//                    if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
-//                        return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
-//                    else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
-//                        return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
-//                }
+                //BooleanColumnList columns (display tick icon or nothing)
+                else if( booleanColumnList.contains(index.column()) ){
+                    return QVariant("");
+                }
 
-                //Text columns
+                //Text columns (translation)
                 if( index.column() == 6 ){
                     // Get the original text
-                    QString text = QSortFilterProxyModel::data(index, role).toString();
-                    //QString translated = QCoreApplication::translate("CatalogsView", text.toUtf8());
+                    tempText = QSortFilterProxyModel::data(index, role).toString();
 
-                    // Translate the text
-                    return tr(text.toUtf8());
-                    //return "test: "+QObject::tr(text.toUtf8());
-                    //return  QCoreApplication::translate(text.toUtf8(), "CatalogsView");
-                    //return translated;
+                    // Translate the text using the MainWindow context
+                    return QCoreApplication::translate("MainWindow", tempText.toUtf8());
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;
@@ -110,19 +104,7 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                if ( filesizeColumnList.contains(index.column()) )
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
-               if ( percentColumnList.contains(index.column()) )
-                   return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
-
-               if ( centerColumnList.contains(index.column()) )
-                   return QVariant ( Qt::AlignVCenter | Qt::AlignCenter );
                break;
-            }
-
-            case Qt::BackgroundRole:
-            {
-                if (index.column()  == 2)  //change background
-                    //return QBrush(Qt::red);
-                break;
             }
 
             case Qt::DecorationRole:
@@ -130,10 +112,15 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
                     QModelIndex idx = index.sibling(index.row(), 7);
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
-                        return QIcon(QIcon::fromTheme("address-book-new")/*":/images/drive_green.png"*/);
+                        return QIcon(QIcon::fromTheme("address-book-new"));
                     }
                     else
-                        return QIcon(QIcon::fromTheme("address-book-new")/*":/images/drive_gray.png"*/);
+                        return QIcon(QIcon::fromTheme("address-book-new"));
+                }
+                else if ( booleanColumnList.contains(index.column()) ){
+                    if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toBool() == true ){
+                        return QIcon(QIcon::fromTheme("dialog-ok-apply"));
+                    }
                 }
                 break;
             }
@@ -156,7 +143,6 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 }
                 break;
             }
-
         }
 
     return QSortFilterProxyModel::data(index, role);
@@ -165,7 +151,7 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
 QVariant CatalogsView::headerData(int section, Qt::Orientation orientation, int role) const
 {
     QList<int> grayColumnList;
-    grayColumnList    <<7 <<8 <<9 <<10 <<11;
+    grayColumnList    <<6 <<7 <<8 <<9 <<10 <<11;
 
     switch ( role )
          {
@@ -175,8 +161,8 @@ QVariant CatalogsView::headerData(int section, Qt::Orientation orientation, int 
             }
             case Qt::BackgroundRole:
             {
-                if (grayColumnList.contains(section))  //change background
-                    //return QBrush(QColor(245, 245, 245));
+                if (grayColumnList.contains(section))
+                    return QBrush(QColor(245, 245, 245));
                 break;
             }
         }
