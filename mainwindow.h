@@ -55,11 +55,11 @@
 #include <QMessageBox>
 #include <QMediaPlayer>
 #include <QMediaMetaData>
-#ifdef Q_OS_LINUX
-    #include <KComboBox>
-    #include <KXmlGuiWindow>
-    class KJob;
-#endif
+//#ifdef Q_OS_LINUX
+//    #include <KComboBox>
+//    #include <KXmlGuiWindow>
+//    class KJob;
+//#endif
 
 #include "catalog.h"
 #include "storage.h"
@@ -69,11 +69,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-#ifdef Q_OS_LINUX
-class MainWindow : public KXmlGuiWindow
-#else
+//#ifdef Q_OS_LINUX
+//class MainWindow : public KXmlGuiWindow
+//#else
 class MainWindow : public QMainWindow
-#endif
+//#endif
 {
     Q_OBJECT
 
@@ -342,15 +342,15 @@ class MainWindow : public QMainWindow
             QString newTagFolderPath;
 
    private slots:
-        //Menu KDE
-            #ifdef Q_OS_LINUX
-                void newFile();
-                void openFile();
-                void saveFile();
-                void saveFileAs();
-                void saveFileAs(const QString &outputFileName);
-                void downloadFinished(KJob* job);
-            #endif
+        //KDE Menu
+//            #ifdef Q_OS_LINUX
+//                void newFile();
+//                void openFile();
+//                void saveFile();
+//                void saveFileAs();
+//                void saveFileAs(const QString &outputFileName);
+//                void downloadFinished(KJob* job);
+//            #endif
 
         //Filters_and_Settings
                 //Main tabs

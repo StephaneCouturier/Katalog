@@ -1041,42 +1041,6 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="KComboBox" name="Search_kcombobox_SearchText">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>35</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>35</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>11</pointsize>
-                      </font>
-                     </property>
-                     <property name="editable">
-                      <bool>true</bool>
-                     </property>
-                     <property name="maxVisibleItems">
-                      <number>30</number>
-                     </property>
-                     <property name="placeholderText">
-                      <string>enter text to search...</string>
-                     </property>
-                     <property name="frame">
-                      <bool>true</bool>
-                     </property>
-                     <property name="modelColumn">
-                      <number>0</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
                     <spacer name="Search_horizontalSpacer_16">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -7447,11 +7411,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>QtCharts::QChartView</class>
    <extends>QGraphicsView</extends>

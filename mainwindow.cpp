@@ -38,11 +38,11 @@
 #include "mainwindow_tab_storage.cpp"
 #include "mainwindow_tab_tags.cpp"
 
-#ifdef Q_OS_LINUX
-MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent), ui(new Ui::MainWindow)
-#else
+//#ifdef Q_OS_LINUX
+//MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent), ui(new Ui::MainWindow)
+//#else
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
-#endif
+//#endif
 {
     //Prepare paths and user setting file
         //Get user home path and application dir path
@@ -59,11 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
 
-    //Set up database ("Memory only" or "File" modes)
-            //QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            //DEV: databaseMode = settings.value("Settings/databaseMode").toString();
-            //DEV: if (databaseMode=="")
-            //DEV:     databaseMode = "Memory";
+    //Set up and start database (modes: "Memory only" or "File")
         startDatabase();
 
     //Set up the interface globally
@@ -71,8 +67,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->setupUi(this);
 
             //Set current version and release date, and check new version
-                currentVersion = "1.15";
-                releaseDate = "2022-12-11";
+                currentVersion = "1.16";
+                releaseDate = "2023-02-28";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -103,12 +99,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->Statistics_calendarWidget->hide();
 
             //For Linux, use KDE libs
-            #ifdef Q_OS_LINUX
-                //Set up KDE Menu/Icon actions
-                setupActions();
-                //Hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
-                ui->Search_lineEdit_SearchText->hide();
-            #endif
+//            #ifdef Q_OS_LINUX
+//                //Set up KDE Menu/Icon actions
+//                setupActions();
+//                //Hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
+//                ui->Search_lineEdit_SearchText->hide();
+//            #endif
 
             //Load all other Settings and apply values
             loadSettings();

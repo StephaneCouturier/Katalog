@@ -36,15 +36,15 @@
     requires(qtConfig(listview))
 
 #KF5 Libraries
-linux: {
-    QT += KCoreAddons
-    QT += KI18n
-    QT += KXmlGui
-    QT += KConfigWidgets
-    QT += KWidgetsAddons
-    QT += KIOCore
-    QT += KCompletion
-}
+#linux: {
+#    QT += KCoreAddons
+#    QT += KI18n
+#    QT += KXmlGui
+#    QT += KConfigWidgets
+#    QT += KWidgetsAddons
+#    QT += KIOCore
+#    QT += KCompletion
+#}
 
 #CONFIG += c++11
 

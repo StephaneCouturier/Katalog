@@ -59,11 +59,11 @@
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
             //clipboard->setText(selectedFile);
-            #ifdef Q_OS_LINUX
-                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
-            #else
+//            #ifdef Q_OS_LINUX
+//                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+//            #else
                 ui->Search_lineEdit_SearchText->setText(originalText);
-            #endif
+//            #endif
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -74,11 +74,11 @@
         void MainWindow::on_Search_pushButton_CleanSearchText_clicked()
         {
             QString originalText;
-            #ifdef Q_OS_LINUX
-                originalText = ui->Search_kcombobox_SearchText->currentText();
-            #else
+//            #ifdef Q_OS_LINUX
+//                originalText = ui->Search_kcombobox_SearchText->currentText();
+//            #else
                 originalText = ui->Search_lineEdit_SearchText->text();
-            #endif
+//            #endif
             originalText.replace("."," ");
             originalText.replace(","," ");
             originalText.replace("_"," ");
@@ -93,20 +93,20 @@
             originalText.replace("\\"," ");
             originalText.replace("'"," ");
             originalText.replace("\""," ");
-            #ifdef Q_OS_LINUX
-                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
-            #else
+//            #ifdef Q_OS_LINUX
+//                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
+//            #else
                 ui->Search_lineEdit_SearchText->setText(originalText);
-            #endif
+//            #endif
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
-            #ifdef Q_OS_LINUX
-                ui->Search_kcombobox_SearchText->setCurrentText("");
-            #else
+//            #ifdef Q_OS_LINUX
+//                ui->Search_kcombobox_SearchText->setCurrentText("");
+//            #else
                 ui->Search_lineEdit_SearchText->setText("");
-            #endif
+//            #endif
 
             ui->Search_checkBox_FileCriteria->setEnabled(true);
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
@@ -349,19 +349,19 @@
         {
             if(checked==true){
                 ui->Search_widget_FileNameCriteria->setHidden(false);
-                #ifdef Q_OS_LINUX
-                    ui->Search_kcombobox_SearchText->setEnabled(true);
-                #else
+//                #ifdef Q_OS_LINUX
+//                    ui->Search_kcombobox_SearchText->setEnabled(true);
+//                #else
                     ui->Search_lineEdit_SearchText->setEnabled(true);
-                #endif
+//                #endif
             }
             else{
                 ui->Search_widget_FileNameCriteria->setHidden(true);
-                #ifdef Q_OS_LINUX
-                    ui->Search_kcombobox_SearchText->setDisabled(true);
-                #else
+//                #ifdef Q_OS_LINUX
+//                    ui->Search_kcombobox_SearchText->setDisabled(true);
+//                #else
                     ui->Search_lineEdit_SearchText->setDisabled(true);
-                #endif
+//                #endif
             }
 
         }
@@ -392,11 +392,11 @@
             searchOnFileCriteria         = ui->Search_treeView_History->model()->index(index.row(), 1, QModelIndex()).data().toBool();
 
             QString TextPhrase   = ui->Search_treeView_History->model()->index(index.row(), 2, QModelIndex()).data().toString();
-            #ifdef Q_OS_LINUX
-                    ui->Search_kcombobox_SearchText->setEditText(TextPhrase);
-            #else
+//            #ifdef Q_OS_LINUX
+//                    ui->Search_kcombobox_SearchText->setEditText(TextPhrase);
+//            #else
                     ui->Search_lineEdit_SearchText->setText(TextPhrase);
-            #endif
+//            #endif
 
             selectedTextCriteria = ui->Search_treeView_History->model()->index(index.row(), 3, QModelIndex()).data().toString();
             selectedSearchIn     = ui->Search_treeView_History->model()->index(index.row(), 4, QModelIndex()).data().toString();
@@ -788,18 +788,18 @@
 
                 //Get search criteria
                     //Get the text to search in file names or directories, depending on OS.
-                    #ifdef Q_OS_LINUX
-                    searchText = ui->Search_kcombobox_SearchText->currentText();
-                    #else
+//                    #ifdef Q_OS_LINUX
+//                    searchText = ui->Search_kcombobox_SearchText->currentText();
+//                    #else
                     searchText = ui->Search_lineEdit_SearchText->text();
-                    #endif
+//                    #endif
 
                     //Add searchText to a list, to retrieved it later
-                    #ifdef Q_OS_LINUX
-                        ui->Search_kcombobox_SearchText->addItem(searchText);
-                    #else
+//                    #ifdef Q_OS_LINUX
+//                        ui->Search_kcombobox_SearchText->addItem(searchText);
+//                    #else
                         //no alternative for win, covered by qcombobox
-                    #endif
+//                    #endif
 
                     //Get other search criteria
                     selectedTextCriteria   = ui->Search_comboBox_TextCriteria->currentText();
@@ -2425,11 +2425,11 @@
             query.bindValue(":dateTime",             searchDateTime);
             query.bindValue(":TextChecked",          ui->Search_checkBox_FileCriteria->isChecked());
 
-            #ifdef Q_OS_LINUX
-            query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
-            #else
+//            #ifdef Q_OS_LINUX
+//            query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
+//            #else
             query.bindValue(":TextPhrase",           ui->Search_lineEdit_SearchText->text());
-            #endif
+//            #endif
 
             query.bindValue(":TextCriteria",         selectedTextCriteria);
             query.bindValue(":TextSearchIn",         selectedSearchIn);

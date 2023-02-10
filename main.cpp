@@ -33,10 +33,10 @@
 #include <QTranslator>
 #include <QMessageBox>
 
-#ifdef Q_OS_LINUX
-    #include <KAboutData>
-    #include <KLocalizedString>
-#endif
+//#ifdef Q_OS_LINUX
+//    #include <KAboutData>
+//    #include <KLocalizedString>
+//#endif
 
 #include "mainwindow.h"
 
@@ -76,32 +76,32 @@ int main(int argc, char *argv[])
         }
 
     #ifdef Q_OS_LINUX
-        KLocalizedString::setApplicationDomain("Katalog");
+//        KLocalizedString::setApplicationDomain("Katalog");
 
-        KAboutData aboutData(
-             QStringLiteral("Katalog"),         // The program name used internally. (componentName)
-             i18n("Katalog"),                   // A displayable program name string. (displayName)
-             QStringLiteral("1.16"),             // The program version string. (version)
-             // Short description of what the app does. (shortDescription)
-             i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
-             KAboutLicense::GPL,// The license this code is released under
-             i18n("(c) 2021 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
-             // Optional text shown in the About box.
-             // Can contain any information desired. (otherText)
-             i18n("-"),
-             // The program homepage string. (homePageAddress = QString())
-             QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
-             // The bug report address
-             // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
-             QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
-             aboutData.addAuthor(i18n("Stéphane Couturier"), i18n("Creator"), QStringLiteral("katalog@stephanecouturier.com"),
-             QStringLiteral("https://github.com/StephaneCouturier/"), QStringLiteral(" "));
-        KAboutData::setApplicationData(aboutData);
+//        KAboutData aboutData(
+//             QStringLiteral("Katalog"),         // The program name used internally. (componentName)
+//             i18n("Katalog"),                   // A displayable program name string. (displayName)
+//             QStringLiteral("1.16"),             // The program version string. (version)
+//             // Short description of what the app does. (shortDescription)
+//             i18n("Katalog is an application to catalog, search, and manage files from any drive, permanent or removable."),
+//             KAboutLicense::GPL,// The license this code is released under
+//             i18n("(c) 2021 Stephane JM Couturier"),// Copyright Statement (copyrightStatement = QString())
+//             // Optional text shown in the About box.
+//             // Can contain any information desired. (otherText)
+//             i18n("-"),
+//             // The program homepage string. (homePageAddress = QString())
+//             QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
+//             // The bug report address
+//             // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
+//             QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));
+//             aboutData.addAuthor(i18n("Stéphane Couturier"), i18n("Creator"), QStringLiteral("katalog@stephanecouturier.com"),
+//             QStringLiteral("https://github.com/StephaneCouturier/"), QStringLiteral(" "));
+//        KAboutData::setApplicationData(aboutData);
 
-        QCommandLineParser parser;
-        aboutData.setupCommandLine(&parser);
-        parser.process(app);
-        aboutData.processCommandLine(&parser);
+//        QCommandLineParser parser;
+//        aboutData.setupCommandLine(&parser);
+//        parser.process(app);
+//        aboutData.processCommandLine(&parser);
     #else
         QApplication::setStyle("fusion");       
     #endif

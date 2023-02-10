@@ -41,11 +41,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-#ifdef Q_OS_LINUX
-    #include <KActionCollection>
-    #include <KIO/Job>
-    #include <KLocalizedString>
-#endif
+//#ifdef Q_OS_LINUX
+//    #include <KActionCollection>
+//    #include <KIO/Job>
+//    #include <KLocalizedString>
+//#endif
 
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
@@ -132,11 +132,11 @@
             }
 
             //Restore last Search values
-            #ifdef Q_OS_LINUX
-                    ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
-            #else
+//            #ifdef Q_OS_LINUX
+//                    ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
+//            #else
                     ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
-            #endif
+//            #endif
 
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
@@ -293,11 +293,11 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
         settings.setValue("LastCollectionFolder", collectionFolder);
-        #ifdef Q_OS_LINUX
-            settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
-        #else        
+//        #ifdef Q_OS_LINUX
+//            settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
+//        #else
             settings.setValue("LastSearch/SearchText", ui->Search_lineEdit_SearchText->text());
-        #endif
+//        #endif
         settings.setValue("LastSearch/SelectedSearchCatalog", selectedFilterCatalogName);
         settings.setValue("LastSearch/SelectedSearchStorage", selectedFilterStorageName);
         settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
@@ -707,95 +707,95 @@
      }
 
     //Menu and Icons - Actions KDE setup ---------------------------------------
-	#ifdef Q_OS_LINUX
-        void MainWindow::setupActions()
-        {
+//	#ifdef Q_OS_LINUX
+//        void MainWindow::setupActions()
+//        {
 
-            KStandardAction::quit(qApp, SLOT(quit()), actionCollection());
-            //KStandardAction::open(this, SLOT(openFile()), actionCollection());
-            //KStandardAction::save(this, SLOT(saveFile()), actionCollection());
-            //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
-            //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
-            setupGUI();
+//            KStandardAction::quit(qApp, SLOT(quit()), actionCollection());
+//            //KStandardAction::open(this, SLOT(openFile()), actionCollection());
+//            //KStandardAction::save(this, SLOT(saveFile()), actionCollection());
+//            //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
+//            //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
+//            setupGUI();
 
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::newFile()
-        {
-            fileName.clear();
-            //ui->plainTextEdit->clear();
-            //ui->statusbar->showMessage(fileName);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::openFile()
-        {
-            QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, tr("Open a Katalog collection"));
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::newFile()
+//        {
+//            fileName.clear();
+//            //ui->plainTextEdit->clear();
+//            //ui->statusbar->showMessage(fileName);
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::openFile()
+//        {
+//            QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, tr("Open a Katalog collection"));
 
-            if (!fileNameFromDialog.isEmpty())
-            {
-                KIO::Job* job = KIO::storedGet(fileNameFromDialog);
-                fileName = fileNameFromDialog.toLocalFile();
+//            if (!fileNameFromDialog.isEmpty())
+//            {
+//                KIO::Job* job = KIO::storedGet(fileNameFromDialog);
+//                fileName = fileNameFromDialog.toLocalFile();
 
-                connect(job, SIGNAL(result(KJob*)), this,
-                             SLOT(downloadFinished(KJob*)));
+//                connect(job, SIGNAL(result(KJob*)), this,
+//                             SLOT(downloadFinished(KJob*)));
 
-                job->exec();
-            }
+//                job->exec();
+//            }
 
-            //ui->statusbar->showMessage(fileName);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::downloadFinished(KJob* job)
-        {
-            if (job->error())
-            {
-                QMessageBox::warning(this, "Katalog",job->errorString());
-                fileName.clear();
-                return;
-            }
+//            //ui->statusbar->showMessage(fileName);
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::downloadFinished(KJob* job)
+//        {
+//            if (job->error())
+//            {
+//                QMessageBox::warning(this, "Katalog",job->errorString());
+//                fileName.clear();
+//                return;
+//            }
 
-            #ifdef Q_OS_LINUX
-            //KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
-            #endif
+//            #ifdef Q_OS_LINUX
+//            //KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
+//            #endif
 
-            //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::saveFileAs(const QString &outputFileName)
-        {
-            if (!outputFileName.isNull())
-            {
-                QSaveFile file(outputFileName);
-                file.open(QIODevice::WriteOnly);
+//            //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::saveFileAs(const QString &outputFileName)
+//        {
+//            if (!outputFileName.isNull())
+//            {
+//                QSaveFile file(outputFileName);
+//                file.open(QIODevice::WriteOnly);
 
-                QByteArray outputByteArray;
-                //outputByteArray.append(ui->plainTextEdit->toPlainText().toUtf8());
-                //outputByteArray.append(ui->LV_FileList->model());
-                file.write(outputByteArray);
-                file.commit();
+//                QByteArray outputByteArray;
+//                //outputByteArray.append(ui->plainTextEdit->toPlainText().toUtf8());
+//                //outputByteArray.append(ui->LV_FileList->model());
+//                file.write(outputByteArray);
+//                file.commit();
 
-                fileName = outputFileName;
-            }
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::saveFileAs()
-        {
-            saveFileAs(QFileDialog::getSaveFileName(this, tr("Save File As")));
-            //ui->statusbar->showMessage(fileName);
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::saveFile()
-        {
-            if (!fileName.isEmpty())
-            {
-                saveFileAs(fileName);
-            }
-            else
-            {
-                saveFileAs();
-            }
-        }
-	#endif
+//                fileName = outputFileName;
+//            }
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::saveFileAs()
+//        {
+//            saveFileAs(QFileDialog::getSaveFileName(this, tr("Save File As")));
+//            //ui->statusbar->showMessage(fileName);
+//        }
+//        //----------------------------------------------------------------------
+//        void MainWindow::saveFile()
+//        {
+//            if (!fileName.isEmpty())
+//            {
+//                saveFileAs(fileName);
+//            }
+//            else
+//            {
+//                saveFileAs();
+//            }
+//        }
+//	#endif
     //----------------------------------------------------------------------
     void MainWindow::generateCollectionFilesPaths()
     {
