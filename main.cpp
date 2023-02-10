@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         QApplication::setStyle("fusion");       
     #endif
 
-    //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the pathset just after)
+    //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the path set just after)
     QIcon::setThemeName( "breeze" );
     //Set icon fallback in case theme is not available
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
