@@ -49,6 +49,7 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
 
     switch ( role )
          {
+
             case Qt::DisplayRole:
             {
                 //Currency (Euro) columns
@@ -62,8 +63,8 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
                 }
 
                 //Percent columns
-                else if( percentColumnList.contains(index.column()) ){
-                    if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
+                 else if( percentColumnList.contains(index.column()) ){
+                  if ( QSortFilterProxyModel::data(index, role).toDouble() < 0 )
                         return QVariant(QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
                     else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
                         return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
@@ -107,7 +108,7 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
             {
                 //Filename column
                 if( index.column()==1 ){
-                    return QIcon(QIcon::fromTheme("drive-harddisk")/*":/images/drive_blue.png"*/);
+                    return QIcon(QIcon::fromTheme("drive-harddisk"));
                 }
 
                 break;
@@ -122,7 +123,6 @@ QVariant StorageView::headerData(int section, Qt::Orientation orientation, int r
     QList<int> grayColumnList;
     grayColumnList    <<7 <<8 <<9 <<10 <<11;
 
-
     switch ( role )
          {
             case Qt::DisplayRole:
@@ -131,7 +131,7 @@ QVariant StorageView::headerData(int section, Qt::Orientation orientation, int r
             }
             case Qt::BackgroundRole:
             {
-                if (grayColumnList.contains(section))  //change background
+                if (grayColumnList.contains(section))
                     //return QBrush(QColor(245, 245, 245));
                 break;
             }

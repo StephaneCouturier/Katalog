@@ -452,34 +452,36 @@
         storageModel->setSort(1, Qt::AscendingOrder);
 
         // Set the localized header captions:
-        storageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
-        storageModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
-        storageModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
-        storageModel->setHeaderData(3, Qt::Horizontal, tr("Location"));
-        storageModel->setHeaderData(4, Qt::Horizontal, tr("Path"));
-        storageModel->setHeaderData(5, Qt::Horizontal, tr("Label"));
-        storageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
-        storageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
-        storageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
-        storageModel->setHeaderData(9, Qt::Horizontal, tr("Brand/Model"));
-        storageModel->setHeaderData(10, Qt::Horizontal, tr("Serial Number"));
-        storageModel->setHeaderData(11, Qt::Horizontal, tr("Build Date"));
-        storageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
-        storageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
-        storageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
+
 
         // Populate the storageModel:
         if (!storageModel->select()) {
-            //showError(model->lastError());
+            //showError(storageModel->lastError());
+            QMessageBox::information(this,"Katalog","storageModel loading error.");
             return;
         }
 
-        StorageView *proxyStorageModel2 = new StorageView(this);
-        proxyStorageModel2->setSourceModel(storageModel);//storageModel  loadCatalogQueryModel
-
-        ui->Storage_treeView_StorageList->setModel(proxyStorageModel2);
-
         // Connect model to tree/table view
+        StorageView *proxyStorageModel = new StorageView(this);
+        proxyStorageModel->setSourceModel(storageModel);
+        proxyStorageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+        proxyStorageModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
+        proxyStorageModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
+        proxyStorageModel->setHeaderData(3, Qt::Horizontal, tr("Location"));
+        proxyStorageModel->setHeaderData(4, Qt::Horizontal, tr("Path"));
+        proxyStorageModel->setHeaderData(5, Qt::Horizontal, tr("Label"));
+        proxyStorageModel->setHeaderData(6, Qt::Horizontal, tr("FileSystem"));
+        proxyStorageModel->setHeaderData(7, Qt::Horizontal, tr("Total"));
+        proxyStorageModel->setHeaderData(8, Qt::Horizontal, tr("Free"));
+        proxyStorageModel->setHeaderData(9, Qt::Horizontal, tr("Brand/Model"));
+        proxyStorageModel->setHeaderData(10, Qt::Horizontal, tr("Serial Number"));
+        proxyStorageModel->setHeaderData(11, Qt::Horizontal, tr("Build Date"));
+        proxyStorageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
+        proxyStorageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
+        proxyStorageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
+
+        ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
+
         ui->Storage_treeView_StorageList->QTreeView::sortByColumn(1,Qt::AscendingOrder);
         ui->Storage_treeView_StorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Storage_treeView_StorageList->header()->resizeSection(0,  50); //ID
@@ -807,12 +809,16 @@
 
     void MainWindow::on_Storage_pushButton_TestMedia_clicked()
     {
-        QString filePath;
-        //filePath ="/home/stephane/Vidéos/COPY/test6.mp4";
-        //filePath ="/home/stephane/Vidéos/COPY/test2.mkv";
-        //filePath ="/home/stephane/Vidéos/COPY/test3.mp3";
-        filePath ="/home/stephane/Vidéos/COPY/test5.mkv";
+        QStringList filePaths;
+        filePaths << "/home/stephane/Vidéos/COPY/test6.mp4";
+        filePaths << "/home/stephane/Vidéos/COPY/test2.mkv";
+        filePaths << "/home/stephane/Vidéos/COPY/test3.mp3";
+        filePaths << "/home/stephane/Vidéos/COPY/test5.mkv";
 
+        for(int i = 0; i<filePaths.length(); i++){
+            setMediaFile(filePaths[i]);
+        }
+
+        QString filePath = "/home/stephane/Vidéos/COPY/test8.mkv";
         setMediaFile(filePath);
-
     }
