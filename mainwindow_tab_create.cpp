@@ -383,11 +383,13 @@
                         fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
 
-//Include Media File Metadata
-                //Include Media File Metadata
-                if(catalog->includeMetadata == true){
-                    //setMediaFile(filePath);
-                    //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                if(developmentMode==false){
+                    //Include Media File Metadata
+                                    //Include Media File Metadata
+                                    if(catalog->includeMetadata == true){
+                                        setMediaFile(filePath);
+                                        //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                                    }
                 }
             }
         }
@@ -424,11 +426,13 @@
                     fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
 
-//Include Media File Metadata
-                //Include Media File Metadata
-                if(catalog->includeMetadata == true){
-                    setMediaFile(filePath);
-                    //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                if(developmentMode==false){
+                    //Include Media File Metadata
+                                    //Include Media File Metadata
+                                    if(catalog->includeMetadata == true){
+                                        setMediaFile(filePath);
+                                        //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
+                                    }
                 }
             }
         }
@@ -616,14 +620,9 @@
     {
         QFile mediaFile(filePath);
         if(mediaFile.exists()==true){
-
-            QMessageBox::information(this,"Katalog","file exists :<br/>" + filePath);
-
             m_player = new QMediaPlayer(this);
             connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
-
             m_player->setSource(QUrl::fromLocalFile(filePath));
-
         }
     }
 
@@ -633,15 +632,46 @@
             getMetaData(m_player);
     }
 
+
+
+
+    void MainWindow::getMetaData(QMediaPlayer *player)
+    {
+        QMediaMetaData metaData = player->metaData();
+
+        QVariant Resolution = metaData.value(QMediaMetaData::Resolution);
+        QMessageBox::information(this,"Katalog","Resolution:<br/>" + Resolution.toString());
+
+        //QVideoFrame frame = player->currentFrame();
+        //qDebug() << "Width: " << frame.width() << ", Height: " << frame.height();
+
+     }
+
+    /*
     void MainWindow::getMetaData(QMediaPlayer *player)
     {
         QMessageBox::information(this,"Katalog","getMetaData");
 
         QMediaMetaData metaData = player->metaData();
 
-        QVariant resolution = metaData.value(QMediaMetaData::Resolution);
-        QMessageBox::information(this,"Katalog","resolution:<br/>" + resolution.toString());
+        QVariant Resolution = metaData.value(QMediaMetaData::Resolution);
+        QMessageBox::information(this,"Katalog","Resolution:<br/>" + Resolution.toString());
 
-        QVariant resolution4 = player->metaData()[QMediaMetaData::Duration];
-        QMessageBox::information(this,"Katalog","resolution4: Duration<br/>" + resolution4.toString());
+        QVariant Duration = player->metaData()[QMediaMetaData::Duration];
+        QMessageBox::information(this,"Katalog","Duration:<br/>" + Duration.toString());
+
+        QVariant MediaType = player->metaData()[QMediaMetaData::MediaType];
+        QMessageBox::information(this,"Katalog","MediaType:<br/>" + MediaType.toString());
      }
+
+
+     QString filePath = "/home/stephane/Vidéos/COPY/test8.mkv";
+
+    */
+
+
+
+
+
+
+

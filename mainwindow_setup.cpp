@@ -363,6 +363,7 @@
             //DEV: the option to include symblinks is not working yet
             ui->Create_checkBox_IncludeSymblinks->hide();
             ui->Create_checkBox_isFullDevice->hide();
+            ui->Create_checkBox_IncludeMetadata->hide();
 
         //Storage
             //DEV: panel to edit the storage in a form

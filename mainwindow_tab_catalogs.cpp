@@ -659,7 +659,9 @@
             //Hide columns
             ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             ui->Catalogs_treeView_CatalogList->hideColumn(13); //Loaded Version
-
+            if(developmentMode==false){
+                ui->Catalogs_treeView_CatalogList->hideColumn(9); //includeMetadata
+            }
             //Populate catalogs statistics
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
