@@ -220,7 +220,7 @@
             }
 
             //Show or Hide ShowHideGlobal
-            if ( settings.value("Settings/ShowHideFilters") == "gonext"){ //Hide
+            if ( settings.value("Settings/ShowHideFilters") == "go-next"){ //Hide
                     ui->splitter_widget_Filters->setHidden(true);
                     ui->main_widget_ShowFilters->setHidden(false);
             }
