@@ -762,9 +762,6 @@
                 tempStorage->loadStorageMetaData();
                 updateStorageInfo(tempStorage);
             }
-//            else
-//                QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalog->storageName));
-
         }
 
         //Refresh catalog lists

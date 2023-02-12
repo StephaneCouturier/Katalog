@@ -540,10 +540,10 @@
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
 
         //verify if path is available / not empty
-        QDir dir (selectedStorage->path);
+        QDir dir (storage->path);
 
             //Warning if no Path is provided
-            if ( selectedStorage->path == "" ){
+            if ( storage->path == "" ){
                 QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
                                               "Modify the device to provide one and try again.\n")
                                               );
