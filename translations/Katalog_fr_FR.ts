@@ -1418,7 +1418,7 @@ to the trash?</source>
     </message>
     <message>
         <source>File name</source>
-        <translation>Name de fichier</translation>
+        <translation>Nom de fichier</translation>
     </message>
     <message>
         <source>File criteria</source>
