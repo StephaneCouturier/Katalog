@@ -140,7 +140,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
     {
-        toggleTreeExpandState();
+        setTreeExpandState(true);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
@@ -242,7 +242,7 @@
         ui->Filters_treeView_Devices->header()->hide();
 
         //Restore Expand or Collapse Device Tree
-        toggleTreeExpandState();
+        setTreeExpandState(false);
     }
     //----------------------------------------------------------------------
     void MainWindow::resetSelection()
@@ -264,8 +264,7 @@
         ui->Filter_pushButton_Update->setEnabled(false);
 
         //reset device tree
-        toggleTreeExpandState();
-        toggleTreeExpandState();
+        setTreeExpandState(false);
 
         loadStorageTableToSelectionTreeModel();
         filterFromSelectedDevices();
@@ -279,32 +278,52 @@
 
     }
     //----------------------------------------------------------------------
-    void MainWindow::toggleTreeExpandState()
+    void MainWindow::setTreeExpandState(bool toggle)
     {
-        //deviceTreeExpandState values:  0=collapse / 1=exp.level0 / 2=exp.level1
+        //deviceTreeExpandState values:  collapseAll or 2 =collapse / 0=exp.level0 / 1=exp.level1
         QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
 
-        if ( deviceTreeExpandState == 0 ){
-            //collapsed > expand first level
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 1;
+        if (toggle==true){
+
+            if ( deviceTreeExpandState == 2 ){
+                //collapsed > expand first level
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                deviceTreeExpandState = 0;
+                ui->Filters_treeView_Devices->expandToDepth(0);
+                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            }
+            else if ( deviceTreeExpandState == 0 ){
+                //expanded first level > expand to second level
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                deviceTreeExpandState = 1;
+                ui->Filters_treeView_Devices->expandToDepth(1);
+                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            }
+            else if ( deviceTreeExpandState == 1 ){
+                //expanded second level > collapse
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                deviceTreeExpandState = 2;
+                ui->Filters_treeView_Devices->collapseAll();
+                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+            }
         }
-        else if ( deviceTreeExpandState == 1 ){
-            //expanded first level > expand to second level
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            ui->Filters_treeView_Devices->expandAll();
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 2;
-        }
-        else if ( deviceTreeExpandState == 2 ){
-            //expanded second level > collapse
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->collapseAll();
-            settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
-            deviceTreeExpandState = 0;
+        else
+        {
+            if ( deviceTreeExpandState == 0 ){
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                ui->Filters_treeView_Devices->collapseAll();
+                ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+            }
+            else if ( deviceTreeExpandState == 1 ){
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                ui->Filters_treeView_Devices->collapseAll();
+                ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+            }
+            else{
+                ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                ui->Filters_treeView_Devices->collapseAll();
+            }
         }
     }
     //----------------------------------------------------------------------
@@ -460,7 +479,7 @@
             queryDelete.exec("DELETE FROM search");
             queryDelete.exec("DELETE FROM tag");
 
-        //Load search history
+        //Load Search history
             loadSearchHistoryFileToTable();
             loadSearchHistoryTableToModel();
 

@@ -150,7 +150,7 @@ class MainWindow : public QMainWindow
             QString selectedFilterCatalogName;
             QString selectedConnectedDrivePath;
 
-            void toggleTreeExpandState();
+            void setTreeExpandState(bool toggle);
             void filterFromSelectedDevices();
             void resetSelection();
 
