@@ -774,6 +774,9 @@
         if ( selectedDeviceType == "Location" )
             querySQL = querySQL + " AND storageLocation = '"+ selectedDeviceName +"' ";
 
+        if ( selectedDeviceType == "Storage" )
+            querySQL = querySQL + " AND storageName = '"+ selectedDeviceName +"' ";
+
         query.prepare(querySQL);
         query.exec();
         query.next();
