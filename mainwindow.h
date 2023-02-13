@@ -516,9 +516,9 @@ class MainWindow : public QMainWindow
         //Statistics
             void on_Statistics_pushButton_EditStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
-            void on_Statistics_comboBox_SelectSource_currentIndexChanged(const QString &selectedSource);
+            void on_Statistics_comboBox_SelectSource_currentTextChanged();
             void on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog);
-            void on_Statistics_comboBox_TypeOfData_currentIndexChanged(const QString &typeOfData);
+            void on_Statistics_comboBox_TypeOfData_currentTextChanged();
             void on_Statistics_lineEdit_GraphicStartDate_returnPressed();
             void on_Statistics_pushButton_ClearDate_clicked();
             void on_Statistics_pushButton_PickDate_clicked();

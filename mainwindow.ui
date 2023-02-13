@@ -6502,6 +6502,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="toolTip">
                    <string>Select the type of data</string>
                   </property>
+                  <item>
+                   <property name="text">
+                    <string>Total File Size</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Number of Files</string>
+                   </property>
+                  </item>
                  </widget>
                 </item>
                 <item>

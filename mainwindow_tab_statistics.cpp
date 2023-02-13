@@ -41,29 +41,24 @@
 #include <QtCharts/QValueAxis>
 
 //UI------------------------------------------------------------------------
-
-    void MainWindow::on_Statistics_comboBox_SelectSource_currentIndexChanged(const QString &selectedSource)
+    void MainWindow::on_Statistics_comboBox_SelectSource_currentTextChanged()
     {
+        QString selectedSource = ui->Statistics_comboBox_SelectSource->itemData(ui->Statistics_comboBox_SelectSource->currentIndex(),Qt::UserRole).toString();
+
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedSource", selectedSource);
 
         //Display selection combo boxes depending on data source
         if (selectedSource ==tr("collection snapshots")){
-//            ui->Statistics_label_Catalog->hide();
-//            ui->Statistics_comboBox_SelectCatalog->hide();
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
         else if(selectedSource ==tr("selected catalog")){
-//            ui->Statistics_label_Catalog->show();
-//            ui->Statistics_comboBox_SelectCatalog->show();
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
         else if(selectedSource ==tr("storage")){
-//            ui->Statistics_label_Catalog->hide();
-//            ui->Statistics_comboBox_SelectCatalog->hide();
             ui->Statistics_label_DataType->hide();
             ui->Statistics_comboBox_TypeOfData->hide();
         }
@@ -71,9 +66,10 @@
         //load the graph
         loadStatisticsChart();
     }
+
     //----------------------------------------------------------------------
     void MainWindow::on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog)
-    {
+    {       
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
@@ -84,8 +80,10 @@
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Statistics_comboBox_TypeOfData_currentIndexChanged(const QString &typeOfData)
+    void MainWindow::on_Statistics_comboBox_TypeOfData_currentTextChanged()
     {
+        QString typeOfData = ui->Statistics_comboBox_TypeOfData->itemData(ui->Statistics_comboBox_TypeOfData->currentIndex(),Qt::UserRole).toString();
+
         //save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/TypeOfData", typeOfData);
@@ -93,6 +91,7 @@
         //load the graph
         loadStatisticsChart();
     }
+
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_EditStatisticsFile_clicked()
     {
@@ -154,23 +153,36 @@
 //Methods-------------------------------------------------------------------
 
     void MainWindow::loadStatisticsDataTypes()
-    {   //Populate the comboxbox for types of data
+    {
+        //Populate the comboxbox for selected source
 
-        //Get last value
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        QString lastValue = settings.value("Statistics/TypeOfData").toString();
+            //Get last value
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QString lastSelectedSourceValue = settings.value("Statistics/SelectedSource").toString();
 
-        //Generate list of values
-        typeOfData << tr("Number of Files") << tr("Total File Size");
-        listModel = new QStringListModel(this);
-        listModel->setStringList(typeOfData);
-        ui->Statistics_comboBox_TypeOfData->setModel(listModel);
+            //Generate list of values
+            ui->Statistics_comboBox_SelectSource->setItemData(0, "selected catalog", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(1, "collection snapshots", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(2, "storage", Qt::UserRole);
 
-        //Restore last selection value or default
-        if (lastValue=="")
-            ui->Statistics_comboBox_TypeOfData->setCurrentText(typeOfData[1]);
-        else
-            ui->Statistics_comboBox_TypeOfData->setCurrentText(lastValue);
+            //Restore last selection value or default
+            if (lastSelectedSourceValue !=""){
+                ui->Statistics_comboBox_SelectSource->setCurrentText(tr(lastSelectedSourceValue.toUtf8()));
+            }
+
+        //Populate the comboxbox for types of data
+
+            //Get last value
+            QString lastValue = settings.value("Statistics/TypeOfData").toString();
+
+            //Generate list of values
+            ui->Statistics_comboBox_TypeOfData->setItemData(0, "Total File Size", Qt::UserRole);
+            ui->Statistics_comboBox_TypeOfData->setItemData(1, "Number of Files", Qt::UserRole);
+
+            //Restore last selection value or default
+            if (lastValue !=""){
+                ui->Statistics_comboBox_TypeOfData->setCurrentText(tr(lastValue.toUtf8()));
+            }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsData()
