@@ -99,9 +99,10 @@ QVariant StorageView::data(const QModelIndex &index, int role) const
 
             case Qt::BackgroundRole:
             {
-                if (index.column()  == 2)  //change background
-                    //return QBrush(Qt::red);
-                break;
+                if (1 == index.row() % 2)
+                    return QColor(247, 247, 247);
+                else
+                    return QColor(255, 255, 255);
             }
 
             case Qt::DecorationRole:
