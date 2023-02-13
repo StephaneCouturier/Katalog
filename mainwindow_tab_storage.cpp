@@ -121,11 +121,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
     {
-        #ifdef Q_OS_LINUX
-                QProcess::startDetached("filelight", QStringList() << selectedStorage->path);
-        #else
-                QProcess::startDetached("filelight", QStringList() << selectedStoragePath);
-        #endif
+        QProcess::startDetached("filelight", QStringList() << selectedStorage->path);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
