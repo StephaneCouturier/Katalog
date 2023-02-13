@@ -397,7 +397,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ExportResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
-            void on_Search_kcombobox_SearchText_returnPressed();
+            //void on_Search_kcombobox_SearchText_returnPressed();
             void on_Search_lineEdit_SearchText_returnPressed();
 
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);

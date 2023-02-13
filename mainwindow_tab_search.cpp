@@ -45,10 +45,10 @@
     //--------------------------------------------------------------------------
     //User interactions
         //Buttons and other changes
-        void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
-        {
-            searchFiles();
-        }
+//        void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
+//        {
+//            searchFiles();
+//        }
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
             searchFiles();
