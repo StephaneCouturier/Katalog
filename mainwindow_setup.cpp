@@ -651,61 +651,61 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::checkVersion()
-     {
-         //Get the number of the lastest Version
-         QString lastestVersion;
-         QString htmlPage;
-         QString downloadAddress = "https://github.com/StephaneCouturier/Katalog/releases/latest";
-         //NOTES:
-         // github will redirect this address to the actual lastest release page.
-         // The event will return a message containing this latest release exact address;
-         // This address contains the release tag, which is the number to get.
+    {
+        //Get the number of the lastest Version
+        QString lastestVersion;
+        QString htmlPage;
+        QString downloadAddress = "https://github.com/StephaneCouturier/Katalog/releases/latest";
+        //NOTES:
+        // github will redirect this address to the actual lastest release page.
+        // The event will return a message containing this latest release exact address;
+        // This address contains the release tag, which is the number to get.
 
-         //Get html message
-         QNetworkAccessManager manager;
-         QNetworkReply *response = manager.get(QNetworkRequest(QUrl(downloadAddress)));
-         QEventLoop event;
-         connect(response,SIGNAL(finished()),&event,SLOT(quit()));
-         event.exec();
-         htmlPage = response->readAll();
+        //Get html message
+        QNetworkAccessManager manager;
+        QNetworkReply *response = manager.get(QNetworkRequest(QUrl(downloadAddress)));
+        QEventLoop event;
+        connect(response,SIGNAL(finished()),&event,SLOT(quit()));
+        event.exec();
+        htmlPage = response->readAll();
 
-         //Parse html text, search, and return the release number
-         QString searchString1 = "/Katalog/releases/tag/v";
-         QStringList lineValues;
-         QTextStream stream(&htmlPage);
-         while (!stream.atEnd())
-         {
-             //Read the next line
-             QString line = stream.readLine();
+        //Parse html text, search, and return the release number
+        QString searchString1 = "/Katalog/releases/tag/v";
+        QStringList lineValues;
+        QTextStream stream(&htmlPage);
+        while (!stream.atEnd())
+        {
+            //Read the next line
+            QString line = stream.readLine();
 
-             //Verify it contains the search string
-             if (line.contains(searchString1, Qt::CaseSensitive)) {
+            //Verify it contains the search string
+            if (line.contains(searchString1, Qt::CaseSensitive)) {
 
-               //get value
-               lineValues = line.split(searchString1);
-               lineValues = lineValues[1].split("\">");
-               lastestVersion = lineValues[0];
-             }
-         }
+                //get value
+                lineValues = line.split(searchString1);
+                lineValues = lineValues[1].split("\"");
+                lastestVersion = lineValues[0];
 
-         QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + lastestVersion;
+                QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + lastestVersion;
 
-        //inform user if new version is available, and give the choice to download it
-        if ( lastestVersion > currentVersion ){
+                //inform user if new version is available, and give the choice to download it
+                if ( lastestVersion > currentVersion ){
 
-            int result = QMessageBox::information(this,"Katalog",
-                      tr("This is version: v%1 <br/><br/>A new version is available: <b>v%2</b> <br/> "
-                         "Find the list of new features in the <a href='%3'>Release Notes</a><br/><br/>"
-                         "Do you want to download it?")
-                         .arg(currentVersion,lastestVersion, releaseNotesAddress),
-                         QMessageBox::Yes|QMessageBox::Cancel);
+                    int result = QMessageBox::information(this,"Katalog",
+                                    tr("This is version: v%1 <br/><br/>A new version is available: <b>v%2</b> <br/> "
+                                    "Find the list of new features in the <a href='%3'>Release Notes</a><br/><br/>"
+                                    "Do you want to download it?")
+                                    .arg(currentVersion,lastestVersion, releaseNotesAddress),
+                                    QMessageBox::Yes|QMessageBox::Cancel);
 
-            if ( result ==QMessageBox::Yes){
-                QDesktopServices::openUrl(QUrl("https://sourceforge.net/projects/katalogg/files/latest/download"));
-
+                    if ( result ==QMessageBox::Yes){
+                        QDesktopServices::openUrl(QUrl("https://sourceforge.net/projects/katalogg/files/latest/download"));
+                    }
+                }
+                return;
             }
         }
-     }
+    }
 
     //Menu and Icons - Actions KDE setup ---------------------------------------
 //	#ifdef Q_OS_LINUX
