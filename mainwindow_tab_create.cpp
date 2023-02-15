@@ -121,7 +121,6 @@
     void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
     {
         createCatalog();
-        loadCollection();
     }
     //--------------------------------------------------------------------------
 
@@ -301,6 +300,10 @@
                                       tr("The new catalog,has been created.\n Name:   ")
                                       +newCatalog->name + "\n" +tr("Source:   ") + newCatalog->sourcePath,
                                       ( tr("Ok") ) );
+
+            //Refresh data
+            loadCollection();
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::catalogDirectory(Catalog *catalog)
