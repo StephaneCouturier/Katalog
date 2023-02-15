@@ -38,11 +38,6 @@
 #include "exploretreemodel.h"
 #include "exploretreeview.h"
 
-#include <QTextStream>
-#include <QDesktopServices>
-#include <QFileDialog>
-#include <QSortFilterProxyModel>
-
 //UI----------------------------------------------------------------------------
 
         //----------------------------------------------------------------------

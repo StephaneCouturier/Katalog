@@ -33,10 +33,6 @@
 #include "ui_mainwindow.h"
 #include "tag.h"
 
-#include <QFileDialog>
-#include <QStandardItemModel>
-#include <QDesktopServices>
-
 //UI------------------------------------------------------------------------
 
     void MainWindow::on_Tags_pushButton_PickFolder_clicked()

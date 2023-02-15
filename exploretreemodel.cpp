@@ -33,7 +33,6 @@
 #include <QStringList>
 #include <QtSql>
 
-
 ExploreTreeModel::ExploreTreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {

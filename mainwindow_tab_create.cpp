@@ -32,11 +32,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QFileDialog>
-#include <QTextStream>
-#include <QDesktopServices>
-#include <QMediaMetaData>
-
 //UI----------------------------------------------------------------------------
 
     void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
@@ -614,7 +609,7 @@
     }
     //--------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------
+//DEV--------------------------------------------------------------------------
 
     void MainWindow::setMediaFile(QString filePath)
     {

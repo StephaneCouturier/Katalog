@@ -32,14 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "catalog.h"
-#include "database.h"
 #include "filesview.h"
-
-#include <QTextStream>
-#include <QDesktopServices>
-#include <QSaveFile>
-#include <QFileDialog>
-#include <QMessageBox>
 
 //TAB: SEARCH FILES ------------------------------------------------------------
     //--------------------------------------------------------------------------

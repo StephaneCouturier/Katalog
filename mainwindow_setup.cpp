@@ -33,14 +33,6 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 
-#include <QFileDialog>
-#include <QTextStream>
-#include <QSaveFile>
-#include <QSettings>
-#include <QDesktopServices>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-
 //#ifdef Q_OS_LINUX
 //    #include <KActionCollection>
 //    #include <KIO/Job>

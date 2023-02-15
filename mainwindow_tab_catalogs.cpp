@@ -34,12 +34,6 @@
 
 #include "catalog.h"
 #include "catalogsview.h"
-#include "database.h"
-
-#include <QTextStream>
-#include <QDesktopServices>
-#include <QFileDialog>
-#include <QSortFilterProxyModel>
 
 //UI----------------------------------------------------------------------------
 
@@ -455,12 +449,6 @@
             QSqlQuery queryDelete;
             queryDelete.prepare( "DELETE FROM catalog" );
             queryDelete.exec();
-
-        //Prepare table and insert query
-            QSqlQuery query;
-            if (!query.exec(SQL_CREATE_CATALOG)){
-                QMessageBox::information(this,"Katalog","problem to create the table.");
-                return;}
 
         //Iterate in the directory to create a list of files and sort it
             QStringList catalogFileExtensions;

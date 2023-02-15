@@ -35,12 +35,6 @@
 #include "storageview.h"
 #include "storage.h"
 
-#include <QDesktopServices>
-#include <QtMultimedia>
-#include <QtMultimedia/QMediaMetaData>
-#include <QMediaMetaData>
-#include <QStringListModel>
-
 //UI----------------------------------------------------------------------------
     //Full list ----------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateList_clicked()

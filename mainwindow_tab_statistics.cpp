@@ -32,14 +32,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDesktopServices>
-#include <QDateTimeAxis>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QBarSet>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QBarCategoryAxis>
-#include <QtCharts/QValueAxis>
-
 //UI------------------------------------------------------------------------
     void MainWindow::on_Statistics_comboBox_SelectSource_currentTextChanged()
     {

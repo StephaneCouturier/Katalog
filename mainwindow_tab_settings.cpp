@@ -37,10 +37,6 @@
 #include "devicetreeview.h"
 #include "catalog.h"
 
-#include <QSettings>
-#include <QDesktopServices>
-#include <QFileDialog>
-
 //ALL/GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()
     {
