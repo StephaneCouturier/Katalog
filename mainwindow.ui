@@ -5204,6 +5204,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="text">
                    <string>Image</string>
                   </property>
+                  <property name="icon">
+                   <iconset theme="image-jpeg"/>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -5216,6 +5219,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="text">
                    <string>Audio</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="audio-x-mpeg"/>
                   </property>
                  </widget>
                 </item>
@@ -5230,6 +5236,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="text">
                    <string>Video</string>
                   </property>
+                  <property name="icon">
+                   <iconset theme="video-mp4"/>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -5242,6 +5251,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="text">
                    <string>Text</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="folder-text"/>
                   </property>
                  </widget>
                 </item>
