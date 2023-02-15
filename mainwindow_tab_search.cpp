@@ -1334,7 +1334,7 @@
                     regexPattern = regexSearchtext;
 
                 //Prepare the regexFileType for file types
-                if(selectedFileType !="All"){
+                if( searchOnFileCriteria==true and selectedFileType !="All"){
                     //Get the list of file extension and join it into one string
                     if(selectedFileType =="Audio"){
                                 regexFileType = fileType_AudioS.join("|");
@@ -1563,7 +1563,7 @@
                 regexPattern = regexSearchtext;
 
             //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
-            if(selectedFileType !=tr("All")){
+            if ( searchOnFileCriteria==true and selectedFileType !=tr("All")){
                 //Get the list of file extension and join it into one string
                 if(selectedFileType ==tr("Audio")){
                             regexFileType = fileType_AudioS.join("|");
