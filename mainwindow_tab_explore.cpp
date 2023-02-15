@@ -34,7 +34,6 @@
 
 #include "catalog.h"
 #include "filesview.h"
-#include "directorytreemodel.h"
 #include "exploretreemodel.h"
 #include "exploretreeview.h"
 

@@ -67,8 +67,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->setupUi(this);
 
             //Set current version and release date, and check new version
-                currentVersion = "1.16";
-                releaseDate = "2023-02-13";
+                currentVersion = "1.17";
+                releaseDate = "2023-02-15";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -213,12 +213,11 @@ MainWindow::~MainWindow()
 
 //DEV Templates
 /*
-QMessageBox::information(this,"Katalog","Ok.");
-QMessageBox::information(this,"Katalog","anyVariable: <br/>" + QVariant(anyVariable).toString());
-QMessageBox::information(this,"Katalog","severalVariables: <br/>"
-                              + QVariant(severalVariables1).toString() + "<br/>"
-                              + QVariant(severalVariables2).toString() + "<br/>"
-                         );
+QMessageBox msgBox;
+msgBox.setWindowTitle("Katalog");
+msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
+msgBox.setIcon(QMessageBox::Information);
+msgBox.exec();
 
 QSqlQuery query;
 QString querySQL = QLatin1String(R"(

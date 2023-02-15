@@ -203,7 +203,7 @@
                     newCatalog->fileType = "Image";}
             else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
                     newCatalog->fileType = "Audio";}
-             else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
+            else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
                     newCatalog->fileType = "Video";}
             else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
                     newCatalog->fileType = "Text";}
@@ -213,21 +213,29 @@
             //Check if the catalog (file) already exists
             QFile file(newCatalog->filePath);
             if (file.exists()==true){
-                QMessageBox::information(this, "Katalog",
-                                         tr("There is already a catalog with this name:")
-                                            + newCatalog->name
-                                            + "\n"+tr("Choose a different name."),
-                                         ( tr("Ok") ) );
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText( tr("There is already a catalog with this name:")
+                                + newCatalog->name
+                                + "\n"+tr("Choose a different name."));
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+
                 return;
             }
 
         //Launch the scan and cataloging of files
             if (newCatalog->name!="" and newCatalog->sourcePath!="")
                     updateSingleCatalog(newCatalog);
-            else QMessageBox::warning(this, "Katalog",
-                                      tr("Provide a name and select a path for this new catalog.")+"\n" +tr("Name:")
-                                      +newCatalog->name+"\n"+tr("Path:")+newCatalog->sourcePath,
-                                      ( tr("Ok") ) );
+            else{
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText( tr("Provide a name and select a path for this new catalog.")
+                                +"\n" +tr("Name:")+ newCatalog->name
+                                +"\n" +tr("Path:")+newCatalog->sourcePath);
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.exec();
+            }
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -296,10 +304,11 @@
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
 
             //Inform user
-            QMessageBox::information(this, "Katalog",
-                                      tr("The new catalog,has been created.\n Name:   ")
-                                      +newCatalog->name + "\n" +tr("Source:   ") + newCatalog->sourcePath,
-                                      ( tr("Ok") ) );
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("The new catalog,has been created.\n Name:   ") + newCatalog->name + "\n" +tr("Source:   ") + newCatalog->sourcePath);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
 
             //Refresh data
             loadCollection();
@@ -329,7 +338,6 @@
         QStringList excludedFolders;
         QFile excludeFile(excludeFilePath);
         if(!excludeFile.open(QIODevice::ReadOnly)) {
-             //QMessageBox::information(this,"Katalog",tr("No exclude file found."));
              //return;
         }
         QTextStream textStream(&excludeFile);
@@ -386,7 +394,6 @@
                                     //Include Media File Metadata
                                     if(catalog->includeMetadata == true){
                                         setMediaFile(filePath);
-                                        //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
                                     }
                 }
             }
@@ -429,7 +436,6 @@
                                     //Include Media File Metadata
                                     if(catalog->includeMetadata == true){
                                         setMediaFile(filePath);
-                                        //QMessageBox::information(this,"Katalog","Create_checkBox_IncludeMetadata: <br/>" + QVariant("ok").toString());
                                     }
                 }
             }
@@ -605,7 +611,11 @@
             for (int i = 0; i < filelist.size(); ++i)
               stream << filelist.at(i) << '\n';
           } else {
-              QMessageBox::information(this,"Katalog","error opening output file\n");
+              QMessageBox msgBox;
+              msgBox.setWindowTitle("Katalog");
+              msgBox.setText(tr("Error opening output file."));
+              msgBox.setIcon(QMessageBox::Warning);
+              msgBox.exec();
             //return EXIT_FAILURE;
           }
           fileOut.close();
@@ -630,16 +640,16 @@
             getMetaData(m_player);
     }
 
-
-
-
     void MainWindow::getMetaData(QMediaPlayer *player)
     {
         QMediaMetaData metaData = player->metaData();
 
         QVariant Resolution = metaData.value(QMediaMetaData::Resolution);
-        QMessageBox::information(this,"Katalog","Resolution:<br/>" + Resolution.toString());
-
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Resolution")+": <br/>" + Resolution.toString());
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
         //QVideoFrame frame = player->currentFrame();
         //qDebug() << "Width: " << frame.width() << ", Height: " << frame.height();
 

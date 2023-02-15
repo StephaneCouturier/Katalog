@@ -84,12 +84,15 @@
 
                 QString themeName = tr("Katalog Colors (light)");
 
-                QMessageBox::information(this,"Katalog",tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
-                                                           "It seems this is the first run.<br/><br/>"
-                                                           "The following Settings have been applied:<br/>"
-                                                           " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
-                                         + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one.")
-                                         );
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("<br/><b>Welcome to Katalog!</b><br/><br/>"
+                                  "It seems this is the first run.<br/><br/>"
+                                  "The following Settings have been applied:<br/>"
+                                  " - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.").arg(userLanguage,themeName,tr("Settings"))
+                + tr("<br/><br/>On the next screen, pick an existing Collection folder or create a new one."));
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
 
                 //Language
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
@@ -109,9 +112,12 @@
                     settings.setValue("LastCollectionFolder", collectionFolder);
 
                 //Go to Create screen
-                QMessageBox::information(this,"Katalog",tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
-                                             + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
-                                             );
+                QMessageBox msgBox2;
+                msgBox2.setWindowTitle("Katalog");
+                msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                                   + tr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>"));
+                msgBox2.setIcon(QMessageBox::Information);
+                msgBox2.exec();
 
                 ui->tabWidget->setCurrentIndex(selectedTab);
             }
@@ -615,12 +621,13 @@
     void MainWindow::startDatabase()
     {       
         //Check Sqlite driver
-        if (!QSqlDatabase::drivers().contains("QSQLITE"))
-            QMessageBox::critical(
-                        this,
-                        "Unable to load database",
-                        "The SQLITE driver was not loaded."
-                        );
+        if (!QSqlDatabase::drivers().contains("QSQLITE")){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Unable to load database.<br/>The SQLITE driver was not loaded."));
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
+        }
 
         //Get databaseMode ("Memory" or "File") and file path
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -634,7 +641,11 @@
         // Initialize the database:
         QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
         if (err.type() != QSqlError::NoError) {
-            QMessageBox::information(this,"Katalog","initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText("initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
             return;
         }
 
