@@ -537,7 +537,7 @@
                 {
                     selectedCatalog->setName(sourceCatalog);
                     selectedCatalog->loadCatalogMetaData();
-                    loadCatalogFilelistToTable(selectedCatalog);
+                    selectedCatalog->loadCatalogFileListToTable();
                 }
     }
 

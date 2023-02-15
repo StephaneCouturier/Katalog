@@ -285,8 +285,6 @@ class MainWindow : public QMainWindow
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
 
-            void loadCatalogFilelistToTable(Catalog *catalog);
-
         //TAB: Explore
             QString selectedDirectoryName;
             QString selectedDirectoryFullPath;

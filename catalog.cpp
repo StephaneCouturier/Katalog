@@ -32,6 +32,7 @@
 #include "catalog.h"
 #include <QSqlQuery>
 #include <QFileInfo>
+#include <QRegularExpression>
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -180,6 +181,149 @@ void Catalog::loadCatalogMetaData()
     isFullDevice       = query.value(11).toBool();
     dateLoaded         = query.value(12).toString();
     includeMetadata    = query.value(13).toBool();
+}
+
+
+void Catalog::loadCatalogFileListToTable()
+{
+    //Verify if the lastest version of the catalog is already in memory
+    QDateTime dateTime1 = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
+    QDateTime dateTime2 = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
+
+    //Load catalog files if latest version is not already in memory
+    if ( dateTime1 < dateTime2){
+
+        //Inputs
+        QFile catalogFile(filePath);
+
+        if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+
+            //Set up a text stream from the file's data
+            QTextStream streamCatalogFile(&catalogFile);
+            QString lineCatalogFile;
+            QRegularExpression lineCatalogFileSplitExp("\t");
+
+            //Prepare database and queries
+                //clear database from old version of catalog
+                QSqlQuery deleteQuery;
+                QString deleteQuerySQL = QLatin1String(R"(
+                                    DELETE FROM filesall
+                                    WHERE fileCatalog=:fileCatalog
+                                                )");
+                deleteQuery.prepare(deleteQuerySQL);
+                deleteQuery.bindValue(":fileCatalog",name);
+                deleteQuery.exec();
+
+                //prepare insert query for filesall
+                QSqlQuery insertFilesallQuery;
+                QString insertFilesallSQL = QLatin1String(R"(
+                                        INSERT INTO filesall (
+                                                        fileName,
+                                                        filePath,
+                                                        fileSize,
+                                                        fileDateUpdated,
+                                                        fileCatalog,
+                                                        fileFullPath
+                                                        )
+                                        VALUES(
+                                                        :fileName,
+                                                        :filePath,
+                                                        :fileSize,
+                                                        :fileDateUpdated,
+                                                        :fileCatalog,
+                                                        :fileFullPath )
+                                    )");
+
+                //prepare insert query for folder
+                                    QSqlQuery insertFolderQuery;
+                                    QString insertFolderSQL = QLatin1String(R"(
+                                            INSERT INTO folder(
+                                                    folderHash,
+                                                    folderCatalogName,
+                                                    folderPath
+                                                                )
+                                            VALUES(
+                                                    :folderHash,
+                                                    :folderCatalogName,
+                                                    :folderPath)
+                                                        )");
+
+
+            //process each line of the file
+                while (true){
+                    lineCatalogFile = streamCatalogFile.readLine();
+                    if (lineCatalogFile.isNull())
+                        break;
+
+                    //exclude catalog meta data
+                    if (lineCatalogFile.left(1)=="<"){continue;}
+
+                    //Split the line text with tabulations into a list
+                    QStringList lineFieldList  = lineCatalogFile.split(lineCatalogFileSplitExp);
+                    int         fieldListCount = lineFieldList.count();
+
+                    //Get the file absolute path from this list
+                    QString     lineFilePath   = lineFieldList[0];
+
+                    //Get the FileSize from the list if available
+                    qint64      lineFileSize;
+                    if (fieldListCount >= 3){lineFileSize = lineFieldList[1].toLongLong();}
+                    else lineFileSize = 0;
+
+                    //Get the File DateTime from the list if available
+                    QDateTime   lineFileDateTime;
+                    if (fieldListCount >= 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
+                    else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
+
+                    //Retrieve file info
+                    QFileInfo fileInfo(lineFilePath);
+
+                    // Get the fileDateTime from the list if available
+                    QString lineFileDatetime;
+                    if (fieldListCount >= 3){
+                            lineFileDatetime = lineFieldList[2];}
+                    else lineFileDatetime = "";
+
+                    QString folder = fileInfo.path();
+                    QString folderHash = QString::number(qHash(folder));
+
+                    //Load folder into the database
+                        insertFolderQuery.prepare(insertFolderSQL);
+                        insertFolderQuery.bindValue(":folderHash",      folderHash);
+                        insertFolderQuery.bindValue(":folderCatalogName",name);
+                        insertFolderQuery.bindValue(":folderPath",      folder);
+                        insertFolderQuery.exec();
+
+                    //Load file into the database
+                        insertFilesallQuery.prepare(insertFilesallSQL);
+                        insertFilesallQuery.bindValue(":fileName",        fileInfo.fileName());
+                        insertFilesallQuery.bindValue(":fileSize",        lineFileSize);
+                        insertFilesallQuery.bindValue(":filePath",        folder ); //DEV: replace later by folderHash
+                        insertFilesallQuery.bindValue(":fileDateUpdated", lineFileDatetime);
+                        insertFilesallQuery.bindValue(":fileCatalog",     name);
+                        insertFilesallQuery.bindValue(":fileFullPath",    lineFilePath);
+                        insertFilesallQuery.exec();
+                }
+
+            //update catalog loadedversion
+                QDateTime nowDateTime = QDateTime::currentDateTime();
+                setDateLoaded(nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+
+                QSqlQuery catalogQuery;
+                QString catalogQuerySQL = QLatin1String(R"(
+                                            UPDATE catalog
+                                            SET catalogLoadedVersion =:catalogDateLoaded
+                                            WHERE catalogName =:catalogName
+                                        )");
+                catalogQuery.prepare(catalogQuerySQL);
+                catalogQuery.bindValue(":catalogDateLoaded", dateLoaded);
+                catalogQuery.bindValue(":catalogName",       name);
+                catalogQuery.exec();
+
+            //close file
+                catalogFile.close();
+        }
+    }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)

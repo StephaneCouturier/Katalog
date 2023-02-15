@@ -477,7 +477,7 @@
         }
 
         //Load the files of the Selected Catalog
-        loadCatalogFilelistToTable(activeCatalog);
+        activeCatalog->loadCatalogFileListToTable();
 
         //Load folders and files to the screen
         loadCatalogDirectoriesToExplore();
@@ -698,7 +698,7 @@
         //Load the catalog's directories and display them
 
         //Load the files of the Selected Catalog
-        loadCatalogFilelistToTable(activeCatalog);
+        activeCatalog->loadCatalogFileListToTable();
 
         //prepare query to load file info
         QSqlQuery getDirectoriesQuery;
