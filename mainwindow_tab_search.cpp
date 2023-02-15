@@ -1416,8 +1416,8 @@
                     getFilesQuery.bindValue(":fileCatalog",sourceCatalogName);
                     getFilesQuery.bindValue(":fileSizeMin",selectedMinimumSize * sizeMultiplierMin);
                     getFilesQuery.bindValue(":fileSizeMax",selectedMaximumSize * sizeMultiplierMax);
-                    getFilesQuery.bindValue(":fileDateUpdatedMin",selectedDateMin);
-                    getFilesQuery.bindValue(":fileDateUpdatedMax",selectedDateMax);
+                    getFilesQuery.bindValue(":fileDateUpdatedMin",selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
+                    getFilesQuery.bindValue(":fileDateUpdatedMax",selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
                     getFilesQuery.exec();
 
                 //File by file, test if the file is matching all search criteria
