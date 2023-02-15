@@ -389,7 +389,7 @@
                         fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
 
-                if(developmentMode==false){
+                if(developmentMode==true){
                     //Include Media File Metadata
                                     //Include Media File Metadata
                                     if(catalog->includeMetadata == true){
@@ -431,7 +431,7 @@
                     fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                 }
 
-                if(developmentMode==false){
+                if(developmentMode==true){
                     //Include Media File Metadata
                                     //Include Media File Metadata
                                     if(catalog->includeMetadata == true){
@@ -446,7 +446,6 @@
         catalog->setTotalFileSize(catalogTotalFileSize);
 
         //Insert catalog file list
-        //DEV note: this can be optimized combining with the method loadCatalogFilelistToTable(Catalog *catalog)
 
             //Remove any former files from db for older catalog with same name
             QSqlQuery deleteQuery;

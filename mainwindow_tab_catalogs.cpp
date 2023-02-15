@@ -645,10 +645,10 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(13,150); //Last Loaded
 
             //Hide columns
-            ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
-            ui->Catalogs_treeView_CatalogList->hideColumn(13); //Loaded Version
             if(developmentMode==false){
                 ui->Catalogs_treeView_CatalogList->hideColumn(9); //includeMetadata
+                ui->Catalogs_treeView_CatalogList->hideColumn(13); //Loaded Version
+                ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             }
             //Populate catalogs statistics
             QSqlQuery query;
