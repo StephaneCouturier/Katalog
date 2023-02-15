@@ -1057,10 +1057,25 @@
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
         //Confirm save changes
-            int result = QMessageBox::warning(this, "Katalog",
-                                tr("Save changes to the definition of the catalog?\n")
-                                     +tr("(The catalog must be updated to reflect these changes)"), QMessageBox::Yes
-                                              | QMessageBox::Cancel);
+            QString message = tr("Save changes to the definition of the catalog?)<br/>");
+            message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=100><i>" + tr("new value") + "</i></td>";
+            if(newCatalogName           !=catalog->name)
+                message = message + "<tr><td>" + tr("Name")         + "</td><td>" + catalog->name         + "</td><td><b>" + newCatalogName          + "</b></td></tr>";
+            if(newCatalogSourcePath     !=catalog->sourcePath)
+                message = message + "<tr><td>" + tr("Source path ") + "</td><td>" + catalog->sourcePath   + "</td><td><b>" + newCatalogSourcePath    + "</b></td></tr>";
+            if(newCatalogStorage        !=catalog->storageName)
+                message = message + "<tr><td>" + tr("Storage name") + "</td><td>" + catalog->storageName  + "</td><td><b>" + newCatalogStorage       + "</b></td></tr>";
+            if(newCatalogFileType       !=catalog->fileType)
+                message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + catalog->fileType     + "</td><td><b>" + newCatalogFileType      + "</b></td></tr>";
+            if(newCatalogIncludeHidden  !=QVariant(catalog->includeHidden).toString())
+                message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(catalog->includeHidden).toString()   + "</td><td><b>" + newCatalogIncludeHidden   + "</b></td></tr>";
+            if(newCatalogIncludeMetadata  !=QVariant(catalog->includeMetadata).toString())
+                message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(catalog->includeMetadata).toString() + "</td><td><b>" + newCatalogIncludeMetadata + "</b></td></tr>";
+
+            message = message + "</table>";
+            message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
+
+            int result = QMessageBox::warning(this, "Katalog", message, QMessageBox::Yes | QMessageBox::Cancel);
             if ( result == QMessageBox::Cancel){
                 return;
             }
