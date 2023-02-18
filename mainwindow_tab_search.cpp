@@ -1497,7 +1497,7 @@
                                 catalogFoundList.insert(0,sourceCatalogName);
 
                                 //Retrieve other file info
-                                QFileInfo file(lineFileFullPath);
+                                //QFileInfo file(lineFileFullPath);
 
                                 //Populate result lists
                                 sFileNames.append(lineFileName);
@@ -1521,7 +1521,7 @@
                                 catalogFoundList.insert(0,sourceCatalogName);
 
                                 //Retrieve other file info
-                                QFileInfo file(lineFilePath);
+                                //QFileInfo file(lineFilePath);
 
                                 //Populate result lists
                                 sFileNames.append(lineFileName);
@@ -1586,6 +1586,7 @@
              }
 
             //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
+
             if ( selectedSearchExclude !=""){
 
                 //Prepare
@@ -1808,7 +1809,7 @@
         {
             //DEV: REPLACE BY SQL QUERY ON Catalog TABLE
 
-            QString catalogStorageName;
+//            QString catalogStorageName;
             //LoadCatalogInfo(file);
             // Get infos stored in the file
             QFile catalogFile(catalogFilePath);
@@ -1990,7 +1991,7 @@
         void MainWindow::refreshLocationSelectionList()
         {
             //Get current location
-            QString currentLocation = ui->Filters_label_DisplayLocation->text();
+//            QString currentLocation = ui->Filters_label_DisplayLocation->text();
             //Query the full list of locations
             QSqlQuery getLocationList;
             getLocationList.prepare("SELECT DISTINCT storage_location FROM storage ORDER BY storage_location");
@@ -2019,7 +2020,7 @@
         void MainWindow::refreshStorageSelectionList(QString selectedLocation)
         {
             //get current location
-            QString currentStorage = ui->Filters_label_DisplayStorage->text();
+//            QString currentStorage = ui->Filters_label_DisplayStorage->text();
 
             //Query the full list of locations
             QSqlQuery getStorageList;
@@ -2061,7 +2062,7 @@
         void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
         {
             //get current location
-            QString currentCatalog = ui->Filters_label_DisplayCatalog->text();
+            //QString currentCatalog = ui->Filters_label_DisplayCatalog->text();
 
             //Query the full list of locations
             QSqlQuery getCatalogSelectionList;
@@ -2118,8 +2119,8 @@
                 catalogListModelForStats->setStringList(catalogSelectedList);
 
                 //Get last value
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
+//                QSettings settings(settingsFilePath, QSettings:: IniFormat);
+//                QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
         }
 
@@ -2383,7 +2384,6 @@
 
             //    Iterate the result
             //    -- Make a QStringList containing the output of each field
-            QStringList fieldList;
             while (query.next()) {
 
                 const QSqlRecord record = query.record();

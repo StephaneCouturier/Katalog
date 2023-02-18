@@ -33,7 +33,6 @@
 #include "ui_mainwindow.h"
 
 #include "storagetreemodel.h"
-#include "storageview.h"
 #include "devicetreeview.h"
 #include "catalog.h"
 
@@ -570,7 +569,7 @@
     void MainWindow::on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1)
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/PreloadCatalogs", ui->Settings_checkBox_PreloadCatalogs->isChecked());
+        settings.setValue("Settings/PreloadCatalogs", arg1);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Collection_pushButton_OpenSettingsFile_clicked()
