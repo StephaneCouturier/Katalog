@@ -726,7 +726,6 @@
 
         //    Iterate the result
         //    -- Make a QStringList containing the output of each field
-        //QStringList fieldList;
         while (query.next()) {
 
             const QSqlRecord record = query.record();
