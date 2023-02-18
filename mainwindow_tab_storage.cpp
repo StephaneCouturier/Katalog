@@ -601,44 +601,47 @@
              fileOut.close();
 
         //Reload new data
-             QSqlQuery query;
-             QString querySQL = QLatin1String(R"(
-                             SELECT  storage_free_space, storage_total_space
-                             FROM storage
-                             WHERE storage_id =:storage_id
-                             )");
-             query.prepare(querySQL);
-             query.bindValue(":storage_id", storage->ID);
-             query.exec();
-             query.next();
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                         SELECT  storage_free_space, storage_total_space
+                         FROM storage
+                         WHERE storage_id =:storage_id
+                         )");
+            query.prepare(querySQL);
+            query.bindValue(":storage_id", storage->ID);
+            query.exec();
+            query.next();
 
 
         //Prepare to report changes to the storage
-             qint64 newStorageFreeSpace    = query.value(0).toLongLong();
-             qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
-             qint64 newStorageTotalSpace   = query.value(1).toLongLong();
-             qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
-             qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
-             qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
+        qint64 newStorageFreeSpace    = query.value(0).toLongLong();
+        qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
+        qint64 newStorageTotalSpace   = query.value(1).toLongLong();
+        qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
+        qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
+        qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
 
-             //Inform user about the update
-             if(skipCatalogUpdateSummary !=true){
-             QMessageBox::information(this,"Katalog",tr("<br/>The storage device <b> %1 </b> was updated:<br/> "
-                                      "<table>"
-                                              "<tr><td> Used Space: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
-                                              "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
-                                              "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
-                                      "</table>"
-                                      ).arg(storage->name,
-                                            QLocale().formattedDataSize(newStorageUsedSpace),
-                                            QLocale().formattedDataSize(deltaStorageUsedSpace),
-                                            QLocale().formattedDataSize(newStorageFreeSpace),
-                                            QLocale().formattedDataSize(deltaStorageFreeSpace),
-                                            QLocale().formattedDataSize(newStorageTotalSpace),
-                                            QLocale().formattedDataSize(deltaStorageTotalSpace),
-                                            selectedStorage->name)
-                                      ,Qt::TextFormat(Qt::RichText));
-             }
+        //Inform user about the update
+        if(skipCatalogUpdateSummary !=true){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("<br/>The storage device <b> %1 </b> was updated:<br/> "
+                              "<table>"
+                              "<tr><td> Used Space: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
+                              "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
+                              "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
+                              "</table>"
+                              ).arg(storage->name,
+                                    QLocale().formattedDataSize(newStorageUsedSpace),
+                                    QLocale().formattedDataSize(deltaStorageUsedSpace),
+                                    QLocale().formattedDataSize(newStorageFreeSpace),
+                                    QLocale().formattedDataSize(deltaStorageFreeSpace),
+                                    QLocale().formattedDataSize(newStorageTotalSpace),
+                                    QLocale().formattedDataSize(deltaStorageTotalSpace),
+                                    selectedStorage->name));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
 
         //reload data to model
         loadStorageTableToModel();
@@ -723,7 +726,7 @@
 
         //    Iterate the result
         //    -- Make a QStringList containing the output of each field
-        QStringList fieldList;
+        //QStringList fieldList;
         while (query.next()) {
 
             const QSqlRecord record = query.record();
