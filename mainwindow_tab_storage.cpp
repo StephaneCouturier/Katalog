@@ -137,7 +137,7 @@
 
             //Delete from the table
             QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "DELETE FROM storage WHERE storageID = " + QString::number(selectedStorage->ID) );
+            queryDeviceNumber.prepare( "DELETE FROM storage WHERE storage_id = " + QString::number(selectedStorage->ID) );
             queryDeviceNumber.exec();
 
             //Reload data to model
@@ -222,7 +222,7 @@
         //Get inputs
             //max ID
             QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "SELECT MAX (storageID) FROM storage" );
+            queryDeviceNumber.prepare( "SELECT MAX (storage_id) FROM storage" );
             queryDeviceNumber.exec();
             queryDeviceNumber.next();
             int maxID = queryDeviceNumber.value(0).toInt();
@@ -239,26 +239,26 @@
         //Insert new device with default values
         QString querySQL = QLatin1String(R"(
             insert into storage(
-                            storageID,
-                            storageName,
-                            storageType,
-                            storageLocation,
-                            storagePath,
-                            storageLabel,
-                            storageFileSystem,
-                            storageTotalSpace,
-                            storageFreeSpace,
-                            storageBrandModel,
-                            storageSerialNumber,
-                            storageBuildDate,
-                            storageContentType,
-                            storageContainer,
-                            storageComment)
+                            storage_id,
+                            storage_name,
+                            storage_type,
+                            storage_location,
+                            storage_path,
+                            storage_label,
+                            storage_file_system,
+                            storage_total_space,
+                            storage_free_space,
+                            storage_brand_model,
+                            storage_serial_number,
+                            storage_build_date,
+                            storage_content_type,
+                            storage_container,
+                            storage_comment)
                       values(
-                            :newID,
-                            :storageName,
+                            :new_id,
+                            :storage_name,
                             "",
-                            :newLocation,
+                            :new_location,
                             "",
                             "",
                             "",
@@ -274,9 +274,9 @@
 
         QSqlQuery insertQuery;
         insertQuery.prepare(querySQL);
-        insertQuery.bindValue(":newID",newID);
-        insertQuery.bindValue(":newLocation",deviceName);
-        insertQuery.bindValue(":newLocation",newLocation);
+        insertQuery.bindValue(":new_id",newID);
+        insertQuery.bindValue(":storage_name",deviceName);
+        insertQuery.bindValue(":new_location",newLocation);
         insertQuery.exec();
 
         //load table to model
@@ -355,56 +355,56 @@
 
                     QString querySQL = QLatin1String(R"(
                         insert into storage(
-                                        storageID,
-                                        storageName,
-                                        storageType,
-                                        storageLocation,
-                                        storagePath,
-                                        storageLabel,
-                                        storageFileSystem,
-                                        storageTotalSpace,
-                                        storageFreeSpace,
-                                        storageBrandModel,
-                                        storageSerialNumber,
-                                        storageBuildDate,
-                                        storageContentType,
-                                        storageContainer,
-                                        storageComment)
+                                        storage_id,
+                                        storage_name,
+                                        storage_type,
+                                        storage_location,
+                                        storage_path,
+                                        storage_label,
+                                        storage_file_system,
+                                        storage_total_space,
+                                        storage_free_space,
+                                        storage_brand_model,
+                                        storage_serial_number,
+                                        storage_build_date,
+                                        storage_content_type,
+                                        storage_container,
+                                        storage_comment)
                                   values(
-                                        :storageID,
-                                        :storageName,
-                                        :storageType,
-                                        :storageLocation,
-                                        :storagePath,
-                                        :storageLabel,
-                                        :storageFileSystem,
-                                        :storageTotalSpace,
-                                        :storageFreeSpace,
-                                        :storageBrandModel,
-                                        :storageSerialNumber,
-                                        :storageBuildDate,
-                                        :storageContentType,
-                                        :storageContainer,
-                                        :storageComment)
+                                        :storage_id,
+                                        :storage_name,
+                                        :storage_type,
+                                        :storage_location,
+                                        :storage_path,
+                                        :storage_label,
+                                        :storage_file_system,
+                                        :storage_total_space,
+                                        :storage_free_space,
+                                        :storage_brand_model,
+                                        :storage_serial_number,
+                                        :storage_build_date,
+                                        :storage_content_type,
+                                        :storage_container,
+                                        :storage_comment)
                                 )");
 
                     QSqlQuery insertQuery;
                     insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":storageID",fieldList[0].toInt());
-                    insertQuery.bindValue(":storageName",fieldList[1]);
-                    insertQuery.bindValue(":storageType",fieldList[2]);
-                    insertQuery.bindValue(":storageLocation",fieldList[3]);
-                    insertQuery.bindValue(":storagePath",fieldList[4]);
-                    insertQuery.bindValue(":storageLabel",fieldList[5]);
-                    insertQuery.bindValue(":storageFileSystem",fieldList[6]);
-                    insertQuery.bindValue(":storageTotalSpace",fieldList[7].toLongLong());
-                    insertQuery.bindValue(":storageFreeSpace",fieldList[8].toLongLong());
-                    insertQuery.bindValue(":storageBrandModel",fieldList[9]);
-                    insertQuery.bindValue(":storageSerialNumber",fieldList[10]);
-                    insertQuery.bindValue(":storageBuildDate",fieldList[11]);
-                    insertQuery.bindValue(":storageContentType",fieldList[12]);
-                    insertQuery.bindValue(":storageContainer",fieldList[13]);
-                    insertQuery.bindValue(":storageComment", fieldList[14]);
+                    insertQuery.bindValue(":storage_id",fieldList[0].toInt());
+                    insertQuery.bindValue(":storage_name",fieldList[1]);
+                    insertQuery.bindValue(":storage_type",fieldList[2]);
+                    insertQuery.bindValue(":storage_location",fieldList[3]);
+                    insertQuery.bindValue(":storage_path",fieldList[4]);
+                    insertQuery.bindValue(":storage_label",fieldList[5]);
+                    insertQuery.bindValue(":storage_file_system",fieldList[6]);
+                    insertQuery.bindValue(":storage_total_space",fieldList[7].toLongLong());
+                    insertQuery.bindValue(":storage_free_space",fieldList[8].toLongLong());
+                    insertQuery.bindValue(":storage_brand_model",fieldList[9]);
+                    insertQuery.bindValue(":storage_serial_number",fieldList[10]);
+                    insertQuery.bindValue(":storage_build_date",fieldList[11]);
+                    insertQuery.bindValue(":storage_content_type",fieldList[12]);
+                    insertQuery.bindValue(":storage_container",fieldList[13]);
+                    insertQuery.bindValue(":storage_comment", fieldList[14]);
 
                     insertQuery.exec();
 
@@ -428,15 +428,15 @@
         storageModel->setTable("storage");
 
         if ( selectedDeviceType == "Location" ){
-            QString tableFilter = "storageLocation = '" + selectedDeviceName + "'";
+            QString tableFilter = "storage_location = '" + selectedDeviceName + "'";
             storageModel->setFilter(tableFilter);
         }
         else if ( selectedDeviceType == "Storage" ){
-            QString tableFilter = "storageName = '" + selectedDeviceName + "'";
+            QString tableFilter = "storage_name = '" + selectedDeviceName + "'";
             storageModel->setFilter(tableFilter);
         }
         else if ( selectedDeviceType == "Catalog" ){
-            QString tableFilter = "storageName = '" + activeCatalog->storageName + "'";
+            QString tableFilter = "storage_name = '" + activeCatalog->storageName + "'";
             storageModel->setFilter(tableFilter);
         }
         storageModel->setSort(1, Qt::AscendingOrder);
@@ -494,17 +494,17 @@
         //Get the list of device names for the Create screen
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                           SELECT storageName
+                           SELECT storage_name
                            FROM storage
-                           WHERE storageName !=''
+                           WHERE storage_name !=''
                                         )");
 
         if ( selectedStorage->location != tr("All") ){
-            querySQL = querySQL + " AND storageLocation ='" + selectedStorage->location + "'";
+            querySQL = querySQL + " AND storage_location ='" + selectedStorage->location + "'";
         }
 
-        querySQL = querySQL + " ORDER BY storageName ";
-        query.bindValue("storageLocation", selectedStorage->location);
+        querySQL = querySQL + " ORDER BY storage_name ";
+        query.bindValue("storage_location", selectedStorage->location);
         query.prepare(querySQL);
         query.exec();
         storageNameList.clear();
@@ -567,18 +567,18 @@
             QSqlQuery queryUpdateStorage;
             QString queryUpdateStorageSQL = QLatin1String(R"(
                                                 UPDATE storage
-                                                SET storageTotalSpace = :storageTotalSpace,
-                                                    storageFreeSpace  = :storageFreeSpace,
-                                                    storageLabel      = :storageLabel,
-                                                    storageFileSystem = :storageFileSystem
-                                                WHERE storageID = :storageID
+                                                SET storage_total_space = :storage_total_space,
+                                                    storage_free_space  = :storage_free_space,
+                                                    storage_label       = :storage_label,
+                                                    storage_file_system = :storage_file_system
+                                                WHERE storage_id = :storage_id
                                             )");
             queryUpdateStorage.prepare(queryUpdateStorageSQL);
-            queryUpdateStorage.bindValue(":storageTotalSpace", QString::number(newSizeTotal));
-            queryUpdateStorage.bindValue(":storageFreeSpace", QString::number(newSizeAvailable));
-            queryUpdateStorage.bindValue(":storageLabel", newStorageName);
-            queryUpdateStorage.bindValue(":storageFileSystem", newStorageFS);
-            queryUpdateStorage.bindValue(":storageID", QString::number(storage->ID));
+            queryUpdateStorage.bindValue(":storage_total_space", QString::number(newSizeTotal));
+            queryUpdateStorage.bindValue(":storage_free_space", QString::number(newSizeAvailable));
+            queryUpdateStorage.bindValue(":storage_label", newStorageName);
+            queryUpdateStorage.bindValue(":storage_file_system", newStorageFS);
+            queryUpdateStorage.bindValue(":storage_id", QString::number(storage->ID));
             queryUpdateStorage.exec();
 
         //Add values to statistics
@@ -603,12 +603,12 @@
         //Reload new data
              QSqlQuery query;
              QString querySQL = QLatin1String(R"(
-                             SELECT  storageFreeSpace, storageTotalSpace
+                             SELECT  storage_free_space, storage_total_space
                              FROM storage
-                             WHERE storageID =:storageID
+                             WHERE storage_id =:storage_id
                              )");
              query.prepare(querySQL);
-             query.bindValue(":storageID", storage->ID);
+             query.bindValue(":storage_id", storage->ID);
              query.exec();
              query.next();
 
@@ -754,18 +754,18 @@
         //Get storage statistics
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                            SELECT  COUNT (storageID),
-                                    SUM(storageFreeSpace),
-                                    SUM(storageTotalSpace)
+                            SELECT  COUNT (storage_id),
+                                    SUM(storage_free_space),
+                                    SUM(storage_total_space)
                             FROM storage
                             WHERE storageName !=''
                                         )");
 
         if ( selectedDeviceType == "Location" )
-            querySQL = querySQL + " AND storageLocation = '"+ selectedDeviceName +"' ";
+            querySQL = querySQL + " AND storage_location = '" + selectedDeviceName + "' ";
 
         if ( selectedDeviceType == "Storage" )
-            querySQL = querySQL + " AND storageName = '"+ selectedDeviceName +"' ";
+            querySQL = querySQL + " AND storage_name = '" + selectedDeviceName + "' ";
 
         query.prepare(querySQL);
         query.exec();

@@ -159,20 +159,20 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(folderPath, :selectedCatalogPath, '')) AS filePath,
-                                       folderPath AS fullPath
+                                SELECT DISTINCT (REPLACE(folder_path, :selectedCatalogPath, '')) AS file_path,
+                                       folder_path AS full_path
                                 FROM  folder
-                                WHERE folderCatalogName=:folderCatalogName
-                                ORDER BY folderPath ASC
+                                WHERE folder_catalog_name=:folder_catalog_name
+                                ORDER BY folder_path ASC
                             )");
         query.prepare(querySQL);
-        query.bindValue(":folderCatalogName", catalogName);
+        query.bindValue(":folder_catalog_name", catalogName);
         query.bindValue(":selectedCatalogPath",catalogSourcePath);
         query.exec();
 query.next();
 
-        int idPath = query.record().indexOf("filePath");
-        int idIdx = query.record().indexOf("fullPath");
+        int idPath = query.record().indexOf("file_path");
+        int idIdx  = query.record().indexOf("full_path");
 
         QList<QVariant> columnData;
 
@@ -215,7 +215,7 @@ query.next();
                            }
                            else
                            {
-                               sQuery += "SELECT count(*) FROM fileAll WHERE filePath like '";
+                               sQuery += "SELECT count(*) FROM filesall WHERE file_path like '";
                                sQuery += temppath;
                                sQuery += "%';";
                            }

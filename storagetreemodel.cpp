@@ -220,9 +220,9 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
     //Get list of Locations
     QSqlQuery queryLocationList;
     QString queryLocationListSQL = QLatin1String(R"(
-                            SELECT DISTINCT storageLocation,'Location'
+                            SELECT DISTINCT storage_location,'Location'
                             FROM storage
-                            ORDER BY storageLocation ASC
+                            ORDER BY storage_location ASC
     )");
     queryLocationList.prepare(queryLocationListSQL);
     queryLocationList.exec();
@@ -245,13 +245,13 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
         //Add Storage devices
         QSqlQuery queryStorageList;
         QString queryStorageListSQL = QLatin1String(R"(
-                                SELECT storageName,'Storage'
+                                SELECT storage_name,'Storage'
                                 FROM storage
-                                WHERE storageLocation=:storageLocation
-                                ORDER BY storageName ASC
+                                WHERE storage_location=:storage_location
+                                ORDER BY storage_name ASC
         )");
         queryStorageList.prepare(queryStorageListSQL);
-        queryStorageList.bindValue(":storageLocation",lineLocationData);
+        queryStorageList.bindValue(":storage_location",lineLocationData);
         queryStorageList.exec();
 
         while (queryStorageList.next())
@@ -268,13 +268,13 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
             //Add Catalogs
             QSqlQuery queryCatalogList;
             QString queryCatalogListSQL = QLatin1String(R"(
-                                    SELECT catalogName,'Catalog'
+                                    SELECT catalog_name,'Catalog'
                                     FROM catalog
-                                    WHERE catalogStorage=:catalogStorage
-                                    ORDER BY catalogName ASC
+                                    WHERE catalog_storage=:catalog_storage
+                                    ORDER BY catalog_name ASC
             )");
             queryCatalogList.prepare(queryCatalogListSQL);
-            queryCatalogList.bindValue(":catalogStorage",currentStorageName);
+            queryCatalogList.bindValue(":catalog_storage",currentStorageName);
             queryCatalogList.exec();
 
             while (queryCatalogList.next())

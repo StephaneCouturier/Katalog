@@ -144,26 +144,26 @@ void Catalog::loadCatalogMetaData()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT
-                                catalogFilePath             ,
-                                catalogName                 ,
-                                catalogDateUpdated          ,
-                                catalogSourcePath           ,
-                                catalogFileCount            ,
-                                catalogTotalFileSize        ,
-                                catalogSourcePathIsActive   ,
-                                catalogIncludeHidden        ,
-                                catalogFileType             ,
-                                catalogStorage              ,
-                                catalogIncludeSymblinks     ,
-                                catalogIsFullDevice         ,
-                                catalogLoadedVersion        ,
-                                catalogIncludeMetadata
+                                catalog_file_path            ,
+                                catalog_name                 ,
+                                catalog_date_updated         ,
+                                catalog_source_path          ,
+                                catalog_file_count           ,
+                                catalog_total_file_size      ,
+                                catalog_source_path_is_active,
+                                catalog_include_hidden       ,
+                                catalog_file_type            ,
+                                catalog_storage              ,
+                                catalog_include_symblinks    ,
+                                catalog_is_full_device       ,
+                                catalog_loaded_version       ,
+                                catalog_include_metadata
                             FROM catalog
-                            LEFT JOIN storage ON catalogStorage = storageName
-                            WHERE catalogName=:catalogName
+                            LEFT JOIN storage ON catalog_storage = storage_name
+                            WHERE catalog_name=:catalog_name
                         )");
     query.prepare(querySQL);
-    query.bindValue(":catalogName",name);
+    query.bindValue(":catalog_name",name);
     query.exec();
     query.next();
 
@@ -218,34 +218,34 @@ void Catalog::loadCatalogFileListToTable()
                 QSqlQuery insertFilesallQuery;
                 QString insertFilesallSQL = QLatin1String(R"(
                                         INSERT INTO filesall (
-                                                        fileName,
-                                                        filePath,
-                                                        fileSize,
-                                                        fileDateUpdated,
-                                                        fileCatalog,
-                                                        fileFullPath
+                                                        file_name,
+                                                        file_path,
+                                                        file_size,
+                                                        file_date_updated,
+                                                        file_catalog,
+                                                        file_full_path
                                                         )
                                         VALUES(
-                                                        :fileName,
-                                                        :filePath,
-                                                        :fileSize,
-                                                        :fileDateUpdated,
-                                                        :fileCatalog,
-                                                        :fileFullPath )
+                                                        :file_name,
+                                                        :file_path,
+                                                        :file_size,
+                                                        :file_date_updated,
+                                                        :file_catalog,
+                                                        :file_full_path )
                                     )");
 
                 //prepare insert query for folder
                                     QSqlQuery insertFolderQuery;
                                     QString insertFolderSQL = QLatin1String(R"(
                                             INSERT INTO folder(
-                                                    folderHash,
-                                                    folderCatalogName,
-                                                    folderPath
+                                                    folder_hash,
+                                                    folder_catalog_name,
+                                                    folder_path
                                                                 )
                                             VALUES(
-                                                    :folderHash,
-                                                    :folderCatalogName,
-                                                    :folderPath)
+                                                    :folder_hash,
+                                                    :folder_catalog_name,
+                                                    :folder_path)
                                                         )");
 
 
@@ -289,19 +289,19 @@ void Catalog::loadCatalogFileListToTable()
 
                     //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folderHash",      folderHash);
-                        insertFolderQuery.bindValue(":folderCatalogName",name);
-                        insertFolderQuery.bindValue(":folderPath",      folder);
+                        insertFolderQuery.bindValue(":folder_hash",      folderHash);
+                        insertFolderQuery.bindValue(":folder_catalog_name",name);
+                        insertFolderQuery.bindValue(":folder_path",      folder);
                         insertFolderQuery.exec();
 
                     //Load file into the database
                         insertFilesallQuery.prepare(insertFilesallSQL);
-                        insertFilesallQuery.bindValue(":fileName",        fileInfo.fileName());
-                        insertFilesallQuery.bindValue(":fileSize",        lineFileSize);
-                        insertFilesallQuery.bindValue(":filePath",        folder ); //DEV: replace later by folderHash
-                        insertFilesallQuery.bindValue(":fileDateUpdated", lineFileDatetime);
-                        insertFilesallQuery.bindValue(":fileCatalog",     name);
-                        insertFilesallQuery.bindValue(":fileFullPath",    lineFilePath);
+                        insertFilesallQuery.bindValue(":file_name",        fileInfo.fileName());
+                        insertFilesallQuery.bindValue(":file_size",        lineFileSize);
+                        insertFilesallQuery.bindValue(":file_path",        folder ); //DEV: replace later by folderHash
+                        insertFilesallQuery.bindValue(":file_date_updated", lineFileDatetime);
+                        insertFilesallQuery.bindValue(":file_catalog",     name);
+                        insertFilesallQuery.bindValue(":file_full_path",    lineFilePath);
                         insertFilesallQuery.exec();
                 }
 
@@ -312,12 +312,12 @@ void Catalog::loadCatalogFileListToTable()
                 QSqlQuery catalogQuery;
                 QString catalogQuerySQL = QLatin1String(R"(
                                             UPDATE catalog
-                                            SET catalogLoadedVersion =:catalogDateLoaded
-                                            WHERE catalogName =:catalogName
+                                            SET catalog_loaded_version =:catalog_date_loaded
+                                            WHERE catalog_name =:catalog_name
                                         )");
                 catalogQuery.prepare(catalogQuerySQL);
-                catalogQuery.bindValue(":catalogDateLoaded", dateLoaded);
-                catalogQuery.bindValue(":catalogName",       name);
+                catalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
+                catalogQuery.bindValue(":catalog_name",       name);
                 catalogQuery.exec();
 
             //close file

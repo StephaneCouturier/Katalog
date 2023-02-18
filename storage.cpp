@@ -45,26 +45,26 @@ void Storage::loadStorageMetaData()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT
-                                storageID,
-                                storageName,
-                                storageType,
-                                storageLocation,
-                                storagePath,
-                                storageLabel,
-                                storageFileSystem,
-                                storageTotalSpace,
-                                storageFreeSpace,
-                                storageBrandModel,
-                                storageSerialNumber,
-                                storageBuildDate,
-                                storageContentType,
-                                storageContainer,
-                                storageComment
+                                storage_id,
+                                storage_name,
+                                storage_type,
+                                storage_location,
+                                storage_path,
+                                storage_label,
+                                storage_file_system,
+                                storage_total_space,
+                                storage_free_space,
+                                storage_brand_model,
+                                storage_serial_number,
+                                storage_build_date,
+                                storage_content_type,
+                                storage_container,
+                                storage_comment
                             FROM storage
-                            WHERE storageID=:storageID
+                            WHERE storage_id=:storage_id
                         )");
     query.prepare(querySQL);
-    query.bindValue(":storageID",ID);
+    query.bindValue(":storage_id",ID);
     query.exec();
     query.next();
 
@@ -105,17 +105,17 @@ void Storage::updateStorageInfo()
 
         QString queryTotalSpaceSQL = QLatin1String(R"(
                                         UPDATE storage
-                                        SET storageTotalSpace = :storageTotalSpace,
-                                            storageFreeSpace = :storageFreeSpace,
-                                            storageLabel = :storageLabel,
-                                            storageFileSystem = :storageFileSystem
+                                        SET storage_total_space = :storage_total_space,
+                                            storage_free_space  = :storage_free_space,
+                                            storage_label       = :storage_label,
+                                            storage_file_system = :storage_file_system
                                         WHERE storageID = :storageID
                                         )");
         queryTotalSpace.prepare(queryTotalSpaceSQL);
-        queryTotalSpace.bindValue(":storageTotalSpace",QString::number(storageInfo.bytesTotal()));
-        queryTotalSpace.bindValue(":storageFreeSpace",QString::number(storageInfo.bytesAvailable()));
-        queryTotalSpace.bindValue(":storageLabel",storageInfo.name());
-        queryTotalSpace.bindValue(":storageFileSystem",storageInfo.fileSystemType());
+        queryTotalSpace.bindValue(":storage_total_space",QString::number(storageInfo.bytesTotal()));
+        queryTotalSpace.bindValue(":storage_free_space",QString::number(storageInfo.bytesAvailable()));
+        queryTotalSpace.bindValue(":storage_label",storageInfo.name());
+        queryTotalSpace.bindValue(":storage_file_system",storageInfo.fileSystemType());
         queryTotalSpace.exec();
 
 }

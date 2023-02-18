@@ -499,7 +499,7 @@
             QString queryCatalogSQL = QLatin1String(R"(
                                     SELECT count(*)
                                     FROM catalog
-                                    WHERE catalogStorage=""
+                                    WHERE catalog_storage=""
                                             )");
             queryCatalog.prepare(queryCatalogSQL);
             queryCatalog.exec();
@@ -509,7 +509,7 @@
             QString queryStorageSQL = QLatin1String(R"(
                                     SELECT count(*)
                                     FROM storage
-                                    WHERE storageName=""
+                                    WHERE storage_name=""
                                 )");
             queryStorage.prepare(queryStorageSQL);
             queryStorage.exec();

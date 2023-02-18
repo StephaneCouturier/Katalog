@@ -126,18 +126,18 @@
             //Get list of displayed and active catalogs
                 //prepare the main part of the query
                 QString querySQL  = QLatin1String(R"(
-                                            SELECT catalogName, catalogSourcePathIsActive, catalogSourcePath, catalogStorage
+                                            SELECT catalog_name, catalog_source_path_is_active, catalog_source_path, catalog_storage
                                             FROM catalog
-                                            LEFT JOIN storage ON catalogStorage = storageName
-                                            WHERE catalogSourcePathIsActive = 1
+                                            LEFT JOIN storage ON catalog_storage = storage_name
+                                            WHERE catalog_source_path_is_active = 1
                                             )");
 
                     //add AND conditions for the selected filters
                     if ( selectedFilterStorageLocation != tr("All") )
-                        querySQL = querySQL + " AND storageLocation = '" + selectedFilterStorageLocation + "' ";
+                        querySQL = querySQL + " AND storage_location = '" + selectedFilterStorageLocation + "' ";
 
                     if ( selectedFilterStorageName != tr("All") )
-                        querySQL = querySQL + " AND catalogStorage = '" + selectedFilterStorageName + "' ";
+                        querySQL = querySQL + " AND catalog_storage = '" + selectedFilterStorageName + "' ";
 
                 //run the query
                 QSqlQuery query;
@@ -173,10 +173,10 @@
                            //get Storage ID
                            QSqlQuery query;
                            QString querySQL = QLatin1String(R"(
-                                               SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
+                                               SELECT storage_id, storage_path FROM storage WHERE storage_name =:storage_name
                                                            )");
                            query.prepare(querySQL);
-                           query.bindValue(":storageName",selectedCatalogStorage);
+                           query.bindValue(":storage_name",selectedCatalogStorage);
                            query.exec();
                            query.next();
                            int selectedCatalogStorageID = query.value(0).toInt();
@@ -498,53 +498,53 @@
                     QSqlQuery insertCatalogQuery;
                     QString insertCatalogQuerySQL = QLatin1String(R"(
                                             INSERT OR IGNORE INTO catalog (
-                                                            catalogFilePath,
-                                                            catalogName,
-                                                            catalogDateUpdated,
-                                                            catalogSourcePath,
-                                                            catalogFileCount,
-                                                            catalogTotalFileSize,
-                                                            catalogSourcePathIsActive,
-                                                            catalogIncludeHidden,
-                                                            catalogFileType,
-                                                            catalogStorage,
-                                                            catalogIncludeSymblinks,
-                                                            catalogIsFullDevice,
-                                                            catalogLoadedVersion,
-                                                            catalogIncludeMetadata
+                                                            catalog_file_path,
+                                                            catalog_name,
+                                                            catalog_date_updated,
+                                                            catalog_source_path,
+                                                            catalog_file_count,
+                                                            catalog_total_file_size,
+                                                            catalog_source_path_is_active,
+                                                            catalog_include_hidden,
+                                                            catalog_file_type,
+                                                            catalog_storage,
+                                                            catalog_include_symblinks,
+                                                            catalog_is_full_device,
+                                                            catalog_loaded_version,
+                                                            catalog_include_metadata
                                                             )
                                             VALUES(
-                                                            :catalogFilePath,
-                                                            :catalogName,
-                                                            :catalogDateUpdated,
-                                                            :catalogSourcePath,
-                                                            :catalogFileCount,
-                                                            :catalogTotalFileSize,
-                                                            :catalogSourcePathIsActive,
-                                                            :catalogIncludeHidden,
-                                                            :catalogFileType,
-                                                            :catalogStorage,
-                                                            :catalogIncludeSymblinks,
-                                                            :catalogIsFullDevice,
-                                                            :catalogLoadedVersion,
-                                                            :catalogIncludeMetadata )
+                                                            :catalog_file_path,
+                                                            :catalog_name,
+                                                            :catalog_date_updated,
+                                                            :catalog_source_path,
+                                                            :catalog_file_count,
+                                                            :catalog_total_file_size,
+                                                            :catalog_source_path_is_active,
+                                                            :catalog_include_hidden,
+                                                            :catalog_file_type,
+                                                            :catalog_storage,
+                                                            :catalog_include_symblinks,
+                                                            :catalog_is_full_device,
+                                                            :catalog_loaded_version,
+                                                            :catalog_include_metadata )
                                         )");
 
                     insertCatalogQuery.prepare(insertCatalogQuerySQL);
-                    insertCatalogQuery.bindValue(":catalogFilePath",catalogFileInfo.filePath());
-                    insertCatalogQuery.bindValue(":catalogName",catalogFileInfo.completeBaseName());
-                    insertCatalogQuery.bindValue(":catalogDateUpdated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-                    insertCatalogQuery.bindValue(":catalogSourcePath",catalogValues[0]);
-                    insertCatalogQuery.bindValue(":catalogFileCount",catalogValues[1].toInt());
-                    insertCatalogQuery.bindValue(":catalogTotalFileSize",catalogValues[2].toLongLong());
-                    insertCatalogQuery.bindValue(":catalogSourcePathIsActive",isActive);
-                    insertCatalogQuery.bindValue(":catalogIncludeHidden",catalogValues[3]);
-                    insertCatalogQuery.bindValue(":catalogFileType",catalogValues[4]);
-                    insertCatalogQuery.bindValue(":catalogStorage",catalogValues[5]);
-                    insertCatalogQuery.bindValue(":catalogIncludeSymblinks",catalogValues[6]);
-                    insertCatalogQuery.bindValue(":catalogIsFullDevice",catalogValues[7]);
-                    insertCatalogQuery.bindValue(":catalogLoadedVersion","");
-                    insertCatalogQuery.bindValue(":catalogIncludeMetadata",catalogValues[8]);
+                    insertCatalogQuery.bindValue(":catalog_file_path",catalogFileInfo.filePath());
+                    insertCatalogQuery.bindValue(":catalog_name",catalogFileInfo.completeBaseName());
+                    insertCatalogQuery.bindValue(":catalog_date_updated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+                    insertCatalogQuery.bindValue(":catalog_source_path",catalogValues[0]);
+                    insertCatalogQuery.bindValue(":catalog_file_count",catalogValues[1].toInt());
+                    insertCatalogQuery.bindValue(":catalog_total_file_size",catalogValues[2].toLongLong());
+                    insertCatalogQuery.bindValue(":catalog_source_path_is_active",isActive);
+                    insertCatalogQuery.bindValue(":catalog_include_hidden",catalogValues[3]);
+                    insertCatalogQuery.bindValue(":catalog_file_type",catalogValues[4]);
+                    insertCatalogQuery.bindValue(":catalog_storage",catalogValues[5]);
+                    insertCatalogQuery.bindValue(":catalog_include_symblinks",catalogValues[6]);
+                    insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
+                    insertCatalogQuery.bindValue(":catalog_loaded_version","");
+                    insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
                     insertCatalogQuery.exec();
 
                 }
@@ -561,23 +561,23 @@
             //prepare the main part of the query
             loadCatalogSQL  = QLatin1String(R"(
                                         SELECT
-                                            catalogName                 ,
-                                            catalogFilePath             ,
-                                            catalogDateUpdated          ,
-                                            catalogFileCount            ,
-                                            catalogTotalFileSize        ,
-                                            catalogSourcePath           ,
-                                            catalogFileType             ,
-                                            catalogSourcePathIsActive   ,
-                                            catalogIncludeHidden        ,
-                                            catalogIncludeMetadata      ,
-                                            catalogStorage              ,
-                                            storageLocation             ,
-                                            catalogIsFullDevice         ,
-                                            catalogLoadedVersion
+                                            catalog_name                 ,
+                                            catalog_file_path            ,
+                                            catalog_date_updated         ,
+                                            catalog_file_count           ,
+                                            catalog_total_file_size      ,
+                                            catalog_source_path          ,
+                                            catalog_file_type            ,
+                                            catalog_source_path_is_active,
+                                            catalog_include_hidden       ,
+                                            catalog_include_metadata     ,
+                                            catalog_storage              ,
+                                            storage_location             ,
+                                            catalog_is_full_device       ,
+                                            catalog_loaded_version
                                         FROM catalog c
-                                        LEFT JOIN storage s ON catalogStorage = storageName
-                                        WHERE catalogName !=''
+                                        LEFT JOIN storage s ON catalog_storage = storage_name
+                                        WHERE catalog_name !=''
                                         )");
 
             if (     selectedFilterStorageLocation == tr("All")
@@ -586,13 +586,13 @@
                 {//No filtering
             }
             else if ( selectedDeviceType == "Location" )
-                loadCatalogSQL = loadCatalogSQL + " AND s.storageLocation = '"+ selectedDeviceName +"' ";
+                loadCatalogSQL = loadCatalogSQL + " AND s.storage_location = '"+ selectedDeviceName +"' ";
 
             else if ( selectedDeviceType == "Storage" )
-                loadCatalogSQL = loadCatalogSQL + " AND catalogStorage = '"+ selectedDeviceName +"' ";
+                loadCatalogSQL = loadCatalogSQL + " AND catalog_storage = '"+ selectedDeviceName +"' ";
 
             else if ( selectedDeviceType == "Catalog" )
-                loadCatalogSQL = loadCatalogSQL + " AND catalogName = '"+ selectedDeviceName +"' ";
+                loadCatalogSQL = loadCatalogSQL + " AND catalog_name = '"+ selectedDeviceName +"' ";
 
 
             //Execute query
@@ -653,22 +653,22 @@
             //Populate catalogs statistics
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT COUNT(catalogName),SUM(catalogTotalFileSize),SUM(catalogFileCount)
+                                SELECT COUNT(catalog_name),SUM(catalog_total_file_size),SUM(catalog_file_count)
                                 FROM catalog
-                                LEFT JOIN storage ON catalogStorage = storageName
-                                WHERE catalogName !=''
+                                LEFT JOIN storage ON catalog_storage = storage_name
+                                WHERE catalog_name !=''
                                             )");
 
             if ( selectedFilterStorageLocation !=tr("All")){
-                querySQL = querySQL + " AND storageLocation =:storageLocation";
+                querySQL = querySQL + " AND storage_location =:storage_location";
             }
             if ( selectedFilterStorageName !=tr("All")){
-                querySQL = querySQL + " AND catalogStorage =:catalogStorage";
+                querySQL = querySQL + " AND catalog_storage =:catalog_storage";
             }
 
             query.prepare(querySQL);
-            query.bindValue(":storageLocation",selectedFilterStorageLocation);
-            query.bindValue(":catalogStorage", selectedFilterStorageName);
+            query.bindValue(":storage_location",selectedFilterStorageLocation);
+            query.bindValue(":catalog_storage", selectedFilterStorageName);
             query.exec();
             query.next();
 
@@ -735,10 +735,10 @@
             //get Storage ID
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT storageID, storagePath FROM storage WHERE storageName =:storageName
+                                SELECT storage_id, storage_path FROM storage WHERE storage_name =:storage_name
                                             )");
             query.prepare(querySQL);
-            query.bindValue(":storageName",catalog->storageName);
+            query.bindValue(":storage_name",catalog->storageName);
             query.exec();
             query.next();
             int selectedCatalogStorageID = query.value(0).toInt();
@@ -880,17 +880,17 @@
                 QSqlQuery insertQuery;
                 QString insertSQL = QLatin1String(R"(
                                     INSERT INTO file (
-                                                    fileName,
-                                                    filePath,
-                                                    fileSize,
-                                                    fileDateUpdated,
-                                                    fileCatalog )
+                                                    file_name,
+                                                    file_path,
+                                                    file_size,
+                                                    file_date_updated,
+                                                    file_catalog )
                                     VALUES(
-                                                    :fileName,
-                                                    :filePath,
-                                                    :fileSize,
-                                                    :fileDateUpdated,
-                                                    :fileCatalog )
+                                                    :file_name,
+                                                    :file_path,
+                                                    :file_size,
+                                                    :file_date_updated,
+                                                    :file_catalog )
                                                 )");
                 insertQuery.prepare(insertSQL);
 
@@ -932,11 +932,11 @@
                             if ( fieldList.count()==7 ){
 
                                 //Append data to the database
-                                insertQuery.bindValue(":fileName", fieldList[2].replace("\"",""));
-                                insertQuery.bindValue(":filePath", fieldList[1].replace("\"",""));
-                                insertQuery.bindValue(":fileSize", fieldList[3].toLongLong());
-                                insertQuery.bindValue(":fileDateUpdated", fieldList[5]);
-                                insertQuery.bindValue(":fileCatalog", fieldList[0].replace("\"",""));
+                                insertQuery.bindValue(":file_name", fieldList[2].replace("\"",""));
+                                insertQuery.bindValue(":file_path", fieldList[1].replace("\"",""));
+                                insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
+                                insertQuery.bindValue(":file_date_updated", fieldList[5]);
+                                insertQuery.bindValue(":file_catalog", fieldList[0].replace("\"",""));
                                 insertQuery.exec();
                             }
                         }
@@ -953,7 +953,7 @@
 
             //Get a list of the source catalogs
                 QString listCatalogSQL = QLatin1String(R"(
-                                    SELECT DISTINCT fileCatalog
+                                    SELECT DISTINCT file_catalog
                                     FROM file
                                                 )");
                 QSqlQuery listCatalogQuery;
@@ -979,11 +979,11 @@
                     QString listCatalogSQL = QLatin1String(R"(
                                         SELECT COUNT(*), SUM(fileSize)
                                         FROM file
-                                        WHERE fileCatalog =:fileCatalog
+                                        WHERE file_catalog =:file_catalog
                                                     )");
                     QSqlQuery listCatalogQuery;
                     listCatalogQuery.prepare(listCatalogSQL);
-                    listCatalogQuery.bindValue(":fileCatalog",formerCatalogName);
+                    listCatalogQuery.bindValue(":file_catalog",formerCatalogName);
                     listCatalogQuery.exec();
                     listCatalogQuery.next();
 
@@ -1009,11 +1009,11 @@
                 QString listFilesSQL = QLatin1String(R"(
                                     SELECT *
                                     FROM file
-                                    WHERE fileCatalog =:fileCatalog
+                                    WHERE file_catalog =:file_catalog
                                                 )");
                 QSqlQuery listFilesQuery;
                 listFilesQuery.prepare(listFilesSQL);
-                listFilesQuery.bindValue(":fileCatalog",formerCatalogName);
+                listFilesQuery.bindValue(":file_catalog",formerCatalogName);
                 listFilesQuery.exec();
 
                 //Write the results in the file
@@ -1085,12 +1085,12 @@
             QString querySQL = QLatin1String(R"(
                                     UPDATE catalog
                                     SET
-                                        catalogSourcePath =:newCatalogSourcePath,
-                                        catalogStorage =:newCatalogStorage,
-                                        catalogFileType =:newCatalogFileType,
-                                        catalogIncludeHidden =:newCatalogIncludeHidden,
-                                        catalogIncludeMetadata =:newCatalogIncludeMetadata
-                                    WHERE catalogName =:catalogName
+                                        catalog_source_path      =:newCatalogSourcePath,
+                                        catalog_storage          =:newCatalogStorage,
+                                        catalog_file_type        =:newCatalogFileType,
+                                        catalog_include_hidden   =:newCatalogIncludeHidden,
+                                        catalog_include_metadata =:newCatalogIncludeMetadata
+                                    WHERE catalog_name =:catalogName
                                 )");
             //DEV: catalogIncludeSymblinks =: newIncludeSymblinks;
 
@@ -1238,12 +1238,12 @@
             //get the list of catalogs and data
                 QSqlQuery queryLast;
                 QString queryLastSQL = QLatin1String(R"(
-                                            SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                            SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                             FROM statistics
-                                            WHERE dateTime = (SELECT MAX(dateTime)
+                                            WHERE date_time = (SELECT MAX(date_time)
                                                                 FROM statistics
-                                                                WHERE recordType="Snapshot")
-                                            GROUP BY dateTime
+                                                                WHERE record_type="Snapshot")
+                                            GROUP BY date_time
                                             )");
                 queryLast.prepare(queryLastSQL);
                 queryLast.exec();
@@ -1262,12 +1262,12 @@
             //get the list of catalogs and data
                 QSqlQuery queryNew;
                 QString queryNewSQL = QLatin1String(R"(
-                                            SELECT SUM(catalogTotalFileSize), SUM(catalogFileCount)
+                                            SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                             FROM statistics
-                                            WHERE dateTime = (SELECT MAX(dateTime)
+                                            WHERE dateTime = (SELECT MAX(date_time)
                                                                 FROM statistics
-                                                                WHERE recordType="Snapshot")
-                                            GROUP BY dateTime
+                                                                WHERE record_type="Snapshot")
+                                            GROUP BY date_time
                                             )");
                 queryNew.prepare(queryNewSQL);
                 queryNew.exec();
@@ -1302,9 +1302,9 @@
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                         SELECT
-                                            catalogName                 ,
-                                            catalogFileCount            ,
-                                            catalogTotalFileSize
+                                            catalog_name                 ,
+                                            catalog_file_count            ,
+                                            catalog_total_file_size
                                         FROM catalog
                                         )");
             query.prepare(querySQL);

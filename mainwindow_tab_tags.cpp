@@ -190,23 +190,23 @@
                 //Append data to the table
                 QString queryInsertSQL = QLatin1String(R"(
                                             INSERT INTO tag(
-                                                            Name,
-                                                            Path,
-                                                            Type,
-                                                            dateTime
+                                                            name,
+                                                            path,
+                                                            type,
+                                                            date_time
                                             )
                                             VALUES(
-                                                            :Name,
-                                                            :Path,
-                                                            :Type,
-                                                            :dateTime
+                                                            :name,
+                                                            :path,
+                                                            :type,
+                                                            :date_time
                                             )
                 )");
                 queryInsert.prepare(queryInsertSQL);
-                queryInsert.bindValue(":Name",fieldList[1]);
-                queryInsert.bindValue(":Path",fieldList[0]);
-                queryInsert.bindValue(":Type","not_stored_in_file_yet");    //fieldList[2]
-                queryInsert.bindValue(":dateTime","not_stored_in_file_yet");//fieldList[3]
+                queryInsert.bindValue(":name",fieldList[1]);
+                queryInsert.bindValue(":path",fieldList[0]);
+                queryInsert.bindValue(":type","not_stored_in_file_yet");    //fieldList[2]
+                queryInsert.bindValue(":date_time","not_stored_in_file_yet");//fieldList[3]
                 queryInsert.exec();
              }
         }
@@ -221,7 +221,7 @@
 		//Get full list of tags
 		QSqlQuery query;
 		QString querySQL = QLatin1String(R"(
-                                    SELECT Path, Name
+                                    SELECT path, name
                                     FROM tag
                                     )");
         query.prepare(querySQL);
@@ -263,15 +263,15 @@
         //Get full list of tags
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                    SELECT Path, Name
+                                    SELECT path, name
                                     FROM tag
                                     )");
         if(selectedTagListName!=""){
-            querySQL = querySQL + " WHERE Name=:Name";
+            querySQL = querySQL + " WHERE name=:name";
         }
         query.prepare(querySQL);
 
-        query.bindValue(":Name",selectedTagListName);
+        query.bindValue(":name",selectedTagListName);
 
         query.exec();
 

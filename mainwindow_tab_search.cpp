@@ -1036,17 +1036,17 @@
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO file (
-                                                                        fileName,
-                                                                        filePath,
-                                                                        fileSize,
-                                                                        fileDateUpdated,
-                                                                        fileCatalog )
+                                                                        file_name,
+                                                                        file_path,
+                                                                        file_size,
+                                                                        file_date_updated,
+                                                                        file_catalog )
                                                         VALUES(
-                                                                        :fileName,
-                                                                        :filePath,
-                                                                        :fileSize,
-                                                                        :fileDateUpdated,
-                                                                        :fileCatalog )
+                                                                        :file_name,
+                                                                        :file_path,
+                                                                        :file_size,
+                                                                        :file_date_updated,
+                                                                        :file_catalog )
                                                                     )");
                                     insertQuery.prepare(insertSQL);
 
@@ -1059,11 +1059,11 @@
                                             QString test = searchResultsCatalog->index(i,0).data().toString();
 
                                             //Append data to the database
-                                            insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
-                                            insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
-                                            insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
-                                            insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.bindValue(":file_name",         searchResultsCatalog->index(i,0).data().toString());
+                                            insertQuery.bindValue(":file_size",         searchResultsCatalog->index(i,1).data().toString());
+                                            insertQuery.bindValue(":file_path",         searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
+                                            insertQuery.bindValue(":file_catalog",      searchResultsCatalog->index(i,4).data().toString());
                                             insertQuery.exec();
 
                                     }
@@ -1094,11 +1094,11 @@
 
                                 //Generate SQL based on grouping of fields
                                 selectSQL = QLatin1String(R"(
-                                                SELECT      fileName,
-                                                            fileSize,
-                                                            fileDateUpdated,
-                                                            filePath,
-                                                            fileCatalog
+                                                SELECT      file_name,
+                                                            file_size,
+                                                            file_date_updated,
+                                                            file_path,
+                                                            file_catalog
                                                 FROM file
                                                 WHERE %1 IN
                                                     (SELECT %1
@@ -1160,17 +1160,17 @@
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO file (
-                                                                        fileName,
-                                                                        filePath,
-                                                                        fileSize,
-                                                                        fileDateUpdated,
-                                                                        fileCatalog )
+                                                                        file_name,
+                                                                        file_path,
+                                                                        file_size,
+                                                                        file_date_updated,
+                                                                        file_catalog )
                                                         VALUES(
-                                                                        :fileName,
-                                                                        :filePath,
-                                                                        :fileSize,
-                                                                        :fileDateUpdated,
-                                                                        :fileCatalog )
+                                                                        :file_name,
+                                                                        :file_path,
+                                                                        :file_size,
+                                                                        :file_date_updated,
+                                                                        :file_catalog )
                                                                     )");
                                     insertQuery.prepare(insertSQL);
 
@@ -1183,11 +1183,11 @@
                                             QString test = searchResultsCatalog->index(i,0).data().toString();
 
                                             //Append data to the database
-                                            insertQuery.bindValue(":fileName",        searchResultsCatalog->index(i,0).data().toString());
-                                            insertQuery.bindValue(":fileSize",        searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":filePath",        searchResultsCatalog->index(i,3).data().toString());
-                                            insertQuery.bindValue(":fileDateUpdated", searchResultsCatalog->index(i,2).data().toString());
-                                            insertQuery.bindValue(":fileCatalog",     searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.bindValue(":file_name",        searchResultsCatalog->index(i,0).data().toString());
+                                            insertQuery.bindValue(":file_size",        searchResultsCatalog->index(i,1).data().toString());
+                                            insertQuery.bindValue(":file_path",        searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
+                                            insertQuery.bindValue(":file_catalog",     searchResultsCatalog->index(i,4).data().toString());
                                             insertQuery.exec();
 
                                     }
@@ -1218,30 +1218,30 @@
 
                                 //Generate SQL based on grouping of fields
                                 selectSQL = QLatin1String(R"(
-                                                 SELECT      fileName,
-                                                             fileSize,
-                                                             fileDateUpdated,
-                                                             filePath,
-                                                             fileCatalog
+                                                 SELECT      file_name,
+                                                             file_size,
+                                                             file_date_updated,
+                                                             file_path,
+                                                             file_catalog
                                                  FROM file
-                                                 WHERE fileCatalog = :selectedDifferencesCatalog1
+                                                 WHERE file_catalog = :selectedDifferencesCatalog1
                                                  AND %1 NOT IN(
                                                      SELECT %1
                                                      FROM file
-                                                     WHERE fileCatalog = :selectedDifferencesCatalog2
+                                                     WHERE file_catalog = :selectedDifferencesCatalog2
                                                      )
                                                  UNION
-                                                 SELECT      fileName,
-                                                             fileSize,
-                                                             fileDateUpdated,
-                                                             filePath,
-                                                             fileCatalog
+                                                 SELECT      file_name,
+                                                             file_size,
+                                                             file_date_updated,
+                                                             file_path,
+                                                             file_catalog
                                                  FROM file
-                                                 WHERE fileCatalog = :selectedDifferencesCatalog2
+                                                 WHERE file_catalog = :selectedDifferencesCatalog2
                                                  AND %1 NOT IN(
                                                      SELECT %1
                                                      FROM file
-                                                     WHERE fileCatalog = :selectedDifferencesCatalog1
+                                                     WHERE file_catalog = :selectedDifferencesCatalog1
                                                      )
                                  )").arg(groupingFieldsDifferences);
 
@@ -1394,30 +1394,30 @@
                 //load the files of the Catalog
                     QSqlQuery getFilesQuery;
                     QString getFilesQuerySQL = QLatin1String(R"(
-                                        SELECT  fileName,
-                                                filePath,
-                                                fileSize,
-                                                fileDateUpdated
+                                        SELECT  file_name,
+                                                file_path,
+                                                file_size,
+                                                file_date_updated
                                         FROM  filesall
-                                        WHERE fileCatalog=:fileCatalog
+                                        WHERE file_catalog=:file_catalog
                                                     )");
 
                     //Add matching size range
                     if (searchOnFileCriteria==true and searchOnSize==true){
-                        getFilesQuerySQL = getFilesQuerySQL+" AND fileSize>=:fileSizeMin ";
-                        getFilesQuerySQL = getFilesQuerySQL+" AND fileSize<=:fileSizeMax ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND file_size>=:file_size_min ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND file_size<=:file_size_max ";
                     }
                     //Add matching date range
                     if (searchOnFileCriteria==true and searchOnDate==true){
-                        getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated>=:fileDateUpdatedMin ";
-                        getFilesQuerySQL = getFilesQuerySQL+" AND fileDateUpdated<=:fileDateUpdatedMax ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND file_date_updated>=:file_date_updated_min ";
+                        getFilesQuerySQL = getFilesQuerySQL+" AND file_date_updated<=:file_date_updated_max ";
                     }
                     getFilesQuery.prepare(getFilesQuerySQL);
-                    getFilesQuery.bindValue(":fileCatalog",sourceCatalogName);
-                    getFilesQuery.bindValue(":fileSizeMin",selectedMinimumSize * sizeMultiplierMin);
-                    getFilesQuery.bindValue(":fileSizeMax",selectedMaximumSize * sizeMultiplierMax);
-                    getFilesQuery.bindValue(":fileDateUpdatedMin",selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
-                    getFilesQuery.bindValue(":fileDateUpdatedMax",selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
+                    getFilesQuery.bindValue(":file_catalog",sourceCatalogName);
+                    getFilesQuery.bindValue(":file_size_min",selectedMinimumSize * sizeMultiplierMin);
+                    getFilesQuery.bindValue(":file_size_max",selectedMaximumSize * sizeMultiplierMax);
+                    getFilesQuery.bindValue(":file_date_updated_min",selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
+                    getFilesQuery.bindValue(":file_date_updated_max",selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
                     getFilesQuery.exec();
 
                 //File by file, test if the file is matching all search criteria
@@ -1441,12 +1441,12 @@
                             //Set query to get a list of folder paths matching the selected tag
                             QSqlQuery queryTag;
                             QString queryTagSQL = QLatin1String(R"(
-                                                SELECT Path
+                                                SELECT path
                                                 FROM tag
-                                                WHERE Name=:Name
+                                                WHERE name=:name
                             )");
                             queryTag.prepare(queryTagSQL);
-                            queryTag.bindValue(":Name",selectedTag);
+                            queryTag.bindValue(":name",selectedTag);
                             queryTag.exec();
 
                             //Test if the FilePath contains a path from the list of folders matching the selected tag name
@@ -1677,12 +1677,12 @@
                             //Set query to get a list of folder paths matching the selected tag
                             QSqlQuery queryTag;
                             QString queryTagSQL = QLatin1String(R"(
-                                                SELECT Path
+                                                SELECT path
                                                 FROM tag
-                                                WHERE Name=:Name
+                                                WHERE name=:name
                             )");
                             queryTag.prepare(queryTagSQL);
-                            queryTag.bindValue(":Name",selectedTag);
+                            queryTag.bindValue(":name",selectedTag);
                             queryTag.exec();
 
                             //Test if the FilePath contains a path from the list of folders matching the selected tag name
@@ -1993,7 +1993,7 @@
             QString currentLocation = ui->Filters_label_DisplayLocation->text();
             //Query the full list of locations
             QSqlQuery getLocationList;
-            getLocationList.prepare("SELECT DISTINCT storageLocation FROM storage ORDER BY storageLocation");
+            getLocationList.prepare("SELECT DISTINCT storage_location FROM storage ORDER BY storage_location");
             getLocationList.exec();
 
             //Put the results in a list
@@ -2024,15 +2024,15 @@
             //Query the full list of locations
             QSqlQuery getStorageList;
 
-            QString queryText = "SELECT storageName FROM storage";
+            QString queryText = "SELECT storage_name FROM storage";
 
             if ( selectedLocation == tr("All")){
-                    queryText = queryText + " ORDER BY storageName";
+                    queryText = queryText + " ORDER BY storage_name";
                     getStorageList.prepare(queryText);
             }
             else{
-                    queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
-                    queryText = queryText + " ORDER BY storageName";
+                    queryText = queryText + " WHERE storage_location ='" + selectedLocation + "'";
+                    queryText = queryText + " ORDER BY storage_name";
                     getStorageList.prepare(queryText);
             }
             getStorageList.exec();
@@ -2068,24 +2068,24 @@
 
             //Prepare and run the query
                 //common
-                QString queryText = "SELECT c.catalogName FROM catalog AS c"
-                                    " left JOIN storage AS s ON c.catalogStorage = s.storageName";
+                QString queryText = "SELECT c.catalog_name FROM catalog AS c"
+                                    " left JOIN storage AS s ON c.catalog_storage = s.storage_name";
 
                 //filter depending on location and selection.
                     //Default: ( selectedLocation == "All" and selectedStorage == "All")
 
                     if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
                     {
-                            queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "'";
+                            queryText = queryText + " WHERE c.catalog_storage ='" + selectedStorage + "'";
                     }
                     else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
                     {
-                            queryText = queryText + " WHERE storageLocation ='" + selectedLocation + "'";
+                            queryText = queryText + " WHERE storage_location ='" + selectedLocation + "'";
                     }
                     else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
                     {
-                            queryText = queryText + " WHERE c.catalogStorage ='" + selectedStorage + "' "
-                                                    " AND storageLocation ='" + selectedLocation + "'";
+                            queryText = queryText + " WHERE c.catalog_storage ='" + selectedStorage + "' "
+                                                    " AND storage_location ='" + selectedLocation + "'";
                     }
                 //common
                 //queryText = queryText + " ORDER BY catalogName ASC";
@@ -2211,120 +2211,120 @@
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                 INSERT INTO search(
-                                    dateTime,
-                                    TextChecked,
-                                    TextPhrase,
-                                    TextCriteria,
-                                    TextSearchIn,
-                                    FileType,
-                                    FileSizeChecked,
-                                    FileSizeMin,
-                                    FileSizeMinUnit,
-                                    FileSizeMax,
-                                    FileSizeMaxUnit,
-                                    DateModifiedChecked,
-                                    DateModifiedMin,
-                                    DateModifiedMax,
-                                    DuplicatesChecked,
-                                    DuplicatesName,
-                                    DuplicatesSize,
-                                    DuplicatesDateModified,
-                                    DifferencesChecked,
-                                    DifferencesName,
-                                    DifferencesSize,
-                                    DifferencesDateModified,
-                                    DifferencesCatalogs,
-                                    ShowFolders,
-                                    TagChecked,
-                                    Tag,
-                                    searchLocation,
-                                    searchStorage,
-                                    searchCatalog,
-                                    SearchCatalogChecked,
-                                    SearchDirectoryChecked,
-                                    SeletedDirectory,
-                                    TextExclude,
-                                    CaseSensitive
+                                    date_time,
+                                    text_checked,
+                                    text_phrase,
+                                    text_criteria,
+                                    text_search_in,
+                                    file_type,
+                                    file_size_checked,
+                                    file_size_min,
+                                    file_size_min_unit,
+                                    file_size_max,
+                                    file_size_max_unit,
+                                    date_modified_checked,
+                                    date_modified_min,
+                                    date_modified_max,
+                                    duplicates_checked,
+                                    duplicates_name,
+                                    duplicates_size,
+                                    duplicates_date_modified,
+                                    differences_checked,
+                                    differences_name,
+                                    differences_size,
+                                    differences_date_modified,
+                                    differences_catalogs,
+                                    show_folders,
+                                    tag_checked,
+                                    tag,
+                                    search_location,
+                                    search_storage,
+                                    search_catalog,
+                                    search_catalog_checked,
+                                    search_directory_checked,
+                                    seleted_directory,
+                                    text_exclude,
+                                    case_sensitive
                                 )
                                 VALUES(
-                                    :dateTime,
-                                    :TextChecked,
-                                    :TextPhrase,
-                                    :TextCriteria,
-                                    :TextSearchIn,
-                                    :FileType,
-                                    :FileSizeChecked,
-                                    :FileSizeMin,
-                                    :FileSizeMinUnit,
-                                    :FileSizeMax,
-                                    :FileSizeMaxUnit,
-                                    :DateModifiedChecked,
-                                    :DateModifiedMin,
-                                    :DateModifiedMax,
-                                    :DuplicatesChecked,
-                                    :DuplicatesName,
-                                    :DuplicatesSize,
-                                    :DuplicatesDateModified,
-                                    :DifferencesChecked,
-                                    :DifferencesName,
-                                    :DifferencesSize,
-                                    :DifferencesDateModified,
-                                    :DifferencesCatalogs,
-                                    :ShowFolders,
-                                    :TagChecked,
-                                    :Tag,
-                                    :searchLocation,
-                                    :searchStorage,
-                                    :searchCatalog,
-                                    :SearchCatalogChecked,
-                                    :SearchDirectoryChecked,
-                                    :SeletedDirectory,
-                                    :TextExclude,
-                                    :CaseSensitive
+                                    :date_time,
+                                    :text_checked,
+                                    :text_phrase,
+                                    :text_criteria,
+                                    :text_search_in,
+                                    :file_type,
+                                    :file_size_checked,
+                                    :file_size_min,
+                                    :file_size_min_unit,
+                                    :file_size_max,
+                                    :file_size_max_unit,
+                                    :date_modified_checked,
+                                    :date_modified_min,
+                                    :date_modified_max,
+                                    :duplicates_checked,
+                                    :duplicates_name,
+                                    :duplicates_size,
+                                    :duplicates_date_modified,
+                                    :differences_checked,
+                                    :differences_name,
+                                    :differences_size,
+                                    :differences_date_modified,
+                                    :differences_catalogs,
+                                    :show_folders,
+                                    :tag_checked,
+                                    :tag,
+                                    :search_location,
+                                    :search_storage,
+                                    :search_catalog,
+                                    :search_catalog_checked,
+                                    :search_directory_checked,
+                                    :seleted_directory,
+                                    :text_exclude,
+                                    :case_sensitive
                                 )
                 )");
 
             query.prepare(querySQL);
-            query.bindValue(":dateTime",             searchDateTime);
-            query.bindValue(":TextChecked",          ui->Search_checkBox_FileCriteria->isChecked());
+            query.bindValue(":date_time",             searchDateTime);
+            query.bindValue(":text_checked",          ui->Search_checkBox_FileCriteria->isChecked());
 
 //            #ifdef Q_OS_LINUX
 //            query.bindValue(":TextPhrase",           ui->Search_kcombobox_SearchText->currentText());
 //            #else
-            query.bindValue(":TextPhrase",           ui->Search_lineEdit_SearchText->text());
+            query.bindValue(":text_phrase",           ui->Search_lineEdit_SearchText->text());
 //            #endif
 
-            query.bindValue(":TextCriteria",         selectedTextCriteria);
-            query.bindValue(":TextSearchIn",         selectedSearchIn);
-            query.bindValue(":FileType",             selectedFileType);
-            query.bindValue(":FileSizeChecked",      ui->Search_checkBox_Size->isChecked());
-            query.bindValue(":FileSizeMin",          selectedMinimumSize);
-            query.bindValue(":FileSizeMinUnit",      selectedMinSizeUnit);
-            query.bindValue(":FileSizeMax",          selectedMaximumSize);
-            query.bindValue(":FileSizeMaxUnit",      selectedMaxSizeUnit);
-            query.bindValue(":DateModifiedChecked",  ui->Search_checkBox_Date->isChecked());
-            query.bindValue(":DateModifiedMin",      ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-            query.bindValue(":DateModifiedMax",      ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-            query.bindValue(":DuplicatesChecked",    ui->Search_checkBox_Duplicates->isChecked());
-            query.bindValue(":DuplicatesName",          ui->Search_checkBox_DuplicatesName->isChecked());
-            query.bindValue(":DuplicatesSize",          ui->Search_checkBox_DuplicatesSize->isChecked());
-            query.bindValue(":DuplicatesDateModified",  ui->Search_checkBox_DuplicatesDateModified->isChecked());
-            query.bindValue(":DifferencesChecked",   ui->Search_checkBox_Differences->isChecked());
-            query.bindValue(":DifferencesName",         ui->Search_checkBox_DifferencesName->isChecked());
-            query.bindValue(":DifferencesSize",         ui->Search_checkBox_DifferencesSize->isChecked());
-            query.bindValue(":DifferencesDateModified", ui->Search_checkBox_DifferencesDateModified->isChecked());
-            query.bindValue(":DifferencesCatalogs",  selectedDifferencesCatalog1+"||"+selectedDifferencesCatalog2);
-            query.bindValue(":ShowFolders",          ui->Search_checkBox_ShowFolders->isChecked());
-            query.bindValue(":TagChecked",           ui->Search_checkBox_Tags->isChecked());
-            query.bindValue(":Tag",                  ui->Search_comboBox_Tags->currentText());
-            query.bindValue(":searchLocation",       selectedFilterStorageLocation);
-            query.bindValue(":searchStorage",        selectedFilterStorageName);
-            query.bindValue(":searchCatalog",        selectedFilterCatalogName);
-            query.bindValue(":SearchCatalogChecked",    ui->Filters_checkBox_SearchInCatalogs->isChecked());
-            query.bindValue(":SearchDirectoryChecked",  ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
-            query.bindValue(":SeletedDirectory",        ui->Filters_lineEdit_SeletedDirectory->text());
-            query.bindValue(":TextExclude",          ui->Search_lineEdit_Exclude->text());
-            query.bindValue(":CaseSensitive",        ui->Search_checkBox_CaseSensitive->isChecked());
+            query.bindValue(":text_criteria",        selectedTextCriteria);
+            query.bindValue(":text_search_in",       selectedSearchIn);
+            query.bindValue(":file_type",            selectedFileType);
+            query.bindValue(":file_size_checked",    ui->Search_checkBox_Size->isChecked());
+            query.bindValue(":file_size_min",        selectedMinimumSize);
+            query.bindValue(":file_size_min_unit",   selectedMinSizeUnit);
+            query.bindValue(":file_size_max",        selectedMaximumSize);
+            query.bindValue(":file_size_max_unit",   selectedMaxSizeUnit);
+            query.bindValue(":date_modified_checked",ui->Search_checkBox_Date->isChecked());
+            query.bindValue(":date_modified_min",    ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+            query.bindValue(":date_modified_max",    ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
+            query.bindValue(":duplicates_checked",   ui->Search_checkBox_Duplicates->isChecked());
+            query.bindValue(":duplicates_name",      ui->Search_checkBox_DuplicatesName->isChecked());
+            query.bindValue(":duplicates_size",      ui->Search_checkBox_DuplicatesSize->isChecked());
+            query.bindValue(":duplicates_date_modified",  ui->Search_checkBox_DuplicatesDateModified->isChecked());
+            query.bindValue(":differences_checked",  ui->Search_checkBox_Differences->isChecked());
+            query.bindValue(":differences_name",     ui->Search_checkBox_DifferencesName->isChecked());
+            query.bindValue(":differences_size",     ui->Search_checkBox_DifferencesSize->isChecked());
+            query.bindValue(":differences_date_modified", ui->Search_checkBox_DifferencesDateModified->isChecked());
+            query.bindValue(":differences_catalogs", selectedDifferencesCatalog1+"||"+selectedDifferencesCatalog2);
+            query.bindValue(":show_folders",         ui->Search_checkBox_ShowFolders->isChecked());
+            query.bindValue(":tag_checked",          ui->Search_checkBox_Tags->isChecked());
+            query.bindValue(":tag",                  ui->Search_comboBox_Tags->currentText());
+            query.bindValue(":search_location",      selectedFilterStorageLocation);
+            query.bindValue(":search_storage",       selectedFilterStorageName);
+            query.bindValue(":search_catalog",       selectedFilterCatalogName);
+            query.bindValue(":search_catalog_checked", ui->Filters_checkBox_SearchInCatalogs->isChecked());
+            query.bindValue(":search_directory_checked", ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
+            query.bindValue(":seleted_directory",    ui->Filters_lineEdit_SeletedDirectory->text());
+            query.bindValue(":text_exclude",         ui->Search_lineEdit_Exclude->text());
+            query.bindValue(":case_sensitive",       ui->Search_checkBox_CaseSensitive->isChecked());
             query.exec();
         }
         //----------------------------------------------------------------------
@@ -2341,42 +2341,42 @@
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                 SELECT
-                                    dateTime,
-                                    TextChecked,
-                                    TextPhrase,
-                                    TextCriteria,
-                                    TextSearchIn,
-                                    FileType,
-                                    FileSizeChecked,
-                                    FileSizeMin,
-                                    FileSizeMinUnit,
-                                    FileSizeMax,
-                                    FileSizeMaxUnit,
-                                    DateModifiedChecked,
-                                    DateModifiedMin,
-                                    DateModifiedMax,
-                                    DuplicatesChecked,
-                                    DuplicatesName,
-                                    DuplicatesSize,
-                                    DuplicatesDateModified,
-                                    ShowFolders,
-                                    TagChecked,
-                                    Tag,
-                                    searchLocation,
-                                    searchStorage,
-                                    searchCatalog,
-                                    SearchCatalogChecked,
-                                    SearchDirectoryChecked,
-                                    SeletedDirectory,
-                                    TextExclude,
-                                    CaseSensitive,
-                                    DifferencesChecked,
-                                    DifferencesName,
-                                    DifferencesSize,
-                                    DifferencesDateModified,
-                                    DifferencesCatalogs
+                                    date_time,
+                                    text_checked,
+                                    text_phrase,
+                                    text_criteria,
+                                    text_search_in,
+                                    file_type,
+                                    file_size_checked,
+                                    file_size_min,
+                                    file_size_min_unit,
+                                    file_size_max,
+                                    file_size_max_unit,
+                                    date_modified_checked,
+                                    date_modified_min,
+                                    date_modified_max,
+                                    duplicates_checked,
+                                    duplicates_name,
+                                    duplicates_size,
+                                    duplicates_date_modified,
+                                    show_folders,
+                                    tag_checked,
+                                    tag,
+                                    search_location,
+                                    search_storage,
+                                    search_catalog,
+                                    search_catalog_checked,
+                                    search_directory_checked,
+                                    seleted_directory,
+                                    text_exclude,
+                                    case_sensitive,
+                                    differences_checked,
+                                    differences_name,
+                                    differences_size,
+                                    differences_date_modified,
+                                    differences_catalogs
                                 FROM search
-                                ORDER BY dateTime DESC
+                                ORDER BY date_time DESC
                                )");
             query.prepare(querySQL);
             query.exec();
@@ -2453,115 +2453,115 @@
 
                         QString querySQL = QLatin1String(R"(
                             insert into search(
-                                            dateTime	,
-                                            TextChecked ,
-                                            TextPhrase	,
-                                            TextCriteria	,
-                                            TextSearchIn	,
-                                            FileType	,
-                                            FileSizeChecked	,
-                                            FileSizeMin	,
-                                            FileSizeMinUnit	,
-                                            FileSizeMax	,
-                                            FileSizeMaxUnit	,
-                                            DateModifiedChecked	,
-                                            DateModifiedMin	,
-                                            DateModifiedMax	,
-                                            DuplicatesChecked	,
-                                            DuplicatesName	,
-                                            DuplicatesSize	,
-                                            DuplicatesDateModified	,
-                                            DifferencesChecked,
-                                            DifferencesName,
-                                            DifferencesSize,
-                                            DifferencesDateModified,
-                                            DifferencesCatalogs,
-                                            ShowFolders	,
-                                            TagChecked	,
-                                            Tag     	,
-                                            searchLocation	,
-                                            searchStorage	,
-                                            searchCatalog ,
-                                            SearchCatalogChecked ,
-                                            SearchDirectoryChecked ,
-                                            SeletedDirectory,
-                                            TextExclude,
-                                            CaseSensitive
+                                            date_time	,
+                                            text_checked ,
+                                            text_phrase	,
+                                            text_criteria	,
+                                            text_search_in	,
+                                            file_type	,
+                                            file_size_checked	,
+                                            file_size_min	,
+                                            file_size_min_unit	,
+                                            file_size_max	,
+                                            file_size_max_unit	,
+                                            date_modified_checked	,
+                                            date_modified_min	,
+                                            date_modified_max	,
+                                            duplicates_checked	,
+                                            duplicates_name	,
+                                            duplicates_size	,
+                                            duplicates_date_modified	,
+                                            differences_checked,
+                                            differences_name,
+                                            differences_size,
+                                            differences_date_modified,
+                                            differences_catalogs,
+                                            show_folders	,
+                                            tag_checked	,
+                                            tag     	,
+                                            search_location	,
+                                            search_storage	,
+                                            search_catalog ,
+                                            search_catalog_checked ,
+                                            search_directory_checked ,
+                                            selected_directory,
+                                            text_exclude,
+                                            case_sensitive
                                         )
                                     values(
-                                            :dateTime	,
-                                            :TextChecked ,
-                                            :TextPhrase	,
-                                            :TextCriteria	,
-                                            :TextSearchIn	,
-                                            :FileType	,
-                                            :FileSizeChecked	,
-                                            :FileSizeMin	,
-                                            :FileSizeMinUnit	,
-                                            :FileSizeMax	,
-                                            :FileSizeMaxUnit	,
-                                            :DateModifiedChecked	,
-                                            :DateModifiedMin	,
-                                            :DateModifiedMax	,
-                                            :DuplicatesChecked	,
-                                            :DuplicatesName	,
-                                            :DuplicatesSize	,
-                                            :DuplicatesDateModified	,
-                                            :DifferencesChecked,
-                                            :DifferencesName,
-                                            :DifferencesSize,
-                                            :DifferencesDateModified,
-                                            :DifferencesCatalogs,
-                                            :ShowFolders	,
-                                            :TagChecked	,
-                                            :Tag     	,
-                                            :searchLocation	,
-                                            :searchStorage	,
-                                            :searchCatalog	,
-                                            :SearchCatalogChecked ,
-                                            :SearchDirectoryChecked ,
-                                            :SeletedDirectory,
-                                            :TextExclude,
-                                            :CaseSensitive
+                                            :date_time	,
+                                            :text_checked ,
+                                            :text_phrase	,
+                                            :text_criteria	,
+                                            :text_search_in	,
+                                            :file_type	,
+                                            :file_size_checked	,
+                                            :file_size_min	,
+                                            :file_size_min_unit	,
+                                            :file_size_max	,
+                                            :file_size_max_unit	,
+                                            :date_modified_checked	,
+                                            :date_modified_min	,
+                                            :date_modified_max	,
+                                            :duplicates_checked	,
+                                            :duplicates_name	,
+                                            :duplicates_size	,
+                                            :duplicates_date_modified	,
+                                            :differences_checked,
+                                            :differences_name,
+                                            :differences_size,
+                                            :differences_date_modified,
+                                            :differences_catalogs,
+                                            :show_folders	,
+                                            :tag_checked	,
+                                            :tag     	,
+                                            :search_location	,
+                                            :search_storage	,
+                                            :search_catalog	,
+                                            :search_catalog_checked ,
+                                            :search_directory_checked ,
+                                            :selected_directory,
+                                            :text_exclude,
+                                            :case_sensitive
                                            )
                                     )");
 
                         QSqlQuery insertQuery;
                         insertQuery.prepare(querySQL);
-                        insertQuery.bindValue(":dateTime",				fieldList[0]);
-                        insertQuery.bindValue(":TextChecked",           fieldList[1]);
-                        insertQuery.bindValue(":TextPhrase",			fieldList[2]);
-                        insertQuery.bindValue(":TextCriteria",			fieldList[3]);
-                        insertQuery.bindValue(":TextSearchIn",			fieldList[4]);
-                        insertQuery.bindValue(":FileType",				fieldList[5]);
-                        insertQuery.bindValue(":FileSizeChecked",		fieldList[6]);
-                        insertQuery.bindValue(":FileSizeMin",			fieldList[7]);
-                        insertQuery.bindValue(":FileSizeMinUnit",		fieldList[8]);
-                        insertQuery.bindValue(":FileSizeMax",			fieldList[9]);
-                        insertQuery.bindValue(":FileSizeMaxUnit",		fieldList[10]);
-                        insertQuery.bindValue(":DateModifiedChecked",	fieldList[11]);
-                        insertQuery.bindValue(":DateModifiedMin",		fieldList[12]);
-                        insertQuery.bindValue(":DateModifiedMax",		fieldList[13]);
-                        insertQuery.bindValue(":DuplicatesChecked",		fieldList[14]);
-                        insertQuery.bindValue(":DuplicatesName",		fieldList[15]);
-                        insertQuery.bindValue(":DuplicatesSize",		fieldList[16]);
-                        insertQuery.bindValue(":DuplicatesDateModified",fieldList[17]);
-                        insertQuery.bindValue(":ShowFolders", 			fieldList[18]);
-                        insertQuery.bindValue(":TagChecked",            fieldList[19]);
-                        insertQuery.bindValue(":Tag",                   fieldList[20]);
-                        insertQuery.bindValue(":searchLocation", 		fieldList[21]);
-                        insertQuery.bindValue(":searchStorage", 		fieldList[22]);
-                        insertQuery.bindValue(":searchCatalog", 		fieldList[23]);
-                        insertQuery.bindValue(":SearchCatalogChecked",  fieldList[24]);
-                        insertQuery.bindValue(":SearchDirectoryChecked",fieldList[25]);
-                        insertQuery.bindValue(":SeletedDirectory",      fieldList[26]);
-                        insertQuery.bindValue(":TextExclude",           fieldList[27]);
-                        insertQuery.bindValue(":CaseSensitive",         fieldList[28]);
-                        insertQuery.bindValue(":DifferencesChecked",	fieldList[29]);
-                        insertQuery.bindValue(":DifferenceName",		fieldList[30]);
-                        insertQuery.bindValue(":DifferenceSize",		fieldList[31]);
-                        insertQuery.bindValue(":DifferencesDateModified",fieldList[32]);
-                        insertQuery.bindValue(":DifferencesCatalogs",   fieldList[33]);
+                        insertQuery.bindValue(":date_time",				fieldList[0]);
+                        insertQuery.bindValue(":text_checked",          fieldList[1]);
+                        insertQuery.bindValue(":text_phrase",			fieldList[2]);
+                        insertQuery.bindValue(":text_criteria",			fieldList[3]);
+                        insertQuery.bindValue(":text_search_in",		fieldList[4]);
+                        insertQuery.bindValue(":file_type",				fieldList[5]);
+                        insertQuery.bindValue(":file_size_checked",		fieldList[6]);
+                        insertQuery.bindValue(":file_size_min",			fieldList[7]);
+                        insertQuery.bindValue(":file_size_min_unit",	fieldList[8]);
+                        insertQuery.bindValue(":file_size_max",			fieldList[9]);
+                        insertQuery.bindValue(":file_size_max_unit",	fieldList[10]);
+                        insertQuery.bindValue(":date_modified_checked",	fieldList[11]);
+                        insertQuery.bindValue(":date_modified_min",		fieldList[12]);
+                        insertQuery.bindValue(":date_modified_max",		fieldList[13]);
+                        insertQuery.bindValue(":duplicates_checked",	fieldList[14]);
+                        insertQuery.bindValue(":duplicates_name",		fieldList[15]);
+                        insertQuery.bindValue(":duplicates_size",		fieldList[16]);
+                        insertQuery.bindValue(":duplicates_date_modified",fieldList[17]);
+                        insertQuery.bindValue(":show_folders", 			fieldList[18]);
+                        insertQuery.bindValue(":tag_checked",           fieldList[19]);
+                        insertQuery.bindValue(":tag",                   fieldList[20]);
+                        insertQuery.bindValue(":search_location", 		fieldList[21]);
+                        insertQuery.bindValue(":search_storage", 		fieldList[22]);
+                        insertQuery.bindValue(":search_catalog", 		fieldList[23]);
+                        insertQuery.bindValue(":search_catalog_checked",fieldList[24]);
+                        insertQuery.bindValue(":search_directory_checked",fieldList[25]);
+                        insertQuery.bindValue(":selected_directory",    fieldList[26]);
+                        insertQuery.bindValue(":text_exclude",          fieldList[27]);
+                        insertQuery.bindValue(":case_sensitive",        fieldList[28]);
+                        insertQuery.bindValue(":differences_checked",	fieldList[29]);
+                        insertQuery.bindValue(":differences_name",		fieldList[30]);
+                        insertQuery.bindValue(":differences_size",		fieldList[31]);
+                        insertQuery.bindValue(":differences_date_modified",fieldList[32]);
+                        insertQuery.bindValue(":differences_catalogs",  fieldList[33]);
                         insertQuery.exec();
                     }
             }
@@ -2573,42 +2573,42 @@
             QSqlQuery querySearchHistory;
             QString querySearchHistorySQL = QLatin1String(R"(
                                                 SELECT
-                                                    dateTime,
-                                                    TextChecked,
-                                                    TextPhrase,
-                                                    TextCriteria,
-                                                    TextSearchIn,
-                                                    CaseSensitive,
-                                                    TextExclude,
-                                                    FileType,
-                                                    FileSizeChecked,
-                                                    FileSizeMin,
-                                                    FileSizeMinUnit,
-                                                    FileSizeMax,
-                                                    FileSizeMaxUnit,
-                                                    DateModifiedChecked,
-                                                    DateModifiedMin,
-                                                    DateModifiedMax,
-                                                    DuplicatesChecked,
-                                                    DuplicatesName,
-                                                    DuplicatesSize,
-                                                    DuplicatesDateModified,
-                                                    DifferencesChecked,
-                                                    DifferencesName,
-                                                    DifferencesSize,
-                                                    DifferencesDateModified,
-                                                    DifferencesCatalogs,
-                                                    ShowFolders,
-                                                    TagChecked,
-                                                    Tag,
-                                                    searchLocation,
-                                                    searchStorage,
-                                                    searchCatalog,
-                                                    SearchCatalogChecked,
-                                                    SearchDirectoryChecked,
-                                                    SeletedDirectory
+                                                    date_time,
+                                                    text_checked,
+                                                    text_phrase,
+                                                    text_criteria,
+                                                    text_search_in,
+                                                    case_sensitive,
+                                                    text_exclude,
+                                                    file_type,
+                                                    file_size_checked,
+                                                    file_size_min,
+                                                    file_size_min_unit,
+                                                    file_size_max,
+                                                    file_size_max_unit,
+                                                    date_modified_checked,
+                                                    date_modified_min,
+                                                    date_modified_max,
+                                                    duplicates_checked,
+                                                    duplicates_name,
+                                                    duplicates_size,
+                                                    duplicates_date_modified,
+                                                    differences_checked,
+                                                    differences_name,
+                                                    differences_size,
+                                                    differences_date_modified,
+                                                    differences_catalogs,
+                                                    show_folders,
+                                                    tag_checked,
+                                                    tag,
+                                                    search_location,
+                                                    search_storage,
+                                                    search_catalog,
+                                                    search_catalog_checked,
+                                                    search_directory_checked,
+                                                    seleted_directory
                                                 FROM search
-                                                ORDER BY dateTime DESC
+                                                ORDER BY date_time DESC
                                             )");
             querySearchHistory.prepare(querySearchHistorySQL);
             querySearchHistory.exec();

@@ -197,17 +197,17 @@
             QSqlQuery insertQuery;
             QString insertSQL = QLatin1String(R"(
                                 INSERT INTO statistics (
-                                                dateTime,
-                                                catalogName,
-                                                catalogFileCount,
-                                                catalogTotalFileSize,
-                                                recordType )
+                                                date_time,
+                                                catalog_name,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                record_type )
                                 VALUES(
-                                                :dateTime,
-                                                :catalogName,
-                                                :catalogFileCount,
-                                                :catalogTotalFileSize,
-                                                :recordType )
+                                                :date_time,
+                                                :catalog_name,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :record_type )
                                             )");
             insertQuery.prepare(insertSQL);
 
@@ -248,11 +248,11 @@
 
 
                         //Append data to the database
-                        insertQuery.bindValue(":dateTime", dateTime);
-                        insertQuery.bindValue(":catalogName", catalogName);
-                        insertQuery.bindValue(":catalogFileCount", QString::number(catalogFileCount));
-                        insertQuery.bindValue(":catalogTotalFileSize", QString::number(catalogTotalFileSize));
-                        insertQuery.bindValue(":recordType", recordType);
+                        insertQuery.bindValue(":date_time", dateTime);
+                        insertQuery.bindValue(":catalog_name", catalogName);
+                        insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
+                        insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
+                        insertQuery.bindValue(":record_type", recordType);
                         insertQuery.exec();
             }
         }
@@ -288,13 +288,13 @@
             if(selectedSource ==tr("selected catalog")){
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                    SELECT dateTime, catalogFileCount, catalogTotalFileSize
+                                    SELECT date_time, catalog_file_count, catalog_total_file_size
                                     FROM statistics
-                                    WHERE catalogName = :selectedCatalogforStats
-                                    AND recordType != 'Storage'
+                                    WHERE catalog_name = :selectedCatalogforStats
+                                    AND record_type != 'Storage'
                                   )");
                 if ( graphicStartDate != "" ){
-                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                     querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
                 queryTotalSnapshots.prepare(querySQL);
@@ -340,26 +340,26 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                    SELECT dateTime, SUM(statistics.catalogFileCount), SUM(statistics.catalogTotalFileSize)
+                                    SELECT date_time, SUM(statistics.catalog_file_count), SUM(statistics.catalog_total_file_size)
                                     FROM statistics
-                                    LEFT JOIN catalog ON catalog.catalogName = statistics.catalogName
-                                    LEFT JOIN storage ON catalog.catalogStorage = storage.storageName
-                                    WHERE recordType = 'Snapshot'
+                                    LEFT JOIN catalog ON catalog.catalog_name = statistics.catalog_name
+                                    LEFT JOIN storage ON catalog.catalog_storage = storage.storage_name
+                                    WHERE record_type = 'Snapshot'
                                   )");
 
                 if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" )
-                    querySQL = querySQL + " AND storage.storageLocation = '" + selectedDeviceName + "' ";
+                    querySQL = querySQL + " AND storage.storage_location = '" + selectedDeviceName + "' ";
                 else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL = querySQL + " AND catalog.catalogStorage = '" + selectedDeviceName + "' ";
+                    querySQL = querySQL + " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
                 else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL = querySQL + " AND catalog.catalogName = '" + selectedDeviceName + "' ";
+                    querySQL = querySQL + " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
 
                 if ( graphicStartDate != "" ){
-                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                     querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
                 //add last part
-                querySQL = querySQL + " GROUP BY datetime ";
+                querySQL = querySQL + " GROUP BY date_time ";
 
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
@@ -404,9 +404,9 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                                    SELECT dateTime, SUM(catalogFileCount), SUM(catalogTotalFileSize)
+                                                    SELECT date_time, SUM(catalog_file_count), SUM(catalog_total_file_size)
                                                     FROM statistics sa
-                                                    WHERE recordType = 'Storage'
+                                                    WHERE record_type = 'Storage'
                                                 )");
 //
 //                LEFT JOIN storage so ON sa.catalogName = so.storageName
@@ -419,18 +419,18 @@
 //                }
 
                 if ( graphicStartDate != "" ){
-                     querySQL = querySQL + " AND dateTime > :graphStartDate ";
+                     querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
                 if (selectedDeviceType == "Storage"){
-                    querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
-                    querySQL = querySQL + " GROUP BY datetime ";
+                    querySQL = querySQL + " AND catalog_name = :selectedStorageforStats ";
+                    querySQL = querySQL + " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedStorageforStats);
                 }
                 else if (selectedDeviceType == "Catalog"){
-                    querySQL = querySQL + " AND catalogName = :selectedStorageforStats ";
-                    querySQL = querySQL + " GROUP BY datetime ";
+                    querySQL = querySQL + " AND catalog_name = :selectedStorageforStats ";
+                    querySQL = querySQL + " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storageName);
                 }

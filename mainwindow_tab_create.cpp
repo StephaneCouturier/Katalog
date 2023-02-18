@@ -255,12 +255,12 @@
             QSqlQuery queryUpdateDateLoaded;
             QString queryUpdateDateLoadedSQL = QLatin1String(R"(
                                                     UPDATE catalog
-                                                    SET catalogLoadedVersion=:catalogDateLoaded
-                                                    WHERE catalogName=:catalogName
+                                                    SET catalog_loaded_version=:catalog_date_loaded
+                                                    WHERE catalog_name=:catalog_name
                                             )");
             queryUpdateDateLoaded.prepare(queryUpdateDateLoadedSQL);
-            queryUpdateDateLoaded.bindValue(":catalogDateLoaded",newCatalog->dateLoaded);
-            queryUpdateDateLoaded.bindValue(":catalogName",newCatalog->name);
+            queryUpdateDateLoaded.bindValue(":catalog_date_loaded",newCatalog->dateLoaded);
+            queryUpdateDateLoaded.bindValue(":catalog_name",newCatalog->name);
             queryUpdateDateLoaded.exec();
 
             //Add new catalog values to the statistics log, if the user has chosen this option
@@ -451,44 +451,44 @@
             QSqlQuery deleteQuery;
             QString deleteQuerySQL = QLatin1String(R"(
                                 DELETE FROM filesall
-                                WHERE fileCatalog=:fileCatalog
+                                WHERE file_catalog=:file_catalog
                                             )");
             deleteQuery.prepare(deleteQuerySQL);
-            deleteQuery.bindValue(":fileCatalog",catalog->name);
+            deleteQuery.bindValue(":file_catalog",catalog->name);
             deleteQuery.exec();
 
             //prepare insert query for filesall
             QSqlQuery insertFilesallQuery;
             QString insertFilesallSQL = QLatin1String(R"(
                                     INSERT INTO filesall (
-                                                    fileName,
-                                                    filePath,
-                                                    fileSize,
-                                                    fileDateUpdated,
-                                                    fileCatalog,
-                                                    fileFullPath
+                                                    file_name,
+                                                    file_path,
+                                                    file_size,
+                                                    file_date_updated,
+                                                    file_catalog,
+                                                    file_full_path
                                                     )
                                     VALUES(
-                                                    :fileName,
-                                                    :filePath,
-                                                    :fileSize,
-                                                    :fileDateUpdated,
-                                                    :fileCatalog,
-                                                    :fileFullPath )
+                                                    :file_name,
+                                                    :file_path,
+                                                    :file_size,
+                                                    :file_date_updated,
+                                                    :file_catalog,
+                                                    :file_full_path )
                                 )");
 
             //prepare insert query for folder
                                    QSqlQuery insertFolderQuery;
                                    QString insertFolderSQL = QLatin1String(R"(
                                            INSERT OR IGNORE INTO folder(
-                                                   folderHash,
-                                                   folderCatalogName,
-                                                   folderPath
+                                                   folder_hash,
+                                                   folder_catalog_name,
+                                                   folder_path
                                                              )
                                            VALUES(
-                                                  :folderHash,
-                                                  :folderCatalogName,
-                                                  :folderPath)
+                                                  :folder_hash,
+                                                  :folder_catalog_name,
+                                                  :folder_path)
                                                        )");
             //Iterrate through the file list
             QRegularExpression lineCatalogFileSplitExp("\t");
@@ -527,19 +527,19 @@
 
                  //Load folder into the database
                      insertFolderQuery.prepare(insertFolderSQL);
-                     insertFolderQuery.bindValue(":folderHash",      folderHash);
-                     insertFolderQuery.bindValue(":folderCatalogName",   catalog->name);
-                     insertFolderQuery.bindValue(":folderPath",      folder);
+                     insertFolderQuery.bindValue(":folder_hash",      folderHash);
+                     insertFolderQuery.bindValue(":folder_catalog_name",   catalog->name);
+                     insertFolderQuery.bindValue(":folder_path",      folder);
                      insertFolderQuery.exec();
 
                 //Load file into the database
                     insertFilesallQuery.prepare(insertFilesallSQL);
-                    insertFilesallQuery.bindValue(":fileName",        fileInfo.fileName());
-                    insertFilesallQuery.bindValue(":fileSize",        lineFileSize);
-                    insertFilesallQuery.bindValue(":filePath",        folder ); //DEV: replace later by folderHash
-                    insertFilesallQuery.bindValue(":fileDateUpdated", lineFileDatetime);
-                    insertFilesallQuery.bindValue(":fileCatalog",     catalog->name);
-                    insertFilesallQuery.bindValue(":fileFullPath",    lineFilePath);
+                    insertFilesallQuery.bindValue(":file_name",        fileInfo.fileName());
+                    insertFilesallQuery.bindValue(":file_size",        lineFileSize);
+                    insertFilesallQuery.bindValue(":file_path",        folder ); //DEV: replace later by folderHash
+                    insertFilesallQuery.bindValue(":file_date_updated", lineFileDatetime);
+                    insertFilesallQuery.bindValue(":file_catalog",     catalog->name);
+                    insertFilesallQuery.bindValue(":file_full_path",    lineFilePath);
                     insertFilesallQuery.exec();
 
         }
@@ -563,15 +563,16 @@
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                 UPDATE Catalog
-                                SET catalogIncludeSymblinks =:catalogIncludeSymblinks,
-                                    catalogFileCount =:catalogFileCount,
-                                    catalogTotalFileSize =:catalogTotalFileSize
-                                    WHERE catalogName =:catalogName
+                                SET catalog_include_symblinks =:catalog_include_symblinks,
+                                    catalog_file_count =:catalog_file_count,
+                                    catalog_total_file_size =:catalog_total_file_size
+                                    WHERE catalog_name =:catalog_name
                             )");
         query.prepare(querySQL);
-        query.bindValue(":catalogFileCount", catalog->fileCount);
-        query.bindValue(":catalogTotalFileSize", catalog->totalFileSize);
-        query.bindValue(":catalogName", catalog->name);
+        query.bindValue(":catalog_include_symblinks", catalog->includeSymblinks);
+        query.bindValue(":catalog_file_count", catalog->fileCount);
+        query.bindValue(":catalog_total_file_size", catalog->totalFileSize);
+        query.bindValue(":catalog_name", catalog->name);
         query.exec();
 
         //update catalog date loaded
@@ -581,12 +582,12 @@
             QSqlQuery catalogQuery;
             QString catalogQuerySQL = QLatin1String(R"(
                                         UPDATE catalog
-                                        SET catalogLoadedVersion =:catalogDateLoaded
-                                        WHERE catalogName =:catalogName
+                                        SET catalog_loaded_version =:catalog_date_loaded
+                                        WHERE catalog_name =:catalog_name
                                       )");
             catalogQuery.prepare(catalogQuerySQL);
-            catalogQuery.bindValue(":catalogDateLoaded", catalog->dateLoaded);
-            catalogQuery.bindValue(":catalogName",       catalog->name);
+            catalogQuery.bindValue(":catalog_date_loaded", catalog->dateLoaded);
+            catalogQuery.bindValue(":catalog_name",       catalog->name);
             catalogQuery.exec();
 
         //Stop animation
@@ -675,10 +676,3 @@
      QString filePath = "/home/stephane/Vidéos/COPY/test8.mkv";
 
     */
-
-
-
-
-
-
-

@@ -223,13 +223,13 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 
         //shorten the paths as they all start with the catalog path
         QString getDirectoriesSQL = QLatin1String(R"(
-                                        SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', ''))
+                                        SELECT DISTINCT (REPLACE(file_path, :selectedCatalogPath||'/', ''))
                                         FROM filesall
-                                        WHERE   fileCatalog =:fileCatalog
-                                        ORDER BY filePath ASC
+                                        WHERE   file_catalog =:file_catalog
+                                        ORDER BY file_path ASC
                                     )");
         getDirectoriesQuery.prepare(getDirectoriesSQL);
-        getDirectoriesQuery.bindValue(":fileCatalog",modelCatalogName);
+        getDirectoriesQuery.bindValue(":file_catalog",modelCatalogName);
         getDirectoriesQuery.bindValue(":selectedCatalogPath",modelCatalogPath);
         getDirectoriesQuery.exec();
 
