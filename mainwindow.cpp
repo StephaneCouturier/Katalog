@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Set current version and release date, and check new version
                 currentVersion = "1.17";
-                releaseDate = "2023-02-15";
+                releaseDate = "2023-02-19";
                 ui->Settings_label_VersionValue->setText(currentVersion);
                 ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -96,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
                 ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
                 ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
+                ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
             //Hide some widgets by default
                 ui->Catalogs_widget_EditCatalog->hide();
                 ui->Statistics_calendarWidget->hide();
