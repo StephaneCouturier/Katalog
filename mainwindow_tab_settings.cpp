@@ -82,6 +82,47 @@
     }
     //----------------------------------------------------------------------
 
+//DATA MODES
+    void MainWindow::on_Settings_pushButton_SelectDatabaseFilePath_clicked()
+    {
+        selectDatabaseFilePath();
+    }
+    void MainWindow::selectDatabaseFilePath()
+    {
+        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+        QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
+                                                        collectionFolder);
+
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDatabaseFilePath !=""){
+
+            databaseFilePath = newDatabaseFilePath;
+
+            //Save Settings for the new collection folder value;
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
+            QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+
+            createStorageList();
+            generateCollectionFilesPaths();
+            loadCollection();
+        }
+
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
+    }
+
+    void MainWindow::on_Settings_pushButton_EditDatabaseFile_clicked()
+    {
+        databaseFilePath = ui->Settings_lineEdit_DatabaseFilePath->text();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(databaseFilePath));
+    }
+
+
 //FILTERS -------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
@@ -385,7 +426,7 @@
 
 //SETTINGS / Collection ----------------------------------------------------
 
-    void MainWindow::on_Collection_pushButton_SelectFolder_clicked()
+    void MainWindow::on_Settings_pushButton_SelectFolder_clicked()
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
@@ -399,7 +440,7 @@
             collectionFolder = dir;
 
             //Set the new path in Settings tab
-            ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
+            ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
 
             //Redefine the path of the Storage file
             storageFilePath = collectionFolder + "/" + "storage.csv";
@@ -437,18 +478,18 @@
         resetSelection();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Collection_lineEdit_CollectionFolder_returnPressed()
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
     {
         loadCollection();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Collection_pushButton_OpenFolder_clicked()
+    void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
     {
         //Open the selected collection folder
         QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Collection_pushButton_Reload_clicked()
+    void MainWindow::on_Settings_pushButton_Reload_clicked()
     {
         createStorageList();
         generateCollectionFilesPaths();
@@ -573,7 +614,7 @@
         settings.setValue("Settings/PreloadCatalogs", arg1);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Collection_pushButton_OpenSettingsFile_clicked()
+    void MainWindow::on_Settings_pushButton_OpenSettingsFile_clicked()
     {
         //Open the selected collection folder
         QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
@@ -581,9 +622,25 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
-        QString selectedDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
+        databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseMode", selectedDatabaseMode);
+        settings.setValue("Settings/databaseMode", databaseMode);
+
+        if(databaseMode=="Memory"){
+                    ui->Settings_widget_DataMode_CSVFiles->show();
+                    ui->Settings_widget_DataMode_LocalSQLite->hide();
+                    ui->Settings_widget_DataMode_Remote->hide();
+        }
+        else if(databaseMode=="File"){
+                    ui->Settings_widget_DataMode_CSVFiles->hide();
+                    ui->Settings_widget_DataMode_LocalSQLite->show();
+                    ui->Settings_widget_DataMode_Remote->hide();
+        }
+        else if(databaseMode=="Remote"){
+                    ui->Settings_widget_DataMode_CSVFiles->hide();
+                    ui->Settings_widget_DataMode_LocalSQLite->hide();
+                    ui->Settings_widget_DataMode_Remote->show();
+        }
     }
     //----------------------------------------------------------------------
 

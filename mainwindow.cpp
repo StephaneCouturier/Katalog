@@ -59,49 +59,49 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
 
-    //Set up and start database (modes: "Memory only" or "File")
-
-        startDatabase();
+        //Set up and start database (modes: "Memory only" or "File")
+            startDatabase();
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
+            ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
 
-            //Set current version and release date, and check new version
-                currentVersion = "1.17";
-                releaseDate = "2023-02-19";
-                ui->Settings_label_VersionValue->setText(currentVersion);
-                ui->Settings_label_DateValue->setText(releaseDate);
+        //Set current version and release date, and check new version
+            currentVersion = "1.17";
+            releaseDate = "2023-02-19";
+            ui->Settings_label_VersionValue->setText(currentVersion);
+            ui->Settings_label_DateValue->setText(releaseDate);
 
-            //Set Development mode
-                developmentMode = false;
+        //Set Development mode
+            developmentMode = false;
 
-                //Hide Development UI items that are not ready for use
-                if(developmentMode==false){
-                    hideDevelopmentUIItems();
-                }
+            //Hide Development UI items that are not ready for use
+            if(developmentMode==false){
+                hideDevelopmentUIItems();
+            }
 
-                //Check for new version
-                checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
-                if ( checkVersionChoice == true)
-                    checkVersion();
+            //Check for new version
+            checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
+            if ( checkVersionChoice == true)
+                checkVersion();
 
-            //Load languages to the Settings combobox, keeping the user's selection
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                QString userLanguage = settings.value("Settings/Language").toString();
-                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
-                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
-                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
-                ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
-                ui->Settings_comboBox_Language->setCurrentText(userLanguage);
-                ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
-                ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
-                ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
-            //Hide some widgets by default
-                ui->Catalogs_widget_EditCatalog->hide();
-                ui->Statistics_calendarWidget->hide();
+        //Load languages to the Settings combobox, keeping the user's selection
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QString userLanguage = settings.value("Settings/Language").toString();
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
+            ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
+            ui->Settings_comboBox_Language->setCurrentText(userLanguage);
+            ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
+            ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
+            ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
+        //Hide some widgets by default
+            ui->Catalogs_widget_EditCatalog->hide();
+            ui->Statistics_calendarWidget->hide();
 
-            //For Linux, use KDE libs
+        //For Linux, use KDE libs
 //            #ifdef Q_OS_LINUX
 //                //Set up KDE Menu/Icon actions
 //                setupActions();
@@ -109,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //                ui->Search_lineEdit_SearchText->hide();
 //            #endif
 
-            //Load all other Settings and apply values
+        //Load all other Settings and apply values
             loadSettings();
 
         //Load custom stylesheet
@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Setup tab: Settings
             //Load path of last collection used
-                ui->Collection_lineEdit_CollectionFolder->setText(collectionFolder);
+                ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
 
             //Set file types
                 setFileTypes();

@@ -54,30 +54,22 @@
     //Get databaseMode ("Memory" or "File") and file path
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
     databaseMode = settings.value("Settings/databaseMode").toString();
-    //DEV: if (databaseMode=="")
-    //databaseMode = "Memory";
-    //databaseMode = "File";
-
-    //        QMessageBox msgBox;
-    //        msgBox.setWindowTitle("Katalog");
-    //        msgBox.setText(tr("databaseMode:<br/>") + databaseMode);
-    //        msgBox.setIcon(QMessageBox::Information);
-    //        msgBox.exec();
-    //        QString newCatalogFileType        = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
 
     //Set database file path
     QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
     QString databaseFilePath = lastCollectionFolder + "/katalog.db";
+    databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
 
     if(databaseMode=="File"){
         QFile databaseFile(databaseFilePath);
         if (!databaseFile.exists()){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("databaseFile cannot be fouond:<br/>") + databaseFilePath);
+            msgBox.setText(tr("databaseFile cannot be found:<br/>") + databaseFilePath);
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
-            return;
+            selectDatabaseFilePath();
+            //return;
         }
     }
 
@@ -94,6 +86,7 @@
 
     storageModel = new QSqlRelationalTableModel(this);
     storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+
 }
     //----------------------------------------------------------------------
 //Set up -------------------------------------------------------------------
@@ -429,9 +422,8 @@
             ui->Storage_listView_Media->hide();
         //Settings
             //DEV: option to switch database mode between memory and file
-            ui->Settings_comboBox_DatabaseMode->hide();
+            ui->Settings_widget_DataModeSelection->hide();
             ui->Settings_label_DatabaseMode->hide();
-
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()

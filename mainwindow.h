@@ -148,7 +148,8 @@ class MainWindow : public QMainWindow
             QString databaseMode;
             void startDatabase();
             void populateCalendarTable(QDateTime min, QDateTime max);
-
+            QString databaseFilePath;
+            void selectDatabaseFilePath();
             //Objects
             Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
@@ -392,11 +393,14 @@ class MainWindow : public QMainWindow
                 void on_Filter_pushButton_PickPath_clicked();
 
             //Settings
-                void on_Collection_pushButton_SelectFolder_clicked();
-                void on_Collection_pushButton_Reload_clicked();
-                void on_Collection_pushButton_OpenFolder_clicked();
-                void on_Collection_lineEdit_CollectionFolder_returnPressed();
-                void on_Collection_pushButton_OpenSettingsFile_clicked();
+                void on_Settings_comboBox_DatabaseMode_currentTextChanged();
+                void on_Settings_pushButton_SelectFolder_clicked();
+                void on_Settings_pushButton_Reload_clicked();
+                void on_Settings_pushButton_OpenFolder_clicked();
+                void on_Settings_lineEdit_CollectionFolder_returnPressed();
+                void on_Settings_pushButton_OpenSettingsFile_clicked();
+                void on_Settings_pushButton_EditDatabaseFile_clicked();
+                void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
 
                 void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
                 void on_Settings_comboBox_Theme_currentIndexChanged(int index);
@@ -404,7 +408,6 @@ class MainWindow : public QMainWindow
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
                 void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
                 void on_Settings_checkBox_CheckVersion_stateChanged();
-                void on_Settings_comboBox_DatabaseMode_currentTextChanged();
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
@@ -521,7 +524,7 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_Reload_clicked();
             void on_Storage_pushButton_EditAll_clicked();
             void on_Storage_pushButton_SaveAll_clicked();
-                        void on_Storage_pushButton_New_clicked();
+            void on_Storage_pushButton_New_clicked();
             void on_Storage_pushButton_OpenFilelight_clicked();
             void on_Storage_pushButton_Update_clicked();
             void on_Storage_pushButton_Delete_clicked();
@@ -552,6 +555,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_Storage_pushButton_TestMedia_clicked();
+
 };
 
 #endif // MAINWINDOW_H
