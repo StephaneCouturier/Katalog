@@ -75,11 +75,13 @@ public:
     void setIsFullDevice(bool selectedIsFullDevice);
     void setDateLoaded(QString dateTime);
     void setIncludeMetadata(bool selectedIncludeMetadata);
-;
 
+    void createCatalog();
+    void deleteCatalog();
     void loadCatalogMetaData();
-    void loadCatalogFileListToTable();
     void renameCatalog(QString newCatalogName);
+    void renameCatalogFile(QString newCatalogName);
+    void loadCatalogFileListToTable();
 
     void populateFileData(  const QList<QString> &fileNames,
                             const QList<qint64>  &fileSizes,

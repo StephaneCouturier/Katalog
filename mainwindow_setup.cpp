@@ -39,6 +39,63 @@
 //    #include <KLocalizedString>
 //#endif
 
+//Database -----------------------------------------------------------------
+    void MainWindow::startDatabase()
+{
+    //Check Sqlite driver
+    if (!QSqlDatabase::drivers().contains("QSQLITE")){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Unable to load database.<br/>The SQLITE driver was not loaded."));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+    }
+
+    //Get databaseMode ("Memory" or "File") and file path
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+    databaseMode = settings.value("Settings/databaseMode").toString();
+    //DEV: if (databaseMode=="")
+    //databaseMode = "Memory";
+    //databaseMode = "File";
+
+    //        QMessageBox msgBox;
+    //        msgBox.setWindowTitle("Katalog");
+    //        msgBox.setText(tr("databaseMode:<br/>") + databaseMode);
+    //        msgBox.setIcon(QMessageBox::Information);
+    //        msgBox.exec();
+    //        QString newCatalogFileType        = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+
+    //Set database file path
+    QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
+    QString databaseFilePath = lastCollectionFolder + "/katalog.db";
+
+    if(databaseMode=="File"){
+        QFile databaseFile(databaseFilePath);
+        if (!databaseFile.exists()){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("databaseFile cannot be fouond:<br/>") + databaseFilePath);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+            return;
+        }
+    }
+
+    // Initialize the database:
+    QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
+    if (err.type() != QSqlError::NoError) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText("initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+        return;
+    }
+
+    storageModel = new QSqlRelationalTableModel(this);
+    storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+}
+    //----------------------------------------------------------------------
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -55,7 +112,6 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
-
     {
         //Check if a settings file already exists. If not, it is considered first use and one gets generated
             QFile settingsFile(settingsFilePath);
@@ -283,7 +339,8 @@
             optionDisplaySubFolders      = settings.value("Explore/DisplaySubFolders").toBool();
 
             //Restore Settings
-            ui->Settings_comboBox_DatabaseMode->setCurrentText(databaseMode);
+            ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
+
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
@@ -614,43 +671,6 @@
         ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
 
-    }
-    //----------------------------------------------------------------------
-
-
-    void MainWindow::startDatabase()
-    {       
-        //Check Sqlite driver
-        if (!QSqlDatabase::drivers().contains("QSQLITE")){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Unable to load database.<br/>The SQLITE driver was not loaded."));
-            msgBox.setIcon(QMessageBox::Critical);
-            msgBox.exec();
-        }
-
-        //Get databaseMode ("Memory" or "File") and file path
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        //DEV: databaseMode = settings.value("Settings/databaseMode").toString();
-        //DEV: if (databaseMode=="")
-            databaseMode = "Memory";
-
-        QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
-        QString databaseFilePath = lastCollectionFolder + "katalog.db";
-
-        // Initialize the database:
-        QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
-        if (err.type() != QSqlError::NoError) {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText("initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-            return;
-        }
-
-        storageModel = new QSqlRelationalTableModel(this);
-        storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
     }
     //----------------------------------------------------------------------
     void MainWindow::checkVersion()

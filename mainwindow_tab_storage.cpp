@@ -31,7 +31,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "database.h"
 #include "storageview.h"
 #include "storage.h"
 
@@ -100,7 +99,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
     {
-        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+        //Send selection to Create screen
         ui->Create_lineEdit_NewCatalogPath->setText(selectedStorage->path);
         ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorage->name);
         ui->Create_lineEdit_NewCatalogName->setText(selectedStorage->name);
@@ -333,13 +332,6 @@
         //Clear all entries of the current table
         queryDelete.exec();
 
-
-        //Prepare query
-        QSqlQuery query;
-        if (!query.exec(SQL_CREATE_STORAGE)){
-            QMessageBox::information(this,"Katalog","pb1.");
-            return;}
-
         //Load storage device lines to table
         while (true)
         {
@@ -354,7 +346,7 @@
                     QStringList fieldList = line.split('\t');
 
                     QString querySQL = QLatin1String(R"(
-                        insert into storage(
+                        INSERT INTO storage(
                                         storage_id,
                                         storage_name,
                                         storage_type,
@@ -412,19 +404,11 @@
         }
         storageFile.close();
 
-        //Enable buttons
-        ui->Storage_pushButton_Reload->setEnabled(true);
-        ui->Storage_pushButton_EditAll->setEnabled(true);
-        //ui->Storage_pushButton_SaveAll->setEnabled(true);
-        ui->Storage_pushButton_New->setEnabled(true);
-
-        //Disable create button so it cannot be overwritten
-        ui->Storage_pushButton_CreateList->setEnabled(false);
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageTableToModel()
     {
+        //Load, filter, and sort data model
         storageModel->setTable("storage");
 
         if ( selectedDeviceType == "Location" ){
@@ -439,12 +423,10 @@
             QString tableFilter = "storage_name = '" + activeCatalog->storageName + "'";
             storageModel->setFilter(tableFilter);
         }
+
         storageModel->setSort(1, Qt::AscendingOrder);
 
-        // Set the localized header captions:
-
-
-        // Populate the storageModel:
+        // Populate the storageModel
         if (!storageModel->select()) {
             //showError(storageModel->lastError());
             QMessageBox::information(this,"Katalog","storageModel loading error.");
@@ -500,11 +482,10 @@
                                         )");
 
         if ( selectedStorage->location != tr("All") ){
-            querySQL = querySQL + " AND storage_location ='" + selectedStorage->location + "'";
+            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedStorage->location);
         }
 
-        querySQL = querySQL + " ORDER BY storage_name ";
-        query.bindValue("storage_location", selectedStorage->location);
+        querySQL += " ORDER BY storage_name ";
         query.prepare(querySQL);
         query.exec();
         storageNameList.clear();
@@ -513,8 +494,16 @@
                 storageNameList<<query.value(0).toString();
             }
         loadStorageList();
-    }
 
+        //Enable buttons
+            ui->Storage_pushButton_Reload->setEnabled(true);
+            ui->Storage_pushButton_EditAll->setEnabled(true);
+            //ui->Storage_pushButton_SaveAll->setEnabled(true);
+            ui->Storage_pushButton_New->setEnabled(true);
+
+            //Disable create button so it cannot be overwritten
+            ui->Storage_pushButton_CreateList->setEnabled(false);
+    }
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
     {
@@ -612,7 +601,6 @@
             query.exec();
             query.next();
 
-
         //Prepare to report changes to the storage
         qint64 newStorageFreeSpace    = query.value(0).toLongLong();
         qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
@@ -656,11 +644,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageData()
     {
-        //Save model data to Storage file
-        saveStorageModelToFile();
+        if (databaseMode=="Memory"){
+            //Save model data to Storage file
+            saveStorageModelToFile();
 
-        //load Storage file data to table
-        loadStorageFileToTable();
+            //load Storage file data to table
+            loadStorageFileToTable();
+        }
 
         //load table to model
         loadStorageTableToModel();

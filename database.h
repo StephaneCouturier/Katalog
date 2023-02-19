@@ -194,20 +194,15 @@
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
-        //databaseMode = "File";
         if (databaseMode=="Memory"){
             db.setDatabaseName(":memory:");
         }
         else if (databaseMode=="File"){
-
-            /*TEMPDEV*/databaseFilePath = "/home/stephane/Development/katalog.db";
             db.setDatabaseName(databaseFilePath);
         }
 
         if (!db.open())
             return db.lastError();
-
-        QStringList tables = db.tables();
 
         QSqlQuery q;
         if (!q.exec(SQL_CREATE_CATALOG))

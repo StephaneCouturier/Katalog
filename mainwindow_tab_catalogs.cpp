@@ -261,31 +261,37 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_DeleteCatalog_clicked()
         {
-            if ( selectedCatalog->filePath != ""){
+            int result = QMessageBox::warning(this,"Katalog",
+                                                  tr("Do you want to delete this catalog?")+"\n"+selectedCatalog->filePath,QMessageBox::Yes|QMessageBox::Cancel);
 
-                int result = QMessageBox::warning(this,"Katalog",
-                          tr("Do you want to delete this catalog?")+"\n"+selectedCatalog->filePath,QMessageBox::Yes|QMessageBox::Cancel);
+            if ( result ==QMessageBox::Yes){
 
-                if ( result ==QMessageBox::Yes){
-                    QFile file (selectedCatalog->filePath);
-                    file.moveToTrash();
+                if(databaseMode=="Memory"){
+                    //move file to trash
+                    if ( selectedCatalog->filePath != ""){
 
-                    if(databaseMode=="Memory"){
-                        //Clear current entires from the tables
-                            QSqlQuery queryDelete;
-                            queryDelete.exec("DELETE FROM catalog");
+
+                              QFile file (selectedCatalog->filePath);
+                              file.moveToTrash();
+
                     }
+                    else QMessageBox::information(this,"Katalog",tr("Select a catalog above first."));
 
+                    //Clear current entires from the table
+                    QSqlQuery queryDelete;
+                    queryDelete.exec("DELETE FROM catalog");
+
+                    //refresh catalog lists
                     loadCatalogFilesToTable();
-                    loadCatalogsTableToModel();
-                    refreshCatalogSelectionList("","");
                 }
-             }
-            else QMessageBox::information(this,"Katalog",tr("Select a catalog above first."));
 
-            //refresh catalog lists
-//               loadCatalogFilesToTable();
-//               loadCatalogsTableToModel();
+                else if(databaseMode=="File"){
+                    selectedCatalog->deleteCatalog();
+                }
+
+                loadCatalogsTableToModel();
+                refreshCatalogSelectionList("","");
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Open_clicked()
@@ -696,15 +702,43 @@
                                 + QString::number(selectedCatalogTotalFileSize) + "\t"
                                 + "Update" ;
 
-        // Stream the list to the file
-        QFile fileOut( collectionFolder + "/" + statisticsFileName );
+        if(databaseMode=="Memory"){
+            // Stream the list to the file
+            QFile fileOut( collectionFolder + "/" + statisticsFileName );
 
-        // Write data
-        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            stream << statisticsLine << "\n";
-         }
-         fileOut.close();
+            // Write data
+            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                QTextStream stream(&fileOut);
+                stream << statisticsLine << "\n";
+             }
+             fileOut.close();
+        }
+        else if(databaseMode=="File"){
+             QSqlQuery query;
+             QString querySQL = QLatin1String(R"(
+                                INSERT INTO statistics(
+                                                date_time,
+                                                catalog_name,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                record_type
+                                                )
+                                VALUES(
+                                                :date_time,
+                                                :catalog_name,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :record_type
+                                                )
+                                )");
+             query.prepare(querySQL);
+             query.bindValue(":date_time",nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
+             query.bindValue(":catalog_name",selectedCatalogName);
+             query.bindValue(":catalog_file_count",QString::number(selectedCatalogFileCount));
+             query.bindValue(":catalog_total_file_size",QString::number(selectedCatalogTotalFileSize));
+             query.bindValue(":record_type","Update");
+             query.exec();
+        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::backupCatalog(QString catalogSourcePath)
@@ -735,8 +769,10 @@
             //get Storage ID
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT storage_id, storage_path FROM storage WHERE storage_name =:storage_name
-                                            )");
+                                    SELECT storage_id, storage_path
+                                    FROM storage
+                                    WHERE storage_name =:storage_name
+                                )");
             query.prepare(querySQL);
             query.bindValue(":storage_name",catalog->storageName);
             query.exec();
@@ -753,41 +789,46 @@
         }
 
         //Refresh catalog lists
+        if(databaseMode=="Memory")
            loadCatalogFilesToTable();
-           loadCatalogsTableToModel();
+
+        loadCatalogsTableToModel();
 
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateCatalogFileList(Catalog *catalog)
     {
-        //Check if the update can be done, inform the user otherwise.
-            //Deal with old versions, where necessary info may have not have been available
-            if(catalog->filePath == "not recorded" or catalog->name == "not recorded" or catalog->sourcePath == "not recorded"){
-            QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
-                                         "Edit it and make sure it has the following first 2 lines:\n\n"
-                                         "<catalogSourcePath>/folderpath\n"
-                                         "<catalogFileCount>10000\n\n"
-                                         "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
-                                         "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                         "- the catalogFileCount number does not matter as much, it can be updated.\n")
-                                     );
-            return;
-            }
+        if(databaseMode=="Memory"){
+           //Check if the update can be done, inform the user otherwise.
+           //Deal with old versions, where necessary info may have not have been available
+           if(catalog->filePath == "not recorded" or catalog->name == "not recorded" or catalog->sourcePath == "not recorded"){
+                QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
+                                                             "Edit it and make sure it has the following first 2 lines:\n\n"
+                                                             "<catalogSourcePath>/folderpath\n"
+                                                             "<catalogFileCount>10000\n\n"
+                                                             "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
+                                                             "- the catalogSourcePath is the folder to catalog the files from.\n"
+                                                             "- the catalogFileCount number does not matter as much, it can be updated.\n")
+                                         );
+                return;
+           }
 
-            //Deal with other cases where some input information is missing
-            if(catalog->filePath == "" or catalog->name == "" or catalog->sourcePath == ""){
-            QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
-                                     catalog->filePath, catalog->name, catalog->sourcePath));
-            return;
-            }
+           //Deal with other cases where some input information is missing
+           if(catalog->filePath == "" or catalog->name == "" or catalog->sourcePath == ""){
+                QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
+                                                              catalog->filePath, catalog->name, catalog->sourcePath));
+                return;
+           }
 
-        //BackUp the file before, if the option is selected
-            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
+           //BackUp the file before, if the option is selected
+           if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
                 backupCatalog(catalog->filePath);
-            }
+           }
+
+        }
 
         //Capture previous FileCount and TotalFileSize to report the changes after the update
-            qint64 previousFileCount = catalog->fileCount;
+            qint64 previousFileCount     = catalog->fileCount;
             qint64 previousTotalFileSize = catalog->totalFileSize;
 
         //Process if dir exists
@@ -809,7 +850,8 @@
             //catalog the directory and save it to the file
             catalogDirectory(catalog);
 
-            saveCatalogToNewFile(catalog->name);
+            if(databaseMode=="Memory")
+                saveCatalogToNewFile(catalog->name);
 
             //Prepare to report changes to the catalog
             qint64 deltaFileCount     = catalog->fileCount     - previousFileCount;
@@ -844,7 +886,9 @@
             recordSelectedCatalogStats(catalog->name, catalog->fileCount, catalog->totalFileSize);
 
         //Refresh data to UI
-        loadCatalogFilesToTable();
+        if(databaseMode=="Memory")
+            loadCatalogFilesToTable();
+
         loadCatalogsTableToModel();
         loadStatisticsChart();
 
@@ -1037,17 +1081,17 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogChanges(Catalog *catalog)
     {
-        //Get new values
+            //Get new values
             //get new name
+            QString previousCatalogName = catalog->name;
             QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
 
             //get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
             QString newCatalogSourcePath    = ui->Catalogs_lineEdit_SourcePath->text();
             int     pathLength              = newCatalogSourcePath.length();
-            if (newCatalogSourcePath !="/" and QVariant(newCatalogSourcePath.at(pathLength-1)).toString()=="/") {
+            if (newCatalogSourcePath !="" and newCatalogSourcePath !="/" and QVariant(newCatalogSourcePath.at(pathLength-1)).toString()=="/") {
                 newCatalogSourcePath.remove(pathLength-1,1);
             }
-
             QString newCatalogStorage         = ui->Catalogs_comboBox_Storage->currentText();
             QString newCatalogFileType        = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
             QString newCatalogIncludeHidden   = QVariant(ui->Catalogs_checkBox_IncludeHidden->isChecked()).toString();
@@ -1058,7 +1102,7 @@
 
         //Confirm save changes
             QString message = tr("Save changes to the definition of the catalog?)<br/>");
-            message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=100><i>" + tr("new value") + "</i></td>";
+            message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
             if(newCatalogName           !=catalog->name)
                 message = message + "<tr><td>" + tr("Name")         + "</td><td>" + catalog->name         + "</td><td><b>" + newCatalogName          + "</b></td></tr>";
             if(newCatalogSourcePath     !=catalog->sourcePath)
@@ -1080,34 +1124,33 @@
                 return;
             }
 
-        //Write changes to database (except change of name)
+        //Write all changes to database (except change of name)
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                     UPDATE catalog
-                                    SET
-                                        catalog_source_path      =:newCatalogSourcePath,
-                                        catalog_storage          =:newCatalogStorage,
-                                        catalog_file_type        =:newCatalogFileType,
-                                        catalog_include_hidden   =:newCatalogIncludeHidden,
-                                        catalog_include_metadata =:newCatalogIncludeMetadata
-                                    WHERE catalog_name =:catalogName
+                                    SET catalog_source_path      =:catalog_source_path,
+                                        catalog_storage          =:catalog_storage,
+                                        catalog_file_type        =:catalog_file_type,
+                                        catalog_include_hidden   =:catalog_include_hidden,
+                                        catalog_include_metadata =:catalog_include_metadata
+                                    WHERE catalog_name =:catalog_name
                                 )");
             //DEV: catalogIncludeSymblinks =: newIncludeSymblinks;
 
             query.prepare(querySQL);
-            query.bindValue(":newCatalogSourcePath",        newCatalogSourcePath);
-            query.bindValue(":newCatalogStorage",           newCatalogStorage);
-            query.bindValue(":newCatalogFileType",          newCatalogFileType);
-            query.bindValue(":newCatalogIncludeHidden",     newCatalogIncludeHidden);
-            query.bindValue(":newCatalogIncludeMetadata",   newCatalogIncludeMetadata);
-            query.bindValue(":catalogName",                 catalog->name);
+            query.bindValue(":catalog_source_path",      newCatalogSourcePath);
+            query.bindValue(":catalog_storage",          newCatalogStorage);
+            query.bindValue(":catalog_file_type",        newCatalogFileType);
+            query.bindValue(":catalog_include_hidden",   newCatalogIncludeHidden);
+            query.bindValue(":catalog_include_metadata", newCatalogIncludeMetadata);
+            query.bindValue(":catalog_name",             catalog->name);
             //DEV:query.bindValue(":catalogIncludeSymblinks", catalog->includeSymblinks);
             query.exec();
 
             loadCatalogsTableToModel();
 
         //Write changes to catalog file (update headers only)
-
+        if(databaseMode=="Memory"){
             QFile catalogFile(catalog->filePath);
             if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
             {
@@ -1165,21 +1208,24 @@
             else {
                 QMessageBox::information(this,"Katalog",tr("Could not open file."));
             }
+        }
 
         //Rename the catalog file
-            if (newCatalogName != catalog->name){
+        if (newCatalogName != previousCatalogName){
 
-                catalog->renameCatalog(newCatalogName);
+            catalog->renameCatalog(newCatalogName);
+
+            if(databaseMode=="Memory"){
+                catalog->renameCatalogFile(newCatalogName);
                 loadCatalogFilesToTable();
-                loadCatalogsTableToModel();
-                refreshCatalogSelectionList("","");
+            }
 
-                //Rename in statistics
+            //Rename in statistics
+            int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
+                                                    , QMessageBox::Yes | QMessageBox::No);
 
-                int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
-                                         , QMessageBox::Yes | QMessageBox::No);
-
-                if (renameChoice == QMessageBox::Yes){
+            if (renameChoice == QMessageBox::Yes){
+                if(databaseMode=="Memory"){
                     QFile f(statisticsFilePath);
                     if(f.open(QIODevice::ReadWrite | QIODevice::Text))
                     {
@@ -1187,22 +1233,40 @@
                         QTextStream t(&f);
                         while(!t.atEnd())
                         {
-                            QString line = t.readLine();
-                            QStringList lineParts = line.split("\t");
-                            if (lineParts[1]==catalog->name){
-                                lineParts[1]= newCatalogName;
-                                line = lineParts.join("\t");
-                            }
-                            s.append(line + "\n");
+                                QString line = t.readLine();
+                                QStringList lineParts = line.split("\t");
+                                if (lineParts[1]==previousCatalogName){
+                                    lineParts[1]= newCatalogName;
+                                    line = lineParts.join("\t");
+                                }
+                                s.append(line + "\n");
                         }
                         f.resize(0);
                         t << s;
                         f.close();
                     }
                 }
+                else if(databaseMode=="File"){
+                    QSqlQuery query;
+                    QString querySQL = QLatin1String(R"(
+                                    UPDATE statistics
+                                    SET catalog_name =:newCatalog_name
+                                    WHERE catalog_name =:previousCatalogName
+                                )");
+                    query.prepare(querySQL);
+                    query.bindValue(":newCatalog_name", newCatalogName);
+                    query.bindValue(":previousCatalogName", previousCatalogName);
+                    query.exec();
+                }
             }
 
-        //Update the list of file if the changes impact the contents (i.e. path, file type, hidden)
+        }
+
+        //Refresh display
+        loadCatalogsTableToModel();
+        refreshCatalogSelectionList("","");
+
+        //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
             if (       newCatalogSourcePath      != catalog->sourcePath
                     or newCatalogIncludeHidden   != QVariant(catalog->includeHidden).toString()
                     or newCatalogIncludeMetadata != QVariant(catalog->includeMetadata).toString()
@@ -1220,7 +1284,9 @@
             }
 
         //Refresh
-            loadCatalogFilesToTable();
+            if(databaseMode=="Memory")
+                loadCatalogFilesToTable();
+
             loadCatalogsTableToModel();
 
         //Hide edition section
@@ -1253,7 +1319,6 @@
 
             //record all current catalog value
             recordAllCatalogStats();
-
 
             //Get new total file size and number
             qint64 newTotalFileSize;

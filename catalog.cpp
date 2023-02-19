@@ -139,6 +139,72 @@ void Catalog::setIncludeMetadata(bool selectedIncludeMetadata)
 }
 
 //catalog files data operation
+void Catalog::createCatalog()
+{
+    QSqlQuery insertCatalogQuery;
+    QString insertCatalogQuerySQL = QLatin1String(R"(
+                                        INSERT OR IGNORE INTO catalog (
+                                                        catalog_file_path,
+                                                        catalog_name,
+                                                        catalog_date_updated,
+                                                        catalog_source_path,
+                                                        catalog_file_count,
+                                                        catalog_total_file_size,
+                                                        catalog_source_path_is_active,
+                                                        catalog_include_hidden,
+                                                        catalog_file_type,
+                                                        catalog_storage,
+                                                        catalog_include_symblinks,
+                                                        catalog_is_full_device,
+                                                        catalog_loaded_version,
+                                                        catalog_include_metadata
+                                                        )
+                                        VALUES(         :catalog_file_path,
+                                                        :catalog_name,
+                                                        :catalog_date_updated,
+                                                        :catalog_source_path,
+                                                        :catalog_file_count,
+                                                        :catalog_total_file_size,
+                                                        :catalog_source_path_is_active,
+                                                        :catalog_include_hidden,
+                                                        :catalog_file_type,
+                                                        :catalog_storage,
+                                                        :catalog_include_symblinks,
+                                                        :catalog_is_full_device,
+                                                        :catalog_loaded_version,
+                                                        :catalog_include_metadata )
+                                    )");
+
+    insertCatalogQuery.prepare(insertCatalogQuerySQL);
+    insertCatalogQuery.bindValue(":catalog_file_path", filePath);
+    insertCatalogQuery.bindValue(":catalog_name",name);
+    insertCatalogQuery.bindValue(":catalog_date_updated",dateUpdated);
+    insertCatalogQuery.bindValue(":catalog_source_path",sourcePath);
+    insertCatalogQuery.bindValue(":catalog_file_count",fileCount);
+    insertCatalogQuery.bindValue(":catalog_total_file_size",totalFileSize);
+    insertCatalogQuery.bindValue(":catalog_source_path_is_active",sourcePathIsActive);
+    insertCatalogQuery.bindValue(":catalog_include_hidden",includeHidden);
+    insertCatalogQuery.bindValue(":catalog_file_type",fileType);
+    insertCatalogQuery.bindValue(":catalog_storage",storageName);
+    insertCatalogQuery.bindValue(":catalog_include_symblinks",includeSymblinks);
+    insertCatalogQuery.bindValue(":catalog_is_full_device",isFullDevice);
+    insertCatalogQuery.bindValue(":catalog_loaded_version",dateLoaded);
+    insertCatalogQuery.bindValue(":catalog_include_metadata",includeMetadata);
+    insertCatalogQuery.exec();
+}
+
+void Catalog::deleteCatalog()
+{
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            DELETE FROM catalog
+                            WHERE catalog_name=:catalog_name
+                        )");
+    query.prepare(querySQL);
+    query.bindValue(":catalog_name",name);
+    query.exec();
+}
+
 void Catalog::loadCatalogMetaData()
 {
     QSqlQuery query;
@@ -183,6 +249,20 @@ void Catalog::loadCatalogMetaData()
     includeMetadata    = query.value(13).toBool();
 }
 
+void Catalog::renameCatalog(QString newCatalogName)
+{
+    //rename value of current object
+    name = newCatalogName;
+}
+
+void Catalog::renameCatalogFile(QString newCatalogName)
+{
+    //rename file
+    QFileInfo catalogFileInfo(filePath);
+    QString newCatalogFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
+    QFile::rename(filePath, newCatalogFilePath);
+    filePath = newCatalogFilePath;
+}
 
 void Catalog::loadCatalogFileListToTable()
 {
@@ -326,17 +406,7 @@ void Catalog::loadCatalogFileListToTable()
     }
 }
 
-void Catalog::renameCatalog(QString newCatalogName)
-{
-        //rename value of current object
-        name = newCatalogName;
 
-        //rename file
-        QFileInfo catalogFileInfo(filePath);
-        QString newCatalogFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
-        QFile::rename(filePath, newCatalogFilePath);
-        filePath = newCatalogFilePath;
-}
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<qint64>  &cfileSize,

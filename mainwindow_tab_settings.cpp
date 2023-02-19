@@ -268,7 +268,8 @@
         settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
         settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
         settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
-
+        settings.setValue("Selection/SelectedDeviceType", tr("All"));
+        settings.setValue("Selection/SelectedDeviceName", tr("All"));
         refreshDifferencesCatalogSelection();
 
     }
@@ -463,7 +464,8 @@
     //----------------------------------------------------------------------
     void MainWindow::loadCollection()
     {
-        //Clear database
+        if(databaseMode=="Memory"){
+            //Clear database
             QSqlQuery queryDelete;
             queryDelete.exec("DELETE FROM catalog");
             queryDelete.exec("DELETE FROM storage");
@@ -474,17 +476,16 @@
             queryDelete.exec("DELETE FROM search");
             queryDelete.exec("DELETE FROM tag");
 
-        //Load Search history
+            //Load Files to database
             loadSearchHistoryFileToTable();
-            loadSearchHistoryTableToModel();
-
-        //Load Storage list and refresh their statistics
+            loadCatalogFilesToTable();
             loadStorageFileToTable();
+        }
+
+        //Load data from tables and update display
+            loadSearchHistoryTableToModel();
             loadStorageTableToModel();
             updateStorageSelectionStatistics();
-
-       //Load Catalogs list
-            loadCatalogFilesToTable();
             loadCatalogsTableToModel();
 
        //Load Storage list
@@ -578,8 +579,9 @@
         QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &selectedDatabaseMode)
+    void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
+        QString selectedDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/databaseMode", selectedDatabaseMode);
     }

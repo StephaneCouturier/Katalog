@@ -60,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             }
 
     //Set up and start database (modes: "Memory only" or "File")
+
         startDatabase();
 
     //Set up the interface globally
@@ -93,7 +94,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
                 ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
                 ui->Settings_comboBox_Language->setCurrentText(userLanguage);
-
+                ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
+                ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
             //Hide some widgets by default
                 ui->Catalogs_widget_EditCatalog->hide();
                 ui->Statistics_calendarWidget->hide();
@@ -213,6 +215,10 @@ MainWindow::~MainWindow()
 
 //DEV Templates
 /*
+qDebug()<<"DEBUG     value:    "<<value;
+
+QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("value:<br/>"+QVariant(variable).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");
 msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());

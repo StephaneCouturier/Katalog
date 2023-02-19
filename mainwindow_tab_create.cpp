@@ -211,18 +211,44 @@
                     newCatalog->fileType = "All";
 
             //Check if the catalog (file) already exists
-            QFile file(newCatalog->filePath);
-            if (file.exists()==true){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText( tr("There is already a catalog with this name:")
-                                + newCatalog->name
-                                + "\n"+tr("Choose a different name."));
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-
-                return;
+            if(databaseMode=="Memory"){
+                QFile file(newCatalog->filePath);
+                if (file.exists()==true){
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Katalog");
+                    msgBox.setText( tr("There is already a catalog with this name:")
+                                   + newCatalog->name
+                                   + "\n"+tr("Choose a different name."));
+                    msgBox.setIcon(QMessageBox::Information);
+                    msgBox.exec();
+                    return;
+                }
             }
+            else if(databaseMode=="File"){
+                QSqlQuery query;
+                QString querySQL = QLatin1String(R"(
+                                    SELECT catalog_name
+                                    FROM catalog
+                                    WHERE catalog_name=:catalog_name
+                                )");
+                query.prepare(querySQL);
+                query.bindValue(":catalog_name",newCatalog->name);
+                query.exec();
+                query.next();
+                if (query.value(0).toString() !=""){
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Katalog");
+                    msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
+                                   + newCatalog->name
+                                   + "</b><br/"+tr("Choose a different name."));
+                    msgBox.setIcon(QMessageBox::Information);
+                    msgBox.exec();
+                    return;
+                }
+            }
+
+            //Save new catalog
+            newCatalog->createCatalog();
 
         //Launch the scan and cataloging of files
             if (newCatalog->name!="" and newCatalog->sourcePath!="")
@@ -236,6 +262,8 @@
                 msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
             }
+
+
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -275,7 +303,8 @@
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
-            loadCatalogFilesToTable();
+            if(databaseMode=="Memory")
+                loadCatalogFilesToTable();
 
             //Refresh the catalog list for the Collection screen
             loadCatalogsTableToModel();
@@ -544,16 +573,18 @@
 
         }
 
-        //Prepare the catalog file data, adding first the catalog metadata at the beginning
-        fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
-        fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
-        fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(catalog->includeSymblinks).toString());
-        fileList.prepend("<catalogStorage>"         + catalog->storageName);
-        fileList.prepend("<catalogFileType>"        + catalog->fileType);
-        fileList.prepend("<catalogIncludeHidden>"   + QVariant(catalog->includeHidden).toString());
-        fileList.prepend("<catalogTotalFileSize>"   + QString::number(catalog->totalFileSize));
-        fileList.prepend("<catalogFileCount>"       + QString::number(catalog->fileCount));
-        fileList.prepend("<catalogSourcePath>"      + catalog->sourcePath);
+        if(databaseMode=="Memory"){
+            //Prepare the catalog file data, adding first the catalog metadata at the beginning
+            fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
+            fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
+            fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(catalog->includeSymblinks).toString());
+            fileList.prepend("<catalogStorage>"         + catalog->storageName);
+            fileList.prepend("<catalogFileType>"        + catalog->fileType);
+            fileList.prepend("<catalogIncludeHidden>"   + QVariant(catalog->includeHidden).toString());
+            fileList.prepend("<catalogTotalFileSize>"   + QString::number(catalog->totalFileSize));
+            fileList.prepend("<catalogFileCount>"       + QString::number(catalog->fileCount));
+            fileList.prepend("<catalogSourcePath>"      + catalog->sourcePath);
+        }
 
         //Define and populate a model
         fileListModel = new QStringListModel(this);
@@ -575,7 +606,7 @@
         query.bindValue(":catalog_name", catalog->name);
         query.exec();
 
-        //update catalog date loaded
+        //Update catalog date loaded
             QDateTime nowDateTime = QDateTime::currentDateTime();
             catalog->setDateLoaded(nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
 

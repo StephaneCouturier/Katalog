@@ -5205,7 +5205,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Image</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="image-jpeg"/>
+                   <iconset theme="image-jpeg">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -5221,7 +5222,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Audio</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="audio-x-mpeg"/>
+                   <iconset theme="audio-x-mpeg">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -5237,7 +5239,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Video</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="video-mp4"/>
+                   <iconset theme="video-mp4">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -5253,7 +5256,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Text</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="folder-text"/>
+                   <iconset theme="folder-text">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -7436,7 +7440,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
   <customwidget>
    <class>QChartView</class>
    <extends>QGraphicsView</extends>
-   <header>QChartView</header>
+   <header location="global">QChartView&gt;</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -404,7 +404,7 @@ class MainWindow : public QMainWindow
                 void on_Settings_checkBox_KeepOneBackUp_stateChanged();
                 void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
                 void on_Settings_checkBox_CheckVersion_stateChanged();
-                void on_Settings_comboBox_DatabaseMode_currentTextChanged(const QString &arg1);
+                void on_Settings_comboBox_DatabaseMode_currentTextChanged();
 
                 void on_Settings_pushButton_Wiki_clicked();
                 void on_Settings_pushButton_ReleaseNotes_clicked();
