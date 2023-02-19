@@ -622,21 +622,21 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
-        databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
+        QString newDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseMode", databaseMode);
+        settings.setValue("Settings/databaseMode", newDatabaseMode);
 
-        if(databaseMode=="Memory"){
+        if(newDatabaseMode=="Memory"){
                     ui->Settings_widget_DataMode_CSVFiles->show();
                     ui->Settings_widget_DataMode_LocalSQLite->hide();
                     ui->Settings_widget_DataMode_Remote->hide();
         }
-        else if(databaseMode=="File"){
+        else if(newDatabaseMode=="File"){
                     ui->Settings_widget_DataMode_CSVFiles->hide();
                     ui->Settings_widget_DataMode_LocalSQLite->show();
                     ui->Settings_widget_DataMode_Remote->hide();
         }
-        else if(databaseMode=="Remote"){
+        else if(newDatabaseMode=="Remote"){
                     ui->Settings_widget_DataMode_CSVFiles->hide();
                     ui->Settings_widget_DataMode_LocalSQLite->hide();
                     ui->Settings_widget_DataMode_Remote->show();

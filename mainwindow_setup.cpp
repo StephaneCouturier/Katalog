@@ -57,7 +57,7 @@
 
     //Set database file path
     QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
-    QString databaseFilePath = lastCollectionFolder + "/katalog.db";
+    databaseFilePath = lastCollectionFolder + "/katalog.db";
     databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
 
     if(databaseMode=="File"){
@@ -86,7 +86,6 @@
 
     storageModel = new QSqlRelationalTableModel(this);
     storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
-
 }
     //----------------------------------------------------------------------
 //Set up -------------------------------------------------------------------
