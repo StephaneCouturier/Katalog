@@ -44,11 +44,16 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 //#endif
 {
-    //Prepare paths and user setting file
+    //Set current version and release date, and check new version
+        currentVersion = "1.17";
+        releaseDate    = "2023-02-20";
+        developmentMode = false;
+
+    //Prepare paths, user setting file, check version
         //Get user home path and application dir path
-        QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-        QString homePath = standardsPaths[0];
-        QString applicationDirPath = QCoreApplication::applicationDirPath();
+            QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+            QString homePath = standardsPaths[0];
+            QString applicationDirPath = QCoreApplication::applicationDirPath();
 
         //Define Setting file path and name
             //For portable mode, check if there is a settings file located with the executable
@@ -58,38 +63,38 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 //otherwise fall back to default katalog_settings path
                 settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
-    //Set up and start database (modes: "Memory only" or "File")
-            startDatabase();
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+        //Check for new version
+            checkVersionChoice = settings.value("Settings/CheckVersion", true).toBool();
+            if ( checkVersionChoice == true)
+                checkVersion();
+
+    //Set up and start database (modes: "Memory", "File", or "Remote")
+        startDatabase();
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
 
+            if(developmentMode==false){
+                    hideDevelopmentUIItems();
+            }
+
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
-        //Set current version and release date, and check new version
-            currentVersion = "1.17";
-            releaseDate = "2023-02-19";
+            ui->Settings_lineEdit_DataMode_Remote_HostName->setText(databaseHostName);
+            ui->Settings_lineEdit_DataMode_Remote_DatabaseName->setText(databaseName);
+            ui->Settings_lineEdit_DataMode_Remote_Port->setText(QVariant(databasePort).toString());
+            ui->Settings_lineEdit_DataMode_Remote_UserName->setText(databaseUserName);
+            ui->Settings_lineEdit_DataMode_Remote_Password->setText(databasePassword);
+
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
-        //Set Development mode
-            developmentMode = false;
-
-            //Hide Development UI items that are not ready for use
-            if(developmentMode==false){
-                hideDevelopmentUIItems();
-            }
-
-            //Check for new version
-            checkVersionChoice = ui->Settings_checkBox_CheckVersion->isChecked();
-            if ( checkVersionChoice == true)
-                checkVersion();
-
         //Load languages to the Settings combobox, keeping the user's selection
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
             QString userLanguage = settings.value("Settings/Language").toString();
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/de.png"),"de_DE");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/cz.png"),"cz_CZ");
@@ -207,6 +212,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
+
 }
 
 MainWindow::~MainWindow()

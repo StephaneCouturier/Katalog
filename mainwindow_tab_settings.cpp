@@ -171,7 +171,21 @@
     //----------------------------------------------------------------------
 
     //Remote ---------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SaveRemoteParameters_clicked()
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Remote_HostName->text());
+        settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Remote_DatabaseName->text());
+        settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Remote_Port->text());
+        settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Remote_UserName->text());
+        settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Remote_Password->text());
 
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Save Database OnlineSettings.<br/>Please restart the app."));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+    }
 
 //SETTINGS / Language & Theme ----------------------------------------------
     void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)

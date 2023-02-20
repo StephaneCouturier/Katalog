@@ -188,52 +188,6 @@
             )");
 
 //-------------------------------------------------------------------------------
-// Database initialization ------------------------------------------------------
-
-    QSqlError initializeDatabase(QString databaseMode, QString databaseFilePath)
-    {
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-
-        if (databaseMode=="Memory"){
-            db.setDatabaseName(":memory:");
-        }
-        else if (databaseMode=="File"){
-            db.setDatabaseName(databaseFilePath);
-        }
-
-        if (!db.open())
-            return db.lastError();
-
-        QSqlQuery q;
-        if (!q.exec(SQL_CREATE_CATALOG))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STORAGE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FILESALL))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FILE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FOLDER))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_METADATA))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STATISTICS))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_SEARCH))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_TAG))
-            return q.lastError();
-
-        return QSqlError();
-    }
 
 
 #endif // DATABASE_H

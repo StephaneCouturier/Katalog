@@ -145,11 +145,18 @@ class MainWindow : public QMainWindow
 
             //Database
             QSqlRelationalTableModel *storageModel;
+            QSqlError initializeDatabase();
             QString databaseMode;
             void startDatabase();
             void populateCalendarTable(QDateTime min, QDateTime max);
             QString databaseFilePath;
             void selectDatabaseFilePath();
+            QString databaseHostName;
+            QString databaseName;
+            int     databasePort;
+            QString databaseUserName;
+            QString databasePassword;
+
             //Objects
             Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
@@ -394,6 +401,8 @@ class MainWindow : public QMainWindow
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
+
+            void on_Settings_pushButton_SaveRemoteParameters_clicked();
 
             void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
             void on_Settings_comboBox_Theme_currentIndexChanged(int index);

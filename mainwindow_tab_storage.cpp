@@ -510,6 +510,7 @@
 
             //Disable create button so it cannot be overwritten
             ui->Storage_pushButton_CreateList->setEnabled(false);
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)

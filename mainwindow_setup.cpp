@@ -33,12 +33,6 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 
-//#ifdef Q_OS_LINUX
-//    #include <KActionCollection>
-//    #include <KIO/Job>
-//    #include <KLocalizedString>
-//#endif
-
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()
 {
@@ -46,21 +40,57 @@
     if (!QSqlDatabase::drivers().contains("QSQLITE")){
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("Unable to load database.<br/>The SQLITE driver was not loaded."));
+        msgBox.setText(tr("Unable to load database.<br/>The SQLite driver was not loaded."));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+    }
+    if (!QSqlDatabase::drivers().contains("QPSQL")){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Unable to load database.<br/>The Postgres driver was not loaded."));
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.exec();
     }
 
-    //Get databaseMode ("Memory" or "File") and file path
+    // Initialize the database:
+    QSqlError err = initializeDatabase();
+    if (err.type() != QSqlError::NoError) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText("could not Initialize db:<br/>" + err.databaseText());
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+        return;
+    }
+
+    storageModel = new QSqlRelationalTableModel(this);
+    storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+
+}
+    //----------------------------------------------------------------------
+    QSqlError MainWindow::initializeDatabase()
+{
+
+    //Get database mode ("Memory", "File", or "Remote") and fields
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
     databaseMode = settings.value("Settings/databaseMode").toString();
 
-    //Set database file path
-    QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
-    databaseFilePath = lastCollectionFolder + "/katalog.db";
-    databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+    if(databaseMode=="")
+        databaseMode="Memory";
 
-    if(databaseMode=="File"){
+    else if(databaseMode=="Memory"){
+        //Set database file path
+        //QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+
+        db.setDatabaseName(":memory:");
+        if (!db.open())
+            return db.lastError();
+    }
+
+    else if(databaseMode=="File"){
+        databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
         QFile databaseFile(databaseFilePath);
         if (!databaseFile.exists()){
             QMessageBox msgBox;
@@ -69,25 +99,71 @@
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
             selectDatabaseFilePath();
-            //return;
+        }
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName(databaseFilePath);
+        if (!db.open())
+            return db.lastError();
+    }
+    else if(databaseMode=="Remote"){
+        databaseHostName= settings.value("Settings/zdatabaseHostName").toString();
+        databaseName    = settings.value("Settings/zdatabaseName").toString();
+        databasePort    = settings.value("Settings/zdatabasePort").toInt();
+        databaseUserName= settings.value("Settings/zdatabaseUserName").toString();
+        databasePassword= settings.value("Settings/zdatabasePassword").toString();
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+        db.setHostName(databaseHostName);
+        db.setDatabaseName(databaseName);
+        db.setPort(databasePort);
+        db.setUserName(databaseUserName);
+        db.setPassword(databasePassword);
+
+        if (!db.open()){
+            QSqlError error = db.lastError();
+            QMessageBox msgBox;
+            msgBox.setText("could not open db:<br/>" + error.databaseText());
+            msgBox.exec();
+        }
+        else {
+            QMessageBox msgBox;
+            msgBox.setText("Remote db connected!");
+            msgBox.exec();
         }
     }
 
-    // Initialize the database:
-    QSqlError err = initializeDatabase(databaseMode,databaseFilePath);
-    if (err.type() != QSqlError::NoError) {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText("initializeDatabase / SQL error: <br/>" + QVariant(err.databaseText()).toString());
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.exec();
-        return;
-    }
+    QSqlQuery q;
+    if (!q.exec(SQL_CREATE_CATALOG))
+        return q.lastError();
 
-    storageModel = new QSqlRelationalTableModel(this);
-    storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+    if (!q.exec(SQL_CREATE_STORAGE))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_FILESALL))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_FILE))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_FOLDER))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_METADATA))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_STATISTICS))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_SEARCH))
+        return q.lastError();
+
+    if (!q.exec(SQL_CREATE_TAG))
+        return q.lastError();
+
+    return QSqlError();
 }
-    //----------------------------------------------------------------------
+
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -177,12 +253,8 @@
                 collectionFolder = settings.value("LastCollectionFolder").toString();
             }
 
-            //Restore last Search values
-//            #ifdef Q_OS_LINUX
-//                    ui->Search_kcombobox_SearchText->setEditText(settings.value("LastSearch/SearchText").toString());
-//            #else
-                    ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
-//            #endif
+            //Restore last Search values       
+            ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
 
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
@@ -331,8 +403,9 @@
             optionDisplaySubFolders      = settings.value("Explore/DisplaySubFolders").toBool();
 
             //Restore Settings
-            ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
-
+            if(developmentMode==true){
+                ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
+            }
     }
     //----------------------------------------------------------------------
     void MainWindow::saveSettings()
@@ -419,10 +492,12 @@
             ui->Storage_widget_DevicePanelForm->hide();
             ui->Storage_pushButton_TestMedia->hide();
             ui->Storage_listView_Media->hide();
+
         //Settings
             //DEV: option to switch database mode between memory and file
             ui->Settings_widget_DataModeSelection->hide();
-            ui->Settings_label_DatabaseMode->hide();
+            ui->Settings_widget_DataMode_LocalSQLite->hide();
+            ui->Settings_widget_DataMode_Remote->hide();
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
@@ -720,97 +795,6 @@
             }
         }
     }
-
-    //Menu and Icons - Actions KDE setup ---------------------------------------
-//	#ifdef Q_OS_LINUX
-//        void MainWindow::setupActions()
-//        {
-
-//            KStandardAction::quit(qApp, SLOT(quit()), actionCollection());
-//            //KStandardAction::open(this, SLOT(openFile()), actionCollection());
-//            //KStandardAction::save(this, SLOT(saveFile()), actionCollection());
-//            //KStandardAction::saveAs(this, SLOT(saveFileAs()), actionCollection());
-//            //KStandardAction::openNew(this, SLOT(newFile()), actionCollection());
-//            setupGUI();
-
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::newFile()
-//        {
-//            fileName.clear();
-//            //ui->plainTextEdit->clear();
-//            //ui->statusbar->showMessage(fileName);
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::openFile()
-//        {
-//            QUrl fileNameFromDialog = QFileDialog::getOpenFileUrl(this, tr("Open a Katalog collection"));
-
-//            if (!fileNameFromDialog.isEmpty())
-//            {
-//                KIO::Job* job = KIO::storedGet(fileNameFromDialog);
-//                fileName = fileNameFromDialog.toLocalFile();
-
-//                connect(job, SIGNAL(result(KJob*)), this,
-//                             SLOT(downloadFinished(KJob*)));
-
-//                job->exec();
-//            }
-
-//            //ui->statusbar->showMessage(fileName);
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::downloadFinished(KJob* job)
-//        {
-//            if (job->error())
-//            {
-//                QMessageBox::warning(this, "Katalog",job->errorString());
-//                fileName.clear();
-//                return;
-//            }
-
-//            #ifdef Q_OS_LINUX
-//            //KIO::StoredTransferJob* storedJob = (KIO::StoredTransferJob*)job;
-//            #endif
-
-//            //ui->plainTextEdit->setPlainText(QTextStream(storedJob->data(),QIODevice::ReadOnly).readAll());
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::saveFileAs(const QString &outputFileName)
-//        {
-//            if (!outputFileName.isNull())
-//            {
-//                QSaveFile file(outputFileName);
-//                file.open(QIODevice::WriteOnly);
-
-//                QByteArray outputByteArray;
-//                //outputByteArray.append(ui->plainTextEdit->toPlainText().toUtf8());
-//                //outputByteArray.append(ui->LV_FileList->model());
-//                file.write(outputByteArray);
-//                file.commit();
-
-//                fileName = outputFileName;
-//            }
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::saveFileAs()
-//        {
-//            saveFileAs(QFileDialog::getSaveFileName(this, tr("Save File As")));
-//            //ui->statusbar->showMessage(fileName);
-//        }
-//        //----------------------------------------------------------------------
-//        void MainWindow::saveFile()
-//        {
-//            if (!fileName.isEmpty())
-//            {
-//                saveFileAs(fileName);
-//            }
-//            else
-//            {
-//                saveFileAs();
-//            }
-//        }
-//	#endif
     //----------------------------------------------------------------------
     void MainWindow::generateCollectionFilesPaths()
     {

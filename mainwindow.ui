@@ -6997,7 +6997,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
               </item>
               <item row="1" column="5">
-               <widget class="QPushButton" name="Collection_pushButton_OpenSettingsFile">
+               <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
                 <property name="maximumSize">
                  <size>
                   <width>150</width>
@@ -7375,7 +7375,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataModeRemoteHostName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_HostName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7384,7 +7384,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataModeRemoteDatabaseName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_DatabaseName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7393,7 +7393,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataModeRemotePort">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_Port">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7402,7 +7402,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="3" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataModeRemoteUserName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_UserName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7430,7 +7430,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="4" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataModeRemotePassword">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_Password">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7700,7 +7700,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <item>
-                     <widget class="QLabel" name="label">
+                     <widget class="QLabel" name="Settings_label_DataMode">
                       <property name="text">
                        <string>Data mode</string>
                       </property>
