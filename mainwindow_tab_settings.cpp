@@ -128,10 +128,16 @@
     {
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+        if (selectedDeviceType=="Storage"){
+            selectedDeviceID   = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toInt();
+            selectedStorage->setID(selectedDeviceID);
+            selectedStorage->loadStorageMetaData();
+        }
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
         settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+        settings.setValue("Selection/SelectedDeviceID",   selectedDeviceID);
 
         filterFromSelectedDevices();
 

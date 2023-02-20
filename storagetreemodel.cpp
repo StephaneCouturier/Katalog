@@ -245,7 +245,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
         //Add Storage devices
         QSqlQuery queryStorageList;
         QString queryStorageListSQL = QLatin1String(R"(
-                                SELECT storage_name,'Storage'
+                                SELECT storage_name,'Storage', storage_id
                                 FROM storage
                                 WHERE storage_location=:storage_location
                                 ORDER BY storage_name ASC
@@ -260,6 +260,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
             QString currentStorageName = queryStorageList.value(0).toString();
             columnData << queryStorageList.value(0).toString();
             columnData << queryStorageList.value(1).toString();
+            columnData << queryStorageList.value(2).toString();
 
             parent->child(countLocation)->insertChildren(countStorage, 1, rootItem->columnCount());
             for (int column = 0; column < columnData.size(); ++column)

@@ -231,10 +231,8 @@
             int maxID = queryDeviceNumber.value(0).toInt();
             int newID = maxID + 1;
 
-            //Location
+            //Generate Location based on current selection
             QString newLocation;
-            QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("selectedStorage->location:<br/>"+QVariant(selectedStorage->location).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
-
             if(selectedDeviceType == "Location"){
                 newLocation = selectedDeviceName;
             }

@@ -165,6 +165,7 @@ class MainWindow : public QMainWindow
 
             QString selectedDeviceName;
             QString selectedDeviceType;
+            int     selectedDeviceID;
 
             QString selectedFilterStorageLocation;
             QString selectedFilterStorageName;

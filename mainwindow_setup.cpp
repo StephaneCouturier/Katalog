@@ -186,7 +186,7 @@
 
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
-
+            selectedDeviceID   = settings.value("Selection/SelectedDeviceID").toInt();
 
             selectedFilterStorageLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
             ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
