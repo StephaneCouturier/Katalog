@@ -776,6 +776,12 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -794,7 +800,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>7</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -6846,7 +6852,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QComboBox" name="Settings_comboBox_Language"/>
+                 <widget class="QComboBox" name="Settings_comboBox_Language">
+                  <property name="minimumSize">
+                   <size>
+                    <width>200</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
                 </item>
                 <item row="0" column="2">
                  <spacer name="horizontalSpacer_13">
@@ -6878,7 +6891,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QComboBox" name="Settings_comboBox_Theme">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>200</width>
                     <height>30</height>
                    </size>
                   </property>
@@ -7615,26 +7628,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="Settings_pushButton_Reload">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Reload all catalog information</string>
-                      </property>
-                      <property name="text">
-                       <string>Reload</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="view-refresh">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
                      <widget class="QPushButton" name="Settings_pushButton_OpenFolder">
                       <property name="maximumSize">
                        <size>
@@ -7775,7 +7768,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Data management settings</string>
+                  <string>Data management</string>
                  </property>
                 </widget>
                </item>

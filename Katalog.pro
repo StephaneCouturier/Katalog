@@ -75,6 +75,7 @@ SOURCES += \
     mainwindow_tab_catalogs.cpp \
     mainwindow_tab_create.cpp \
     mainwindow_tab_explore.cpp \
+    mainwindow_tab_filters.cpp \
     mainwindow_tab_search.cpp \
     mainwindow_tab_settings.cpp \
     mainwindow_tab_statistics.cpp \

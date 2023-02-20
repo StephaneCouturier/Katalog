@@ -362,56 +362,47 @@ class MainWindow : public QMainWindow
             QString newTagFolderPath;
 
    private slots:
-        //KDE Menu
-//            #ifdef Q_OS_LINUX
-//                void newFile();
-//                void openFile();
-//                void saveFile();
-//                void saveFileAs();
-//                void saveFileAs(const QString &outputFileName);
-//                void downloadFinished(KJob* job);
-//            #endif
 
-        //Filters_and_Settings
-                //Main tabs
-                void on_tabWidget_currentChanged(int index);
-                void on_splitter_splitterMoved();
-                void on_FiltersTabWidgetCurrentChanged(int index);
-                void on_Filters_pushButton_Filters_Hide_clicked();
-                void on_Filters_pushButton_Filters_Show_clicked();
+        //Filters
+            void on_Filters_pushButton_Filters_Hide_clicked();
+            void on_Filters_pushButton_Filters_Show_clicked();
+            void on_Filters_pushButton_ResetGlobal_clicked();
+            void on_Filters_pushButton_ReloadCollection_clicked();
+            void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
+            void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
 
-            //Filters
-                void on_Filters_pushButton_ResetGlobal_clicked();
-                void on_Filters_pushButton_ReloadCollection_clicked();
-                void on_Filter_pushButton_Search_clicked();
-                void on_Filter_pushButton_Explore_clicked();
-                void on_Filter_pushButton_Update_clicked();
-                void on_Filters_pushButton_TreeExpandCollapse_clicked();
-                void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
-                void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
-                void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
-                void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
-                void on_Filter_pushButton_PickPath_clicked();
+            void on_Filter_pushButton_Search_clicked();
+            void on_Filter_pushButton_Explore_clicked();
+            void on_Filter_pushButton_Update_clicked();
+            void on_Filters_pushButton_TreeExpandCollapse_clicked();
+            void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
 
-            //Settings
-                void on_Settings_comboBox_DatabaseMode_currentTextChanged();
-                void on_Settings_pushButton_SelectFolder_clicked();
-                void on_Settings_pushButton_Reload_clicked();
-                void on_Settings_pushButton_OpenFolder_clicked();
-                void on_Settings_lineEdit_CollectionFolder_returnPressed();
-                void on_Settings_pushButton_OpenSettingsFile_clicked();
-                void on_Settings_pushButton_EditDatabaseFile_clicked();
-                void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
+            void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
+            void on_Filter_pushButton_PickPath_clicked();
 
-                void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
-                void on_Settings_comboBox_Theme_currentIndexChanged(int index);
-                void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
-                void on_Settings_checkBox_KeepOneBackUp_stateChanged();
-                void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
-                void on_Settings_checkBox_CheckVersion_stateChanged();
+        //Settings
+            void on_tabWidget_currentChanged(int index);
+            void on_splitter_splitterMoved();
 
-                void on_Settings_pushButton_Wiki_clicked();
-                void on_Settings_pushButton_ReleaseNotes_clicked();
+            void on_Settings_comboBox_DatabaseMode_currentTextChanged();
+
+            void on_Settings_pushButton_SelectFolder_clicked();
+            void on_Settings_pushButton_OpenFolder_clicked();
+            void on_Settings_lineEdit_CollectionFolder_returnPressed();
+            void on_Settings_checkBox_KeepOneBackUp_stateChanged();
+            void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
+
+            void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
+            void on_Settings_pushButton_EditDatabaseFile_clicked();
+
+            void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
+            void on_Settings_comboBox_Theme_currentIndexChanged(int index);
+            void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
+            void on_Settings_pushButton_OpenSettingsFile_clicked();
+
+            void on_Settings_pushButton_Wiki_clicked();
+            void on_Settings_pushButton_ReleaseNotes_clicked();
+            void on_Settings_checkBox_CheckVersion_stateChanged();
 
         //Search
             void on_Search_pushButton_Search_clicked();
@@ -419,7 +410,6 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ExportResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
-            //void on_Search_kcombobox_SearchText_returnPressed();
             void on_Search_lineEdit_SearchText_returnPressed();
 
             void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
