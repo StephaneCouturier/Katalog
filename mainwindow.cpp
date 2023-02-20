@@ -58,15 +58,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 //otherwise fall back to default katalog_settings path
                 settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
-
-        //Set up and start database (modes: "Memory only" or "File")
+    //Set up and start database (modes: "Memory only" or "File")
             startDatabase();
 
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
-            ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
 
+            ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+            ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
+            ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
+            ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
         //Set current version and release date, and check new version
             currentVersion = "1.17";
             releaseDate = "2023-02-19";
@@ -94,9 +96,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/us.png"),"en_US");
             ui->Settings_comboBox_Language->addItem(QIcon(":/images/flags/fr.png"),"fr_FR");
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
-            ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
-            ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
-            ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
+
         //Hide some widgets by default
             ui->Catalogs_widget_EditCatalog->hide();
             ui->Statistics_calendarWidget->hide();

@@ -219,17 +219,26 @@
     void MainWindow::addStorageDevice(QString deviceName)
     {
         //Get inputs
-            //max ID
+            //Generate ID
             QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "SELECT MAX (storage_id) FROM storage" );
+            QString queryDeviceNumberSQL = QLatin1String(R"(
+                                    SELECT MAX (storage_id)
+                                    FROM storage
+                                )");
+            queryDeviceNumber.prepare(queryDeviceNumberSQL);
             queryDeviceNumber.exec();
             queryDeviceNumber.next();
             int maxID = queryDeviceNumber.value(0).toInt();
             int newID = maxID + 1;
 
-            //location
+            //Location
             QString newLocation;
-            if(selectedStorage->location != tr("All")){
+            QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("selectedStorage->location:<br/>"+QVariant(selectedStorage->location).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+
+            if(selectedDeviceType == "Location"){
+                newLocation = selectedDeviceName;
+            }
+            else if(selectedStorage->location != tr("All")){
                 newLocation = selectedStorage->location;
             }
             else
@@ -237,7 +246,7 @@
 
         //Insert new device with default values
         QString querySQL = QLatin1String(R"(
-            insert into storage(
+            INSERT INTO storage(
                             storage_id,
                             storage_name,
                             storage_type,
@@ -253,7 +262,7 @@
                             storage_content_type,
                             storage_container,
                             storage_comment)
-                      values(
+                      VALUES(
                             :new_id,
                             :storage_name,
                             "",

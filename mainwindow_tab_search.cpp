@@ -1994,7 +1994,12 @@
 //            QString currentLocation = ui->Filters_label_DisplayLocation->text();
             //Query the full list of locations
             QSqlQuery getLocationList;
-            getLocationList.prepare("SELECT DISTINCT storage_location FROM storage ORDER BY storage_location");
+            QString getLocationListSQL = QLatin1String(R"(
+                                            SELECT DISTINCT storage_location
+                                            FROM storage
+                                            ORDER BY storage_location
+                            )");
+            getLocationList.prepare(getLocationListSQL);
             getLocationList.exec();
 
             //Put the results in a list
@@ -2025,15 +2030,15 @@
             //Query the full list of locations
             QSqlQuery getStorageList;
 
-            QString queryText = "SELECT storage_name FROM storage";
+            QString queryText = "SELECT storage_name FROM storage ";
 
             if ( selectedLocation == tr("All")){
-                    queryText = queryText + " ORDER BY storage_name";
+                    queryText = queryText + " ORDER BY storage_name ";
                     getStorageList.prepare(queryText);
             }
             else{
                     queryText = queryText + " WHERE storage_location ='" + selectedLocation + "'";
-                    queryText = queryText + " ORDER BY storage_name";
+                    queryText = queryText + " ORDER BY storage_name ";
                     getStorageList.prepare(queryText);
             }
             getStorageList.exec();
