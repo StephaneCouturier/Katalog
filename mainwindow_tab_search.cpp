@@ -35,13 +35,10 @@
 #include "filesview.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
-    //--------------------------------------------------------------------------
+
     //User interactions
+
         //Buttons and other changes
-//        void MainWindow::on_Search_kcombobox_SearchText_returnPressed()
-//        {
-//            searchFiles();
-//        }
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
             searchFiles();
@@ -51,12 +48,7 @@
         {
             QClipboard *clipboard = QGuiApplication::clipboard();
             QString originalText = clipboard->text();
-            //clipboard->setText(selectedFile);
-//            #ifdef Q_OS_LINUX
-//                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
-//            #else
-                ui->Search_lineEdit_SearchText->setText(originalText);
-//            #endif
+            ui->Search_lineEdit_SearchText->setText(originalText);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -67,11 +59,8 @@
         void MainWindow::on_Search_pushButton_CleanSearchText_clicked()
         {
             QString originalText;
-//            #ifdef Q_OS_LINUX
-//                originalText = ui->Search_kcombobox_SearchText->currentText();
-//            #else
-                originalText = ui->Search_lineEdit_SearchText->text();
-//            #endif
+            originalText = ui->Search_lineEdit_SearchText->text();
+
             originalText.replace("."," ");
             originalText.replace(","," ");
             originalText.replace("_"," ");
@@ -86,20 +75,14 @@
             originalText.replace("\\"," ");
             originalText.replace("'"," ");
             originalText.replace("\""," ");
-//            #ifdef Q_OS_LINUX
-//                ui->Search_kcombobox_SearchText->setCurrentText(originalText);
-//            #else
-                ui->Search_lineEdit_SearchText->setText(originalText);
-//            #endif
+
+            ui->Search_lineEdit_SearchText->setText(originalText);
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
-//            #ifdef Q_OS_LINUX
-//                ui->Search_kcombobox_SearchText->setCurrentText("");
-//            #else
-                ui->Search_lineEdit_SearchText->setText("");
-//            #endif
+            ui->Search_lineEdit_SearchText->setText("");
 
             ui->Search_checkBox_FileCriteria->setEnabled(true);
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
@@ -158,7 +141,6 @@
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-            //KMessageBox::information(this,"test:\n did nothing."+selectedFile);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_listView_CatalogsFound_clicked(const QModelIndex &index)
@@ -182,14 +164,6 @@
         void MainWindow::on_Search_pushButton_ShowHideSearchCriteria_clicked()
         {
             QString iconName = ui->Search_pushButton_ShowHideSearchCriteria->icon().name();
-
-//            QPropertyAnimation animation(ui->Search_widget_SearchCriteria, "geometry");
-//            animation.setDuration(3000);
-//            animation.setStartValue(QRect(0, 0, 100, 30));
-//            animation.setEndValue(QRect(250, 250, 100, 30));
-//            animation.setEasingCurve(QEasingCurve::OutBounce);
-//            animation.start();
-
             if ( iconName == "go-up"){ //Hide
                     ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_widget_SearchCriteria->setHidden(true);
@@ -342,21 +316,12 @@
         {
             if(checked==true){
                 ui->Search_widget_FileNameCriteria->setHidden(false);
-//                #ifdef Q_OS_LINUX
-//                    ui->Search_kcombobox_SearchText->setEnabled(true);
-//                #else
-                    ui->Search_lineEdit_SearchText->setEnabled(true);
-//                #endif
+                ui->Search_lineEdit_SearchText->setEnabled(true);
             }
             else{
                 ui->Search_widget_FileNameCriteria->setHidden(true);
-//                #ifdef Q_OS_LINUX
-//                    ui->Search_kcombobox_SearchText->setDisabled(true);
-//                #else
-                    ui->Search_lineEdit_SearchText->setDisabled(true);
-//                #endif
+                ui->Search_lineEdit_SearchText->setDisabled(true);
             }
-
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_FileCriteria_toggled(bool checked)
@@ -756,9 +721,9 @@
             }
         }
 
-//Methods-----------------------------------------------------------------------
+    //Methods-----------------------------------------------------------------------
 
-    //Search methods
+        //Search methods
         //run a search of files in each selected catalog based on user inputs
         void MainWindow::searchFiles()
         {
@@ -1785,26 +1750,6 @@
             }
         }
         //----------------------------------------------------------------------
-//        void MainWindow::loadCatalogFilelistToTable(Catalog *catalog)
-//        {
-//            //Verify if the lastest version of the catalog is already in memory
-//            QDateTime dateTime1 = QDateTime::fromString(catalog->dateLoaded, "yyyy-MM-dd hh:mm:ss");
-//            QDateTime dateTime2 = QDateTime::fromString(catalog->dateUpdated,"yyyy-MM-dd hh:mm:ss");
-
-//            //Load catalog files if latest version is not already in memory
-//            if ( dateTime1 < dateTime2){
-
-//                catalog->loadCatalogFileListToTable();
-
-//                //refresh catalogs screen
-//                    loadCatalogsTableToModel();
-//            }
-//            else{
-//                //QMessageBox::information(this,"Katalog","NO UPDATE needed: \n" + catalog->loadedVersion);
-//            }
-
-//        }
-        //----------------------------------------------------------------------
         QString MainWindow::getCatalogStorageName(QString catalogFilePath)
         {
             //DEV: REPLACE BY SQL QUERY ON Catalog TABLE
@@ -1913,9 +1858,7 @@
         }
         //----------------------------------------------------------------------
 
-    //--------------------------------------------------------------------------
-    //UI methods
-        //Set up
+        //UI methods
         void MainWindow::initiateSearchValues()
         {
             //Add filetype English value additionally to the displayed/translated value
@@ -2128,7 +2071,6 @@
 //                QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
 
         }
-
         //--------------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
             ui->Search_comboBox_DifferencesCatalog1->clear();
@@ -2139,7 +2081,6 @@
                         ui->Search_comboBox_DifferencesCatalog2->addItem(sourceCatalog);
                     }
         }
-
         //----------------------------------------------------------------------
         QString MainWindow::exportSearchResults()
         {
@@ -2205,8 +2146,6 @@
 
             return fullFileName;
         }
-        //----------------------------------------------------------------------
-
         //----------------------------------------------------------------------
         void MainWindow::insertSearchHistoryToTable()
         {
@@ -2650,5 +2589,4 @@
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
-
         }
