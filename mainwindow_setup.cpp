@@ -35,134 +35,136 @@
 
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()
-{
-    //Check Sqlite driver
-    if (!QSqlDatabase::drivers().contains("QSQLITE")){
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("Unable to load database.<br/>The SQLite driver was not loaded."));
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.exec();
-    }
-    if (!QSqlDatabase::drivers().contains("QPSQL")){
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("Unable to load database.<br/>The Postgres driver was not loaded."));
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.exec();
-    }
-
-    // Initialize the database:
-    QSqlError err = initializeDatabase();
-    if (err.type() != QSqlError::NoError) {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText("could not Initialize db:<br/>" + err.databaseText());
-        msgBox.setIcon(QMessageBox::Critical);
-        msgBox.exec();
-        return;
-    }
-
-    storageModel = new QSqlRelationalTableModel(this);
-    storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
-
-}
-    //----------------------------------------------------------------------
-    QSqlError MainWindow::initializeDatabase()
-{
-
-    //Get database mode ("Memory", "File", or "Remote") and fields
-    QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    databaseMode = settings.value("Settings/databaseMode").toString();
-
-    if(databaseMode=="")
-        databaseMode="Memory";
-
-    else if(databaseMode=="Memory"){
-        //Set database file path
-        //QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
-
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-
-        db.setDatabaseName(":memory:");
-        if (!db.open())
-            return db.lastError();
-    }
-
-    else if(databaseMode=="File"){
-        databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
-        QFile databaseFile(databaseFilePath);
-        if (!databaseFile.exists()){
+    {
+        //Check Sqlite driver
+        if (!QSqlDatabase::drivers().contains("QSQLITE")){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("databaseFile cannot be found:<br/>") + databaseFilePath);
-            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setText(tr("Unable to load database.<br/>The SQLite driver was not loaded."));
+            msgBox.setIcon(QMessageBox::Critical);
             msgBox.exec();
-            selectDatabaseFilePath();
         }
 
-        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName(databaseFilePath);
-        if (!db.open())
-            return db.lastError();
-    }
-    else if(databaseMode=="Remote"){
-        databaseHostName= settings.value("Settings/zdatabaseHostName").toString();
-        databaseName    = settings.value("Settings/zdatabaseName").toString();
-        databasePort    = settings.value("Settings/zdatabasePort").toInt();
-        databaseUserName= settings.value("Settings/zdatabaseUserName").toString();
-        databasePassword= settings.value("Settings/zdatabasePassword").toString();
-
-        QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-        db.setHostName(databaseHostName);
-        db.setDatabaseName(databaseName);
-        db.setPort(databasePort);
-        db.setUserName(databaseUserName);
-        db.setPassword(databasePassword);
-
-        if (!db.open()){
-            QSqlError error = db.lastError();
+        if (!QSqlDatabase::drivers().contains("QPSQL")){
             QMessageBox msgBox;
-            msgBox.setText("could not open db:<br/>" + error.databaseText());
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Unable to load database.<br/>The Postgres driver was not loaded."));
+            msgBox.setIcon(QMessageBox::Critical);
             msgBox.exec();
         }
-        else {
+
+        // Initialize the database:
+        QSqlError err = initializeDatabase();
+        if (err.type() != QSqlError::NoError) {
             QMessageBox msgBox;
-            msgBox.setText("Remote db connected!");
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText("could not Initialize db:<br/>" + err.databaseText());
+            msgBox.setIcon(QMessageBox::Critical);
             msgBox.exec();
+            return;
         }
+
+        storageModel = new QSqlRelationalTableModel(this);
+        storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+
     }
+    //----------------------------------------------------------------------
+    QSqlError MainWindow::initializeDatabase()
+    {
 
-    QSqlQuery q;
-    if (!q.exec(SQL_CREATE_CATALOG))
-        return q.lastError();
+        //Get database mode ("Memory", "File", or "Remote") and fields
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        databaseMode     = settings.value("Settings/databaseMode").toString();
+        databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+        databaseHostName = settings.value("Settings/zdatabaseHostName").toString();
+        databaseName     = settings.value("Settings/zdatabaseName").toString();
+        databasePort     = settings.value("Settings/zdatabasePort").toInt();
+        databaseUserName = settings.value("Settings/zdatabaseUserName").toString();
+        databasePassword = settings.value("Settings/zdatabasePassword").toString();
 
-    if (!q.exec(SQL_CREATE_STORAGE))
-        return q.lastError();
+        if(databaseMode=="")
+            databaseMode="Memory";
 
-    if (!q.exec(SQL_CREATE_FILESALL))
-        return q.lastError();
+        else if(databaseMode=="Memory"){
+            //Set database file path
+            //QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
 
-    if (!q.exec(SQL_CREATE_FILE))
-        return q.lastError();
+            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
-    if (!q.exec(SQL_CREATE_FOLDER))
-        return q.lastError();
+            db.setDatabaseName(":memory:");
+            if (!db.open())
+                return db.lastError();
+        }
 
-    if (!q.exec(SQL_CREATE_METADATA))
-        return q.lastError();
+        else if(databaseMode=="File"){
+            QFile databaseFile(databaseFilePath);
+            if (!databaseFile.exists()){
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("databaseFile cannot be found:<br/>") + databaseFilePath);
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+                selectDatabaseFilePath();
+            }
 
-    if (!q.exec(SQL_CREATE_STATISTICS))
-        return q.lastError();
+            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+            db.setDatabaseName(databaseFilePath);
+            if (!db.open())
+                return db.lastError();
+        }
+        else if(databaseMode=="Remote"){
 
-    if (!q.exec(SQL_CREATE_SEARCH))
-        return q.lastError();
 
-    if (!q.exec(SQL_CREATE_TAG))
-        return q.lastError();
+            QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+            db.setHostName(databaseHostName);
+            db.setDatabaseName(databaseName);
+            db.setPort(databasePort);
+            db.setUserName(databaseUserName);
+            db.setPassword(databasePassword);
 
-    return QSqlError();
-}
+            if (!db.open()){
+                QSqlError error = db.lastError();
+                QMessageBox msgBox;
+                msgBox.setText("could not open db:<br/>" + error.databaseText());
+                msgBox.exec();
+            }
+            else {
+                QMessageBox msgBox;
+                msgBox.setText("Remote db connected!");
+                msgBox.exec();
+            }
+        }
+
+        QSqlQuery q;
+        if (!q.exec(SQL_CREATE_CATALOG))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STORAGE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FILESALL))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FILE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_FOLDER))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_METADATA))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STATISTICS))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_SEARCH))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_TAG))
+            return q.lastError();
+
+        return QSqlError();
+    }
 
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
