@@ -36,8 +36,68 @@
 #include "catalogsview.h"
 
 //UI----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+    //Catalog UI display
+        void MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged(){
 
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+
+            QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
+
+            lastCatalogsSortSection = catalogsTreeHeader->sortIndicatorSection();
+            lastCatalogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
+
+            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatalogsSortSection));
+            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
+        }
+        //----------------------------------------------------------------------
     //Catalog operations
+        void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
+        {
+            selectedCatalog->setName(ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString());
+            selectedCatalog->loadCatalogMetaData();
+
+            // Display buttons
+            ui->Catalogs_pushButton_Search->setEnabled(true);
+            ui->Catalogs_pushButton_ExploreCatalog->setEnabled(true);
+            ui->Catalogs_pushButton_Open->setEnabled(true);
+            ui->Catalogs_pushButton_EditCatalogFile->setEnabled(true);
+            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
+            ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(true);
+            ui->Catalogs_pushButton_DeleteCatalog->setEnabled(true);
+
+            //Load catalog values to the Edit area
+            ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
+            ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalog->sourcePath);
+            ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
+            ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
+            ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
+            ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
+            //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
+
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
+        {
+            //Start at the root folder of the catalog
+            selectedDirectoryName     = selectedCatalog->sourcePath;
+            selectedDirectoryFullPath = selectedCatalog->sourcePath;
+            selectedFilterCatalogName = selectedCatalog->name;
+
+
+            //The selected catalog becomes the active catalog
+            //activeCatalog = selectedCatalog;
+            activeCatalog->setName(selectedCatalog->name);
+            activeCatalog->loadCatalogMetaData();
+
+            //Load
+            openCatalogToExplore();
+
+            //Go to explore tab
+            ui->tabWidget->setCurrentIndex(2);
+
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Search_clicked()
         {
             //Change the selected catalog in Search tab
@@ -96,7 +156,7 @@
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
-        {   //Update the selected catalog
+        {
             skipCatalogUpdateSummary= false;
             updateSingleCatalog(selectedCatalog);
         }
@@ -104,7 +164,6 @@
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         {
             //user to confirm running this global update
-
                 int confirm = QMessageBox::warning(this, "Katalog",
                                     tr("Are you sure you want to update ALL catalogs that are currently filtered and identified as active?")
                                          , QMessageBox::Yes
@@ -208,9 +267,9 @@
             //save catalogs
             int result = QMessageBox::warning(this, "Katalog",
                                 tr("You are about to edit the catalog file directly.<br/><br/>"
-"It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
-"Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
-"Do you want to continue anyway?")
+                                "It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
+                                "Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
+                                "Do you want to continue anyway?")
                                      , QMessageBox::Yes
                                               | QMessageBox::Cancel);
             if ( result == QMessageBox::Cancel){
@@ -299,9 +358,9 @@
             //save catalogs
             int result = QMessageBox::warning(this, "Katalog",
                                 tr("You are about to edit the catalog file directly.<br/><br/>"
-"It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
-"Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
-"Do you want to continue anyway?")
+                                "It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
+                                "Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
+                                "Do you want to continue anyway?")
                                      , QMessageBox::Yes
                                               | QMessageBox::Cancel);
             if ( result == QMessageBox::Cancel){
@@ -333,121 +392,22 @@
             saveCatalogChanges(selectedCatalog);
         }
         //----------------------------------------------------------------------
-
-    //File methods
-        //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
-        {
-            selectedCatalog->setName(ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString());
-            selectedCatalog->loadCatalogMetaData();
-
-            // Display buttons
-            ui->Catalogs_pushButton_Search->setEnabled(true);
-            ui->Catalogs_pushButton_ExploreCatalog->setEnabled(true);
-            ui->Catalogs_pushButton_Open->setEnabled(true);
-            ui->Catalogs_pushButton_EditCatalogFile->setEnabled(true);
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-            ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(true);
-            ui->Catalogs_pushButton_DeleteCatalog->setEnabled(true);
-
-            //Load catalog values to the Edit area
-            ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
-            ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalog->sourcePath);
-            ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
-            ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
-            ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
-            ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
-            //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
-
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
-        {
-            //Start at the root folder of the catalog
-            selectedDirectoryName     = selectedCatalog->sourcePath;
-            selectedDirectoryFullPath = selectedCatalog->sourcePath;
-            selectedFilterCatalogName = selectedCatalog->name;
-
-
-            //The selected catalog becomes the active catalog
-            //activeCatalog = selectedCatalog;
-            activeCatalog->setName(selectedCatalog->name);
-            activeCatalog->loadCatalogMetaData();
-
-            //Load
-            openCatalogToExplore();
-
-            //Go to explore tab
-            ui->tabWidget->setCurrentIndex(2);
-
-        }
-        //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
         {
             recordCollectionStats();
         }
-        //----------------------------------------------------------------------
-        void MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged(){
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
-            QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
-
-            lastCatalogsSortSection = catalogsTreeHeader->sortIndicatorSection();
-            lastCatalogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
-
-            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatalogsSortSection));
-            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
-        }
-        //--------------------------------------------------------------------------
-        void MainWindow::hideCatalogButtons()
-        {
-            //Hide buttons
-            ui->Catalogs_pushButton_Search->setEnabled(false);
-            ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
-            ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
-            ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-            ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
-            ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
-        }
-        //----------------------------------------------------------------------
-/*        void MainWindow::on_Catalogs_treeView_CatalogList_HeaderSizeChanged(int section){
-
-//            QList<int> headerSectionsSize;
-
-//            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
-//            QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
-
-//            lastCatalogsHeaderSection = section;
-//            lastCatalogsHeaderSize    = catalogsTreeHeader->sectionSize(0);
-
-            //headerSectionsSize[lastCatalogsHeaderSection] = lastCatalogsHeaderSize;
-
-//            settings.setValue("Catalogs/lastCatalogsHeaderSection", QString::number(lastCatalogsHeaderSection));
-//            settings.setValue("Catalogs/lastCatalogsHeaderSize"   , QString::number(lastCatalogsHeaderSize));
-            //settings.setValue("Catalogs/lastCatalogsHeaderSectionSizes"   , ui->Catalogs_treeView_CatalogList->header()->saveState());
-
-//            settings.beginWriteArray("headerSectionSizes");
-//            for (int i = 0; i < headerSectionsSize.size(); ++i) {
-//                settings.setArrayIndex(i);
-//                settings.setValue("lastCatalogsHeaderSection", i);
-//                settings.setValue("lastCatalogsHeaderSize", headerSectionsSize[i]);
-//            }
-//            settings.endArray();
-
-            //            lastCatalogsHeaderSection = 0;
-            //            int currentSize = ui->Catalogs_treeView_CatalogList->header()->sectionSize(0);
-            //            lastCatalogsHeaderSize = 200;
-            //            QMessageBox::information(this,"Katalog","lastCatlogsSortSection: \n" + QVariant(lastCatalogsHeaderSection).toString()
-            //                    +"\ncurrentSize: \n" + QVariant(currentSize).toString()
-            //                    +"\nlastCatalogsHeaderSize: \n" + QVariant(lastCatalogsHeaderSize).toString());
-//            ui->Catalogs_treeView_CatalogList->header()->resizeSection(lastCatalogsHeaderSection,lastCatalogsHeaderSize);
-        }
-*/
 
 //Methods-----------------------------------------------------------------------
-
+    void MainWindow::hideCatalogButtons()
+    {
+        //Hide buttons
+        ui->Catalogs_pushButton_Search->setEnabled(false);
+        ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+        ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
+        ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
+    }
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
@@ -753,10 +713,6 @@
 
         //Copy the file to the same location, adding .bak for the new file name.
         QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
-
-        //Inform user
-        //QMessageBox::information(this,"Katalog","Backup done.\n");
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateSingleCatalog(Catalog *catalog)
@@ -1288,6 +1244,8 @@
                 loadCatalogFilesToTable();
 
             loadCatalogsTableToModel();
+            loadCatalogsTableToModel();
+            loadStorageTableToSelectionTreeModel();
 
         //Hide edition section
             ui->Catalogs_widget_EditCatalog->hide();
@@ -1295,7 +1253,6 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::recordCollectionStats(){
-            //recordSelectedCatalogStats(selectedCatalogName, selectedCatalogFileCount, selectedCatalogTotalFileSize);
 
             //Get last total file size and number
             qint64 lastTotalFileSize;
