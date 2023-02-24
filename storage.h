@@ -56,11 +56,17 @@ public:
     QString contentType;
     QString container;
     QString comment;
+    QDateTime lastUpdated;
+    QString statisticsFilePath;
 
     void setID(int selectedID);
 
     void loadStorageMetaData();
     void updateStorageInfo();
+    void saveStatistics();
+    void setStatisticsFilePath(QString filePath);
+    void saveStatisticsToFile();
+
 };
 
 #endif // STORAGE_H

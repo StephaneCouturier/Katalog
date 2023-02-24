@@ -519,6 +519,7 @@
             qint64 previousStorageFreeSpace  = storage->freeSpace;
             qint64 previousStorageTotalSpace = storage->totalSpace;
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
+            QDateTime lastUpdate  = storage->lastUpdated;
 
         //verify if path is available / not empty
         QDir dir (storage->path);
@@ -534,85 +535,35 @@
             ///Warning and choice if the result is 0 files
             if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
             {
-                int result = QMessageBox::warning(this,tr("Directory is empty"),tr("The source folder does not contain any file.\n"
-                                              "This could mean that the source is empty or the device is not mounted to this folder.\n")
-                                              +tr("Katalog is going try to get values anyhow."));
+                int result = QMessageBox::warning(this,tr("Directory is empty"),tr("The source folder does not contain any file.<br/><br/>"
+                                              "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>")
+                                              +tr("The application is going try to get values anyhow."));
                 //return;
                 if ( result == QMessageBox::Cancel){
                     return;
                 }
             }
 
-        //Get device information
-            QStorageInfo storageInfo;
-            storageInfo.setPath(storage->path);
-            if (storageInfo.isReadOnly())
-                qDebug() << "isReadOnly:" << storageInfo.isReadOnly();
+        //Update device information
+            storage->updateStorageInfo();
 
-            qint64 newSizeTotal = storageInfo.bytesTotal();
-            qint64 newSizeAvailable = storageInfo.bytesAvailable();
-            QString newStorageName = storageInfo.name();
-            QString newStorageFS = storageInfo.fileSystemType();
-
-        //get confirmation for the update
-            if (newSizeTotal == -1 ){
-                QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
+        //Stop if the update was not done (lastUpdate time did not change)
+            if (lastUpdate == storage->lastUpdated)
                 return;
-            }
 
-        //SQL updates
-            QSqlQuery queryUpdateStorage;
-            QString queryUpdateStorageSQL = QLatin1String(R"(
-                                                UPDATE storage
-                                                SET storage_total_space = :storage_total_space,
-                                                    storage_free_space  = :storage_free_space,
-                                                    storage_label       = :storage_label,
-                                                    storage_file_system = :storage_file_system
-                                                WHERE storage_id = :storage_id
-                                            )");
-            queryUpdateStorage.prepare(queryUpdateStorageSQL);
-            queryUpdateStorage.bindValue(":storage_total_space", QString::number(newSizeTotal));
-            queryUpdateStorage.bindValue(":storage_free_space", QString::number(newSizeAvailable));
-            queryUpdateStorage.bindValue(":storage_label", newStorageName);
-            queryUpdateStorage.bindValue(":storage_file_system", newStorageFS);
-            queryUpdateStorage.bindValue(":storage_id", QString::number(storage->ID));
-            queryUpdateStorage.exec();
+        //Save statistics
+            storage->saveStatistics();
 
-        //Add values to statistics
-            QDateTime nowDateTime = QDateTime::currentDateTime();
-
-            QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                    + storage->name + "\t"
-                                    + QString::number(newSizeAvailable) + "\t"
-                                    + QString::number(newSizeTotal) + "\t"
-                                    + "Storage" ;
-
-            // Stream the list to the file
-            QFile fileOut( collectionFolder + "/" + statisticsFileName );
-
-            // Write data
-            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                QTextStream stream(&fileOut);
-                stream << statisticsLine << "\n";
-             }
-             fileOut.close();
-
-        //Reload new data
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                         SELECT  storage_free_space, storage_total_space
-                         FROM storage
-                         WHERE storage_id =:storage_id
-                         )");
-            query.prepare(querySQL);
-            query.bindValue(":storage_id", storage->ID);
-            query.exec();
-            query.next();
+            //save to file
+                if(databaseMode=="Memory"){
+                    storage->setStatisticsFilePath(collectionFolder + "/" + statisticsFileName);
+                    storage->saveStatisticsToFile();
+                }
 
         //Prepare to report changes to the storage
-        qint64 newStorageFreeSpace    = query.value(0).toLongLong();
+        qint64 newStorageFreeSpace    = storage->freeSpace;
         qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
-        qint64 newStorageTotalSpace   = query.value(1).toLongLong();
+        qint64 newStorageTotalSpace   = storage->totalSpace;
         qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
         qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
         qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
@@ -643,9 +594,10 @@
         loadStorageTableToModel();
 
         //save model data to file
-        saveStorageData();
+        if (databaseMode=="Memory")
+            saveStorageData();
 
-        //refresh storage statistics
+        //refresh storage screen statistics
         updateStorageSelectionStatistics();
 
     }
@@ -673,19 +625,12 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageModelToFile()
     {
-        //Prepare export file name
-        //Define storage file
+        //Prepare export file
         storageFilePath = collectionFolder + "/" + "storage.csv";
-
         QFile storageFile(storageFilePath);
-
-        //QFile exportFile(collectionFolder+"/file.txt");
-    //    QString textData;
-    //    int rows = storageModel->rowCount();
-    //    int columns = storageModel->columnCount();
-
         QTextStream out(&storageFile);
-        //DEV ADD HEADER LINE
+
+        //Prepare header line
         out  << "ID"            << "\t"
              << "Name"          << "\t"
              << "Type"          << "\t"
@@ -703,18 +648,7 @@
              << "Comment"       << "\t"
              << '\n';
 
-        //save from model
-    //    for (int i = 0; i < rows; i++) {
-    //        for (int j = 0; j < columns; j++) {
-    //                textData += storageModel->data(storageModel->index(i,j)).toString();
-    //                textData += "\t";      // for .csv file format
-    //        }
-    //        textData += "\n";             // (optional: for new line segmentation)
-    //    }
-
-        //save from query
-    //    Open your output file using QFile
-    //    Run a select * query on your database table
+        //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                              SELECT * FROM storage
@@ -722,18 +656,15 @@
         query.prepare(querySQL);
         query.exec();
 
-        //    Iterate the result
-        //    -- Make a QStringList containing the output of each field
+        //Iterate the records and generate lines
         while (query.next()) {
-
             const QSqlRecord record = query.record();
             for (int i=0, recCount = record.count() ; i<recCount ; ++i){
                 if (i>0)
-                out << '\t';
+                    out << '\t';
                 out << record.value(i).toString();
             }
-     //    -- Write the result in the file
-             //out << line;
+            //-- Write the result in the file
              out << '\n';
 
         }
@@ -758,14 +689,14 @@
                                     SUM(storage_free_space),
                                     SUM(storage_total_space)
                             FROM storage
-                            WHERE storageName !=''
+                            WHERE storage_name !=''
                                         )");
 
         if ( selectedDeviceType == "Location" )
-            querySQL = querySQL + " AND storage_location = '" + selectedDeviceName + "' ";
+            querySQL += " AND storage_location = '" + selectedDeviceName + "' ";
 
         if ( selectedDeviceType == "Storage" )
-            querySQL = querySQL + " AND storage_name = '" + selectedDeviceName + "' ";
+            querySQL += " AND storage_name = '" + selectedDeviceName + "' ";
 
         query.prepare(querySQL);
         query.exec();

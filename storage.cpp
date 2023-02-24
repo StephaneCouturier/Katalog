@@ -32,6 +32,8 @@
 #include "storage.h"
 #include <QSqlQuery>
 #include <QVariant>
+#include <QMessageBox>
+#include <QCoreApplication>
 
 //set storage device definition
 void Storage::setID(int selectedID)
@@ -92,30 +94,94 @@ void Storage::updateStorageInfo()
         QStorageInfo storageInfo;
         storageInfo.setPath(path);
 
-        qint64 bytesTotal = storageInfo.bytesTotal();
+        label        = storageInfo.name();
+        fileSystem   = storageInfo.fileSystemType();
+        totalSpace   = storageInfo.bytesTotal();
+        freeSpace    = storageInfo.bytesAvailable();
 
     //Get confirmation for the update
+        qint64 bytesTotal = storageInfo.bytesTotal();
         if (bytesTotal == -1 ){
-            //QMessageBox::warning(this,tr("Katalog"),tr("Katalog could not get values. <br/> Check the source folder, or that the device is mounted to the source folder."));
+            // Get the original text
+            QString tempText = QString("Katalog could not get values. <br/><br/>"
+                               "Check that the source folder ( %1 ) is correct,<br/>"
+                               "or that the device is mounted to the source folder.").arg(path);
+
+            // Translate the text using the MainWindow context
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
             return;
         }
 
-    //SQL updates
-        QSqlQuery queryTotalSpace;
+        lastUpdated = QDateTime::currentDateTime();
 
+    //Save
+        QSqlQuery queryTotalSpace;
         QString queryTotalSpaceSQL = QLatin1String(R"(
                                         UPDATE storage
                                         SET storage_total_space = :storage_total_space,
                                             storage_free_space  = :storage_free_space,
                                             storage_label       = :storage_label,
                                             storage_file_system = :storage_file_system
-                                        WHERE storageID = :storageID
+                                        WHERE storage_id = :storage_id
                                         )");
         queryTotalSpace.prepare(queryTotalSpaceSQL);
-        queryTotalSpace.bindValue(":storage_total_space",QString::number(storageInfo.bytesTotal()));
-        queryTotalSpace.bindValue(":storage_free_space",QString::number(storageInfo.bytesAvailable()));
-        queryTotalSpace.bindValue(":storage_label",storageInfo.name());
-        queryTotalSpace.bindValue(":storage_file_system",storageInfo.fileSystemType());
+        queryTotalSpace.bindValue(":storage_total_space",QString::number(totalSpace));
+        queryTotalSpace.bindValue(":storage_free_space",QString::number(freeSpace));
+        queryTotalSpace.bindValue(":storage_label",label);
+        queryTotalSpace.bindValue(":storage_file_system",fileSystem);
+        queryTotalSpace.bindValue(":storage_id", ID);
         queryTotalSpace.exec();
 
+}
+
+void Storage::saveStatistics()
+{
+        QSqlQuery querySaveStatistics;
+        QString querySaveStatisticsSQL = QLatin1String(R"(
+                                        INSERT INTO statistics(                                                date_time,
+                                                catalog_name,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                record_type)
+                                        VALUES(
+                                                :date_time,
+                                                :catalog_name,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :record_type)
+                                        )");
+        querySaveStatistics.prepare(querySaveStatisticsSQL);
+        querySaveStatistics.bindValue(":date_time", lastUpdated);
+        querySaveStatistics.bindValue(":catalog_name", name);
+        querySaveStatistics.bindValue(":catalog_file_count", freeSpace);
+        querySaveStatistics.bindValue(":catalog_total_file_size", totalSpace);
+        querySaveStatistics.bindValue(":record_type", "Storage");
+        querySaveStatistics.exec();
+}
+
+void Storage::setStatisticsFilePath(QString filePath)
+{
+        statisticsFilePath = filePath;
+}
+
+void Storage::saveStatisticsToFile()
+{
+        QFile fileOut( statisticsFilePath);
+
+        QString statisticsLine = lastUpdated.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                 + name + "\t"
+                                 + QString::number(freeSpace) + "\t"
+                                 + QString::number(totalSpace) + "\t"
+                                 + "Storage" ;
+
+        // Write data
+        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            stream << statisticsLine << "\n";
+        }
+        fileOut.close();
 }
