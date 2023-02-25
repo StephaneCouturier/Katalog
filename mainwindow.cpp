@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //#endif
 {
     //Set current version and release date, and check new version
-        currentVersion = "1.17";
-        releaseDate    = "2023-02-20";
+        currentVersion  = "1.17";
+        releaseDate     = "2023-02-23";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -105,14 +105,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Hide some widgets by default
             ui->Catalogs_widget_EditCatalog->hide();
             ui->Statistics_calendarWidget->hide();
-
-        //For Linux, use KDE libs
-//            #ifdef Q_OS_LINUX
-//                //Set up KDE Menu/Icon actions
-//                setupActions();
-//                //Hide the lineEdit used for Windows as the Linux version uses a KDE library that is not implement in the windows version
-//                ui->Search_lineEdit_SearchText->hide();
-//            #endif
 
         //Load all other Settings and apply values
             loadSettings();
@@ -195,16 +187,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             setupFileContextMenu();
 
             //Header Order change
-            connect(ui->Catalogs_treeView_CatalogList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                    this , SLOT(on_Catalogs_treeView_CatalogList_HeaderSortOrderChanged()) );
-            connect(ui->Storage_treeView_StorageList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                    this , SLOT(on_Storage_treeView_StorageList_HeaderSortOrderChanged()) );
-            connect(ui->Explore_treeView_FileList->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                    this , SLOT(on_Explore_treeView_FileList_HeaderSortOrderChanged()) );
-            connect(ui->Search_treeView_FilesFound->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                    this , SLOT(on_Search_treeView_FilesFound_HeaderSortOrderChanged()) );
-            connect(ui->Search_treeView_History->header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                    this , SLOT(on_Search_treeView_History_HeaderSortOrderChanged()) );
+            connect(ui->Catalogs_treeView_CatalogList->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged);
+
+            connect(ui->Storage_treeView_StorageList->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged);
+
+            connect(ui->Explore_treeView_FileList->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged);
+
+            connect(ui->Search_treeView_FilesFound->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_SearchTreeViewFilesFoundHeaderSortOrderChanged);
+
+            connect(ui->Search_treeView_History->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_SearchTreeViewHistoryHeaderSortOrderChanged);
 
     //Restore sorting of views
             ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatalogsSortSection,Qt::SortOrder(lastCatalogsSortOrder));

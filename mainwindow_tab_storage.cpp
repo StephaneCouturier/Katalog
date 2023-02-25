@@ -161,7 +161,7 @@
             updateStorageSelectionStatistics();
         }
     }
-    //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     void MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged(){
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -170,12 +170,11 @@
         lastStorageSortSection = storageTreeHeader->sortIndicatorSection();
         lastStorageSortOrder   = storageTreeHeader->sortIndicatorOrder();
 
-        settings.setValue("Storage/lastStorageSortSection", QString::number(lastStorageSortSection));
-        settings.setValue("Storage/lastStorageSortOrder",   QString::number(lastStorageSortOrder));
+        settings.setValue("Storage/lastStorageSortSection", lastStorageSortSection);
+        settings.setValue("Storage/lastStorageSortOrder",   lastStorageSortOrder);
     }
 
 //Methods-----------------------------------------------------------------------
-
     void MainWindow::createStorageList()
     {
         // Create it, if it does not exist
@@ -733,8 +732,8 @@
         ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
         else ui->Storage_label_PercentFree->setText("");
     }
-//--------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_TestMedia_clicked()
     {
         QStringList filePaths;

@@ -47,8 +47,8 @@
             lastCatalogsSortSection = catalogsTreeHeader->sortIndicatorSection();
             lastCatalogsSortOrder   = catalogsTreeHeader->sortIndicatorOrder();
 
-            settings.setValue("Catalogs/lastCatlogsSortSection", QString::number(lastCatalogsSortSection));
-            settings.setValue("Catalogs/lastCatlogsSortOrder",   QString::number(lastCatalogsSortOrder));
+            settings.setValue("Catalogs/lastCatlogsSortSection", lastCatalogsSortSection);
+            settings.setValue("Catalogs/lastCatlogsSortOrder",   lastCatalogsSortOrder);
         }
         //----------------------------------------------------------------------
     //Catalog operations
