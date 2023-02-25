@@ -172,7 +172,7 @@
                             search_catalog            TEXT,
                             search_catalog_checked    INTEGER,
                             search_directory_checked  INTEGER,
-                            seleted_directory         TEXT,
+                            selected_directory        TEXT,
                             text_exclude              TEXT,
                             case_sensitive            INTEGER)
             )");
