@@ -136,7 +136,12 @@
 
             //Delete from the table
             QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare( "DELETE FROM storage WHERE storage_id = " + QString::number(selectedStorage->ID) );
+            QString queryDeviceNumberSQL = QLatin1String(R"(
+                                                DELETE FROM storage
+                                                WHERE storage_id = :storage_id
+                                            )");
+            queryDeviceNumber.prepare(queryDeviceNumberSQL);
+            queryDeviceNumber.bindValue(":storage_id",selectedStorage->ID);
             queryDeviceNumber.exec();
 
             //Reload data to model
@@ -145,7 +150,14 @@
             //Save model data to file
             saveStorageData();
 
-            //Refresh storage statistics
+            //Disable buttons to force new selection
+            ui->Storage_pushButton_SearchLocation->setEnabled(false);
+            ui->Storage_pushButton_SearchStorage->setEnabled(false);
+            ui->Storage_pushButton_CreateCatalog->setEnabled(false);
+            ui->Storage_pushButton_OpenFilelight->setEnabled(false);
+            ui->Storage_pushButton_Delete->setEnabled(false);
+
+            //Refresh storage screen statistics
             updateStorageSelectionStatistics();
         }
     }
