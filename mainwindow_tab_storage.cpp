@@ -293,7 +293,7 @@
         QSqlQuery insertQuery;
         insertQuery.prepare(querySQL);
         insertQuery.bindValue(":new_id",newID);
-        insertQuery.bindValue(":storage_name",deviceName);
+        insertQuery.bindValue(":storage_name",deviceName+"_"+QString::number(newID));
         insertQuery.bindValue(":new_location",newLocation);
         insertQuery.exec();
 
