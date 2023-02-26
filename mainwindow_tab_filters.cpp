@@ -169,6 +169,10 @@
             selectedStorage->setID(selectedDeviceID);
             selectedStorage->loadStorageMetaData();
         }
+        else if (selectedDeviceType=="Catalog"){
+            selectedCatalog->setName(selectedDeviceName);
+            selectedCatalog->loadCatalogMetaData();
+        }
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);

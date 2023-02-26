@@ -216,9 +216,9 @@
                 if (file.exists()==true){
                     QMessageBox msgBox;
                     msgBox.setWindowTitle("Katalog");
-                    msgBox.setText( tr("There is already a catalog with this name:")
+                    msgBox.setText( tr("There is already a catalog with this name:")+"<br/>"
                                    + newCatalog->name
-                                   + "\n"+tr("Choose a different name."));
+                                   + "<br/>"+tr("Choose a different name."));
                     msgBox.setIcon(QMessageBox::Information);
                     msgBox.exec();
                     return;

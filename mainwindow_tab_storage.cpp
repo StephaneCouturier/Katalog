@@ -499,8 +499,15 @@
                            WHERE storage_name !=''
                                         )");
 
-        if ( selectedStorage->location != tr("All") ){
-            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedStorage->location);
+        if ( selectedDeviceType == "Location" ){
+            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Storage" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedDeviceName);
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Catalog" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(activeCatalog->storageName);
         }
 
         querySQL += " ORDER BY storage_name ";
@@ -512,6 +519,20 @@
                 storageNameList<<query.value(0).toString();
             }
         loadStorageList();
+
+        //If a storage is selected, use it for the Create screen
+        if ( selectedDeviceType == "Location" ){
+            ui->Create_comboBox_StorageSelection->setCurrentText("");
+            ui->Create_lineEdit_NewCatalogPath->setText("/");
+        }
+        else if ( selectedDeviceType == "Storage" ){
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
+            ui->Create_lineEdit_NewCatalogPath->setText(selectedStorage->path);
+        }
+        else if ( selectedDeviceType == "Catalog" ){
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedCatalog->storageName);
+            ui->Create_lineEdit_NewCatalogPath->setText(selectedCatalog->sourcePath);
+        }
 
         //Enable buttons
             ui->Storage_pushButton_Reload->setEnabled(true);
