@@ -266,6 +266,7 @@
         loadStorageTableToSelectionTreeModel();
 
         //Add a storage device for catalogs without one
+
         QSqlQuery queryCatalog;
         QString queryCatalogSQL = QLatin1String(R"(
                                     SELECT count(*)
@@ -287,7 +288,7 @@
         queryStorage.next();
 
         if (queryCatalog.value(0).toInt() >0 and queryStorage.value(0).toInt() == 0){
-                    addStorageDevice(tr(""));
+            addStorageDevice(tr(""));
         }
 
         //Load Statistics

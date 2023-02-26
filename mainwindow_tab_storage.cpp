@@ -204,14 +204,10 @@
 
                   newStorageFile.close();
 
+                  //Enable,Disable buttons
                   ui->Storage_pushButton_Reload->setEnabled(true);
                   ui->Storage_pushButton_EditAll->setEnabled(true);
-                  //ui->Storage_pushButton_SaveAll->setEnabled(true);
 
-//                  QMessageBox::information(this,"Katalog",tr("A storage file was created")+":\n" + newStorageFile.fileName()
-//                                           + "\n"+tr("You can edit it now")+".");
-
-                  //Disable button so it cannot be overwritten
                   ui->Storage_pushButton_CreateList->setEnabled(false);
                   ui->Storage_pushButton_SaveAll->setEnabled(true);
 
@@ -219,7 +215,6 @@
                   loadStorageFileToTable();
                   loadStorageTableToModel();
                   updateStorageSelectionStatistics();
-                  addStorageDevice("");
 
             return;
             }
@@ -293,6 +288,9 @@
         insertQuery.prepare(querySQL);
         insertQuery.bindValue(":new_id",newID);
         insertQuery.bindValue(":storage_name",deviceName+"_"+QString::number(newID));
+        if(deviceName=="")
+            insertQuery.bindValue(":storage_name","");
+
         insertQuery.bindValue(":new_location",newLocation);
         insertQuery.exec();
 
