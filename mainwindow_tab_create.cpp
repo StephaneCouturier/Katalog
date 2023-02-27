@@ -210,16 +210,34 @@
             else
                     newCatalog->fileType = "All";
 
+            //Check if input where provided
+            if (newCatalog->name==""){
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("Provide a name for this new catalog.<br/>"));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.exec();
+                return;
+            }
+            if (newCatalog->sourcePath==""){
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("Provide a path for this new catalog.<br/>"));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.exec();
+                return;
+            }
+
             //Check if the catalog (file) already exists
             if(databaseMode=="Memory"){
                 QFile file(newCatalog->filePath);
                 if (file.exists()==true){
                     QMessageBox msgBox;
                     msgBox.setWindowTitle("Katalog");
-                    msgBox.setText( tr("There is already a catalog with this name:")+"<br/>"
+                    msgBox.setText( tr("There is already a catalog with this name:")+"<br/><br/>"
                                    + newCatalog->name
-                                   + "<br/>"+tr("Choose a different name."));
-                    msgBox.setIcon(QMessageBox::Information);
+                                   + "<br/><br/>"+tr("Choose a different name."));
+                    msgBox.setIcon(QMessageBox::Warning);
                     msgBox.exec();
                     return;
                 }
@@ -251,21 +269,8 @@
             newCatalog->createCatalog();
 
         //Launch the scan and cataloging of files
-            if (newCatalog->name!="" and newCatalog->sourcePath!=""){
-                requestSource = "create";
-                updateSingleCatalog(newCatalog);
-            }
-            else{
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText( tr("Provide a name and select a path for this new catalog.")
-                                +"\n" +tr("Name:")+ newCatalog->name
-                                +"\n" +tr("Path:")+newCatalog->sourcePath);
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-            }
-
-
+            requestSource = "create";
+            updateSingleCatalog(newCatalog);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
