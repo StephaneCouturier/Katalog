@@ -7264,7 +7264,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </font>
                       </property>
                       <property name="text">
-                       <string>DatabaseName</string>
+                       <string>Database Name</string>
                       </property>
                      </widget>
                     </item>
@@ -7283,7 +7283,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </font>
                       </property>
                       <property name="text">
-                       <string>UserName</string>
+                       <string>User Name</string>
                       </property>
                      </widget>
                     </item>
@@ -7357,7 +7357,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </font>
                       </property>
                       <property name="text">
-                       <string>HostName</string>
+                       <string>Host Name</string>
                       </property>
                      </widget>
                     </item>

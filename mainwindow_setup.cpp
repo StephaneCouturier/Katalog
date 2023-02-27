@@ -101,7 +101,7 @@
             if (!databaseFile.exists()){
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("databaseFile cannot be found:<br/>") + databaseFilePath);
+                msgBox.setText(tr("The Database file cannot be found:<br/>") + databaseFilePath);
                 msgBox.setIcon(QMessageBox::Information);
                 msgBox.exec();
                 selectDatabaseFilePath();
