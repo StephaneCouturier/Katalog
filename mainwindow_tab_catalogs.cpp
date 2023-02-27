@@ -1070,7 +1070,7 @@
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
         //Confirm save changes
-            QString message = tr("Save changes to the definition of the catalog?)<br/>");
+            QString message = tr("Save changes to the definition of the catalog?<br/>");
             message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
             if(newCatalogName           !=catalog->name)
                 message = message + "<tr><td>" + tr("Name")         + "</td><td>" + catalog->name         + "</td><td><b>" + newCatalogName          + "</b></td></tr>";
