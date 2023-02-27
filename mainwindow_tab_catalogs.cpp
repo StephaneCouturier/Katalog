@@ -353,6 +353,7 @@
 
                 loadCatalogsTableToModel();
                 refreshCatalogSelectionList("","");
+                loadStorageTableToSelectionTreeModel();
             }
         }
         //----------------------------------------------------------------------
