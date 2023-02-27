@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version and release date, and check new version
         currentVersion  = "1.17";
-        releaseDate     = "2023-02-23";
+        releaseDate     = "2023-02-27";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             if ( checkVersionChoice == true)
                 checkVersion();
 
-    //Set up and start database (modes: "Memory", "File", or "Remote")
+    //Set up and start database (modes: "Memory", "File", or "Hosted")
         startDatabase();
 
     //Set up the interface globally
@@ -84,12 +84,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
-            ui->Settings_comboBox_DatabaseMode->setItemData(2, "Remote", Qt::UserRole);
-            ui->Settings_lineEdit_DataMode_Remote_HostName->setText(databaseHostName);
-            ui->Settings_lineEdit_DataMode_Remote_DatabaseName->setText(databaseName);
-            ui->Settings_lineEdit_DataMode_Remote_Port->setText(QVariant(databasePort).toString());
-            ui->Settings_lineEdit_DataMode_Remote_UserName->setText(databaseUserName);
-            ui->Settings_lineEdit_DataMode_Remote_Password->setText(databasePassword);
+            ui->Settings_comboBox_DatabaseMode->setItemData(2, "Hosted", Qt::UserRole);
+            ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(databaseHostName);
+            ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->setText(databaseName);
+            ui->Settings_lineEdit_DataMode_Hosted_Port->setText(QVariant(databasePort).toString());
+            ui->Settings_lineEdit_DataMode_Hosted_UserName->setText(databaseUserName);
+            ui->Settings_lineEdit_DataMode_Hosted_Password->setText(databasePassword);
 
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
@@ -128,7 +128,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 generateCollectionFilesPaths();
 
             //Create a Storage list (if none exists)
-                createStorageList();
+                if(databaseMode=="Memory"){
+                    createStorageList();
+                }
 
             //Load Collection data from csv files
                 loadCollection();
@@ -218,7 +220,7 @@ MainWindow::~MainWindow()
 
 //DEV Templates
 /*
-qDebug()<<"DEBUG     value:    "<<value;
+qDebug()<<"DEBUG     value:    " << value;
 
 QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("value:<br/>"+QVariant(variable).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
 

@@ -65,17 +65,17 @@
         if(newDatabaseMode=="Memory"){
             ui->Settings_widget_DataMode_CSVFiles->show();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
-            ui->Settings_widget_DataMode_Remote->hide();
+            ui->Settings_widget_DataMode_Hosted->hide();
         }
         else if(newDatabaseMode=="File"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->show();
-            ui->Settings_widget_DataMode_Remote->hide();
+            ui->Settings_widget_DataMode_Hosted->hide();
         }
-        else if(newDatabaseMode=="Remote"){
+        else if(newDatabaseMode=="Hosted"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
-            ui->Settings_widget_DataMode_Remote->show();
+            ui->Settings_widget_DataMode_Hosted->show();
         }
     }
     //----------------------------------------------------------------------
@@ -170,15 +170,15 @@
     }
     //----------------------------------------------------------------------
 
-    //Remote ---------------------------------------------------------------
-    void MainWindow::on_Settings_pushButton_SaveRemoteParameters_clicked()
+    //Hosted ---------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_SaveHostedParameters_clicked()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Remote_HostName->text());
-        settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Remote_DatabaseName->text());
-        settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Remote_Port->text());
-        settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Remote_UserName->text());
-        settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Remote_Password->text());
+        settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
+        settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
+        settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
+        settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
+        settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Hosted_Password->text());
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");

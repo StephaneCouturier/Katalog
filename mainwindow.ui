@@ -7217,13 +7217,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </widget>
                </item>
                <item row="8" column="0">
-                <widget class="QWidget" name="Settings_widget_DataMode_Remote" native="true">
+                <widget class="QWidget" name="Settings_widget_DataMode_Hosted" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_17">
                   <property name="topMargin">
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QGridLayout" name="Settings_gridLayout_Remote">
+                   <layout class="QGridLayout" name="Settings_gridLayout_Hosted">
                     <property name="leftMargin">
                      <number>12</number>
                     </property>
@@ -7231,7 +7231,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <number>0</number>
                     </property>
                     <item row="2" column="0">
-                     <widget class="QLabel" name="Settings_label_DataModeRemotePort">
+                     <widget class="QLabel" name="Settings_label_DataModeHostedPort">
                       <property name="minimumSize">
                        <size>
                         <width>125</width>
@@ -7250,7 +7250,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QLabel" name="Settings_label_DataModeRemoteDatabaseName">
+                     <widget class="QLabel" name="Settings_label_DataModeHostedDatabaseName">
                       <property name="minimumSize">
                        <size>
                         <width>125</width>
@@ -7269,7 +7269,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="3" column="0">
-                     <widget class="QLabel" name="Settings_label_DataModeRemoteUserName">
+                     <widget class="QLabel" name="Settings_label_DataModeHostedUserName">
                       <property name="minimumSize">
                        <size>
                         <width>125</width>
@@ -7288,7 +7288,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="4" column="0">
-                     <widget class="QLabel" name="Settings_label_DataModeRemotePassword">
+                     <widget class="QLabel" name="Settings_label_DataModeHostedPassword">
                       <property name="minimumSize">
                        <size>
                         <width>125</width>
@@ -7307,7 +7307,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_HostName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_HostName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7316,7 +7316,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_DatabaseName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_DatabaseName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7325,7 +7325,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_Port">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Port">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7334,7 +7334,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="3" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_UserName">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_UserName">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7343,7 +7343,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="0" column="0">
-                     <widget class="QLabel" name="Settings_label_DataModeRemoteHostname">
+                     <widget class="QLabel" name="Settings_label_DataModeHostedHostname">
                       <property name="minimumSize">
                        <size>
                         <width>125</width>
@@ -7362,7 +7362,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="4" column="1">
-                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Remote_Password">
+                     <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Password">
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -7373,7 +7373,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="Settings_pushButton_SaveRemoteParameters">
+                   <widget class="QPushButton" name="Settings_pushButton_SaveHostedParameters">
                     <property name="maximumSize">
                      <size>
                       <width>150</width>

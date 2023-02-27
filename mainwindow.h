@@ -403,7 +403,7 @@ class MainWindow : public QMainWindow
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
 
-            void on_Settings_pushButton_SaveRemoteParameters_clicked();
+            void on_Settings_pushButton_SaveHostedParameters_clicked();
 
             void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
             void on_Settings_comboBox_Theme_currentIndexChanged(int index);

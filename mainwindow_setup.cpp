@@ -72,15 +72,15 @@
     QSqlError MainWindow::initializeDatabase()
     {
 
-        //Get database mode ("Memory", "File", or "Remote") and fields
+        //Get database mode ("Memory", "File", or "Hosted") and fields
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         databaseMode     = settings.value("Settings/databaseMode").toString();
         databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
-        databaseHostName = settings.value("Settings/zdatabaseHostName").toString();
-        databaseName     = settings.value("Settings/zdatabaseName").toString();
-        databasePort     = settings.value("Settings/zdatabasePort").toInt();
-        databaseUserName = settings.value("Settings/zdatabaseUserName").toString();
-        databasePassword = settings.value("Settings/zdatabasePassword").toString();
+        databaseHostName = settings.value("Settings/databaseHostName").toString();
+        databaseName     = settings.value("Settings/databaseName").toString();
+        databasePort     = settings.value("Settings/databasePort").toInt();
+        databaseUserName = settings.value("Settings/databaseUserName").toString();
+        databasePassword = settings.value("Settings/databasePassword").toString();
 
         if(databaseMode=="")
             databaseMode="Memory";
@@ -112,7 +112,7 @@
             if (!db.open())
                 return db.lastError();
         }
-        else if(databaseMode=="Remote"){
+        else if(databaseMode=="Hosted"){
 
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
@@ -130,7 +130,7 @@
             }
             else {
                 QMessageBox msgBox;
-                msgBox.setText("Remote db connected!");
+                msgBox.setText("Hosted db connected!");
                 msgBox.exec();
             }
         }
@@ -499,7 +499,7 @@
             //DEV: option to switch database mode between memory and file
             ui->Settings_widget_DataModeSelection->hide();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
-            ui->Settings_widget_DataMode_Remote->hide();
+            ui->Settings_widget_DataMode_Hosted->hide();
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()
