@@ -7684,7 +7684,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </item>
                       <item>
                        <property name="text">
-                        <string>Remote</string>
+                        <string>Hosted</string>
                        </property>
                       </item>
                      </widget>
