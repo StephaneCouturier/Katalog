@@ -251,8 +251,10 @@
             newCatalog->createCatalog();
 
         //Launch the scan and cataloging of files
-            if (newCatalog->name!="" and newCatalog->sourcePath!="")
-                    updateSingleCatalog(newCatalog);
+            if (newCatalog->name!="" and newCatalog->sourcePath!=""){
+                requestSource = "create";
+                updateSingleCatalog(newCatalog);
+            }
             else{
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
@@ -332,16 +334,8 @@
             ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
 
-            //Inform user
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("The new catalog,has been created.\n Name:   ") + newCatalog->name + "\n" +tr("Source:   ") + newCatalog->sourcePath);
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-
             //Refresh data
             loadCollection();
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::catalogDirectory(Catalog *catalog)

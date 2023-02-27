@@ -158,11 +158,14 @@
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {
             skipCatalogUpdateSummary= false;
+            requestSource ="update";
             updateSingleCatalog(selectedCatalog);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         {
+            requestSource ="update";
+
             //user to confirm running this global update
                 int confirm = QMessageBox::warning(this, "Katalog",
                                     tr("Are you sure you want to update ALL catalogs that are currently filtered and identified as active?")
@@ -389,6 +392,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
+            requestSource = "update";
             saveCatalogChanges(selectedCatalog);
         }
         //----------------------------------------------------------------------
@@ -717,7 +721,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::updateSingleCatalog(Catalog *catalog)
     {
-        //Update catalog file list
+        //Update catalog file list      
         updateCatalogFileList(catalog);
 
         //Update its storage
@@ -815,15 +819,23 @@
 
             //Inform user about the update
             if(skipCatalogUpdateSummary !=true){
-                QMessageBox::information(this,"Katalog",tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>"
-                                     "<table> <tr><td>Number of files: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
-                                     "<tr><td>Total file size: </td><td><b> %4 </b>  </td><td>  (added: <b> %5 </b>)</td></tr></table>"
-                                     ).arg(catalog->name,
-                                           QString::number(catalog->fileCount),
+                QMessageBox msgBox;
+                QString message;
+                if (requestSource=="update")
+                    message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(catalog->name);
+                else if (requestSource=="create")
+                    message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(catalog->name);
+
+                message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                                     "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                                     ).arg(QString::number(catalog->fileCount),
                                            QString::number(deltaFileCount),
                                            QLocale().formattedDataSize(catalog->totalFileSize),
-                                           QLocale().formattedDataSize(deltaTotalFileSize))
-                                     ,Qt::TextFormat(Qt::RichText));
+                                           QLocale().formattedDataSize(deltaTotalFileSize));
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(message);
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
             }
         }
         else {
