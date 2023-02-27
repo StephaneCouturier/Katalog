@@ -82,23 +82,25 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
+            //File name
             ui->Search_lineEdit_SearchText->setText("");
-
             ui->Search_checkBox_FileCriteria->setEnabled(true);
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
+            ui->Search_checkBox_CaseSensitive->setChecked(false);
             ui->Search_lineEdit_Exclude->setText(tr(""));
-            ui->Search_comboBox_FileType->setCurrentText(tr("All"));
 
+            //File criteria
+            ui->Search_checkBox_FileCriteria->setChecked(false);
             ui->Search_checkBox_Size->setChecked(false);
             ui->Search_spinBox_MinimumSize->setValue(0);
-            ui->Search_spinBox_MaximumSize->setValue(1000);
             ui->Search_comboBox_MinSizeUnit->setCurrentText(tr("Bytes"));
+            ui->Search_spinBox_MaximumSize->setValue(1000);
             ui->Search_comboBox_MaxSizeUnit->setCurrentText(tr("GiB"));
             ui->Search_checkBox_Date->setChecked(false);
             ui->Search_dateTimeEdit_Min->setDateTime(QDateTime::fromString("1970-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
-
+            ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_checkBox_Duplicates->setChecked(false);
             ui->Search_checkBox_DuplicatesName->setChecked(false);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
@@ -108,9 +110,13 @@
             ui->Search_checkBox_DifferencesSize->setChecked(false);
             ui->Search_checkBox_DifferencesDateModified->setChecked(false);
 
+            //Folder criteria
+            ui->Search_checkBox_FolderCriteria->setChecked(false);
             ui->Search_checkBox_ShowFolders->setChecked(false);
             ui->Search_checkBox_Tags->setChecked(false);
+            ui->Search_comboBox_Tags->setCurrentText("");
 
+            //Results
             ui->Search_label_NumberResults->setText("");
             ui->Search_label_SizeResults->setText("");
             ui->Search_pushButton_FileFoundMoreStatistics->setDisabled(true);

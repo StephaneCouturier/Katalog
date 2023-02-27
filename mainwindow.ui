@@ -37,79 +37,6 @@
     <bool>false</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QWidget" name="main_widget_ShowFilters" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <spacer name="Filters_verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>6</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Filters_pushButton_Filters_Show">
-         <property name="maximumSize">
-          <size>
-           <width>28</width>
-           <height>22</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Show/Hide Filters and Settings</string>
-         </property>
-         <property name="statusTip">
-          <string/>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="go-next">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="ShowFilters_verticalSpacer_WhenFiltersHidden_1">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="2">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -953,6 +880,26 @@
                      </property>
                     </spacer>
                    </item>
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_ResetAll">
+                     <property name="minimumSize">
+                      <size>
+                       <width>110</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Reset all criteria to default values, and clear previous results.</string>
+                     </property>
+                     <property name="text">
+                      <string>Reset</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-clear-history">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                  <item>
@@ -1499,26 +1446,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                        </spacer>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="Search_pushButton_ResetAll">
-                        <property name="minimumSize">
-                         <size>
-                          <width>110</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="toolTip">
-                         <string>Reset all criteria to default values, and clear previous results.</string>
-                        </property>
-                        <property name="text">
-                         <string>Reset</string>
-                        </property>
-                        <property name="icon">
-                         <iconset theme="edit-clear-history">
-                          <normaloff>.</normaloff>.</iconset>
-                        </property>
-                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -5830,6 +5757,206 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
+            <item row="1" column="0">
+             <widget class="Line" name="Storage_line_Separate">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <layout class="QHBoxLayout" name="Storage_horizontalLayout_SelectedDevice">
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_New">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Add a new storage device</string>
+                </property>
+                <property name="text">
+                 <string>New</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="folder-new">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_SaveAll">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Save changes made directly in the table below</string>
+                </property>
+                <property name="text">
+                 <string>Save All</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-save">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="Storage_label_WithSelectedStorage">
+                <property name="minimumSize">
+                 <size>
+                  <width>135</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>with selected</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>4</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_SearchStorage">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Search files or folders in the selected storage device</string>
+                </property>
+                <property name="text">
+                 <string>Storage</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-find">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_SearchLocation">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Search files or folders in the selected location</string>
+                </property>
+                <property name="text">
+                 <string>Location</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-find">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_CreateCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Create a new catalog for this device</string>
+                </property>
+                <property name="text">
+                 <string>Catalog</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="journal-new">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_OpenFilelight">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Open the path in Filelight</string>
+                </property>
+                <property name="text">
+                 <string>Filelight</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="gparted">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_Update">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Update the values for the selected device (label, filesystem, total size, free space)</string>
+                </property>
+                <property name="text">
+                 <string>Update</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="media-playlist-repeat">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="Storage_horizontalSpacer_06">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Storage_pushButton_Delete">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Delete the selected device</string>
+                </property>
+                <property name="text">
+                 <string>Delete</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-delete">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="Storage_horizontalSpacer_07">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
             <item row="0" column="0">
              <layout class="QHBoxLayout" name="Storage_horizontalLayout_Summary">
               <item>
@@ -6044,205 +6171,68 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="Line" name="Storage_line_Separate">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
+            <item row="4" column="0">
+             <widget class="QWidget" name="widget" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_19">
+               <item>
+                <widget class="QLabel" name="Storage_label_PanelDevice">
+                 <property name="text">
+                  <string>Device</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Storage_pushButton_PanelNew">
+                 <property name="text">
+                  <string>New</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Storage_pushButton_PanelSaveAll">
+                 <property name="text">
+                  <string>Save All</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Storage_pushButton_TestMedia">
+                 <property name="text">
+                  <string>TEST MEDIA</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListView" name="Storage_listView_Media"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Storage_pushButton_ShowHidePanel">
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Show/Hide Filters and Settings</string>
+                 </property>
+                 <property name="statusTip">
+                  <string/>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding: 2px 10px;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset theme="go-previous">
+                   <normaloff>.</normaloff>.</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="Storage_horizontalLayout_SelectedDevice">
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_New">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Add a new storage device</string>
-                </property>
-                <property name="text">
-                 <string>New</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="folder-new">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_SaveAll">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Save changes made directly in the table below</string>
-                </property>
-                <property name="text">
-                 <string>Save All</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-save">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="Storage_label_WithSelectedStorage">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>with selected</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="margin">
-                 <number>4</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_SearchStorage">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Search files or folders in the selected storage device</string>
-                </property>
-                <property name="text">
-                 <string>Storage</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-find">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_SearchLocation">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Search files or folders in the selected location</string>
-                </property>
-                <property name="text">
-                 <string>Location</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-find">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_CreateCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Create a new catalog for this device</string>
-                </property>
-                <property name="text">
-                 <string>Catalog</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="journal-new">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_OpenFilelight">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Open the path in Filelight</string>
-                </property>
-                <property name="text">
-                 <string>Filelight</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="gparted">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_Update">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Update the values for the selected device (label, filesystem, total size, free space)</string>
-                </property>
-                <property name="text">
-                 <string>Update</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="media-playlist-repeat">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="Storage_horizontalSpacer_06">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Storage_pushButton_Delete">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="toolTip">
-                 <string>Delete the selected device</string>
-                </property>
-                <property name="text">
-                 <string>Delete</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="edit-delete">
-                  <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="Storage_horizontalSpacer_07">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
             </item>
             <item row="3" column="0">
              <layout class="QHBoxLayout" name="Storage_horizontalLayout_ListAndPanel">
@@ -6265,33 +6255,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QWidget" name="Storage_widget_EditPanel" native="true">
                 <layout class="QGridLayout" name="gridLayout_5">
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="Storage_label_PanelDevice">
-                   <property name="text">
-                    <string>Device</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0" rowspan="2" colspan="3">
-                  <widget class="QWidget" name="Storage_widget_DevicePanelForm" native="true">
-                   <layout class="QVBoxLayout" name="verticalLayout_5">
-                    <item>
-                     <widget class="QPushButton" name="Storage_pushButton_PanelNew">
-                      <property name="text">
-                       <string>New</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Storage_pushButton_PanelSaveAll">
-                      <property name="text">
-                       <string>Save All</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
                  <item row="4" column="2">
                   <spacer name="spacer">
                    <property name="orientation">
@@ -6305,41 +6268,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </spacer>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="Storage_pushButton_ShowHidePanel">
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>22</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Show/Hide Filters and Settings</string>
-                   </property>
-                   <property name="statusTip">
-                    <string/>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 2px 10px;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="go-previous">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
+                 <item row="1" column="0" rowspan="2" colspan="3">
+                  <widget class="QWidget" name="Storage_widget_DevicePanelForm" native="true">
+                   <layout class="QVBoxLayout" name="verticalLayout_5"/>
                   </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QPushButton" name="Storage_pushButton_TestMedia">
-                   <property name="text">
-                    <string>TEST MEDIA</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QListView" name="Storage_listView_Media"/>
                  </item>
                 </layout>
                </widget>
@@ -6819,12 +6751,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <number>0</number>
             </property>
             <item row="2" column="0">
-             <layout class="QGridLayout" name="Settings_gridLayout_Options_2">
+             <layout class="QGridLayout" name="Settings_gridLayout_LanguageTheme">
               <property name="leftMargin">
                <number>12</number>
               </property>
               <item row="1" column="3">
-               <spacer name="horizontalSpacer_10">
+               <spacer name="Settings_horizontalSpacer_10">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6862,7 +6794,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <spacer name="horizontalSpacer_13">
+                 <spacer name="Settings_horizontalSpacer_13">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -6950,7 +6882,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item row="5" column="0">
-             <layout class="QGridLayout" name="Settings_gridLayout_Options">
+             <layout class="QGridLayout" name="Settings_gridLayout_OtherSettings">
               <property name="leftMargin">
                <number>12</number>
               </property>
@@ -7030,7 +6962,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item row="1" column="3">
-               <spacer name="horizontalSpacer_14">
+               <spacer name="Settings_horizontalSpacer_14">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -7043,7 +6975,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </spacer>
               </item>
               <item row="1" column="6">
-               <spacer name="horizontalSpacer_15">
+               <spacer name="Settings_horizontalSpacer_15">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -7258,7 +7190,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item row="4" column="4">
-                 <spacer name="horizontalSpacer_5">
+                 <spacer name="Settings_horizontalSpacer_5">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -7504,6 +7436,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
                     <item>
+                     <spacer name="Settings_horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="Settings_pushButton_SelectDatabaseFilePath">
                       <property name="maximumSize">
                        <size>
@@ -7547,7 +7495,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer_2">
+                     <spacer name="Settings_horizontalSpacer_2">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -7571,7 +7519,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_13">
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_13">
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder">
                       <property name="minimumSize">
@@ -7603,7 +7551,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_4">
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_12">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_SelectFolder">
                       <property name="maximumSize">
@@ -7648,7 +7612,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer_11">
+                     <spacer name="Settings_horizontalSpacer_11">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -7698,7 +7662,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <widget class="QWidget" name="Settings_widget_DataModeSelection" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_18">
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_5">
                     <item>
                      <widget class="QLabel" name="Settings_label_DataMode">
                       <property name="text">
@@ -7736,7 +7700,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer_6">
+                     <spacer name="Settings_horizontalSpacer_6">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -7781,6 +7745,79 @@ background: url(:/images/link-h.png) repeat-x center;</string>
         </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QWidget" name="main_widget_ShowFilters" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="Filters_verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>6</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Filters_pushButton_Filters_Show">
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Show/Hide Filters and Settings</string>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="go-next">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="ShowFilters_verticalSpacer_WhenFiltersHidden_1">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
