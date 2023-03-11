@@ -70,8 +70,8 @@ QVariant ExploreTreeModel::data(const QModelIndex &index, int role) const
 
 Qt::ItemFlags ExploreTreeModel::flags(const QModelIndex &index) const
 {
-//    if (!index.isValid())
-//        return 0;
+    if (!index.isValid())
+        return Qt::NoItemFlags;
 
     return QAbstractItemModel::flags(index);
 }
@@ -154,10 +154,11 @@ void ExploreTreeModel::setCatalog(QString newCatalogName, QString newCatalogSour
 
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
 {
-    QList<ExploreTreeItem*> parents;
-    parents << parent;
+        QList<ExploreTreeItem*> parents;
+        parents << parent;
 
         QSqlQuery query;
+
         QString querySQL = QLatin1String(R"(
                                 SELECT DISTINCT (REPLACE(folder_path, :selectedCatalogPath, '')) AS file_path,
                                        folder_path AS full_path
@@ -167,9 +168,9 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                             )");
         query.prepare(querySQL);
         query.bindValue(":folder_catalog_name", catalogName);
-        query.bindValue(":selectedCatalogPath",catalogSourcePath);
+        query.bindValue(":selectedCatalogPath", catalogSourcePath);
         query.exec();
-query.next();
+
 
         int idPath = query.record().indexOf("file_path");
         int idIdx  = query.record().indexOf("full_path");
@@ -178,9 +179,9 @@ query.next();
 
         while (query.next())
         {
-           QString name         = query.value(idPath).toString();
+           QString name = query.value(idPath).toString();
 
-                   int id_file          = query.value(idIdx).toInt();
+                   int id_file = query.value(idIdx).toInt();
                    QString folderPath;
 
                    QStringList nodeString = name.split("/", Qt::SkipEmptyParts);
