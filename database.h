@@ -51,7 +51,7 @@
                             catalog_storage               TEXT,
                             catalog_include_symblinks     TEXT,
                             catalog_is_full_device        TEXT,
-                            catalog_loaded_version        TEXT,
+                            catalog_date_loaded           TEXT,
                             catalog_include_metadata      TEXT,
                             PRIMARY KEY("catalog_name"))
             )");

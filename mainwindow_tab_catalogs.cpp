@@ -481,7 +481,7 @@
                                                             catalog_storage,
                                                             catalog_include_symblinks,
                                                             catalog_is_full_device,
-                                                            catalog_loaded_version,
+                                                            catalog_date_loaded,
                                                             catalog_include_metadata
                                                             )
                                             VALUES(
@@ -497,7 +497,7 @@
                                                             :catalog_storage,
                                                             :catalog_include_symblinks,
                                                             :catalog_is_full_device,
-                                                            :catalog_loaded_version,
+                                                            :catalog_date_loaded,
                                                             :catalog_include_metadata )
                                         )");
 
@@ -514,7 +514,7 @@
                     insertCatalogQuery.bindValue(":catalog_storage",catalogValues[5]);
                     insertCatalogQuery.bindValue(":catalog_include_symblinks",catalogValues[6]);
                     insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
-                    insertCatalogQuery.bindValue(":catalog_loaded_version","");
+                    insertCatalogQuery.bindValue(":catalog_date_loaded","");
                     insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
                     insertCatalogQuery.exec();
 
@@ -545,7 +545,7 @@
                                             catalog_storage              ,
                                             storage_location             ,
                                             catalog_is_full_device       ,
-                                            catalog_loaded_version
+                                            catalog_date_loaded
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalog_storage = storage_name
                                         WHERE catalog_name !=''
@@ -573,7 +573,7 @@
 
             //Format and send to Treeview
             QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
-            catalogQueryModel->setQuery(loadCatalogQuery);
+            catalogQueryModel->setQuery(std::move(loadCatalogQuery));
 
             CatalogsView *proxyResultsModel = new CatalogsView(this);
             proxyResultsModel->setSourceModel(catalogQueryModel);
@@ -617,8 +617,8 @@
 
             //Hide columns
             if(developmentMode==false){
-                ui->Catalogs_treeView_CatalogList->hideColumn(9); //includeMetadata
-                ui->Catalogs_treeView_CatalogList->hideColumn(13); //Loaded Version
+                ui->Catalogs_treeView_CatalogList->hideColumn( 9); //includeMetadata
+                ui->Catalogs_treeView_CatalogList->hideColumn(13); //date Loaded
                 ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             }
             //Populate catalogs statistics

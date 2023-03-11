@@ -66,14 +66,15 @@ public:
     void setName(QString selectedName);
     void setFilePath(QString selectedFilePath);
     void setSourcePath(QString selectedSourcePath);
-    void setFileCount(qint64 selectedFileCount);
-    void setTotalFileSize(qint64 selectedTotalFileSize);
+    void setFileCount(); //from database
+    void setTotalFileSize(); //from database
     void setIncludeHidden(bool selectedIncludeHidden);
     void setFileType(QString selectedFileType);
     void setStorageName(QString selectedStorageName);
     void setIncludeSymblinks(bool selectedIncludeSymblinks);
     void setIsFullDevice(bool selectedIsFullDevice);
-    void setDateLoaded(QString dateTime);
+    void setDateLoaded();
+    void setDateUpdated();
     void setIncludeMetadata(bool selectedIncludeMetadata);
 
     void createCatalog();
@@ -83,11 +84,11 @@ public:
     void renameCatalogFile(QString newCatalogName);
     void loadCatalogFileListToTable();
 
-    void populateFileData(  const QList<QString> &fileNames,
-                            const QList<qint64>  &fileSizes,
-                            const QList<QString> &filePaths,
-                            const QList<QString> &fileDateTimes,
-                            const QList<QString> &fileCatalogs);
+    void populateFileData( const QList<QString> &fileNames,
+                           const QList<qint64>  &fileSizes,
+                           const QList<QString> &filePaths,
+                           const QList<QString> &fileDateTimes,
+                           const QList<QString> &fileCatalogs);
 
 private:
     QList<QString> fileNames;

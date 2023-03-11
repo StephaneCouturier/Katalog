@@ -38,405 +38,405 @@
 #include "exploretreeview.h"
 
 //UI----------------------------------------------------------------------------
+    void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
+    {
+        //Get selected directory name
+        QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
+        selectedDirectoryFullPath = fullPath;
+        selectedDirectoryName = fullPath.remove(activeCatalog->sourcePath + "/");
 
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
-        {
-            //Get selected directory name
-            QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
-            selectedDirectoryFullPath = fullPath;
-            selectedDirectoryName = fullPath.remove(activeCatalog->sourcePath + "/");
+        //Display selected directory name
+        ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
-            //Display selected directory name
-            ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+        //Remember selected directory name
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+
+        //Load directory files
+        loadSelectedDirectoryFilesToExplore();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
+    {
+        //Get file from selected row
+        QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile       = selectedFileFolder+"/"+selectedFileName;
+        QString selectedType       = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+
+        if(selectedType=="file"){
+            //Open the file (fromLocalFile needed for spaces in file name)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+        }
+        else{
+            //openDirectory
+            selectedDirectoryFullPath = selectedFileFolder;
+            selectedDirectoryName     = selectedFileFolder.remove(activeCatalog->sourcePath + "/");
 
             //Remember selected directory name
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
-            //Load directory files
+            //Reload
             loadSelectedDirectoryFilesToExplore();
         }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_treeView_FileList_clicked(const QModelIndex &index)
-        {
-            //Get file from selected row
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile       = selectedFileFolder+"/"+selectedFileName;
-            QString selectedType       = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
 
-            if(selectedType=="file"){
-                //Open the file (fromLocalFile needed for spaces in file name)
-                QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged(){
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QHeaderView *exploreTreeHeader = ui->Explore_treeView_FileList->header();
+
+        lastExploreSortSection = exploreTreeHeader->sortIndicatorSection();
+        lastExploreSortOrder   = exploreTreeHeader->sortIndicatorOrder();
+
+        settings.setValue("Explore/lastExploreSortSection", QString::number(lastExploreSortSection));
+        settings.setValue("Explore/lastExploreSortOrder",   QString::number(lastExploreSortOrder));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Explore_splitter_splitterMoved()
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Explore/ExploreSplitterWidget1Size", ui->Explore_splitter_widget_Directory->size());
+        settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_ExplorePushButtonLoadClicked()
+    {
+        //reloads catalog to explore at root level
+        if (selectedDeviceType=="Catalog" and selectedDeviceName != selectedFilterCatalogName){
+            selectedFilterCatalogName = selectedDeviceName;
+        }
+        openCatalogToExplore();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
+    {
+        optionDisplayFolders = checked;
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Explore/DisplayFolders", optionDisplayFolders);
+        loadSelectedDirectoryFilesToExplore();
+        if(checked==true){ui->Explore_checkBox_DisplaySubFolders->setEnabled(true);}
+        else {ui->Explore_checkBox_DisplaySubFolders->setEnabled(false);}
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Explore_checkBox_DisplaySubFolders_toggled(bool checked)
+    {
+        optionDisplaySubFolders = checked;
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Explore/DisplaySubFolders", optionDisplaySubFolders);
+        loadSelectedDirectoryFilesToExplore();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Explore_pushButton_OrderFoldersFirst_clicked()
+    {
+        ui->Explore_treeView_FileList->QTreeView::sortByColumn(6,Qt::AscendingOrder);
+    }
+    //----------------------------------------------------------------------
+
+//Context Menu - directories
+    void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
+    {
+        QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
+        QMenu directoryContextMenu;
+
+        QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
+        connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
+        directoryContextMenu.addAction(menuDirectoryAction1);
+
+        directoryContextMenu.exec(globalPos);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextTagFolder()
+    {
+        QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
+
+        QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
+
+        ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
+        ui->tabWidget->setCurrentIndex(6);
+    }
+    //--------------------------------------------------------------------------
+
+//Context Menu - files
+    void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
+    {
+        //Get tiem type (file or folder)
+        QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
+        QModelIndex tempindex = ui->Explore_treeView_FileList->indexAt(pos);
+        QString selectedType = ui->Explore_treeView_FileList->model()->index(tempindex.row(), 5, QModelIndex()).data().toString();
+
+        QMenu fileContextMenu;
+
+        if (selectedType == "file")
+        {
+            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
+            connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFile);
+            fileContextMenu.addAction(menuAction1);
+
+            QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+            connect(menuAction2, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
+            fileContextMenu.addAction(menuAction2);
+
+            fileContextMenu.addSeparator();
+
+            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+            connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
+            fileContextMenu.addAction(menuAction3);
+
+            QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
+            connect( menuAction4,&QAction::triggered, this, &MainWindow::exploreContextCopyAbsolutePath);
+            fileContextMenu.addAction(menuAction4);
+
+            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
+            connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
+            fileContextMenu.addAction(menuAction5);
+
+            QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
+            connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
+            fileContextMenu.addAction(menuAction6);
+
+            fileContextMenu.addSeparator();
+
+            //DEV
+            if (developmentMode == true){
+                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
+                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
+                fileContextMenu.addAction(menuAction7);
             }
-            else{
-                //openDirectory
-                selectedDirectoryFullPath = selectedFileFolder;
-                selectedDirectoryName     = selectedFileFolder.remove(activeCatalog->sourcePath + "/");
 
-                //Remember selected directory name
-                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+            QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
+            connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
+            fileContextMenu.addAction(menuAction8);
 
-                //Reload
-                loadSelectedDirectoryFilesToExplore();
-            }
-
+            QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete file")), this);
+            connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
+            fileContextMenu.addAction(menuAction9);
         }
-        //----------------------------------------------------------------------
-        void MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged(){
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            QHeaderView *exploreTreeHeader = ui->Explore_treeView_FileList->header();
-
-            lastExploreSortSection = exploreTreeHeader->sortIndicatorSection();
-            lastExploreSortOrder   = exploreTreeHeader->sortIndicatorOrder();
-
-            settings.setValue("Explore/lastExploreSortSection", QString::number(lastExploreSortSection));
-            settings.setValue("Explore/lastExploreSortOrder",   QString::number(lastExploreSortOrder));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_splitter_splitterMoved()
+        else if (selectedType == "folder")
         {
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/ExploreSplitterWidget1Size", ui->Explore_splitter_widget_Directory->size());
-            settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_ExplorePushButtonLoadClicked()
-        {
-            //reloads catalog to explore at root level
-            if (selectedDeviceType=="Catalog" and selectedDeviceName != selectedFilterCatalogName){
-                selectedFilterCatalogName = selectedDeviceName;
-            }
-            openCatalogToExplore();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
-        {
-            optionDisplayFolders = checked;
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/DisplayFolders", optionDisplayFolders);
-            loadSelectedDirectoryFilesToExplore();
-            if(checked==true){ui->Explore_checkBox_DisplaySubFolders->setEnabled(true);}
-            else {ui->Explore_checkBox_DisplaySubFolders->setEnabled(false);}
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_checkBox_DisplaySubFolders_toggled(bool checked)
-        {
-            optionDisplaySubFolders = checked;
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/DisplaySubFolders", optionDisplaySubFolders);
-            loadSelectedDirectoryFilesToExplore();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Explore_pushButton_OrderFoldersFirst_clicked()
-        {
-            ui->Explore_treeView_FileList->QTreeView::sortByColumn(6,Qt::AscendingOrder);
-        }
-        //----------------------------------------------------------------------
+            QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
+            connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
+            fileContextMenu.addAction(menuAction1);
 
-    //Context Menu - directories
-        void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
-        {
-            QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
-            QMenu directoryContextMenu;
+            fileContextMenu.addSeparator();
 
-            QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
-            connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
-            directoryContextMenu.addAction(menuDirectoryAction1);
+            QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
+            connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
+            fileContextMenu.addAction(menuAction3);
 
-            directoryContextMenu.exec(globalPos);
-        }
+            QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder name")), this);
+            connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
+            fileContextMenu.addAction(menuAction5);
 
-        void MainWindow::exploreContextTagFolder()
-        {
-            QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
+            fileContextMenu.addSeparator();
 
-            QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
+            //DEV
+            if (developmentMode == true){
+                QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
+                connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
+                fileContextMenu.addAction(menuAction7);
 
-            ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
-            ui->tabWidget->setCurrentIndex(6);
-        }
-
-    //Context Menu - files
-        void MainWindow::on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos)
-        {
-            //Get tiem type (file or folder)
-            QPoint globalPos = ui->Explore_treeView_FileList->mapToGlobal(pos);
-            QModelIndex tempindex = ui->Explore_treeView_FileList->indexAt(pos);
-            QString selectedType = ui->Explore_treeView_FileList->model()->index(tempindex.row(), 5, QModelIndex()).data().toString();
-
-            QMenu fileContextMenu;
-
-            if (selectedType == "file")
-            {
-                QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open file")), this);
-                connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFile);
-                fileContextMenu.addAction(menuAction1);
-
-                QAction *menuAction2 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
-                connect(menuAction2, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
-                fileContextMenu.addAction(menuAction2);
-
-                fileContextMenu.addSeparator();
-
-                QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
-                connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
-                fileContextMenu.addAction(menuAction3);
-
-                QAction *menuAction4 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file absolute path")), this);
-                connect( menuAction4,&QAction::triggered, this, &MainWindow::exploreContextCopyAbsolutePath);
-                fileContextMenu.addAction(menuAction4);
-
-                QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name with extension")), this);
-                connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
-                fileContextMenu.addAction(menuAction5);
-
-                QAction *menuAction6 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy file name without extension")), this);
-                connect( menuAction6,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithoutExtension);
-                fileContextMenu.addAction(menuAction6);
-
-                fileContextMenu.addSeparator();
-
-                //DEV
-                if (developmentMode == true){
-                    QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                    connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                    fileContextMenu.addAction(menuAction7);
-                }
-
-                QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
-                connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
-                fileContextMenu.addAction(menuAction8);
-
-                QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete file")), this);
+                QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete folder")), this);
                 connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
                 fileContextMenu.addAction(menuAction9);
             }
-            else if (selectedType == "folder")
-            {
-                QAction *menuAction1 = new QAction(QIcon::fromTheme("document-open-data"),(tr("Open folder")), this);
-                connect(menuAction1, &QAction::triggered, this, &MainWindow::exploreContextOpenFolder);
-                fileContextMenu.addAction(menuAction1);
 
-                fileContextMenu.addSeparator();
+            QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move folder to Trash")), this);
+            connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
+            fileContextMenu.addAction(menuAction8);
+        }
 
-                QAction *menuAction3 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder path")), this);
-                connect( menuAction3,&QAction::triggered, this, &MainWindow::exploreContextCopyFolderPath);
-                fileContextMenu.addAction(menuAction3);
+        fileContextMenu.exec(globalPos);
 
-                QAction *menuAction5 = new QAction(QIcon::fromTheme("edit-copy"),(tr("Copy folder name")), this);
-                connect( menuAction5,&QAction::triggered, this, &MainWindow::exploreContextCopyFileNameWithExtension);
-                fileContextMenu.addAction(menuAction5);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextOpenFile()
+    {
+        QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+        //Get filepath from selected row
+        QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+        //Open the file (fromLocalFile needed for spaces in file name)
+        QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextOpenFolder()
+    {
+        QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+        QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+        QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextCopyAbsolutePath()
+    {
+        QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
 
-                fileContextMenu.addSeparator();
+        QString selectedFileName =   ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
 
-                //DEV
-                if (developmentMode == true){
-                    QAction *menuAction7 = new QAction(QIcon::fromTheme("document-export"),(tr("Move file to other folder")), this);
-                    connect( menuAction7,&QAction::triggered, this, &MainWindow::searchContextMoveFileToFolder);
-                    fileContextMenu.addAction(menuAction7);
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString originalText = clipboard->text();
+        clipboard->setText(selectedFile);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextCopyFolderPath()
+    {
+        QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
 
-                    QAction *menuAction9 = new QAction(QIcon::fromTheme("edit-delete"),(tr("Delete folder")), this);
-                    connect( menuAction9,&QAction::triggered, this, &MainWindow::exploreContextDeleteFile);
-                    fileContextMenu.addAction(menuAction9);
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString originalText = clipboard->text();
+        clipboard->setText(selectedFileFolder);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextCopyFileNameWithExtension()
+    {
+        QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
+        QString selectedFileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+
+        QString fileNameWithExtension = selectedFileName;
+
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString originalText = clipboard->text();
+        clipboard->setText(fileNameWithExtension);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextCopyFileNameWithoutExtension()
+    {
+        QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+
+        QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
+        QFileInfo fileName;
+        fileName.setFile(selectedFile);
+        QString fileNameWithoutExtension = fileName.completeBaseName();
+
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString originalText = clipboard->text();
+        clipboard->setText(fileNameWithoutExtension);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextMoveFileToFolder()
+    {
+        QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+
+        QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+        QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedFile = selectedFileFolder+"/"+selectedFileName;
+
+        QString pathInTrash;
+
+        if (selectedFileName.isEmpty()) {
+            return;
+        }
+
+        if (QMessageBox::question(this,
+                                  tr("Confirmation"),
+                                  tr("Move\n%1\nto the trash?").arg(selectedFile))
+            == QMessageBox::Yes) {
+            QFile file(selectedFile);
+            if (file.exists()) {
+                //Open a dialog for the user to select the target folder
+                QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
+                                                                collectionFolder,
+                                                                QFileDialog::ShowDirsOnly
+                                                                | QFileDialog::DontResolveSymlinks);
+
+                //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
+                if ( dir !=""){
+                    //move
+
                 }
 
-                QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move folder to Trash")), this);
-                connect( menuAction8,&QAction::triggered, this, &MainWindow::exploreContextMoveFileToTrash);
-                fileContextMenu.addAction(menuAction8);
-            }
+                //move file
+                QMessageBox::warning(this, tr("Warning"), tr("Moved to folder:<br/>") + dir);
 
-            fileContextMenu.exec(globalPos);
-
-        }
-
-        void MainWindow::exploreContextOpenFile()
-        {
-            QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
-            //Get filepath from selected row
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-            //Open the file (fromLocalFile needed for spaces in file name)
-            QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-        }
-
-        void MainWindow::exploreContextOpenFolder()
-        {
-            QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-            QString folderName = selectedFile.left(selectedFile.lastIndexOf("/"));
-            QDesktopServices::openUrl(QUrl::fromLocalFile(folderName));
-        }
-
-        void MainWindow::exploreContextCopyAbsolutePath()
-        {
-            QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
-
-            QString selectedFileName =   ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-
-            QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
-            clipboard->setText(selectedFile);
-        }
-
-        void MainWindow::exploreContextCopyFolderPath()
-        {
-            QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-
-            QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
-            clipboard->setText(selectedFileFolder);
-        }
-
-        void MainWindow::exploreContextCopyFileNameWithExtension()
-        {
-            QModelIndex index = ui->Explore_treeView_FileList->currentIndex();
-            QString selectedFileName = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-
-            QString fileNameWithExtension = selectedFileName;
-
-            QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
-            clipboard->setText(fileNameWithExtension);
-        }
-
-        void MainWindow::exploreContextCopyFileNameWithoutExtension()
-        {
-            QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
-
-            QString selectedFileName   = ui->Explore_treeView_FileList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-
-            QFileInfo fileName;
-            fileName.setFile(selectedFile);
-            QString fileNameWithoutExtension = fileName.completeBaseName();
-
-            QClipboard *clipboard = QGuiApplication::clipboard();
-            QString originalText = clipboard->text();
-            clipboard->setText(fileNameWithoutExtension);
-        }
-
-        void MainWindow::exploreContextMoveFileToFolder()
-        {
-            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
-
-            QString selectedFileName   = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFile = selectedFileFolder+"/"+selectedFileName;
-
-            QString pathInTrash;
-
-            if (selectedFileName.isEmpty()) {
-                return;
-            }
-
-            if (QMessageBox::question(this,
-                                      tr("Confirmation"),
-                                      tr("Move\n%1\nto the trash?").arg(selectedFile))
-                == QMessageBox::Yes) {
-                QFile file(selectedFile);
-                if (file.exists()) {
-                    //Open a dialog for the user to select the target folder
-                    QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                    collectionFolder,
-                                                                    QFileDialog::ShowDirsOnly
-                                                                    | QFileDialog::DontResolveSymlinks);
-
-                    //Unless the selection was cancelled, set the new collection folder, and refresh the list of catalogs
-                    if ( dir !=""){
-                        //move
-
-                    }
-
-                    //move file
-                    QMessageBox::warning(this, tr("Warning"), tr("Moved to folder:<br/>") + dir);
-
-                } else {
-                    QMessageBox::warning(this, tr("Warning"), tr("Move to folder failed."));
-                }
+            } else {
+                QMessageBox::warning(this, tr("Warning"), tr("Move to folder failed."));
             }
         }
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextMoveFileToTrash()
+    {
+        //Get selected data
+        QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+        QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+        QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
 
-        void MainWindow::exploreContextMoveFileToTrash()
-        {
-            //Get selected data
-            QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
-            QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
+        //Define what to move to trash
+        QString pathInTrash;
+        QString pathToMove;
+        if (selectedType=="file")
+            pathToMove= selectedFilePath;
+        else pathToMove = selectedFileDirectory;
 
-            //Define what to move to trash
-            QString pathInTrash;
-            QString pathToMove;
-            if (selectedType=="file")
-                pathToMove= selectedFilePath;
-            else pathToMove = selectedFileDirectory;
-
-            if (selectedFilePath.isEmpty()) {
-                return;
-            }
-
-            //confirm and move
-            if (QMessageBox::question(this,
-                                      tr("Confirmation"),
-                                      tr("Move\n%1\nto the trash?").arg(pathToMove))
-                == QMessageBox::Yes) {
-                if (QFile::moveToTrash(pathToMove, &pathInTrash)) {
-                    QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
-
-                } else {
-                    QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
-                }
-            }
+        if (selectedFilePath.isEmpty()) {
+            return;
         }
 
-        void MainWindow::exploreContextDeleteFile()
-        {
-            //Get selected data
-            QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
-            QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
-            QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
+        //confirm and move
+        if (QMessageBox::question(this,
+                                  tr("Confirmation"),
+                                  tr("Move\n%1\nto the trash?").arg(pathToMove))
+            == QMessageBox::Yes) {
+            if (QFile::moveToTrash(pathToMove, &pathInTrash)) {
+                QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
 
-            //Define what to move to trash
-            QString pathInTrash;
-            QString pathToDelete;
-            if (selectedType=="file")
-                pathToDelete= selectedFilePath;
-            else pathToDelete = selectedFileDirectory;
-
-            if (selectedFilePath.isEmpty()) {
-                return;
-            }
-
-            //confirm and delete
-            if (QMessageBox::question(this,
-                                      tr("Confirmation"),
-                                      tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(pathToDelete))
-                == QMessageBox::Yes) {
-
-                QFile file(pathToDelete);
-                if (file.exists()) {
-
-                    file.remove();
-
-                    QMessageBox::warning(this, tr("Warning"), tr("Deleted.") );
-
-                } else {
-                    QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
-                }
+            } else {
+                QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
             }
         }
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::exploreContextDeleteFile()
+    {
+        //Get selected data
+        QModelIndex index=ui->Explore_treeView_FileList->currentIndex();
+        QString selectedFileDirectory = ui->Explore_treeView_FileList->model()->index(index.row(), 3, QModelIndex()).data().toString();
+        QString selectedType          = ui->Explore_treeView_FileList->model()->index(index.row(), 5, QModelIndex()).data().toString();
+        QString selectedFilePath      = ui->Explore_treeView_FileList->model()->index(index.row(), 7, QModelIndex()).data().toString();
+
+        //Define what to move to trash
+        QString pathInTrash;
+        QString pathToDelete;
+        if (selectedType=="file")
+            pathToDelete= selectedFilePath;
+        else pathToDelete = selectedFileDirectory;
+
+        if (selectedFilePath.isEmpty()) {
+            return;
+        }
+
+        //confirm and delete
+        if (QMessageBox::question(this,
+                                  tr("Confirmation"),
+                                  tr("<span style='color:red;'>DELETE</span><br/> %1 <br/>?").arg(pathToDelete))
+            == QMessageBox::Yes) {
+
+            QFile file(pathToDelete);
+            if (file.exists()) {
+
+                file.remove();
+
+                QMessageBox::warning(this, tr("Warning"), tr("Deleted.") );
+
+            } else {
+                QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
+            }
+        }
+    }
+    //--------------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
 
@@ -630,7 +630,7 @@
         loadCatalogQuery.exec();
 
         QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-        loadCatalogQueryModel->setQuery(loadCatalogQuery);
+        loadCatalogQueryModel->setQuery(std::move(loadCatalogQuery));
 
         FilesView *proxyModel2 = new FilesView(this);
         proxyModel2->setSourceModel(loadCatalogQueryModel);
