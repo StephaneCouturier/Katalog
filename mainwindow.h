@@ -75,12 +75,6 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
-//#ifdef Q_OS_LINUX
-//    #include <KComboBox>
-//    #include <KXmlGuiWindow>
-//    class KJob;
-//#endif
-
 #include "catalog.h"
 #include "storage.h"
 #include "devicetreeview.h"
@@ -89,11 +83,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-//#ifdef Q_OS_LINUX
-//class MainWindow : public KXmlGuiWindow
-//#else
 class MainWindow : public QMainWindow
-//#endif
 {
     Q_OBJECT
 
@@ -147,10 +137,9 @@ class MainWindow : public QMainWindow
             QSqlRelationalTableModel *storageModel;
             QSqlError initializeDatabase();
             QString databaseMode;
-            void startDatabase();
-            void populateCalendarTable(QDateTime min, QDateTime max);
+            void    startDatabase();
             QString databaseFilePath;
-            void selectDatabaseFilePath();
+            void    selectDatabaseFilePath();
             QString databaseHostName;
             QString databaseName;
             int     databasePort;
@@ -168,7 +157,7 @@ class MainWindow : public QMainWindow
         //Filters
             bool searchInFileCatalogsChecked;
             bool searchInConnectedDriveChecked;           
-            int deviceTreeExpandState;
+            int  deviceTreeExpandState;
 
             QString selectedDeviceName;
             QString selectedDeviceType;
@@ -190,7 +179,7 @@ class MainWindow : public QMainWindow
             QString selectedTextCriteria;
             QString selectedSearchIn;
             QString selectedSearchExclude;
-            bool searchOnSize;
+            bool    searchOnSize;
             qint64  selectedMinimumSize;
             qint64  selectedMaximumSize;
             qint64  sizeMultiplierMin;

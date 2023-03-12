@@ -95,7 +95,6 @@
             if (!db.open())
                 return db.lastError();
         }
-
         else if(databaseMode=="File"){
             QFile databaseFile(databaseFilePath);
             if (!databaseFile.exists()){
