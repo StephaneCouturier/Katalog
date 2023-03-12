@@ -215,20 +215,6 @@
             }
 
             //Check if the catalog (file) already exists
-            if(databaseMode=="Memory"){
-                QFile file(newCatalog->filePath);
-                if (file.exists()==true){
-                    QMessageBox msgBox;
-                    msgBox.setWindowTitle("Katalog");
-                    msgBox.setText( tr("There is already a catalog with this name:")+"<br/><br/>"
-                                   + newCatalog->name
-                                   + "<br/><br/>"+tr("Choose a different name."));
-                    msgBox.setIcon(QMessageBox::Warning);
-                    msgBox.exec();
-                    return;
-                }
-            }
-            else if(databaseMode=="File"){
                 QSqlQuery query;
                 QString querySQL = QLatin1String(R"(
                                     SELECT catalog_name
@@ -244,11 +230,10 @@
                     msgBox.setWindowTitle("Katalog");
                     msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
                                    + newCatalog->name
-                                   + "</b><br/"+tr("Choose a different name."));
-                    msgBox.setIcon(QMessageBox::Information);
+                                   + "</b><br/><br/>"+tr("Choose a different name."));
+                    msgBox.setIcon(QMessageBox::Critical);
                     msgBox.exec();
                     return;
-                }
             }
 
             //Save new catalog

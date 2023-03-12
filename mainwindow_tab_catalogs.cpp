@@ -1189,6 +1189,28 @@
         //Rename the catalog file
         if (newCatalogName != previousCatalogName){
 
+            //verfiy if name exists
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT catalog_name
+                                FROM catalog
+                                WHERE catalog_name=:catalog_name
+                            )");
+            query.prepare(querySQL);
+            query.bindValue(":catalog_name",newCatalogName);
+            query.exec();
+            query.next();
+            if (query.value(0).toString() !=""){
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
+                               + newCatalogName
+                               + "</b><br/><br/>"+tr("Choose a different name."));
+                msgBox.setIcon(QMessageBox::Critical);
+                msgBox.exec();
+                return;
+            }
+
             catalog->renameCatalog(newCatalogName);
 
             if(databaseMode=="Memory"){
