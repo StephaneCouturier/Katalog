@@ -146,10 +146,9 @@
     {
         //reloads catalog to explore at root level
         if (selectedDeviceType=="Catalog"){
-            activeCatalog->setName(selectedDeviceName);
-            activeCatalog->loadCatalogMetaData();
-
-            updateSingleCatalog(activeCatalog);
+            skipCatalogUpdateSummary= false;
+            requestSource ="update";
+            updateSingleCatalog(selectedCatalog);
         }
     }
     //----------------------------------------------------------------------
