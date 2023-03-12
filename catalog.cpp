@@ -30,9 +30,6 @@
 */
 
 #include "catalog.h"
-#include <QSqlQuery>
-#include <QFileInfo>
-#include <QRegularExpression>
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -343,7 +340,7 @@ void Catalog::loadCatalogFileListToTable()
                 QString insertFilesallSQL = QLatin1String(R"(
                                         INSERT INTO filesall (
                                                 file_name,
-                                                file_path,
+                                                file_folder_path,
                                                 file_size,
                                                 file_date_updated,
                                                 file_catalog,
@@ -351,7 +348,7 @@ void Catalog::loadCatalogFileListToTable()
                                                 )
                                         VALUES(
                                                 :file_name,
-                                                :file_path,
+                                                :file_folder_path,
                                                 :file_size,
                                                 :file_date_updated,
                                                 :file_catalog,
@@ -421,7 +418,7 @@ void Catalog::loadCatalogFileListToTable()
                         insertFilesallQuery.prepare(insertFilesallSQL);
                         insertFilesallQuery.bindValue(":file_name",        fileInfo.fileName());
                         insertFilesallQuery.bindValue(":file_size",        lineFileSize);
-                        insertFilesallQuery.bindValue(":file_path",        folder ); //DEV: replace later by folderHash
+                        insertFilesallQuery.bindValue(":file_folder_path", folder ); //DEV: replace later by folderHash
                         insertFilesallQuery.bindValue(":file_date_updated",lineFileDatetime);
                         insertFilesallQuery.bindValue(":file_catalog",     name);
                         insertFilesallQuery.bindValue(":file_full_path",   lineFilePath);

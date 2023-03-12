@@ -894,13 +894,13 @@
                 QString insertSQL = QLatin1String(R"(
                                     INSERT INTO file (
                                                     file_name,
-                                                    file_path,
+                                                    file_folder_path,
                                                     file_size,
                                                     file_date_updated,
                                                     file_catalog )
                                     VALUES(
                                                     :file_name,
-                                                    :file_path,
+                                                    :file_folder_path,
                                                     :file_size,
                                                     :file_date_updated,
                                                     :file_catalog )
@@ -946,7 +946,7 @@
 
                                 //Append data to the database
                                 insertQuery.bindValue(":file_name", fieldList[2].replace("\"",""));
-                                insertQuery.bindValue(":file_path", fieldList[1].replace("\"",""));
+                                insertQuery.bindValue(":file_folder_path", fieldList[1].replace("\"",""));
                                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
                                 insertQuery.bindValue(":file_catalog", fieldList[0].replace("\"",""));
@@ -1187,6 +1187,7 @@
             if(databaseMode=="Memory"){
                 catalog->renameCatalogFile(newCatalogName);
                 loadCatalogFilesToTable();
+                loadCatalogsTableToModel();
             }
 
             //Rename in statistics

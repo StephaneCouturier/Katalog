@@ -34,6 +34,10 @@
 
 #include <QAbstractTableModel>
 #include <QLocale>
+#include <QDateTime>
+#include <QSqlQuery>
+#include <QFileInfo>
+#include <QRegularExpression>
 
 class Catalog : public QAbstractTableModel
 {

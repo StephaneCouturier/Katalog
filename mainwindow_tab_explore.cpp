@@ -441,16 +441,15 @@
 //Methods-----------------------------------------------------------------------
 
     void MainWindow::openCatalogToExplore()
-    {
+    {//Load the contents of a catalog to display folders in a tree and files in a list for direct browsing
+
         // Start animation while opening
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Start at the root folder of the catalog
-
         selectedDirectoryName     = activeCatalog->sourcePath;
         selectedDirectoryFullPath = activeCatalog->sourcePath;
 
-        //Load
         //Check catalog's number of files and confirm load if too big
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
@@ -521,7 +520,7 @@
 
         //Display number of directories and total size
             QString countSQL = QLatin1String(R"(
-                                SELECT count (DISTINCT (file_path))
+                                SELECT count (DISTINCT (file_folder_path))
                                 FROM filesall
                                 WHERE file_catalog =:file_catalog
                                )");
@@ -537,72 +536,62 @@
     void MainWindow::loadSelectedDirectoryFilesToExplore()
     {
         //Load the files of the selected directory into the file view
-
         // Load all files and create model
         QString selectSQL;
 
+        //select folder based on selected options
         if(optionDisplayFolders==true){
+            qDebug()<<optionDisplayFolders<<" - "<<selectedDirectoryFullPath;
 
             selectSQL = QLatin1String(R"(
-                                    SELECT  REPLACE(file_path, :selectedDirectoryFullPath||'/', ''),
+                                    SELECT  (REPLACE(file_folder_path, :selected_directory_full_path||'/', ''))  AS file_name,
                                             SUM(file_size),
-                                            "",
-                                            file_path,
-                                            "",
-                                            "folder" AS type,
-                                            "1"||file_path AS order_value,
+                                            "" AS file_date_updated,
+                                            file_folder_path,
+                                            file_catalog,
+                                            "folder" AS entry_type,
+                                            "1"||file_folder_path AS order_value,
                                             file_full_path
                                     FROM    filesall
                                     WHERE   file_catalog =:file_catalog
-                                    AND     file_path  like :folder_path
                         )");
 
             if(optionDisplaySubFolders != true){
                 selectSQL = selectSQL + QLatin1String(R"(
-                                    AND     (REPLACE(file_path, :selectedDirectoryFullPath||'/', ''))  NOT like "%/%"
+                                    AND     (REPLACE(file_folder_path, :selected_directory_full_path||'/', ''))  NOT like "%/%"
+                )");
+            }
+            else{
+                selectSQL = selectSQL + QLatin1String(R"(
+                                    AND     file_folder_path LIKE :selected_directory_full_path||'/%'
                 )");
             }
 
             selectSQL = selectSQL + QLatin1String(R"(
 
-                                    GROUP BY file_path
+                                    GROUP BY file_folder_path
 
                                     UNION
 
+                                )");
+        }
+
+        //select files
+        selectSQL += QLatin1String(R"(
                                     SELECT  file_name,
                                             file_size,
                                             file_date_updated,
-                                            file_path,
+                                            file_folder_path,
                                             file_catalog,
-                                            "file"  AS type,
+                                            "file" AS entry_type,
                                             "2"||file_name AS order_value,
                                             file_full_path
                                     FROM    filesall
                                     WHERE   file_catalog =:file_catalog
-                                    AND     file_path    =:file_path
+                                    AND     file_folder_path =:file_folder_path
 
                                     ORDER BY order_value ASC
-
-                                )");
-            // AND     (REPLACE(filePath, :selectedDirectoryFullPath||'/', ''))  NOT like "%/%"
-        }
-        else{
-            selectSQL = QLatin1String(R"(
-                                    SELECT  file_name,
-                                            file_size,
-                                            file_date_updated,
-                                            file_path,
-                                            file_catalog,
-                                            "file"  AS type,
-                                            "2"||file_name AS order_value,
-                                            file_full_path
-                                    FROM    filesall
-                                    WHERE   file_catalog =:file_catalog
-                                    AND     file_path    =:file_path
-
-                                    ORDER BY order_value ASC
-                                )");
-        }
+                                )");//
 
 
         if( activeCatalog->sourcePath == "EXPORT" ){
@@ -615,16 +604,20 @@
         loadCatalogQuery.prepare(selectSQL);
 
         // fill lists depending on directory selection source
-        loadCatalogQuery.bindValue(":file_catalog",selectedFilterCatalogName);
+        loadCatalogQuery.bindValue(":file_catalog", activeCatalog->name);
 
         if(activeCatalog->sourcePath == selectedDirectoryName){
-            loadCatalogQuery.bindValue(":file_path",selectedDirectoryName);
+            loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryName);
+            qDebug()<<"selectedDirectoryName";
+
         }
         else{
-            loadCatalogQuery.bindValue(":file_path",selectedDirectoryFullPath);
+            loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryFullPath);
+            qDebug()<<"selected_directory_full_path";
+
         }
 
-        loadCatalogQuery.bindValue(":folder_path",selectedDirectoryFullPath+"/%");
+//        loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryFullPath+"/%");
         loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
 
         loadCatalogQuery.exec();
@@ -662,13 +655,13 @@
 
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(
-                                SELECT  count (*), sum(fileSize)
+                                SELECT  count (*), sum(file_size)
                                 FROM    filesall
                                 WHERE   file_catalog =:file_catalog
                            )");
 
         if (selectedDirectoryName!=""){
-            countSQL = countSQL + " AND file_path =:file_path";
+            countSQL = countSQL + " AND file_folder_path =:file_folder_path";
         }
 
         QSqlQuery countQuery;
@@ -676,10 +669,10 @@
         countQuery.bindValue(":file_catalog",activeCatalog->name);
 
         if(activeCatalog->sourcePath == selectedDirectoryName){
-            countQuery.bindValue(":file_path",selectedDirectoryName);
+            countQuery.bindValue(":file_folder_path",selectedDirectoryName);
         }
         else{
-            countQuery.bindValue(":file_path",selectedDirectoryFullPath);
+            countQuery.bindValue(":file_folder_path",selectedDirectoryFullPath);
         }
 
         countQuery.exec();
@@ -708,7 +701,7 @@
                                             SELECT DISTINCT (REPLACE(filePath, :selectedCatalogPath||'/', ''))
                                             FROM filesall
                                             WHERE   file_catalog =:file_catalog
-                                            ORDER BY file_path ASC
+                                            ORDER BY file_folder_path ASC
                                         )");
             getDirectoriesQuery.prepare(getDirectoriesSQL);
             getDirectoriesQuery.bindValue(":file_catalog",selectedFilterCatalogName);
@@ -730,7 +723,7 @@
 
         //Display number of directories
         QString countSQL = QLatin1String(R"(
-                            SELECT count (DISTINCT (file_path))
+                            SELECT count (DISTINCT (file_folder_path))
                             FROM filesall
                             WHERE file_catalog =:file_catalog
                            )");

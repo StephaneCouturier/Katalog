@@ -83,7 +83,7 @@
                        CREATE TABLE IF NOT EXISTS filesall(
                             id_file           INTEGER,
                             file_name         TEXT,
-                            file_path         TEXT,
+                            file_folder_path  TEXT,
                             file_size         NUMERIC,
                             file_date_updated TEXT,
                             file_catalog      TEXT,
@@ -97,7 +97,7 @@
                    CREATE TABLE IF NOT EXISTS  file(
                             id_file              INTEGER,
                             file_name            TEXT,
-                            file_path            TEXT,
+                            file_folder_path     TEXT,
                             file_size            NUMERIC,
                             file_date_updated    TEXT,
                             file_catalog         TEXT,

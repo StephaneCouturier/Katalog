@@ -1008,13 +1008,13 @@
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO file (
                                                                         file_name,
-                                                                        file_path,
+                                                                        file_folder_path,
                                                                         file_size,
                                                                         file_date_updated,
                                                                         file_catalog )
                                                         VALUES(
                                                                         :file_name,
-                                                                        :file_path,
+                                                                        :file_folder_path,
                                                                         :file_size,
                                                                         :file_date_updated,
                                                                         :file_catalog )
@@ -1032,7 +1032,7 @@
                                             //Append data to the database
                                             insertQuery.bindValue(":file_name",         searchResultsCatalog->index(i,0).data().toString());
                                             insertQuery.bindValue(":file_size",         searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_path",         searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_folder_path",  searchResultsCatalog->index(i,3).data().toString());
                                             insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
                                             insertQuery.bindValue(":file_catalog",      searchResultsCatalog->index(i,4).data().toString());
                                             insertQuery.exec();
@@ -1068,7 +1068,7 @@
                                                 SELECT      file_name,
                                                             file_size,
                                                             file_date_updated,
-                                                            file_path,
+                                                            file_folder_path,
                                                             file_catalog
                                                 FROM file
                                                 WHERE %1 IN
@@ -1085,7 +1085,7 @@
                                 duplicatesQuery.exec();
 
                                 QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-                                loadCatalogQueryModel->setQuery(duplicatesQuery);
+                                loadCatalogQueryModel->setQuery(std::move(duplicatesQuery));
 
                                 FilesView *fileModel = new FilesView(this);
                                 fileModel->setSourceModel(loadCatalogQueryModel);
@@ -1132,13 +1132,13 @@
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO file (
                                                                         file_name,
-                                                                        file_path,
+                                                                        file_folder_path,
                                                                         file_size,
                                                                         file_date_updated,
                                                                         file_catalog )
                                                         VALUES(
                                                                         :file_name,
-                                                                        :file_path,
+                                                                        :file_folder_path,
                                                                         :file_size,
                                                                         :file_date_updated,
                                                                         :file_catalog )
@@ -1156,8 +1156,8 @@
                                             //Append data to the database
                                             insertQuery.bindValue(":file_name",        searchResultsCatalog->index(i,0).data().toString());
                                             insertQuery.bindValue(":file_size",        searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_path",        searchResultsCatalog->index(i,3).data().toString());
-                                            insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
+                                            insertQuery.bindValue(":file_folder_path", searchResultsCatalog->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_date_updated",searchResultsCatalog->index(i,2).data().toString());
                                             insertQuery.bindValue(":file_catalog",     searchResultsCatalog->index(i,4).data().toString());
                                             insertQuery.exec();
 
@@ -1192,7 +1192,7 @@
                                                  SELECT      file_name,
                                                              file_size,
                                                              file_date_updated,
-                                                             file_path,
+                                                             file_folder_path,
                                                              file_catalog
                                                  FROM file
                                                  WHERE file_catalog = :selectedDifferencesCatalog1
@@ -1205,7 +1205,7 @@
                                                  SELECT      file_name,
                                                              file_size,
                                                              file_date_updated,
-                                                             file_path,
+                                                             file_folder_path,
                                                              file_catalog
                                                  FROM file
                                                  WHERE file_catalog = :selectedDifferencesCatalog2
@@ -1366,7 +1366,7 @@
                     QSqlQuery getFilesQuery;
                     QString getFilesQuerySQL = QLatin1String(R"(
                                         SELECT  file_name,
-                                                file_path,
+                                                file_folder_path,
                                                 file_size,
                                                 file_date_updated
                                         FROM  filesall

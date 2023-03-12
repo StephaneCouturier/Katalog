@@ -391,7 +391,7 @@
             QString insertFilesallSQL = QLatin1String(R"(
                                         INSERT INTO filesall (
                                                         file_name,
-                                                        file_path,
+                                                        file_folder_path,
                                                         file_size,
                                                         file_date_updated,
                                                         file_catalog,
@@ -399,7 +399,7 @@
                                                         )
                                         VALUES(
                                                         :file_name,
-                                                        :file_path,
+                                                        :file_folder_path,
                                                         :file_size,
                                                         :file_date_updated,
                                                         :file_catalog,
@@ -457,7 +457,7 @@
                             QFile file(entryPath);
                             insertFilesallQuery.bindValue(":file_name",         entry.fileName());
                             insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_path",         entry.absolutePath()); //DEV: replace later by folderHash
+                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath()); //DEV: replace later by folderHash
                             insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
                             insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
                             insertFilesallQuery.bindValue(":file_full_path",    entryPath);
@@ -502,7 +502,7 @@
                             QFile file(entryPath);
                             insertFilesallQuery.bindValue(":file_name",         entry.fileName());
                             insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_path",         entry.absolutePath()); //DEV: replace later by folderHash
+                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath()); //DEV: replace later by folderHash
                             insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
                             insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
                             insertFilesallQuery.bindValue(":file_full_path",    entryPath);
