@@ -1086,7 +1086,14 @@
                 message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(catalog->includeMetadata).toString() + "</td><td><b>" + newCatalogIncludeMetadata + "</b></td></tr>";
 
             message = message + "</table>";
-            message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
+
+            if(    (newCatalogSourcePath     !=catalog->sourcePath)
+                or (newCatalogFileType       !=catalog->fileType)
+                or (newCatalogIncludeHidden  !=QVariant(catalog->includeHidden).toString())
+                or (newCatalogIncludeMetadata  !=QVariant(catalog->includeMetadata).toString())
+            ){
+                    message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
+            }
 
             int result = QMessageBox::warning(this, "Katalog", message, QMessageBox::Yes | QMessageBox::Cancel);
             if ( result == QMessageBox::Cancel){
