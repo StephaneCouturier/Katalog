@@ -51,8 +51,8 @@ public:
     QString filePath;
     QString dateUpdated;
     QString sourcePath;
-    qint64  fileCount;
-    qint64  totalFileSize;
+    qint64  fileCount = 0;
+    qint64  totalFileSize = 0;
     bool    sourcePathIsActive;
     bool    includeHidden;
     QString fileType;
