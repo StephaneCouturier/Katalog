@@ -92,11 +92,14 @@ void Catalog::setSourcePath(QString selectedSourcePath)
 {
     sourcePath = selectedSourcePath;
 
-    //remove the / at the end if any, except for root path
-    int pathLength = sourcePath.length();
-//    if (sourcePath !="/" and sourcePath.at(pathLength-1)=="/") {
-//        sourcePath.remove(pathLength-1,1);
-//    }
+    //if provided, remove the / at the end if any, except for root path (unix)
+    if(sourcePath!=""){
+        int pathLength   = sourcePath.length();
+        QString lastChar = sourcePath.at(pathLength-1);
+        if (sourcePath !="/" and lastChar=="/") {
+            sourcePath.remove(pathLength-1,1);
+        }
+    }
 }
 void Catalog::setFileCount()
 {

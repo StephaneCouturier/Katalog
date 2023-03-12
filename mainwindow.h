@@ -147,6 +147,7 @@ class MainWindow : public QMainWindow
             QString databasePassword;
 
             //Objects
+            Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
             Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
             Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)

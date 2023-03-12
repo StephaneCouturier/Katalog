@@ -51,18 +51,19 @@
         //Pick a directory from a dialog window
 
         //Get current selected path as default path for the dialog window
-        QString newCatalogPath = ui->Create_lineEdit_NewCatalogPath->text();
+        newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
-                                                        newCatalogPath,
+                                                        newCatalog->sourcePath,
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
-        //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-        ui->Create_lineEdit_NewCatalogPath->setText(dir);
+        //Save selected directory, and update input line for the source path
+        newCatalog->setSourcePath(dir);
+        ui->Create_lineEdit_NewCatalogPath->setText(newCatalog->sourcePath);
 
         //Select this directory in the treeview.
-        loadFileSystem(newCatalogPath);
+        loadFileSystem(newCatalog->sourcePath);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
@@ -126,44 +127,34 @@
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)
-    {//Load file system for the treeview
-            newCatalogPath="/";
-         // Creates a new model
-            fileSystemModel = new QFileSystemModel(this);
+    {//Load file system to the Create and the Filter for connected devices treeviews
 
-         // Set filter to show only directories
-            fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+        //Create a new model, only directories, and set root path
+        fileSystemModel = new QFileSystemModel(this);
+        fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+        fileSystemModel->setRootPath(newCatalogPath);
+        fileSystemModel->sort(0,Qt::AscendingOrder);
 
-         // QFileSystemModel requires root path
-            QString rootPath ="/";
-            fileSystemModel->setRootPath(rootPath);
-            fileSystemModel->setRootPath(newCatalogPath);
-
-         // Enable/Disable modifying file system
-            //qfilesystemmodel->setReadOnly(true);
-
-
-        //loadFileSystem in the Create screen tree view
-            // Attach the model to the view
-                ui->Create_treeView_Explorer->setModel(fileSystemModel);
+        //Load File System to the Create and the Filter treeviews
+            //Load File System to the Filter connected device treeview
+            ui->Create_treeView_Explorer->setModel(fileSystemModel);
             // Only show the tree, hidding other columns and the header row.
-                ui->Create_treeView_Explorer->setColumnWidth(0,250);
-                ui->Create_treeView_Explorer->setColumnHidden(1,true);
-                ui->Create_treeView_Explorer->setColumnHidden(2,true);
-                ui->Create_treeView_Explorer->setColumnHidden(3,true);
-                ui->Create_treeView_Explorer->setHeaderHidden(true);
-                ui->Create_treeView_Explorer->expandToDepth(1);
+            ui->Create_treeView_Explorer->setColumnWidth(0,250);
+            ui->Create_treeView_Explorer->setColumnHidden(1,true);
+            ui->Create_treeView_Explorer->setColumnHidden(2,true);
+            ui->Create_treeView_Explorer->setColumnHidden(3,true);
+            ui->Create_treeView_Explorer->setHeaderHidden(true);
+            ui->Create_treeView_Explorer->expandToDepth(10);
 
-        //loadFileSystem in the Filter tab tree view
-            // Attach the model to the view
-                ui->Filters_treeView_Directory->setModel(fileSystemModel);
-           // Only show the tree, hidding other columns and the header row.
-                ui->Filters_treeView_Directory->setColumnWidth(0,250);
-                ui->Filters_treeView_Directory->setColumnHidden(1,true);
-                ui->Filters_treeView_Directory->setColumnHidden(2,true);
-                ui->Filters_treeView_Directory->setColumnHidden(3,true);
-                ui->Filters_treeView_Directory->setHeaderHidden(true);
-                ui->Filters_treeView_Directory->expandToDepth(1);
+            //Load File System to the Filter tab treeview
+            ui->Filters_treeView_Directory->setModel(fileSystemModel);
+            // Only show the tree, hidding other columns and the header row.
+            ui->Filters_treeView_Directory->setColumnWidth(0,250);
+            ui->Filters_treeView_Directory->setColumnHidden(1,true);
+            ui->Filters_treeView_Directory->setColumnHidden(2,true);
+            ui->Filters_treeView_Directory->setColumnHidden(3,true);
+            ui->Filters_treeView_Directory->setHeaderHidden(true);
+            ui->Filters_treeView_Directory->expandToDepth(1);
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageList()
@@ -181,7 +172,7 @@
     {
         //Create a new catalog, launch the cataloging and save, and refresh data and UI
         //Create a new catalog
-        Catalog *newCatalog = new Catalog();
+        //Catalog *newCatalog = new Catalog();
 
             //Get inputs and set values of the newCatalog
             newCatalog->setName(ui->Create_lineEdit_NewCatalogName->text());
