@@ -118,8 +118,10 @@ void Catalog::setTotalFileSize()
     QString querySQL = QLatin1String(R"(
                             SELECT SUM(file_size)
                             FROM filesall
+                            WHERE file_catalog =:file_catalog
                         )");
     query.prepare(querySQL);
+    query.bindValue(":file_catalog",name);
     query.exec();
     query.next();
     totalFileSize = query.value(0).toLongLong();
