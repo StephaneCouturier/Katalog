@@ -148,7 +148,10 @@ int ExploreTreeModel::findNode(unsigned int& hash, const QList<ExploreTreeItem*>
 void ExploreTreeModel::setCatalog(QString newCatalogName, QString newCatalogSourcePath)
 {
     catalogName = newCatalogName;
-    catalogSourcePath = newCatalogSourcePath;
+
+    int pos = newCatalogSourcePath.lastIndexOf(QChar('/'));
+    catalogSourcePath = newCatalogSourcePath.left(pos);
+
     setupModelData(rootItem);
 }
 
