@@ -521,11 +521,9 @@
         //If a storage is selected, use it for the Create screen
         if ( selectedDeviceType == "Location" ){
             ui->Create_comboBox_StorageSelection->setCurrentText("");
-            ui->Create_lineEdit_NewCatalogPath->setText("/");
         }
         else if ( selectedDeviceType == "Storage" ){
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
-            ui->Create_lineEdit_NewCatalogPath->setText(selectedStorage->path);
         }
         else if ( selectedDeviceType == "Catalog" ){
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedCatalog->storageName);
