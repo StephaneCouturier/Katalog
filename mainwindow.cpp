@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version and release date, and check new version
         currentVersion  = "1.17";
-        releaseDate     = "2023-02-27";
+        releaseDate     = "2023-03-14";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -185,6 +185,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 //Initiate and restore Search values
                 initiateSearchValues();
 
+        //Setup tab: Storage
+                unsavedChanges = false;
+
     //Context menu and other slots and signals
             setupFileContextMenu();
 
@@ -220,8 +223,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent (QCloseEvent *event)
 {
-    //unsavedChanges = true;
-
     if(unsavedChanges == true){
 
         int result = QMessageBox::warning(this,"Katalog",
