@@ -57,6 +57,7 @@
     {
         saveStorageData();
         refreshLocationSelectionList();
+        unsavedChanges = false;
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
@@ -173,6 +174,12 @@
         settings.setValue("Storage/lastStorageSortSection", lastStorageSortSection);
         settings.setValue("Storage/lastStorageSortOrder",   lastStorageSortOrder);
     }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Storage_treeView_StorageList_doubleClicked(const QModelIndex &index)
+    {
+        unsavedChanges = true;
+    }
+    //--------------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::createStorageList()

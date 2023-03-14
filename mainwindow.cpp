@@ -218,6 +218,27 @@ MainWindow::~MainWindow()
       delete ui;
 }
 
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    //unsavedChanges = true;
+
+    if(unsavedChanges == true){
+
+        int result = QMessageBox::warning(this,"Katalog",
+                    tr( "Some changes in Storage list have not been saved.<br/>"
+                        "Are you sure to quit without saving?"),
+                    QMessageBox::Yes|QMessageBox::Cancel);
+        if ( result ==QMessageBox::Cancel){
+            event->ignore();
+            return;
+        }
+        else if ( result ==QMessageBox::Yes){
+            event->accept();
+            return;
+        }
+    }
+}
+
 //DEV Templates
 /*
 qDebug()<<"DEBUG     value:    " << value;

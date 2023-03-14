@@ -59,6 +59,7 @@
 #include <QClipboard>
 #include <QStandardItemModel>
 #include <QDesktopServices>
+#include <QCloseEvent>
 //#include QtSql
 #include <QtSql>
 //#include QtMultimedia
@@ -106,6 +107,8 @@ class MainWindow : public QMainWindow
             void loadCustomThemeLight();
             void loadCustomThemeDark();
             void hideDevelopmentUIItems();
+            bool unsavedChanges;
+            void closeEvent (QCloseEvent *event);
 
             //KDE menus/icons
             void setupActions();
@@ -521,6 +524,7 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_SearchLocation_clicked();
             void on_Storage_pushButton_CreateCatalog_clicked();
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
+            void on_Storage_treeView_StorageList_doubleClicked(const QModelIndex &index);
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
 
         //Statistics
