@@ -35,8 +35,7 @@
 //UI----------------------------------------------------------------------------
 
     void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
-    {
-        //Get the selected folder from the tree to the new Catalog path
+    {//Get the selected folder from the tree to the new Catalog path
 
         //Get the model/data from the tree
         QFileSystemModel* pathmodel = (QFileSystemModel*)ui->Create_treeView_Explorer->model();
@@ -47,8 +46,7 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_PickPath_clicked()
-    {
-        //Pick a directory from a dialog window
+    {//Pick a directory from a dialog window
 
         //Get current selected path as default path for the dialog window
         newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
@@ -67,8 +65,7 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
-    {
-        //Edit Exclusion list
+    {//Edit Exclusion list
 
         //Verify if a folder exclusion list exists
         QFile excludeFile(excludeFilePath);
@@ -111,8 +108,8 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()
-    {
-        //Generate the Catalog name from the path
+    {//Generate the Catalog name from the path
+
         QString newCatalogName = ui->Create_lineEdit_NewCatalogPath->text();
         newCatalogName.replace("/","_");
         newCatalogName.replace(":","_");
@@ -405,8 +402,8 @@
 
             //Iterator
             if (catalog->includeHidden == true){
-                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
+                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
+                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
@@ -450,8 +447,8 @@
                 }
             }
             else{
-                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files, QDirIterator::Subdirectories);
+                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
@@ -587,7 +584,49 @@
           fileOut.close();
     }
     //--------------------------------------------------------------------------
+    void MainWindow::saveFoldersToNewFile(QString newCatalogName)
+    {
+        //Save a catalog to a new file
 
+        // Get the folder list from database
+        //QStringList filelist = fileListModel->stringList();
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                SELECT
+                                    folder_hash,
+                                    folder_catalog_name,
+                                    folder_path
+                                FROM folder
+                                WHERE folder_catalog_name=:folder_catalog_name
+                                        )");
+        query.prepare(querySQL);
+        query.bindValue(":folder_catalog_name",newCatalogName);
+        query.exec();
+
+        // Stream the list to the file
+        QFile fileOut( collectionFolder +"/"+ newCatalogName + ".folders.idx" );
+
+        // write data
+
+          if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            while(query.next()){
+                stream << query.value(0).toString() << '\t';
+                stream << query.value(1).toString() << '\t';
+                stream << query.value(2).toString() << '\n';
+            }
+
+          } else {
+              QMessageBox msgBox;
+              msgBox.setWindowTitle("Katalog");
+              msgBox.setText(tr("Error opening output file."));
+              msgBox.setIcon(QMessageBox::Warning);
+              msgBox.exec();
+            //return EXIT_FAILURE;
+          }
+          fileOut.close();
+    }
+    //--------------------------------------------------------------------------
 //DEV --------------------------------------------------------------------------
 
     void MainWindow::setMediaFile(QString filePath)
@@ -617,7 +656,6 @@
         msgBox.setIcon(QMessageBox::Information);
         msgBox.exec();
         //QVideoFrame frame = player->currentFrame();
-        //qDebug() << "Width: " << frame.width() << ", Height: " << frame.height();
 
      }
     //--------------------------------------------------------------------------

@@ -87,6 +87,7 @@ public:
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
     void loadCatalogFileListToTable();
+    void loadFoldersToTable();
 
     void populateFileData( const QList<QString> &fileNames,
                            const QList<qint64>  &fileSizes,

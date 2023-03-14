@@ -4954,6 +4954,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
                <item row="2" column="10">
                 <widget class="QPushButton" name="Explore_pushButton_OrderFoldersFirst">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Order folders first</string>
                  </property>
@@ -4965,6 +4968,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
                <item row="1" column="10">
                 <widget class="QCheckBox" name="Explore_checkBox_DisplaySubFolders">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>and all sub-folders</string>
                  </property>

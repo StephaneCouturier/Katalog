@@ -431,7 +431,7 @@ void Catalog::loadCatalogFileListToTable()
                 }
 
             //update catalog loaded version
-                setDateLoaded();
+                //setDateLoaded();
 
             //close file
                 catalogFile.close();
@@ -439,6 +439,86 @@ void Catalog::loadCatalogFileListToTable()
     }
 }
 
+void Catalog::loadFoldersToTable()
+{
+    //Verify if the lastest version of the catalog is already in memory
+    QDateTime dateTime1 = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
+    QDateTime dateTime2 = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
+qDebug()<<dateTime1<<" - "<<dateTime2;
+    //Load catalog files if latest version is not already in memory
+    if ( dateTime1 < dateTime2){
+
+        QString folderFilePath = filePath;
+        int pos = folderFilePath.lastIndexOf(".idx");
+        folderFilePath = folderFilePath.left(pos);
+        folderFilePath +=".folders.idx";
+
+        //Inputs
+        QFile folderFile(folderFilePath);
+        if (folderFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+
+            //Set up a text stream from the file's data
+            QTextStream streamFolderFile(&folderFile);
+            QString lineFolderFile;
+            QRegularExpression lineFolderFileSplitExp("\t");
+
+            //Prepare database and queries
+                //clear database from old version of catalog
+                QSqlQuery deleteQuery;
+                QString deleteQuerySQL = QLatin1String(R"(
+                                    DELETE FROM folder
+                                    WHERE folder_catalog_name=:folder_catalog_name
+                                                )");
+                deleteQuery.prepare(deleteQuerySQL);
+                deleteQuery.bindValue(":folder_catalog_name",name);
+                deleteQuery.exec();
+
+                //prepare insert query for folder
+                                QSqlQuery insertFolderQuery;
+                                QString insertFolderSQL = QLatin1String(R"(
+                                        INSERT INTO folder(
+                                                folder_hash,
+                                                folder_catalog_name,
+                                                folder_path
+                                                            )
+                                        VALUES(
+                                                :folder_hash,
+                                                :folder_catalog_name,
+                                                :folder_path)
+                                        )");
+
+            //process each line of the file
+                while (true){
+                    lineFolderFile = streamFolderFile.readLine();
+                    if (lineFolderFile.isNull())
+                        break;
+
+                    //exclude catalog meta data
+                    //if (lineFolderFile.left(1)=="<"){continue;}
+
+                    //Split the line text with tabulations into a list
+                    QStringList lineFieldList  = lineFolderFile.split(lineFolderFileSplitExp);
+                    int         fieldListCount = lineFieldList.count();
+
+                    //Load folder into the database
+                        insertFolderQuery.prepare(insertFolderSQL);
+                        insertFolderQuery.bindValue(":folder_hash",        lineFieldList[0]);
+                        insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[1]);
+                        insertFolderQuery.bindValue(":folder_path",        lineFieldList[2]);
+                        insertFolderQuery.exec();
+                }
+
+            //update catalog loaded version
+                setDateLoaded();
+
+            //close file
+                folderFile.close();
+        }
+    }
+
+    //update catalog loaded version
+        setDateLoaded();
+}
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<qint64>  &cfileSize,

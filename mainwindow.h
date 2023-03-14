@@ -290,11 +290,8 @@ class MainWindow : public QMainWindow
             QString selectedDirectoryFullPath;
 
             void openCatalogToExplore();
-            void loadCatalogFilesToExplore();
             void loadSelectedDirectoryFilesToExplore();
             void loadCatalogDirectoriesToExplore();
-
-            void loadCatalogDirectoriesToExploreList();
 
             int lastExploreSortSection;
             int lastExploreSortOrder;
@@ -318,6 +315,7 @@ class MainWindow : public QMainWindow
             void catalogDirectory(Catalog *catalog);
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
+            void saveFoldersToNewFile(QString newCatalogName);
 
         //TAB: Storage
             QString storageFilePath;

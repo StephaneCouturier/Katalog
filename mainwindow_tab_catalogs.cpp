@@ -811,8 +811,10 @@
             //catalog the directory and save it to the file
             catalogDirectory(catalog);
 
-            if(databaseMode=="Memory")
+            if(databaseMode=="Memory"){
                 saveCatalogToNewFile(catalog->name);
+                saveFoldersToNewFile(catalog->name);
+            }
 
             //Prepare to report changes to the catalog
             qint64 deltaFileCount     = catalog->fileCount     - previousFileCount;
