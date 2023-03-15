@@ -1331,7 +1331,7 @@
                 QString queryNewSQL = QLatin1String(R"(
                                             SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                             FROM statistics
-                                            WHERE dateTime = (SELECT MAX(date_time)
+                                            WHERE date_time = (SELECT MAX(date_time)
                                                                 FROM statistics
                                                                 WHERE record_type="Snapshot")
                                             GROUP BY date_time
@@ -1346,24 +1346,26 @@
             qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
             qint64 deltaTotalFileNumber = newTotalFileNumber - lastTotalFileNumber;
 
-            QMessageBox::information(this,"Katalog",tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
-                                     "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
-                                     "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                                     ).arg(QString::number(newTotalFileNumber),
-                                           QString::number(deltaTotalFileNumber),
-                                           QLocale().formattedDataSize(newTotalFileSize),
-                                           QLocale().formattedDataSize(deltaTotalFileSize)
-                                           )
-                                     ,Qt::TextFormat(Qt::RichText));
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
+                              "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                              "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                              ).arg(QString::number(newTotalFileNumber),
+                                    QString::number(deltaTotalFileNumber),
+                                    QLocale().formattedDataSize(newTotalFileSize),
+                                    QLocale().formattedDataSize(deltaTotalFileSize)
+                                    ));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::recordAllCatalogStats()
     {
         // Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
-
         QDateTime nowDateTime = QDateTime::currentDateTime();
         QString nowDateTimeFormatted = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
-        //QMessageBox::information(this,"Katalog","Ok." + nowDateTimeFormatted);
 
         //get the list of catalogs and data
             QSqlQuery query;
@@ -1376,7 +1378,6 @@
                                         )");
             query.prepare(querySQL);
             query.exec();
-
 
         //create a new record for each catalog
             QString recordCatalogName;
