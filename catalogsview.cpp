@@ -145,11 +145,14 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
             }
 
             case Qt::BackgroundRole:
+            {
                 if (1 == index.row() % 2)
                     return QColor(247, 247, 247);
                 else
                     return QColor(255, 255, 255);
-            break;
+
+                break;
+            }
         }
 
     return QSortFilterProxyModel::data(index, role);
