@@ -1027,7 +1027,7 @@
 
                                     for (int i=0; i<rows; i++) {
 
-                                            QString test = searchResultsCatalog->index(i,0).data().toString();
+                                            //QString test = searchResultsCatalog->index(i,0).data().toString();
 
                                             //Append data to the database
                                             insertQuery.bindValue(":file_name",         searchResultsCatalog->index(i,0).data().toString());
@@ -1036,7 +1036,6 @@
                                             insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
                                             insertQuery.bindValue(":file_catalog",      searchResultsCatalog->index(i,4).data().toString());
                                             insertQuery.exec();
-
                                     }
 
                             //Prepare duplicate SQL
@@ -1048,15 +1047,15 @@
 
                                     //same name
                                     if(hasDuplicatesOnName == true){
-                                        groupingFields = groupingFields + "fileName";
+                                        groupingFields = groupingFields + "file_name";
                                     }
                                     //same size
                                     if(hasDuplicatesOnSize == true){
-                                        groupingFields = groupingFields + "||fileSize";
+                                        groupingFields = groupingFields + "||file_size";
                                     }
                                     //same date modified
                                     if(hasDuplicatesOnDateModified == true){
-                                        groupingFields = groupingFields + "||fileDateUpdated";
+                                        groupingFields = groupingFields + "||file_date_updated";
                                     }
 
                                     //remove starting || if any
@@ -1084,6 +1083,13 @@
                                 duplicatesQuery.prepare(selectSQL);
                                 duplicatesQuery.exec();
 
+                                // Display count of files
+                                int fileCount = 0;
+                                while(duplicatesQuery.next()){
+                                        fileCount++;
+                                }
+
+                                //Load results to model
                                 QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
                                 loadCatalogQueryModel->setQuery(std::move(duplicatesQuery));
 
@@ -1104,11 +1110,6 @@
                                 ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
                                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
-                                // Display count of files
-                                int fileCount = 0;
-                                while(duplicatesQuery.next()){
-                                    fileCount++;
-                                }
                                 ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
                                 ui->Search_label_NumberResults->setText(QString::number(fileCount));
 
