@@ -443,7 +443,7 @@
             storageModel->setFilter(tableFilter);
         }
         else if ( selectedDeviceType == "Catalog" ){
-            QString tableFilter = "storage_name = '" + activeCatalog->storageName + "'";
+            QString tableFilter = "storage_name = '" + selectedCatalog->storageName + "'";
             storageModel->setFilter(tableFilter);
         }
 
@@ -512,7 +512,7 @@
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
         }
         else if ( selectedDeviceType == "Catalog" ){
-            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(activeCatalog->storageName);
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedCatalog->storageName);
         }
 
         querySQL += " ORDER BY storage_name ";

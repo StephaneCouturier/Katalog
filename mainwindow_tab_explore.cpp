@@ -43,7 +43,7 @@
         //Get selected directory name
         QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
         selectedDirectoryFullPath = fullPath;
-        selectedDirectoryName = fullPath.remove(activeCatalog->sourcePath + "/");
+        selectedDirectoryName = fullPath.remove(selectedCatalog->sourcePath + "/");
 
         //Display selected directory name
         ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
@@ -71,7 +71,7 @@
         else{
             //openDirectory
             selectedDirectoryFullPath = selectedFileFolder;
-            selectedDirectoryName     = selectedFileFolder.remove(activeCatalog->sourcePath + "/");
+            selectedDirectoryName     = selectedFileFolder.remove(selectedCatalog->sourcePath + "/");
 
             //Remember selected directory name
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -453,51 +453,58 @@
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Start at the root folder of the catalog
-        selectedDirectoryName     = activeCatalog->sourcePath;
-        selectedDirectoryFullPath = activeCatalog->sourcePath;
+        selectedDirectoryName     = selectedCatalog->sourcePath;
+        selectedDirectoryFullPath = selectedCatalog->sourcePath;
 
         //Check catalog's number of files and confirm load if too big
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                            SELECT catalog_file_count
-                            FROM catalog
-                            WHERE catalog_name=:catalog_name
-                                        )");
-        query.prepare(querySQL);
-        query.bindValue(":catalog_name",activeCatalog->name);
-        query.exec();
-        query.next();
-        int selectedcatalogFileCount = query.value(0).toInt();
-        int numberOfFilesWarningThreshold = 200000;
-        if (selectedcatalogFileCount > numberOfFilesWarningThreshold){
-                int result = QMessageBox::warning(this,"Katalog",
-                          tr("The selected catalog contains more than %1 files.<br/>"
-                             "It may take several minutes to open.<br/>"
-                             "Continue?").arg(QLocale().toString(numberOfFilesWarningThreshold)),QMessageBox::Yes|QMessageBox::Cancel);
-                if ( result ==QMessageBox::Cancel){
-                    //Stop animation
-                    QApplication::restoreOverrideCursor();
-                    return;
-                }
+        if( databaseMode == "Memory"
+            and (selectedCatalog->dateLoaded < selectedCatalog->dateUpdated)){
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT catalog_file_count
+                                FROM catalog
+                                WHERE catalog_name=:catalog_name
+                                            )");
+            query.prepare(querySQL);
+            query.bindValue(":catalog_name",selectedCatalog->name);
+            query.exec();
+            query.next();
+            int selectedcatalogFileCount = query.value(0).toInt();
+            int numberOfFilesWarningThreshold = 200000;
+            if (selectedcatalogFileCount > numberOfFilesWarningThreshold){
+                    int result = QMessageBox::warning(this,"Katalog",
+                              tr("The selected catalog contains more than %1 files.<br/>"
+                                 "It may take several minutes to open.<br/>"
+                                 "Continue?").arg(QLocale().toString(numberOfFilesWarningThreshold)),QMessageBox::Yes|QMessageBox::Cancel);
+                    if ( result ==QMessageBox::Cancel){
+                        //Stop animation
+                        QApplication::restoreOverrideCursor();
+                        return;
+                    }
+            }
         }
 
-        //Load the files of the Selected Catalog
-        activeCatalog->loadCatalogFileListToTable();
-        activeCatalog->loadFoldersToTable();
+        //Load folders of the Selected Catalog
+            if( databaseMode == "Memory")
+                selectedCatalog->loadFoldersToTable();
 
-        //Load folders and files to the screen
-        loadCatalogDirectoriesToExplore();
-        loadSelectedDirectoryFilesToExplore();
+            loadCatalogDirectoriesToExplore();
+
+        //Load the files of the Selected Catalog
+            if( databaseMode == "Memory")
+                selectedCatalog->loadCatalogFileListToTable();
+
+            loadSelectedDirectoryFilesToExplore();
 
         //Go to the Explorer tab
-        ui->Explore_label_CatalogNameDisplay->setText(activeCatalog->name);
-        ui->Explore_label_CatalogPathDisplay->setText(activeCatalog->sourcePath);
+        ui->Explore_label_CatalogNameDisplay->setText(selectedCatalog->name);
+        ui->Explore_label_CatalogPathDisplay->setText(selectedCatalog->sourcePath);
 
         //Remember last opened catalog
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedCatalogFile", activeCatalog->filePath);
-        settings.setValue("Explore/lastSelectedCatalogName", activeCatalog->name);
-        settings.setValue("Explore/lastSelectedCatalogPath", activeCatalog->sourcePath);
+        settings.setValue("Explore/lastSelectedCatalogFile", selectedCatalog->filePath);
+        settings.setValue("Explore/lastSelectedCatalogName", selectedCatalog->name);
+        settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalog->sourcePath);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
         //Stop animation
@@ -510,7 +517,7 @@
 
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
-            exploreTreeModel->setCatalog(activeCatalog->name,activeCatalog->sourcePath);
+            exploreTreeModel->setCatalog(selectedCatalog->name, selectedCatalog->sourcePath);
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);
@@ -528,13 +535,13 @@
 
         //Display number of directories and total size
             QString countSQL = QLatin1String(R"(
-                                SELECT count (DISTINCT (file_folder_path))
-                                FROM filesall
-                                WHERE file_catalog =:file_catalog
+                                SELECT COUNT (DISTINCT (folder_path))
+                                FROM folder
+                                WHERE folder_catalog_name =:folder_catalog_name
                                )");
             QSqlQuery countQuery;
             countQuery.prepare(countSQL);
-            countQuery.bindValue(":file_catalog",selectedFilterCatalogName);
+            countQuery.bindValue(":folder_catalog_name",selectedFilterCatalogName);
             countQuery.exec();
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
@@ -547,13 +554,13 @@
         // Load all files and create model
         QString selectSQL;
 
-        //select folder based on selected options
+        //select folders based on selected options
         if(optionDisplayFolders==true){
 
             selectSQL = QLatin1String(R"(
                                 SELECT (REPLACE(folder_path, :selected_directory_full_path||"/", '')) AS file_name,
-                                            1                     AS file_size,
-                                            "updated"             AS file_date_updated,
+                                            NULL                     AS file_size,
+                                            ""             AS file_date_updated,
                                             folder_path           AS file_folder_path,
                                             folder_catalog_name   AS file_catalog,
                                             "folder"              AS entry_type,
@@ -600,21 +607,18 @@
                                 )");
 
 
-        if( activeCatalog->sourcePath == "EXPORT" ){
+        if( selectedCatalog->sourcePath == "EXPORT" ){
             selectedDirectoryFullPath.remove("EXPORT");
         }
 
-        //  if selectedDirectoryName="" then no file is loaded
-
         QSqlQuery loadCatalogQuery;
         loadCatalogQuery.prepare(selectSQL);
-        loadCatalogQuery.bindValue(":folder_catalog_name", activeCatalog->name);
-
+        loadCatalogQuery.bindValue(":folder_catalog_name", selectedCatalog->name);
 
         // fill lists depending on directory selection source
-        loadCatalogQuery.bindValue(":file_catalog", activeCatalog->name);
+        loadCatalogQuery.bindValue(":file_catalog", selectedCatalog->name);
 
-        if(activeCatalog->sourcePath == selectedDirectoryName){
+        if(selectedCatalog->sourcePath == selectedDirectoryName){
             loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryName);
             loadCatalogQuery.bindValue(":selectedCatalogPath", selectedDirectoryName);
 
@@ -625,12 +629,8 @@
 
         }
 
-//        loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryFullPath+"/%");
         loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
-
         loadCatalogQuery.exec();
-
-
 
         QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
         loadCatalogQueryModel->setQuery(std::move(loadCatalogQuery));
@@ -676,9 +676,9 @@
 
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":file_catalog",activeCatalog->name);
+        countQuery.bindValue(":file_catalog",selectedCatalog->name);
 
-        if(activeCatalog->sourcePath == selectedDirectoryName){
+        if(selectedCatalog->sourcePath == selectedDirectoryName){
             countQuery.bindValue(":file_folder_path",selectedDirectoryName);
         }
         else{

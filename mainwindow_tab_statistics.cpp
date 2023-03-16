@@ -432,7 +432,7 @@
                     querySQL = querySQL + " AND catalog_name = :selectedStorageforStats ";
                     querySQL = querySQL + " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats",activeCatalog->storageName);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedCatalog->storageName);
                 }
 
                 queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
@@ -490,7 +490,7 @@
 
             }
             else if (selectedDeviceType == "Catalog"){
-                selectedCatalogforStats = activeCatalog->storageName;
+                selectedCatalogforStats = selectedCatalog->storageName;
 
             }
 

@@ -532,7 +532,6 @@
             fileListModel->setStringList(fileList);
         }
 
-
         //Update catalog in db
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
@@ -550,8 +549,8 @@
         query.exec();
 
         //Update catalog date loaded and updated
-        catalog->setDateLoaded();
         catalog->setDateUpdated();
+        catalog->setDateLoaded();
 
         //Stop animation
         QApplication::restoreOverrideCursor();

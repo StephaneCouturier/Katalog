@@ -313,12 +313,11 @@ void Catalog::renameCatalogFile(QString newCatalogName)
 void Catalog::loadCatalogFileListToTable()
 {
     //Verify if the lastest version of the catalog is already in memory
-    QDateTime dateTime1 = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
-    QDateTime dateTime2 = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
+    QDateTime dateTimeLoaded  = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
+    QDateTime dateTimeUpdated = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
 
     //Load catalog files if latest version is not already in memory
-    if ( dateTime1 < dateTime2){
-
+    if ( dateTimeLoaded < dateTimeUpdated ){
         //Inputs
         QFile catalogFile(filePath);
 
@@ -431,7 +430,7 @@ void Catalog::loadCatalogFileListToTable()
                 }
 
             //update catalog loaded version
-                //setDateLoaded();
+                setDateLoaded();
 
             //close file
                 catalogFile.close();
@@ -442,11 +441,10 @@ void Catalog::loadCatalogFileListToTable()
 void Catalog::loadFoldersToTable()
 {
     //Verify if the lastest version of the catalog is already in memory
-    QDateTime dateTime1 = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
-    QDateTime dateTime2 = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
-qDebug()<<dateTime1<<" - "<<dateTime2;
+    QDateTime dateTimeLoaded   = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
+    QDateTime dateTimeUploaded = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
     //Load catalog files if latest version is not already in memory
-    if ( dateTime1 < dateTime2){
+    if ( dateTimeLoaded < dateTimeUploaded ){
 
         QString folderFilePath = filePath;
         int pos = folderFilePath.lastIndexOf(".idx");
@@ -508,16 +506,10 @@ qDebug()<<dateTime1<<" - "<<dateTime2;
                         insertFolderQuery.exec();
                 }
 
-            //update catalog loaded version
-                setDateLoaded();
-
             //close file
                 folderFile.close();
         }
     }
-
-    //update catalog loaded version
-        setDateLoaded();
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,

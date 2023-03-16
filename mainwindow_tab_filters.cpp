@@ -133,10 +133,11 @@
     {
         //reloads catalog to explore at root level
         if (selectedDeviceType=="Catalog"){
-            activeCatalog->setName(selectedDeviceName);
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(selectedDeviceName);
+            selectedCatalog->loadCatalogMetaData();
 
             openCatalogToExplore();
+
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
         }
@@ -234,8 +235,8 @@
         ui->Filters_label_DisplayLocation->setText(tr("All"));
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
-        activeCatalog->setName(tr(""));
-        activeCatalog->loadCatalogMetaData();
+        selectedCatalog->setName(tr(""));
+        selectedCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedFilterStorageLocation);
         refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         ui->Filter_pushButton_Explore->setEnabled(false);
@@ -355,12 +356,12 @@
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
 
-            activeCatalog->setName(selectedDeviceName);
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(selectedDeviceName);
+            selectedCatalog->loadCatalogMetaData();
 
             selectedFilterStorageLocation = tr("All");
             selectedFilterStorageName = tr("All");
-            selectedFilterCatalogName = activeCatalog->name;
+            selectedFilterCatalogName = selectedCatalog->name;
         }
 
         //Display selection values and save them

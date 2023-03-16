@@ -44,9 +44,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 //#endif
 {
-    //Set current version and release date, and check new version
-        currentVersion  = "1.17";
-        releaseDate     = "2023-03-14";
+    //Set current version, release date, and development mode
+        currentVersion  = "1.18";
+        releaseDate     = "2023-03-16";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -142,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Load last opened catalog to Explore tab
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-                if (activeCatalog->filePath != ""){
+                if (selectedCatalog->filePath != ""){
                     openCatalogToExplore();
                 }
 

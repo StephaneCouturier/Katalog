@@ -87,8 +87,8 @@
 
             //The selected catalog becomes the active catalog
             //activeCatalog = selectedCatalog;
-            activeCatalog->setName(selectedCatalog->name);
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(selectedCatalog->name);
+            selectedCatalog->loadCatalogMetaData();
 
             //Load
             openCatalogToExplore();
@@ -110,8 +110,8 @@
             selectedFilterStorageName = tr("All");
             ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
-            activeCatalog->setName(selectedCatalog->name);
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(selectedCatalog->name);
+            selectedCatalog->loadCatalogMetaData();
 
             selectedDeviceName = selectedCatalog->name;
             selectedDeviceType = "Catalog";
@@ -134,8 +134,8 @@
                 selectedFilterCatalogName       = selectedCatalog->name;
 
                 //The selected catalog becomes the active catalog
-                activeCatalog->setName(selectedCatalog->name);
-                activeCatalog->loadCatalogMetaData();
+                selectedCatalog->setName(selectedCatalog->name);
+                selectedCatalog->loadCatalogMetaData();
 
                 //Load
                 openCatalogToExplore();
@@ -294,8 +294,8 @@
             selectedFilterStorageName = tr("All");
             ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
-            activeCatalog->setName(selectedCatalog->name);
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(selectedCatalog->name);
+            selectedCatalog->loadCatalogMetaData();
 
             selectedDeviceName = selectedCatalog->name;
             selectedDeviceType = "Catalog";
@@ -750,9 +750,6 @@
         }
 
         //Refresh catalog lists
-        if(databaseMode=="Memory")
-           loadCatalogFilesToTable();
-
         loadCatalogsTableToModel();
 
     }
@@ -857,8 +854,8 @@
             recordSelectedCatalogStats(catalog->name, catalog->fileCount, catalog->totalFileSize);
 
         //Refresh data to UI
-        if(databaseMode=="Memory")
-            loadCatalogFilesToTable();
+//        if(databaseMode=="Memory")
+//            loadCatalogFilesToTable();
 
         loadCatalogsTableToModel();
         loadStatisticsChart();

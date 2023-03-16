@@ -378,10 +378,10 @@
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
 
             //Restore last opened catalog
-            activeCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
-            activeCatalog->loadCatalogMetaData();
+            selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
+            selectedCatalog->loadCatalogMetaData();
             selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-            selectedDirectoryFullPath = activeCatalog->sourcePath + "/" + selectedDirectoryName;
+            selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();
