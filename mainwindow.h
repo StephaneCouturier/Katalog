@@ -151,9 +151,8 @@ class MainWindow : public QMainWindow
 
             //Objects
             Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
-            Catalog *activeCatalog   = new Catalog(); //selected catalog used for data operation (update, explore, statistics)
-            Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation in Catalogs screen (update, edit, delete)
-            Catalog *tempCatalog     = new Catalog(); //temporary catalog used for search operations in Search screen or temporary operations (list of catalogs)
+            Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation from various screens (explore, update, edit, delete)
+            Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations in Search screen or temporary operations (list of catalogs)
             DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
             Storage *selectedStorage = new Storage(); //selected storage used for individual storage operation in Storage screen (update)
             Storage *tempStorage = new Storage(); //temporary storage used for individual storage operation in Storage screen (update)

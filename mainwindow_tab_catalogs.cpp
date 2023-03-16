@@ -579,6 +579,7 @@
             proxyResultsModel->setSourceModel(catalogQueryModel);
 
             proxyResultsModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+            proxyResultsModel->setHeaderData(1, Qt::Horizontal, tr("File path"));
             proxyResultsModel->setHeaderData(2, Qt::Horizontal, tr("Last Update"));
             proxyResultsModel->setHeaderData(3, Qt::Horizontal, tr("Files"));
             proxyResultsModel->setHeaderData(4, Qt::Horizontal, tr("Total Size"));

@@ -496,6 +496,9 @@
 
             loadSelectedDirectoryFilesToExplore();
 
+        //Refresh Catalogs screen as dateLoaded may have changed
+            loadCatalogsTableToModel();
+
         //Go to the Explorer tab
         ui->Explore_label_CatalogNameDisplay->setText(selectedCatalog->name);
         ui->Explore_label_CatalogPathDisplay->setText(selectedCatalog->sourcePath);
