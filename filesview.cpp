@@ -96,7 +96,11 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     fileType = fullFileName.remove(fileName+".");
 
                     //Assign the icon per filetype
-                    if(      fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
+                    QModelIndex idx = index.sibling(index.row(), 5);
+                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" ){
+                        return QIcon::fromTheme("folder");
+                    }
+                    else if( fileTypesPlain_Image.contains(fileType,Qt::CaseInsensitive)){
                         return QIcon::fromTheme("image-jpeg");
                     }
                     else if( fileTypesPlain_Audio.contains(fileType,Qt::CaseInsensitive)){
@@ -108,13 +112,8 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                     else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
                         return QIcon::fromTheme("folder-text");
                     }
-                    else{
-                        QModelIndex idx = index.sibling(index.row(), 5);
-                        if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" )
-                            return QIcon::fromTheme("folder");
-                        else
-                            return QIcon::fromTheme("document-preview-archive");
-                    }
+                    else
+                        return QIcon::fromTheme("document-preview-archive");
                 }
 
                 break;
