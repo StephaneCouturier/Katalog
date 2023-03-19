@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.18";
-        releaseDate     = "2023-03-16";
+        releaseDate     = "2023-03-19";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -226,14 +226,19 @@ void MainWindow::closeEvent (QCloseEvent *event)
     if(unsavedChanges == true){
 
         int result = QMessageBox::warning(this,"Katalog",
-                    tr( "Some changes in Storage list have not been saved.<br/>"
-                        "Are you sure to quit without saving?"),
-                    QMessageBox::Yes|QMessageBox::Cancel);
+                    tr( "Some changes in the Storage device list have not been saved.<br/>"
+                        "Save and exit, discard and exit, or cancel exit?"),
+                    QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel);
         if ( result ==QMessageBox::Cancel){
             event->ignore();
             return;
         }
-        else if ( result ==QMessageBox::Yes){
+        else if ( result ==QMessageBox::Save){
+            saveStorageData();
+            event->accept();
+            return;
+        }
+        else if ( result ==QMessageBox::Discard){
             event->accept();
             return;
         }
