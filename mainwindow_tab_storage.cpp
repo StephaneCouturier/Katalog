@@ -122,6 +122,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
+        skipCatalogUpdateSummary =false;
         updateStorageInfo(selectedStorage);
     }
     //--------------------------------------------------------------------------
