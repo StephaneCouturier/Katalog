@@ -446,10 +446,24 @@ void Catalog::loadFoldersToTable()
     //Load catalog files if latest version is not already in memory
     if ( dateTimeLoaded < dateTimeUploaded ){
 
+        //prepare inputs and insert query for folder
         QString folderFilePath = filePath;
         int pos = folderFilePath.lastIndexOf(".idx");
         folderFilePath = folderFilePath.left(pos);
         folderFilePath +=".folders.idx";
+
+        QSqlQuery insertFolderQuery;
+        QString insertFolderSQL = QLatin1String(R"(
+                                        INSERT INTO folder(
+                                                folder_hash,
+                                                folder_catalog_name,
+                                                folder_path
+                                                            )
+                                        VALUES(
+                                                :folder_hash,
+                                                :folder_catalog_name,
+                                                :folder_path)
+                                        )");
 
         //Inputs
         QFile folderFile(folderFilePath);
@@ -471,20 +485,6 @@ void Catalog::loadFoldersToTable()
                 deleteQuery.bindValue(":folder_catalog_name",name);
                 deleteQuery.exec();
 
-                //prepare insert query for folder
-                                QSqlQuery insertFolderQuery;
-                                QString insertFolderSQL = QLatin1String(R"(
-                                        INSERT INTO folder(
-                                                folder_hash,
-                                                folder_catalog_name,
-                                                folder_path
-                                                            )
-                                        VALUES(
-                                                :folder_hash,
-                                                :folder_catalog_name,
-                                                :folder_path)
-                                        )");
-
             //process each line of the file
                 while (true){
                     lineFolderFile = streamFolderFile.readLine();
@@ -496,7 +496,6 @@ void Catalog::loadFoldersToTable()
 
                     //Split the line text with tabulations into a list
                     QStringList lineFieldList  = lineFolderFile.split(lineFolderFileSplitExp);
-                    int         fieldListCount = lineFieldList.count();
 
                     //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
@@ -508,6 +507,35 @@ void Catalog::loadFoldersToTable()
 
             //close file
                 folderFile.close();
+        }
+        else{ //if no folder file is found, fall back on generating the list from the files themselves
+                //load files first
+                loadCatalogFileListToTable();
+
+                //get list of folders
+                QSqlQuery selectFoldersQuery;
+                QString selectFoldersQuerySQL = QLatin1String(R"(
+                                    SELECT DISTINCT file_folder_path
+                                    FROM filesall
+                                    WHERE file_catalog=:file_catalog
+                                                )");
+                selectFoldersQuery.prepare(selectFoldersQuerySQL);
+                selectFoldersQuery.bindValue(":file_catalog",name);
+                selectFoldersQuery.exec();
+
+                //add each line to the folder table
+                QString folderPath;
+                QString folderHash;
+                while (selectFoldersQuery.next()){
+                        folderPath = selectFoldersQuery.value(0).toString();
+                        folderHash = QString::number(qHash(folderPath));
+                        //Load folder into the database
+                        insertFolderQuery.prepare(insertFolderSQL);
+                        insertFolderQuery.bindValue(":folder_hash",        folderHash);
+                        insertFolderQuery.bindValue(":folder_catalog_name",name);
+                        insertFolderQuery.bindValue(":folder_path",        folderPath);
+                        insertFolderQuery.exec();
+                }
         }
     }
 }
