@@ -180,6 +180,7 @@
             newCatalog->setIncludeSymblinks(ui->Create_checkBox_IncludeSymblinks->isChecked());
             newCatalog->setIsFullDevice(ui->Create_checkBox_isFullDevice->isChecked());
             newCatalog->setIncludeMetadata(ui->Create_checkBox_IncludeMetadata->isChecked());
+            newCatalog->setAppVersion(currentVersion);
 
             //Get the file type for the catalog
             if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
@@ -510,6 +511,7 @@
             };
 
             //Prepare the catalog file data, adding first the catalog metadata at the beginning
+            fileList.prepend("<catalogAppVersion>"      + currentVersion);
             fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
             fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
             fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(catalog->includeSymblinks).toString());
@@ -528,18 +530,22 @@
         //Update catalog in db
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                UPDATE Catalog
+                                UPDATE catalog
                                 SET catalog_include_symblinks =:catalog_include_symblinks,
                                     catalog_file_count =:catalog_file_count,
-                                    catalog_total_file_size =:catalog_total_file_size
+                                    catalog_total_file_size =:catalog_total_file_size,
+                                    catalog_app_version =:catalog_app_version
                                     WHERE catalog_name =:catalog_name
                             )");
         query.prepare(querySQL);
         query.bindValue(":catalog_include_symblinks", catalog->includeSymblinks);
         query.bindValue(":catalog_file_count", catalog->fileCount);
         query.bindValue(":catalog_total_file_size", catalog->totalFileSize);
+        query.bindValue(":catalog_app_version", currentVersion);
         query.bindValue(":catalog_name", catalog->name);
         query.exec();
+
+        loadCatalogsTableToModel();
 
         //Update catalog date loaded and updated
         catalog->setDateUpdated();

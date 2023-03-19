@@ -183,6 +183,10 @@ void Catalog::setIncludeMetadata(bool selectedIncludeMetadata)
 {
     includeMetadata = selectedIncludeMetadata;
 }
+void Catalog::setAppVersion(QString selectedAppVersion)
+{
+    appVersion = selectedAppVersion;
+}
 
 //catalog files data operation
 void Catalog::createCatalog()
@@ -203,7 +207,8 @@ void Catalog::createCatalog()
                                                         catalog_include_symblinks,
                                                         catalog_is_full_device,
                                                         catalog_date_loaded,
-                                                        catalog_include_metadata
+                                                        catalog_include_metadata,
+                                                        catalog_app_version
                                                         )
                                         VALUES(         :catalog_file_path,
                                                         :catalog_name,
@@ -218,7 +223,8 @@ void Catalog::createCatalog()
                                                         :catalog_include_symblinks,
                                                         :catalog_is_full_device,
                                                         :catalog_date_loaded,
-                                                        :catalog_include_metadata )
+                                                        :catalog_include_metadata,
+                                                        :catalog_app_version )
                                     )");
 
     insertCatalogQuery.prepare(insertCatalogQuerySQL);
@@ -236,6 +242,7 @@ void Catalog::createCatalog()
     insertCatalogQuery.bindValue(":catalog_is_full_device",isFullDevice);
     insertCatalogQuery.bindValue(":catalog_date_loaded",dateLoaded);
     insertCatalogQuery.bindValue(":catalog_include_metadata",includeMetadata);
+    insertCatalogQuery.bindValue(":catalog_app_version",appVersion);
     insertCatalogQuery.exec();
 }
 
@@ -269,7 +276,8 @@ void Catalog::loadCatalogMetaData()
                                 catalog_include_symblinks    ,
                                 catalog_is_full_device       ,
                                 catalog_date_loaded          ,
-                                catalog_include_metadata
+                                catalog_include_metadata     ,
+                                catalog_app_version
                             FROM catalog
                             LEFT JOIN storage ON catalog_storage = storage_name
                             WHERE catalog_name=:catalog_name
@@ -293,6 +301,7 @@ void Catalog::loadCatalogMetaData()
     isFullDevice       = query.value(11).toBool();
     dateLoaded         = query.value(12).toString();
     includeMetadata    = query.value(13).toBool();
+    appVersion         = query.value(14).toString();
 }
 
 void Catalog::renameCatalog(QString newCatalogName)

@@ -444,11 +444,11 @@
                 //Prepare a textsteam for the file
                 QTextStream textStreamCatalogs(&catalogFile);
 
-                //Read the first 8 lines and put values in a stringlist
+                //Read the first 10 lines and put values in a stringlist
                 QStringList catalogValues;
                 QString line;
                 QString value;
-                for (int i=0; i<9; i++) {
+                for (int i=0; i<10; i++) {
                     line = textStreamCatalogs.readLine();
                     if (line !="" and QVariant(line.at(0)).toString()=="<"){
                         value = line.right(line.size() - line.lastIndexOf(">") - 1);
@@ -458,6 +458,7 @@
                 }
                 if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
                 if (catalogValues.count()==8) catalogValues << "false"; //for older catalog without includeMetadata
+                if (catalogValues.count()==9) catalogValues << "";      //for older catalog without appVersion
 
                 if(catalogValues.length()>0){
                     // Verify if path is active (drive connected)
@@ -482,7 +483,8 @@
                                                             catalog_include_symblinks,
                                                             catalog_is_full_device,
                                                             catalog_date_loaded,
-                                                            catalog_include_metadata
+                                                            catalog_include_metadata,
+                                                            catalog_app_version
                                                             )
                                             VALUES(
                                                             :catalog_file_path,
@@ -498,7 +500,8 @@
                                                             :catalog_include_symblinks,
                                                             :catalog_is_full_device,
                                                             :catalog_date_loaded,
-                                                            :catalog_include_metadata )
+                                                            :catalog_include_metadata,
+                                                            :catalog_app_version )
                                         )");
 
                     insertCatalogQuery.prepare(insertCatalogQuerySQL);
@@ -516,6 +519,7 @@
                     insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
                     insertCatalogQuery.bindValue(":catalog_date_loaded","");
                     insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
+                    insertCatalogQuery.bindValue(":catalog_app_version",catalogValues[9]);
                     insertCatalogQuery.exec();
 
                 }
@@ -545,7 +549,8 @@
                                             catalog_storage              ,
                                             storage_location             ,
                                             catalog_is_full_device       ,
-                                            catalog_date_loaded
+                                            catalog_date_loaded          ,
+                                            catalog_app_version
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalog_storage = storage_name
                                         WHERE catalog_name !=''
@@ -592,6 +597,7 @@
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Location"));
             proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Full Device"));
             proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("Last Loaded"));
+            proxyResultsModel->setHeaderData(14,Qt::Horizontal, tr("App Version"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -615,6 +621,7 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(11,150); //Location
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(12, 50); //FullDevice
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(13,150); //Last Loaded
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(14,150); //App Version
 
             //Hide columns
             if(developmentMode==false){
@@ -806,10 +813,11 @@
                 }
             }
 
-            //catalog the directory and save it to the file
+            //catalog the directory (iterator)
             catalogDirectory(catalog);
 
             if(databaseMode=="Memory"){
+                //save it to csv files
                 saveCatalogToNewFile(catalog->name);
                 saveFoldersToNewFile(catalog->name);
             }
@@ -855,9 +863,6 @@
             recordSelectedCatalogStats(catalog->name, catalog->fileCount, catalog->totalFileSize);
 
         //Refresh data to UI
-//        if(databaseMode=="Memory")
-//            loadCatalogFilesToTable();
-
         loadCatalogsTableToModel();
         loadStatisticsChart();
 

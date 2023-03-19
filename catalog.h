@@ -61,6 +61,7 @@ public:
     bool    isFullDevice;
     QString dateLoaded;
     bool    includeMetadata;
+    QString appVersion;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -80,6 +81,7 @@ public:
     void setDateLoaded();
     void setDateUpdated();
     void setIncludeMetadata(bool selectedIncludeMetadata);
+    void setAppVersion(QString selectedAppVersion);
 
     void createCatalog();
     void deleteCatalog();
