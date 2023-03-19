@@ -77,10 +77,10 @@
                             storage_comment       TEXT)
             )");
 
-        // FILESALL (storing all catalogs files)---------------------------------
+        // FILE (storing all catalogs files)---------------------------------
 
-            const auto SQL_CREATE_FILESALL = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS filesall(
+            const auto SQL_CREATE_FILE = QLatin1String(R"(
+                       CREATE TABLE IF NOT EXISTS file(
                             id_file           INTEGER,
                             file_name         TEXT,
                             file_folder_path  TEXT,
@@ -91,10 +91,10 @@
                             PRIMARY KEY("id_file" AUTOINCREMENT))
                 )");
 
-        // FILE (one-off requests) ----------------------------------------------
+        // FILETEMP (one-off requests) ----------------------------------------------
 
-            const auto SQL_CREATE_FILE = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  file(
+            const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  filetemp(
                             id_file              INTEGER,
                             file_name            TEXT,
                             file_folder_path     TEXT,

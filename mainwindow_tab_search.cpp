@@ -987,12 +987,12 @@
 							//Load Search results into the database
                                 //clear database
                                     QSqlQuery deleteQuery;
-                                    deleteQuery.exec("DELETE FROM file");
+                                    deleteQuery.exec("DELETE FROM filetemp");
 
                                 //prepare query to load file info
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
-                                                        INSERT INTO file (
+                                                        INSERT INTO filetemp (
                                                                         file_name,
                                                                         file_folder_path,
                                                                         file_size,
@@ -1055,10 +1055,10 @@
                                                             file_date_updated,
                                                             file_folder_path,
                                                             file_catalog
-                                                FROM file
+                                                FROM filetemp
                                                 WHERE %1 IN
                                                     (SELECT %1
-                                                    FROM file
+                                                    FROM filetemp
                                                     GROUP BY %1
                                                     HAVING count(%1)>1)
                                                 ORDER BY %1
@@ -1112,12 +1112,12 @@
 							//Load Search results into the database
                                 //clear database
                                     QSqlQuery deleteQuery;
-                                    deleteQuery.exec("DELETE FROM file");
+                                    deleteQuery.exec("DELETE FROM filetemp");
 
                                 //prepare query to load file info
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
-                                                        INSERT INTO file (
+                                                        INSERT INTO filetemp (
                                                                         file_name,
                                                                         file_folder_path,
                                                                         file_size,
@@ -1181,11 +1181,11 @@
                                                              file_date_updated,
                                                              file_folder_path,
                                                              file_catalog
-                                                 FROM file
+                                                 FROM filetemp
                                                  WHERE file_catalog = :selectedDifferencesCatalog1
                                                  AND %1 NOT IN(
                                                      SELECT %1
-                                                     FROM file
+                                                     FROM filetemp
                                                      WHERE file_catalog = :selectedDifferencesCatalog2
                                                      )
                                                  UNION
@@ -1194,11 +1194,11 @@
                                                              file_date_updated,
                                                              file_folder_path,
                                                              file_catalog
-                                                 FROM file
+                                                 FROM filetemp
                                                  WHERE file_catalog = :selectedDifferencesCatalog2
                                                  AND %1 NOT IN(
                                                      SELECT %1
-                                                     FROM file
+                                                     FROM filetemp
                                                      WHERE file_catalog = :selectedDifferencesCatalog1
                                                      )
                                  )").arg(groupingFieldsDifferences);
@@ -1356,7 +1356,7 @@
                                                 file_folder_path,
                                                 file_size,
                                                 file_date_updated
-                                        FROM  filesall
+                                        FROM  file
                                         WHERE file_catalog=:file_catalog
                                                     )");
 

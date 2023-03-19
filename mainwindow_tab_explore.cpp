@@ -602,7 +602,7 @@
                                             "file" AS entry_type,
                                             "2"||file_name AS order_value,
                                             file_full_path
-                                    FROM    filesall
+                                    FROM    file
                                     WHERE   file_catalog =:file_catalog
                                     AND     file_folder_path =:file_folder_path
 
@@ -670,7 +670,7 @@
         //Display count of files and total size
         QString countSQL = QLatin1String(R"(
                                 SELECT  count (*), sum(file_size)
-                                FROM    filesall
+                                FROM    file
                                 WHERE   file_catalog =:file_catalog
                            )");
 

@@ -141,10 +141,10 @@
         if (!q.exec(SQL_CREATE_STORAGE))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_FILESALL))
+        if (!q.exec(SQL_CREATE_FILE))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_FILE))
+        if (!q.exec(SQL_CREATE_FILETEMP))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_FOLDER))

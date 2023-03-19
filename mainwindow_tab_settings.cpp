@@ -115,8 +115,8 @@
                         QSqlQuery queryDelete;
                         queryDelete.exec("DELETE FROM catalog");
                         queryDelete.exec("DELETE FROM storage");
-                        queryDelete.exec("DELETE FROM filesall");
                         queryDelete.exec("DELETE FROM file");
+                        queryDelete.exec("DELETE FROM filetemp");
                         queryDelete.exec("DELETE FROM folder");
                         queryDelete.exec("DELETE FROM statistics");
                         queryDelete.exec("DELETE FROM search");
@@ -240,8 +240,8 @@
                     QSqlQuery queryDelete;
                     queryDelete.exec("DELETE FROM catalog");
                     queryDelete.exec("DELETE FROM storage");
-                    queryDelete.exec("DELETE FROM filesall");
                     queryDelete.exec("DELETE FROM file");
+                    queryDelete.exec("DELETE FROM filetemp");
                     queryDelete.exec("DELETE FROM folder");
                     queryDelete.exec("DELETE FROM statistics");
                     queryDelete.exec("DELETE FROM search");

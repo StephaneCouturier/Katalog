@@ -343,7 +343,7 @@
             //Remove any former files from db for older catalog with same name
             QSqlQuery deleteFileQuery;
             QString deleteFileQuerySQL = QLatin1String(R"(
-                                            DELETE FROM filesall
+                                            DELETE FROM file
                                             WHERE file_catalog=:file_catalog
                                         )");
             deleteFileQuery.prepare(deleteFileQuerySQL);
@@ -359,10 +359,10 @@
             deleteFolderQuery.bindValue(":folder_catalog_name",catalog->name);
             deleteFolderQuery.exec();
 
-            //prepare insert query for filesall
-            QSqlQuery insertFilesallQuery;
-            QString insertFilesallSQL = QLatin1String(R"(
-                                        INSERT INTO filesall (
+            //prepare insert query for file
+            QSqlQuery insertFileQuery;
+            QString insertFileSQL = QLatin1String(R"(
+                                        INSERT INTO file (
                                                         file_name,
                                                         file_folder_path,
                                                         file_size,
@@ -378,7 +378,7 @@
                                                         :file_catalog,
                                                         :file_full_path )
                                         )");
-            insertFilesallQuery.prepare(insertFilesallSQL);
+            insertFileQuery.prepare(insertFileSQL);
 
             //prepare insert query for folder
             QSqlQuery insertFolderQuery;
@@ -423,13 +423,13 @@
                         //Insert files
                         else if (entry.isFile()) {
                             QFile file(entryPath);
-                            insertFilesallQuery.bindValue(":file_name",         entry.fileName());
-                            insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath());
-                            insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
-                            insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
-                            insertFilesallQuery.bindValue(":file_full_path",    entryPath);
-                            insertFilesallQuery.exec();
+                            insertFileQuery.bindValue(":file_name",         entry.fileName());
+                            insertFileQuery.bindValue(":file_size",         file.size());
+                            insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
+                            insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
+                            insertFileQuery.bindValue(":file_catalog",      catalog->name);
+                            insertFileQuery.bindValue(":file_full_path",    entryPath);
+                            insertFileQuery.exec();
 
                             //Include Media File Metadata
                             if(developmentMode==true){
@@ -466,13 +466,13 @@
                         //Insert files
                         else if (entry.isFile()) {
                             QFile file(entryPath);
-                            insertFilesallQuery.bindValue(":file_name",         entry.fileName());
-                            insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath());
-                            insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
-                            insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
-                            insertFilesallQuery.bindValue(":file_full_path",    entryPath);
-                            insertFilesallQuery.exec();
+                            insertFileQuery.bindValue(":file_name",         entry.fileName());
+                            insertFileQuery.bindValue(":file_size",         file.size());
+                            insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
+                            insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
+                            insertFileQuery.bindValue(":file_catalog",      catalog->name);
+                            insertFileQuery.bindValue(":file_full_path",    entryPath);
+                            insertFileQuery.exec();
 
                             //Include Media File Metadata
                             if(developmentMode==true){
@@ -497,7 +497,7 @@
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                         SELECT file_full_path, file_size, file_date_updated
-                        FROM filesall
+                        FROM file
                         WHERE file_catalog=:file_catalog
                     )");
             query.prepare(querySQL);

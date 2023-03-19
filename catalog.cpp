@@ -106,7 +106,7 @@ void Catalog::setFileCount()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT COUNT(file_name)
-                            FROM filesall
+                            FROM file
                             WHERE file_catalog =:file_catalog
                         )");
     query.prepare(querySQL);
@@ -120,7 +120,7 @@ void Catalog::setTotalFileSize()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT SUM(file_size)
-                            FROM filesall
+                            FROM file
                             WHERE file_catalog =:file_catalog
                         )");
     query.prepare(querySQL);
@@ -332,17 +332,17 @@ void Catalog::loadCatalogFileListToTable()
                 //clear database from old version of catalog
                 QSqlQuery deleteQuery;
                 QString deleteQuerySQL = QLatin1String(R"(
-                                    DELETE FROM filesall
+                                    DELETE FROM file
                                     WHERE file_catalog=:file_catalog
                                                 )");
                 deleteQuery.prepare(deleteQuerySQL);
                 deleteQuery.bindValue(":file_catalog",name);
                 deleteQuery.exec();
 
-                //prepare insert query for filesall
-                QSqlQuery insertFilesallQuery;
-                QString insertFilesallSQL = QLatin1String(R"(
-                                        INSERT INTO filesall (
+                //prepare insert query for file
+                QSqlQuery insertFileQuery;
+                QString insertFileSQL = QLatin1String(R"(
+                                        INSERT INTO file (
                                                 file_name,
                                                 file_folder_path,
                                                 file_size,
@@ -415,14 +415,14 @@ void Catalog::loadCatalogFileListToTable()
                         insertFolderQuery.exec();
 
                     //Load file into the database
-                        insertFilesallQuery.prepare(insertFilesallSQL);
-                        insertFilesallQuery.bindValue(":file_name",        fileInfo.fileName());
-                        insertFilesallQuery.bindValue(":file_size",        lineFileSize);
-                        insertFilesallQuery.bindValue(":file_folder_path", folder );
-                        insertFilesallQuery.bindValue(":file_date_updated",lineFileDatetime);
-                        insertFilesallQuery.bindValue(":file_catalog",     name);
-                        insertFilesallQuery.bindValue(":file_full_path",   lineFilePath);
-                        insertFilesallQuery.exec();
+                        insertFileQuery.prepare(insertFileSQL);
+                        insertFileQuery.bindValue(":file_name",        fileInfo.fileName());
+                        insertFileQuery.bindValue(":file_size",        lineFileSize);
+                        insertFileQuery.bindValue(":file_folder_path", folder );
+                        insertFileQuery.bindValue(":file_date_updated",lineFileDatetime);
+                        insertFileQuery.bindValue(":file_catalog",     name);
+                        insertFileQuery.bindValue(":file_full_path",   lineFilePath);
+                        insertFileQuery.exec();
                 }
 
             //update catalog loaded version
@@ -509,7 +509,7 @@ void Catalog::loadFoldersToTable()
                 QSqlQuery selectFoldersQuery;
                 QString selectFoldersQuerySQL = QLatin1String(R"(
                                                     SELECT DISTINCT file_folder_path
-                                                    FROM filesall
+                                                    FROM file
                                                     WHERE file_catalog=:file_catalog
                                                 )");
                 selectFoldersQuery.prepare(selectFoldersQuerySQL);
