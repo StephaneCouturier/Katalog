@@ -494,6 +494,8 @@
             ui->Storage_widget_DevicePanelForm->hide();
             ui->Storage_pushButton_TestMedia->hide();
             ui->Storage_listView_Media->hide();
+            ui->Storage_pushButton_PanelNew->hide();
+            ui->Storage_pushButton_PanelSaveAll->hide();
 
         //Settings
             //DEV: option to switch database mode between memory and file
