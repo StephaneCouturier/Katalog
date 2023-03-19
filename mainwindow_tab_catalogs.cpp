@@ -451,7 +451,7 @@
                 for (int i=0; i<10; i++) {
                     line = textStreamCatalogs.readLine();
                     if (line !="" and QVariant(line.at(0)).toString()=="<"){
-                        value = line.right(line.size() - line.lastIndexOf(">") - 1);
+                        value = line.right(line.size() - line.indexOf(">") - 1);
                         if (value =="") catalogValues << "";
                         else catalogValues << value;
                     }
