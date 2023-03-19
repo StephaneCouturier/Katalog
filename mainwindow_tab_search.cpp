@@ -751,21 +751,7 @@
                     sFileCatalogs.clear();
 
                 //Get search criteria
-                    //Get the text to search in file names or directories, depending on OS.
-//                    #ifdef Q_OS_LINUX
-//                    searchText = ui->Search_kcombobox_SearchText->currentText();
-//                    #else
-                    searchText = ui->Search_lineEdit_SearchText->text();
-//                    #endif
-
-                    //Add searchText to a list, to retrieved it later
-//                    #ifdef Q_OS_LINUX
-//                        ui->Search_kcombobox_SearchText->addItem(searchText);
-//                    #else
-                        //no alternative for win, covered by qcombobox
-//                    #endif
-
-                    //Get other search criteria
+                    searchText             = ui->Search_lineEdit_SearchText->text();
                     selectedTextCriteria   = ui->Search_comboBox_TextCriteria->currentText();
                     selectedSearchIn       = ui->Search_comboBox_SearchIn->currentText();
                     selectedSearchExclude  = ui->Search_lineEdit_Exclude->text();
