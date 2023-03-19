@@ -661,6 +661,7 @@
         ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
         ui->Explore_treeView_FileList->header()->resizeSection(2, 140); //Date
         ui->Explore_treeView_FileList->header()->resizeSection(3, 400); //Directory
+        ui->Explore_treeView_FileList->hideColumn(3); //Directory
         ui->Explore_treeView_FileList->hideColumn(4); //Catalog
         ui->Explore_treeView_FileList->hideColumn(5); //Type
         ui->Explore_treeView_FileList->hideColumn(6); //orderValue
