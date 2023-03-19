@@ -363,12 +363,10 @@ void Catalog::loadCatalogFileListToTable()
                                 QSqlQuery insertFolderQuery;
                                 QString insertFolderSQL = QLatin1String(R"(
                                         INSERT INTO folder(
-                                                folder_hash,
                                                 folder_catalog_name,
                                                 folder_path
                                                             )
                                         VALUES(
-                                                :folder_hash,
                                                 :folder_catalog_name,
                                                 :folder_path)
                                         )");
@@ -409,11 +407,9 @@ void Catalog::loadCatalogFileListToTable()
                     else lineFileDatetime = "";
 
                     QString folder = fileInfo.path();
-                    QString folderHash = QString::number(qHash(folder));
 
                     //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_hash",      folderHash);
                         insertFolderQuery.bindValue(":folder_catalog_name",name);
                         insertFolderQuery.bindValue(":folder_path",      folder);
                         insertFolderQuery.exec();
@@ -422,7 +418,7 @@ void Catalog::loadCatalogFileListToTable()
                         insertFilesallQuery.prepare(insertFilesallSQL);
                         insertFilesallQuery.bindValue(":file_name",        fileInfo.fileName());
                         insertFilesallQuery.bindValue(":file_size",        lineFileSize);
-                        insertFilesallQuery.bindValue(":file_folder_path", folder ); //DEV: replace later by folderHash
+                        insertFilesallQuery.bindValue(":file_folder_path", folder );
                         insertFilesallQuery.bindValue(":file_date_updated",lineFileDatetime);
                         insertFilesallQuery.bindValue(":file_catalog",     name);
                         insertFilesallQuery.bindValue(":file_full_path",   lineFilePath);
@@ -455,12 +451,10 @@ void Catalog::loadFoldersToTable()
         QSqlQuery insertFolderQuery;
         QString insertFolderSQL = QLatin1String(R"(
                                         INSERT INTO folder(
-                                                folder_hash,
                                                 folder_catalog_name,
                                                 folder_path
                                                             )
                                         VALUES(
-                                                :folder_hash,
                                                 :folder_catalog_name,
                                                 :folder_path)
                                         )");
@@ -499,7 +493,6 @@ void Catalog::loadFoldersToTable()
 
                     //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_hash",        lineFieldList[0]);
                         insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[1]);
                         insertFolderQuery.bindValue(":folder_path",        lineFieldList[2]);
                         insertFolderQuery.exec();
@@ -515,9 +508,9 @@ void Catalog::loadFoldersToTable()
                 //get list of folders
                 QSqlQuery selectFoldersQuery;
                 QString selectFoldersQuerySQL = QLatin1String(R"(
-                                    SELECT DISTINCT file_folder_path
-                                    FROM filesall
-                                    WHERE file_catalog=:file_catalog
+                                                    SELECT DISTINCT file_folder_path
+                                                    FROM filesall
+                                                    WHERE file_catalog=:file_catalog
                                                 )");
                 selectFoldersQuery.prepare(selectFoldersQuerySQL);
                 selectFoldersQuery.bindValue(":file_catalog",name);
@@ -525,13 +518,10 @@ void Catalog::loadFoldersToTable()
 
                 //add each line to the folder table
                 QString folderPath;
-                QString folderHash;
                 while (selectFoldersQuery.next()){
                         folderPath = selectFoldersQuery.value(0).toString();
-                        folderHash = QString::number(qHash(folderPath));
                         //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_hash",        folderHash);
                         insertFolderQuery.bindValue(":folder_catalog_name",name);
                         insertFolderQuery.bindValue(":folder_path",        folderPath);
                         insertFolderQuery.exec();

@@ -384,12 +384,10 @@
             QSqlQuery insertFolderQuery;
             QString insertFolderSQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO folder(
-                                            folder_hash,
                                             folder_catalog_name,
                                             folder_path
                                          )
                                         VALUES(
-                                            :folder_hash,
                                             :folder_catalog_name,
                                             :folder_path)
                                         )");
@@ -398,7 +396,6 @@
         //Scan entries with iterator
 
             QString entryPath;
-            QString folderHash;
 
             //Iterator
             if (catalog->includeHidden == true){
@@ -417,9 +414,7 @@
 
                         //Insert dirs
                         if (entry.isDir()) {
-                            folderHash = QString::number(qHash(entryPath));
                             insertFolderQuery.prepare(insertFolderSQL);
-                            insertFolderQuery.bindValue(":folder_hash",         folderHash);
                             insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
                             insertFolderQuery.exec();
@@ -430,7 +425,7 @@
                             QFile file(entryPath);
                             insertFilesallQuery.bindValue(":file_name",         entry.fileName());
                             insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath()); //DEV: replace later by folderHash
+                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath());
                             insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
                             insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
                             insertFilesallQuery.bindValue(":file_full_path",    entryPath);
@@ -462,9 +457,7 @@
 
                         //Insert dirs
                         if (entry.isDir()) {
-                            folderHash = QString::number(qHash(entryPath));
                             insertFolderQuery.prepare(insertFolderSQL);
-                            insertFolderQuery.bindValue(":folder_hash",         folderHash);
                             insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
                             insertFolderQuery.exec();
@@ -475,7 +468,7 @@
                             QFile file(entryPath);
                             insertFilesallQuery.bindValue(":file_name",         entry.fileName());
                             insertFilesallQuery.bindValue(":file_size",         file.size());
-                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath()); //DEV: replace later by folderHash
+                            insertFilesallQuery.bindValue(":file_folder_path",  entry.absolutePath());
                             insertFilesallQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
                             insertFilesallQuery.bindValue(":file_catalog",      catalog->name);
                             insertFilesallQuery.bindValue(":file_full_path",    entryPath);
@@ -592,7 +585,6 @@
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                 SELECT
-                                    folder_hash,
                                     folder_catalog_name,
                                     folder_path
                                 FROM folder
@@ -612,7 +604,6 @@
             while(query.next()){
                 stream << query.value(0).toString() << '\t';
                 stream << query.value(1).toString() << '\t';
-                stream << query.value(2).toString() << '\n';
             }
 
           } else {

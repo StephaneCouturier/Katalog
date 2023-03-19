@@ -109,10 +109,9 @@
 
             const auto SQL_CREATE_FOLDER = QLatin1String(R"(
                    CREATE TABLE IF NOT EXISTS  folder(
-                            folder_hash          TEXT,
                             folder_catalog_name  TEXT,
                             folder_path          TEXT,
-                            PRIMARY KEY(folder_hash,folder_catalog_name))
+                            PRIMARY KEY(folder_catalog_name,folder_path))
             )");
 
         // METADATA -------------------------------------------------------------
