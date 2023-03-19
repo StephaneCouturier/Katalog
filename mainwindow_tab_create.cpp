@@ -603,7 +603,7 @@
             QTextStream stream(&fileOut);
             while(query.next()){
                 stream << query.value(0).toString() << '\t';
-                stream << query.value(1).toString() << '\t';
+                stream << query.value(1).toString() << '\n';
             }
 
           } else {

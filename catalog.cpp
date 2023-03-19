@@ -489,12 +489,12 @@ void Catalog::loadFoldersToTable()
                     //if (lineFolderFile.left(1)=="<"){continue;}
 
                     //Split the line text with tabulations into a list
-                    QStringList lineFieldList  = lineFolderFile.split(lineFolderFileSplitExp);
+                    QStringList lineFieldList  = lineFolderFile.split("\t");
 
                     //Load folder into the database
                         insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[1]);
-                        insertFolderQuery.bindValue(":folder_path",        lineFieldList[2]);
+                        insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[0]);
+                        insertFolderQuery.bindValue(":folder_path",        lineFieldList[1]);
                         insertFolderQuery.exec();
                 }
 
