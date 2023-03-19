@@ -58,6 +58,8 @@
         saveStorageData();
         refreshLocationSelectionList();
         unsavedChanges = false;
+        ui->Storage_pushButton_SaveAll->setStyleSheet("color: black");
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
@@ -178,6 +180,7 @@
     void MainWindow::on_Storage_treeView_StorageList_doubleClicked(const QModelIndex &index)
     {
         unsavedChanges = true;
+        ui->Storage_pushButton_SaveAll->setStyleSheet("color: orange");
     }
     //--------------------------------------------------------------------------
 
