@@ -401,63 +401,72 @@
             //Iterator
             if (catalog->includeHidden == true){
                 QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
-                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
 
-                    //exclude if the folder is part of excluded directories
-                    bool excludeEntry = false;
-                    if (excludedFolders.contains(entry.absolutePath())){
-                        excludeEntry = true;
+                    //exclude if the folder is part of excluded directories and their sub-directories
+                    bool exclude = false;
+                    for(int i=0; i<excludedFolders.count(); i++){
+                        if( entryPath.contains(excludedFolders[i]) ){
+                              exclude = true;
+                        }
                     }
-                    if(excludeEntry == false){
 
+                    if(exclude == false){
                         //Insert dirs
                         if (entry.isDir()) {
-                            insertFolderQuery.prepare(insertFolderSQL);
-                            insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
-                            insertFolderQuery.bindValue(":folder_path",         entryPath);
-                            insertFolderQuery.exec();
+
+                              qDebug()<<entryPath<<" - "<<entry.absolutePath();//<<" - "<<excludeEntry;
+
+                              insertFolderQuery.prepare(insertFolderSQL);
+                              insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
+                              insertFolderQuery.bindValue(":folder_path",         entryPath);
+                              insertFolderQuery.exec();
                         }
 
                         //Insert files
                         else if (entry.isFile()) {
-                            QFile file(entryPath);
-                            insertFileQuery.bindValue(":file_name",         entry.fileName());
-                            insertFileQuery.bindValue(":file_size",         file.size());
-                            insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
-                            insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
-                            insertFileQuery.bindValue(":file_catalog",      catalog->name);
-                            insertFileQuery.bindValue(":file_full_path",    entryPath);
-                            insertFileQuery.exec();
 
-                            //Include Media File Metadata
-                            if(developmentMode==true){
-                              if(catalog->includeMetadata == true){
-                                  setMediaFile(entryPath);
+                              QFile file(entryPath);
+                              insertFileQuery.bindValue(":file_name",         entry.fileName());
+                              insertFileQuery.bindValue(":file_size",         file.size());
+                              insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
+                              insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
+                              insertFileQuery.bindValue(":file_catalog",      catalog->name);
+                              insertFileQuery.bindValue(":file_full_path",    entryPath);
+                              insertFileQuery.exec();
+
+                              //Media File Metadata
+                              if(developmentMode==true){
+                                  if(catalog->includeMetadata == true){
+                                      setMediaFile(entryPath);
+                                  }
                               }
-                            }
                         }
                     }
                 }
             }
             else{
                 QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                //QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::Files, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
 
-                    //exclude if the folder is part of excluded directories
-                    bool excludeEntry = false;
-                    if (excludedFolders.contains(entry.absolutePath())){
-                        excludeEntry = true;
+                    //exclude if the folder is part of excluded directories and their sub-directories
+                    bool exclude = false;
+                    for(int i=0; i<excludedFolders.count(); i++){
+                        if( entryPath.contains(excludedFolders[i]) ){
+                            exclude = true;
+                        }
                     }
-                    if(excludeEntry == false){
 
+                    if(exclude == false){
                         //Insert dirs
                         if (entry.isDir()) {
+
+                        qDebug()<<entryPath<<" - "<<entry.absolutePath();//<<" - "<<excludeEntry;
+
                             insertFolderQuery.prepare(insertFolderSQL);
                             insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
@@ -466,6 +475,7 @@
 
                         //Insert files
                         else if (entry.isFile()) {
+
                             QFile file(entryPath);
                             insertFileQuery.bindValue(":file_name",         entry.fileName());
                             insertFileQuery.bindValue(":file_size",         file.size());
@@ -475,7 +485,7 @@
                             insertFileQuery.bindValue(":file_full_path",    entryPath);
                             insertFileQuery.exec();
 
-                            //Include Media File Metadata
+                            //Media File Metadata
                             if(developmentMode==true){
                               if(catalog->includeMetadata == true){
                                   setMediaFile(entryPath);
@@ -535,7 +545,7 @@
                                     catalog_file_count =:catalog_file_count,
                                     catalog_total_file_size =:catalog_total_file_size,
                                     catalog_app_version =:catalog_app_version
-                                    WHERE catalog_name =:catalog_name
+                                WHERE catalog_name =:catalog_name
                             )");
         query.prepare(querySQL);
         query.bindValue(":catalog_include_symblinks", catalog->includeSymblinks);
