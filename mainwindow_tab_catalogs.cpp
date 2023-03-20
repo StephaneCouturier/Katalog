@@ -730,7 +730,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::updateSingleCatalog(Catalog *catalog)
     {
-        //Update catalog file list      
+        //Update catalog file list
         updateCatalogFileList(catalog);
 
         //Update its storage

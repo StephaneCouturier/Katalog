@@ -56,6 +56,11 @@
     void MainWindow::on_Storage_pushButton_SaveAll_clicked()
     {
         saveStorageData();
+
+        //refresh
+        loadStorageTableToModel();
+        updateStorageSelectionStatistics();
+        loadStorageTableToSelectionTreeModel();
         refreshLocationSelectionList();
         unsavedChanges = false;
         ui->Storage_pushButton_SaveAll->setStyleSheet("color: black");
@@ -153,6 +158,11 @@
 
             //Save model data to file
             saveStorageData();
+
+            //refresh
+            loadStorageTableToModel();
+            updateStorageSelectionStatistics();
+            loadStorageTableToSelectionTreeModel();
 
             //Disable buttons to force new selection
             ui->Storage_pushButton_SearchLocation->setEnabled(false);
@@ -308,6 +318,11 @@
         //load table to model
         loadStorageTableToModel();
         saveStorageData();
+
+        //refresh
+        loadStorageTableToModel();
+        updateStorageSelectionStatistics();
+        loadStorageTableToSelectionTreeModel();
 
         //enable save button
         ui->Storage_pushButton_New->setEnabled(true);
@@ -650,15 +665,6 @@
             //load Storage file data to table
             loadStorageFileToTable();
         }
-
-        //load table to model
-        loadStorageTableToModel();
-
-        //refresh stats
-        updateStorageSelectionStatistics();
-
-        //refresh selection tree
-        loadStorageTableToSelectionTreeModel();
 
     }
     //--------------------------------------------------------------------------
