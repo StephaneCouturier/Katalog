@@ -416,9 +416,6 @@
                     if(exclude == false){
                         //Insert dirs
                         if (entry.isDir()) {
-
-                              qDebug()<<entryPath<<" - "<<entry.absolutePath();//<<" - "<<excludeEntry;
-
                               insertFolderQuery.prepare(insertFolderSQL);
                               insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                               insertFolderQuery.bindValue(":folder_path",         entryPath);
@@ -464,9 +461,6 @@
                     if(exclude == false){
                         //Insert dirs
                         if (entry.isDir()) {
-
-                        qDebug()<<entryPath<<" - "<<entry.absolutePath();//<<" - "<<excludeEntry;
-
                             insertFolderQuery.prepare(insertFolderSQL);
                             insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
