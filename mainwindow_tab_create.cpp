@@ -456,7 +456,7 @@
                     //exclude if the folder is part of excluded directories and their sub-directories
                     bool exclude = false;
                     for(int i=0; i<excludedFolders.count(); i++){
-                        if( entryPath.contains(excludedFolders[i]) ){
+                        if( entryPath.startsWith(excludedFolders[i]) ){
                             exclude = true;
                         }
                     }
