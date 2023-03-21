@@ -638,8 +638,9 @@
                                     QLocale().formattedDataSize(newStorageFreeSpace),
                                     QLocale().formattedDataSize(deltaStorageFreeSpace),
                                     QLocale().formattedDataSize(newStorageTotalSpace),
-                                    QLocale().formattedDataSize(deltaStorageTotalSpace),
-                                    selectedStorage->name));
+                                    QLocale().formattedDataSize(deltaStorageTotalSpace)
+                                    )
+                           );
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
