@@ -285,23 +285,23 @@ void Catalog::loadCatalogMetaData()
     query.prepare(querySQL);
     query.bindValue(":catalog_name",name);
     query.exec();
-    query.next();
-
-    filePath           = query.value(0).toString();
-    name               = query.value(1).toString();
-    dateUpdated        = query.value(2).toString();
-    sourcePath         = query.value(3).toString();
-    fileCount          = query.value(4).toLongLong();
-    totalFileSize      = query.value(5).toLongLong();
-    sourcePathIsActive = query.value(6).toBool();
-    includeHidden      = query.value(7).toBool();
-    fileType           = query.value(8).toString();
-    storageName        = query.value(9).toString();
-    includeSymblinks   = query.value(10).toBool();
-    isFullDevice       = query.value(11).toBool();
-    dateLoaded         = query.value(12).toString();
-    includeMetadata    = query.value(13).toBool();
-    appVersion         = query.value(14).toString();
+    if (query.next()){
+        filePath           = query.value(0).toString();
+        name               = query.value(1).toString();
+        dateUpdated        = query.value(2).toString();
+        sourcePath         = query.value(3).toString();
+        fileCount          = query.value(4).toLongLong();
+        totalFileSize      = query.value(5).toLongLong();
+        sourcePathIsActive = query.value(6).toBool();
+        includeHidden      = query.value(7).toBool();
+        fileType           = query.value(8).toString();
+        storageName        = query.value(9).toString();
+        includeSymblinks   = query.value(10).toBool();
+        isFullDevice       = query.value(11).toBool();
+        dateLoaded         = query.value(12).toString();
+        includeMetadata    = query.value(13).toBool();
+        appVersion         = query.value(14).toString();
+    }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)

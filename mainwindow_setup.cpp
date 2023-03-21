@@ -113,7 +113,6 @@
         }
         else if(databaseMode=="Hosted"){
 
-
             QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
             db.setHostName(databaseHostName);
             db.setDatabaseName(databaseName);
@@ -376,12 +375,6 @@
             //Restore last statistics values
             ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
-
-            //Restore last opened catalog
-            selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
-            selectedCatalog->loadCatalogMetaData();
-            selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-            selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();

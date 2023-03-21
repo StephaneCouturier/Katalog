@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //#endif
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.18";
-        releaseDate     = "2023-03-19";
+        currentVersion  = "1.19";
+        releaseDate     = "2023-03-21";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -116,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->splitter_widget_Filters->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
+
             //load custom Katalog stylesheet instead of default theme
             if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
                 loadCustomThemeLight();
@@ -135,15 +136,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             //Load Collection data from csv files
                 loadCollection();
 
-            //Preload last selected catalogs contents to memory
-                if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
-                    preloadCatalogs();
-                }
-
-            //Load last opened catalog to Explore tab
+            //Restore last opened catalog to Explore tab
+                selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
+                selectedCatalog->loadCatalogMetaData();
+                selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
+                selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
                 if (selectedCatalog->filePath != ""){
                     openCatalogToExplore();
+                }
+
+            //Preload last selected catalogs contents to memory
+                if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
+                    preloadCatalogs();
                 }
 
     //Setup tabs
