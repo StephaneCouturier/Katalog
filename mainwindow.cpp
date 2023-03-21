@@ -137,13 +137,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 loadCollection();
 
             //Restore last opened catalog to Explore tab
-                selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
-                selectedCatalog->loadCatalogMetaData();
-                selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-                selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
-                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-                if (selectedCatalog->filePath != ""){
-                    openCatalogToExplore();
+                if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
+                    selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
+                    selectedCatalog->loadCatalogMetaData();
+                    selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
+                    selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
+                    ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+                    if (selectedCatalog->filePath != ""){
+                        openCatalogToExplore();
+                    }
                 }
 
             //Preload last selected catalogs contents to memory

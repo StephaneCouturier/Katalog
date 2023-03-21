@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1158</width>
-    <height>891</height>
+    <height>904</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -6901,9 +6901,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Data</string>
+                 <string>Catalog updates</string>
                 </property>
                </widget>
+              </item>
+              <item row="1" column="6">
+               <spacer name="Settings_horizontalSpacer_15">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item row="1" column="4">
                <widget class="QLabel" name="Settings_label_SettingsFile">
@@ -6918,21 +6931,18 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="Settings_label_Settings">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
+              <item row="1" column="2">
+               <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
+                <property name="toolTip">
+                 <string>Keep records of files and size for Statistics</string>
                 </property>
                 <property name="text">
-                 <string>Other Settings</string>
+                 <string>Save records</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
-              </item>
-              <item row="3" column="1">
-               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
               </item>
               <item row="1" column="5">
                <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
@@ -6954,19 +6964,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-                <property name="toolTip">
-                 <string>Keep records of files and size for Statistics</string>
-                </property>
-                <property name="text">
-                 <string>Save records</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="3">
                <spacer name="Settings_horizontalSpacer_14">
                 <property name="orientation">
@@ -6980,18 +6977,50 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </spacer>
               </item>
-              <item row="1" column="6">
-               <spacer name="Settings_horizontalSpacer_15">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="4" column="1">
+               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="Settings_label_Settings">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
+                <property name="text">
+                 <string>Other Settings</string>
                 </property>
-               </spacer>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QCheckBox" name="Settings_checkBox_LoadLastCatalog">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Preload last selected catalogs at start-up to accelerate next search</string>
+                </property>
+                <property name="text">
+                 <string>Load last catalog to Explore</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="Settings_label_Data_2">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Startup</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -7654,7 +7683,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>Preload last selected catalogs at start-up to accelerate next search</string>
                     </property>
                     <property name="text">
-                     <string>Preload last catalogs</string>
+                     <string>Preload last catalogs (this may slow down the startup a lot, but allows faster search after)</string>
                     </property>
                     <property name="checked">
                      <bool>false</bool>

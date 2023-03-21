@@ -206,6 +206,12 @@
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/LoadLastCatalog", arg1);
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_OpenSettingsFile_clicked()
     {
         //Open the selected collection folder
