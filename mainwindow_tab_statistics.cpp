@@ -261,19 +261,13 @@
     void MainWindow::loadStatisticsChart()
     {
         // Plot the statistics data into a graph based on selections
-
         //Get inputs
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
 
             //QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
             QString selectedStorageforStats = ui->Filters_label_DisplayStorage->text();
-            QString selectedCatalogforStats = ui->Filters_label_DisplayCatalog->text();; // activeCatalog->name;//ui->Statistics_comboBox_SelectCatalog->currentText();
-            //            activeCatalog->setCatalogName(selectedCatalogPath);
-            //            activeCatalog->loadCatalogMetaData();
-//            if (selectedDeviceType == "Catalog"){
-//                selectedStorageforStats = activeCatalog->storage;
-//            }
+            QString selectedCatalogforStats = ui->Filters_label_DisplayCatalog->text();
 
             qint64 maxValueGraphRange = 0.0;
             QString displayUnit;
@@ -476,11 +470,11 @@
             }
 
         //Prepare the chart and plot the data
-
             //Create new chart and prepare formating
             QChart *chart = new QChart();
             chart->addSeries(series1);
-            if(selectedSource ==tr("storage")){
+            chart->addSeries(series2);
+          if(selectedSource ==tr("storage")){
                 chart->addSeries(series2);
             }
             chart->legend()->hide();
@@ -519,7 +513,6 @@
             chart->addAxis(axisX, Qt::AlignBottom);
             series1->attachAxis(axisX);
             series2->attachAxis(axisX);
-
             QValueAxis *axisY = new QValueAxis;
             axisY->setLabelFormat("%.0f");
             axisY->setTitleText(tr("Total"));
@@ -540,9 +533,9 @@
 
             axisY->setRange(0 , maxValueGraphRange);
             chart->addAxis(axisY, Qt::AlignLeft);
+
             series1->attachAxis(axisY);
             series2->attachAxis(axisY);
-
             //Legend
                 //chart->legend()->setAlignment(Qt::AlignRight);
                 chart->legend()->setVisible(true);
@@ -557,6 +550,5 @@
 
             ui->Statistics_chartview_Graph1->setChart(chart);
             ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
-
     }
     //----------------------------------------------------------------------
