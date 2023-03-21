@@ -62,10 +62,10 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                 //File Size columns
                 if( filesizeColumnList.contains(index.column()) ){
                     QModelIndex idx = index.sibling(index.row(), 5);
-                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="file" )
-                        return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
-                    else
+                    if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString()=="folder" )
                         return "";
+                    else
+                        return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
 
                 //Numbers columns (without units)

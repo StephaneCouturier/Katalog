@@ -895,7 +895,7 @@
                         proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
                         proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
                         proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Catalog"));
+                        proxyModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                         // Connect model to treeview and display
                         ui->Search_treeView_FilesFound->setModel(proxyModel);
