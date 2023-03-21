@@ -168,16 +168,8 @@
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenu(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect( ui->Search_treeView_FilesFound, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(QPoint)));
-
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(ui->Explore_treeView_FileList, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(QPoint)));
-
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(ui->Explore_treeview_Directories, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(QPoint)));
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
