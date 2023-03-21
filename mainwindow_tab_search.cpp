@@ -1211,7 +1211,7 @@
                                 differencesQuery.exec();
 
                                 QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-                                loadCatalogQueryModel->setQuery(differencesQuery);
+                                loadCatalogQueryModel->setQuery(std::move(differencesQuery));
 
                                 FilesView *fileDifferencesModel = new FilesView(this);
                                 fileDifferencesModel->setSourceModel(loadCatalogQueryModel);
