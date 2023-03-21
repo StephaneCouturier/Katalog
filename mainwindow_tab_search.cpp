@@ -1243,7 +1243,8 @@
             //Save the search parameters to the settings file
             saveSettings();
             insertSearchHistoryToTable();
-            saveSearchHistoryTableToFile();
+            if(databaseMode=="Memory")
+                saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
 
             //Stop animation
