@@ -451,7 +451,7 @@ void Catalog::loadFoldersToTable()
     //Load catalog files if latest version is not already in memory
     if ( dateTimeLoaded < dateTimeUploaded ){
 
-        //prepare inputs and insert query for folder
+        //Prepare inputs and insert query for folder
         QString folderFilePath = filePath;
         int pos = folderFilePath.lastIndexOf(".idx");
         folderFilePath = folderFilePath.left(pos);
@@ -477,64 +477,63 @@ void Catalog::loadFoldersToTable()
             QString lineFolderFile;
             QRegularExpression lineFolderFileSplitExp("\t");
 
-            //Prepare database and queries
-                //clear database from old version of catalog
-                QSqlQuery deleteQuery;
-                QString deleteQuerySQL = QLatin1String(R"(
-                                    DELETE FROM folder
-                                    WHERE folder_catalog_name=:folder_catalog_name
-                                                )");
-                deleteQuery.prepare(deleteQuerySQL);
-                deleteQuery.bindValue(":folder_catalog_name",name);
-                deleteQuery.exec();
+            //Clear database from old version of catalog
+            QSqlQuery deleteQuery;
+            QString deleteQuerySQL = QLatin1String(R"(
+                                DELETE FROM folder
+                                WHERE folder_catalog_name=:folder_catalog_name
+                                            )");
+            deleteQuery.prepare(deleteQuerySQL);
+            deleteQuery.bindValue(":folder_catalog_name",name);
+            deleteQuery.exec();
 
-            //process each line of the file
-                while (true){
-                    lineFolderFile = streamFolderFile.readLine();
-                    if (lineFolderFile.isNull())
-                        break;
+            //Process each line of the file
+            while (true){
+                lineFolderFile = streamFolderFile.readLine();
+                if (lineFolderFile.isNull())
+                    break;
 
-                    //exclude catalog meta data
-                    //if (lineFolderFile.left(1)=="<"){continue;}
+                //exclude catalog meta data
+                //if (lineFolderFile.left(1)=="<"){continue;}
 
-                    //Split the line text with tabulations into a list
-                    QStringList lineFieldList  = lineFolderFile.split("\t");
+                //Split the line text with tabulations into a list
+                QStringList lineFieldList  = lineFolderFile.split("\t");
 
-                    //Load folder into the database
-                        insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[0]);
-                        insertFolderQuery.bindValue(":folder_path",        lineFieldList[1]);
-                        insertFolderQuery.exec();
-                }
+                //Load folder into the database
+                    insertFolderQuery.prepare(insertFolderSQL);
+                    insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[0]);
+                    insertFolderQuery.bindValue(":folder_path",        lineFieldList[1]);
+                    insertFolderQuery.exec();
+            }
 
-            //close file
+            //Close file
                 folderFile.close();
         }
-        else{ //if no folder file is found, fall back on generating the list from the files themselves
-                //load files first
-                loadCatalogFileListToTable();
+        else{ //If no folder file is found, fall back on generating the list from the files themselves
+            //Load files first
+            loadCatalogFileListToTable();
 
-                //get list of folders
-                QSqlQuery selectFoldersQuery;
-                QString selectFoldersQuerySQL = QLatin1String(R"(
-                                                    SELECT DISTINCT file_folder_path
-                                                    FROM file
-                                                    WHERE file_catalog=:file_catalog
-                                                )");
-                selectFoldersQuery.prepare(selectFoldersQuerySQL);
-                selectFoldersQuery.bindValue(":file_catalog",name);
-                selectFoldersQuery.exec();
+            //Get list of folders
+            QSqlQuery selectFoldersQuery;
+            QString selectFoldersQuerySQL = QLatin1String(R"(
+                                                SELECT DISTINCT file_folder_path
+                                                FROM file
+                                                WHERE file_catalog=:file_catalog
+                                            )");
+            selectFoldersQuery.prepare(selectFoldersQuerySQL);
+            selectFoldersQuery.bindValue(":file_catalog",name);
+            selectFoldersQuery.exec();
 
-                //add each line to the folder table
-                QString folderPath;
-                while (selectFoldersQuery.next()){
-                        folderPath = selectFoldersQuery.value(0).toString();
-                        //Load folder into the database
-                        insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_catalog_name",name);
-                        insertFolderQuery.bindValue(":folder_path",        folderPath);
-                        insertFolderQuery.exec();
-                }
+            //Add each line to the folder table
+            QString folderPath;
+            while (selectFoldersQuery.next()){
+                    folderPath = selectFoldersQuery.value(0).toString();
+                    //Load folder into the database
+                    insertFolderQuery.prepare(insertFolderSQL);
+                    insertFolderQuery.bindValue(":folder_catalog_name",name);
+                    insertFolderQuery.bindValue(":folder_path",        folderPath);
+                    insertFolderQuery.exec();
+            }
         }
     }
 }

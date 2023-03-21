@@ -394,6 +394,12 @@
                                         )");
             insertFolderQuery.prepare(insertFolderSQL);
 
+            //insert root folder (so that it is displayed even when there are no sub-folders)
+            insertFolderQuery.prepare(insertFolderSQL);
+            insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
+            insertFolderQuery.bindValue(":folder_path",         catalog->sourcePath);
+            insertFolderQuery.exec();
+
         //Scan entries with iterator
 
             QString entryPath;

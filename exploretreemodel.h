@@ -35,6 +35,8 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QStringList>
+#include <QtSql>
 
 class ExploreTreeModel : public QAbstractItemModel
 {
@@ -55,6 +57,7 @@ public:
 
     QString catalogName;
     QString catalogSourcePath;
+    QString catalogSourcePathRoot;
 
     void setCatalog(QString newCatalogName, QString newCatalogSourcePath);
 
