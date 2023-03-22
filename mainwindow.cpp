@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.19";
-        releaseDate     = "2023-03-21";
+        releaseDate     = "2023-03-22";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -157,43 +157,43 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Setup tab: Create
             //Default path to scan
-                ui->Create_lineEdit_NewCatalogPath->setText("/");
+            ui->Create_lineEdit_NewCatalogPath->setText("/");
 
             //Always Load the file system for the treeview
-                loadFileSystem("/");
+            loadFileSystem("/");
 
             //Load the list of Storage devices for Create and Catalog tabs
-                loadStorageList();
+            loadStorageList();
 
         //Setup tab: Tags
-                //Set Default path to scan
-                ui->Tags_lineEdit_FolderPath->setText("/");
+            //Set Default path to scan
+            ui->Tags_lineEdit_FolderPath->setText("/");
 
-                loadFileSystemTags(newTagFolderPath);
-                reloadTagsData();
+            loadFileSystemTags(newTagFolderPath);
+            reloadTagsData();
 
         //Setup tab: Settings
             //Load path of last collection used
-                ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
+            ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
 
             //Set file types
-                setFileTypes();
+            setFileTypes();
 
         //Setup tab: Explore
-                ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
-                ui->Explore_checkBox_DisplaySubFolders->setChecked(optionDisplaySubFolders);
+            ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
+            ui->Explore_checkBox_DisplaySubFolders->setChecked(optionDisplaySubFolders);
 
         //Setup tab: Search
-                //Load an empty model to display headers
-                Catalog *empty = new Catalog(this);
-                ui->Search_treeView_FilesFound->setModel(empty);
-                ui->Search_listView_CatalogsFound->setModel(empty);
+            //Load an empty model to display headers
+            Catalog *empty = new Catalog(this);
+            ui->Search_treeView_FilesFound->setModel(empty);
+            ui->Search_listView_CatalogsFound->setModel(empty);
 
-                //Initiate and restore Search values
-                initiateSearchValues();
+            //Initiate and restore Search values
+            initiateSearchValues();
 
         //Setup tab: Storage
-                unsavedChanges = false;
+            unsavedChanges = false;
 
     //Context menu and other slots and signals
             setupFileContextMenu();
