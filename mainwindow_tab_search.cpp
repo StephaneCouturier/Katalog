@@ -1135,15 +1135,15 @@
 
                                     //same name
                                     if(hasDifferencesOnName == true){
-                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileName";
+                                        groupingFieldsDifferences += "||file_name";
                                     }
                                     //same size
                                     if(hasDifferencesOnSize == true){
-                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileSize";
+                                        groupingFieldsDifferences += "||file_size";
                                     }
                                     //same date modified
                                     if(hasDifferencesOnDateModified == true){
-                                        groupingFieldsDifferences = groupingFieldsDifferences + "||fileDateUpdated";
+                                        groupingFieldsDifferences += "||file_date_updated";
                                     }
 
                                     //remove the || at the start
