@@ -818,7 +818,7 @@
                         //List of catalogs to search from: catalogSelectedList
                             //Search every catalog if "All" is selected
                             if ( selectedFilterCatalogName ==tr("All")){
-                                //For differences, only process with the selected catalog specifically
+                                //For differences, only process with the selected catalogs
                                 if (ui->Search_checkBox_Differences->isChecked() ==true){
                                     QStringList differenceCatalogs;
                                     differenceCatalogs << selectedDifferencesCatalog1;
@@ -840,7 +840,7 @@
                                 searchFilesInCatalog(selectedFilterCatalogName);
                             }
                     }
-                    //Process the SEARCH in SELECTED DIRECTORY
+                //Process the SEARCH in SELECTED DIRECTORY
                     else if (searchInConnectedDriveChecked==true){
                             QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
                             searchFilesInDirectory(sourceDirectory);
@@ -865,13 +865,12 @@
                     ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
 
                 //Process search results: list of files
-                    // Create model
+                    // Use a virtual catalog to store results
                     Catalog *searchResultsCatalog = new Catalog(this);
 
                     // Populate model with folders only if this option is selected
                     if ( searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
                     {
-
                         sFilePaths.removeDuplicates();
                         int numberOfFolders = sFilePaths.count();
                         sFileNames.clear();
@@ -1386,16 +1385,16 @@
                 while(getFilesQuery.next()){
 
                     QString   lineFileName     = getFilesQuery.value(0).toString();
-                        QString   lineFilePath     = getFilesQuery.value(1).toString();
-                        QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
-                        qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
-                        QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
-
+                    QString   lineFilePath     = getFilesQuery.value(1).toString();
+                    QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
+                    //qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
+                    //QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
+                    bool      fileIsMatchingTag;
 
                     //Continue if the file is matching the tags
                         if (searchOnFolderCriteria==true and searchOnTags==true and selectedTag!=""){
 
-                            bool fileIsMatchingTag = false;
+                            fileIsMatchingTag = false;
 
                             //Set query to get a list of folder paths matching the selected tag
                             QSqlQuery queryTag;
@@ -1409,13 +1408,12 @@
                             queryTag.exec();
 
                             //Test if the FilePath contains a path from the list of folders matching the selected tag name
-                            // a slash is added in both value to ensure no result from Tag AB is returned when Tag A is selected
+                            // a slash "/" is added at the end of both values to ensure no result from a tag "AB" is returned when a tag "A" is selected
                             while(queryTag.next()){
                                 if ( (lineFilePath+"/").contains( queryTag.value(0).toString()+"/" )==true){
                                     fileIsMatchingTag = true;
                                     break;
                                 }
-                                //else tagIsMatching==false
                             }
 
                             //If the file is not matching any of the paths, process the next file
@@ -1425,8 +1423,8 @@
 
                     //Finally, verify the text search criteria
                         if (searchOnFileName==true){
-                            //Depending on the "Search in" criteria,
-                            //reduce the abosulte path to the required text string and match the search text
+                            //Depends on the "Search in" criteria,
+                            //Reduces the abosulte path to the required text string and matches the search text
                             if(selectedSearchIn == tr("File names only"))
                             {
                                 match = regex.match(lineFileName);
@@ -1461,8 +1459,8 @@
                                 //Populate result lists
                                 sFileNames.append(lineFileName);
                                 sFilePaths.append(lineFilePath);
-                                sFileSizes.append(lineFileSize);
-                                sFileDateTimes.append(lineFileDateTime.toString("yyyy/MM/dd hh:mm:ss"));
+                                sFileSizes.append(getFilesQuery.value(2).toLongLong());
+                                sFileDateTimes.append(getFilesQuery.value(3).toString());
                                 sFileCatalogs.append(sourceCatalogName);
                             }
                         }
@@ -1485,8 +1483,8 @@
                                 //Populate result lists
                                 sFileNames.append(lineFileName);
                                 sFilePaths.append(lineFilePath);
-                                sFileSizes.append(lineFileSize);
-                                sFileDateTimes.append(lineFileDateTime.toString("yyyy/MM/dd hh:mm:ss"));
+                                sFileSizes.append(getFilesQuery.value(2).toLongLong());
+                                sFileDateTimes.append(getFilesQuery.value(3).toString());
                                 sFileCatalogs.append(sourceCatalogName);
                             }
                         }

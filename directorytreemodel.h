@@ -36,6 +36,8 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QtSql>
+#include <QStringList>
+#include <QtWidgets>
 
 class DirectoryTreeItem;
 

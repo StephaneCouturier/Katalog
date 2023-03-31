@@ -31,9 +31,6 @@
 #include "directorytreemodel.h"
 #include "directorytreeitem.h"
 
-#include <QStringList>
-#include <QtWidgets>
-
 DirectoryTreeModel::DirectoryTreeModel(const QStringList &headers, QObject *parent)
     : QAbstractItemModel(parent)
 {
@@ -214,8 +211,8 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
     QVector<DirectoryTreeItem*> parents;
     parents << parent; //add rootItem
     int lastAdded =0;
-    int countLocation=1;
-    int countStorage=1;
+//    int countLocation=1;
+//    int countStorage=1;
 //    int countCatalog=0;
 
     //prepare query to load file info
@@ -261,7 +258,7 @@ void DirectoryTreeModel::setupModelData(DirectoryTreeItem *parent)
 
                 lastAddedPath = directoryPath;
 
-                lastAdded=parents.last()->childCount();
+//                lastAdded=parents.last()->childCount();
                 lastAdded=parents.count();//.last()->childCount();
                 //lastAdded=parents.last()->childNumber();//.last()->childCount();
             }
