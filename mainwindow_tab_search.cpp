@@ -1181,7 +1181,7 @@
 
                                 //Run Query and load to model
                                 QSqlQuery differencesQuery;
-                                qDebug()<<differencesQuery.prepare(selectSQL);
+                                differencesQuery.prepare(selectSQL);
                                 differencesQuery.bindValue(":selectedDifferencesCatalog1",selectedDifferencesCatalog1);
                                 differencesQuery.bindValue(":selectedDifferencesCatalog2",selectedDifferencesCatalog2);
                                 differencesQuery.exec();
