@@ -2141,8 +2141,7 @@
                 {
                     stream << catalogMetadata[i] << '\n';
                 }
-
-                for (int i = 0; i < filesFoundList.size(); ++i)
+                for (int i = 0; i < sFileNames.size(); ++i)
                 {
                     QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t"
                                  + QString::number(sFileSizes[i]) + "\t"
