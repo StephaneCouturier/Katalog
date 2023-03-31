@@ -840,6 +840,19 @@
                             //Otherwise just search files in the selected catalog
                             else{
                                 searchFilesInCatalog(selectedFilterCatalogName);
+
+                                //but also load the second catalog for Differences
+                                if ( searchOnFileCriteria==true and ui->Search_checkBox_Differences->isChecked() ==true
+                                    and (     hasDifferencesOnName==true
+                                         or hasDifferencesOnSize==true
+                                         or hasDifferencesOnDateModified==true)){
+
+                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!=selectedFilterCatalogName)
+                                            searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog1->currentText());
+
+                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!=selectedFilterCatalogName)
+                                            searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog2->currentText());
+                                }
                             }
                     }
                 //Process the SEARCH in SELECTED DIRECTORY
