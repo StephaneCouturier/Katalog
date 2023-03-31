@@ -413,24 +413,27 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_FileFoundMoreStatistics_clicked()
         {
-            QMessageBox::information(this,"Katalog",tr("<br/><b>Files Found Statistics</b><br/>"
-                                     "<table> <tr><td>Files found:  </td><td><b> %1 </b> <br/> </td></tr>"
-                                             "<tr><td>Total size:   </td><td><b> %2 </b>  </td></tr>"
-                                             "<tr><td>Average size: </td><td><b> %3 </b>  </td></tr>"
-                                             "<tr><td>Min size:     </td><td><b> %4 </b>  </td></tr>"
-                                             "<tr><td>Max size:     </td><td><b> %5 </b>  <br/></td></tr>"
-                                             "<tr><td>Min Date:     </td><td><b> %6 </b>  </td></tr>"
-                                             "<tr><td>Max Date:     </td><td><b> %7 </b>  </td></tr>"
-                                     "</table>"
-                                     ).arg(
-                                           QString::number(filesFoundList.count()),
-                                           QLocale().formattedDataSize(filesFoundTotalSize),
-                                           QLocale().formattedDataSize(filesFoundAverageSize),
-                                           QLocale().formattedDataSize(filesFoundMinSize),
-                                           QLocale().formattedDataSize(filesFoundMaxSize),
-                                           filesFoundMinDate,
-                                           filesFoundMaxDate)
-                                     ,Qt::TextFormat(Qt::RichText));
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("<br/><b>Files Found Statistics</b><br/>"
+                              "<table> <tr><td>Files found:  </td><td><b> %1 </b> <br/> </td></tr>"
+                              "<tr><td>Total size:   </td><td><b> %2 </b>  </td></tr>"
+                              "<tr><td>Average size: </td><td><b> %3 </b>  </td></tr>"
+                              "<tr><td>Min size:     </td><td><b> %4 </b>  </td></tr>"
+                              "<tr><td>Max size:     </td><td><b> %5 </b>  <br/></td></tr>"
+                              "<tr><td>Min Date:     </td><td><b> %6 </b>  </td></tr>"
+                              "<tr><td>Max Date:     </td><td><b> %7 </b>  </td></tr>"
+                              "</table>"
+                              ).arg(
+                                   QString::number(filesFoundNumber),
+                                   QLocale().formattedDataSize(filesFoundTotalSize),
+                                   QLocale().formattedDataSize(filesFoundAverageSize),
+                                   QLocale().formattedDataSize(filesFoundMinSize),
+                                   QLocale().formattedDataSize(filesFoundMaxSize),
+                                   filesFoundMinDate,
+                                   filesFoundMaxDate));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_SearchTreeViewFilesFoundHeaderSortOrderChanged(){
@@ -774,13 +777,12 @@
                     searchInFileCatalogsChecked   = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                     searchInConnectedDriveChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
 
-                        //Differences
-                        hasDifferencesOnName         = ui->Search_checkBox_DifferencesName->checkState();
-                        hasDifferencesOnSize         = ui->Search_checkBox_DifferencesSize->checkState();
-                        hasDifferencesOnDateModified = ui->Search_checkBox_DifferencesDateModified->checkState();
-                        selectedDifferencesCatalog1  = ui->Search_comboBox_DifferencesCatalog1->currentText();
-                        selectedDifferencesCatalog2  = ui->Search_comboBox_DifferencesCatalog2->currentText();
-
+                    //Differences
+                    hasDifferencesOnName         = ui->Search_checkBox_DifferencesName->checkState();
+                    hasDifferencesOnSize         = ui->Search_checkBox_DifferencesSize->checkState();
+                    hasDifferencesOnDateModified = ui->Search_checkBox_DifferencesDateModified->checkState();
+                    selectedDifferencesCatalog1  = ui->Search_comboBox_DifferencesCatalog1->currentText();
+                    selectedDifferencesCatalog2  = ui->Search_comboBox_DifferencesCatalog2->currentText();
 
                     // Get the file size min and max, from 0 to 1000.
                     // Define a size multiplier depending on the size unit selected
@@ -867,6 +869,10 @@
                 //Process search results: list of files
                     // Use a virtual catalog to store results
                     Catalog *searchResultsCatalog = new Catalog(this);
+                    // Prepare query model
+                    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                    // Prepare model to display
+                    FilesView *fileViewModel = new FilesView(this);
 
                     // Populate model with folders only if this option is selected
                     if ( searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
@@ -886,18 +892,17 @@
                         for (int i=0; i<numberOfFolders; i++)
                             sFileCatalogs <<"";
 
+                        // Populate model with data
                         searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes,sFileCatalogs);
-                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                        proxyModel->setSourceModel(searchResultsCatalog);
-
-                        proxyModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        proxyModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        proxyModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        proxyModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        proxyModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+                        fileViewModel->setSourceModel(searchResultsCatalog);
+                        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                         // Connect model to treeview and display
-                        ui->Search_treeView_FilesFound->setModel(proxyModel);
+                        ui->Search_treeView_FilesFound->setModel(fileViewModel);
                         ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
                         ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
                         ui->Search_treeView_FilesFound->header()->hideSection(0);
@@ -912,20 +917,14 @@
                     {
                         // Populate model with data
                         searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
-
-                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-                        proxyModel->setSourceModel(searchResultsCatalog);
-
-                        FilesView *fileViewModel = new FilesView(this);
                         fileViewModel->setSourceModel(searchResultsCatalog);
-
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
                         fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
                         fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
                         fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
                         if (searchInConnectedDriveChecked==true){
-                            proxyModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
+                            fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
                         }
 
                         // Connect model to tree/table view
@@ -939,38 +938,9 @@
                         ui->Search_treeView_FilesFound->header()->showSection(0);
                         ui->Search_treeView_FilesFound->header()->showSection(1);
                         ui->Search_treeView_FilesFound->header()->showSection(2);
+
                         ui->Search_label_FoundTitle->setText(tr("Files found"));
                     }
-
-                //Files found Statistics
-                    //Count and display the number of files found
-                    filesFoundNumber = searchResultsCatalog->rowCount();
-                    ui->Search_label_NumberResults->setText(QString::number(filesFoundNumber));
-
-                    //Count and display the total size of files found
-                    filesFoundTotalSize = 0;
-                    qint64 sizeItem;
-                    foreach (sizeItem, sFileSizes) {
-                        filesFoundTotalSize = filesFoundTotalSize + sizeItem;
-                    }
-                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
-
-                    //Other statistics, covering the case where no results are returned.
-                    if (filesFoundNumber !=0){
-                        filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
-                        QList<qint64> fileSizeList = sFileSizes;
-                        std::sort(fileSizeList.begin(), fileSizeList.end());
-                        filesFoundMinSize = fileSizeList.first();
-                        filesFoundMaxSize = fileSizeList.last();
-
-                        QList<QString> fileDateList = sFileDateTimes;
-                        std::sort(fileDateList.begin(), fileDateList.end());
-                        filesFoundMinDate = fileDateList.first();
-                        filesFoundMaxDate = fileDateList.last();
-
-                        ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
-                    }
-
 
                 //Process DUPLICATES -------------------------------
                     //Get inputs
@@ -1068,26 +1038,33 @@
                                 duplicatesQuery.prepare(selectSQL);
                                 duplicatesQuery.exec();
 
-                                // Display count of files
-                                int fileCount = 0;
+                                //recapture file results for Stats
+                                sFileNames.clear();
+                                sFileSizes.clear();
+                                sFilePaths.clear();
+                                sFileDateTimes.clear();
+                                sFileCatalogs.clear();
                                 while(duplicatesQuery.next()){
-                                        fileCount++;
+                                        sFileNames.append(duplicatesQuery.value(0).toString());
+                                        sFileSizes.append(duplicatesQuery.value(1).toLongLong());
+                                        sFileDateTimes.append(duplicatesQuery.value(2).toString());
+                                        sFilePaths.append(duplicatesQuery.value(3).toString());
+                                        sFileCatalogs.append(duplicatesQuery.value(4).toString());
                                 }
 
                                 //Load results to model
-                                QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
                                 loadCatalogQueryModel->setQuery(std::move(duplicatesQuery));
 
-                                FilesView *fileModel = new FilesView(this);
-                                fileModel->setSourceModel(loadCatalogQueryModel);
-                                fileModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                                fileModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                                fileModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                                fileModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                                fileModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+                                //FilesView *fileViewModel = new FilesView(this);
+                                fileViewModel->setSourceModel(loadCatalogQueryModel);
+                                fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                                fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                                fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                                fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                                fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                                 // Connect model to tree/table view
-                                ui->Search_treeView_FilesFound->setModel(fileModel);
+                                ui->Search_treeView_FilesFound->setModel(fileViewModel);
                                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                                 ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
                                 ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
@@ -1096,7 +1073,7 @@
                                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
                                 ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
-                                ui->Search_label_NumberResults->setText(QString::number(fileCount));
+                                filesFoundNumber = fileViewModel->rowCount();
 
                         }
 
@@ -1204,24 +1181,37 @@
 
                                 //Run Query and load to model
                                 QSqlQuery differencesQuery;
-                                differencesQuery.prepare(selectSQL);
+                                qDebug()<<differencesQuery.prepare(selectSQL);
                                 differencesQuery.bindValue(":selectedDifferencesCatalog1",selectedDifferencesCatalog1);
                                 differencesQuery.bindValue(":selectedDifferencesCatalog2",selectedDifferencesCatalog2);
                                 differencesQuery.exec();
 
-                                QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+                                //recapture file results for Stats
+                                sFileNames.clear();
+                                sFileSizes.clear();
+                                sFilePaths.clear();
+                                sFileDateTimes.clear();
+                                sFileCatalogs.clear();
+                                while(differencesQuery.next()){
+                                        sFileNames.append(differencesQuery.value(0).toString());
+                                        sFileSizes.append(differencesQuery.value(1).toLongLong());
+                                        sFileDateTimes.append(differencesQuery.value(2).toString());
+                                        sFilePaths.append(differencesQuery.value(3).toString());
+                                        sFileCatalogs.append(differencesQuery.value(4).toString());
+                                }
+
                                 loadCatalogQueryModel->setQuery(std::move(differencesQuery));
 
-                                FilesView *fileDifferencesModel = new FilesView(this);
-                                fileDifferencesModel->setSourceModel(loadCatalogQueryModel);
-                                fileDifferencesModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                                fileDifferencesModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                                fileDifferencesModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                                fileDifferencesModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                                fileDifferencesModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+                                //FilesView *fileViewModel = new FilesView(this);
+                                fileViewModel->setSourceModel(loadCatalogQueryModel);
+                                fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+                                fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
+                                fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
+                                fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
+                                fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
 
                                 // Connect model to tree/table view
-                                ui->Search_treeView_FilesFound->setModel(fileDifferencesModel);
+                                ui->Search_treeView_FilesFound->setModel(fileViewModel);
                                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
                                 ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
                                 ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
@@ -1230,14 +1220,47 @@
                                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
                                 // Display count of files
-                                int fileCount = 0;
-                                while(differencesQuery.next()){
-                                    fileCount++;
-                                }
                                 ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
-                                ui->Search_label_NumberResults->setText(QString::number(fileCount));
 
                         }
+
+                //Files found Statistics
+                    //Reset from previous search
+                        filesFoundNumber = 0;
+                        filesFoundTotalSize = 0;
+                        filesFoundAverageSize = 0;
+                        filesFoundMinSize = 0;
+                        filesFoundMaxSize = 0;
+                        filesFoundMinDate = "";
+                        filesFoundMaxDate = "";
+
+                    //Number of files found
+                    filesFoundNumber = fileViewModel->rowCount();
+                    ui->Search_label_NumberResults->setText(QString::number(filesFoundNumber));
+
+                    //Total size of files found
+                    qint64 sizeItem;
+                    filesFoundTotalSize = 0;
+                    foreach (sizeItem, sFileSizes) {
+                                filesFoundTotalSize = filesFoundTotalSize + sizeItem;
+                    }
+                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
+
+                    //Other statistics, covering the case where no results are returned.
+                    if (filesFoundNumber !=0){
+                                filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
+                                QList<qint64> fileSizeList = sFileSizes;
+                                std::sort(fileSizeList.begin(), fileSizeList.end());
+                                filesFoundMinSize = fileSizeList.first();
+                                filesFoundMaxSize = fileSizeList.last();
+
+                                QList<QString> fileDateList = sFileDateTimes;
+                                std::sort(fileDateList.begin(), fileDateList.end());
+                                filesFoundMinDate = fileDateList.first();
+                                filesFoundMaxDate = fileDateList.last();
+
+                                ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
+                    }
 
             //Save the search parameters to the settings file
             saveSettings();
