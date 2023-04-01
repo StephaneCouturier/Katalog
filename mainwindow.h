@@ -397,6 +397,7 @@ class MainWindow : public QMainWindow
 
             void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
             void on_Settings_comboBox_Theme_currentIndexChanged(int index);
+            void on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1);
             void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
             void on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1);
             void on_Settings_pushButton_OpenSettingsFile_clicked();

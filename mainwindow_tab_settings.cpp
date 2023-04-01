@@ -218,7 +218,30 @@
         QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1)
+    {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/ThemeBiggerIconSize", arg1);
 
+        QSize size;
+        if(arg1==2){
+            size.setHeight(32);
+            size.setWidth(32);}
+        else{
+            size.setHeight(22);
+            size.setWidth(22);
+        }
+        ui->Filters_treeView_Devices->setIconSize(size);
+        ui->Filters_treeView_Directory->setIconSize(size);
+        ui->Search_treeView_FilesFound->setIconSize(size);
+        ui->Catalogs_treeView_CatalogList->setIconSize(size);
+        ui->Explore_treeview_Directories->setIconSize(size);
+        ui->Explore_treeView_FileList->setIconSize(size);
+        ui->Create_treeView_Explorer->setIconSize(size);
+        ui->Storage_treeView_StorageList->setIconSize(size);
+        ui->Tags_treeview_Explorer->setIconSize(size);
+    }
+    //----------------------------------------------------------------------
 //SETTINGS / About ---------------------------------------------------------
     void MainWindow::on_Settings_pushButton_Wiki_clicked()
     {

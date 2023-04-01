@@ -114,10 +114,10 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
                         return QIcon::fromTheme("video-mp4");
                     }
                     else if(  fileTypesPlain_Text.contains(fileType,Qt::CaseInsensitive)){
-                        return QIcon::fromTheme("folder-text");
+                        return QIcon::fromTheme("view-list-text");
                     }
                     else
-                        return QIcon::fromTheme("document-preview-archive");
+                        return QIcon::fromTheme("application-x-zerosize");
                 }
 
                 break;
