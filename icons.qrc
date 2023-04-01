@@ -16,7 +16,6 @@
         <file>fallback-icons/edit-paste.png</file>
         <file>fallback-icons/edit-select.png</file>
         <file>fallback-icons/folder-new.png</file>
-        <file>fallback-icons/folder-text.png</file>
         <file>fallback-icons/format-convert-to-path.png</file>
         <file>fallback-icons/gparted.png</file>
         <file>fallback-icons/image-jpeg.png</file>
@@ -47,5 +46,7 @@
         <file>fallback-icons/collapse-all.png</file>
         <file>fallback-icons/expand-all.png</file>
         <file>fallback-icons/dialog-ok-apply.png</file>
+        <file>fallback-icons/application-x-zerosize.png</file>
+        <file>fallback-icons/view-list-text.png</file>
     </qresource>
 </RCC>
