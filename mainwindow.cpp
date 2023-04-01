@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.19";
-        releaseDate     = "2023-03-22";
+        releaseDate     = "2023-04-01";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
