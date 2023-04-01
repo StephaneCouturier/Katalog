@@ -93,7 +93,8 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_Reload_clicked()
     {
-        loadStatisticsData();
+        if(databaseMode=="Memory")
+            loadStatisticsData();
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------

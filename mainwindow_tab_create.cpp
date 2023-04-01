@@ -404,6 +404,15 @@
 
             QString entryPath;
 
+            //Start a transaction to save all inserts at once in the db
+            QSqlQuery beginQuery;
+            QString beginQuerySQL = QLatin1String(R"(
+                                        BEGIN
+                                        )");
+            beginQuery.prepare(beginQuerySQL);
+            beginQuery.exec();
+
+
             //Iterator
             if (catalog->includeHidden == true){
                 QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
@@ -465,9 +474,9 @@
                     }
 
                     if(exclude == false){
+
                         //Insert dirs
                         if (entry.isDir()) {
-                            insertFolderQuery.prepare(insertFolderSQL);
                             insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
                             insertFolderQuery.exec();
@@ -490,11 +499,19 @@
                               if(catalog->includeMetadata == true){
                                   setMediaFile(entryPath);
                               }
-                            }
+                           }
                         }
                     }
                 }
             }
+
+            //Commit the transaction to save all inserts at once in the db
+            QSqlQuery commitQuery;
+            QString commitQuerySQL = QLatin1String(R"(
+                                        COMMIT
+                                        )");
+            commitQuery.prepare(commitQuerySQL);
+            commitQuery.exec();
 
             //update Catalog metadata
                 catalog->setFileCount();

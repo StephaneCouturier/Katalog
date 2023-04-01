@@ -118,7 +118,8 @@
     void MainWindow::reloadTagsData()
     {
         selectedTagListName="";
-        loadTagsToTable();
+        if(databaseMode=="Memory")
+                loadTagsToTable();
         loadTagsTableToExistingTagsModel();
         loadTagsTableToTagsAndFolderListModel();
     }

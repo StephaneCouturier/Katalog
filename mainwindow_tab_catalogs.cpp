@@ -1413,7 +1413,8 @@
             }
 
             //refresh graphs
-            loadStatisticsData();
+            if(databaseMode=="Memory")
+                loadStatisticsData();
             loadStatisticsChart();
 
     }

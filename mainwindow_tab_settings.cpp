@@ -279,7 +279,8 @@
                     //Load Files to database
                     loadSearchHistoryFileToTable();
                     loadCatalogFilesToTable();
-                    loadStorageFileToTable();
+                    if(databaseMode=="Memory")
+                        loadStorageFileToTable();
         }
 
         //Load data from tables and update display
@@ -322,7 +323,8 @@
 
         //Load Statistics
         loadStatisticsDataTypes();
-        loadStatisticsData();
+        if(databaseMode=="Memory")
+            loadStatisticsData();
         loadStatisticsChart();
 
         //Load Tags

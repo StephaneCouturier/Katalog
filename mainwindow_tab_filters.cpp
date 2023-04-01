@@ -383,7 +383,8 @@
         updateStorageSelectionStatistics();
 
         //Load matching Statistics
-        loadStatisticsData();
+        if(databaseMode=="Memory")
+            loadStatisticsData();
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
