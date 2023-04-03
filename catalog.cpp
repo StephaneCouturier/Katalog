@@ -306,8 +306,23 @@ void Catalog::loadCatalogMetaData()
 
 void Catalog::renameCatalog(QString newCatalogName)
 {
+
+    //update db
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                UPDATE catalog
+                                SET   catalog_name=:new_catalog_name
+                                WHERE catalog_name=:catalog_name
+                            )");
+    query.prepare(querySQL);
+    query.bindValue(":new_catalog_name",newCatalogName);
+    query.bindValue(":catalog_name",name);
+    query.exec();
+    query.next();
+
     //rename value of current object
     name = newCatalogName;
+
 }
 
 void Catalog::renameCatalogFile(QString newCatalogName)
