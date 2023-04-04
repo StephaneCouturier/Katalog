@@ -43,7 +43,7 @@ public:
     int ID;
     QString name;
     QString type;
-    QString location;
+    QString location = "";
     QString path;
     QString label;
     QString fileSystem;

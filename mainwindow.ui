@@ -7549,6 +7549,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="Settings_pushButton_NewDatabaseFile">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Create a new database file</string>
+                      </property>
+                      <property name="text">
+                       <string>New</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-open">
+                        <normaloff>.</normaloff>.</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <spacer name="Settings_horizontalSpacer_2">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>

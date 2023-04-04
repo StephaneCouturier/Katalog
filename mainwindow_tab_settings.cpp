@@ -31,7 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "database.h"
 #include "catalog.h"
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
@@ -167,6 +167,11 @@
     {
         databaseFilePath = ui->Settings_lineEdit_DatabaseFilePath->text();
         QDesktopServices::openUrl(QUrl::fromLocalFile(databaseFilePath));
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_NewDatabaseFile_clicked()
+    {
+        selectNewDatabaseFolderPath();
     }
     //----------------------------------------------------------------------
 
@@ -348,7 +353,7 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
-                                                                   collectionFolder);
+                                                                   collectionFolder,"*.db");
 
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
@@ -359,7 +364,54 @@
                     //Save Settings for the new collection folder value;
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
-                    QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+                    //QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+
+                    //Set the new path in Settings tab
+                    ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+
+                    createStorageList();
+                    if(databaseMode=="Memory")
+                        generateCollectionFilesPaths();
+                    loadCollection();
+        }
+
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::selectNewDatabaseFolderPath()
+    {
+        //QString newDir;
+        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to open:"),
+                                                                   collectionFolder+"/newKatalogFile.db","*.db");
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDatabaseFilePath !=""){
+
+                    databaseFilePath = newDatabaseFilePath;
+
+                    QFile fileOut( databaseFilePath );
+                    if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                        //create an empty file
+                    }
+                    fileOut.close();
+
+                    QSqlQuery q;
+                    q.exec(SQL_CREATE_CATALOG);
+                    q.exec(SQL_CREATE_STORAGE);
+                    q.exec(SQL_CREATE_FILE);
+                    q.exec(SQL_CREATE_FILETEMP);
+                    q.exec(SQL_CREATE_FOLDER);
+                    q.exec(SQL_CREATE_METADATA);
+                    q.exec(SQL_CREATE_STATISTICS);
+                    q.exec(SQL_CREATE_SEARCH);
+                    q.exec(SQL_CREATE_TAG);
+
+                    //Save Settings for the new collection folder value;
+                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
+                    //QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
 
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
@@ -372,4 +424,3 @@
         //Reset selected values (to avoid actions on the last selected ones)
         resetSelection();
     }
-    //----------------------------------------------------------------------

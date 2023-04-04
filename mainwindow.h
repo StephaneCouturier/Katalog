@@ -143,6 +143,7 @@ class MainWindow : public QMainWindow
             void    startDatabase();
             QString databaseFilePath;
             void    selectDatabaseFilePath();
+            void    selectNewDatabaseFolderPath();
             QString databaseHostName;
             QString databaseName;
             int     databasePort;
@@ -392,6 +393,7 @@ class MainWindow : public QMainWindow
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
+            void on_Settings_pushButton_NewDatabaseFile_clicked();
 
             void on_Settings_pushButton_SaveHostedParameters_clicked();
 
@@ -548,7 +550,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-            void on_Storage_pushButton_TestMedia_clicked();
+            void on_Storage_pushButton_TestMedia_clicked();           
 
 };
 
