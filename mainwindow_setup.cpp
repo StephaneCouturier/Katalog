@@ -635,7 +635,7 @@
                         QTabWidget            { padding: 10px; margin: 0px; background-color: #095676; }
                         QTabWidget::tab-bar   { left: 0px; height: 38px;}
 
-                        QTabBar               { background:  url(:images/Katalog40.png) no-repeat right; background-color: #0D79A6;
+                        QTabBar               { background:  url(:images/Appname_Logo.png) no-repeat right; background-color: #0D79A6;
                                                 border-top-left-radius:  3px;
                                                 border-top-right-radius: 3px;
                                               }

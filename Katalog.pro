@@ -131,3 +131,4 @@ DISTFILES +=
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico
+ICON = images/Katalog_logo_64.ico

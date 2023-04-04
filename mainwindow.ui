@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1158</width>
-    <height>904</height>
+    <height>936</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,8 @@
   </property>
   <property name="windowIcon">
    <iconset resource="images.qrc">
-    <normaloff>:/images/Katalog_logo_64.ico</normaloff>:/images/Katalog_logo_64.ico</iconset>
+    <normaloff>:/images/Katalog_logo_64.ico</normaloff>
+    <normalon>:/images/Katalog_logo_64.ico</normalon>:/images/Katalog_logo_64.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

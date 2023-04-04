@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/Katalog40.png</file>
+        <file>images/Appname_Logo.png</file>
         <file>images/Katalog_logo_64.ico</file>
         <file>images/link-h.png</file>
         <file>images/link-tree-end.png</file>
@@ -14,7 +14,7 @@
         <file>images/flags/us.png</file>
         <file>images/flags/cz.png</file>
         <file>images/flags/de.png</file>
-        <file>images/Banner_1.06.png</file>
+        <file>images/Banner.png</file>
         <file>images/drive_blue.png</file>
         <file>images/drive_green.png</file>
         <file>images/drive_orange.png</file>
