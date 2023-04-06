@@ -94,7 +94,7 @@
     void MainWindow::on_Statistics_pushButton_Reload_clicked()
     {
         if(databaseMode=="Memory")
-            loadStatisticsData();
+            loadStatisticsFileToTable();
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
@@ -146,7 +146,8 @@
 //Methods-------------------------------------------------------------------
 
     void MainWindow::loadStatisticsDataTypes()
-    {
+    {//Populate the comboxboxes
+
         //Populate the comboxbox for selected source
 
             //Get last value
@@ -178,9 +179,8 @@
             }
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadStatisticsData()
-    {
-        // Load the contents of the statistics file into the database
+    void MainWindow::loadStatisticsFileToTable()
+    {// Load the contents of the statistics file into the database
 
         //clear database table
             QSqlQuery deleteQuery;
@@ -260,13 +260,11 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsChart()
-    {
-        // Plot the statistics data into a graph based on selections
+    {// Plot the statistics data into a graph based on selections
+
         //Get inputs
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
-
-            //QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
             QString selectedStorageforStats = ui->Filters_label_DisplayStorage->text();
             QString selectedCatalogforStats = ui->Filters_label_DisplayCatalog->text();
 
@@ -278,7 +276,7 @@
             qint64 freeSpace = 0;
             qint64 totalSpace = 0;
 
-        //Get the data
+        //Get the data depending on the type of source
             //Getting one catalog data
             if(selectedSource ==tr("selected catalog")){
                 QSqlQuery queryTotalSnapshots;
@@ -403,15 +401,6 @@
                                                     FROM statistics sa
                                                     WHERE record_type = 'Storage'
                                                 )");
-//
-//                LEFT JOIN storage so ON sa.catalogName = so.storageName
-//
-//                if (selectedDeviceType == "Location"){
-//                    querySQL = querySQL + " AND storageLocation = :storageLocation ";
-//                    querySQL = querySQL + " GROUP BY datetime ";
-//                    queryTotalSnapshots.prepare(querySQL);
-//                    queryTotalSnapshots.bindValue(":storageLocation",selectedLocation);
-//                }
 
                 if ( graphicStartDate != "" ){
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
@@ -423,6 +412,13 @@
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":selectedStorageforStats",selectedStorageforStats);
                 }
+//                else if (selectedDeviceType == "Location"){
+//                    querySQL = querySQL + " AND storageLocation = :storageLocation ";
+//                    querySQL = querySQL + " LEFT JOIN storage so ON sa.catalogName = so.storageName ";
+//                    querySQL = querySQL + " GROUP BY datetime ";
+//                    queryTotalSnapshots.prepare(querySQL);
+//                    queryTotalSnapshots.bindValue(":storageLocation",selectedLocation);
+//                }
                 else if (selectedDeviceType == "Catalog"){
                     querySQL = querySQL + " AND catalog_name = :selectedStorageforStats ";
                     querySQL = querySQL + " GROUP BY date_time ";
@@ -475,9 +471,7 @@
             QChart *chart = new QChart();
             chart->addSeries(series1);
             chart->addSeries(series2);
-          if(selectedSource ==tr("storage")){
-                chart->addSeries(series2);
-            }
+
             chart->legend()->hide();
 
             if (selectedDeviceType == "Storage"){

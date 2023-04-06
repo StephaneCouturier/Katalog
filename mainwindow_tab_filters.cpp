@@ -384,7 +384,7 @@
 
         //Load matching Statistics
         if(databaseMode=="Memory")
-            loadStatisticsData();
+            loadStatisticsFileToTable();
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------

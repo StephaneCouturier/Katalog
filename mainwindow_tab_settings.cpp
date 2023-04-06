@@ -329,7 +329,7 @@
         //Load Statistics
         loadStatisticsDataTypes();
         if(databaseMode=="Memory")
-            loadStatisticsData();
+            loadStatisticsFileToTable();
         loadStatisticsChart();
 
         //Load Tags

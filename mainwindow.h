@@ -346,7 +346,7 @@ class MainWindow : public QMainWindow
             QStringListModel *listModel;
             QString graphicStartDate;
             void loadStatisticsDataTypes();
-            void loadStatisticsData();
+            void loadStatisticsFileToTable();
             void loadStatisticsChart();
 
         //TAB: Tags

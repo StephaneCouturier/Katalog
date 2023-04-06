@@ -1414,7 +1414,7 @@
 
             //refresh graphs
             if(databaseMode=="Memory")
-                loadStatisticsData();
+                loadStatisticsFileToTable();
             loadStatisticsChart();
 
     }
