@@ -328,8 +328,10 @@
 
         //Load Statistics
         loadStatisticsDataTypes();
-        if(databaseMode=="Memory")
-            loadStatisticsFileToTable();
+        if(databaseMode=="Memory"){
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
+        }
         loadStatisticsChart();
 
         //Load Tags

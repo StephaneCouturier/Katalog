@@ -121,7 +121,6 @@ class MainWindow : public QMainWindow
             void generateCollectionFilesPaths();
 
             //Parameters
-            QString fileName;
             int selectedTab;
 
             //FileTypes
@@ -152,13 +151,12 @@ class MainWindow : public QMainWindow
 
             //Objects
             Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
-            Catalog *selectedCatalog = new Catalog(); //selected catalog used for individual catalog operation from various screens (explore, update, edit, delete)
-            Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations in Search screen or temporary operations (list of catalogs)
-            DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView(); //tree of devices for selection and filtering
-            Storage *selectedStorage = new Storage(); //selected storage used for individual storage operation in Storage screen (update)
-            Storage *tempStorage = new Storage(); //temporary storage used for individual storage operation in Storage screen (update)
+            Catalog *selectedCatalog = new Catalog(); // selected catalog used for individual catalog operations
+            Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
+            Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
+            Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
 
-        //Filters
+        //Filters panel
             bool searchInFileCatalogsChecked;
             bool searchInConnectedDriveChecked;           
             int  deviceTreeExpandState;
@@ -278,7 +276,7 @@ class MainWindow : public QMainWindow
                                             int selectedCatalogFileCount,
                                             qint64 selectedCatalogTotalFileSize);
             void recordCollectionStats();
-            void recordAllCatalogStats();
+            void recordAllCatalogStats(QDateTime dateTime);
             void convertCatalog(QString catalogSourcePath);
             void backupCatalog(QString catalogSourcePath);
             void hideCatalogButtons();
@@ -337,16 +335,20 @@ class MainWindow : public QMainWindow
             void saveStorageData();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
+            void recordAllStorageStats(QDateTime dateTime);
 
         //TAB: Statistics
-            QString statisticsFileName;
-            QString statisticsFilePath;
+            QString statisticsCatalogFileName;
+            QString statisticsCatalogFilePath;
+            QString statisticsStorageFileName;
+            QString statisticsStorageFilePath;
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
             QString graphicStartDate;
             void loadStatisticsDataTypes();
-            void loadStatisticsFileToTable();
+            void loadStatisticsCatalogFileToTable();
+            void loadStatisticsStorageFileToTable();
             void loadStatisticsChart();
 
         //TAB: Tags

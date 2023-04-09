@@ -133,6 +133,7 @@
             }
         }
 
+        //Create tables
         QSqlQuery q;
         if (!q.exec(SQL_CREATE_CATALOG))
             return q.lastError();
@@ -152,7 +153,13 @@
         if (!q.exec(SQL_CREATE_METADATA))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_STATISTICS))
+        if (!q.exec(SQL_CREATE_STATISTICS)) //to be removed?
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_SEARCH))
@@ -791,8 +798,10 @@
     {
         searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
         storageFilePath       = collectionFolder + "/" + "storage.csv";
-        statisticsFileName    = "statistics.csv";
-        statisticsFilePath    = collectionFolder + "/" + statisticsFileName;
+        statisticsCatalogFileName    = "statistics.csv";
+        statisticsCatalogFilePath    = collectionFolder + "/" + statisticsCatalogFileName;
+        statisticsStorageFileName    = "statistics_storage.csv";
+        statisticsStorageFilePath    = collectionFolder + "/" + statisticsStorageFileName;
         excludeFilePath       = collectionFolder + "/" + "exclude.csv";
     }
     //----------------------------------------------------------------------

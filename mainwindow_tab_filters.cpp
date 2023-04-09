@@ -312,6 +312,7 @@
         const QStringList headers({tr("Location / Storage / Catalog"),tr("Type"),tr("Empty")});
         StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
 
+        DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView();
         deviceTreeProxyModel->setSourceModel(storageTreeModel);
 
         //LoadModel
@@ -383,8 +384,11 @@
         updateStorageSelectionStatistics();
 
         //Load matching Statistics
-        if(databaseMode=="Memory")
-            loadStatisticsFileToTable();
+        if(databaseMode=="Memory"){
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
+        }
+
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------

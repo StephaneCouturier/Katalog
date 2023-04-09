@@ -573,7 +573,7 @@
             qint64 previousStorageFreeSpace  = storage->freeSpace;
             qint64 previousStorageTotalSpace = storage->totalSpace;
             qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-            QDateTime lastUpdate  = storage->lastUpdated;
+            QDateTime lastUpdate  = storage->dateUpdated;
 
         //verify if path is available / not empty
         QDir dir (storage->path);
@@ -602,16 +602,17 @@
             storage->updateStorageInfo();
 
         //Stop if the update was not done (lastUpdate time did not change)
-            if (lastUpdate == storage->lastUpdated)
+            if (lastUpdate == storage->dateUpdated)
                 return;
 
         //Save statistics
-            storage->saveStatistics();
+            QDateTime dateTime = QDateTime::currentDateTime();
+            storage->saveStatistics(dateTime);
 
             //save to file
                 if(databaseMode=="Memory"){
-                    storage->setStatisticsFilePath(collectionFolder + "/" + statisticsFileName);
-                    storage->saveStatisticsToFile();
+                    QString storageStatisticsFilePath = collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
+                    storage->saveStatisticsToFile(storageStatisticsFilePath, dateTime);
                 }
 
         //Prepare to report changes to the storage
@@ -666,7 +667,6 @@
             //load Storage file data to table
             loadStorageFileToTable();
         }
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageModelToFile()
@@ -718,7 +718,7 @@
         if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
             //out << textData;
-    //    Close the file
+            //Close the file
             //storageFile.close();
         }
 
@@ -766,6 +766,75 @@
         float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
         ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
         else ui->Storage_label_PercentFree->setText("");
+    }
+
+    //--------------------------------------------------------------------------
+    void MainWindow::recordAllStorageStats(QDateTime dateTime)
+    {// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
+
+        //Get the list of storage devices
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                        SELECT
+                                            storage_id,
+                                            storage_name,
+                                            storage_free_space,
+                                            storage_total_space
+                                        FROM storage
+                                        )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Save values for each storage device
+        while(query.next()){
+            tempStorage->setID(query.value(0).toInt());
+            tempStorage->loadStorageMetaData();
+            tempStorage->saveStatistics(dateTime);
+
+            if(databaseMode=="Memory")
+            {
+                QString filePath = collectionFolder + "/" + "statistics_storage.csv";//statisticsFileName;
+                tempStorage->saveStatisticsToFile(filePath, dateTime);
+                /*
+                //create a new record for each catalog
+                QString recordStorageName;
+                QString recordStorageFreeSpace;
+                QString recordStorageTotalSpace;
+
+                //while (query.next()){
+                    recordStorageName       = query.value(1).toString();
+                    recordStorageFreeSpace  = query.value(2).toString();
+                    recordStorageTotalSpace = query.value(3).toString();
+
+                    QString statisticsLine = dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                             + recordStorageName + "\t"
+                                             + recordStorageFreeSpace + "\t"
+                                             + recordStorageTotalSpace + "\t"
+                                             + "Snapshot" ;
+
+                    // Stream the values to the file
+                    QFile fileOut( collectionFolder + "/" + statisticsFileName );
+
+                    // Write data
+                    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+                        QTextStream stream(&fileOut);
+                        stream << statisticsLine << "\n";
+                    }
+                    fileOut.close();
+*/
+                //}
+
+            }
+        }
+
+        //Refresh
+        if(databaseMode=="Memory"){
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
+        }
+
+        loadStatisticsChart();
+
     }
 
 //--------------------------------------------------------------------------

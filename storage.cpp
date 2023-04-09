@@ -116,7 +116,7 @@ void Storage::updateStorageInfo()
             return;
         }
 
-        lastUpdated = QDateTime::currentDateTime();
+        dateUpdated = QDateTime::currentDateTime();
 
     //Save
         QSqlQuery queryTotalSpace;
@@ -138,45 +138,52 @@ void Storage::updateStorageInfo()
 
 }
 
-void Storage::saveStatistics()
-{
+void Storage::saveStatistics(QDateTime dateTime)
+{      
         QSqlQuery querySaveStatistics;
         QString querySaveStatisticsSQL = QLatin1String(R"(
-                                        INSERT INTO statistics(                                                date_time,
-                                                catalog_name,
-                                                catalog_file_count,
-                                                catalog_total_file_size,
+                                        INSERT INTO statistics_storage(
+                                                date_time,
+                                                storage_name,
+                                                storage_free_space,
+                                                storage_total_space,
                                                 record_type)
                                         VALUES(
                                                 :date_time,
-                                                :catalog_name,
-                                                :catalog_file_count,
-                                                :catalog_total_file_size,
+                                                :storage_name,
+                                                :storage_free_space,
+                                                :storage_total_space,
                                                 :record_type)
                                         )");
         querySaveStatistics.prepare(querySaveStatisticsSQL);
-        querySaveStatistics.bindValue(":date_time", lastUpdated);
-        querySaveStatistics.bindValue(":catalog_name", name);
-        querySaveStatistics.bindValue(":catalog_file_count", freeSpace);
-        querySaveStatistics.bindValue(":catalog_total_file_size", totalSpace);
-        querySaveStatistics.bindValue(":record_type", "Storage");
+        querySaveStatistics.bindValue(":date_time", dateTime.toString("yyyy-MM-dd hh:mm:ss"));
+        querySaveStatistics.bindValue(":storage_name", name);
+        querySaveStatistics.bindValue(":storage_free_space", freeSpace);
+        querySaveStatistics.bindValue(":storage_total_space", totalSpace);
+        if (dateTime == dateUpdated)
+            querySaveStatistics.bindValue(":record_type", "update");
+        else
+            querySaveStatistics.bindValue(":record_type", "snapshot");
+
         querySaveStatistics.exec();
 }
 
-void Storage::setStatisticsFilePath(QString filePath)
+void Storage::saveStatisticsToFile(QString filePath, QDateTime dateTime)
 {
-        statisticsFilePath = filePath;
-}
+        //Prepare file and data
+        QFile fileOut(filePath);
+        QString record_type;
+        if (dateTime == dateUpdated)
+            record_type = "update";
+        else
+            record_type = "snapshot";
 
-void Storage::saveStatisticsToFile()
-{
-        QFile fileOut( statisticsFilePath);
-
-        QString statisticsLine = lastUpdated.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                 + name + "\t"
-                                 + QString::number(freeSpace) + "\t"
-                                 + QString::number(totalSpace) + "\t"
-                                 + "Storage" ;
+        QString statisticsLine =   dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                                + name + "\t"
+                                + QString::number(freeSpace) + "\t"
+                                + QString::number(totalSpace) + "\t"
+                                + QString::number(ID) + "\t"
+                                + record_type;
 
         // Write data
         if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {

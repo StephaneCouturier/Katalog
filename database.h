@@ -75,7 +75,8 @@
                             storage_build_date    TEXT,
                             storage_content_type  TEXT,
                             storage_container     TEXT,
-                            storage_comment       TEXT)
+                            storage_comment       TEXT,
+                            storage_date_updated  TEXT)
             )");
 
         // FILE (storing all catalogs files)---------------------------------
@@ -134,6 +135,25 @@
                             catalog_name            TEXT,
                             catalog_file_count      NUMERIC,
                             catalog_total_file_size NUMERIC,
+                            record_type             TEXT)
+            )");
+
+            const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  statistics_catalog(
+                            date_time               TEXT,
+                            catalog_name            TEXT,
+                            catalog_file_count      NUMERIC,
+                            catalog_total_file_size NUMERIC,
+                            record_type             TEXT)
+            )");
+
+            const auto SQL_CREATE_STATISTICS_STORAGE = QLatin1String(R"(
+                   CREATE TABLE IF NOT EXISTS  statistics_storage(
+                            date_time               TEXT,
+                            storage_id              TEXT,
+                            storage_name            TEXT,
+                            storage_free_space      NUMERIC,
+                            storage_total_space     NUMERIC,
                             record_type             TEXT)
             )");
 

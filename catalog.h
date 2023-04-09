@@ -90,6 +90,8 @@ public:
     void renameCatalogFile(QString newCatalogName);
     void loadCatalogFileListToTable();
     void loadFoldersToTable();
+    void saveStatistics(QDateTime dateTime);
+    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 
     void populateFileData( const QList<QString> &fileNames,
                            const QList<qint64>  &fileSizes,

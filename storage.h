@@ -34,6 +34,7 @@
 
 #include <QStorageInfo>
 #include <QSqlQuery>
+#include <QRegularExpression>
 
 class Storage
 {
@@ -43,7 +44,7 @@ public:
     int ID;
     QString name;
     QString type;
-    QString location = "";
+    QString location = ""; //avoid NULL in database
     QString path;
     QString label;
     QString fileSystem;
@@ -56,16 +57,14 @@ public:
     QString contentType;
     QString container;
     QString comment;
-    QDateTime lastUpdated;
-    QString statisticsFilePath;
+    QDateTime dateUpdated;
 
     void setID(int selectedID);
 
     void loadStorageMetaData();
     void updateStorageInfo();
-    void saveStatistics();
-    void setStatisticsFilePath(QString filePath);
-    void saveStatisticsToFile();
+    void saveStatistics(QDateTime dateTime);
+    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 
 };
 

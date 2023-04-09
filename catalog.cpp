@@ -553,6 +553,60 @@ void Catalog::loadFoldersToTable()
     }
 }
 
+void Catalog::saveStatistics(QDateTime dateTime)
+{
+    QSqlQuery querySaveStatistics;
+    QString querySaveStatisticsSQL = QLatin1String(R"(
+                                        INSERT INTO statistics_catalog(
+                                                date_time,
+                                                catalog_name,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                record_type)
+                                        VALUES(
+                                                :date_time,
+                                                :catalog_name,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :record_type)
+                                    )");
+    querySaveStatistics.prepare(querySaveStatisticsSQL);
+    querySaveStatistics.bindValue(":date_time", dateTime.toString("yyyy-MM-dd hh:mm:ss"));
+    querySaveStatistics.bindValue(":catalog_name", name);
+    querySaveStatistics.bindValue(":catalog_file_count",  fileCount);
+    querySaveStatistics.bindValue(":catalog_total_file_size", totalFileSize);
+    if (dateTime.toString("yyyy-MM-dd hh:mm:ss") == dateUpdated)
+        querySaveStatistics.bindValue(":record_type", "update");
+    else
+        querySaveStatistics.bindValue(":record_type", "snapshot");
+
+    querySaveStatistics.exec();
+}
+
+void Catalog::saveStatisticsToFile(QString filePath, QDateTime dateTime)
+{
+    //Prepare file and data
+    QFile fileOut(filePath);
+    QString record_type;
+    if (dateTime.toString("yyyy-MM-dd hh:mm:ss") == dateUpdated)
+        record_type = "update";
+    else
+        record_type = "snapshot";
+
+    QString statisticsLine =   dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                             + name + "\t"
+                             + QString::number(fileCount) + "\t"
+                             + QString::number(totalFileSize) + "\t"
+                             + record_type;
+
+    // Write data
+    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+        QTextStream stream(&fileOut);
+        stream << statisticsLine << "\n";
+    }
+    fileOut.close();
+}
+
 void Catalog::populateFileData( const QList<QString> &cfileName,
                                 const QList<qint64>  &cfileSize,
                                 const QList<QString> &cfilePath,
