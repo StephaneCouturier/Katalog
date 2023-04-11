@@ -304,7 +304,7 @@
             searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
             searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
             caseSensitive = settings.value("LastSearch/CaseSensitive").toBool();
-            graphicStartDate = settings.value("Statistics/graphStartDate").toString();
+            graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
             //Restore Splitters
             if (settings.value("Settings/SplitterWidget1Size").toSize().width() !=-1 and settings.value("Settings/SplitterWidget2Size").toSize().width() !=-1){
@@ -382,7 +382,7 @@
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore Statistics settings
-            ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
+            ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.toString("yyyy-mm-dd"));
 
             //Restore last sort order for the catalogs and storage
             lastCatalogsSortSection      = settings.value("Catalogs/lastCatlogsSortSection").toInt();
@@ -798,7 +798,7 @@
     {
         searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
         storageFilePath       = collectionFolder + "/" + "storage.csv";
-        statisticsCatalogFileName    = "statistics.csv";
+        statisticsCatalogFileName    = "statistics_catalog.csv";
         statisticsCatalogFilePath    = collectionFolder + "/" + statisticsCatalogFileName;
         statisticsStorageFileName    = "statistics_storage.csv";
         statisticsStorageFilePath    = collectionFolder + "/" + statisticsStorageFileName;

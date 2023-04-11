@@ -272,13 +272,10 @@ class MainWindow : public QMainWindow
             void loadCatalogFilesToTable();
             void loadCatalogsTableToModel();
             int verifyCatalogPath(QString catalogSourcePath);
-            void recordSelectedCatalogStats(QString selectedCatalogName,
-                                            int selectedCatalogFileCount,
-                                            qint64 selectedCatalogTotalFileSize);
             void recordCollectionStats();
             void recordAllCatalogStats(QDateTime dateTime);
             void convertCatalog(QString catalogSourcePath);
-            void backupCatalog(QString catalogSourcePath);
+            void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
             void updateSingleCatalog(Catalog *catalog);
             void updateCatalogFileList(Catalog *catalog);
@@ -345,7 +342,7 @@ class MainWindow : public QMainWindow
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
-            QString graphicStartDate;
+            QDateTime graphicStartDate;
             void loadStatisticsDataTypes();
             void loadStatisticsCatalogFileToTable();
             void loadStatisticsStorageFileToTable();

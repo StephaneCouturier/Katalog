@@ -49,7 +49,7 @@ public:
     QString ID;
     QString name;
     QString filePath;
-    QString dateUpdated;
+    QDateTime dateUpdated;
     QString sourcePath;
     qint64  fileCount = 0;
     qint64  totalFileSize = 0;
@@ -59,7 +59,7 @@ public:
     QString storageName;
     bool    includeSymblinks;
     bool    isFullDevice;
-    QString dateLoaded;
+    QDateTime dateLoaded;
     bool    includeMetadata;
     QString appVersion;
 

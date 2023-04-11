@@ -166,12 +166,12 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::createCatalog()
-    {
-        //Create a new catalog, launch the cataloging and save, and refresh data and UI
-        //Create a new catalog
-        //Catalog *newCatalog = new Catalog();
+    {//Create a new catalog, launch the cataloging and save, and refresh data and UI
 
+        //Create a new catalog
+            newCatalog = new Catalog();
             //Get inputs and set values of the newCatalog
+
             newCatalog->setName(ui->Create_lineEdit_NewCatalogName->text());
             newCatalog->setFilePath(collectionFolder + "/" + newCatalog->name + ".idx");
             newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
@@ -258,16 +258,6 @@
             //Update the new catalog loadedversion to indicate that files are already in memory
             newCatalog->setDateLoaded();
 
-            //Add new catalog values to the statistics log, if the user has chosen this option
-                if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
-
-                    //Save values
-                    recordSelectedCatalogStats(newCatalog->name, newCatalog->fileCount, newCatalog->totalFileSize);
-
-                    //Reload stats file to refresh values
-                    loadStatisticsChart();
-                }
-
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
             if(databaseMode=="Memory")
@@ -324,20 +314,19 @@
             // Get directories to exclude
             QStringList excludedFolders;
             QFile excludeFile(excludeFilePath);
-            if(!excludeFile.open(QIODevice::ReadOnly)) {
-                 //return;
-            }
-            QTextStream textStream(&excludeFile);
-            QString line;
-            while (true)
-            {
-                line = textStream.readLine();
-                if (line.isNull())
+            if(excludeFile.open(QIODevice::ReadOnly)) {
+                QTextStream textStream(&excludeFile);
+                QString line;
+                while (true)
+                {
+                    line = textStream.readLine();
+                    if (line.isNull())
                     break;
-                else
+                    else
                     excludedFolders << line;
+                }
+                excludeFile.close();
             }
-            excludeFile.close();
 
         //Prepare database and queries
 
@@ -533,7 +522,6 @@
             query.exec();
 
             while(query.next()){
-                    //fileList << filePath + "\t" + QString::number(fileSize) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
                     fileList << query.value(0).toString() + "\t" + query.value(1).toString() + "\t" + query.value(2).toString();
             };
 

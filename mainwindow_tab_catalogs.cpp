@@ -665,56 +665,7 @@
         return status;
     }
     //--------------------------------------------------------------------------
-    void MainWindow::recordSelectedCatalogStats(QString selectedCatalogName, int selectedCatalogFileCount, qint64 selectedCatalogTotalFileSize)
-    {
-        QDateTime nowDateTime = QDateTime::currentDateTime();
-
-        QString statisticsLine = nowDateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                + selectedCatalogName + "\t"
-                                + QString::number(selectedCatalogFileCount) + "\t"
-                                + QString::number(selectedCatalogTotalFileSize) + "\t"
-                                + "Update" ;
-
-        if(databaseMode=="Memory"){
-            // Stream the list to the file
-            QFile fileOut( statisticsCatalogFilePath );
-
-            // Write data
-            if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                QTextStream stream(&fileOut);
-                stream << statisticsLine << "\n";
-             }
-             fileOut.close();
-        }
-        else if(databaseMode=="File"){
-             QSqlQuery query;
-             QString querySQL = QLatin1String(R"(
-                                INSERT INTO statistics(
-                                                date_time,
-                                                catalog_name,
-                                                catalog_file_count,
-                                                catalog_total_file_size,
-                                                record_type
-                                                )
-                                VALUES(
-                                                :date_time,
-                                                :catalog_name,
-                                                :catalog_file_count,
-                                                :catalog_total_file_size,
-                                                :record_type
-                                                )
-                                )");
-             query.prepare(querySQL);
-             query.bindValue(":date_time",nowDateTime.toString("yyyy-MM-dd hh:mm:ss"));
-             query.bindValue(":catalog_name",selectedCatalogName);
-             query.bindValue(":catalog_file_count",QString::number(selectedCatalogFileCount));
-             query.bindValue(":catalog_total_file_size",QString::number(selectedCatalogTotalFileSize));
-             query.bindValue(":record_type","Update");
-             query.exec();
-        }
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::backupCatalog(QString catalogSourcePath)
+    void MainWindow::backupCatalogFile(QString catalogSourcePath)
     {
         QString catalogBackUpSourcePath = catalogSourcePath + ".bak";
 
@@ -746,8 +697,8 @@
             query.bindValue(":storage_name",catalog->storageName);
             query.exec();
             query.next();
-            int selectedCatalogStorageID = query.value(0).toInt();
-            QString selectedCatalogStoragePath =  query.value(1).toString();
+            int     selectedCatalogStorageID   = query.value(0).toInt();
+            QString selectedCatalogStoragePath = query.value(1).toString();
 
             //Update storage
             if ( selectedCatalogStoragePath!=""){
@@ -788,9 +739,8 @@
 
            //BackUp the file before, if the option is selected
            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-                backupCatalog(catalog->filePath);
+                backupCatalogFile(catalog->filePath);
            }
-
         }
 
         //Capture previous FileCount and TotalFileSize to report the changes after the update
@@ -859,8 +809,12 @@
         }
 
         //record catalog statistics if option is selected
-        if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true )
-            recordSelectedCatalogStats(catalog->name, catalog->fileCount, catalog->totalFileSize);
+        if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
+            //Save values
+            QDateTime dateTime = catalog->dateUpdated;
+            catalog->saveStatistics(dateTime);
+            catalog->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
+        }
 
         //Refresh data to UI
         loadCatalogsTableToModel();
@@ -1306,7 +1260,7 @@
         QSqlQuery queryLast;
         QString queryLastSQL = QLatin1String(R"(
                                     SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
-                                    FROM statistics
+                                    FROM statistics_catalog
                                     WHERE date_time = (SELECT MAX(date_time)
                                                         FROM statistics
                                                         WHERE record_type="Snapshot")
@@ -1327,7 +1281,7 @@
         QSqlQuery queryNew;
         QString queryNewSQL = QLatin1String(R"(
                                 SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
-                                FROM statistics
+                                FROM statistics_catalog
                                 WHERE date_time = (SELECT MAX(date_time)
                                                     FROM statistics
                                                     WHERE record_type="Snapshot")
@@ -1375,36 +1329,13 @@
 
            //Save history for each catalog
             while (query.next()){
-//            tempCatalog->setName(query.value(0).toInt());
-//            tempStorage->saveStatistics(dateTime);
+                tempCatalog->setName(query.value(0).toString());
+                tempCatalog->loadCatalogMetaData();
+                tempCatalog->saveStatistics(dateTime);
 
                 if(databaseMode=="Memory")
                 {
-                //Create a new record for each catalog
-            QString recordCatalogName;
-            QString recordCatalogFileCount;
-            QString recordCatalogTotalFileSize;
-
-
-                    recordCatalogName = query.value(0).toString();
-                    recordCatalogFileCount = query.value(1).toString();
-                    recordCatalogTotalFileSize = query.value(2).toString();
-
-                    QString statisticsLine = dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                            + recordCatalogName + "\t"
-                                            + recordCatalogFileCount + "\t"
-                                            + recordCatalogTotalFileSize + "\t"
-                                            + "Snapshot" ;
-
-                    //Stream the values to the file
-                        QFile fileOut( collectionFolder + "/" + statisticsCatalogFilePath );
-
-                        //Write data
-                        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                            QTextStream stream(&fileOut);
-                            stream << statisticsLine << "\n";
-                         }
-                         fileOut.close();
+                    tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
                 }
             }
 

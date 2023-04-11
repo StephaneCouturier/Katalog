@@ -6155,7 +6155,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item row="4" column="0">
-             <widget class="QWidget" name="widget" native="true">
+             <widget class="QWidget" name="Storage_widget" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_19">
                <item>
                 <widget class="QLabel" name="Storage_label_PanelDevice">
@@ -6239,7 +6239,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QWidget" name="Storage_widget_EditPanel" native="true">
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="4" column="2">
-                  <spacer name="spacer">
+                  <spacer name="Storage_spacer">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
@@ -6397,7 +6397,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_4">
+                 <spacer name="Statistics_horizontalSpacer_4">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -6469,6 +6469,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="4" column="0">
                <layout class="QHBoxLayout" name="Statistics_horizontalLayout_GraphParameters">
                 <item>
+                 <spacer name="Statistics_horizontalSpacer_10">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QLabel" name="Statistics_label_GraphicStartDate">
                   <property name="minimumSize">
                    <size>
@@ -6516,7 +6532,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QCalendarWidget" name="Statistics_calendarWidget"/>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_9">
+                 <spacer name="Statistics_horizontalSpacer_9">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -6694,7 +6710,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_7">
+                 <spacer name="Tags_horizontalSpacer_7">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>

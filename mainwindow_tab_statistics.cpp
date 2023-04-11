@@ -102,10 +102,10 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_lineEdit_GraphicStartDate_returnPressed()
     {
-        graphicStartDate = ui->Statistics_lineEdit_GraphicStartDate->text();
+        graphicStartDate = QDateTime::fromString(ui->Statistics_lineEdit_GraphicStartDate->text(),"yyyy-mm-dd");
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+        settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
         //load the graph
         loadStatisticsChart();
@@ -113,11 +113,11 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_ClearDate_clicked()
     {
-        graphicStartDate = "";
-        ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
+        graphicStartDate = *new QDateTime;
+        ui->Statistics_lineEdit_GraphicStartDate->setText("");
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+        settings.setValue("Statistics/graphStartDate", "");
 
         //load the graph
         loadStatisticsChart();
@@ -127,11 +127,12 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_calendarWidget_clicked(const QDate &date)
     {
-        graphicStartDate = QVariant(date).toString();
-        ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate);
+        graphicStartDate.setDate(date);
+        graphicStartDate.setTime(QTime::fromString("00:00:00"));
+        ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.date().toString("yyyy-MM-dd"));
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Statistics/graphStartDate", graphicStartDate);
+        settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
         //load the graph
         loadStatisticsChart();
@@ -186,7 +187,7 @@
 
         //clear database table
             QSqlQuery deleteQuery;
-            deleteQuery.exec("DELETE FROM statistics");
+            deleteQuery.exec("DELETE FROM statistics_catalog");
 
         // Get infos stored in the file
             QFile statisticsCatalogFile(statisticsCatalogFilePath);
@@ -199,7 +200,7 @@
         //prepare query to load file info
             QSqlQuery insertQuery;
             QString insertSQL = QLatin1String(R"(
-                                INSERT INTO statistics (
+                                INSERT INTO statistics_catalog (
                                                 date_time,
                                                 catalog_name,
                                                 catalog_file_count,
@@ -345,13 +346,32 @@
             QString selectedStorageforStats  = ui->Filters_label_DisplayStorage->text();
             QString selectedCatalogforStats  = ui->Filters_label_DisplayCatalog->text();
 
-            qint64 maxValueGraphRange = 0.0;
+            qint64  maxValueGraphRange = 0.0;
             QString displayUnit;
             QLineSeries *series1 = new QLineSeries();
             QLineSeries *series2 = new QLineSeries();
-            qint64 numberOrSizeTotal = 0;
-            qint64 freeSpace = 0;
-            qint64 totalSpace = 0;
+            QLineSeries *series3 = new QLineSeries();
+            bool    loadSeries1 = true;
+            bool    loadSeries2 = true;
+            bool    loadSeries3 = true;
+            bool    invalidCombinaison = false;
+            qint64  numberOrSizeTotal = 0;
+            qint64  freeSpace  = 0;
+            qint64  totalSpace = 0;
+
+            //Line formatting
+            QRgb colorCatalogTotalSize = qRgb(32, 159, 223);
+            QPen penCatalogTotalSize(colorCatalogTotalSize);
+            penCatalogTotalSize.setWidth(2);
+            QRgb colorCatalogNumberFiles = qRgb(146, 110, 228);
+            QPen penCatalogNumberFiles(colorCatalogNumberFiles);
+            penCatalogNumberFiles.setWidth(2);
+            QRgb colorStorageTotalSpace = qRgb(153, 202, 83);
+            QPen penStorageTotalSpace(colorStorageTotalSpace);
+            penStorageTotalSpace.setWidth(2);
+            QRgb colorStorageUsedSpace = qRgb(246, 166, 37);
+            QPen penStorageUsedSpace(colorStorageUsedSpace);
+            penStorageUsedSpace.setWidth(2);
 
         //Get the data depending on the type of source
             //Getting one catalog data
@@ -359,31 +379,39 @@
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
                                     SELECT date_time, catalog_file_count, catalog_total_file_size
-                                    FROM statistics
+                                    FROM statistics_catalog
                                     WHERE catalog_name = :selectedCatalogforStats
                                     AND record_type != 'Storage'
                                   )");
-                if ( graphicStartDate != "" ){
+                if ( !graphicStartDate.isNull() ){
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
-                queryTotalSnapshots.prepare(querySQL);
-                queryTotalSnapshots.bindValue(":selectedCatalogforStats",selectedCatalogforStats);
-                queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
-                queryTotalSnapshots.exec();
+                if (selectedDeviceType == "Location"){
+                     invalidCombinaison = true;
+                }
+                else if (selectedDeviceType == "Storage"){
+                     invalidCombinaison = true;
+                }
+                else if (selectedDeviceType == "Catalog"){
+                    queryTotalSnapshots.prepare(querySQL);
+                    queryTotalSnapshots.bindValue(":selectedCatalogforStats", selectedCatalogforStats);
+                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+                    queryTotalSnapshots.exec();
 
-                while (queryTotalSnapshots.next()){
+                    while (queryTotalSnapshots.next()){
 
-                       QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
+                         //QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
+                        QDateTime datetime = queryTotalSnapshots.value(0).toDateTime();
 
-                       if ( selectedTypeOfData == tr("Number of Files") )
+                        if ( selectedTypeOfData == tr("Number of Files") )
                        {
                            numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
 
                            if ( numberOrSizeTotal > maxValueGraphRange )
                                maxValueGraphRange = numberOrSizeTotal;
                        }
-                       else if ( selectedTypeOfData == tr("Total File Size") )
+                        else if ( selectedTypeOfData == tr("Total File Size") )
                        {
                            numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
                            if ( freeSpace > 2000000000 ){
@@ -399,129 +427,157 @@
                                maxValueGraphRange = numberOrSizeTotal;
                        }
 
-                       series1->setName(selectedTypeOfData);
-                       series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
+                        series1->setName(selectedTypeOfData);
+                        series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
+                    }
 
+                    loadSeries1 = true;
+                    loadSeries2 = false;
+                    loadSeries3 = false;
+
+                    penStorageUsedSpace.setWidth(2);
+                    if ( selectedTypeOfData == tr("Number of Files") )
+                           series1->setPen(penCatalogNumberFiles);
+                    else
+                           series1->setPen(penCatalogTotalSize);
                 }
             }
 
             //Getting the collection snapshots data
             else if(selectedSource == tr("collection snapshots")){
+
                 //Add Catalog data
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                    SELECT date_time, SUM(statistics.catalog_file_count), SUM(statistics.catalog_total_file_size)
-                                    FROM statistics
-                                    LEFT JOIN catalog ON catalog.catalog_name = statistics.catalog_name
+                                    SELECT date_time, SUM(statistics_catalog.catalog_file_count), SUM(statistics_catalog.catalog_total_file_size)
+                                    FROM statistics_catalog
+                                    LEFT JOIN catalog ON catalog.catalog_name = statistics_catalog.catalog_name
                                     LEFT JOIN storage ON catalog.catalog_storage = storage.storage_name
-                                    WHERE record_type = 'Snapshot'
+                                    WHERE record_type = 'snapshot'
                                   )");
 
                 if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" )
-                    querySQL = querySQL + " AND storage.storage_location = '" + selectedDeviceName + "' ";
+                    querySQL += " AND storage.storage_location = '" + selectedDeviceName + "' ";
                 else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL = querySQL + " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
+                    querySQL += " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
                 else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL = querySQL + " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
+                    querySQL += " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
 
-                if ( graphicStartDate != "" ){
+                if ( !graphicStartDate.isNull() ){
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
                 querySQL = querySQL + " GROUP BY date_time ";
 
                 queryTotalSnapshots.prepare(querySQL);
-                queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
+                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){
 
-                       QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
+                    QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
 
-                       if ( selectedTypeOfData == tr("Number of Files") )
-                       {
-                           numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
+                    if ( selectedTypeOfData == tr("Number of Files") )
+                    {
+                       numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
+                       qDebug()<<numberOrSizeTotal;
 
-                           if ( numberOrSizeTotal > maxValueGraphRange )
-                               maxValueGraphRange = numberOrSizeTotal;
+                       if ( numberOrSizeTotal > maxValueGraphRange )
+                           maxValueGraphRange = numberOrSizeTotal;
 
+                    }
+                    else if ( selectedTypeOfData == tr("Total File Size") )
+                    {
+                       numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
+                       if ( numberOrSizeTotal > 2000000000 ){
+                           numberOrSizeTotal = numberOrSizeTotal/1024/1024/1024;
+                           displayUnit = " ("+tr("GiB")+")";
                        }
-                       else if ( selectedTypeOfData == tr("Total File Size") )
-                       {
-                           numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
-                           if ( numberOrSizeTotal > 2000000000 ){
-                               numberOrSizeTotal = numberOrSizeTotal/1024/1024/1024;
-                               displayUnit = " ("+tr("GiB")+")";
-                           }
-                           else {
-                               numberOrSizeTotal = numberOrSizeTotal/1024/1024;
-                               displayUnit = " ("+tr("MiB")+")";
-                           }
-
-                           if ( numberOrSizeTotal > maxValueGraphRange )
-                               maxValueGraphRange = numberOrSizeTotal;
-
+                       else {
+                           numberOrSizeTotal = numberOrSizeTotal/1024/1024;
+                           displayUnit = " ("+tr("MiB")+")";
                        }
 
-                       series1->setName(selectedTypeOfData);
-                       series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal+1000000000);
+                       if ( numberOrSizeTotal > maxValueGraphRange )
+                           maxValueGraphRange = numberOrSizeTotal;
+                    }
+
+                    series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
                 }
+
+                series1->setName(tr("Catalog") + "/"  + selectedTypeOfData);
+                if ( selectedTypeOfData == tr("Number of Files") )
+                    series1->setPen(penCatalogNumberFiles);
+                else
+                    series1->setPen(penCatalogTotalSize);
+
                 //Add Storage data
                 QSqlQuery queryStorageSnapshots;
                 QString queryStorageSnapshotsSQL = QLatin1String(R"(
-                                    SELECT date_time, SUM(statistics.catalog_file_count), SUM(statistics.catalog_total_file_size)
-                                    FROM statistics
-                                    LEFT JOIN catalog ON catalog.catalog_name = statistics.catalog_name
-                                    LEFT JOIN storage ON catalog.catalog_storage = storage.storage_name
-                                    WHERE record_type = 'Snapshot'
-                                  )");
+                                                        SELECT  date_time,
+                                                                SUM(statistics_storage.storage_free_space),
+                                                                SUM(statistics_storage.storage_total_space)
+                                                        FROM statistics_storage
+                                                        LEFT JOIN storage ON storage.storage_name = statistics_storage.storage_name
+                                                    )");
 
-                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" )
-                       queryStorageSnapshotsSQL += " AND storage.storage_location = '" + selectedDeviceName + "' ";
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" )
-                       queryStorageSnapshotsSQL += " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
-                       queryStorageSnapshotsSQL += " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
-
-                if ( graphicStartDate != "" ){
-                       queryStorageSnapshotsSQL += " AND date_time > :graphStartDate ";
+                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" ){
+                        queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
+                        queryStorageSnapshotsSQL += "   AND storage.storage_location = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" ){
+                        queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
+                        queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" ){
+                        queryStorageSnapshotsSQL += "   LEFT JOIN catalog ON catalog.catalog_storage = storage.storage_name ";
+                        queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
+                        queryStorageSnapshotsSQL += "   AND catalog.catalog_name = '" + selectedDeviceName + "' ";
+                }
+                if ( !graphicStartDate.isNull() ){
+                       queryStorageSnapshotsSQL += "    AND date_time > :graphStartDate ";
                 }
 
-                queryStorageSnapshotsSQL = queryStorageSnapshotsSQL + " GROUP BY date_time ";
+                queryStorageSnapshotsSQL += "           GROUP BY date_time ";
 
-                queryStorageSnapshots.prepare(querySQL);
+                queryStorageSnapshots.prepare(queryStorageSnapshotsSQL);
                 queryStorageSnapshots.bindValue(":graphStartDate",graphicStartDate);
                 queryStorageSnapshots.exec();
 
                 while (queryStorageSnapshots.next()){
-
                     QDateTime datetime = QDateTime::fromString(queryStorageSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-
-//                    if ( selectedTypeOfData == tr("Number of Files") ){
-//                        numberOrSizeTotal = queryStorageSnapshots.value(1).toLongLong();
-
-//                        if ( numberOrSizeTotal > maxValueGraphRange )
-//                        maxValueGraphRange = numberOrSizeTotal;
-
-//                    }
-//                    else if ( selectedTypeOfData == tr("Total File Size") ){
-                        numberOrSizeTotal = queryStorageSnapshots.value(2).toLongLong();
-                        if ( numberOrSizeTotal > 2000000000 ){
-                            numberOrSizeTotal = numberOrSizeTotal/1024/1024/1024;
+                    freeSpace  = queryStorageSnapshots.value(1).toLongLong();
+                    totalSpace = queryStorageSnapshots.value(2).toLongLong();
+                    if ( selectedTypeOfData == tr("Number of Files") )
+                    {
+                        //Number of files does not apply to Storage
+                        loadSeries2 = false;
+                        loadSeries3 = false;
+                    }
+                    else if ( selectedTypeOfData == tr("Total File Size") )
+                    {
+                        if ( totalSpace > 2000000000 ){
+                            freeSpace    = freeSpace/1024/1024/1024;
+                            totalSpace   = totalSpace/1024/1024/1024;
                             displayUnit = " ("+tr("GiB")+")";
                         }
                         else {
-                            numberOrSizeTotal = numberOrSizeTotal/1024/1024;
+                            freeSpace    = freeSpace/1024/1024;
+                            totalSpace   = totalSpace/1024/1024;
                             displayUnit = " ("+tr("MiB")+")";
                         }
 
-                        if ( numberOrSizeTotal > maxValueGraphRange )
-                            maxValueGraphRange = numberOrSizeTotal;
-                    //}
+                        if ( totalSpace > maxValueGraphRange )
+                            maxValueGraphRange = totalSpace;
 
-                    series2->setName("Storage total space"); //selectedTypeOfData
-                    series2->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
+                        series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
+                        series3->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
+                    }
                 }
+
+                series2->setName(tr("Storage") + "/" + tr("Total space"));
+                series3->setName(tr("Storage") + "/" + tr("Used space"));
+
             }
 
             //Getting the storage data
@@ -530,34 +586,29 @@
                 QString querySQL = QLatin1String(R"(
                                                     SELECT date_time, SUM(storage_free_space), SUM(storage_total_space)
                                                     FROM statistics_storage sa
+                                                    WHERE record_type = 'update'
                                                 )");
 
-                if (selectedDeviceType == "Storage"){
-                    querySQL = querySQL + " WHERE record_type = 'update' ";
-                    querySQL = querySQL + " AND storage_name = :selectedStorageforStats ";
-                    querySQL = querySQL + " GROUP BY date_time ";
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedStorageforStats);
-                }
-//                else if (selectedDeviceType == "Location"){
-//                    querySQL = querySQL + " LEFT JOIN storage so ON sa.catalog_name = so.storage_name ";
-//                    querySQL = querySQL + " WHERE record_type = 'Storage' ";
-//                    querySQL = querySQL + " AND storage_location = :storage_location ";
-//                    querySQL = querySQL + " GROUP BY date_time ";
-//                    queryTotalSnapshots.prepare(querySQL);
-//                    queryTotalSnapshots.bindValue(":storageLocation", selectedLocationforStats);
-//                }
-                else if (selectedDeviceType == "Catalog"){
-                    querySQL = querySQL + " WHERE record_type = 'update' ";
-                    querySQL = querySQL + " AND storage_name = :selectedStorageforStats ";
-                    querySQL = querySQL + " GROUP BY date_time ";
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedCatalog->storageName);
+                if ( !graphicStartDate.isNull() ){
+                    querySQL += " AND date_time > :graphStartDate ";
                 }
 
-                if ( graphicStartDate != "" ){
-                    querySQL = querySQL + " AND date_time > :graphStartDate ";
-                    queryTotalSnapshots.bindValue(":graphStartDate",graphicStartDate);
+                if (selectedDeviceType == "Storage"){
+                    querySQL += " AND storage_name = :selectedStorageforStats ";
+                    querySQL += " GROUP BY date_time ";
+                    queryTotalSnapshots.prepare(querySQL);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedStorageforStats);
+                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+                }
+                else if (selectedDeviceType == "Location"){
+                    invalidCombinaison = true;
+                }
+                else if (selectedDeviceType == "Catalog"){
+                    querySQL += " AND storage_name = :selectedStorageforStats ";
+                    querySQL += " GROUP BY date_time ";
+                    queryTotalSnapshots.prepare(querySQL);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedCatalog->storageName);
+                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
 
                 queryTotalSnapshots.exec();
@@ -594,17 +645,23 @@
 
                        series1->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
                        series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
-                       series1->setName("Used Space");
-                       series2->setName("Total Space");
-                   }
+                }
+
+                series1->setName("Used Space");
+                series1->setPen(penStorageUsedSpace);
+                series2->setName("Total Space");
+                series2->setPen(penStorageTotalSpace);
+                loadSeries1 = true;
+                loadSeries2 = true;
+                loadSeries3 = false;
+
             }
 
         //Prepare the chart and plot the data
             //Create new chart and prepare formating
             QChart *chart = new QChart();
-            chart->addSeries(series1);
-            chart->addSeries(series2);
 
+            //Title
             chart->legend()->hide();
 
             if (selectedDeviceType == "Storage"){
@@ -613,7 +670,6 @@
             }
             else if (selectedDeviceType == "Catalog"){
                 selectedCatalogforStats = selectedCatalog->storageName;
-
             }
 
             chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
@@ -639,8 +695,7 @@
             axisX->setFormat("yyyy-MM-dd");
             axisX->setTitleText(tr("Date"));
             chart->addAxis(axisX, Qt::AlignBottom);
-            series1->attachAxis(axisX);
-            series2->attachAxis(axisX);
+
             QValueAxis *axisY = new QValueAxis;
             axisY->setLabelFormat("%.0f");
             axisY->setTitleText(tr("Total"));
@@ -662,19 +717,43 @@
             axisY->setRange(0 , maxValueGraphRange);
             chart->addAxis(axisY, Qt::AlignLeft);
 
-            series1->attachAxis(axisY);
-            series2->attachAxis(axisY);
-            //Legend
-                //chart->legend()->setAlignment(Qt::AlignRight);
-                chart->legend()->setVisible(true);
-                chart->legend()->setAlignment(Qt::AlignLeft);
-                chart->legend()->detachFromChart();
-                chart->legend()->setBrush(QBrush(QColor(255, 255, 255, 220)));
-                chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
-                //chart->legend()->attachToChart();
-                chart->legend()->setBackgroundVisible(true);
-                chart->legend()->setGeometry(QRectF(120, 70, 200, 75));
-                chart->legend()->update();
+        //Load series to chart
+            if (loadSeries1==true){
+                chart->addSeries(series1);
+                series1->attachAxis(axisX);
+                series1->attachAxis(axisY);
+            }
+
+            if (loadSeries2==true){
+                chart->addSeries(series2);
+                series2->attachAxis(axisX);
+                series2->attachAxis(axisY);
+            }
+
+            if (loadSeries3==true){
+                chart->addSeries(series3);
+                series3->attachAxis(axisX);
+                series3->attachAxis(axisY);
+            }
+
+        //Legend
+            chart->legend()->setVisible(true);
+            chart->legend()->setAlignment(Qt::AlignLeft);
+            chart->legend()->detachFromChart();
+            chart->legend()->setBrush(QBrush(QColor(255, 255, 255, 220)));
+            chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
+            chart->legend()->setBackgroundVisible(true);
+            chart->legend()->setGeometry(QRectF(120, 70, 200, 100));
+            chart->legend()->update();
+
+        //Load chart
+            //clear if invalid combinaison
+            if(invalidCombinaison == true){
+                chart = new QChart();
+                chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
+                                + tr("invalid") + " "
+                                +" <span style=\"font-style: italic; color: #000,\"></p>");
+            }
 
             ui->Statistics_chartview_Graph1->setChart(chart);
             ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);

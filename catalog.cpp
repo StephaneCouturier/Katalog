@@ -151,7 +151,7 @@ void Catalog::setIsFullDevice(bool selectedIsFullDevice)
 }
 void Catalog::setDateLoaded()
 {
-    dateLoaded = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    dateLoaded = QDateTime::currentDateTime();
 
     QSqlQuery catalogQuery;
     QString catalogQuerySQL = QLatin1String(R"(
@@ -166,7 +166,7 @@ void Catalog::setDateLoaded()
 }
 void Catalog::setDateUpdated()
 {
-    dateUpdated = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    dateUpdated = QDateTime::currentDateTime();
 
     QSqlQuery catalogQuery;
     QString catalogQuerySQL = QLatin1String(R"(
@@ -288,7 +288,7 @@ void Catalog::loadCatalogMetaData()
     if (query.next()){
         filePath           = query.value(0).toString();
         name               = query.value(1).toString();
-        dateUpdated        = query.value(2).toString();
+        dateUpdated        = query.value(2).toDateTime();
         sourcePath         = query.value(3).toString();
         fileCount          = query.value(4).toLongLong();
         totalFileSize      = query.value(5).toLongLong();
@@ -298,7 +298,7 @@ void Catalog::loadCatalogMetaData()
         storageName        = query.value(9).toString();
         includeSymblinks   = query.value(10).toBool();
         isFullDevice       = query.value(11).toBool();
-        dateLoaded         = query.value(12).toString();
+        dateLoaded         = query.value(12).toDateTime();
         includeMetadata    = query.value(13).toBool();
         appVersion         = query.value(14).toString();
     }
@@ -335,13 +335,9 @@ void Catalog::renameCatalogFile(QString newCatalogName)
 }
 
 void Catalog::loadCatalogFileListToTable()
-{
-    //Verify if the lastest version of the catalog is already in memory
-    QDateTime dateTimeLoaded  = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
-    QDateTime dateTimeUpdated = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
+{//Load catalog files from file, if latest version is not already in memory
 
-    //Load catalog files if latest version is not already in memory
-    if ( dateTimeLoaded < dateTimeUpdated ){
+    if ( dateLoaded < dateUpdated ){
         //Inputs
         QFile catalogFile(filePath);
 
@@ -459,12 +455,9 @@ void Catalog::loadCatalogFileListToTable()
 }
 
 void Catalog::loadFoldersToTable()
-{
-    //Verify if the lastest version of the catalog is already in memory
-    QDateTime dateTimeLoaded   = QDateTime::fromString(dateLoaded, "yyyy-MM-dd hh:mm:ss");
-    QDateTime dateTimeUploaded = QDateTime::fromString(dateUpdated,"yyyy-MM-dd hh:mm:ss");
-    //Load catalog files if latest version is not already in memory
-    if ( dateTimeLoaded < dateTimeUploaded ){
+{//Load catalog folders from file, if latest version is not already in memory
+
+    if ( dateLoaded < dateUpdated ){
 
         //Prepare inputs and insert query for folder
         QString folderFilePath = filePath;
@@ -575,7 +568,7 @@ void Catalog::saveStatistics(QDateTime dateTime)
     querySaveStatistics.bindValue(":catalog_name", name);
     querySaveStatistics.bindValue(":catalog_file_count",  fileCount);
     querySaveStatistics.bindValue(":catalog_total_file_size", totalFileSize);
-    if (dateTime.toString("yyyy-MM-dd hh:mm:ss") == dateUpdated)
+    if (dateTime == dateUpdated)
         querySaveStatistics.bindValue(":record_type", "update");
     else
         querySaveStatistics.bindValue(":record_type", "snapshot");
@@ -588,7 +581,7 @@ void Catalog::saveStatisticsToFile(QString filePath, QDateTime dateTime)
     //Prepare file and data
     QFile fileOut(filePath);
     QString record_type;
-    if (dateTime.toString("yyyy-MM-dd hh:mm:ss") == dateUpdated)
+    if (dateTime == dateUpdated)
         record_type = "update";
     else
         record_type = "snapshot";
