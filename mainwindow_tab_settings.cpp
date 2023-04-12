@@ -269,23 +269,30 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
-        if(databaseMode=="Memory"){
-                    //Clear database
-                    QSqlQuery queryDelete;
-                    queryDelete.exec("DELETE FROM catalog");
-                    queryDelete.exec("DELETE FROM storage");
-                    queryDelete.exec("DELETE FROM file");
-                    queryDelete.exec("DELETE FROM filetemp");
-                    queryDelete.exec("DELETE FROM folder");
-                    queryDelete.exec("DELETE FROM statistics");
-                    queryDelete.exec("DELETE FROM search");
-                    queryDelete.exec("DELETE FROM tag");
+        //Generate collection files paths and statistics parameters
+        generateCollectionFilesPaths();
 
-                    //Load Files to database
-                    loadSearchHistoryFileToTable();
-                    loadCatalogFilesToTable();
-                    if(databaseMode=="Memory")
-                        loadStorageFileToTable();
+        //Create a Storage list (if none exists) + conversions
+        if(databaseMode=="Memory"){
+            createStorageList();
+            convertStatistics();
+
+            //Clear database
+            QSqlQuery queryDelete;
+            queryDelete.exec("DELETE FROM catalog");
+            queryDelete.exec("DELETE FROM storage");
+            queryDelete.exec("DELETE FROM file");
+            queryDelete.exec("DELETE FROM filetemp");
+            queryDelete.exec("DELETE FROM folder");
+            queryDelete.exec("DELETE FROM statistics");
+            queryDelete.exec("DELETE FROM search");
+            queryDelete.exec("DELETE FROM tag");
+
+            //Load Files to database
+            loadSearchHistoryFileToTable();
+            loadCatalogFilesToTable();
+            if(databaseMode=="Memory")
+                loadStorageFileToTable();
         }
 
         //Load data from tables and update display
@@ -406,7 +413,6 @@
                     q.exec(SQL_CREATE_FILETEMP);
                     q.exec(SQL_CREATE_FOLDER);
                     q.exec(SQL_CREATE_METADATA);
-                    q.exec(SQL_CREATE_STATISTICS);
                     q.exec(SQL_CREATE_SEARCH);
                     q.exec(SQL_CREATE_TAG);
 

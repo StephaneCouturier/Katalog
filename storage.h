@@ -60,6 +60,10 @@ public:
     QDateTime dateUpdated;
 
     void setID(int selectedID);
+    void setName(QString selectedName);
+    void setFreeSpace(qint64 selectedFreeSpace);
+    void setTotalSpace(qint64 selectedTotalSpace);
+    void setDateUpdated(QDateTime dateTime);
 
     void loadStorageMetaData();
     void updateStorageInfo();

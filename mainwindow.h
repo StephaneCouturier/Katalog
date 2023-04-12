@@ -347,6 +347,7 @@ class MainWindow : public QMainWindow
             void loadStatisticsCatalogFileToTable();
             void loadStatisticsStorageFileToTable();
             void loadStatisticsChart();
+            void convertStatistics();
 
         //TAB: Tags
             void reloadTagsData();
@@ -530,7 +531,8 @@ class MainWindow : public QMainWindow
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
 
         //Statistics
-            void on_Statistics_pushButton_EditStatisticsFile_clicked();
+            void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
+            void on_Statistics_pushButton_EditStorageStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectSource_currentTextChanged();
             void on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog);
@@ -549,7 +551,7 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-            void on_Storage_pushButton_TestMedia_clicked();           
+            void on_Storage_pushButton_TestMedia_clicked();
 
 };
 

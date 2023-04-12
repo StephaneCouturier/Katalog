@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //#endif
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.19";
-        releaseDate     = "2023-04-01";
+        currentVersion  = "1.20";
+        releaseDate     = "2023-04-12";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -125,15 +125,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 loadCustomThemeDark();
             }
     //Load Collection data
-            //Generate collection files paths and statistics parameters
-                generateCollectionFilesPaths();
 
-            //Create a Storage list (if none exists)
-                if(databaseMode=="Memory"){
-                    createStorageList();
-                }
-
-            //Load Collection data from csv files
+            //Load Collection
                 loadCollection();
 
             //Restore last opened catalog to Explore tab

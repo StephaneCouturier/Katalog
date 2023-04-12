@@ -256,7 +256,8 @@
             }
 
             //Update the new catalog loadedversion to indicate that files are already in memory
-            newCatalog->setDateLoaded();
+            QDateTime emptyDateTime = *new QDateTime;
+            newCatalog->setDateLoaded(emptyDateTime);
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
@@ -503,8 +504,8 @@
             commitQuery.exec();
 
             //update Catalog metadata
-                catalog->setFileCount();
-                catalog->setTotalFileSize();
+                catalog->updateFileCount();
+                catalog->updateTotalFileSize();
 
         //Generate csv files
         if(databaseMode=="Memory"){
@@ -563,8 +564,9 @@
         loadCatalogsTableToModel();
 
         //Update catalog date loaded and updated
-        catalog->setDateUpdated();
-        catalog->setDateLoaded();
+        QDateTime emptyDateTime = *new QDateTime;
+        catalog->setDateUpdated(emptyDateTime);
+        catalog->setDateLoaded(emptyDateTime);
 
         //Stop animation
         QApplication::restoreOverrideCursor();

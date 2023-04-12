@@ -153,9 +153,6 @@
         if (!q.exec(SQL_CREATE_METADATA))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_STATISTICS)) //to be removed?
-            return q.lastError();
-
         if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
             return q.lastError();
 

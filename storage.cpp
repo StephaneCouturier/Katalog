@@ -40,6 +40,22 @@ void Storage::setID(int selectedID)
 {
     ID = selectedID;
 }
+void Storage::setName(QString selectedName)
+{
+    name = selectedName;
+}
+void Storage::setFreeSpace(qint64 selectedFreeSpace)
+{
+    freeSpace = selectedFreeSpace;
+}
+void Storage::setTotalSpace(qint64 selectedTotalSpace)
+{
+    totalSpace = selectedTotalSpace;
+}
+void Storage::setDateUpdated(QDateTime dateTime)
+{
+    dateUpdated = dateTime;
+}
 
 //storage data operation
 void Storage::loadStorageMetaData()
@@ -86,7 +102,6 @@ void Storage::loadStorageMetaData()
     container    = query.value(14).toString();
     comment      = query.value(15).toString();
 }
-
 
 void Storage::updateStorageInfo()
 {

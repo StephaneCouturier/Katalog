@@ -129,15 +129,6 @@
 
         // STATISTICS -----------------------------------------------------------
 
-            const auto SQL_CREATE_STATISTICS = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  statistics(
-                            date_time               TEXT,
-                            catalog_name            TEXT,
-                            catalog_file_count      NUMERIC,
-                            catalog_total_file_size NUMERIC,
-                            record_type             TEXT)
-            )");
-
             const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
                    CREATE TABLE IF NOT EXISTS  statistics_catalog(
                             date_time               TEXT,

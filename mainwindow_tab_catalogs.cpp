@@ -1262,8 +1262,8 @@
                                     SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                     FROM statistics_catalog
                                     WHERE date_time = (SELECT MAX(date_time)
-                                                        FROM statistics
-                                                        WHERE record_type="Snapshot")
+                                                        FROM statistics_catalog
+                                                        WHERE record_type="snapshot")
                                     GROUP BY date_time
                                 )");
         queryLast.prepare(queryLastSQL);
@@ -1283,26 +1283,26 @@
                                 SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                 FROM statistics_catalog
                                 WHERE date_time = (SELECT MAX(date_time)
-                                                    FROM statistics
-                                                    WHERE record_type="Snapshot")
+                                                    FROM statistics_catalog
+                                                    WHERE record_type="snapshot")
                                 GROUP BY date_time
                             )");
         queryNew.prepare(queryNewSQL);
         queryNew.exec();
         queryNew.next();
         qint64 newTotalFileSize   = queryNew.value(0).toLongLong();
-        qint64 newTotalFileNumber = queryNew.value(1).toLongLong();
+        qint64 newTotalFileCount  = queryNew.value(1).toLongLong();
 
         //Calculate and inform
         qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
-        qint64 deltaTotalFileNumber = newTotalFileNumber - lastTotalFileNumber;
+        qint64 deltaTotalFileNumber = newTotalFileCount - lastTotalFileNumber;
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText(tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
                           "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
                           "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                          ).arg(QString::number(newTotalFileNumber),
+                          ).arg(QString::number(newTotalFileCount),
                                 QString::number(deltaTotalFileNumber),
                                 QLocale().formattedDataSize(newTotalFileSize),
                                 QLocale().formattedDataSize(deltaTotalFileSize)

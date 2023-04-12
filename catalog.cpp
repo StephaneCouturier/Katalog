@@ -101,7 +101,11 @@ void Catalog::setSourcePath(QString selectedSourcePath)
         }
     }
 }
-void Catalog::setFileCount()
+void Catalog::setFileCount(qint64 selectedFileCount)
+{
+        fileCount = selectedFileCount;
+}
+void Catalog::updateFileCount()
 {
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
@@ -115,14 +119,18 @@ void Catalog::setFileCount()
     query.next();
     fileCount = query.value(0).toLongLong();
 }
-void Catalog::setTotalFileSize()
+void Catalog::setTotalFileSize(qint64 selectedTotalFileSize)
+{
+    totalFileSize = selectedTotalFileSize;
+}
+void Catalog::updateTotalFileSize()
 {
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                            SELECT SUM(file_size)
-                            FROM file
-                            WHERE file_catalog =:file_catalog
-                        )");
+                        SELECT SUM(file_size)
+                        FROM file
+                        WHERE file_catalog =:file_catalog
+                    )");
     query.prepare(querySQL);
     query.bindValue(":file_catalog",name);
     query.exec();
@@ -149,35 +157,43 @@ void Catalog::setIsFullDevice(bool selectedIsFullDevice)
 {
     isFullDevice = selectedIsFullDevice;
 }
-void Catalog::setDateLoaded()
+void Catalog::setDateLoaded(QDateTime dateTime)
 {
-    dateLoaded = QDateTime::currentDateTime();
+    if(dateTime.isNull()){
+        dateLoaded = QDateTime::currentDateTime();
 
-    QSqlQuery catalogQuery;
-    QString catalogQuerySQL = QLatin1String(R"(
+        QSqlQuery catalogQuery;
+        QString catalogQuerySQL = QLatin1String(R"(
                                         UPDATE catalog
                                         SET catalog_date_loaded =:catalog_date_loaded
                                         WHERE catalog_name =:catalog_name
                                       )");
-    catalogQuery.prepare(catalogQuerySQL);
-    catalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
-    catalogQuery.bindValue(":catalog_name",        name);
-    catalogQuery.exec();
+        catalogQuery.prepare(catalogQuerySQL);
+        catalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
+        catalogQuery.bindValue(":catalog_name",        name);
+        catalogQuery.exec();
+    }
+    else
+        dateLoaded = dateTime;
 }
-void Catalog::setDateUpdated()
+void Catalog::setDateUpdated(QDateTime dateTime)
 {
-    dateUpdated = QDateTime::currentDateTime();
+    if(dateTime.isNull()){
+        dateUpdated = QDateTime::currentDateTime();
 
-    QSqlQuery catalogQuery;
-    QString catalogQuerySQL = QLatin1String(R"(
-                                        UPDATE catalog
-                                        SET catalog_date_updated =:catalog_date_updated
-                                        WHERE catalog_name =:catalog_name
-                                      )");
-    catalogQuery.prepare(catalogQuerySQL);
-    catalogQuery.bindValue(":catalog_date_updated", dateUpdated);
-    catalogQuery.bindValue(":catalog_name",        name);
-    catalogQuery.exec();
+        QSqlQuery catalogQuery;
+        QString catalogQuerySQL = QLatin1String(R"(
+                                            UPDATE catalog
+                                            SET catalog_date_updated =:catalog_date_updated
+                                            WHERE catalog_name =:catalog_name
+                                          )");
+        catalogQuery.prepare(catalogQuerySQL);
+        catalogQuery.bindValue(":catalog_date_updated", dateUpdated);
+        catalogQuery.bindValue(":catalog_name",        name);
+        catalogQuery.exec();
+    }
+    else
+        dateUpdated = dateTime;
 }
 void Catalog::setIncludeMetadata(bool selectedIncludeMetadata)
 {
@@ -446,7 +462,8 @@ void Catalog::loadCatalogFileListToTable()
                 }
 
             //update catalog loaded version
-                setDateLoaded();
+                QDateTime emptyDateTime = *new QDateTime;
+                setDateLoaded(emptyDateTime);
 
             //close file
                 catalogFile.close();

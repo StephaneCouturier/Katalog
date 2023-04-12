@@ -71,21 +71,23 @@ public:
     void setName(QString selectedName);
     void setFilePath(QString selectedFilePath);
     void setSourcePath(QString selectedSourcePath);
-    void setFileCount(); //from database
-    void setTotalFileSize(); //from database
+    void setFileCount(qint64 selectedFileCount);
+    void updateFileCount();//from database
+    void setTotalFileSize(qint64 selectedTotalFileSize);
+    void updateTotalFileSize();//from database
     void setIncludeHidden(bool selectedIncludeHidden);
     void setFileType(QString selectedFileType);
     void setStorageName(QString selectedStorageName);
     void setIncludeSymblinks(bool selectedIncludeSymblinks);
     void setIsFullDevice(bool selectedIsFullDevice);
-    void setDateLoaded();
-    void setDateUpdated();
+    void setDateLoaded(QDateTime dateTime);
+    void setDateUpdated(QDateTime dateTime);
     void setIncludeMetadata(bool selectedIncludeMetadata);
     void setAppVersion(QString selectedAppVersion);
 
     void createCatalog();
     void deleteCatalog();
-    void loadCatalogMetaData();
+    void loadCatalogMetaData();//from database
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
     void loadCatalogFileListToTable();

@@ -6318,12 +6318,42 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_EditStatisticsFile">
+                 <widget class="QLabel" name="Statistics_label_EditRecords">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Edit records:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_EditCatalogStatisticsFile">
                   <property name="toolTip">
                    <string>Edit the file storing all records</string>
                   </property>
                   <property name="text">
-                   <string>Edit records</string>
+                   <string>catalogs</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="document-edit-sign">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Statistics_pushButton_EditStorageStatisticsFile">
+                  <property name="toolTip">
+                   <string>Edit the file storing all records</string>
+                  </property>
+                  <property name="text">
+                   <string>storage</string>
                   </property>
                   <property name="icon">
                    <iconset theme="document-edit-sign">
