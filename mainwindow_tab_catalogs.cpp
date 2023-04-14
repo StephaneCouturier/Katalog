@@ -1257,8 +1257,8 @@
     void MainWindow::recordCollectionStats(){
 
         //Get the current total values
-        QSqlQuery queryLast;
-        QString queryLastSQL = QLatin1String(R"(
+        QSqlQuery queryLastCatalog;
+        QString queryLastCatalogSQL = QLatin1String(R"(
                                     SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                     FROM statistics_catalog
                                     WHERE date_time = (SELECT MAX(date_time)
@@ -1266,11 +1266,26 @@
                                                         WHERE record_type="snapshot")
                                     GROUP BY date_time
                                 )");
-        queryLast.prepare(queryLastSQL);
-        queryLast.exec();
-        queryLast.next();
-        qint64 lastTotalFileSize   = queryLast.value(0).toLongLong();
-        qint64 lastTotalFileNumber = queryLast.value(1).toLongLong();
+        queryLastCatalog.prepare(queryLastCatalogSQL);
+        queryLastCatalog.exec();
+        queryLastCatalog.next();
+        qint64 lastCatalogTotalFileSize   = queryLastCatalog.value(0).toLongLong();
+        qint64 lastCatalogTotalFileNumber = queryLastCatalog.value(1).toLongLong();
+
+        QSqlQuery queryLastStorage;
+        QString queryLastStorageSQL = QLatin1String(R"(
+                                    SELECT SUM(storage_free_space), SUM(storage_total_space)
+                                    FROM statistics_storage
+                                    WHERE date_time = (SELECT MAX(date_time)
+                                                        FROM statistics_storage
+                                                        WHERE record_type="snapshot")
+                                    GROUP BY date_time
+                                )");
+        queryLastStorage.prepare(queryLastStorageSQL);
+        queryLastStorage.exec();
+        queryLastStorage.next();
+        qint64 lastStorageFreeSpace  = queryLastStorage.value(0).toLongLong();
+        qint64 lastStorageTotalSpace = queryLastStorage.value(1).toLongLong();
 
         //Record current catalogs and storage devices values
         QDateTime nowDateTime = QDateTime::currentDateTime();
@@ -1283,8 +1298,8 @@
                                 SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
                                 FROM statistics_catalog
                                 WHERE date_time = (SELECT MAX(date_time)
-                                                    FROM statistics_catalog
-                                                    WHERE record_type="snapshot")
+                                                   FROM statistics_catalog
+                                                   WHERE record_type="snapshot")
                                 GROUP BY date_time
                             )");
         queryNew.prepare(queryNewSQL);
@@ -1293,19 +1308,46 @@
         qint64 newTotalFileSize   = queryNew.value(0).toLongLong();
         qint64 newTotalFileCount  = queryNew.value(1).toLongLong();
 
+        QSqlQuery queryNewStorage;
+        QString queryNewStorageSQL = QLatin1String(R"(
+                                    SELECT SUM(storage_free_space), SUM(storage_total_space)
+                                    FROM statistics_storage
+                                    WHERE date_time = (SELECT MAX(date_time)
+                                                       FROM statistics_storage
+                                                       WHERE record_type="snapshot")
+                                    GROUP BY date_time
+                                )");
+        queryNewStorage.prepare(queryNewStorageSQL);
+        queryNewStorage.exec();
+        queryNewStorage.next();
+        qint64 newStorageFreeSpace  = queryNewStorage.value(0).toLongLong();
+        qint64 newStorageTotalSpace = queryNewStorage.value(1).toLongLong();
+
         //Calculate and inform
-        qint64 deltaTotalFileSize = newTotalFileSize - lastTotalFileSize;
-        qint64 deltaTotalFileNumber = newTotalFileCount - lastTotalFileNumber;
+        qint64 deltaCatalogTotalFileSize   = newTotalFileSize  - lastCatalogTotalFileSize;
+        qint64 deltaCatalogTotalFileNumber = newTotalFileCount - lastCatalogTotalFileNumber;
+        qint64 deltaStorageFreeSpace       = newStorageFreeSpace  - lastStorageFreeSpace;
+        qint64 deltaStorageTotalSpace      = newStorageTotalSpace - lastStorageTotalSpace;
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("<br/>A snapshot of this collection was recorded:<br/><br/>"
-                          "<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
-                          "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                          ).arg(QString::number(newTotalFileCount),
-                                QString::number(deltaTotalFileNumber),
+        msgBox.setText(tr(  "<br/>A snapshot of this collection was recorded:"
+                            "<table>"
+                            "<tr><td><br/><b>Catalogs</b></td><td></td><td></td></tr>"
+                            "<tr><td>Number of files: </td><td style='text-align: right;'><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                            "<tr><td>Total file size: </td><td style='text-align: right;'><b> %3 </b></td><td>  (added: <b> %4 </b>)</td></tr>"
+                            "<tr><td><br/><b>Storage</b></td><td></td><td></td></tr>"
+                            "<tr><td>Storage free space: </td><td style='text-align: right;'><b> %5 </b></td><td>  (added: <b> %6 </b>)</td></tr>"
+                            "<tr><td>Storage total space: </td><td style='text-align: right;'><b> %7 </b></td><td>  (added: <b> %8 </b>)</td></tr>"
+                            "</table>"
+                          ).arg(QLocale().toString(newTotalFileCount),
+                                QLocale().toString(deltaCatalogTotalFileNumber),
                                 QLocale().formattedDataSize(newTotalFileSize),
-                                QLocale().formattedDataSize(deltaTotalFileSize)
+                                QLocale().formattedDataSize(deltaCatalogTotalFileSize),
+                                QLocale().formattedDataSize(newStorageFreeSpace),
+                                QLocale().formattedDataSize(deltaStorageFreeSpace),
+                                QLocale().formattedDataSize(newStorageTotalSpace),
+                                QLocale().formattedDataSize(deltaStorageTotalSpace)
                                 ));
         msgBox.setIcon(QMessageBox::Information);
         msgBox.exec();

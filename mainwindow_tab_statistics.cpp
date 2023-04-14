@@ -37,7 +37,7 @@
     {
         QString selectedSource = ui->Statistics_comboBox_SelectSource->itemData(ui->Statistics_comboBox_SelectSource->currentIndex(),Qt::UserRole).toString();
 
-        //save selection in settings file;
+        //Save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedSource", selectedSource);
 
@@ -46,16 +46,16 @@
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
-        else if(selectedSource ==tr("selected catalog")){
+        else if(selectedSource ==tr("catalog updates")){
             ui->Statistics_label_DataType->show();
             ui->Statistics_comboBox_TypeOfData->show();
         }
-        else if(selectedSource ==tr("storage")){
+        else if(selectedSource ==tr("storage updates")){
             ui->Statistics_label_DataType->hide();
             ui->Statistics_comboBox_TypeOfData->hide();
         }
 
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
     }
 
@@ -151,7 +151,6 @@
     //----------------------------------------------------------------------
 
 //Methods-------------------------------------------------------------------
-
     void MainWindow::loadStatisticsDataTypes()
     {//Populate the comboxboxes
 
@@ -162,9 +161,9 @@
             QString lastSelectedSourceValue = settings.value("Statistics/SelectedSource").toString();
 
             //Generate list of values
-            ui->Statistics_comboBox_SelectSource->setItemData(0, "selected catalog", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(1, "collection snapshots", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(2, "storage", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(0, "catalog updates", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(1, "storage updates", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(2, "collection snapshots", Qt::UserRole);
 
             //Restore last selection value or default
             if (lastSelectedSourceValue !=""){
@@ -358,6 +357,9 @@
             bool    loadSeries2 = true;
             bool    loadSeries3 = true;
             bool    invalidCombinaison = false;
+            QString invalidCase;
+            QString reportName;
+            QString reportTypeOfData;
             qint64  numberOrSizeTotal = 0;
             qint64  freeSpace  = 0;
             qint64  totalSpace = 0;
@@ -378,7 +380,10 @@
 
         //Get the data depending on the type of source
             //Getting one catalog data
-            if(selectedSource ==tr("selected catalog")){
+            if(selectedSource ==tr("catalog updates")){
+                reportName = tr("Catalog updates");
+                reportTypeOfData = selectedTypeOfData;
+
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
                                     SELECT date_time, catalog_file_count, catalog_total_file_size
@@ -392,9 +397,11 @@
 
                 if (selectedDeviceType == "Location"){
                      invalidCombinaison = true;
+                     invalidCase = tr("A Catalog should be selected for that report.");
                 }
                 else if (selectedDeviceType == "Storage"){
                      invalidCombinaison = true;
+                     invalidCase = tr("A Catalog should be selected for that report.");
                 }
                 else if (selectedDeviceType == "Catalog"){
                     queryTotalSnapshots.prepare(querySQL);
@@ -448,6 +455,8 @@
 
             //Getting the collection snapshots data
             else if(selectedSource == tr("collection snapshots")){
+                reportName = tr("Collection snapshots");
+                reportTypeOfData = selectedTypeOfData;
 
                 //Add Catalog data
                 QSqlQuery queryTotalSnapshots;
@@ -465,6 +474,9 @@
                     querySQL += " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
                 else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
                     querySQL += " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
+                else
+                    querySQL += " AND storage.storage_location !=''";
+
 
                 if ( !graphicStartDate.isNull() ){
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
@@ -483,11 +495,8 @@
                     if ( selectedTypeOfData == tr("Number of Files") )
                     {
                        numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
-                       qDebug()<<numberOrSizeTotal;
-
                        if ( numberOrSizeTotal > maxValueGraphRange )
                            maxValueGraphRange = numberOrSizeTotal;
-
                     }
                     else if ( selectedTypeOfData == tr("Total File Size") )
                     {
@@ -508,7 +517,7 @@
                     series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
                 }
 
-                series1->setName(tr("Catalog") + "/"  + selectedTypeOfData);
+                series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
                 if ( selectedTypeOfData == tr("Number of Files") )
                     series1->setPen(penCatalogNumberFiles);
                 else
@@ -578,13 +587,19 @@
                     }
                 }
 
-                series2->setName(tr("Storage") + "/" + tr("Total space"));
-                series3->setName(tr("Storage") + "/" + tr("Used space"));
-
+                //case: no catalog for the storage (display of the graph will fail if no point are in series1)
+                if(series1->count()==0){
+                    series1->append(0,0);
+                }
+                series2->setName(tr("Storage") + " / " + tr("Total space"));
+                series3->setName(tr("Storage") + " / " + tr("Used space"));
             }
 
-            //Getting the storage data
-            else if(selectedSource ==tr("storage")){
+            //Getting one storage data
+            else if(selectedSource ==tr("storage updates")){
+                reportName = tr("Storage updates");
+                reportTypeOfData = tr("Total File Size");
+
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
                                                     SELECT date_time, SUM(storage_free_space), SUM(storage_total_space)
@@ -605,6 +620,7 @@
                 }
                 else if (selectedDeviceType == "Location"){
                     invalidCombinaison = true;
+                    invalidCase = tr("A Storage or Catalog should be selected for that report.");
                 }
                 else if (selectedDeviceType == "Catalog"){
                     querySQL += " AND storage_name = :selectedStorageforStats ";
@@ -654,41 +670,28 @@
                 series1->setPen(penStorageUsedSpace);
                 series2->setName("Total Space");
                 series2->setPen(penStorageTotalSpace);
+
+                //case: no catalog for the storage
+                if(series1->count()==0){
+                       series1->append(0,0);
+                }
+
                 loadSeries1 = true;
                 loadSeries2 = true;
                 loadSeries3 = false;
-
             }
 
-        //Prepare the chart and plot the data
+        //Prepare the chart
             //Create new chart and prepare formating
             QChart *chart = new QChart();
 
             //Title
-            chart->legend()->hide();
-
-            if (selectedDeviceType == "Storage"){
-                selectedCatalogforStats = selectedFilterStorageName;
-
-            }
-            else if (selectedDeviceType == "Catalog"){
-                selectedCatalogforStats = selectedCatalog->storageName;
-            }
-
-            chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
+            chart->setTitle("<span style=\"font-weight: bold; font-size: 16px; font-color: #AAA,\">"
+                            + reportName + "</span><br/>"
+                            "<span style=\"font-weight: bold; font-size: 14px; font-color: #AAA,\">"
                             + selectedTypeOfData + " "
-                            +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span>"+ displayUnit+"</p>");
-
-            if(selectedSource =="collection snapshots"){
-                chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
-                                + selectedTypeOfData + " "
-                                +" " + tr("of") + " " + tr("collection") + displayUnit+"</p>");
-            }
-            else{
-                chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
-                                + selectedTypeOfData + " "
-                                +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"+selectedCatalogforStats+"</span>"+ displayUnit+"</p>");
-            }
+                            +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"
+                            + selectedDeviceName +"</span>"+ displayUnit+"</span>");
 
             //Format axis
             chart->setLocalizeNumbers(true);
@@ -726,35 +729,37 @@
                 series1->attachAxis(axisX);
                 series1->attachAxis(axisY);
             }
-
             if (loadSeries2==true){
                 chart->addSeries(series2);
                 series2->attachAxis(axisX);
                 series2->attachAxis(axisY);
             }
-
             if (loadSeries3==true){
                 chart->addSeries(series3);
                 series3->attachAxis(axisX);
                 series3->attachAxis(axisY);
             }
 
-        //Legend
+        //Set the Legend
             chart->legend()->setVisible(true);
             chart->legend()->setAlignment(Qt::AlignLeft);
             chart->legend()->detachFromChart();
             chart->legend()->setBrush(QBrush(QColor(255, 255, 255, 220)));
             chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
             chart->legend()->setBackgroundVisible(true);
-            chart->legend()->setGeometry(QRectF(120, 70, 200, 100));
+            chart->legend()->setGeometry(QRectF(150, 100, 240, 90));
             chart->legend()->update();
+
+            QFont font = chart->legend()->font();
+            font.setPointSizeF(8);
+            chart->legend()->setFont(font);
 
         //Load chart
             //clear if invalid combinaison
             if(invalidCombinaison == true){
                 chart = new QChart();
                 chart->setTitle("<p style=\"font-weight: bold; font-size: 18px; font-color: #AAA,\">"
-                                + tr("invalid") + " "
+                                + invalidCase + " "
                                 +" <span style=\"font-style: italic; color: #000,\"></p>");
             }
 
@@ -845,12 +850,11 @@
                             tempCatalog->setName(catalogName);
                             tempCatalog->setFileCount(catalogFileCount);
                             tempCatalog->setTotalFileSize(catalogTotalFileSize);
-                            //tempCatalog->setDateUpdated(dateTime);
                             tempCatalog->saveStatistics(dateTime);
                             tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
                        }
                        else {
-                            qDebug()<<"line could not be processed: "+line;
+                            //qDebug()<<"line could not be processed: "+line;
                        }
                    }
             }

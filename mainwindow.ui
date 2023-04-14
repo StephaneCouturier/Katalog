@@ -6411,17 +6411,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>selected catalog</string>
+                    <string>catalog updates</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>storage updates</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
                     <string>collection snapshots</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>storage</string>
                    </property>
                   </item>
                  </widget>
