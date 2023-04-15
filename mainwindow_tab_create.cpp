@@ -405,7 +405,7 @@
 
             //Iterator
             if (catalog->includeHidden == true){
-                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
+                QDirIterator iterator(catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
@@ -450,7 +450,7 @@
                 }
             }
             else{
-                QDirIterator iterator(catalog->sourcePath, fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                QDirIterator iterator(catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
