@@ -69,7 +69,7 @@ public:
     void createStorage();
     void deleteStorage();
     void loadStorageMetaData();
-    void updateStorageInfo();
+    QList<qint64> updateStorageInfo();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 

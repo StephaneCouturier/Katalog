@@ -433,6 +433,7 @@
         proxyStorageModel->setHeaderData(12, Qt::Horizontal, tr("Content Type"));
         proxyStorageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
         proxyStorageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
+        proxyStorageModel->setHeaderData(15, Qt::Horizontal, tr("Last Update"));
 
         ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
 
@@ -453,7 +454,7 @@
         ui->Storage_treeView_StorageList->header()->resizeSection(12, 75); //Content
         ui->Storage_treeView_StorageList->header()->resizeSection(13,125); //Container
         ui->Storage_treeView_StorageList->header()->resizeSection(14, 50); //Comment
-        //ui->Storage_treeView_StorageList->header()->hideSection(1); //Path
+        ui->Storage_treeView_StorageList->header()->hideSection(15); //Last Update
 
         //Get the list of device names for the Create screen
         QSqlQuery query;
@@ -509,41 +510,8 @@
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
     {
-        //Get current values for comparison later
-            qint64 previousStorageFreeSpace  = storage->freeSpace;
-            qint64 previousStorageTotalSpace = storage->totalSpace;
-            qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-            QDateTime lastUpdate  = storage->dateUpdated;
-
-        //verify if path is available / not empty
-        QDir dir (storage->path);
-
-            //Warning if no Path is provided
-            if ( storage->path == "" ){
-                QMessageBox::warning(this,tr("No path provided"),tr("No Path was provided. \n"
-                                              "Modify the device to provide one and try again.\n")
-                                              );
-                return;
-            }
-
-            ///Warning and choice if the result is 0 files
-            if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
-            {
-                int result = QMessageBox::warning(this,tr("Directory is empty"),tr("The source folder does not contain any file.<br/><br/>"
-                                              "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>")
-                                              +tr("The application is going try to get values anyhow."));
-                //return;
-                if ( result == QMessageBox::Cancel){
-                    return;
-                }
-            }
-
         //Update device information
-            storage->updateStorageInfo();
-
-        //Stop if the update was not done (lastUpdate time did not change)
-            if (lastUpdate == storage->dateUpdated)
-                return;
+            QList<qint64> updates = storage->updateStorageInfo();
 
         //Save statistics
             QDateTime dateTime = QDateTime::currentDateTime();
@@ -555,16 +523,8 @@
                     storage->saveStatisticsToFile(storageStatisticsFilePath, dateTime);
                 }
 
-        //Prepare to report changes to the storage
-        qint64 newStorageFreeSpace    = storage->freeSpace;
-        qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
-        qint64 newStorageTotalSpace   = storage->totalSpace;
-        qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
-        qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
-        qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
-
         //Inform user about the update
-        if(skipCatalogUpdateSummary !=true){
+        if(skipCatalogUpdateSummary !=true and updates.count()>0){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(tr("<br/>The storage device <b> %1 </b> was updated:<br/> "
@@ -574,12 +534,12 @@
                               "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
                               "</table>"
                               ).arg(storage->name,
-                                    QLocale().formattedDataSize(newStorageUsedSpace),
-                                    QLocale().formattedDataSize(deltaStorageUsedSpace),
-                                    QLocale().formattedDataSize(newStorageFreeSpace),
-                                    QLocale().formattedDataSize(deltaStorageFreeSpace),
-                                    QLocale().formattedDataSize(newStorageTotalSpace),
-                                    QLocale().formattedDataSize(deltaStorageTotalSpace)
+                                    QLocale().formattedDataSize(updates[0]),
+                                    QLocale().formattedDataSize(updates[1]),
+                                    QLocale().formattedDataSize(updates[2]),
+                                    QLocale().formattedDataSize(updates[3]),
+                                    QLocale().formattedDataSize(updates[4]),
+                                    QLocale().formattedDataSize(updates[5])
                                     )
                            );
             msgBox.setIcon(QMessageBox::Information);
