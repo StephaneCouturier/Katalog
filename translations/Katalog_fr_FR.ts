@@ -84,7 +84,7 @@
         <location filename="../mainwindow.ui" line="135"/>
         <location filename="../mainwindow.ui" line="5836"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="484"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="424"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
@@ -161,6 +161,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="436"/>
         <source>Last Update</source>
         <translation>Dernière Mise-à-jour</translation>
     </message>
@@ -299,7 +300,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="483"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="423"/>
         <location filename="../mainwindow_tab_explore.cpp" line="649"/>
         <location filename="../mainwindow_tab_filters.cpp" line="312"/>
         <source>Type</source>
@@ -317,7 +318,7 @@
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="485"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="425"/>
         <location filename="../mainwindow_tab_explore.cpp" line="651"/>
         <source>Path</source>
         <translation>Chemin</translation>
@@ -344,7 +345,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="1220"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="1035"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="482"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="422"/>
         <location filename="../mainwindow_tab_explore.cpp" line="644"/>
         <source>Name</source>
         <translation>Nom</translation>
@@ -469,7 +470,7 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="561"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="641"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="644"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="266"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="248"/>
         <location filename="../mainwindow_tab_filters.cpp" line="230"/>
         <location filename="../mainwindow_tab_filters.cpp" line="231"/>
         <location filename="../mainwindow_tab_filters.cpp" line="232"/>
@@ -570,66 +571,56 @@
         <translation>Chemins des Dossiers uniquement</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="486"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="426"/>
         <source>Label</source>
         <translation>Etiquette</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="487"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="427"/>
         <source>FileSystem</source>
         <translation>Système de Fichers</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="488"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="428"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="707"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6041"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="489"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="429"/>
         <source>Free</source>
         <translation>Libre</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="490"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="430"/>
         <source>Brand/Model</source>
         <translation>Marque/Modèle</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="491"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="431"/>
         <source>Serial Number</source>
         <translation>Numéro de Série</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="492"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="432"/>
         <source>Build Date</source>
         <translation>Date de Fabrication</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="493"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="433"/>
         <source>Content Type</source>
         <translation>Type de Contentu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="494"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="434"/>
         <source>Container</source>
         <translation>Conteneur</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="495"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="435"/>
         <source>Comment</source>
         <translation>Commentaire</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="592"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;</source>
-        <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;&lt;br/&gt;Cela peut signifier que la source est vide ou que l&apos;appareil n&apos;est pas monté dans ce dossier.&lt;br/&gt;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="594"/>
-        <source>The application is going try to get values anyhow.</source>
-        <translation>L&apos;application va essayer d&apos;obtenir des valeurs de toute façon.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="400"/>
@@ -1228,7 +1219,7 @@
         <translation>Choisir le fichier csv à importer</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="481"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="421"/>
         <source>ID</source>
         <translation>Id</translation>
     </message>
@@ -1376,11 +1367,6 @@
         <translation>Toujours garder une sauvegarde de chaque catalogue</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="592"/>
-        <source>Directory is empty</source>
-        <translation>Le répertoire est vide</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_catalogs.cpp" line="801"/>
         <source>The catalog %1 cannot be updated.
 
@@ -1508,20 +1494,6 @@ Cela peut vouloir dire que la source est vide ou que le périphérique de stocka
         <translation>Résolution</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="583"/>
-        <source>No path provided</source>
-        <translation>Aucun chemin fourni</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="583"/>
-        <source>No Path was provided. 
-Modify the device to provide one and try again.
-</source>
-        <translation>Aucun chemin n&apos;a été fourni.
-Modifier le stockage pour en fournir un et essayer à nouveau.
-</translation>
-    </message>
-    <message>
         <source>The source folder does not contain any file.
 
 This could mean that the source is empty or the device is not mounted to this folder.
@@ -1562,7 +1534,7 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation>Vous êtes sur le point d&apos;éditer le ficher de catalogue directement.&lt;br/&gt;&lt;br/&gt;Il est généralement recommandé de Créer un nouveau catalogue avec les bonnes valeurs initiales (chemin source, type de fichier, inclure les fichiers cachés, stockage), plutôt que de modifier le fichier de catalogue directement. &lt;br/&gt;&lt;br/&gt;Vérifier la page du Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; pour comprendre l&apos;impact d&apos;un changement directement dans ce ficher.&lt;br/&gt;&lt;br/&gt;Voulez-vous continuer tout de même ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="366"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="306"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -1899,7 +1871,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
         <translation>Appareil complet</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="630"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="530"/>
         <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Le périphérique de stockage &lt;b&gt; %1 &lt;/b&gt; a été mis à jour&#xa0;:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Espace utilisé&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b &gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Espace libre&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt;&#xa0;%5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace total&#xa0;: &lt;/td&gt;&lt;td&gt;&lt;b &gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -2264,6 +2236,16 @@ to the trash?</source>
         <location filename="../mainwindow.cpp" line="229"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Certaines modifications apportées à la liste des périphériques de stockage n&apos;ont pas été enregistrées.&lt;br/&gt;Enregistrer et quitter, supprimer et quitter ou annuler la sortie ?</translation>
+    </message>
+    <message>
+        <location filename="../storage.cpp" line="201"/>
+        <source>No Path was provided. &lt;br/&gt;Modify the device to provide one and try again.</source>
+        <translation>Aucun chemin n&apos;a été fourni. &lt;br/&gt;Modifiez l&apos;appareil pour en fournir un et réessayez.</translation>
+    </message>
+    <message>
+        <location filename="../storage.cpp" line="214"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;The application is going try to get values anyhow.</source>
+        <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;&lt;br/&gt;Cela peut signifier que la source est vide ou que l&apos;appareil n&apos;est pas monté dans ce dossier.&lt;br/&gt;&lt;br/&gt;L&apos;application va essayer d&apos;obtenir valeurs de toute façon.</translation>
     </message>
 </context>
 <context>

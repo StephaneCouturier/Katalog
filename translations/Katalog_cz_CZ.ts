@@ -304,7 +304,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="483"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="423"/>
         <location filename="../mainwindow_tab_explore.cpp" line="649"/>
         <location filename="../mainwindow_tab_filters.cpp" line="312"/>
         <source>Type</source>
@@ -342,7 +342,7 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="561"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="641"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="644"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="266"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="248"/>
         <location filename="../mainwindow_tab_filters.cpp" line="230"/>
         <location filename="../mainwindow_tab_filters.cpp" line="231"/>
         <location filename="../mainwindow_tab_filters.cpp" line="232"/>
@@ -575,7 +575,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="1220"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="1035"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="482"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="422"/>
         <location filename="../mainwindow_tab_explore.cpp" line="644"/>
         <source>Name</source>
         <translation>Název</translation>
@@ -717,7 +717,7 @@
         <translation>je plné zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="485"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="425"/>
         <location filename="../mainwindow_tab_explore.cpp" line="651"/>
         <source>Path</source>
         <translation>Cesta</translation>
@@ -1043,7 +1043,7 @@
         <location filename="../mainwindow.ui" line="135"/>
         <location filename="../mainwindow.ui" line="5836"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="484"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="424"/>
         <source>Location</source>
         <translation>Umístění</translation>
     </message>
@@ -1099,7 +1099,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6041"/>
-        <location filename="../mainwindow_tab_storage.cpp" line="489"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="429"/>
         <source>Free</source>
         <translation>Volný</translation>
     </message>
@@ -1848,6 +1848,7 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
     </message>
     <message>
         <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="436"/>
         <source>Last Update</source>
         <translation>Poslední aktualizace</translation>
     </message>
@@ -2040,7 +2041,7 @@ Zkopírujte / vložte tyto řádky na začátku souboru a upravte hodnoty po&gt;
         <translation>Chcete &lt;span style = &apos;color: red&apos;;&gt; smazat &lt;/span&gt; toto úložné zařízení? &lt;table&gt; &lt;tr&gt; &lt;td&gt; ID: &lt;/td&gt;&lt;td&gt; &lt;b&gt;%1 &lt;/ td &gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; Název: &lt;/td&gt;&lt;td&gt; &lt;b&gt;%2 &lt;/td&gt;&lt;/tr&gt; &lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="366"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="306"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -2051,87 +2052,58 @@ Soubor lze opravit ručně, navštivte stránku wiki:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt; Úložiště / oprava nových verzí &lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="481"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="421"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="486"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="426"/>
         <source>Label</source>
         <translation>Označení</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="487"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="427"/>
         <source>FileSystem</source>
         <translation>Souborový systém</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="488"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="428"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="707"/>
         <source>Total</source>
         <translation>Celkový</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="490"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="430"/>
         <source>Brand/Model</source>
         <translation>Značka / Model</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="491"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="431"/>
         <source>Serial Number</source>
         <translation>Sériové číslo</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="492"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="432"/>
         <source>Build Date</source>
         <translation>Datum výstavby</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="493"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="433"/>
         <source>Content Type</source>
         <translation>Typ obsahu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="494"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="434"/>
         <source>Container</source>
         <translation>Kontejner</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="495"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="435"/>
         <source>Comment</source>
         <translation>Komentář</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="583"/>
-        <source>No path provided</source>
-        <translation>Není k dispozici žádná cesta</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="583"/>
-        <source>No Path was provided. 
-Modify the device to provide one and try again.
-</source>
-        <translation>Nebyla poskytnuta žádná cesta.
-Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="592"/>
-        <source>Directory is empty</source>
-        <translation>Adresář je prázdný</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="592"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;</source>
-        <translation>Zdrojová složka neobsahuje žádný soubor.&lt;br/&gt;&lt;br/&gt;To může znamenat, že je zdroj prázdný nebo že zařízení není připojeno k této složce.&lt;br/&gt;&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="594"/>
-        <source>The application is going try to get values anyhow.</source>
-        <translation>Aplikace se přesto pokusí získat hodnoty.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="630"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="530"/>
         <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Úložné zařízení &lt;b&gt; %1 &lt;/b&gt; bylo aktualizováno:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Využité místo: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b &gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Volné místo: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový prostor: &lt;/td&gt;&lt;td&gt;&lt;b &gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -2247,6 +2219,16 @@ Upravte zařízení tak, aby poskytovalo jedno, a zkuste to znovu.
         <location filename="../mainwindow.cpp" line="229"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Některé změny v seznamu úložných zařízení nebyly uloženy.&lt;br/&gt;Uložit a ukončit, zahodit a ukončit nebo zrušit ukončení?</translation>
+    </message>
+    <message>
+        <location filename="../storage.cpp" line="201"/>
+        <source>No Path was provided. &lt;br/&gt;Modify the device to provide one and try again.</source>
+        <translation>Nebyla poskytnuta žádná cesta. &lt;br/&gt;Upravte zařízení a zkuste to znovu.</translation>
+    </message>
+    <message>
+        <location filename="../storage.cpp" line="214"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;The application is going try to get values anyhow.</source>
+        <translation>Zdrojová složka neobsahuje žádný soubor.&lt;br/&gt;&lt;br/&gt;To může znamenat, že je zdroj prázdný nebo že zařízení není připojeno k této složce.&lt;br/&gt;&lt;br/&gt;Aplikace se pokusí získat hodnoty každopádně.</translation>
     </message>
 </context>
 <context>
