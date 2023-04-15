@@ -335,13 +335,13 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="110"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="198"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="201"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="291"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="294"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="290"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="293"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="558"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="559"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="560"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="561"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="641"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="644"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="640"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="643"/>
         <location filename="../mainwindow_tab_storage.cpp" line="248"/>
         <location filename="../mainwindow_tab_filters.cpp" line="230"/>
         <location filename="../mainwindow_tab_filters.cpp" line="231"/>
@@ -537,8 +537,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4461"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="592"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1041"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="591"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1040"/>
         <source>File Type</source>
         <translation>Typ souboru</translation>
     </message>
@@ -552,7 +552,7 @@
         <location filename="../mainwindow.ui" line="4250"/>
         <location filename="../mainwindow.ui" line="5725"/>
         <location filename="../mainwindow.ui" line="5819"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="596"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="595"/>
         <location filename="../mainwindow_tab_storage.cpp" line="89"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="594"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="595"/>
@@ -573,8 +573,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="934"/>
         <location filename="../mainwindow_tab_search.cpp" line="1073"/>
         <location filename="../mainwindow_tab_search.cpp" line="1220"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1035"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="585"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1034"/>
         <location filename="../mainwindow_tab_storage.cpp" line="422"/>
         <location filename="../mainwindow_tab_explore.cpp" line="644"/>
         <source>Name</source>
@@ -593,7 +593,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4313"/>
         <location filename="../mainwindow.ui" line="4856"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="591"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="590"/>
         <source>Source Path</source>
         <translation>Cesta zdroje</translation>
     </message>
@@ -775,7 +775,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4511"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1045"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1044"/>
         <source>Include Metadata</source>
         <translation>Zahrnout metadata</translation>
     </message>
@@ -1042,7 +1042,7 @@
     <message>
         <location filename="../mainwindow.ui" line="135"/>
         <location filename="../mainwindow.ui" line="5836"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="596"/>
         <location filename="../mainwindow_tab_storage.cpp" line="424"/>
         <source>Location</source>
         <translation>Umístění</translation>
@@ -1162,7 +1162,7 @@
         <translation>Zdroj</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="313"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="312"/>
         <source>selected catalog</source>
         <translation>vybraný katalog</translation>
     </message>
@@ -1730,7 +1730,7 @@ do koše?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="55"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="383"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="382"/>
         <location filename="../mainwindow_tab_tags.cpp" line="44"/>
         <location filename="../mainwindow_tab_filters.cpp" line="212"/>
         <source>Select the directory to be cataloged in this new catalog</source>
@@ -1758,13 +1758,13 @@ do koše?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="231"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1167"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1166"/>
         <source>Choose a different name.</source>
         <translation>Vyberte jiné jméno.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="229"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1165"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1164"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Katalog s tímto názvem již existuje:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -1781,7 +1781,7 @@ do koše?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="249"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="757"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="756"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
@@ -1791,7 +1791,7 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="251"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="759"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="758"/>
         <source>Do you want to save it anyway (the catalog would be empty)?
 </source>
         <translation>Chcete jej přesto uložit (katalog by byl prázdný)?
@@ -1804,28 +1804,28 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
         <translation>Vyberte adresář pro tuto kolekci</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="327"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="326"/>
         <source>Do you want to delete this catalog?</source>
         <translation>Chcete smazat tento katalog?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="340"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="339"/>
         <source>Select a catalog above first.</source>
         <translation>Nejprve vyberte výše uvedený katalog.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="272"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="364"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="271"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="363"/>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
         <translation>Chystáte se přímo upravit katalogový soubor. &lt;br/&gt; &lt;br/&gt; Obecně se doporučuje spíše než nový katalog vytvořit nový katalog se správným počátečním nastavením (cesta zdroje, typ souboru, zahrnout skryté soubory, úložiště). soubor přímo. &lt;br/&gt; &lt;br/&gt; Chcete-li pochopit dopad, podívejte se na stránku Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt; Catalogs / Edit &lt;/a&gt; přímé změny tohoto souboru. &lt;br/&gt; &lt;br/&gt; Chcete přesto pokračovat?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1054"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1053"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Katalog musí být aktualizován, aby odrážel tyto změny)</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="254"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="253"/>
         <source>The storage device name may not be correct:
  %1 </source>
         <translation>Název úložného zařízení nemusí být správný:
@@ -1842,135 +1842,135 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
         <translation>Chcete zobrazit souhrn aktualizací na konci každé aktualizace katalogu?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="264"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="263"/>
         <source>Update of displayed and active catalogs completed.</source>
         <translation>Aktualizace zobrazených a aktivních katalogů dokončena.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="587"/>
         <location filename="../mainwindow_tab_storage.cpp" line="436"/>
         <source>Last Update</source>
         <translation>Poslední aktualizace</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="589"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
         <source>Files</source>
         <translation>Soubory</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3514"/>
         <location filename="../mainwindow.ui" line="4730"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="590"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="589"/>
         <source>Total Size</source>
         <translation>Celková velikost</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="593"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="592"/>
         <source>Active</source>
         <translation>Aktivní</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="594"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="593"/>
         <source>Inc.Hidden</source>
         <translation>Včetně skrytého</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="598"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
         <source>Full Device</source>
         <translation>Plné zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="600"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="599"/>
         <source>App Version</source>
         <translation>Verze aplikace</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="784"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="783"/>
         <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</source>
         <translation>&lt;br/&gt;Tento katalog byl aktualizován:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="786"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="785"/>
         <source>&lt;br/&gt;This catalog was created:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</source>
         <translation>&lt;br/&gt;Tento katalog byl vytvořen:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>field</source>
         <translation>pole</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>previous value</source>
         <translation>předchozí hodnota</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>new value</source>
         <translation>novou hodnotu</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1037"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1036"/>
         <source>Source path </source>
         <translation>Zdrojová cesta </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1039"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1038"/>
         <source>Storage name</source>
         <translation>Název úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1043"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1042"/>
         <source>Include Hidden</source>
         <translation>Zahrnout skryté</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1144"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1143"/>
         <source>Could not open file.</source>
         <translation>Soubor nelze otevřít.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1182"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1181"/>
         <source>Apply the change in the statistics file?
 </source>
         <translation>Použít změnu v souboru statistik?
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1234"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1233"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation>Aktualizovat obsah katalogu podle nových kritérií?
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1334"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1333"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Byl zaznamenán snímek této sbírky:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogy&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td &gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Počet souborů: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno : &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost souboru: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Úložiště&lt;/b &gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Volné místo v úložišti: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt; &lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový úložný prostor: &lt;/td &gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr &gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="440"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="872"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="439"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="871"/>
         <source>No catalog found.</source>
         <translation>Nebyl nalezen žádný katalog.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="587"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
         <source>File path</source>
         <translation>Cesta k souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="595"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="594"/>
         <source>Inc.Metadata</source>
         <translation>Zahrnout Metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="599"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="598"/>
         <source>Last Loaded</source>
         <translation>Naposledy načteno</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="722"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="721"/>
         <source>It seems this catalog was not correctly imported or has an old format.
 Edit it and make sure it has the following first 2 lines:
 
@@ -1993,7 +1993,7 @@ Zkopírujte / vložte tyto řádky na začátku souboru a upravte hodnoty po&gt;
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="735"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="734"/>
         <source>Select a catalog first (some info is missing).
  currentCatalogFilePath: %1 
  currentCatalogName: %2 
@@ -2004,7 +2004,7 @@ Zkopírujte / vložte tyto řádky na začátku souboru a upravte hodnoty po&gt;
  currentCatalogSourcePath:%3</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="801"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="800"/>
         <source>The catalog %1 cannot be updated.
 
  The source folder - %2 - was not found.
@@ -2021,17 +2021,17 @@ Zkopírujte / vložte tyto řádky na začátku souboru a upravte hodnoty po&gt;
     - zdrojová složka byla přesunuta nebo přejmenována.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="834"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="833"/>
         <source>Select the csv file to be imported</source>
         <translation>Vyberte soubor CSV, který chcete importovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="887"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="886"/>
         <source>A file was found, but could not be loaded</source>
         <translation>Soubor byl nalezen, ale nelze jej načíst</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1031"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation>Uložit změny v definici katalogu?&lt;br/&gt;</translation>
     </message>
@@ -2103,7 +2103,12 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Komentář</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="530"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="533"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
+        <translation>Zdrojová složka neobsahuje žádný soubor.&lt;br/&gt;&lt;br/&gt;Může to znamenat, že je zdroj prázdný nebo že zařízení není připojeno k této složce.&lt;br/&gt;&lt;br/&gt;Vynutit pokus o získání hodnot?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_storage.cpp" line="564"/>
         <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Úložné zařízení &lt;b&gt; %1 &lt;/b&gt; bylo aktualizováno:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Využité místo: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b &gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Volné místo: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový prostor: &lt;/td&gt;&lt;td&gt;&lt;b &gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -2221,14 +2226,9 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Některé změny v seznamu úložných zařízení nebyly uloženy.&lt;br/&gt;Uložit a ukončit, zahodit a ukončit nebo zrušit ukončení?</translation>
     </message>
     <message>
-        <location filename="../storage.cpp" line="201"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="520"/>
         <source>No Path was provided. &lt;br/&gt;Modify the device to provide one and try again.</source>
         <translation>Nebyla poskytnuta žádná cesta. &lt;br/&gt;Upravte zařízení a zkuste to znovu.</translation>
-    </message>
-    <message>
-        <location filename="../storage.cpp" line="214"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;The application is going try to get values anyhow.</source>
-        <translation>Zdrojová složka neobsahuje žádný soubor.&lt;br/&gt;&lt;br/&gt;To může znamenat, že je zdroj prázdný nebo že zařízení není připojeno k této složce.&lt;br/&gt;&lt;br/&gt;Aplikace se pokusí získat hodnoty každopádně.</translation>
     </message>
 </context>
 <context>

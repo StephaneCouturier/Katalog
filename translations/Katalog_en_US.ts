@@ -263,13 +263,13 @@
         <location filename="../mainwindow_tab_catalogs.cpp" line="110"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="198"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="201"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="291"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="294"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="290"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="293"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="558"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="559"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="560"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="561"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="641"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="644"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="640"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="643"/>
         <location filename="../mainwindow_tab_storage.cpp" line="248"/>
         <location filename="../mainwindow_tab_filters.cpp" line="230"/>
         <location filename="../mainwindow_tab_filters.cpp" line="231"/>
@@ -694,7 +694,7 @@
         <location filename="../mainwindow.ui" line="4250"/>
         <location filename="../mainwindow.ui" line="5725"/>
         <location filename="../mainwindow.ui" line="5819"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="596"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="595"/>
         <location filename="../mainwindow_tab_storage.cpp" line="89"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="594"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="595"/>
@@ -867,7 +867,7 @@
     <message>
         <location filename="../mainwindow.ui" line="135"/>
         <location filename="../mainwindow.ui" line="5836"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="596"/>
         <location filename="../mainwindow_tab_storage.cpp" line="424"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
@@ -1011,8 +1011,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="934"/>
         <location filename="../mainwindow_tab_search.cpp" line="1073"/>
         <location filename="../mainwindow_tab_search.cpp" line="1220"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1035"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="585"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1034"/>
         <location filename="../mainwindow_tab_storage.cpp" line="422"/>
         <location filename="../mainwindow_tab_explore.cpp" line="644"/>
         <source>Name</source>
@@ -1046,7 +1046,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="55"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="383"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="382"/>
         <location filename="../mainwindow_tab_tags.cpp" line="44"/>
         <location filename="../mainwindow_tab_filters.cpp" line="212"/>
         <source>Select the directory to be cataloged in this new catalog</source>
@@ -1059,54 +1059,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="587"/>
         <location filename="../mainwindow_tab_storage.cpp" line="436"/>
         <source>Last Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="589"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="588"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3514"/>
         <location filename="../mainwindow.ui" line="4730"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="590"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="589"/>
         <source>Total Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4313"/>
         <location filename="../mainwindow.ui" line="4856"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="591"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="590"/>
         <source>Source Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4461"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="592"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1041"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="591"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1040"/>
         <source>File Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="593"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="592"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="594"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="593"/>
         <source>Inc.Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="834"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="833"/>
         <source>Select the csv file to be imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="887"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="886"/>
         <source>A file was found, but could not be loaded</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1165,6 +1165,11 @@
     <message>
         <location filename="../mainwindow_tab_storage.cpp" line="435"/>
         <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_storage.cpp" line="533"/>
+        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1227,12 +1232,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="327"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="326"/>
         <source>Do you want to delete this catalog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="340"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="339"/>
         <source>Select a catalog above first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1258,7 +1263,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="231"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1167"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1166"/>
         <source>Choose a different name.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1351,8 +1356,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="440"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="872"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="439"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="871"/>
         <source>No catalog found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1362,7 +1367,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="801"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="800"/>
         <source>The catalog %1 cannot be updated.
 
  The source folder - %2 - was not found.
@@ -1373,7 +1378,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="722"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="721"/>
         <source>It seems this catalog was not correctly imported or has an old format.
 Edit it and make sure it has the following first 2 lines:
 
@@ -1387,7 +1392,7 @@ Copy/paste these lines at the begining of the file and modify the values after t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="735"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="734"/>
         <source>Select a catalog first (some info is missing).
  currentCatalogFilePath: %1 
  currentCatalogName: %2 
@@ -1437,13 +1442,13 @@ Copy/paste these lines at the begining of the file and modify the values after t
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="229"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1165"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1164"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="249"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="757"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="756"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 </source>
@@ -1451,7 +1456,7 @@ This could mean that the source is empty or the device is not mounted to this fo
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="251"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="759"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="758"/>
         <source>Do you want to save it anyway (the catalog would be empty)?
 </source>
         <translation type="unfinished"></translation>
@@ -1484,7 +1489,7 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1054"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1053"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1494,8 +1499,8 @@ This could mean that the source is empty or the device is not mounted to this fo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="272"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="364"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="271"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="363"/>
         <source>You are about to edit the catalog file directly.&lt;br/&gt;&lt;br/&gt;It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.&lt;br/&gt;&lt;br/&gt;Check the Wiki page &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; to understand the impact of changing this file directly.&lt;br/&gt;&lt;br/&gt;Do you want to continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1523,7 +1528,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="313"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="312"/>
         <source>selected catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1575,84 +1580,84 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="587"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
         <source>File path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="599"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="598"/>
         <source>Last Loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="600"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="599"/>
         <source>App Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="784"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="783"/>
         <source>&lt;br/&gt;This catalog was updated:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="786"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="785"/>
         <source>&lt;br/&gt;This catalog was created:&lt;br/&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1031"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>previous value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1033"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1032"/>
         <source>new value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1037"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1036"/>
         <source>Source path </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1039"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1038"/>
         <source>Storage name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1043"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1042"/>
         <source>Include Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1144"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1143"/>
         <source>Could not open file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1182"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1181"/>
         <source>Apply the change in the statistics file?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1234"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1233"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1334"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1333"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1662,7 +1667,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="264"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="263"/>
         <source>Update of displayed and active catalogs completed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1815,18 +1820,18 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="254"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="253"/>
         <source>The storage device name may not be correct:
  %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="598"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
         <source>Full Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_storage.cpp" line="530"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="564"/>
         <source>&lt;br/&gt;The storage device &lt;b&gt; %1 &lt;/b&gt; was updated:&lt;br/&gt; &lt;table&gt;&lt;tr&gt;&lt;td&gt; Used Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %3 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Free Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %5 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total Space: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %7 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2153,7 +2158,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4511"/>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="1045"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="1044"/>
         <source>Include Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2168,7 +2173,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_catalogs.cpp" line="595"/>
+        <location filename="../mainwindow_tab_catalogs.cpp" line="594"/>
         <source>Inc.Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2189,13 +2194,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../storage.cpp" line="201"/>
+        <location filename="../mainwindow_tab_storage.cpp" line="520"/>
         <source>No Path was provided. &lt;br/&gt;Modify the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../storage.cpp" line="214"/>
-        <source>The source folder does not contain any file.&lt;br/&gt;&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;&lt;br/&gt;The application is going try to get values anyhow.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -510,6 +510,40 @@
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
     {
+        //verify if path is available / not empty
+        QDir dir (storage->path);
+
+        //Warning if no Path is provided
+        if ( storage->path == "" ){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", "No Path was provided. <br/>"
+                                                                     "Modify the device to provide one and try again."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+
+            return;
+        }
+
+        ///Warning and choice if the result is 0 files
+        if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+        {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder does not contain any file.<br/><br/>"
+                                                                     "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>"
+                                                                     "Force trying to get values anyhow?")
+                           );
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int result = msgBox.exec();
+
+            if ( result == QMessageBox::Cancel){
+                    return;
+            }
+        }
+
         //Update device information
             QList<qint64> updates = storage->updateStorageInfo();
 
