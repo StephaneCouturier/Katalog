@@ -96,7 +96,7 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     QString type = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
 
                     if(     type=="Location" ){
-                        return QIcon(QIcon::fromTheme("drive-multidisk"));//preferences-system-network-server edit-paste-in-place drive-multidisk folder-desktop
+                        return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
