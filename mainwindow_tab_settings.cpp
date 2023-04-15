@@ -330,7 +330,7 @@
         queryStorage.next();
 
         if (queryCatalog.value(0).toInt() >0 and queryStorage.value(0).toInt() == 0){
-            addStorageDevice(tr(""));
+            addStorageDevice("");
         }
 
         //Load Statistics

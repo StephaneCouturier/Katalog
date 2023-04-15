@@ -56,8 +56,86 @@ void Storage::setDateUpdated(QDateTime dateTime)
 {
     dateUpdated = dateTime;
 }
+void Storage::setLocation(QString selectedLocation){
+    location = selectedLocation;
+}
 
 //storage data operation
+void Storage::createStorage()
+{
+    //Generate ID
+    QSqlQuery queryDeviceNumber;
+    QString queryDeviceNumberSQL = QLatin1String(R"(
+                                    SELECT MAX (storage_id)
+                                    FROM storage
+                                )");
+    queryDeviceNumber.prepare(queryDeviceNumberSQL);
+    queryDeviceNumber.exec();
+    queryDeviceNumber.next();
+    int maxID = queryDeviceNumber.value(0).toInt();
+    int newID = maxID + 1;
+
+    //Insert new device with default values
+    QString querySQL = QLatin1String(R"(
+            INSERT INTO storage(
+                            storage_id,
+                            storage_name,
+                            storage_type,
+                            storage_location,
+                            storage_path,
+                            storage_label,
+                            storage_file_system,
+                            storage_total_space,
+                            storage_free_space,
+                            storage_brand_model,
+                            storage_serial_number,
+                            storage_build_date,
+                            storage_content_type,
+                            storage_container,
+                            storage_comment)
+                      VALUES(
+                            :new_id,
+                            :storage_name,
+                            "",
+                            :new_location,
+                            "",
+                            "",
+                            "",
+                            0,
+                            0,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "")
+                    )");
+
+    QSqlQuery insertQuery;
+    insertQuery.prepare(querySQL);
+    insertQuery.bindValue(":new_id", newID);
+    insertQuery.bindValue(":storage_name", name + "_"+QString::number(newID));
+    if(name=="")
+        insertQuery.bindValue(":storage_name","");
+
+    insertQuery.bindValue(":new_location", location);
+    insertQuery.exec();
+
+}
+
+void Storage::deleteStorage()
+{
+    //Delete from the table
+    QSqlQuery queryDeviceNumber;
+    QString queryDeviceNumberSQL = QLatin1String(R"(
+                                                DELETE FROM storage
+                                                WHERE storage_id = :storage_id
+                                            )");
+    queryDeviceNumber.prepare(queryDeviceNumberSQL);
+    queryDeviceNumber.bindValue(":storage_id",ID);
+    queryDeviceNumber.exec();
+}
+
 void Storage::loadStorageMetaData()
 {
     QSqlQuery query;

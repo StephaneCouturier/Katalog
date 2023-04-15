@@ -64,7 +64,10 @@ public:
     void setFreeSpace(qint64 selectedFreeSpace);
     void setTotalSpace(qint64 selectedTotalSpace);
     void setDateUpdated(QDateTime dateTime);
+    void setLocation(QString selectedLocation);
 
+    void createStorage();
+    void deleteStorage();
     void loadStorageMetaData();
     void updateStorageInfo();
     void saveStatistics(QDateTime dateTime);

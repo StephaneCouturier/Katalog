@@ -491,7 +491,7 @@ class MainWindow : public QMainWindow
         //Explore
             void on_Explore_splitter_splitterMoved();
             void on_Explore_treeview_Directories_clicked(const QModelIndex &index);
-                        void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
+            void on_Explore_treeView_FileList_clicked(const QModelIndex &index);
             void on_ExplorePushButtonLoadClicked();
             void on_Explore_checkBox_DisplayFolders_toggled(bool checked);
             void on_Explore_checkBox_DisplaySubFolders_toggled(bool checked);
@@ -527,7 +527,7 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_SearchLocation_clicked();
             void on_Storage_pushButton_CreateCatalog_clicked();
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
-            void on_Storage_treeView_StorageList_doubleClicked(const QModelIndex &index);
+            void on_Storage_treeView_StorageList_doubleClicked();
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
 
         //Statistics
