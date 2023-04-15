@@ -48,5 +48,7 @@
         <file>fallback-icons/dialog-ok-apply.png</file>
         <file>fallback-icons/application-x-zerosize.png</file>
         <file>fallback-icons/view-list-text.png</file>
+        <file>fallback-icons/media-optical-blu-ray.png</file>
+        <file>fallback-icons/media-optical.png</file>
     </qresource>
 </RCC>

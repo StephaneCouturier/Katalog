@@ -96,13 +96,18 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     QString type = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
 
                     if(     type=="Location" ){
-                        return QIcon(QIcon::fromTheme("edit-paste-in-place"));
+                        return QIcon(QIcon::fromTheme("drive-multidisk"));//preferences-system-network-server edit-paste-in-place drive-multidisk folder-desktop
                     }
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
                     }
                     else if( type=="Catalog" ){
-                        return QIcon(QIcon::fromTheme("address-book-new"));
+                        QModelIndex idx = index.sibling(index.row(), 2);
+                        if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
+                            return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
+                        }
+                        else
+                            return QIcon(QIcon::fromTheme("media-optical"));
                     }
                 }
                 break;

@@ -112,10 +112,10 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                 if( index.column()==0 ){
                     QModelIndex idx = index.sibling(index.row(), 7);
                     if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
-                        return QIcon(QIcon::fromTheme("address-book-new"));
+                        return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
                     }
                     else
-                        return QIcon(QIcon::fromTheme("address-book-new"));
+                        return QIcon(QIcon::fromTheme("media-optical"));
                 }
                 else if ( booleanColumnList.contains(index.column()) ){
                     if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toBool() == true ){

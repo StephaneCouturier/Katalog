@@ -269,7 +269,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
             //Add Catalogs
             QSqlQuery queryCatalogList;
             QString queryCatalogListSQL = QLatin1String(R"(
-                                    SELECT catalog_name,'Catalog'
+                                    SELECT catalog_name,'Catalog', catalog_source_path_is_active
                                     FROM catalog
                                     WHERE catalog_storage=:catalog_storage
                                     ORDER BY catalog_name ASC
@@ -283,6 +283,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
                 QVector<QVariant> columnData;
                 columnData << queryCatalogList.value(0).toString();
                 columnData << queryCatalogList.value(1).toString();
+                columnData << queryCatalogList.value(2).toString();
 
                 parent->child(countLocation)->child(countStorage)->insertChildren(countCatalog, 1, rootItem->columnCount());
                 for (int column = 0; column < columnData.size(); ++column)
