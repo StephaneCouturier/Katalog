@@ -1365,6 +1365,7 @@
                                             catalog_file_count,
                                             catalog_total_file_size
                                         FROM catalog
+                                        WHERE catalog_file_type !='EXPORT'
                                         )");
             query.prepare(querySQL);
             query.exec();
