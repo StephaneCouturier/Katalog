@@ -64,6 +64,7 @@
             return;
         }
 
+//        storageModel = new QSqlRelationalTableModel(this);
         storageModel = new QSqlRelationalTableModel(this);
         storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
@@ -468,6 +469,10 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
+        qDebug()<<"test";
+        //Complete tabs
+            ui->tabWidget->removeTab(8);
+
         //Catalogs
             //DEV: preparing catalog-device relation
             ui->Catalogs_checkBox_isFullDevice->hide();
@@ -480,19 +485,18 @@
 
         //Storage
             //DEV: panel to edit the storage in a form
-            ui->Storage_pushButton_ShowHidePanel->hide();
-            ui->Storage_label_PanelDevice->hide();
-            ui->Storage_widget_DevicePanelForm->hide();
-            ui->Storage_pushButton_TestMedia->hide();
-            ui->Storage_listView_Media->hide();
-            ui->Storage_pushButton_PanelNew->hide();
-            ui->Storage_pushButton_PanelSaveAll->hide();
+            ui->Storage_widget_Panel->hide();
 
         //Settings
             //DEV: option to switch database mode between memory and file
             ui->Settings_widget_DataModeSelection->hide();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
             ui->Settings_widget_DataMode_Hosted->hide();
+
+        //TESTS
+            //ui->Storage_pushButton_TestMedia->hide();
+            //ui->Storage_listView_Media->hide();
+
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeLight()

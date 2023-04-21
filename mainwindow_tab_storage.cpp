@@ -48,6 +48,12 @@
         updateStorageSelectionStatistics();
     }
     //--------------------------------------------------------------------------
+    void MainWindow::on_Storage_pushButton_Edit_clicked()
+    {
+        ui->Storage_widget_Panel->show();
+        loadStorageToPanel();
+    }
+    //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_EditAll_clicked()
     {
         QDesktopServices::openUrl(QUrl::fromLocalFile(storageFilePath));
@@ -55,7 +61,14 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_SaveAll_clicked()
     {
-        saveStorageData();
+        //Save data to file and reload
+        if (databaseMode=="Memory"){
+            //Save model data to Storage file
+            saveStorageModelToFile();
+
+            //Reload Storage file data to table
+            loadStorageFileToTable();
+        }
 
         //refresh
         loadStorageTableToModel();
@@ -65,6 +78,7 @@
         unsavedChanges = false;
         ui->Storage_pushButton_SaveAll->setStyleSheet("color: black");
 
+        loadStorageToPanel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
@@ -73,6 +87,7 @@
         selectedStorage->loadStorageMetaData();
 
         //display buttons
+        ui->Storage_pushButton_Edit->setEnabled(true);
         ui->Storage_pushButton_SearchStorage->setEnabled(true);
         ui->Storage_pushButton_SearchLocation->setEnabled(true);
         ui->Storage_pushButton_CreateCatalog->setEnabled(true);
@@ -81,7 +96,10 @@
         ui->Storage_pushButton_OpenFilelight->setEnabled(true);
 
         selectedStorageIndexRow = index.row();
+
+        loadStorageToPanel();
     }
+    //--------------------------------------------------------------------------
 
     //With seleted storage -----------------------------------------------------
     void MainWindow::on_Storage_pushButton_New_clicked()
@@ -129,6 +147,7 @@
     {
         skipCatalogUpdateSummary =false;
         updateStorageInfo(selectedStorage);
+        loadStorageToPanel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Delete_clicked()
@@ -149,8 +168,14 @@
             //Reload data to model
             loadStorageTableToModel();
 
-            //Save model data to file
-            saveStorageData();
+            //Save data to file and reload
+            if (databaseMode=="Memory"){
+                //Save model data to Storage file
+                saveStorageModelToFile();
+
+                //Reload Storage file data to table
+                loadStorageFileToTable();
+            }
 
             //refresh
             loadStorageTableToModel();
@@ -185,6 +210,41 @@
     {
         unsavedChanges = true;
         ui->Storage_pushButton_SaveAll->setStyleSheet("color: orange");
+    }
+    //--------------------------------------------------------------------------
+
+    //Panel --------------------------------------------------------------------
+    void MainWindow::on_Storage_pushButton_ShowHidePanel_clicked()
+    {
+        ui->Storage_widget_Panel->hide();
+
+        QString iconName = ui->Storage_pushButton_ShowHidePanel->icon().name();
+
+        if ( iconName == "go-down"){ //Hide
+            ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
+            ui->Search_treeView_History->setHidden(true);
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Storage/ShowHidePanel", "go-up");
+        }
+        else{ //Show
+            ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
+            ui->Search_treeView_History->setHidden(false);
+
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Storage/ShowHidePanel", "go-down");
+        }
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Storage_pushButton_PanelSave_clicked()
+    {
+        saveStorageFromPanel();
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Storage_pushButton_PanelCancel_clicked()
+    {
+        loadStorageToPanel();
+        ui->Storage_widget_Panel->hide();
     }
     //--------------------------------------------------------------------------
 
@@ -233,7 +293,6 @@
             return;
             }
         }
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::addStorageDevice(QString deviceName)
@@ -257,7 +316,15 @@
 
         //load table to model
         loadStorageTableToModel();
-        saveStorageData();
+
+        //Save data to file and reload
+        if (databaseMode=="Memory"){
+            //Save model data to Storage file
+            saveStorageModelToFile();
+
+            //Reload Storage file data to table
+            loadStorageFileToTable();
+        }
 
         //refresh
         loadStorageTableToModel();
@@ -299,7 +366,7 @@
             return;
         }
 
-        //test file validity (application breaks between v0.13 and v0.14)
+        //Test file validity (application breaks between v0.13 and v0.14)
         QString line = textStream.readLine();
         if (line.left(2)!="ID"){
                QMessageBox::warning(this,"Katalog",
@@ -448,7 +515,7 @@
         ui->Storage_treeView_StorageList->header()->resizeSection(6,  75); //FS
         ui->Storage_treeView_StorageList->header()->resizeSection(7,  85); //Total
         ui->Storage_treeView_StorageList->header()->resizeSection(8,  85); //Free
-        ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //Brand
+        ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //BrandModel
         ui->Storage_treeView_StorageList->header()->resizeSection(10,150); //Serial
         ui->Storage_treeView_StorageList->header()->resizeSection(11, 75); //Build date
         ui->Storage_treeView_StorageList->header()->resizeSection(12, 75); //Content
@@ -505,7 +572,6 @@
 
             //Disable create button so it cannot be overwritten
             ui->Storage_pushButton_CreateList->setEnabled(false);
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
@@ -584,23 +650,17 @@
         loadStorageTableToModel();
 
         //save model data to file
-        if (databaseMode=="Memory")
-            saveStorageData();
+        if (databaseMode=="Memory"){
+                //Save model data to Storage file
+                saveStorageModelToFile();
+
+                //Reload Storage file data to table
+                loadStorageFileToTable();
+        }
 
         //refresh storage screen statistics
         updateStorageSelectionStatistics();
 
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::saveStorageData()
-    {
-        if (databaseMode=="Memory"){
-            //Save model data to Storage file
-            saveStorageModelToFile();
-
-            //load Storage file data to table
-            loadStorageFileToTable();
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageModelToFile()
@@ -701,7 +761,6 @@
         ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
         else ui->Storage_label_PercentFree->setText("");
     }
-
     //--------------------------------------------------------------------------
     void MainWindow::recordAllStorageStats(QDateTime dateTime)
     {// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
@@ -770,7 +829,93 @@
         loadStatisticsChart();
 
     }
+    //--------------------------------------------------------------------------
+    void MainWindow::displayStoragePicture()
+    {//Load and display the picture of the storage device
+        QString picturePath = collectionFolder + "/images/" + QString::number(selectedStorage->ID) + ".jpg";
+        QPixmap pic(picturePath);
+        ui->Storage_label_Picture->setScaledContents(true);
+        ui->Storage_label_Picture->setPixmap(pic);
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::loadStorageToPanel()
+    {//Load selected Storage device to the edition panel
+        ui->Storage_lineEdit_Panel_ID->setText(QString::number(selectedStorage->ID));
+        ui->Storage_lineEdit_Panel_Name->setText(selectedStorage->name);
+        ui->Storage_lineEdit_Panel_Type->setText(selectedStorage->type);
+        ui->Storage_lineEdit_Panel_Location->setText(selectedStorage->location);
+        ui->Storage_lineEdit_Panel_Path->setText(selectedStorage->path);
+        ui->Storage_lineEdit_Panel_Label->setText(selectedStorage->label);
+        ui->Storage_lineEdit_Panel_FileSystem->setText(selectedStorage->fileSystem);
 
+        ui->Storage_lineEdit_Panel_Total->setText(QString::number(selectedStorage->totalSpace));
+        ui->Storage_lineEdit_Panel_Free->setText(QString::number(selectedStorage->freeSpace));
+        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(selectedStorage->totalSpace));
+        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(selectedStorage->freeSpace));
+
+        ui->Storage_lineEdit_Panel_BrandModel->setText(selectedStorage->brand);
+        ui->Storage_lineEdit_Panel_SerialNumber->setText(selectedStorage->serialNumber);
+        ui->Storage_lineEdit_Panel_BuildDate->setText(selectedStorage->buildDate);
+        ui->Storage_lineEdit_Panel_ContentType->setText(selectedStorage->contentType);
+        ui->Storage_lineEdit_Panel_Container->setText(selectedStorage->container);
+        ui->Storage_lineEdit_Panel_Comment->setText(selectedStorage->comment);
+
+        displayStoragePicture();
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::saveStorageFromPanel()
+    {//Save changes to selected Storage device from the edition panel
+
+        //Update
+        QString querySQL = QLatin1String(R"(
+                                    UPDATE storage
+                                    SET storage_id = :storage_id,
+                                        storage_name =:storage_name,
+                                        storage_type =:storage_type,
+                                        storage_location =:storage_location,
+                                        storage_path =:storage_path,
+                                        storage_label =:storage_label,
+                                        storage_file_system =:storage_file_system,
+                                        storage_total_space =:storage_total_space,
+                                        storage_free_space =:storage_free_space,
+                                        storage_brand_model =:storage_brand_model,
+                                        storage_serial_number =:storage_serial_number,
+                                        storage_build_date =:storage_build_date,
+                                        storage_content_type =:storage_content_type,
+                                        storage_container =:storage_container,
+                                        storage_comment = :storage_comment
+                                    WHERE storage_id =:storage_id
+                                )");
+
+        QSqlQuery updateQuery;
+        updateQuery.prepare(querySQL);
+        updateQuery.bindValue(":storage_id",            ui->Storage_lineEdit_Panel_ID->text());
+        updateQuery.bindValue(":storage_name",          ui->Storage_lineEdit_Panel_Name->text());
+        updateQuery.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
+        updateQuery.bindValue(":storage_location",      ui->Storage_lineEdit_Panel_Location->text());
+        updateQuery.bindValue(":storage_path",          ui->Storage_lineEdit_Panel_Path->text());
+        updateQuery.bindValue(":storage_label",         ui->Storage_lineEdit_Panel_Label->text());
+        updateQuery.bindValue(":storage_file_system",   ui->Storage_lineEdit_Panel_FileSystem->text());
+        updateQuery.bindValue(":storage_total_space",   ui->Storage_lineEdit_Panel_Total->text());
+        updateQuery.bindValue(":storage_free_space",    ui->Storage_lineEdit_Panel_Free->text());
+        updateQuery.bindValue(":storage_brand_model",   ui->Storage_lineEdit_Panel_BrandModel->text());
+        updateQuery.bindValue(":storage_serial_number", ui->Storage_lineEdit_Panel_SerialNumber->text());
+        updateQuery.bindValue(":storage_build_date",    ui->Storage_lineEdit_Panel_BuildDate->text());
+        updateQuery.bindValue(":storage_content_type",  ui->Storage_lineEdit_Panel_ContentType->text());
+        updateQuery.bindValue(":storage_container",     ui->Storage_lineEdit_Panel_Container->text());
+        updateQuery.bindValue(":storage_comment",       ui->Storage_lineEdit_Panel_Comment->text());
+        updateQuery.exec();
+
+        loadStorageTableToModel();
+        updateStorageSelectionStatistics();
+        loadStorageTableToSelectionTreeModel();
+        refreshLocationSelectionList();
+
+        //Save data to file
+        if (databaseMode=="Memory"){
+            saveStorageModelToFile();
+        }
+    }
 //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_TestMedia_clicked()
     {

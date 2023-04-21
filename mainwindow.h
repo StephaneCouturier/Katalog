@@ -60,6 +60,7 @@
 #include <QStandardItemModel>
 #include <QDesktopServices>
 #include <QCloseEvent>
+#include <QPixmap>
 //#include QtSql
 #include <QtSql>
 //#include QtMultimedia
@@ -78,7 +79,6 @@
 
 #include "catalog.h"
 #include "storage.h"
-#include "devicetreeview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -137,6 +137,7 @@ class MainWindow : public QMainWindow
 
             //Database
             QSqlRelationalTableModel *storageModel;
+            //QSqlTableModel *storageModel;
             QSqlError initializeDatabase();
             QString databaseMode;
             void    startDatabase();
@@ -329,10 +330,13 @@ class MainWindow : public QMainWindow
             void loadStorageTableToModel();
             void loadStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
-            void saveStorageData();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
             void recordAllStorageStats(QDateTime dateTime);
+
+            void displayStoragePicture();
+            void loadStorageToPanel();
+            void saveStorageFromPanel();
 
         //TAB: Statistics
             QString statisticsCatalogFileName;
@@ -529,6 +533,7 @@ class MainWindow : public QMainWindow
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
             void on_Storage_treeView_StorageList_doubleClicked();
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
+            void on_Storage_pushButton_ShowHidePanel_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
@@ -552,7 +557,9 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_Storage_pushButton_TestMedia_clicked();
-
+            void on_Storage_pushButton_PanelSave_clicked();
+            void on_Storage_pushButton_Edit_clicked();
+            void on_Storage_pushButton_PanelCancel_clicked();
 };
 
 #endif // MAINWINDOW_H

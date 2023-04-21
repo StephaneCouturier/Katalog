@@ -173,12 +173,12 @@ void Storage::loadStorageMetaData()
     totalSpace   = query.value(7).toLongLong();
     freeSpace    = query.value(8).toLongLong();
     brand        = query.value(9).toString();
-    model        = query.value(10).toString();
-    serialNumber = query.value(11).toString();
-    buildDate    = query.value(12).toString();
-    contentType  = query.value(13).toString();
-    container    = query.value(14).toString();
-    comment      = query.value(15).toString();
+    model        = query.value(9).toString();
+    serialNumber = query.value(10).toString();
+    buildDate    = query.value(11).toString();
+    contentType  = query.value(12).toString();
+    container    = query.value(13).toString();
+    comment      = query.value(14).toString();
 }
 
 QList<qint64> Storage::updateStorageInfo()

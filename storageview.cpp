@@ -30,11 +30,6 @@
 */
 #include "storageview.h"
 
-#include <QFont>
-#include <QBrush>
-#include <QDebug>
-#include <QFileIconProvider>
-
 StorageView::StorageView(QObject *parent)
     : QSortFilterProxyModel(parent)
 {

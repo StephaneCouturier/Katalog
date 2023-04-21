@@ -32,6 +32,10 @@
 #define STORAGEVIEW_H
 
 #include <QSortFilterProxyModel>
+#include <QFont>
+#include <QBrush>
+#include <QDebug>
+#include <QFileIconProvider>
 
 class StorageView  : public QSortFilterProxyModel
 {

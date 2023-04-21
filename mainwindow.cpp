@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.20";
-        releaseDate     = "2023-04-12";
+        releaseDate     = "2023-04-15";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->setupUi(this);
 
             if(developmentMode==false){
-                    hideDevelopmentUIItems();
+                hideDevelopmentUIItems();
             }
 
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Hide some widgets by default
             ui->Catalogs_widget_EditCatalog->hide();
+            ui->Storage_widget_Panel->hide();
             ui->Statistics_calendarWidget->hide();
 
         //Load all other Settings and apply values
@@ -234,7 +235,14 @@ void MainWindow::closeEvent (QCloseEvent *event)
             return;
         }
         else if ( result ==QMessageBox::Save){
-            saveStorageData();
+            //Save data to file and reload
+            if (databaseMode=="Memory"){
+                //Save model data to Storage file
+                saveStorageModelToFile();
+
+                //Reload Storage file data to table
+                loadStorageFileToTable();
+            }
             event->accept();
             return;
         }
