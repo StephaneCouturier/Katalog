@@ -277,6 +277,7 @@
             selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
             selectedDateMin         = QDateTime::fromString(settings.value("LastSearch/DateMin").toString(),"yyyy/MM/dd hh:mm:ss");
             selectedDateMax         = QDateTime::fromString(settings.value("LastSearch/DateMax").toString(),"yyyy/MM/dd hh:mm:ss");
+            searchOnType            = settings.value("LastSearch/searchOnType").toBool();
             searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
             searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
             searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
@@ -438,6 +439,7 @@
         settings.setValue("LastSearch/DifferencesCatalog2", ui->Search_comboBox_DifferencesCatalog2->currentText());
         settings.setValue("LastSearch/searchOnSize", ui->Search_checkBox_Size->isChecked());
         settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
+        settings.setValue("LastSearch/searchOnType", ui->Search_checkBox_Type->isChecked());
         settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
         settings.setValue("LastSearch/searchOnFileName", ui->Search_checkBox_FileName->isChecked());
@@ -469,7 +471,6 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
-        qDebug()<<"test";
         //Complete tabs
             ui->tabWidget->removeTab(8);
 

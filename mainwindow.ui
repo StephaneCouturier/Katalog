@@ -2176,41 +2176,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLabel" name="Search_label_Type">
+                       <widget class="QCheckBox" name="Search_checkBox_Type">
                         <property name="enabled">
                          <bool>true</bool>
                         </property>
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
                         <property name="minimumSize">
                          <size>
-                          <width>60</width>
+                          <width>75</width>
                           <height>0</height>
                          </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
                         </property>
                         <property name="text">
                          <string>Type</string>
                         </property>
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                        <property name="margin">
-                         <number>6</number>
+                        <property name="checked">
+                         <bool>false</bool>
                         </property>
                        </widget>
                       </item>
@@ -6267,49 +6247,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="3" column="0">
              <widget class="QWidget" name="Storage_widget_Panel" native="true">
               <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_21">
-                 <item>
-                  <widget class="QPushButton" name="Storage_pushButton_ShowHidePanel">
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>22</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Show/Hide Filters and Settings</string>
-                   </property>
-                   <property name="statusTip">
-                    <string/>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">padding: 2px 10px;</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="go-up">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_19">
                  <item>

@@ -340,6 +340,16 @@
             }
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_checkBox_Type_toggled(bool checked)
+        {
+            if(checked==1){
+                ui->Search_comboBox_FileType->setEnabled(true);
+            }
+            else{
+                ui->Search_comboBox_FileType->setDisabled(true);
+            }
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_FolderCriteria_toggled(bool checked)
         {
             if(checked==true){
@@ -408,6 +418,8 @@
 
             selectedFilterCatalogName   = ui->Search_treeView_History->model()->index(index.row(), 30, QModelIndex()).data().toString();
             ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+
+            searchOnType         = ui->Search_treeView_History->model()->index(index.row(), 34, QModelIndex()).data().toBool();
 
         }
         //----------------------------------------------------------------------
@@ -765,6 +777,7 @@
                     selectedMaxSizeUnit    = ui->Search_comboBox_MaxSizeUnit->currentText();
                     selectedDateMin        = ui->Search_dateTimeEdit_Min->dateTime();
                     selectedDateMax        = ui->Search_dateTimeEdit_Max->dateTime();
+                    searchOnType           = ui->Search_checkBox_Type->isChecked();
                     searchOnSize           = ui->Search_checkBox_Size->isChecked();
                     searchOnDate           = ui->Search_checkBox_Date->isChecked();
                     searchOnTags           = ui->Search_checkBox_Tags->isChecked();
@@ -1328,7 +1341,7 @@
                     regexPattern = regexSearchtext;
 
                 //Prepare the regexFileType for file types
-                if( searchOnFileCriteria==true and selectedFileType !="All"){
+                if( searchOnFileCriteria==true and searchOnType ==true and selectedFileType !="All"){
                     //Get the list of file extension and join it into one string
                     if(selectedFileType =="Audio"){
                                 regexFileType = fileType_AudioS.join("|");
@@ -1350,6 +1363,8 @@
                     regexPattern = regexSearchtext  + "(" + regexFileType + ")";
 
                  }
+
+
 
                 //Add the words to exclude to the regex
                 if ( selectedSearchExclude !=""){
@@ -1936,6 +1951,7 @@
                 ui->Search_comboBox_MaxSizeUnit->setCurrentText(selectedMaxSizeUnit);
                 ui->Search_dateTimeEdit_Min->setDateTime(selectedDateMin);
                 ui->Search_dateTimeEdit_Max->setDateTime(selectedDateMax);
+                ui->Search_checkBox_Type->setChecked(searchOnType);
                 ui->Search_checkBox_Size->setChecked(searchOnSize);
                 ui->Search_checkBox_Date->setChecked(searchOnDate);
                 ui->Search_checkBox_Tags->setChecked(searchOnTags);
