@@ -3296,7 +3296,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>Choose to only show folders as results</string>
                         </property>
                         <property name="text">
-                         <string>only list Folders in results</string>
+                         <string>only list folders in results</string>
                         </property>
                         <property name="tristate">
                          <bool>false</bool>
