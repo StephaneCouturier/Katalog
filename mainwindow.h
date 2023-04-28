@@ -435,6 +435,7 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Date_toggled(bool checked);
             void on_Search_checkBox_Size_toggled(bool checked);
             void on_Search_checkBox_Tags_toggled(bool checked);
+            void on_Search_checkBox_Type_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
             void on_Search_checkBox_Differences_toggled(bool checked);
 
@@ -535,6 +536,9 @@ class MainWindow : public QMainWindow
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
             void on_Storage_treeView_StorageList_doubleClicked();
             void on_StorageTreeViewStorageListHeaderSortOrderChanged();
+            void on_Storage_pushButton_PanelSave_clicked();
+            void on_Storage_pushButton_Edit_clicked();
+            void on_Storage_pushButton_PanelCancel_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
@@ -558,10 +562,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_Storage_pushButton_TestMedia_clicked();
-            void on_Storage_pushButton_PanelSave_clicked();
-            void on_Storage_pushButton_Edit_clicked();
-            void on_Storage_pushButton_PanelCancel_clicked();
-            void on_Search_checkBox_Type_toggled(bool checked);
+
 };
 
 #endif // MAINWINDOW_H

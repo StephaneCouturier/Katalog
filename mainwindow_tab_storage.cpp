@@ -51,6 +51,7 @@
     void MainWindow::on_Storage_pushButton_Edit_clicked()
     {
         ui->Storage_widget_Panel->show();
+        ui->Storage_widget_PanelForm->setEnabled(true);
         loadStorageToPanel();
     }
     //--------------------------------------------------------------------------
@@ -121,6 +122,8 @@
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
         ui->Filters_label_DisplayLocation->setText(selectedStorage->location);
+        ui->Filters_label_DisplayStorage->setText(tr("All"));
+        ui->Filters_label_DisplayCatalog->setText(tr("All"));
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
@@ -214,28 +217,6 @@
     //--------------------------------------------------------------------------
 
     //Panel --------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_ShowHidePanel_clicked()
-    {
-        ui->Storage_widget_Panel->hide();
-
-        QString iconName = ui->Storage_pushButton_ShowHidePanel->icon().name();
-
-        if ( iconName == "go-down"){ //Hide
-            ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
-            ui->Search_treeView_History->setHidden(true);
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Storage/ShowHidePanel", "go-up");
-        }
-        else{ //Show
-            ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
-            ui->Search_treeView_History->setHidden(false);
-
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Storage/ShowHidePanel", "go-down");
-        }
-    }
-    //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_PanelSave_clicked()
     {
         saveStorageFromPanel();
@@ -786,37 +767,8 @@
 
             if(databaseMode=="Memory")
             {
-                QString filePath = collectionFolder + "/" + "statistics_storage.csv";//statisticsFileName;
+                QString filePath = collectionFolder + "/" + "statistics_storage.csv";
                 tempStorage->saveStatisticsToFile(filePath, dateTime);
-                /*
-                //create a new record for each catalog
-                QString recordStorageName;
-                QString recordStorageFreeSpace;
-                QString recordStorageTotalSpace;
-
-                //while (query.next()){
-                    recordStorageName       = query.value(1).toString();
-                    recordStorageFreeSpace  = query.value(2).toString();
-                    recordStorageTotalSpace = query.value(3).toString();
-
-                    QString statisticsLine = dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                             + recordStorageName + "\t"
-                                             + recordStorageFreeSpace + "\t"
-                                             + recordStorageTotalSpace + "\t"
-                                             + "Snapshot" ;
-
-                    // Stream the values to the file
-                    QFile fileOut( collectionFolder + "/" + statisticsFileName );
-
-                    // Write data
-                    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-                        QTextStream stream(&fileOut);
-                        stream << statisticsLine << "\n";
-                    }
-                    fileOut.close();
-*/
-                //}
-
             }
         }
 
@@ -834,8 +786,15 @@
     {//Load and display the picture of the storage device
         QString picturePath = collectionFolder + "/images/" + QString::number(selectedStorage->ID) + ".jpg";
         QPixmap pic(picturePath);
-        ui->Storage_label_Picture->setScaledContents(true);
-        ui->Storage_label_Picture->setPixmap(pic);
+        QFile file(picturePath);
+        if(file.exists()){
+            ui->Storage_label_Picture->setScaledContents(true);
+            ui->Storage_label_Picture->setPixmap(pic.scaled(350, 300, Qt::KeepAspectRatio));
+        }
+        else{
+            QPixmap empty("");
+            ui->Storage_label_Picture->setPixmap(empty);
+        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageToPanel()
@@ -866,10 +825,12 @@
     void MainWindow::saveStorageFromPanel()
     {//Save changes to selected Storage device from the edition panel
 
+        QString currentName = selectedStorage->name;
+
         //Update
         QString querySQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_id = :storage_id,
+                                    SET storage_id = :new_storage_id,
                                         storage_name =:storage_name,
                                         storage_type =:storage_type,
                                         storage_location =:storage_location,
@@ -889,7 +850,7 @@
 
         QSqlQuery updateQuery;
         updateQuery.prepare(querySQL);
-        updateQuery.bindValue(":storage_id",            ui->Storage_lineEdit_Panel_ID->text());
+        updateQuery.bindValue(":new_storage_id",        ui->Storage_lineEdit_Panel_ID->text());
         updateQuery.bindValue(":storage_name",          ui->Storage_lineEdit_Panel_Name->text());
         updateQuery.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
         updateQuery.bindValue(":storage_location",      ui->Storage_lineEdit_Panel_Location->text());
@@ -904,6 +865,7 @@
         updateQuery.bindValue(":storage_content_type",  ui->Storage_lineEdit_Panel_ContentType->text());
         updateQuery.bindValue(":storage_container",     ui->Storage_lineEdit_Panel_Container->text());
         updateQuery.bindValue(":storage_comment",       ui->Storage_lineEdit_Panel_Comment->text());
+        updateQuery.bindValue(":storage_id",            selectedStorage->ID);
         updateQuery.exec();
 
         loadStorageTableToModel();
@@ -914,6 +876,64 @@
         //Save data to file
         if (databaseMode=="Memory"){
             saveStorageModelToFile();
+        }
+
+        //Update name in statistics and catalogs
+        if (currentName != ui->Storage_lineEdit_Panel_Name->text()){
+            //Update statistics
+            QString updateNameQuerySQL = QLatin1String(R"(
+                                    UPDATE statistics_storage
+                                    SET storage_name = :new_storage_name
+                                    WHERE storage_id =:current_storage_name
+                                )");
+
+            QSqlQuery updateNameQuery;
+            updateNameQuery.prepare(updateNameQuerySQL);
+            updateNameQuery.bindValue(":current_storage_name", currentName);
+            updateNameQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
+            updateNameQuery.exec();
+
+            if (databaseMode=="Memory"){
+                saveStatiticsToFile();
+            }
+
+            //Update catalogs (database mode)
+            QString updateCatalogQuerySQL = QLatin1String(R"(
+                                    UPDATE catalog
+                                    SET catalog_storage = :new_storage_name
+                                    WHERE catalog_storage =:current_storage_name
+                                )");
+
+            QSqlQuery updateCatalogQuery;
+            updateCatalogQuery.prepare(updateCatalogQuerySQL);
+            updateCatalogQuery.bindValue(":current_storage_name", currentName);
+            updateCatalogQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
+            updateCatalogQuery.exec();
+
+            //Update catalogs (memory mode)
+            if (databaseMode=="Memory"){
+                //List catalogs
+                QString listCatalogQuerySQL = QLatin1String(R"(
+                                    SELECT catalog_name
+                                    FROM catalog
+                                    WHERE catalog_storage =:current_storage_name
+                                )");
+
+                QSqlQuery listCatalogQuery;
+                listCatalogQuery.prepare(listCatalogQuerySQL);
+                listCatalogQuery.bindValue(":current_storage_name", currentName);
+                listCatalogQuery.exec();
+
+                qDebug()<<listCatalogQuery.lastError();
+
+                //Edit and save each one
+                while (listCatalogQuery.next()){
+                    qDebug()<<listCatalogQuery.value(0).toString();
+
+                    //listCatalogQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
+
+                }
+            }
         }
     }
 //--------------------------------------------------------------------------

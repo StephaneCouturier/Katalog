@@ -484,10 +484,6 @@
             ui->Create_checkBox_isFullDevice->hide();
             ui->Create_checkBox_IncludeMetadata->hide();
 
-        //Storage
-            //DEV: panel to edit the storage in a form
-            ui->Storage_widget_Panel->hide();
-
         //Settings
             //DEV: option to switch database mode between memory and file
             ui->Settings_widget_DataModeSelection->hide();
