@@ -1363,6 +1363,8 @@
                     regexPattern = regexSearchtext  + "(" + regexFileType + ")";
 
                  }
+                 else
+                    regexPattern = regexSearchtext;
 
                 //Add the words to exclude to the regex
                 if ( selectedSearchExclude !=""){
@@ -1480,23 +1482,21 @@
                             }
                             else if(selectedSearchIn == tr("Folder path only"))
                             {
-                                //Keep only the folder name, so all characters left of the last occurence of / in the path.
-                                //reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
                                 //Check that the folder name matches the search text
                                 regex.setPattern(regexSearchtext);
                                 foldermatch = regex.match(lineFilePath);
-
                                 //if it does, then check that the file matches the selected file type
-                                if (foldermatch.hasMatch()){
+                                if (foldermatch.hasMatch() and searchOnType==true){
                                     regex.setPattern(regexFileType);
-                                    match = regex.match(lineFilePath);
+                                    match = regex.match(lineFileName);
                                 }
+                                else
+                                    match = foldermatch; //selectedSearchIn == tr("Files and Folder paths")
                             }
                             else {
                                 match = regex.match(lineFileFullPath);
                             }
-
                             //If the file is matching the criteria, add it and its catalog to the search results
                             if (match.hasMatch()){
                                 filesFoundList << lineFilePath;
