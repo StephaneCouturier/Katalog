@@ -1364,8 +1364,6 @@
 
                  }
 
-
-
                 //Add the words to exclude to the regex
                 if ( selectedSearchExclude !=""){
 
@@ -1517,7 +1515,9 @@
                         }
                         else{
                             //verify file matches the selected file type
-                            regex.setPattern(regexFileType);
+                            if (searchOnType==true){
+                                regex.setPattern(regexFileType);
+                            }
                             match = regex.match(lineFilePath);
                             if (!match.hasMatch()){
                                 continue;
@@ -1540,7 +1540,7 @@
                             }
                         }
                 }
-      }
+        }
         //----------------------------------------------------------------------
         //run a search of files for the selected Directory
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
@@ -1666,11 +1666,12 @@
                          if (lineFilePath.left(1)=="<"){continue;}
 
                     //Continue if the file is matching the size range
-                    if (searchOnSize==true){
+                        if (searchOnSize==true){
                             if ( !(     lineFileSize >= selectedMinimumSize * sizeMultiplierMin
                                     and lineFileSize <= selectedMaximumSize * sizeMultiplierMax) ){
                                         continue;}
                         }
+
                     //Continue if the file is matching the date range
                         if (searchOnDate==true){
                             if ( !(     lineFileDateTime >= selectedDateMin
