@@ -871,3 +871,38 @@
         }
     }
     //----------------------------------------------------------------------
+    void MainWindow::saveStatiticsToFile()
+    {
+        //Prepare export file
+        QFile statisticsFile(statisticsStorageFilePath);
+        QTextStream out(&statisticsFile);
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                SELECT * FROM statistics_storage
+                            )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Iterate the records and generate lines
+        while (query.next()) {
+            const QSqlRecord record = query.record();
+            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                   if (i>0)
+                       out << '\t';
+                   out << record.value(i).toString();
+            }
+            //-- Write the result in the file
+            out << '\n';
+        }
+
+        if(statisticsFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            //out << textData;
+            //Close the file
+            //storageFile.close();
+        }
+
+        statisticsFile.close();
+    }
+    //----------------------------------------------------------------------
