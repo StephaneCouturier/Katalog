@@ -2197,7 +2197,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <widget class="QComboBox" name="Search_comboBox_FileType">
                         <property name="enabled">
-                         <bool>true</bool>
+                         <bool>false</bool>
                         </property>
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
