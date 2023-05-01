@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.20";
-        releaseDate     = "2023-04-29";
+        releaseDate     = "2023-05-01";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -117,7 +117,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->splitter_widget_Filters->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
-
             //load custom Katalog stylesheet instead of default theme
             if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
                 loadCustomThemeLight();
@@ -177,17 +176,36 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
             ui->Explore_checkBox_DisplaySubFolders->setChecked(optionDisplaySubFolders);
 
+        //Setup tab: Storage
+            unsavedChanges = false;
+
         //Setup tab: Search
+            //Default values
+            initiateSearchFields();
+            resetToDefaultSearchCriteria();
+
             //Load an empty model to display headers
             Catalog *empty = new Catalog(this);
             ui->Search_treeView_FilesFound->setModel(empty);
             ui->Search_listView_CatalogsFound->setModel(empty);
 
-            //Initiate and restore Search values
-            initiateSearchValues();
+            //Restore last Search values
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                SELECT MAX(date_time)
+                                FROM search
+                            )");
+            query.prepare(querySQL);
+            query.exec();
+            query.next();
 
-        //Setup tab: Storage
-            unsavedChanges = false;
+            Search *lastSearch = new Search;
+            lastSearch->searchDateTime = query.value(0).toString();
+            lastSearch->loadSearchHistoryCriteria();
+            loadSearchCriteria(lastSearch);
+
+            //Restore last Search values
+            filterFromSelectedDevices();
 
     //Context menu and other slots and signals
             setupFileContextMenu();

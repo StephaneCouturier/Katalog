@@ -64,7 +64,6 @@
             return;
         }
 
-//        storageModel = new QSqlRelationalTableModel(this);
         storageModel = new QSqlRelationalTableModel(this);
         storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
@@ -87,8 +86,6 @@
             databaseMode="Memory";
 
         else if(databaseMode=="Memory"){
-            //Set database file path
-            //QString lastCollectionFolder = settings.value("LastCollectionFolder").toString();
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -196,11 +193,10 @@
                 firstRun =true;
 
             if (firstRun == true){
-                //create a file, with default values
+                //Create a file, with default values
                 settings.setValue("LastCollectionFolder", QApplication::applicationDirPath());
 
                 //Set Language and theme
-
                 QString userLanguage = QLocale::system().name();
                 settings.setValue("Settings/Language", userLanguage);
 
@@ -251,58 +247,10 @@
                 collectionFolder = settings.value("LastCollectionFolder").toString();
             }
 
-            //Restore last Search values       
-            ui->Search_lineEdit_SearchText->setText(settings.value("LastSearch/SearchText").toString());
-
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
             selectedDeviceID   = settings.value("Selection/SelectedDeviceID").toInt();
 
-            selectedFilterStorageLocation  = settings.value("LastSearch/SelectedSearchLocation").toString();
-            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
-
-            selectedFilterStorageName   = settings.value("LastSearch/SelectedSearchStorage").toString();
-            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-
-            selectedFilterCatalogName   = settings.value("LastSearch/SelectedSearchCatalog").toString();
-            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
-
-            selectedFileType        = settings.value("LastSearch/FileType").toString();
-            selectedTextCriteria    = settings.value("LastSearch/SearchTextCriteria").toString();
-            selectedSearchIn        = settings.value("LastSearch/SearchIn").toString();
-            selectedSearchExclude   = settings.value("LastSearch/SearchExclude").toString();
-            selectedMinimumSize     = settings.value("LastSearch/MinimumSize").toLongLong();
-            selectedMaximumSize     = settings.value("LastSearch/MaximumSize").toLongLong();
-            selectedMinSizeUnit     = settings.value("LastSearch/MinSizeUnit").toString();
-            selectedMaxSizeUnit     = settings.value("LastSearch/MaxSizeUnit").toString();
-            selectedDateMin         = QDateTime::fromString(settings.value("LastSearch/DateMin").toString(),"yyyy/MM/dd hh:mm:ss");
-            selectedDateMax         = QDateTime::fromString(settings.value("LastSearch/DateMax").toString(),"yyyy/MM/dd hh:mm:ss");
-            searchOnType            = settings.value("LastSearch/searchOnType").toBool();
-            searchOnSize            = settings.value("LastSearch/searchOnSize").toBool();
-            searchOnDate            = settings.value("LastSearch/searchOnDate").toBool();
-            searchOnTags            = settings.value("LastSearch/searchOnTags").toBool();
-            if ( settings.value("LastSearch/searchOnFileName").toString() =="") searchOnFileName=true;
-            else searchOnFileName       = settings.value("LastSearch/searchOnFileName").toBool();
-            if ( settings.value("LastSearch/searchOnFileCriteria").toString() =="") searchOnFileCriteria=true;
-            else searchOnFileCriteria       = settings.value("LastSearch/searchOnFileCriteria").toBool();
-            if ( settings.value("LastSearch/searchOnFolderCriteria").toString() =="") searchOnFolderCriteria=true;
-            else searchOnFolderCriteria       = settings.value("LastSearch/searchOnFolderCriteria").toBool();
-            showFoldersOnly         = settings.value("LastSearch/showFoldersOnly").toBool();
-            selectedTag             = settings.value("LastSearch/SearchTag").toString();
-            searchOnDuplicates      = settings.value("LastSearch/DuplicatesOn").toBool();
-            hasDuplicatesOnName     = settings.value("LastSearch/hasDuplicatesOnName").toBool();
-            hasDuplicatesOnSize     = settings.value("LastSearch/hasDuplicatesOnSize").toBool();
-            hasDuplicatesOnDateModified = settings.value("LastSearch/hasDuplicatesOnDateModified").toBool();
-            searchOnDifferences      = settings.value("LastSearch/DifferencesOn").toBool();
-            hasDifferencesOnName     = settings.value("LastSearch/hasDifferencesOnName").toBool();
-            hasDifferencesOnSize     = settings.value("LastSearch/hasDifferencesOnSize").toBool();
-            hasDifferencesOnDateModified = settings.value("LastSearch/hasDifferencesOnDateModified").toBool();
-            selectedDifferencesCatalog1 = settings.value("LastSearch/DifferencesCatalog1").toString();
-            selectedDifferencesCatalog2 = settings.value("LastSearch/DifferencesCatalog2").toString();
-            selectedConnectedDrivePath  = settings.value("LastSearch/selectedConnectedDrivePath").toString();
-            searchInFileCatalogsChecked = settings.value("LastSearch/searchInFileCatalogsChecked").toBool();
-            searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
-            caseSensitive = settings.value("LastSearch/CaseSensitive").toBool();
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
             //Restore Splitters
@@ -315,13 +263,11 @@
             if (settings.value("Explore/ExploreSplitterWidget1Size").toSize().width() !=-1 and settings.value("Explore/ExploreSplitterWidget2Size").toSize().width() !=-1){
                 ui->Explore_splitter->setSizes(QList<int>() << settings.value("Explore/ExploreSplitterWidget1Size").toSize().width() << settings.value("Explore/ExploreSplitterWidget2Size").toSize().width());
             }
+
             //Filters selection
                 //by default, SearchInCatalogs is enabled
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
                 ui->Filters_widget_ConnectedDrives->hide();
-                //switch to SearchInConnectedDrives if it was last choice
-                searchInConnectedDriveChecked = settings.value("LastSearch/searchInConnectedDriveChecked").toBool();
-                ui->Filters_checkBox_SearchInConnectedDrives->setChecked(searchInConnectedDriveChecked);
 
             //Show or Hide ShowHideSearchCriteria
             if ( settings.value("Settings/ShowHideSearchCriteria") == "go-down"){ //Hide
@@ -401,57 +347,6 @@
             if(developmentMode==true){
                 ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
             }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::saveSettings()
-    {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-
-        settings.setValue("LastCollectionFolder", collectionFolder);
-//        #ifdef Q_OS_LINUX
-//            settings.setValue("LastSearch/SearchText", ui->Search_kcombobox_SearchText->currentText());
-//        #else
-            settings.setValue("LastSearch/SearchText", ui->Search_lineEdit_SearchText->text());
-//        #endif
-        settings.setValue("LastSearch/SelectedSearchCatalog", selectedFilterCatalogName);
-        settings.setValue("LastSearch/SelectedSearchStorage", selectedFilterStorageName);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
-        settings.setValue("LastSearch/FileType", selectedFileType);
-        settings.setValue("LastSearch/SearchTextCriteria", selectedTextCriteria);
-        settings.setValue("LastSearch/SearchIn", selectedSearchIn);
-        settings.setValue("LastSearch/SearchExclude", selectedSearchExclude);
-        settings.setValue("LastSearch/MinimumSize", selectedMinimumSize);
-        settings.setValue("LastSearch/MaximumSize", selectedMaximumSize);
-        settings.setValue("LastSearch/MinSizeUnit", selectedMinSizeUnit);
-        settings.setValue("LastSearch/MaxSizeUnit", selectedMaxSizeUnit);
-        settings.setValue("LastSearch/selectedConnectedDrivePath", ui->Filters_lineEdit_SeletedDirectory->text());
-
-        settings.setValue("LastSearch/showFoldersOnly", ui->Search_checkBox_ShowFolders->isChecked());
-        settings.setValue("LastSearch/DuplicatesOn", ui->Search_checkBox_Duplicates->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnName", ui->Search_checkBox_DuplicatesName->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnSize", ui->Search_checkBox_DuplicatesSize->isChecked());
-        settings.setValue("LastSearch/hasDuplicatesOnDateModified", ui->Search_checkBox_DuplicatesDateModified->isChecked());
-        settings.setValue("LastSearch/DifferencesOn", ui->Search_checkBox_Differences->isChecked());
-        settings.setValue("LastSearch/hasDifferencesOnName", ui->Search_checkBox_DifferencesName->isChecked());
-        settings.setValue("LastSearch/hasDifferencesOnSize", ui->Search_checkBox_DifferencesSize->isChecked());
-        settings.setValue("LastSearch/hasDifferencesOnDateModified", ui->Search_checkBox_DifferencesDateModified->isChecked());
-        settings.setValue("LastSearch/DifferencesCatalog1", ui->Search_comboBox_DifferencesCatalog1->currentText());
-        settings.setValue("LastSearch/DifferencesCatalog2", ui->Search_comboBox_DifferencesCatalog2->currentText());
-        settings.setValue("LastSearch/searchOnSize", ui->Search_checkBox_Size->isChecked());
-        settings.setValue("LastSearch/searchOnDate", ui->Search_checkBox_Date->isChecked());
-        settings.setValue("LastSearch/searchOnType", ui->Search_checkBox_Type->isChecked());
-        settings.setValue("LastSearch/DateMin", ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-        settings.setValue("LastSearch/DateMax", ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-        settings.setValue("LastSearch/searchOnFileName", ui->Search_checkBox_FileName->isChecked());
-        settings.setValue("LastSearch/searchOnFileCriteria", ui->Search_checkBox_FileCriteria->isChecked());
-        settings.setValue("LastSearch/searchOnFolderCriteria", ui->Search_checkBox_FolderCriteria->isChecked());
-        settings.setValue("LastSearch/searchOnTags", ui->Search_checkBox_Tags->isChecked());
-        settings.setValue("LastSearch/SearchTag", ui->Search_comboBox_Tags->currentText());
-        settings.setValue("LastSearch/CaseSensitive", ui->Search_checkBox_CaseSensitive->isChecked());
-
-        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
-        settings.setValue("Settings/UseDefaultDesktopTheme", ui->Settings_comboBox_Theme->currentText());
-        settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
     }
     //----------------------------------------------------------------------
     void MainWindow::setFileTypes()

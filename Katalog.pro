@@ -81,6 +81,7 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
+    search.cpp \
     storage.cpp \
     storagetreeitem.cpp \
     storagetreemodel.cpp \
@@ -99,6 +100,7 @@ HEADERS += \
     exploretreeview.h \
     filesview.h \
     mainwindow.h \
+    search.h \
     storage.h \
     storagetreeitem.h \
     storagetreemodel.h \

@@ -165,7 +165,7 @@
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
         if (selectedDeviceType=="Storage"){
-            selectedDeviceID   = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toInt();
+            selectedDeviceID = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toInt();
             selectedStorage->setID(selectedDeviceID);
             selectedStorage->loadStorageMetaData();
         }
@@ -249,9 +249,9 @@
         filterFromSelectedDevices();
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
-        settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
-        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
+//        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
+//        settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
+//        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
         settings.setValue("Selection/SelectedDeviceType", tr("All"));
         settings.setValue("Selection/SelectedDeviceName", tr("All"));
         refreshDifferencesCatalogSelection();
@@ -339,8 +339,8 @@
             selectedFilterStorageName = tr("All");
             selectedFilterCatalogName = tr("All");
 
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
             refreshStorageSelectionList(selectedFilterStorageLocation);
-            refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         }
         else if (selectedDeviceType=="Storage"){
             ui->Filter_pushButton_Explore->setEnabled(false);
@@ -350,8 +350,8 @@
             selectedFilterStorageName = selectedDeviceName;
             selectedFilterCatalogName = tr("All");
 
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
             refreshStorageSelectionList(selectedFilterStorageLocation);
-            refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
         }
         else if (selectedDeviceType=="Catalog"){
             ui->Filter_pushButton_Explore->setEnabled(true);
@@ -370,25 +370,19 @@
         ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
         ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
-        settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
-        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
+        //Load matching Catalogs, Storage, and Statistics
+            //Load matching Catalogs
+            loadCatalogsTableToModel();
 
-        //Load matching Catalogs, Storage, Statistics
-        //Load matching Catalogs
-        loadCatalogsTableToModel();
+            //Load matching Storage
+            loadStorageTableToModel();
+            updateStorageSelectionStatistics();
 
-        //Load matching Storage
-        loadStorageTableToModel();
-        updateStorageSelectionStatistics();
-
-        //Load matching Statistics
-        if(databaseMode=="Memory"){
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
-        }
-
-        loadStatisticsChart();
+            //Load matching Statistics
+            if(databaseMode=="Memory"){
+                loadStatisticsCatalogFileToTable();
+                loadStatisticsStorageFileToTable();
+            }
+            loadStatisticsChart();
     }
     //----------------------------------------------------------------------

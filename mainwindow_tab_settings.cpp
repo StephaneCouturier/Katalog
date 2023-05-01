@@ -83,6 +83,9 @@
     //Memory ---------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
     {
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("LastCollectionFolder", collectionFolder);
+
         loadCollection();
     }
     //----------------------------------------------------------------------
@@ -99,14 +102,14 @@
 
             collectionFolder = dir;
 
+            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("LastCollectionFolder", collectionFolder);
+
             //Set the new path in Settings tab
             ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
 
             //Redefine the path of the Storage file
             storageFilePath = collectionFolder + "/" + "storage.csv";
-
-            //Save Settings for the new collection folder value;
-            saveSettings();
 
             //Load the collection from this new folder;
                 //Clear database if mode is Memory
@@ -131,7 +134,6 @@
             createStorageList();
             generateCollectionFilesPaths();
             loadCollection();
-
         }
 
         //Reset selected values (to avoid actions on the last selected ones)
@@ -208,7 +210,7 @@
     void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
     {
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());
+        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());       
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)

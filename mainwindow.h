@@ -77,7 +77,9 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
+//Katalog object classes
 #include "catalog.h"
+#include "search.h"
 #include "storage.h"
 
 QT_BEGIN_NAMESPACE
@@ -116,7 +118,6 @@ class MainWindow : public QMainWindow
             //Application settings
             QString settingsFilePath;
             void loadSettings();
-            void saveSettings();
             void preloadCatalogs();
             void generateCollectionFilesPaths();
 
@@ -158,8 +159,6 @@ class MainWindow : public QMainWindow
             Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
 
         //Filters panel
-            bool searchInFileCatalogsChecked;
-            bool searchInConnectedDriveChecked;           
             int  deviceTreeExpandState;
 
             QString selectedDeviceName;
@@ -176,48 +175,18 @@ class MainWindow : public QMainWindow
             void resetSelection();
 
         //TAB: Search
-            QString searchText;
-            QString regexPattern;
-            QString selectedFileType;
-            QString selectedTextCriteria;
-            QString selectedSearchIn;
-            QString selectedSearchExclude;
-            bool    searchOnSize;
-            qint64  selectedMinimumSize;
-            qint64  selectedMaximumSize;
-            qint64  sizeMultiplierMin;
-            qint64  sizeMultiplierMax;
-            QString selectedMinSizeUnit;
-            QString selectedMaxSizeUnit;
-            QString selectedTagName;
-            bool searchOnDuplicates;
-            bool hasDuplicatesOnName;
-            bool hasDuplicatesOnSize;
-            bool hasDuplicatesOnDateModified;
-            bool searchDuplicatesOnDate;
-            bool searchDuplicatesOnTags;
-            bool searchDuplicatesOnText;
-            bool searchOnDifferences;
-            bool hasDifferencesOnName;
-            bool hasDifferencesOnSize;
-            bool hasDifferencesOnDateModified;
-            QString selectedDifferencesCatalog1;
-            QString selectedDifferencesCatalog2;
-            bool searchOnType;
-            bool searchOnDate;
-            bool searchOnTags;
-            bool searchOnFileName;
-            bool searchOnFileCriteria;
-            bool searchOnFolderCriteria;
-            QDateTime selectedDateMin;
-            QDateTime selectedDateMax;
-            bool showFoldersOnly;
-            QString selectedTag;
-            bool caseSensitive;
+            Search *newSearch = new Search;
 
+            //Criteria
+            QString regexPattern;
+
+            //Search processing
             QString sourceCatalog;
             QStringList catalogSelectedList;
-            void initiateSearchValues();
+            void resetToDefaultSearchCriteria();
+            void initiateSearchFields();
+            void loadSearchCriteria(Search *search);
+            void getSearchCriteria();
             void refreshLocationSelectionList();
             void refreshStorageSelectionList(QString selectedLocation);
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
@@ -232,7 +201,7 @@ class MainWindow : public QMainWindow
             int lastSearchSortOrder;
             void refreshDifferencesCatalogSelection();
 
-            //search
+            //Search results
             QList<QString>  sFileNames;
             QList<qint64>   sFileSizes;
             QList<QString>  sFilePaths;
