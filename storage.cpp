@@ -250,12 +250,12 @@ QList<qint64> Storage::updateStorageInfo()
         qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
         qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
 
+        list.append(newStorageUsedSpace);
+        list.append(deltaStorageUsedSpace);
         list.append(newStorageFreeSpace);
         list.append(deltaStorageFreeSpace);
         list.append(newStorageTotalSpace);
         list.append(deltaStorageTotalSpace);
-        list.append(newStorageUsedSpace);
-        list.append(deltaStorageUsedSpace);
 
         return list;
 
