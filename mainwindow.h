@@ -191,6 +191,7 @@ class MainWindow : public QMainWindow
             void refreshStorageSelectionList(QString selectedLocation);
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
             QString exportSearchResults();
+            void batchProcessSearchResults();
             QString getCatalogStorageName(QString catalogFilePath);
             void insertSearchHistoryToTable();
             void loadSearchHistoryTableToModel();
@@ -387,7 +388,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_Search_clicked();
             void on_Search_pushButton_CleanSearchText_clicked();
             void on_Search_pushButton_ResetAll_clicked();
-            void on_Search_pushButton_ExportResults_clicked();
+            void on_Search_pushButton_ProcessResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
             void on_Search_lineEdit_SearchText_returnPressed();
 

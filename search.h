@@ -57,6 +57,12 @@ public:
     bool    searchInConnectedChecked;
     QString connectedDirectory;
 
+    QList<QString>  sFileNames;
+    QList<qint64>   sFileSizes;
+    QList<QString>  sFilePaths;
+    QList<QString>  sFileDateTimes;
+    QList<QString>  sFileCatalogs;
+
     //Methods
     void loadSearchHistoryCriteria();
     void setMultipliers();

@@ -85,11 +85,9 @@
             resetToDefaultSearchCriteria();
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_pushButton_ExportResults_clicked()
-        {          
-            QString exportFileName = exportSearchResults();
-            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")
-                                                    +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+        void MainWindow::on_Search_pushButton_ProcessResults_clicked()
+        {
+            batchProcessSearchResults();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_FilesFound_clicked(const QModelIndex &index)
@@ -658,11 +656,11 @@
                     catalogFoundList.clear();
 
                     //Set up temporary lists
-                    sFileNames.clear();
-                    sFileSizes.clear();
-                    sFilePaths.clear();
-                    sFileDateTimes.clear();
-                    sFileCatalogs.clear();
+                    newSearch->sFileNames.clear();
+                    newSearch->sFileSizes.clear();
+                    newSearch->sFilePaths.clear();
+                    newSearch->sFileDateTimes.clear();
+                    newSearch->sFileCatalogs.clear();
 
                 //Get search criteria
                     getSearchCriteria();
@@ -752,23 +750,28 @@
                     // Populate model with folders only if this option is selected
                     if ( newSearch->searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
                     {
-                        sFilePaths.removeDuplicates();
-                        int numberOfFolders = sFilePaths.count();
-                        sFileNames.clear();
-                        sFileSizes.clear();
-                        sFileDateTimes.clear();
-                        sFileCatalogs.clear();
+                        newSearch->sFilePaths.removeDuplicates();
+                        int numberOfFolders = newSearch->sFilePaths.count();
+                        newSearch->sFileNames.clear();
+                        newSearch->sFileSizes.clear();
+                        newSearch->sFileDateTimes.clear();
+                        newSearch->sFileCatalogs.clear();
                         for (int i=0; i<numberOfFolders; i++)
-                            sFileNames <<"";
+                            newSearch->sFileNames <<"";
                         for (int i=0; i<numberOfFolders; i++)
-                            sFileSizes <<0;
+                            newSearch->sFileSizes <<0;
                         for (int i=0; i<numberOfFolders; i++)
-                            sFileDateTimes <<"";
+                            newSearch->sFileDateTimes <<"";
                         for (int i=0; i<numberOfFolders; i++)
-                            sFileCatalogs <<"";
+                            newSearch->sFileCatalogs <<"";
 
                         // Populate model with data
-                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes,sFileCatalogs);
+                        searchResultsCatalog->populateFileData(
+                            newSearch->sFileNames,
+                            newSearch->sFileSizes,
+                            newSearch->sFilePaths,
+                            newSearch->sFileDateTimes,
+                            newSearch->sFileCatalogs);
                         fileViewModel->setSourceModel(searchResultsCatalog);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
@@ -791,7 +794,12 @@
                     else
                     {
                         // Populate model with data
-                        searchResultsCatalog->populateFileData(sFileNames, sFileSizes, sFilePaths, sFileDateTimes, sFileCatalogs);
+                        searchResultsCatalog->populateFileData(
+                            newSearch->sFileNames,
+                            newSearch->sFileSizes,
+                            newSearch->sFilePaths,
+                            newSearch->sFileDateTimes,
+                            newSearch->sFileCatalogs);
                         fileViewModel->setSourceModel(searchResultsCatalog);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
@@ -911,17 +919,17 @@
                                 duplicatesQuery.exec();
 
                                 //recapture file results for Stats
-                                sFileNames.clear();
-                                sFileSizes.clear();
-                                sFilePaths.clear();
-                                sFileDateTimes.clear();
-                                sFileCatalogs.clear();
+                                newSearch->sFileNames.clear();
+                                newSearch->sFileSizes.clear();
+                                newSearch->sFilePaths.clear();
+                                newSearch->sFileDateTimes.clear();
+                                newSearch->sFileCatalogs.clear();
                                 while(duplicatesQuery.next()){
-                                        sFileNames.append(duplicatesQuery.value(0).toString());
-                                        sFileSizes.append(duplicatesQuery.value(1).toLongLong());
-                                        sFileDateTimes.append(duplicatesQuery.value(2).toString());
-                                        sFilePaths.append(duplicatesQuery.value(3).toString());
-                                        sFileCatalogs.append(duplicatesQuery.value(4).toString());
+                                        newSearch->sFileNames.append(duplicatesQuery.value(0).toString());
+                                        newSearch->sFileSizes.append(duplicatesQuery.value(1).toLongLong());
+                                        newSearch->sFileDateTimes.append(duplicatesQuery.value(2).toString());
+                                        newSearch->sFilePaths.append(duplicatesQuery.value(3).toString());
+                                        newSearch->sFileCatalogs.append(duplicatesQuery.value(4).toString());
                                 }
 
                                 //Load results to model
@@ -1059,17 +1067,17 @@
                                 differencesQuery.exec();
 
                                 //recapture file results for Stats
-                                sFileNames.clear();
-                                sFileSizes.clear();
-                                sFilePaths.clear();
-                                sFileDateTimes.clear();
-                                sFileCatalogs.clear();
+                                newSearch->sFileNames.clear();
+                                newSearch->sFileSizes.clear();
+                                newSearch->sFilePaths.clear();
+                                newSearch->sFileDateTimes.clear();
+                                newSearch->sFileCatalogs.clear();
                                 while(differencesQuery.next()){
-                                        sFileNames.append(differencesQuery.value(0).toString());
-                                        sFileSizes.append(differencesQuery.value(1).toLongLong());
-                                        sFileDateTimes.append(differencesQuery.value(2).toString());
-                                        sFilePaths.append(differencesQuery.value(3).toString());
-                                        sFileCatalogs.append(differencesQuery.value(4).toString());
+                                        newSearch->sFileNames.append(differencesQuery.value(0).toString());
+                                        newSearch->sFileSizes.append(differencesQuery.value(1).toLongLong());
+                                        newSearch->sFileDateTimes.append(differencesQuery.value(2).toString());
+                                        newSearch->sFilePaths.append(differencesQuery.value(3).toString());
+                                        newSearch->sFileCatalogs.append(differencesQuery.value(4).toString());
                                 }
 
                                 loadCatalogQueryModel->setQuery(std::move(differencesQuery));
@@ -1113,7 +1121,7 @@
                     //Total size of files found
                     qint64 sizeItem;
                     filesFoundTotalSize = 0;
-                    foreach (sizeItem, sFileSizes) {
+                    foreach (sizeItem, newSearch->sFileSizes) {
                                 filesFoundTotalSize = filesFoundTotalSize + sizeItem;
                     }
                     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
@@ -1121,12 +1129,12 @@
                     //Other statistics, covering the case where no results are returned.
                     if (filesFoundNumber !=0){
                                 filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
-                                QList<qint64> fileSizeList = sFileSizes;
+                                QList<qint64> fileSizeList = newSearch->sFileSizes;
                                 std::sort(fileSizeList.begin(), fileSizeList.end());
                                 filesFoundMinSize = fileSizeList.first();
                                 filesFoundMaxSize = fileSizeList.last();
 
-                                QList<QString> fileDateList = sFileDateTimes;
+                                QList<QString> fileDateList = newSearch->sFileDateTimes;
                                 std::sort(fileDateList.begin(), fileDateList.end());
                                 filesFoundMinDate = fileDateList.first();
                                 filesFoundMaxDate = fileDateList.last();
@@ -1144,7 +1152,8 @@
             QApplication::restoreOverrideCursor();
 
             //Enable Export
-            ui->Search_pushButton_ExportResults->setEnabled(true);
+            ui->Search_pushButton_ProcessResults->setEnabled(true);
+            ui->Search_comboBox_SelectProcess->setEnabled(true);
 
         }
         //----------------------------------------------------------------------
@@ -1351,11 +1360,11 @@
                                 //QFileInfo file(lineFileFullPath);
 
                                 //Populate result lists
-                                sFileNames.append(lineFileName);
-                                sFilePaths.append(lineFilePath);
-                                sFileSizes.append(getFilesQuery.value(2).toLongLong());
-                                sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                sFileCatalogs.append(sourceCatalogName);
+                                newSearch->sFileNames.append(lineFileName);
+                                newSearch->sFilePaths.append(lineFilePath);
+                                newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
+                                newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
+                                newSearch->sFileCatalogs.append(sourceCatalogName);
                             }
                         }
                         else{
@@ -1377,11 +1386,11 @@
                                 //QFileInfo file(lineFilePath);
 
                                 //Populate result lists
-                                sFileNames.append(lineFileName);
-                                sFilePaths.append(lineFilePath);
-                                sFileSizes.append(getFilesQuery.value(2).toLongLong());
-                                sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                sFileCatalogs.append(sourceCatalogName);
+                                newSearch->sFileNames.append(lineFileName);
+                                newSearch->sFilePaths.append(lineFilePath);
+                                newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
+                                newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
+                                newSearch->sFileCatalogs.append(sourceCatalogName);
                             }
                         }
                 }
@@ -1605,11 +1614,11 @@
                             else lineFileDatetime = "";
 
                             //Populate result lists
-                            sFileNames.append(file.fileName());
-                            sFilePaths.append(file.path());
-                            sFileSizes.append(lineFileSize);
-                            sFileDateTimes.append(lineFileDatetime);
-                            sFileCatalogs.append(sourceDirectory);
+                            newSearch->sFileNames.append(file.fileName());
+                            newSearch->sFilePaths.append(file.path());
+                            newSearch->sFileSizes.append(lineFileSize);
+                            newSearch->sFileDateTimes.append(lineFileDatetime);
+                            newSearch->sFileCatalogs.append(sourceDirectory);
                         }
                     }
                     else{
@@ -1629,11 +1638,11 @@
                             else lineFileDatetime = "";
 
                             //Populate result lists
-                            sFileNames.append(file.fileName());
-                            sFilePaths.append(file.path());
-                            sFileSizes.append(lineFileSize);
-                            sFileDateTimes.append(lineFileDatetime);
-                            sFileCatalogs.append(sourceDirectory);
+                            newSearch->sFileNames.append(file.fileName());
+                            newSearch->sFilePaths.append(file.path());
+                            newSearch->sFileSizes.append(lineFileSize);
+                            newSearch->sFileDateTimes.append(lineFileDatetime);
+                            newSearch->sFileCatalogs.append(sourceDirectory);
                         }
                     }
             }
@@ -1763,6 +1772,10 @@
                     ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
                     ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
 
+                    ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
+                    ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
+                    ui->Search_comboBox_SelectProcess->setItemData(2, "KRename", Qt::UserRole);
+
                     //Prepare list of size units for the Catalog selection combobox
                     // the first line is the one displayed by default
                     ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
@@ -1832,7 +1845,8 @@
 
             //Clear results and disable export
             filesFoundList.clear();
-            ui->Search_pushButton_ExportResults->setEnabled(false);
+            ui->Search_pushButton_ProcessResults->setEnabled(false);
+            ui->Search_comboBox_SelectProcess->setEnabled(false);
         }
         //----------------------------------------------------------------------
         void MainWindow::loadSearchCriteria(Search *search)
@@ -2104,67 +2118,114 @@
                     }
         }
         //----------------------------------------------------------------------
+        void MainWindow::batchProcessSearchResults()
+        {//Process all results according to user's choice
+
+            //user process choice
+            QString selectedProcess = ui->Search_comboBox_SelectProcess->currentText();
+
+            //Generate list of full file path (directory path + file name)
+            QStringList resultsFilesList;
+            for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+            {
+                QString fileFullPath = newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i];
+                resultsFilesList << fileFullPath;
+            }
+
+            //No selection
+            if(selectedProcess=="Select..."){
+                        QMessageBox::information(this,"Katalog",tr("Select first a process to be applied to all results below."));
+                        return;
+            }
+
+            //Export Results
+            else if(selectedProcess=="Export Results"){
+                        QString exportFileName = exportSearchResults();
+                        if (exportFileName !=""){
+                            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")
+                                                                          +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+                        }
+            }
+
+            //KRename
+            else if(selectedProcess=="Open in KRename"){
+                        QProcess process;
+                        process.startDetached("krename",resultsFilesList);
+
+                        //inform if process cannot be run
+                        //            if ( process.state() == QProcess::NotRunning ){
+                        //                    //return false;
+                        //                QMessageBox::information(this,"Katalog",tr("Batch error."));
+                        //            }
+            }
+
+            //QMessageBox::information(this,"Katalog",tr("Batch process executed."));
+        }
+        //----------------------------------------------------------------------
         QString MainWindow::exportSearchResults()
         {
             QString fileExtension;
             QStringList catalogMetadata;
+            QString fullFileName;
 
             int result = QMessageBox::warning(this,"Katalog",
                       tr("Create a catalog from these results?"
                          "<br/>- Yes: create an idx file and use it to refine your search,"
                          "<br/>- No:  simply export results to a csv file."),
-                                              QMessageBox::Yes|QMessageBox::No);
+                                              QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
 
-            if ( result ==QMessageBox::Yes){
-                fileExtension="idx";
+            if ( result !=QMessageBox::Cancel){
 
-                catalogMetadata.prepend("<catalogIsFullDevice>");
-                catalogMetadata.prepend("<catalogIncludeSymblinks>");
-                catalogMetadata.prepend("<catalogStorage>EXPORT");
-                catalogMetadata.prepend("<catalogFileType>EXPORT");
-                catalogMetadata.prepend("<catalogIncludeHidden>false");
-                catalogMetadata.prepend("<catalogTotalFileSize>0");
-                catalogMetadata.prepend("<catalogFileCount>0");
-                catalogMetadata.prepend("<catalogSourcePath>EXPORT");
-            }
-            else{
-                fileExtension="csv";
-            }
+                if ( result ==QMessageBox::Yes){
+                    fileExtension="idx";
 
-            //Prepare export file name
-            QDateTime now = QDateTime::currentDateTime();
-            QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-            QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
-            QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
-            QString fullFileName=collectionFolder+"/"+fileNameWithExtension;
-            QFile exportFile(fullFileName);
-
-            //Export search results to file
-            if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
-
-                QTextStream stream(&exportFile);
-
-                for (int i = 0; i < catalogMetadata.size(); ++i)
-                {
-                    stream << catalogMetadata[i] << '\n';
+                    catalogMetadata.prepend("<catalogIsFullDevice>");
+                    catalogMetadata.prepend("<catalogIncludeSymblinks>");
+                    catalogMetadata.prepend("<catalogStorage>EXPORT");
+                    catalogMetadata.prepend("<catalogFileType>EXPORT");
+                    catalogMetadata.prepend("<catalogIncludeHidden>false");
+                    catalogMetadata.prepend("<catalogTotalFileSize>0");
+                    catalogMetadata.prepend("<catalogFileCount>0");
+                    catalogMetadata.prepend("<catalogSourcePath>EXPORT");
                 }
-                for (int i = 0; i < sFileNames.size(); ++i)
-                {
-                    QString line = sFilePaths[i] + "/" + sFileNames[i] + "\t"
-                                 + QString::number(sFileSizes[i]) + "\t"
-                                 + sFileDateTimes[i] + "\t"
-                                 + sFileCatalogs[i];
-                    stream << line << '\n';
+                else if( result ==QMessageBox::No){
+                    fileExtension="csv";
                 }
+
+                //Prepare export file name
+                QDateTime now = QDateTime::currentDateTime();
+                QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
+                QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
+                QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
+                fullFileName = collectionFolder+"/"+fileNameWithExtension;
+                QFile exportFile(fullFileName);
+
+                //Export search results to file
+                if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                    QTextStream stream(&exportFile);
+
+                    for (int i = 0; i < catalogMetadata.size(); ++i)
+                    {
+                                    stream << catalogMetadata[i] << '\n';
+                    }
+                    for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                    {
+                                    QString line = newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i] + "\t"
+                                                   + QString::number(newSearch->sFileSizes[i]) + "\t"
+                                                   + newSearch->sFileDateTimes[i] + "\t"
+                                                   + newSearch->sFileCatalogs[i];
+                                    stream << line << '\n';
+                    }
+                }
+                exportFile.close();
+
+                //Refresh catalogs
+                loadCollection();
+
+                //Select new catalog with results
+                ui->Filters_label_DisplayCatalog->setText(fileNameWithoutExtension);
             }
-            exportFile.close();
-
-            //Refresh catalogs
-            loadCollection();
-
-            //Select new catalog with results
-            ui->Filters_label_DisplayCatalog->setText(fileNameWithoutExtension);
-
             return fullFileName;
         }
         //----------------------------------------------------------------------

@@ -366,8 +366,14 @@
     //----------------------------------------------------------------------
     void MainWindow::hideDevelopmentUIItems()
     {
-        //Complete tabs
+        //Tabs
             ui->tabWidget->removeTab(8);
+
+        //Search
+            //hide Krename if not linux
+            #ifndef Q_OS_LINUX
+            ui->Search_comboBox_SelectProcess->removeItem(2);
+            #endif
 
         //Catalogs
             //DEV: preparing catalog-device relation
