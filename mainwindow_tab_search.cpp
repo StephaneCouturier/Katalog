@@ -1774,7 +1774,7 @@
 
                     ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
                     ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
-                    ui->Search_comboBox_SelectProcess->setItemData(2, "KRename", Qt::UserRole);
+                    ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
 
                     //Prepare list of size units for the Catalog selection combobox
                     // the first line is the one displayed by default
@@ -2148,7 +2148,7 @@
             }
 
             //KRename
-            else if(selectedProcess=="Open in KRename"){
+            else if(selectedProcess=="Rename (KRename)"){
                         QProcess process;
                         process.startDetached("krename",resultsFilesList);
 
