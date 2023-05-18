@@ -3468,7 +3468,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <widget class="QLabel" name="Search_label_CatalogsWithResults">
                     <property name="minimumSize">
                      <size>
-                      <width>215</width>
+                      <width>180</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -3496,111 +3496,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <layout class="QHBoxLayout" name="Search_horizontalLayout_FileResults">
                   <item>
-                   <widget class="QLabel" name="Search_label_FoundTitle">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>130</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Files found</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                    <property name="indent">
-                     <number>10</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="Search_label_NumberResults">
-                    <property name="minimumSize">
-                     <size>
-                      <width>50</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="Search_label_SizeTitle">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>90</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Total Size</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                    <property name="indent">
-                     <number>10</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="Search_label_SizeResults">
-                    <property name="minimumSize">
-                     <size>
-                      <width>50</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer">
+                   <spacer name="horizontalSpacer_7">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
@@ -3609,7 +3505,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>10</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -3643,6 +3539,126 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="Search_label_FoundTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>125</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Files found</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="indent">
+                     <number>10</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="Search_label_NumberResults">
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="Search_label_SizeTitle">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>125</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Total Size</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="indent">
+                     <number>10</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="Search_label_SizeResults">
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>10</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                   <item>
                    <spacer name="Search_horizontalSpacer_08">
@@ -3693,7 +3709,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="minimumSize">
                      <size>
-                      <width>145</width>
+                      <width>180</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -3719,7 +3735,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Export Results</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="document-new"/>
+                      <iconset theme="document-export">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </item>
                     <item>
@@ -3727,15 +3744,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Rename (KRename)</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="document-new"/>
+                      <iconset theme="document-edit">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>Move to trash</string>
+                      <string>Move to Trash</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="user-trash"/>
+                      <iconset theme="user-trash">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </item>
                     <item>
@@ -3743,7 +3762,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Delete</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-delete"/>
+                      <iconset theme="edit-delete">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </item>
                    </widget>

@@ -421,7 +421,7 @@
                 fileContextMenu.addAction(menuAction7);
             }
 
-            QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move file to Trash")), this);
+            QAction *menuAction8 = new QAction(QIcon::fromTheme("user-trash"),(tr("Move to Trash")), this);
             connect( menuAction8,&QAction::triggered, this, &MainWindow::searchContextMoveFileToTrash);
             fileContextMenu.addAction(menuAction8);
 
@@ -2180,7 +2180,7 @@
             }
 
             //Move to trash
-            else if(selectedProcess=="Move to trash"){
+            else if(selectedProcess=="Move to Trash"){
                 QString trashPath;
                 QString fileFullPath;
                 qint64 movedFiles = 0;
