@@ -3718,10 +3718,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <property name="text">
                       <string>Export Results</string>
                      </property>
+                     <property name="icon">
+                      <iconset theme="document-new"/>
+                     </property>
                     </item>
                     <item>
                      <property name="text">
                       <string>Rename (KRename)</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="document-new"/>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Move to trash</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="user-trash"/>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Delete</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-delete"/>
                      </property>
                     </item>
                    </widget>

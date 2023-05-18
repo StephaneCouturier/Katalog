@@ -231,6 +231,10 @@ class MainWindow : public QMainWindow
             int lastSearchHistorySortSection;
             int lastSearchHistorySortOrder;
 
+            //Result operations
+            QString moveFileToTrash(QString fileFullPath);
+            QString deleteFile(QString fileFullPath);
+
         //TAB: Catalogs
             QString collectionFolder;
             QStringListModel catalogListModel;
