@@ -880,7 +880,13 @@
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT * FROM statistics_storage
+                                SELECT  date_time,
+                                        storage_name,
+                                        storage_free_space,
+                                        storage_total_space,
+                                        storage_id,
+                                        record_type
+                                FROM statistics_storage
                             )");
         query.prepare(querySQL);
         query.exec();
