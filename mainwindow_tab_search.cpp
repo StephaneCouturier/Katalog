@@ -582,27 +582,36 @@
         //----------------------------------------------------------------------
         void MainWindow::searchContextMoveFileToTrash()
         {
-            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
-            QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFileFullPath = selectedFileFolder+"/"+selectedFileName;
-            QString pathInTrash;
+            if(newSearch->showFoldersOnly==false){
+                QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+                QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+                QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+                QString selectedFileFullPath = selectedFileFolder+"/"+selectedFileName;
+                QString pathInTrash;
 
-            if (QMessageBox::warning(this,
-                                     tr("Confirmation"),
-                                     "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                         +tr("Move this file to the trash?")+QString("<br/><span style='font-style: italic;'>%1</span><br/>").arg(selectedFileFullPath),
-                                     QMessageBox::Yes|QMessageBox::Cancel)
-                == QMessageBox::Yes){
+                if (QMessageBox::warning(this,
+                                         tr("Confirmation"),
+                                         "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
+                                             +tr("Move this file to the trash?")+QString("<br/><span style='font-style: italic;'>%1</span><br/>").arg(selectedFileFullPath),
+                                         QMessageBox::Yes|QMessageBox::Cancel)
+                    == QMessageBox::Yes){
 
-                pathInTrash = moveFileToTrash(selectedFileFullPath);
+                    pathInTrash = moveFileToTrash(selectedFileFullPath);
 
-                if (pathInTrash!=""){
-                    QMessageBox::information(this, tr("Information"), tr("Moved to trash:<br/>") + pathInTrash);
+                    if (pathInTrash!=""){
+                        QMessageBox::information(this, tr("Information"), tr("Moved to trash:<br/>") + pathInTrash);
+                    }
+                    else{
+                        QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
+                    }
                 }
-                else{
-                    QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
-                }
+            }
+            else{
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("Moving a folder to Trash is not available."));
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
             }
         }
         //----------------------------------------------------------------------
@@ -615,28 +624,36 @@
         //----------------------------------------------------------------------
         void MainWindow::searchContextDeleteFile()
         {
-            QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+            if(newSearch->showFoldersOnly==false){
+                QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
+                QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+                QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+                QString selectedFileFullPath = selectedFileFolder+"/"+selectedFileName;
+                QString result;
 
-            QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFileFullPath = selectedFileFolder+"/"+selectedFileName;
-            QString result;
+                if (QMessageBox::critical(this,
+                                          tr("Confirmation"),
+                                          "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                              +tr("Delete this file?")+QString("<br/><span style='font-style: italic;'>%1").arg(selectedFileFullPath),
+                                          QMessageBox::Yes|QMessageBox::Cancel)
+                    == QMessageBox::Yes) {
 
-            if (QMessageBox::critical(this,
-                                      tr("Confirmation"),
-                                      "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                          +tr("Delete this file?")+QString("<br/><span style='font-style: italic;'>%1").arg(selectedFileFullPath),
-                                      QMessageBox::Yes|QMessageBox::Cancel)
-                == QMessageBox::Yes) {
+                    result = deleteFile(selectedFileFullPath);
 
-                result = deleteFile(selectedFileFullPath);
-
-                if (result!=""){
-                    QMessageBox::information(this, tr("Information"), tr("Deleted.") );
+                    if (result!=""){
+                        QMessageBox::information(this, tr("Information"), tr("Deleted.") );
+                    }
+                    else{
+                        QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
+                    }
                 }
-                else{
-                    QMessageBox::warning(this, tr("Warning"), tr("Failed to delete."));
-                }
+            }
+            else{
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("Deleting a folder is not available."));
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
             }
         }
         //----------------------------------------------------------------------
@@ -2176,56 +2193,75 @@
 
             //Move to trash
             else if(selectedProcess==tr("Move to Trash")){
-                QString trashPath;
-                QString fileFullPath;
-                qint64 movedFiles = 0;
-                if (QMessageBox::warning(this,
-                                          tr("Confirmation"),
-                                         "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                         +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
-                                          QMessageBox::Yes|QMessageBox::Cancel)
-                                        == QMessageBox::Yes) {
-                    for (int i = 0; i < newSearch->sFileNames.size(); ++i)
-                    {
-                        fileFullPath = moveFileToTrash(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
-                        trashPath = moveFileToTrash(fileFullPath);
-                        if(trashPath==""){
-                            QMessageBox::information(this,"Katalog",tr("Problem moving file: ")
-                                                                    +"<br/>file-<a href='"+fileFullPath+"'>"+fileFullPath+"</a>");
-                        }
-                        else
-                            movedFiles+=1;
+
+                if(newSearch->showFoldersOnly==false){
+                    QString trashPath;
+                    QString fileFullPath;
+                    qint64 movedFiles = 0;
+                    if (QMessageBox::warning(this,
+                                             tr("Confirmation"),
+                                             "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
+                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                             QMessageBox::Yes|QMessageBox::Cancel)
+                        == QMessageBox::Yes) {
+                            for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                            {
+                            fileFullPath = moveFileToTrash(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
+                            trashPath = moveFileToTrash(fileFullPath);
+                            if(trashPath==""){
+                         QMessageBox::information(this,"Katalog",tr("Problem moving file: ")
+                                                                       +"<br/>file-<a href='"+fileFullPath+"'>"+fileFullPath+"</a>");
+                            }
+                            else
+                         movedFiles+=1;
+                            }
+                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(filesFoundNumber)));
                     }
-                    QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(filesFoundNumber)));
+
+                    //Reset process selection to reduce risk of running it by mistake
+                    ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
                 }
-
-                //Reset process selection to reduce risk of running it by mistake
-                ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
-
+                else{
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Katalog");
+                    msgBox.setText(tr("Moving a list of folders to Trash is not available."));
+                    msgBox.setIcon(QMessageBox::Information);
+                    msgBox.exec();
+                }
             }
 
             //Delete
             else if(selectedProcess==tr("Delete")){
-                qint64 deletedFiles = 0;
-                if (QMessageBox::critical(this,
-                                          tr("Confirmation"),
-                                          "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                          +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
-                                          QMessageBox::Yes|QMessageBox::Cancel)
-                    == QMessageBox::Yes) {
-                    for (int i = 0; i < newSearch->sFileNames.size(); ++i)
-                    {
-                        result = deleteFile(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
-                        if (result!=""){
-                            deletedFiles +=1;
-                        }
-                        result="";
-                    }
-                    QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(filesFoundNumber)));
-                }
 
-                //Reset process selection to reduce risk of running it by mistake
-                ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
+                if(newSearch->showFoldersOnly==false){
+                    qint64 deletedFiles = 0;
+                    if (QMessageBox::critical(this,
+                                              tr("Confirmation"),
+                                              "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
+                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                              QMessageBox::Yes|QMessageBox::Cancel)
+                        == QMessageBox::Yes) {
+                        for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                        {
+                            result = deleteFile(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
+                            if (result!=""){
+                                deletedFiles +=1;
+                            }
+                            result="";
+                        }
+                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(filesFoundNumber)));
+                    }
+
+                    //Reset process selection to reduce risk of running it by mistake
+                    ui->Search_comboBox_SelectProcess->setCurrentIndex(0);
+                }
+                else{
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Katalog");
+                    msgBox.setText(tr("Deleting a list of folders is not available."));
+                    msgBox.setIcon(QMessageBox::Information);
+                    msgBox.exec();
+                }
             }
         }
         //----------------------------------------------------------------------
