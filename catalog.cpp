@@ -350,6 +350,58 @@ void Catalog::renameCatalogFile(QString newCatalogName)
     filePath = newCatalogFilePath;
 }
 
+void Catalog::updateStorageNameToFile()
+{//Write changes to catalog file (update headers only)
+
+        QFile catalogFile(filePath);
+        if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QString fullFileText;
+            QTextStream textStream(&catalogFile);
+
+            while(!textStream.atEnd())
+            {
+                QString line = textStream.readLine();
+
+                //add file data line
+                if(!line.startsWith("<catalogSourcePath")
+                    and !line.startsWith("<catalogIncludeHidden")
+                    and !line.startsWith("<catalogFileType")
+                    and !line.startsWith("<catalogStorage")
+                    and !line.startsWith("<catalogIsFullDevice")
+                    and !line.startsWith("<catalogIncludeMetadata")
+                    )
+                {
+                    fullFileText.append(line + "\n");
+                }
+                else{
+                    //add catalog meta-data. The ifs must be in the correct order of the meta-data lines
+                    if(line.startsWith("<catalogSourcePath>"))
+                        fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
+
+                    if(line.startsWith("<catalogIncludeHidden>"))
+                        fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
+
+                    if(line.startsWith("<catalogFileType>"))
+                        fullFileText.append("<catalogFileType>" + fileType +"\n");
+
+                    if(line.startsWith("<catalogStorage>"))
+                        fullFileText.append("<catalogStorage>" + storageName +"\n");
+
+                    if(line.startsWith("<catalogIsFullDevice>")){
+                        fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
+                    }
+                    if(line.startsWith("<catalogIncludeMetadata>")){
+                        fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+                    }
+                }
+            }
+            catalogFile.resize(0);
+            textStream << fullFileText;
+            catalogFile.close();
+        }
+}
+
 void Catalog::loadCatalogFileListToTable()
 {//Load catalog files from file, if latest version is not already in memory
 

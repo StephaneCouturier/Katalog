@@ -825,7 +825,8 @@
     void MainWindow::saveStorageFromPanel()
     {//Save changes to selected Storage device from the edition panel
 
-        QString currentName = selectedStorage->name;
+        QString currentStorageName = selectedStorage->name;
+        QString newStorageName     = ui->Storage_lineEdit_Panel_Name->text();
 
         //Update
         QString querySQL = QLatin1String(R"(
@@ -879,18 +880,18 @@
         }
 
         //Update name in statistics and catalogs
-        if (currentName != ui->Storage_lineEdit_Panel_Name->text()){
+        if (currentStorageName != newStorageName){
             //Update statistics
             QString updateNameQuerySQL = QLatin1String(R"(
                                     UPDATE statistics_storage
                                     SET storage_name = :new_storage_name
-                                    WHERE storage_id =:current_storage_name
+                                    WHERE storage_id =:storage_id
                                 )");
 
             QSqlQuery updateNameQuery;
             updateNameQuery.prepare(updateNameQuerySQL);
-            updateNameQuery.bindValue(":current_storage_name", currentName);
-            updateNameQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
+            updateNameQuery.bindValue(":new_storage_name", newStorageName);
+            updateNameQuery.bindValue(":storage_id", selectedStorage->ID);
             updateNameQuery.exec();
 
             if (databaseMode=="Memory"){
@@ -906,33 +907,41 @@
 
             QSqlQuery updateCatalogQuery;
             updateCatalogQuery.prepare(updateCatalogQuerySQL);
-            updateCatalogQuery.bindValue(":current_storage_name", currentName);
-            updateCatalogQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
+            updateCatalogQuery.bindValue(":current_storage_name", currentStorageName);
+            updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
             updateCatalogQuery.exec();
 
             //Update catalogs (memory mode)
             if (databaseMode=="Memory"){
+
                 //List catalogs
                 QString listCatalogQuerySQL = QLatin1String(R"(
                                     SELECT catalog_name
                                     FROM catalog
-                                    WHERE catalog_storage =:current_storage_name
+                                    WHERE catalog_storage =:new_storage_name
                                 )");
 
                 QSqlQuery listCatalogQuery;
                 listCatalogQuery.prepare(listCatalogQuerySQL);
-                listCatalogQuery.bindValue(":current_storage_name", currentName);
+                listCatalogQuery.bindValue(":new_storage_name", newStorageName);
                 listCatalogQuery.exec();
-
-                qDebug()<<listCatalogQuery.lastError();
 
                 //Edit and save each one
                 while (listCatalogQuery.next()){
-                    qDebug()<<listCatalogQuery.value(0).toString();
-
-                    //listCatalogQuery.bindValue(":new_storage_name", ui->Storage_lineEdit_Panel_Name->text());
-
+                    tempCatalog = new Catalog;
+                    tempCatalog->setName(listCatalogQuery.value(0).toString());
+                    tempCatalog->loadCatalogMetaData();
+                    tempCatalog->setStorageName(newStorageName);
+                    tempCatalog->updateStorageNameToFile();
                 }
+
+                //Refresh
+                if(databaseMode=="Memory")
+                    loadCatalogFilesToTable();
+
+                loadCatalogsTableToModel();
+                loadCatalogsTableToModel();
+                loadStorageTableToSelectionTreeModel();
             }
         }
     }

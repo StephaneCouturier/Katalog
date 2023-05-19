@@ -90,6 +90,7 @@ public:
     void loadCatalogMetaData();//from database
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
+    void updateStorageNameToFile();
     void loadCatalogFileListToTable();
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);
