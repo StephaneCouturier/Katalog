@@ -313,7 +313,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {//Load and restore the criteria of the selected search history
-            //Search *loadSearch = new Search;
+            loadSearch = new Search;
             loadSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
             loadSearch->loadSearchHistoryCriteria();
             loadSearchCriteria(loadSearch);
@@ -676,10 +676,11 @@
         void MainWindow::searchFiles()
         {
             // Start animation while opening
-            QApplication::setOverrideCursor(Qt::WaitCursor);           
+            QApplication::setOverrideCursor(Qt::WaitCursor);
 
             //Prepare the SEARCH -------------------------------
-                //Search *newSearch = new Search;
+                //Clear the temporary search
+                    newSearch = new Search;
 
                 //Search results are currently captured in the Catalog model, not the database.
                 //Clear exisitng lists of results and search variables
@@ -771,8 +772,7 @@
                     ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
 
                 //Process search results: list of files
-                    // Use a virtual catalog to store results
-                    Catalog *searchResultsCatalog = new Catalog(this);
+
                     // Prepare query model
                     QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
                     // Prepare model to display
@@ -797,13 +797,13 @@
                             newSearch->sFileCatalogs <<"";
 
                         // Populate model with data
-                        searchResultsCatalog->populateFileData(
+                        newSearch->populateFileData(
                             newSearch->sFileNames,
                             newSearch->sFileSizes,
                             newSearch->sFilePaths,
                             newSearch->sFileDateTimes,
                             newSearch->sFileCatalogs);
-                        fileViewModel->setSourceModel(searchResultsCatalog);
+                        fileViewModel->setSourceModel(newSearch);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
                         fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
@@ -825,13 +825,13 @@
                     else
                     {
                         // Populate model with data
-                        searchResultsCatalog->populateFileData(
+                        newSearch->populateFileData(
                             newSearch->sFileNames,
                             newSearch->sFileSizes,
                             newSearch->sFilePaths,
                             newSearch->sFileDateTimes,
                             newSearch->sFileCatalogs);
-                        fileViewModel->setSourceModel(searchResultsCatalog);
+                        fileViewModel->setSourceModel(newSearch);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
                         fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
@@ -889,18 +889,16 @@
 
                                 //loop through the result list and populate database
 
-                                    int rows = searchResultsCatalog->rowCount();
+                                    int rows = newSearch->rowCount();
 
                                     for (int i=0; i<rows; i++) {
 
-                                            //QString test = searchResultsCatalog->index(i,0).data().toString();
-
                                             //Append data to the database
-                                            insertQuery.bindValue(":file_name",         searchResultsCatalog->index(i,0).data().toString());
-                                            insertQuery.bindValue(":file_size",         searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_folder_path",  searchResultsCatalog->index(i,3).data().toString());
-                                            insertQuery.bindValue(":file_date_updated", searchResultsCatalog->index(i,2).data().toString());
-                                            insertQuery.bindValue(":file_catalog",      searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.bindValue(":file_name",         newSearch->index(i,0).data().toString());
+                                            insertQuery.bindValue(":file_size",         newSearch->index(i,1).data().toString());
+                                            insertQuery.bindValue(":file_folder_path",  newSearch->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_date_updated", newSearch->index(i,2).data().toString());
+                                            insertQuery.bindValue(":file_catalog",      newSearch->index(i,4).data().toString());
                                             insertQuery.exec();
                                     }
 
@@ -911,20 +909,20 @@
                                 //Generate grouping of fields based on user selection, determining what are duplicates
                                 QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
 
-                                    //same name
+                                    //Same name
                                     if(newSearch->searchDuplicatesOnName == true){
                                         groupingFields = groupingFields + "file_name";
                                     }
-                                    //same size
+                                    //Same size
                                     if(newSearch->searchDuplicatesOnSize == true){
                                         groupingFields = groupingFields + "||file_size";
                                     }
-                                    //same date modified
+                                    //Same date modified
                                     if(newSearch->searchDuplicatesOnDate == true){
                                         groupingFields = groupingFields + "||file_date_updated";
                                     }
 
-                                    //remove starting || if any
+                                    //Remove starting || if any
                                     if (groupingFields.startsWith("||"))
                                         groupingFields.remove(0, 2);
 
@@ -997,11 +995,11 @@
                                     or newSearch->differencesOnDate == true)){
 
 							//Load Search results into the database
-                                //clear database
+                                //Clear database
                                     QSqlQuery deleteQuery;
                                     deleteQuery.exec("DELETE FROM filetemp");
 
-                                //prepare query to load file info
+                                //Prepare query to load file info
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO filetemp (
@@ -1019,20 +1017,20 @@
                                                                     )");
                                     insertQuery.prepare(insertSQL);
 
-                                //loop through the result list and populate database
+                                //Loop through the result list and populate database
 
-                                    int rows = searchResultsCatalog->rowCount();
+                                    int rows = newSearch->rowCount();
 
                                     for (int i=0; i<rows; i++) {
 
-                                            QString test = searchResultsCatalog->index(i,0).data().toString();
+                                            QString test = newSearch->index(i,0).data().toString();
 
                                             //Append data to the database
-                                            insertQuery.bindValue(":file_name",        searchResultsCatalog->index(i,0).data().toString());
-                                            insertQuery.bindValue(":file_size",        searchResultsCatalog->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_folder_path", searchResultsCatalog->index(i,3).data().toString());
-                                            insertQuery.bindValue(":file_date_updated",searchResultsCatalog->index(i,2).data().toString());
-                                            insertQuery.bindValue(":file_catalog",     searchResultsCatalog->index(i,4).data().toString());
+                                            insertQuery.bindValue(":file_name",        newSearch->index(i,0).data().toString());
+                                            insertQuery.bindValue(":file_size",        newSearch->index(i,1).data().toString());
+                                            insertQuery.bindValue(":file_folder_path", newSearch->index(i,3).data().toString());
+                                            insertQuery.bindValue(":file_date_updated",newSearch->index(i,2).data().toString());
+                                            insertQuery.bindValue(":file_catalog",     newSearch->index(i,4).data().toString());
                                             insertQuery.exec();
 
                                     }
@@ -1044,20 +1042,20 @@
                                 //Generate grouping of fields based on user selection, determining what are duplicates
                                 QString groupingFieldsDifferences; // this value should be a concatenation of fields, like "fileName||fileSize"
 
-                                    //same name
+                                    //Same name
                                     if(newSearch->differencesOnName == true){
                                         groupingFieldsDifferences += "||file_name";
                                     }
-                                    //same size
+                                    //Same size
                                     if(newSearch->differencesOnSize == true){
                                         groupingFieldsDifferences += "||file_size";
                                     }
-                                    //same date modified
+                                    //Same date modified
                                     if(newSearch->differencesOnDate == true){
                                         groupingFieldsDifferences += "||file_date_updated";
                                     }
 
-                                    //remove the || at the start
+                                    //Remove the || at the start
                                     if (groupingFieldsDifferences.startsWith("||"))
                                         groupingFieldsDifferences.remove(0, 2);
 
@@ -1213,7 +1211,7 @@
                         QRegularExpression lineSplitExp(" ");
                         QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                         int numberOfSearchWords = lineFieldList.count();
-                        //build regex group for one word
+                        //Build regex group for one word
                         for (int i=0; i<(numberOfSearchWords); i++){
                             groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
                         }
@@ -1264,7 +1262,7 @@
                     //Build regex group to exclude all words
                         //Genereate first part = first characters + the first word
                         excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-                        //add more words
+                        //Add more words
                         for (int i=1; i<(numberOfSearchWords); i++){
                             excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
                         }
@@ -1285,7 +1283,7 @@
                 tempCatalog->loadCatalogFileListToTable();
 
             //Search loop for all lines in the catalog file
-                //load the files of the Catalog
+                //Load the files of the Catalog
                     QSqlQuery getFilesQuery;
                     QString getFilesQuerySQL = QLatin1String(R"(
                                         SELECT  file_name,
@@ -1323,8 +1321,6 @@
                     QString   lineFileName     = getFilesQuery.value(0).toString();
                     QString   lineFilePath     = getFilesQuery.value(1).toString();
                     QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
-                    //qint64    lineFileSize     = getFilesQuery.value(2).toLongLong();
-                    //QDateTime lineFileDateTime = QDateTime::fromString(getFilesQuery.value(3).toString(),"yyyy/MM/dd hh:mm:ss");
                     bool      fileIsMatchingTag;
 
                     //Continue if the file is matching the tags
@@ -1371,7 +1367,7 @@
                                 //Check that the folder name matches the search text
                                 regex.setPattern(regexSearchtext);
                                 foldermatch = regex.match(lineFilePath);
-                                //if it does, then check that the file matches the selected file type
+                                //If it does, then check that the file matches the selected file type
                                 if (foldermatch.hasMatch() and newSearch->searchOnType==true){
                                     regex.setPattern(regexFileType);
                                     match = regex.match(lineFileName);
@@ -1386,9 +1382,6 @@
                             if (match.hasMatch()){
                                 filesFoundList << lineFilePath;
                                 catalogFoundList.insert(0,sourceCatalogName);
-
-                                //Retrieve other file info
-                                //QFileInfo file(lineFileFullPath);
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
@@ -1412,9 +1405,6 @@
                             if (lineFilePath !=""){
                                 filesFoundList << lineFilePath;
                                 catalogFoundList.insert(0,sourceCatalogName);
-
-                                //Retrieve other file info
-                                //QFileInfo file(lineFilePath);
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
@@ -1443,7 +1433,7 @@
                     QRegularExpression lineSplitExp(" ");
                     QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
                     int numberOfSearchWords = lineFieldList.count();
-                    //build regex group for one word
+                    //Build regex group for one word
                     for (int i=0; i<(numberOfSearchWords); i++){
                         groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
                     }
@@ -1492,11 +1482,11 @@
                 //Build regex group to exclude all words
                     //Genereate first part = first characters + the first word
                     excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-                    //add more words
+                    //Add more words
                     for (int i=1; i<(numberOfSearchWords); i++){
                         excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
                     }
-                    //last part
+                    //Last part
                     excludeGroupRegEx = excludeGroupRegEx + "))";
 
                 //Add regex group to exclude to the global regexPattern
@@ -1505,8 +1495,8 @@
 
             QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
 
-            //filetypes
-                    // Get the file type for the catalog
+            //Filetypes
+                    //Get the file type for the catalog
                     QStringList fileTypes;
 
             //Scan directory and create a list of files
@@ -1683,7 +1673,6 @@
         {
             //DEV: REPLACE BY SQL QUERY ON Catalog TABLE
 
-//            QString catalogStorageName;
             //LoadCatalogInfo(file);
             // Get infos stored in the file
             QFile catalogFile(catalogFilePath);
@@ -1900,7 +1889,6 @@
             ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
             ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
 
-
                 //File name
                 ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
                 ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
@@ -1950,7 +1938,8 @@
         void MainWindow::getSearchCriteria()
         {//Get all new criteria
 
-                //newSearch = new Search;
+                //Clear the temporary search
+                newSearch = new Search;
 
                 //searchDateTime;
                 newSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
@@ -2000,8 +1989,6 @@
         //----------------------------------------------------------------------
         void MainWindow::refreshLocationSelectionList()
         {
-            //Get current location
-//            QString currentLocation = ui->Filters_label_DisplayLocation->text();
             //Query the full list of locations
             QSqlQuery getLocationList;
             QString getLocationListSQL = QLatin1String(R"(
@@ -2021,22 +2008,10 @@
             QStringList displayLocationList = locationList;
             //Add the "All" option at the beginning
             displayLocationList.insert(0,tr("All"));
-
-            //Send the list to the Search combobox model
-//            QStringListModel *locationListModel = new QStringListModel();
-//            locationListModel->setStringList(displayLocationList);
-//            ui->Filters_label_DisplayLocation->setModel(locationListModel);
-
-            //Restore last selection
-//            ui->Filters_comboBox_SelectLocation->setCurrentText(currentLocation);
-
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshStorageSelectionList(QString selectedLocation)
         {
-            //get current location
-//            QString currentStorage = ui->Filters_label_DisplayStorage->text();
-
             //Query the full list of locations
             QSqlQuery getStorageList;
 
@@ -2063,15 +2038,6 @@
             QStringList displayStorageList = storageList;
             //Add the "All" option at the beginning
             displayStorageList.insert(0,tr("All"));
-
-            //Send the list to the Search combobox model
-//            QStringListModel *storageListModel = new QStringListModel();
-//            storageListModel->setStringList(displayStorageList);
-//            ui->Filters_label_DisplayStorage->setModel(storageListModel);
-
-//            Restore last selection
-//            ui->Filters_comboBox_SelectStorage->setCurrentText(currentStorage);
-
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
@@ -2132,11 +2098,6 @@
             //Send list to the Statistics combobox (without All or Selected storage options)
                 QStringListModel *catalogListModelForStats = new QStringListModel(this);
                 catalogListModelForStats->setStringList(catalogSelectedList);
-
-                //Get last value
-//                QSettings settings(settingsFilePath, QSettings:: IniFormat);
-//                QString lastValue = settings.value("Statistics/SelectedCatalog").toString();
-
         }
         //--------------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
