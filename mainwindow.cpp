@@ -32,9 +32,9 @@
 #include "ui_mainwindow.h"
 
 #include "mainwindow_setup.cpp"
-#include "mainwindow_tab_search.cpp"
-#include "mainwindow_tab_create.cpp"
 #include "mainwindow_tab_catalogs.cpp"
+#include "mainwindow_tab_create.cpp"
+#include "mainwindow_tab_search.cpp"
 #include "mainwindow_tab_storage.cpp"
 #include "mainwindow_tab_tags.cpp"
 
@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //#endif
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.20";
-        releaseDate     = "2023-05-01";
+        currentVersion  = "1.21";
+        releaseDate     = "2023-05-19";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -199,7 +199,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             query.exec();
             query.next();
 
-            Search *lastSearch = new Search;
+            //Search *lastSearch = new Search;
             lastSearch->searchDateTime = query.value(0).toString();
             lastSearch->loadSearchHistoryCriteria();
             loadSearchCriteria(lastSearch);
@@ -279,6 +279,7 @@ QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("value:<br/
 
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");
+msgBox.setTextFormat(Qt::RichText);
 msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
 msgBox.setIcon(QMessageBox::Information);
 msgBox.exec();

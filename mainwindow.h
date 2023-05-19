@@ -175,7 +175,9 @@ class MainWindow : public QMainWindow
             void resetSelection();
 
         //TAB: Search
-            Search *newSearch = new Search;
+            Search *newSearch  = new Search(); //temporary search object used to handle the current search and results
+            Search *loadSearch = new Search(); //temporary search object used to load criteria from a previous search.
+            Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
 
             //Criteria
             QString regexPattern;
@@ -203,11 +205,6 @@ class MainWindow : public QMainWindow
             void refreshDifferencesCatalogSelection();
 
             //Search results
-            QList<QString>  sFileNames;
-            QList<qint64>   sFileSizes;
-            QList<QString>  sFilePaths;
-            QList<QString>  sFileDateTimes;
-            QList<QString>  sFileCatalogs;
             QString regexSearchtext;
             QString regexFileType;
             void searchFiles();

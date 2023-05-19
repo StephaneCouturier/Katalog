@@ -313,7 +313,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {//Load and restore the criteria of the selected search history
-            Search *loadSearch = new Search;
+            //Search *loadSearch = new Search;
             loadSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
             loadSearch->loadSearchHistoryCriteria();
             loadSearchCriteria(loadSearch);
@@ -1950,7 +1950,7 @@
         void MainWindow::getSearchCriteria()
         {//Get all new criteria
 
-                newSearch = new Search;
+                //newSearch = new Search;
 
                 //searchDateTime;
                 newSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
