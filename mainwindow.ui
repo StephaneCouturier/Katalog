@@ -3645,22 +3645,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </widget>
                   </item>
                   <item>
-                   <spacer name="horizontalSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>10</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
                    <spacer name="Search_horizontalSpacer_08">
                     <property name="font">
                      <font>
@@ -3677,30 +3661,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </size>
                     </property>
                    </spacer>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="Search_label_SizeTitle_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Batch: </string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                    <property name="indent">
-                     <number>10</number>
-                    </property>
-                   </widget>
                   </item>
                   <item>
                    <widget class="QComboBox" name="Search_comboBox_SelectProcess">
@@ -3720,10 +3680,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </size>
                     </property>
                     <property name="toolTip">
-                     <string>Define which process to run on all results</string>
+                     <string>Define which batch process to execute on all results</string>
                     </property>
                     <property name="whatsThis">
-                     <string>Define how the search text should be used.</string>
+                     <string>Define which batch process to execute on all results</string>
                     </property>
                     <item>
                      <property name="text">

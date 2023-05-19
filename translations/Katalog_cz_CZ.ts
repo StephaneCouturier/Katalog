@@ -58,7 +58,7 @@
         <location filename="../mainwindow.ui" line="328"/>
         <location filename="../mainwindow.ui" line="830"/>
         <location filename="../mainwindow.ui" line="1187"/>
-        <location filename="../mainwindow.ui" line="4076"/>
+        <location filename="../mainwindow.ui" line="4142"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
@@ -69,9 +69,9 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2256"/>
-        <location filename="../mainwindow.ui" line="4444"/>
-        <location filename="../mainwindow.ui" line="5228"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1427"/>
+        <location filename="../mainwindow.ui" line="4510"/>
+        <location filename="../mainwindow.ui" line="5294"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1450"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -103,31 +103,31 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1370"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1170"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1400"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1792"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1193"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1423"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1819"/>
         <source>All Words</source>
         <translation>Všechna slova</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1375"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1164"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1394"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1187"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1417"/>
         <source>Exact Phrase</source>
         <translation>Přesná fráze</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1380"/>
-        <location filename="../mainwindow_tab_search.cpp" line="672"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1166"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1396"/>
+        <location filename="../mainwindow_tab_search.cpp" line="684"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1189"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1419"/>
         <source>Begins With</source>
         <translation>Začíná s</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1385"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1168"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1398"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1191"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1421"/>
         <source>Any Word</source>
         <translation>Jakékoli slovo</translation>
     </message>
@@ -150,17 +150,17 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1487"/>
-        <location filename="../mainwindow_tab_search.cpp" line="672"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1324"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1561"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1793"/>
+        <location filename="../mainwindow_tab_search.cpp" line="684"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1347"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1584"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1820"/>
         <source>File names only</source>
         <translation>Pouze názvy souborů</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1497"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1328"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1569"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1351"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1592"/>
         <source>Folder path only</source>
         <translation>Pouze cesta ke složce</translation>
     </message>
@@ -205,34 +205,34 @@
         <translation>Rozbalte 1 úroveň, 2 úrovně nebo sbalte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8216"/>
+        <location filename="../mainwindow.ui" line="8282"/>
         <source>TESTS</source>
         <translation>TESTY</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8228"/>
+        <location filename="../mainwindow.ui" line="8294"/>
         <source>TEST MEDIA</source>
         <translation>TEST MEDIA</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6903"/>
+        <location filename="../mainwindow.ui" line="6969"/>
         <source>Select date</source>
         <translation>Vyberte datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7184"/>
+        <location filename="../mainwindow.ui" line="7250"/>
         <location filename="../mainwindow.cpp" line="124"/>
         <source>Katalog Colors (dark)</source>
         <translation>Katalogové barvy (tmavé)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7413"/>
-        <location filename="../mainwindow.ui" line="8114"/>
+        <location filename="../mainwindow.ui" line="7479"/>
+        <location filename="../mainwindow.ui" line="8180"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Předem načtěte poslední vybrané katalogy při spuštění, abyste urychlili další vyhledávání</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7341"/>
+        <location filename="../mainwindow.ui" line="7407"/>
         <source>Open Settings file</source>
         <translation>Otevřete soubor Nastavení</translation>
     </message>
@@ -247,17 +247,17 @@
         <translation>citlivý na velká písmena</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8135"/>
+        <location filename="../mainwindow.ui" line="8201"/>
         <source>Data mode</source>
         <translation>Datový režim</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8148"/>
+        <location filename="../mainwindow.ui" line="8214"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8143"/>
+        <location filename="../mainwindow.ui" line="8209"/>
         <source>Memory</source>
         <translation>Paměť</translation>
     </message>
@@ -272,10 +272,10 @@
         <location filename="../mainwindow.ui" line="1959"/>
         <location filename="../mainwindow.ui" line="2664"/>
         <location filename="../mainwindow.ui" line="2840"/>
-        <location filename="../mainwindow_tab_search.cpp" line="774"/>
-        <location filename="../mainwindow_tab_search.cpp" line="797"/>
-        <location filename="../mainwindow_tab_search.cpp" line="933"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1080"/>
+        <location filename="../mainwindow_tab_search.cpp" line="791"/>
+        <location filename="../mainwindow_tab_search.cpp" line="819"/>
+        <location filename="../mainwindow_tab_search.cpp" line="955"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1102"/>
         <location filename="../mainwindow_tab_explore.cpp" line="645"/>
         <source>Size</source>
         <translation>Velikost</translation>
@@ -304,7 +304,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2193"/>
-        <location filename="../mainwindow.ui" line="6220"/>
+        <location filename="../mainwindow.ui" line="6286"/>
         <location filename="../mainwindow_tab_storage.cpp" line="471"/>
         <location filename="../mainwindow_tab_explore.cpp" line="649"/>
         <location filename="../mainwindow_tab_filters.cpp" line="312"/>
@@ -318,20 +318,20 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2233"/>
-        <location filename="../mainwindow.ui" line="4421"/>
-        <location filename="../mainwindow.ui" line="5161"/>
-        <location filename="../mainwindow_tab_search.cpp" line="113"/>
-        <location filename="../mainwindow_tab_search.cpp" line="116"/>
-        <location filename="../mainwindow_tab_search.cpp" line="684"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1419"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1807"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1978"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2000"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2020"/>
+        <location filename="../mainwindow.ui" line="4487"/>
+        <location filename="../mainwindow.ui" line="5227"/>
+        <location filename="../mainwindow_tab_search.cpp" line="111"/>
+        <location filename="../mainwindow_tab_search.cpp" line="114"/>
+        <location filename="../mainwindow_tab_search.cpp" line="696"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1442"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1834"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2006"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2028"/>
         <location filename="../mainwindow_tab_search.cpp" line="2048"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2052"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2056"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2076"/>
         <location filename="../mainwindow_tab_search.cpp" line="2080"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2084"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2108"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="107"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="110"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="198"/>
@@ -373,25 +373,25 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2238"/>
-        <location filename="../mainwindow.ui" line="4426"/>
-        <location filename="../mainwindow.ui" line="5194"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1421"/>
+        <location filename="../mainwindow.ui" line="4492"/>
+        <location filename="../mainwindow.ui" line="5260"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1444"/>
         <source>Audio</source>
         <translation>Zvuk</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2247"/>
-        <location filename="../mainwindow.ui" line="4435"/>
-        <location filename="../mainwindow.ui" line="5177"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1424"/>
+        <location filename="../mainwindow.ui" line="4501"/>
+        <location filename="../mainwindow.ui" line="5243"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1447"/>
         <source>Image</source>
         <translation>Obraz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2265"/>
-        <location filename="../mainwindow.ui" line="4453"/>
-        <location filename="../mainwindow.ui" line="5211"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1430"/>
+        <location filename="../mainwindow.ui" line="4519"/>
+        <location filename="../mainwindow.ui" line="5277"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1453"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -416,14 +416,15 @@
         <translation>ve výsledcích zobrazí pouze složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3677"/>
-        <source>Export the search results to a csv file</source>
-        <translation>Exportujte výsledky hledání do souboru CSV</translation>
+        <location filename="../mainwindow.ui" line="3683"/>
+        <location filename="../mainwindow.ui" line="3686"/>
+        <source>Define which batch process to execute on all results</source>
+        <translation>Definujte, který dávkový proces se má provést u všech výsledků</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3680"/>
+        <location filename="../mainwindow.ui" line="3695"/>
         <source>Export Results</source>
-        <translation>Výsledky exportu</translation>
+        <translation>Exportovat výsledky</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3450"/>
@@ -436,39 +437,39 @@
         <translation>Katalogy s výsledky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3518"/>
-        <location filename="../mainwindow_tab_search.cpp" line="817"/>
+        <location filename="../mainwindow.ui" line="3563"/>
+        <location filename="../mainwindow_tab_search.cpp" line="839"/>
         <source>Files found</source>
         <translation>Soubory nalezeny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3543"/>
-        <location filename="../mainwindow.ui" line="3595"/>
-        <location filename="../mainwindow.ui" line="4666"/>
-        <location filename="../mainwindow.ui" line="4751"/>
-        <location filename="../mainwindow.ui" line="4802"/>
-        <location filename="../mainwindow.ui" line="5826"/>
-        <location filename="../mainwindow.ui" line="5856"/>
-        <location filename="../mainwindow.ui" line="5883"/>
-        <location filename="../mainwindow.ui" line="5910"/>
+        <location filename="../mainwindow.ui" line="3588"/>
+        <location filename="../mainwindow.ui" line="3640"/>
+        <location filename="../mainwindow.ui" line="4732"/>
+        <location filename="../mainwindow.ui" line="4817"/>
+        <location filename="../mainwindow.ui" line="4868"/>
+        <location filename="../mainwindow.ui" line="5892"/>
+        <location filename="../mainwindow.ui" line="5922"/>
+        <location filename="../mainwindow.ui" line="5949"/>
+        <location filename="../mainwindow.ui" line="5976"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3905"/>
-        <location filename="../mainwindow.ui" line="3933"/>
+        <location filename="../mainwindow.ui" line="3971"/>
+        <location filename="../mainwindow.ui" line="3999"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="520"/>
         <source>Catalogs</source>
         <translation>Katalogy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3908"/>
+        <location filename="../mainwindow.ui" line="3974"/>
         <source>Manage the catalogs</source>
         <translation>Spravujte katalogy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3971"/>
-        <location filename="../mainwindow.ui" line="6820"/>
+        <location filename="../mainwindow.ui" line="4037"/>
+        <location filename="../mainwindow.ui" line="6886"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="424"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="501"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="569"/>
@@ -477,90 +478,91 @@
         <translation>Celková velikost souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4004"/>
+        <location filename="../mainwindow.ui" line="4070"/>
         <source>Total Number of Files</source>
         <translation>Celkový počet souborů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4073"/>
+        <location filename="../mainwindow.ui" line="4139"/>
         <source>Search the selected catalog</source>
         <translation>Prohledat vybraný katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4090"/>
+        <location filename="../mainwindow.ui" line="4156"/>
         <source>Explore the selected catalog&apos;s files and folders</source>
         <translation>Prozkoumejte soubory a složky vybraného katalogu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="356"/>
-        <location filename="../mainwindow.ui" line="4096"/>
-        <location filename="../mainwindow.ui" line="4591"/>
+        <location filename="../mainwindow.ui" line="4162"/>
+        <location filename="../mainwindow.ui" line="4657"/>
         <source>Explore</source>
         <translation>Prozkoumat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4110"/>
+        <location filename="../mainwindow.ui" line="4176"/>
         <source>View the statistics of the selected catalog</source>
         <translation>Zobrazit statistiky vybraného katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4130"/>
-        <location filename="../mainwindow.ui" line="6469"/>
-        <location filename="../mainwindow.ui" line="7935"/>
+        <location filename="../mainwindow.ui" line="4196"/>
+        <location filename="../mainwindow.ui" line="6535"/>
+        <location filename="../mainwindow.ui" line="8001"/>
         <source>Edit</source>
         <translation>Upravit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4127"/>
+        <location filename="../mainwindow.ui" line="4193"/>
         <source>Edit the selected catalog file itself</source>
         <translation>Upravte samotný vybraný katalogový soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="384"/>
-        <location filename="../mainwindow.ui" line="4147"/>
-        <location filename="../mainwindow.ui" line="6554"/>
+        <location filename="../mainwindow.ui" line="4213"/>
+        <location filename="../mainwindow.ui" line="6620"/>
         <location filename="../mainwindow_tab_create.cpp" line="77"/>
         <source>Update</source>
         <translation>Aktualizujte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4170"/>
+        <location filename="../mainwindow.ui" line="4236"/>
         <source>All active</source>
         <translation>Všechny aktivní</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4190"/>
+        <location filename="../mainwindow.ui" line="4256"/>
         <source>Delete the selected catalog</source>
         <translation>Odstraňte vybraný katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4193"/>
-        <location filename="../mainwindow.ui" line="6587"/>
+        <location filename="../mainwindow.ui" line="3722"/>
+        <location filename="../mainwindow.ui" line="4259"/>
+        <location filename="../mainwindow.ui" line="6653"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4234"/>
+        <location filename="../mainwindow.ui" line="4300"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4478"/>
+        <location filename="../mainwindow.ui" line="4544"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="592"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="1041"/>
         <source>File Type</source>
         <translation>Typ souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4518"/>
+        <location filename="../mainwindow.ui" line="4584"/>
         <source>Include Hidden Files</source>
         <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="186"/>
-        <location filename="../mainwindow.ui" line="4267"/>
-        <location filename="../mainwindow.ui" line="5781"/>
-        <location filename="../mainwindow.ui" line="6486"/>
+        <location filename="../mainwindow.ui" line="4333"/>
+        <location filename="../mainwindow.ui" line="5847"/>
+        <location filename="../mainwindow.ui" line="6552"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="596"/>
         <location filename="../mainwindow_tab_storage.cpp" line="108"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="594"/>
@@ -569,21 +571,21 @@
         <translation>Úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4497"/>
-        <location filename="../mainwindow.ui" line="6158"/>
-        <location filename="../mainwindow.ui" line="7833"/>
+        <location filename="../mainwindow.ui" line="4563"/>
+        <location filename="../mainwindow.ui" line="6224"/>
+        <location filename="../mainwindow.ui" line="7899"/>
         <source>Save</source>
         <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2648"/>
         <location filename="../mainwindow.ui" line="2824"/>
-        <location filename="../mainwindow.ui" line="4288"/>
-        <location filename="../mainwindow.ui" line="6083"/>
-        <location filename="../mainwindow_tab_search.cpp" line="773"/>
-        <location filename="../mainwindow_tab_search.cpp" line="796"/>
-        <location filename="../mainwindow_tab_search.cpp" line="932"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1079"/>
+        <location filename="../mainwindow.ui" line="4354"/>
+        <location filename="../mainwindow.ui" line="6149"/>
+        <location filename="../mainwindow_tab_search.cpp" line="790"/>
+        <location filename="../mainwindow_tab_search.cpp" line="818"/>
+        <location filename="../mainwindow_tab_search.cpp" line="954"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1101"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="586"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="1035"/>
         <location filename="../mainwindow_tab_storage.cpp" line="470"/>
@@ -593,45 +595,45 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="582"/>
-        <location filename="../mainwindow.ui" line="4277"/>
-        <location filename="../mainwindow.ui" line="5758"/>
-        <location filename="../mainwindow.ui" line="7056"/>
-        <location filename="../mainwindow.ui" line="7912"/>
-        <location filename="../mainwindow.ui" line="8049"/>
+        <location filename="../mainwindow.ui" line="4343"/>
+        <location filename="../mainwindow.ui" line="5824"/>
+        <location filename="../mainwindow.ui" line="7122"/>
+        <location filename="../mainwindow.ui" line="7978"/>
+        <location filename="../mainwindow.ui" line="8115"/>
         <source>Select</source>
         <translation>Vybrat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4330"/>
-        <location filename="../mainwindow.ui" line="4912"/>
+        <location filename="../mainwindow.ui" line="4396"/>
+        <location filename="../mainwindow.ui" line="4978"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="591"/>
         <source>Source Path</source>
         <translation>Cesta zdroje</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4594"/>
+        <location filename="../mainwindow.ui" line="4660"/>
         <source>Explore a catalog</source>
         <translation>Prozkoumejte katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="230"/>
-        <location filename="../mainwindow.ui" line="4951"/>
-        <location filename="../mainwindow.ui" line="6520"/>
-        <location filename="../mainwindow_tab_search.cpp" line="777"/>
-        <location filename="../mainwindow_tab_search.cpp" line="800"/>
-        <location filename="../mainwindow_tab_search.cpp" line="936"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1083"/>
+        <location filename="../mainwindow.ui" line="5017"/>
+        <location filename="../mainwindow.ui" line="6586"/>
+        <location filename="../mainwindow_tab_search.cpp" line="794"/>
+        <location filename="../mainwindow_tab_search.cpp" line="822"/>
+        <location filename="../mainwindow_tab_search.cpp" line="958"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1105"/>
         <location filename="../mainwindow_tab_explore.cpp" line="648"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7545"/>
+        <location filename="../mainwindow.ui" line="7611"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Při spuštění aplikace ověřte, zda je k dispozici nová verze Katalogu.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3807"/>
+        <location filename="../mainwindow.ui" line="3873"/>
         <source>Show/Hide search history</source>
         <translation>Zobrazit/skrýt historii vyhledávání</translation>
     </message>
@@ -667,33 +669,33 @@
         <translation>Štítek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3636"/>
+        <location filename="../mainwindow.ui" line="3532"/>
         <source>View more statitics about the results</source>
         <translation>Zobrazit další statistiky o výsledcích</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3844"/>
+        <location filename="../mainwindow.ui" line="3910"/>
         <source>Search history</source>
         <translation>Historie vyhledávání</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4167"/>
+        <location filename="../mainwindow.ui" line="4233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Aktualizujte všechny aktivní katalogy, pokud je zařízení k dispozici. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4231"/>
+        <location filename="../mainwindow.ui" line="4297"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Import a list of volumes from VVV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Import seznamu svazků z VVV &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4362"/>
-        <location filename="../mainwindow.ui" line="6169"/>
+        <location filename="../mainwindow.ui" line="4428"/>
+        <location filename="../mainwindow.ui" line="6235"/>
         <source>Cancel</source>
         <translation>Zrušení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4394"/>
+        <location filename="../mainwindow.ui" line="4460"/>
         <source>Open in text editor</source>
         <translation>Otevřít v textovém editoru</translation>
     </message>
@@ -724,19 +726,19 @@
         <translation>Zvolte použití značek k filtrování výsledků</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4508"/>
+        <location filename="../mainwindow.ui" line="4574"/>
         <source>is full device</source>
         <translation>je plné zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6103"/>
+        <location filename="../mainwindow.ui" line="6169"/>
         <location filename="../mainwindow_tab_storage.cpp" line="473"/>
         <location filename="../mainwindow_tab_explore.cpp" line="651"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4650"/>
+        <location filename="../mainwindow.ui" line="4716"/>
         <source>Directories</source>
         <translation>Složku</translation>
     </message>
@@ -746,8 +748,8 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Výsledky by měly přesně odpovídat textu (citlivé na velká písmena)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4735"/>
-        <location filename="../mainwindow.ui" line="6825"/>
+        <location filename="../mainwindow.ui" line="4801"/>
+        <location filename="../mainwindow.ui" line="6891"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="417"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="449"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="495"/>
@@ -757,17 +759,17 @@
         <translation>Počet souborů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4958"/>
+        <location filename="../mainwindow.ui" line="5024"/>
         <source>Display folders</source>
         <translation>Zobrazit složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5008"/>
+        <location filename="../mainwindow.ui" line="5074"/>
         <source>and all sub-folders</source>
         <translation>a všechny podsložky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4994"/>
+        <location filename="../mainwindow.ui" line="5060"/>
         <source>Order folders first</source>
         <translation>Nejprve objednejte složky</translation>
     </message>
@@ -787,403 +789,418 @@
         <translation>Kritéria složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4528"/>
+        <location filename="../mainwindow.ui" line="3690"/>
+        <source>Select...</source>
+        <translation>Vybrat...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3704"/>
+        <source>Rename (KRename)</source>
+        <translation>Přejmenovat (KRename)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3743"/>
+        <source>Run process on all results</source>
+        <translation>Spusťte proces u všech výsledků</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="4594"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="1045"/>
         <source>Include Metadata</source>
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4840"/>
+        <location filename="../mainwindow.ui" line="4906"/>
         <source>Click to open the file</source>
         <translation>Kliknutím otevřete soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5030"/>
+        <location filename="../mainwindow.ui" line="5096"/>
         <source>Create</source>
         <translation>Vytvořit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5033"/>
+        <location filename="../mainwindow.ui" line="5099"/>
         <source>Create a catalog</source>
         <translation>Vytvořte katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5072"/>
+        <location filename="../mainwindow.ui" line="5138"/>
         <source>2- </source>
         <translation>2- </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5087"/>
+        <location filename="../mainwindow.ui" line="5153"/>
         <source>Select Content options</source>
         <translation>Vyberte možnosti obsahu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5145"/>
+        <location filename="../mainwindow.ui" line="5211"/>
         <source>include File Type</source>
         <translation>zahrnout typ souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5261"/>
+        <location filename="../mainwindow.ui" line="5327"/>
         <source>Other options</source>
         <translation>Jiné možnosti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5271"/>
+        <location filename="../mainwindow.ui" line="5337"/>
         <source>Include Hidden files</source>
         <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5278"/>
+        <location filename="../mainwindow.ui" line="5344"/>
         <source>Include Media files metadata</source>
         <translation>Zahrnout metadata mediálního souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5288"/>
+        <location filename="../mainwindow.ui" line="5354"/>
         <source>Follow symbolic links</source>
         <translation>Postupujte podle symbolických odkazů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5312"/>
+        <location filename="../mainwindow.ui" line="5378"/>
         <source>Edit list of folders to be excluded</source>
         <translation>Upravte seznam složek, které chcete vyloučit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5367"/>
+        <location filename="../mainwindow.ui" line="5433"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5382"/>
+        <location filename="../mainwindow.ui" line="5448"/>
         <source>Define &amp; Create catalog</source>
         <translation>Definujte a vytvořte katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5430"/>
+        <location filename="../mainwindow.ui" line="5496"/>
         <source>Select Storage</source>
         <translation>Vyberte úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5455"/>
-        <location filename="../mainwindow.ui" line="6425"/>
+        <location filename="../mainwindow.ui" line="5521"/>
+        <location filename="../mainwindow.ui" line="6491"/>
         <source>Add a new storage device</source>
         <translation>Přidejte nové úložné zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5458"/>
+        <location filename="../mainwindow.ui" line="5524"/>
         <source>Add Storage</source>
         <translation>Přidat úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5477"/>
+        <location filename="../mainwindow.ui" line="5543"/>
         <source>catalog is for the full device</source>
         <translation>katalog je pro celé zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5500"/>
+        <location filename="../mainwindow.ui" line="5566"/>
         <source>Enter the Name of the new catalog</source>
         <translation>Zadejte název nového katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5512"/>
+        <location filename="../mainwindow.ui" line="5578"/>
         <source>NewCatalog</source>
         <translation>NovýKatalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5515"/>
+        <location filename="../mainwindow.ui" line="5581"/>
         <source>Enter a name for your new catalog</source>
         <translation>Zadejte název svého nového katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5534"/>
+        <location filename="../mainwindow.ui" line="5600"/>
         <source>Generate a catalog name based on the path.</source>
         <translation>Vygenerujte název katalogu na základě cesty.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5537"/>
+        <location filename="../mainwindow.ui" line="5603"/>
         <source>Generate</source>
         <translation>Generovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5596"/>
+        <location filename="../mainwindow.ui" line="5662"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation>Spusťte katalogizaci a uložte ji do souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5602"/>
+        <location filename="../mainwindow.ui" line="5668"/>
         <source>Create Catalog</source>
         <translation>Vytvořit katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5684"/>
+        <location filename="../mainwindow.ui" line="5750"/>
         <source>1- </source>
         <translation>1- </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5705"/>
+        <location filename="../mainwindow.ui" line="5771"/>
         <source>Select Source path</source>
         <translation>Vyberte cestu ke zdroji</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6303"/>
-        <location filename="../mainwindow.ui" line="6364"/>
+        <location filename="../mainwindow.ui" line="6369"/>
+        <location filename="../mainwindow.ui" line="6430"/>
         <source>Free Space</source>
         <translation>Volný prostor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6405"/>
+        <location filename="../mainwindow.ui" line="6471"/>
         <source>Device Picture</source>
         <translation>Obrázek zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6675"/>
+        <location filename="../mainwindow.ui" line="6741"/>
         <source>Edit records:</source>
         <translation>Upravit záznamy:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6688"/>
+        <location filename="../mainwindow.ui" line="6754"/>
         <source>catalogs</source>
         <translation>katalogy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6760"/>
+        <location filename="../mainwindow.ui" line="6826"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="49"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="383"/>
         <source>catalog updates</source>
         <translation>aktualizace katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6765"/>
+        <location filename="../mainwindow.ui" line="6831"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="53"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="599"/>
         <source>storage updates</source>
         <translation>aktualizace úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7157"/>
+        <location filename="../mainwindow.ui" line="7223"/>
         <source>Icons</source>
         <translation>Ikony</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7244"/>
+        <location filename="../mainwindow.ui" line="7310"/>
         <source>Use bigger icon size</source>
         <translation>Použijte větší velikost ikony</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7315"/>
+        <location filename="../mainwindow.ui" line="7381"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="384"/>
         <source>Catalog updates</source>
         <translation>Aktualizace katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7416"/>
+        <location filename="../mainwindow.ui" line="7482"/>
         <source>Load last catalog to Explore</source>
         <translation>Načíst poslední katalog a prozkoumat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7432"/>
+        <location filename="../mainwindow.ui" line="7498"/>
         <source>Startup</source>
         <translation>Spuštění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7713"/>
+        <location filename="../mainwindow.ui" line="7779"/>
         <source>Database Name</source>
         <translation>Jméno databáze</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7732"/>
+        <location filename="../mainwindow.ui" line="7798"/>
         <source>User Name</source>
         <translation>Uživatelské jméno</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7806"/>
+        <location filename="../mainwindow.ui" line="7872"/>
         <source>Host Name</source>
         <translation>Název hostitele</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7952"/>
+        <location filename="../mainwindow.ui" line="8018"/>
         <source>Create a new database file</source>
         <translation>Vytvořte nový soubor databáze</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8117"/>
+        <location filename="../mainwindow.ui" line="8183"/>
         <source>Preload last catalogs (this may slow down the startup a lot, but allows faster search after)</source>
         <translation>Předběžné načtení posledních katalogů (to může značně zpomalit spouštění, ale umožňuje rychlejší vyhledávání)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8153"/>
+        <location filename="../mainwindow.ui" line="8219"/>
         <source>Hosted</source>
         <translation>Hostováno</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8201"/>
+        <location filename="../mainwindow.ui" line="8267"/>
         <source>Data management</source>
         <translation>Správa dat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="579"/>
-        <location filename="../mainwindow.ui" line="5755"/>
+        <location filename="../mainwindow.ui" line="5821"/>
         <source>Select the path</source>
         <translation>Vyberte cestu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5784"/>
+        <location filename="../mainwindow.ui" line="5850"/>
         <source>Manage the list of storage devices</source>
         <translation>Spravujte seznam úložných zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6428"/>
-        <location filename="../mainwindow.ui" line="7955"/>
+        <location filename="../mainwindow.ui" line="6494"/>
+        <location filename="../mainwindow.ui" line="8021"/>
         <source>New</source>
         <translation>Nový</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6004"/>
-        <location filename="../mainwindow.ui" line="6466"/>
+        <location filename="../mainwindow.ui" line="6070"/>
+        <location filename="../mainwindow.ui" line="6532"/>
         <source>Save changes made directly in the table below</source>
         <translation>Uložte změny provedené přímo do níže uvedené tabulky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6007"/>
+        <location filename="../mainwindow.ui" line="6073"/>
         <source>Save All</source>
         <translation>Uložit vše</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6450"/>
+        <location filename="../mainwindow.ui" line="6516"/>
         <source>with selected</source>
         <translation>s vybraným</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6483"/>
+        <location filename="../mainwindow.ui" line="6549"/>
         <source>Search files or folders in the selected storage device</source>
         <translation>Vyhledejte soubory nebo složky ve vybraném úložném zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6500"/>
+        <location filename="../mainwindow.ui" line="6566"/>
         <source>Search files or folders in the selected location</source>
         <translation>Vyhledejte soubory nebo složky ve vybraném umístění</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="208"/>
-        <location filename="../mainwindow.ui" line="6093"/>
-        <location filename="../mainwindow.ui" line="6503"/>
+        <location filename="../mainwindow.ui" line="6159"/>
+        <location filename="../mainwindow.ui" line="6569"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="597"/>
         <location filename="../mainwindow_tab_storage.cpp" line="472"/>
         <source>Location</source>
         <translation>Umístění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4214"/>
+        <location filename="../mainwindow.ui" line="4280"/>
         <source>Record the values of all catalog for statistics of the full collection </source>
         <translation>Zaznamenejte hodnoty celého katalogu pro statistiku celé sbírky </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4217"/>
+        <location filename="../mainwindow.ui" line="4283"/>
         <source>Snapshot</source>
         <translation>Momentka</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6517"/>
+        <location filename="../mainwindow.ui" line="6583"/>
         <source>Create a new catalog for this device</source>
         <translation>Vytvořte nový katalog pro toto zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6534"/>
+        <location filename="../mainwindow.ui" line="6600"/>
         <source>Open the path in Filelight</source>
         <translation>Otevřete cestu v Filelight</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6537"/>
+        <location filename="../mainwindow.ui" line="6603"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6551"/>
+        <location filename="../mainwindow.ui" line="6617"/>
         <source>Update the values for the selected device (label, filesystem, total size, free space)</source>
         <translation>Aktualizujte hodnoty pro vybrané zařízení (štítek, souborový systém, celková velikost, volné místo)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6584"/>
+        <location filename="../mainwindow.ui" line="6650"/>
         <source>Delete the selected device</source>
         <translation>Odstranit vybrané zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5804"/>
+        <location filename="../mainwindow.ui" line="5870"/>
         <source>Devices</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5843"/>
-        <location filename="../mainwindow.ui" line="6296"/>
-        <location filename="../mainwindow.ui" line="6331"/>
+        <location filename="../mainwindow.ui" line="5909"/>
+        <location filename="../mainwindow.ui" line="6362"/>
+        <location filename="../mainwindow.ui" line="6397"/>
         <source>Total Space</source>
         <translation>Celkové místo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5870"/>
+        <location filename="../mainwindow.ui" line="5936"/>
         <source>Used</source>
         <translation>Použitý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5897"/>
+        <location filename="../mainwindow.ui" line="5963"/>
         <location filename="../mainwindow_tab_storage.cpp" line="477"/>
         <source>Free</source>
         <translation>Volný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5939"/>
+        <location filename="../mainwindow.ui" line="6005"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5953"/>
+        <location filename="../mainwindow.ui" line="6019"/>
         <source>Create a list to add devices</source>
         <translation>Vytvořte seznam pro přidání zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5956"/>
+        <location filename="../mainwindow.ui" line="6022"/>
         <source>Create list</source>
         <translation>Vytvořit seznam</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5970"/>
+        <location filename="../mainwindow.ui" line="6036"/>
         <source>Edit the list in a spreadsheet ( tab separated file)</source>
         <translation>Úpravy seznamu v tabulce (soubor oddělený tabulátory)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5973"/>
+        <location filename="../mainwindow.ui" line="6039"/>
         <source>Edit list</source>
         <translation>Upravit seznam</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5987"/>
+        <location filename="../mainwindow.ui" line="6053"/>
         <source>Reload the entire list of devices</source>
         <translation>Znovu načtěte celý seznam zařízení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5990"/>
-        <location filename="../mainwindow.ui" line="6722"/>
-        <location filename="../mainwindow.ui" line="6999"/>
+        <location filename="../mainwindow.ui" line="6056"/>
+        <location filename="../mainwindow.ui" line="6788"/>
+        <location filename="../mainwindow.ui" line="7065"/>
         <source>Reload</source>
         <translation>Znovu načíst</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4144"/>
+        <location filename="../mainwindow.ui" line="4210"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Aktualizujte soubory vybraného katalogu, pokud je zařízení k dispozici &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4113"/>
-        <location filename="../mainwindow.ui" line="6621"/>
+        <location filename="../mainwindow.ui" line="4179"/>
+        <location filename="../mainwindow.ui" line="6687"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6624"/>
+        <location filename="../mainwindow.ui" line="6690"/>
         <source>View collection statistics</source>
         <translation>Zobrazit statistiky sbírky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6743"/>
+        <location filename="../mainwindow.ui" line="6809"/>
         <source>Source</source>
         <translation>Zdroj</translation>
     </message>
@@ -1193,87 +1210,87 @@
         <translation>vybraný katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6770"/>
+        <location filename="../mainwindow.ui" line="6836"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="45"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="457"/>
         <source>collection snapshots</source>
         <translation>snímky kolekce</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6702"/>
+        <location filename="../mainwindow.ui" line="6768"/>
         <source>storage</source>
         <translation>Úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6800"/>
+        <location filename="../mainwindow.ui" line="6866"/>
         <source>Type of data</source>
         <translation>Typ údajů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6816"/>
+        <location filename="../mainwindow.ui" line="6882"/>
         <source>Select the type of data</source>
         <translation>Vyberte typ dat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6685"/>
-        <location filename="../mainwindow.ui" line="6699"/>
+        <location filename="../mainwindow.ui" line="6751"/>
+        <location filename="../mainwindow.ui" line="6765"/>
         <source>Edit the file storing all records</source>
         <translation>Upravte soubor obsahující všechny záznamy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6719"/>
+        <location filename="../mainwindow.ui" line="6785"/>
         <source>Reload the file storing all records</source>
         <translation>Znovu načtěte soubor s uložením všech záznamů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6872"/>
+        <location filename="../mainwindow.ui" line="6938"/>
         <source>Graphic Start Date</source>
         <translation>Datum zahájení grafiky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6935"/>
+        <location filename="../mainwindow.ui" line="7001"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6938"/>
+        <location filename="../mainwindow.ui" line="7004"/>
         <source>Tag folders for search and statistics</source>
         <translation>Označte složky pro vyhledávání a statistiky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7077"/>
+        <location filename="../mainwindow.ui" line="7143"/>
         <source>Add the tag to this folder</source>
         <translation>Přidejte značku do této složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7080"/>
+        <location filename="../mainwindow.ui" line="7146"/>
         <source>Tag the folder</source>
         <translation>Označte složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7012"/>
+        <location filename="../mainwindow.ui" line="7078"/>
         <source>Current folders and tags</source>
         <translation>Aktuální složky a značky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7019"/>
+        <location filename="../mainwindow.ui" line="7085"/>
         <source>Select a tag</source>
         <translation>Vyberte značku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7029"/>
-        <location filename="../mainwindow.ui" line="7053"/>
+        <location filename="../mainwindow.ui" line="7095"/>
+        <location filename="../mainwindow.ui" line="7119"/>
         <source>Select a folder</source>
         <translation>Vyberte složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6958"/>
+        <location filename="../mainwindow.ui" line="7024"/>
         <source>Existing tags</source>
         <translation>Stávající značky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6976"/>
-        <location filename="../mainwindow.ui" line="6996"/>
+        <location filename="../mainwindow.ui" line="7042"/>
+        <location filename="../mainwindow.ui" line="7062"/>
         <source>Reload the file storing the tags</source>
         <translation>Znovu načtěte soubor s uloženými značkami</translation>
     </message>
@@ -1289,95 +1306,95 @@
         <translation>Resetujte všechny filtry</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7113"/>
+        <location filename="../mainwindow.ui" line="7179"/>
         <location filename="../mainwindow_setup.cpp" line="210"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7500"/>
+        <location filename="../mainwindow.ui" line="7566"/>
         <source>About</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7587"/>
-        <location filename="../mainwindow.ui" line="7612"/>
+        <location filename="../mainwindow.ui" line="7653"/>
+        <location filename="../mainwindow.ui" line="7678"/>
         <source>Version</source>
         <translation>Verze</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2371"/>
-        <location filename="../mainwindow.ui" line="7518"/>
-        <location filename="../mainwindow.ui" line="7628"/>
-        <location filename="../mainwindow_tab_search.cpp" line="775"/>
-        <location filename="../mainwindow_tab_search.cpp" line="798"/>
-        <location filename="../mainwindow_tab_search.cpp" line="934"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1081"/>
+        <location filename="../mainwindow.ui" line="7584"/>
+        <location filename="../mainwindow.ui" line="7694"/>
+        <location filename="../mainwindow_tab_search.cpp" line="792"/>
+        <location filename="../mainwindow_tab_search.cpp" line="820"/>
+        <location filename="../mainwindow_tab_search.cpp" line="956"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1103"/>
         <location filename="../mainwindow_tab_explore.cpp" line="646"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="702"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7564"/>
+        <location filename="../mainwindow.ui" line="7630"/>
         <source>Katalog&apos;s Wiki</source>
         <translation>Wiki Katalogu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7534"/>
+        <location filename="../mainwindow.ui" line="7600"/>
         <source>Release Notes</source>
         <translation>Poznámky k vydání</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7254"/>
-        <location filename="../mainwindow.ui" line="8161"/>
+        <location filename="../mainwindow.ui" line="7320"/>
+        <location filename="../mainwindow.ui" line="8227"/>
         <source>(requires to restart)</source>
         <translation>(vyžaduje restart)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7241"/>
-        <location filename="../mainwindow.ui" line="7348"/>
+        <location filename="../mainwindow.ui" line="7307"/>
+        <location filename="../mainwindow.ui" line="7414"/>
         <source>Keep records of files and size for Statistics</source>
         <translation>Uchovávejte záznamy o velikostech souborů a Statistikách</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7351"/>
+        <location filename="../mainwindow.ui" line="7417"/>
         <source>Save records</source>
         <translation>Ukládejte záznamy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7234"/>
+        <location filename="../mainwindow.ui" line="7300"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8098"/>
+        <location filename="../mainwindow.ui" line="8164"/>
         <source>Always keep one back of each catalog</source>
         <translation>Z každého katalogu si vždy nechejte jednu zadní část</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8101"/>
+        <location filename="../mainwindow.ui" line="8167"/>
         <source>Auto-backup catalogs</source>
         <translation>Automatické zálohování katalogů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7198"/>
+        <location filename="../mainwindow.ui" line="7264"/>
         <source>Theme</source>
         <translation>Téma</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7170"/>
+        <location filename="../mainwindow.ui" line="7236"/>
         <source>Select a theme</source>
         <translation>Vyberte téma</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7174"/>
+        <location filename="../mainwindow.ui" line="7240"/>
         <source>Desktop Theme</source>
         <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
         <translation>Téma plochy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7179"/>
+        <location filename="../mainwindow.ui" line="7245"/>
         <location filename="../mainwindow_setup.cpp" line="203"/>
         <location filename="../mainwindow.cpp" line="121"/>
         <source>Katalog Colors (light)</source>
@@ -1385,44 +1402,44 @@
         <translation>Katalogové barvy (světlé)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7288"/>
+        <location filename="../mainwindow.ui" line="7354"/>
         <source>Language &amp; Theme</source>
         <translation>Jazyk a téma</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7403"/>
+        <location filename="../mainwindow.ui" line="7469"/>
         <source>Other Settings</source>
         <translation>Další nastavení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7548"/>
+        <location filename="../mainwindow.ui" line="7614"/>
         <source>Check at start up</source>
         <translation>Zkontrolujte při spuštění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7694"/>
+        <location filename="../mainwindow.ui" line="7760"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7751"/>
+        <location filename="../mainwindow.ui" line="7817"/>
         <source>Password</source>
         <translation>Heslo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7867"/>
+        <location filename="../mainwindow.ui" line="7933"/>
         <source>Database File Path</source>
         <translation>Cesta k souboru databáze</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8004"/>
+        <location filename="../mainwindow.ui" line="8070"/>
         <source>Collection folder</source>
         <translation>Složka kolekce</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7830"/>
-        <location filename="../mainwindow.ui" line="7909"/>
-        <location filename="../mainwindow.ui" line="8046"/>
+        <location filename="../mainwindow.ui" line="7896"/>
+        <location filename="../mainwindow.ui" line="7975"/>
+        <location filename="../mainwindow.ui" line="8112"/>
         <source>Select a different Collection folder</source>
         <translation>Vyberte jinou složku Collection</translation>
     </message>
@@ -1432,15 +1449,15 @@
         <translation>Znovu načtěte všechny katalogové informace</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7367"/>
-        <location filename="../mainwindow.ui" line="7932"/>
-        <location filename="../mainwindow.ui" line="8069"/>
+        <location filename="../mainwindow.ui" line="7433"/>
+        <location filename="../mainwindow.ui" line="7998"/>
+        <location filename="../mainwindow.ui" line="8135"/>
         <source>Open the collection folder</source>
         <translation>Otevřete složku kolekce</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7370"/>
-        <location filename="../mainwindow.ui" line="8072"/>
+        <location filename="../mainwindow.ui" line="7436"/>
+        <location filename="../mainwindow.ui" line="8138"/>
         <source>Open</source>
         <translation>Otevřeno</translation>
     </message>
@@ -1480,21 +1497,21 @@
         <translation>1- Vyberte celou jednotku nebo adresář, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- klikněte na &apos;Vytvořit&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="675"/>
+        <location filename="../mainwindow_setup.cpp" line="681"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Toto je verze: v%1 &lt;br/&gt; &lt;br/&gt; K dispozici je nová verze: &lt;b&gt; v%2 &lt;/b&gt; &lt;br/&gt; Seznam nových funkcí najdete v &lt;a href = &apos;%3 &apos;&gt; Poznámky k vydání &lt;/a&gt; &lt;br/&gt; &lt;br/&gt; Chcete si jej stáhnout?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="1772"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1777"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1801"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1799"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1804"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1828"/>
         <source>Bytes</source>
         <translation>Bajty</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="1769"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1774"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1803"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1796"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1801"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1830"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="429"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="506"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="574"/>
@@ -1506,83 +1523,85 @@
         <translation>GiB</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="91"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2160"/>
         <source>Results exported to the collection folder:</source>
         <translation>Výsledky exportované do složky kolekce:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="328"/>
+        <location filename="../mainwindow_tab_search.cpp" line="326"/>
         <source>&lt;br/&gt;&lt;b&gt;Files Found Statistics&lt;/b&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Files found:  &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total size:   &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Average size: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max size:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt;  &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Min Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Date:     &lt;/td&gt;&lt;td&gt;&lt;b&gt; %7 &lt;/b&gt;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Statistika nalezených souborů&lt;/b&gt;&lt;br/&gt;&lt;table&gt; &lt;tr&gt;&lt;td&gt;Nalezené soubory: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt; &lt;br/&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %2 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Průměrná velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %3 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %4 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální velikost: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %5 &lt;/b&gt; &lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Minimální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %6 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Maximální datum: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %7 &lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6979"/>
-        <location filename="../mainwindow_tab_search.cpp" line="387"/>
+        <location filename="../mainwindow.ui" line="7045"/>
+        <location filename="../mainwindow_tab_search.cpp" line="385"/>
         <location filename="../mainwindow_tab_explore.cpp" line="180"/>
         <source>Open file</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="391"/>
+        <location filename="../mainwindow_tab_search.cpp" line="389"/>
         <location filename="../mainwindow_tab_explore.cpp" line="184"/>
         <location filename="../mainwindow_tab_explore.cpp" line="225"/>
         <source>Open folder</source>
         <translation>Otevřená složka</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="395"/>
+        <location filename="../mainwindow_tab_search.cpp" line="393"/>
         <source>Explore folder</source>
         <translation>Prozkoumat složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="401"/>
+        <location filename="../mainwindow_tab_search.cpp" line="399"/>
         <location filename="../mainwindow_tab_explore.cpp" line="190"/>
         <location filename="../mainwindow_tab_explore.cpp" line="231"/>
         <source>Copy folder path</source>
         <translation>Zkopírujte cestu ke složce</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="405"/>
+        <location filename="../mainwindow_tab_search.cpp" line="403"/>
         <location filename="../mainwindow_tab_explore.cpp" line="194"/>
         <source>Copy file absolute path</source>
         <translation>Kopírovat absolutní cestu k souboru</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="409"/>
+        <location filename="../mainwindow_tab_search.cpp" line="407"/>
         <location filename="../mainwindow_tab_explore.cpp" line="198"/>
         <source>Copy file name with extension</source>
         <translation>Zkopírujte název souboru s příponou</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="413"/>
+        <location filename="../mainwindow_tab_search.cpp" line="411"/>
         <location filename="../mainwindow_tab_explore.cpp" line="202"/>
         <source>Copy file name without extension</source>
         <translation>Zkopírujte název souboru bez přípony</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="421"/>
+        <location filename="../mainwindow_tab_search.cpp" line="419"/>
         <location filename="../mainwindow_tab_explore.cpp" line="210"/>
         <location filename="../mainwindow_tab_explore.cpp" line="243"/>
         <source>Move file to other folder</source>
         <translation>Přesuňte soubor do jiné složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="426"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="215"/>
-        <source>Move file to Trash</source>
-        <translation>Přesunout soubor do koše</translation>
+        <location filename="../mainwindow.ui" line="3713"/>
+        <location filename="../mainwindow_tab_search.cpp" line="424"/>
+        <source>Move to Trash</source>
+        <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="430"/>
+        <location filename="../mainwindow_tab_search.cpp" line="428"/>
         <location filename="../mainwindow_tab_explore.cpp" line="219"/>
         <source>Delete file</source>
         <translation>Smazat soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="544"/>
-        <location filename="../mainwindow_tab_search.cpp" line="562"/>
-        <location filename="../mainwindow_tab_search.cpp" line="601"/>
+        <location filename="../mainwindow_tab_search.cpp" line="542"/>
+        <location filename="../mainwindow_tab_search.cpp" line="560"/>
+        <location filename="../mainwindow_tab_search.cpp" line="592"/>
         <location filename="../mainwindow_tab_search.cpp" line="626"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2177"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2205"/>
         <location filename="../mainwindow_tab_explore.cpp" line="349"/>
         <location filename="../mainwindow_tab_explore.cpp" line="396"/>
         <location filename="../mainwindow_tab_explore.cpp" line="429"/>
@@ -1590,23 +1609,41 @@
         <translation>potvrzení</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="550"/>
+        <location filename="../mainwindow_tab_search.cpp" line="548"/>
         <location filename="../mainwindow_tab_explore.cpp" line="355"/>
         <source>Select the folder to move this file</source>
         <translation>Vyberte složku, do které chcete tento soubor přesunout</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="2113"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2152"/>
+        <source>Select first a process to be applied to all results below.</source>
+        <translation>Nejprve vyberte proces, který se použije na všechny výsledky níže.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="2179"/>
+        <source>Move all %1 files (%2) from these results to trash?</source>
+        <translation>Přesunout všechny soubory %1 (%2) z těchto výsledků do koše?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="2187"/>
+        <source>Problem moving file: </source>
+        <translation>Problém s přesunem souboru: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="2207"/>
+        <source>Delete permanently all %1 files (%2) from these results?</source>
+        <translation>Smazat trvale všechny soubory %1 (%2) z těchto výsledků?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="2233"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create an idx file and use it to refine your search,&lt;br/&gt;- No:  simply export results to a csv file.</source>
         <translation>Vytvořit katalog z těchto výsledků?&lt;br/&gt;- Ano: vytvořte soubor idx a použijte jej k upřesnění vyhledávání,&lt;br/&gt;- Ne: jednoduše exportujte výsledky do souboru csv.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="568"/>
-        <location filename="../mainwindow_tab_search.cpp" line="576"/>
-        <location filename="../mainwindow_tab_search.cpp" line="580"/>
-        <location filename="../mainwindow_tab_search.cpp" line="605"/>
-        <location filename="../mainwindow_tab_search.cpp" line="608"/>
-        <location filename="../mainwindow_tab_search.cpp" line="635"/>
+        <location filename="../mainwindow_tab_search.cpp" line="566"/>
+        <location filename="../mainwindow_tab_search.cpp" line="574"/>
+        <location filename="../mainwindow_tab_search.cpp" line="578"/>
+        <location filename="../mainwindow_tab_search.cpp" line="604"/>
         <location filename="../mainwindow_tab_search.cpp" line="638"/>
         <location filename="../mainwindow_tab_explore.cpp" line="367"/>
         <location filename="../mainwindow_tab_explore.cpp" line="370"/>
@@ -1618,27 +1655,45 @@
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="576"/>
+        <location filename="../mainwindow_tab_search.cpp" line="574"/>
         <location filename="../mainwindow_tab_explore.cpp" line="367"/>
         <source>Moved to folder:&lt;br/&gt;</source>
         <translation>Přesunuto do složky:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="580"/>
+        <location filename="../mainwindow_tab_search.cpp" line="578"/>
         <source>This file cannot be moved (offline or not existing).</source>
         <translation>Tento soubor nelze přesunout (offline nebo neexistující).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="605"/>
+        <location filename="../mainwindow_tab_search.cpp" line="593"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2178"/>
+        <source>MOVE</source>
+        <translation>PŘESUNOUT</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="601"/>
         <location filename="../mainwindow_tab_explore.cpp" line="400"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Přesunuto do koše:&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="608"/>
+        <location filename="../mainwindow_tab_search.cpp" line="601"/>
+        <location filename="../mainwindow_tab_search.cpp" line="635"/>
+        <source>Information</source>
+        <translation>Informace</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="604"/>
         <location filename="../mainwindow_tab_explore.cpp" line="403"/>
         <source>Move to trash failed.</source>
         <translation>Přesunutí do koše se nezdařilo.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="627"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2206"/>
+        <source>DELETE</source>
+        <translation>VYMAZAT</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="635"/>
@@ -1653,22 +1708,32 @@
         <translation>Smazání se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="674"/>
+        <location filename="../mainwindow_tab_search.cpp" line="686"/>
         <source>The option &apos;Begin With&apos; can only be used with &apos;File names only&apos;.
 Use a different combinaison.</source>
         <translation>Možnost „Začít s“ lze použít pouze s „Pouze názvy souborů“.
 Použijte jinou kombinaci.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="1771"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1776"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1798"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1803"/>
         <location filename="../search.cpp" line="103"/>
         <location filename="../search.cpp" line="112"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="545"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2193"/>
+        <source>%1 files were moved to trash, out of %2 files from the results.</source>
+        <translation>%1 souborů bylo přesunuto do koše, z %2 souborů z výsledků.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="2218"/>
+        <source>%1 files were deleted, out of %2 files from the results.</source>
+        <translation>%1 souborů bylo smazáno, z %2 souborů z výsledků.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="543"/>
         <source>Move
 %1
 to another folder?</source>
@@ -1677,17 +1742,16 @@ to another folder?</source>
 do jiné složky?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="563"/>
+        <location filename="../mainwindow_tab_search.cpp" line="561"/>
         <source>A file %&amp; already exists. Overwrite it?</source>
         <translation>Soubor %&amp; již existuje. Přepsat to?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="568"/>
+        <location filename="../mainwindow_tab_search.cpp" line="566"/>
         <source>Cancelled move to folder.</source>
         <translation>Přesun do složky byl zrušen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="602"/>
         <location filename="../mainwindow_tab_explore.cpp" line="350"/>
         <location filename="../mainwindow_tab_explore.cpp" line="397"/>
         <source>Move
@@ -1698,14 +1762,13 @@ to the trash?</source>
 do koše?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="627"/>
         <location filename="../mainwindow_tab_explore.cpp" line="430"/>
         <source>&lt;span style=&apos;color:red;&apos;&gt;DELETE&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</source>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;SMAZAT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="1770"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1775"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1797"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1802"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="433"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="510"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="579"/>
@@ -1717,34 +1780,44 @@ do koše?</translation>
         <translation>MiB</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="1768"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1773"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1795"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1800"/>
         <location filename="../search.cpp" line="109"/>
         <location filename="../search.cpp" line="118"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="776"/>
-        <location filename="../mainwindow_tab_search.cpp" line="799"/>
-        <location filename="../mainwindow_tab_search.cpp" line="935"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1082"/>
+        <location filename="../mainwindow_tab_search.cpp" line="594"/>
+        <source>Move this file to the trash?</source>
+        <translation>Přesunout tento soubor do koše?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="628"/>
+        <source>Delete this file?</source>
+        <translation>Smazat tento soubor?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_search.cpp" line="793"/>
+        <location filename="../mainwindow_tab_search.cpp" line="821"/>
+        <location filename="../mainwindow_tab_search.cpp" line="957"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1104"/>
         <source>Folder</source>
         <translation>Složka</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="787"/>
+        <location filename="../mainwindow_tab_search.cpp" line="804"/>
         <source>Folders found</source>
         <translation>Nalezeny složky</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="802"/>
+        <location filename="../mainwindow_tab_search.cpp" line="824"/>
         <source>Search Directory</source>
         <translation>Složku Hledat</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_search.cpp" line="947"/>
-        <location filename="../mainwindow_tab_search.cpp" line="1095"/>
+        <location filename="../mainwindow_tab_search.cpp" line="969"/>
+        <location filename="../mainwindow_tab_search.cpp" line="1117"/>
         <source>Duplicates found</source>
         <translation>Nalezeny duplikáty</translation>
     </message>
@@ -1878,8 +1951,8 @@ To by mohlo znamenat, že zdroj je prázdný nebo že zařízení není připoje
         <translation>Soubory</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3570"/>
-        <location filename="../mainwindow.ui" line="4786"/>
+        <location filename="../mainwindow.ui" line="3615"/>
+        <location filename="../mainwindow.ui" line="4852"/>
         <location filename="../mainwindow_tab_catalogs.cpp" line="590"/>
         <source>Total Size</source>
         <translation>Celková velikost</translation>
@@ -2072,19 +2145,19 @@ Soubor lze opravit ručně, navštivte stránku wiki:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt; Úložiště / oprava nových verzí &lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6073"/>
+        <location filename="../mainwindow.ui" line="6139"/>
         <location filename="../mainwindow_tab_storage.cpp" line="469"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6260"/>
+        <location filename="../mainwindow.ui" line="6326"/>
         <location filename="../mainwindow_tab_storage.cpp" line="474"/>
         <source>Label</source>
         <translation>Označení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6270"/>
+        <location filename="../mainwindow.ui" line="6336"/>
         <location filename="../mainwindow_tab_storage.cpp" line="475"/>
         <source>FileSystem</source>
         <translation>Souborový systém</translation>
@@ -2096,37 +2169,37 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Celkový</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6230"/>
+        <location filename="../mainwindow.ui" line="6296"/>
         <location filename="../mainwindow_tab_storage.cpp" line="478"/>
         <source>Brand/Model</source>
         <translation>Značka / Model</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6240"/>
+        <location filename="../mainwindow.ui" line="6306"/>
         <location filename="../mainwindow_tab_storage.cpp" line="479"/>
         <source>Serial Number</source>
         <translation>Sériové číslo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6250"/>
+        <location filename="../mainwindow.ui" line="6316"/>
         <location filename="../mainwindow_tab_storage.cpp" line="480"/>
         <source>Build Date</source>
         <translation>Datum výstavby</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6113"/>
+        <location filename="../mainwindow.ui" line="6179"/>
         <location filename="../mainwindow_tab_storage.cpp" line="481"/>
         <source>Content Type</source>
         <translation>Typ obsahu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6123"/>
+        <location filename="../mainwindow.ui" line="6189"/>
         <location filename="../mainwindow_tab_storage.cpp" line="482"/>
         <source>Container</source>
         <translation>Kontejner</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6133"/>
+        <location filename="../mainwindow.ui" line="6199"/>
         <location filename="../mainwindow_tab_storage.cpp" line="483"/>
         <source>Comment</source>
         <translation>Komentář</translation>
@@ -2188,10 +2261,15 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Konverze dokončena.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4971"/>
+        <location filename="../mainwindow.ui" line="5037"/>
         <location filename="../mainwindow_tab_explore.cpp" line="647"/>
         <source>Directory</source>
         <translation>Složku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_explore.cpp" line="215"/>
+        <source>Move file to Trash</source>
+        <translation>Přesunout soubor do koše</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_explore.cpp" line="235"/>

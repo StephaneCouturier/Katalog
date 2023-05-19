@@ -591,7 +591,7 @@
             if (QMessageBox::warning(this,
                                      tr("Confirmation"),
                                      "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                     +tr("Move this file to the trash?<br/><span style='font-style: italic;'>%1</span><br/>").arg(selectedFileFullPath),
+                                         +tr("Move this file to the trash?")+QString("<br/><span style='font-style: italic;'>%1</span><br/>").arg(selectedFileFullPath),
                                      QMessageBox::Yes|QMessageBox::Cancel)
                 == QMessageBox::Yes){
 
@@ -609,13 +609,8 @@
         QString MainWindow::moveFileToTrash(QString fileFullPath)
         {
             QString pathInTrash;
-
-            if (QFile::moveToTrash(fileFullPath, &pathInTrash)){
-                return pathInTrash; //QMessageBox::warning(this, tr("Warning"), tr("Moved to trash:<br/>") + pathInTrash);
-            }
-            else{
-                return pathInTrash; //QMessageBox::warning(this, tr("Warning"), tr("Move to trash failed."));
-            }
+            QFile::moveToTrash(fileFullPath, &pathInTrash);
+            return pathInTrash;
         }
         //----------------------------------------------------------------------
         void MainWindow::searchContextDeleteFile()
@@ -630,7 +625,7 @@
             if (QMessageBox::critical(this,
                                       tr("Confirmation"),
                                       "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                          +tr("Delete this file?<br/><span style='font-style: italic;'>%1").arg(selectedFileFullPath),
+                                          +tr("Delete this file?")+QString("<br/><span style='font-style: italic;'>%1").arg(selectedFileFullPath),
                                       QMessageBox::Yes|QMessageBox::Cancel)
                 == QMessageBox::Yes) {
 
@@ -2153,41 +2148,41 @@
             }
 
             //No selection
-            if(selectedProcess=="Select..."){
+            if(selectedProcess==tr("Select...")){
                         QMessageBox::information(this,"Katalog",tr("Select first a process to be applied to all results below."));
                         return;
             }
 
             //Export Results
-            else if(selectedProcess=="Export Results"){
+            else if(selectedProcess==tr("Export Results")){
                         QString exportFileName = exportSearchResults();
                         if (exportFileName !=""){
-                            QMessageBox::information(this,"Katalog",tr("Results exported to the collection folder:")
-                                                                          +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+                            QMessageBox msgBox;
+                            msgBox.setWindowTitle("Katalog");
+                            msgBox.setTextFormat(Qt::RichText);
+                            exportFileName = "file://" + exportFileName;
+                            msgBox.setText(tr("Results exported to the collection folder:")
+                                           +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+                            msgBox.setIcon(QMessageBox::Information);
+                            msgBox.exec();
                         }
             }
 
             //KRename
-            else if(selectedProcess=="Rename (KRename)"){
+            else if(selectedProcess==tr("Rename (KRename)")){
                         QProcess process;
                         process.startDetached("krename",resultsFilesList);
-
-                        //inform if process cannot be run
-                        //            if ( process.state() == QProcess::NotRunning ){
-                        //                    //return false;
-                        //                QMessageBox::information(this,"Katalog",tr("Batch error."));
-                        //            }
             }
 
             //Move to trash
-            else if(selectedProcess=="Move to Trash"){
+            else if(selectedProcess==tr("Move to Trash")){
                 QString trashPath;
                 QString fileFullPath;
                 qint64 movedFiles = 0;
                 if (QMessageBox::warning(this,
                                           tr("Confirmation"),
                                          "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                         +tr("Move all %1 files (%2)  in these results to trash?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                         +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
                                           QMessageBox::Yes|QMessageBox::Cancel)
                                         == QMessageBox::Yes) {
                     for (int i = 0; i < newSearch->sFileNames.size(); ++i)
@@ -2201,7 +2196,7 @@
                         else
                             movedFiles+=1;
                     }
-                    QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files in the results.").arg(QString::number(movedFiles), QString::number(filesFoundNumber)));
+                    QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(filesFoundNumber)));
                 }
 
                 //Reset process selection to reduce risk of running it by mistake
@@ -2210,12 +2205,12 @@
             }
 
             //Delete
-            else if(selectedProcess=="Delete"){
+            else if(selectedProcess==tr("Delete")){
                 qint64 deletedFiles = 0;
                 if (QMessageBox::critical(this,
                                           tr("Confirmation"),
                                           "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                          +tr("Delete all %1 files (%2) in these results?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                          +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
                                           QMessageBox::Yes|QMessageBox::Cancel)
                     == QMessageBox::Yes) {
                     for (int i = 0; i < newSearch->sFileNames.size(); ++i)
@@ -2226,7 +2221,7 @@
                         }
                         result="";
                     }
-                    QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files in the results.").arg(QString::number(deletedFiles), QString::number(filesFoundNumber)));
+                    QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(filesFoundNumber)));
                 }
 
                 //Reset process selection to reduce risk of running it by mistake
@@ -2240,7 +2235,7 @@
             QStringList catalogMetadata;
             QString fullFileName;
 
-            int result = QMessageBox::warning(this,"Katalog",
+            int result = QMessageBox::question(this,"Katalog",
                       tr("Create a catalog from these results?"
                          "<br/>- Yes: create an idx file and use it to refine your search,"
                          "<br/>- No:  simply export results to a csv file."),
