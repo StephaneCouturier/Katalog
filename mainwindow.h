@@ -194,7 +194,6 @@ class MainWindow : public QMainWindow
             void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
             QString exportSearchResults();
             void batchProcessSearchResults();
-            QString getCatalogStorageName(QString catalogFilePath);
             void insertSearchHistoryToTable();
             void loadSearchHistoryTableToModel();
             void saveSearchHistoryTableToFile();

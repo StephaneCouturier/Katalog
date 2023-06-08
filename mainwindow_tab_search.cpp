@@ -1669,48 +1669,6 @@
             }
         }
         //----------------------------------------------------------------------
-        QString MainWindow::getCatalogStorageName(QString catalogFilePath)
-        {
-            //DEV: REPLACE BY SQL QUERY ON Catalog TABLE
-
-            //LoadCatalogInfo(file);
-            // Get infos stored in the file
-            QFile catalogFile(catalogFilePath);
-            if(!catalogFile.open(QIODevice::ReadOnly)) {
-                return "";
-            }
-
-            QTextStream textStream(&catalogFile);
-
-            while (true)
-            {
-                QString line = textStream.readLine();
-
-                if (line.left(19)=="<catalogSourcePath>"){
-
-                }
-                else if (line.left(18)=="<catalogFileCount>"){
-
-                }
-                else if (line.left(22)=="<catalogTotalFileSize>"){
-
-                }
-                else if (line.left(22)=="<catalogIncludeHidden>"){
-
-                }
-                else if (line.left(17)=="<catalogFileType>"){
-
-                }
-                else if (line.left(16)=="<catalogStorage>"){
-                    QString catalogStorageName = line.right(line.size() - line.lastIndexOf(">") - 1);
-                    return catalogStorageName;
-                }
-                else
-                    break;
-            }
-            return "";
-        }
-        //----------------------------------------------------------------------
 
         //UI methods
         void MainWindow::initiateSearchFields()
