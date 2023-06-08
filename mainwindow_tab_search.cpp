@@ -1711,70 +1711,6 @@
             return "";
         }
         //----------------------------------------------------------------------
-        void MainWindow::getLocationCatalogList(QString location)
-        {
-            //DEV: REPLACE BY SQL QUERY ON Storage and Catalog TABLE
-            // get all catalog for storage with matching location
-            /*
-            QSqlQuery queryDeviceNumber;
-            queryDeviceNumber.prepare(
-                        "SELECT * FROM storage, catalog "
-                        "WHERE location = " + selectedStorageLocation );
-            queryDeviceNumber.exec();
-
-            "SELECT * FROM storage, catalog
-            WHERE location = " + location + '"'
-            */
-
-            //QString catalogStorageName;
-
-            //Define storage file
-            QFile storageFile(storageFilePath);
-
-            //Open file
-            if(!storageFile.open(QIODevice::ReadOnly)) {
-                return;
-            }
-
-            // Get list of storage matching the location
-            QTextStream textStream(&storageFile);
-            QStringList locationStorageList;
-            while (true)
-            {
-                QString line = textStream.readLine();
-                if (line.isNull())
-                    break;
-
-                //Split the string by tabulations into a list
-                QStringList fieldList = line.split('\t');
-
-                //Add to the list if the location is matching
-                if ( fieldList[3] == location){
-                    locationStorageList << fieldList[0];
-                }
-            }
-
-            //Get list of catalogs matching these storages
-            QString sourceStorage;
-            foreach(sourceStorage,locationStorageList)
-                    {
-
-                    foreach(sourceCatalog,catalogFileList)
-                        {
-
-                        //get catalog storage name
-                        QString sourceCatalogStorageName;
-                        QString currentCatalogFilePath = collectionFolder + "/" + sourceCatalog + ".idx";
-                        sourceCatalogStorageName = getCatalogStorageName(currentCatalogFilePath);
-
-                        if  ( sourceCatalogStorageName == sourceStorage )
-                            {
-                                    locationCatalogList << sourceCatalog;
-                            }
-                        }
-                    }
-        }
-        //----------------------------------------------------------------------
 
         //UI methods
         void MainWindow::initiateSearchFields()
@@ -2041,61 +1977,50 @@
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
-        {
-            //get current location
-            //QString currentCatalog = ui->Filters_label_DisplayCatalog->text();
-
-            //Query the full list of locations
-            QSqlQuery getCatalogSelectionList;
+        {//Update the list of selected catalogs, based on the selection of Location or Storage device
 
             //Prepare and run the query
-                //common
-                QString queryText = "SELECT c.catalog_name FROM catalog AS c"
-                                    " left JOIN storage AS s ON c.catalog_storage = s.storage_name";
+                QSqlQuery getCatalogSelectionList;
+                QString getCatalogSelectionListSQL = QLatin1String(R"(
+                                                        SELECT c.catalog_name
+                                                        FROM catalog AS c
+                                                        LEFT JOIN storage AS s ON c.catalog_storage = s.storage_name
+                                                    )");
 
-                //filter depending on location and selection.
-                    //Default: ( selectedLocation == "All" and selectedStorage == "All")
+                //Filter depending on location and selection.
+                if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
+                {
+                        getCatalogSelectionListSQL += " WHERE c.catalog_storage =:selectedStorage ";
+                }
+                else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
+                {
+                        getCatalogSelectionListSQL += " WHERE storage_location =:selectedLocation ";
+                }
+                else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
+                {
+                        getCatalogSelectionListSQL += " WHERE c.catalog_storage =:selectedStorage"
+                                                      " AND storage_location =:selectedLocation ";
+                }
 
-                    if      ( selectedLocation == tr("All") and selectedStorage != tr("All"))
-                    {
-                            queryText = queryText + " WHERE c.catalog_storage ='" + selectedStorage + "'";
-                    }
-                    else if ( selectedLocation != tr("All") and selectedStorage == tr("All"))
-                    {
-                            queryText = queryText + " WHERE storage_location ='" + selectedLocation + "'";
-                    }
-                    else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
-                    {
-                            queryText = queryText + " WHERE c.catalog_storage ='" + selectedStorage + "' "
-                                                    " AND storage_location ='" + selectedLocation + "'";
-                    }
-                //common
-                //queryText = queryText + " ORDER BY catalogName ASC";
+                //Order
+                getCatalogSelectionListSQL += " ORDER BY s.storage_location, s.storage_name, c.catalog_name ASC ";
 
-                //run the query
-                getCatalogSelectionList.prepare(queryText);
+                //Run the query
+                getCatalogSelectionList.prepare(getCatalogSelectionListSQL);
+                getCatalogSelectionList.bindValue(":selectedLocation", selectedLocation);
+                getCatalogSelectionList.bindValue(":selectedStorage",  selectedStorage);
                 getCatalogSelectionList.exec();
 
             //Put the results in a list
-                //clear the list of selected catalogs
+                //Clear the list of selected catalogs
                 catalogSelectedList.clear();
 
-                //populate from the query results
+                //Populate from the query results
                 while (getCatalogSelectionList.next()) {
                     catalogSelectedList << getCatalogSelectionList.value(0).toString();
                 }
-                catalogSelectedList.sort(); //DEV: because the SQL "order by" does not work
-            //Prepare the list for the Location combobox
-                QStringList displayCatalogList = catalogSelectedList;
-                //Add the "All" option at the beginning
-                displayCatalogList.insert(0,tr("All"));
 
-            //Send the list to the Search combobox model
-                //QStringListModel *catalogListModel = new QStringListModel();
-                //catalogListModel->setStringList(displayCatalogList);
-                //ui->Filters_comboBox_SelectCatalog->setModel(catalogListModel);
-
-            //Send list to the Statistics combobox (without All or Selected storage options)
+            //Send list to the Statistics combobox
                 QStringListModel *catalogListModelForStats = new QStringListModel(this);
                 catalogListModelForStats->setStringList(catalogSelectedList);
         }

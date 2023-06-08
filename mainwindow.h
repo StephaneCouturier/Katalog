@@ -292,7 +292,6 @@ class MainWindow : public QMainWindow
             QString storageFilePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
-            QStringList locationCatalogList;
             int lastStorageSortSection;
             int lastStorageSortOrder;
 
@@ -420,7 +419,6 @@ class MainWindow : public QMainWindow
             void on_Search_splitter_Results_splitterMoved();
 
             void setupFileContextMenu();
-            void getLocationCatalogList(QString location);
 
             //context menu
             void searchContextOpenFile();
