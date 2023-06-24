@@ -623,7 +623,7 @@
         <location filename="../mainwindow.ui" line="6179"/>
         <location filename="../mainwindow_tab_storage.cpp" line="481"/>
         <source>Content Type</source>
-        <translation>Type de Contentu</translation>
+        <translation>Type de Contenu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6189"/>
