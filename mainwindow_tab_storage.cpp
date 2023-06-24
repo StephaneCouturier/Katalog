@@ -499,7 +499,7 @@
         ui->Storage_treeView_StorageList->header()->resizeSection(9, 150); //BrandModel
         ui->Storage_treeView_StorageList->header()->resizeSection(10,150); //Serial
         ui->Storage_treeView_StorageList->header()->resizeSection(11, 75); //Build date
-        ui->Storage_treeView_StorageList->header()->resizeSection(12, 75); //Content
+        ui->Storage_treeView_StorageList->header()->resizeSection(12,125); //Content
         ui->Storage_treeView_StorageList->header()->resizeSection(13,125); //Container
         ui->Storage_treeView_StorageList->header()->resizeSection(14, 50); //Comment
         ui->Storage_treeView_StorageList->header()->hideSection(15); //Last Update
