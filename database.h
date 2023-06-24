@@ -23,7 +23,7 @@
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   database.h
-// Purpose:     database queries
+// Purpose:     database queries to create tables
 // Description:
 // Author:      Stephane Couturier
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,16 @@
                             storage_date_updated  TEXT)
             )");
 
-        // FILE (storing all catalogs files)---------------------------------
+        // VIRTUALSTORAGE  ------------------------------------------------------
+
+            const auto SQL_CREATE_VIRTUAL_STORAGE = QLatin1String(R"(
+                       CREATE TABLE IF NOT EXISTS virtual_storage(
+                            virtual_storage_id          NUMERIC,
+                            virtual_storage_parent_id   NUMERIC,
+                            virtual_storage_name        TEXT)
+            )");
+
+        // FILE (storing all catalogs files)-------------------------------------
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(
                        CREATE TABLE IF NOT EXISTS file(
@@ -91,9 +100,9 @@
                             file_catalog      TEXT,
                             file_full_path    TEXT,
                             PRIMARY KEY("id_file" AUTOINCREMENT))
-                )");
+            )");
 
-        // FILETEMP (one-off requests) ----------------------------------------------
+        // FILETEMP (one-off requests) ------------------------------------------
 
             const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                    CREATE TABLE IF NOT EXISTS  filetemp(
@@ -202,6 +211,5 @@
             )");
 
 //-------------------------------------------------------------------------------
-
 
 #endif // DATABASE_H

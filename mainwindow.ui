@@ -394,6 +394,38 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_12">
                 <item>
+                 <widget class="QComboBox" name="Filter_comboBox_TreeType">
+                  <property name="minimumSize">
+                   <size>
+                    <width>145</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Define how the search text should be used.</string>
+                  </property>
+                  <property name="whatsThis">
+                   <string>Define how the search text should be used.</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Location / Storage / Catatog</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Virtual Storage</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="Filters_label_TreeSelectionTitle">
                   <property name="minimumSize">
                    <size>

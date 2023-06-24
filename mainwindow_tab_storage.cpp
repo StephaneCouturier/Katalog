@@ -436,6 +436,74 @@
 
     }
     //--------------------------------------------------------------------------
+    void MainWindow::loadVirtualStorageFileToTable()
+    {
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
+                        DELETE FROM virtual_storage
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        querySQL = QLatin1String(R"(
+                        INSERT INTO virtual_storage (
+                                        virtual_storage_id,
+                                        virtual_storage_parent_id,
+                                        virtual_storage_name )
+                        VALUES(         :virtual_storage_id,
+                                        :virtual_storage_parent_id,
+                                        :virtual_storage_name )
+                    )");
+        query.prepare(querySQL);
+
+        query.bindValue(":virtual_storage_id",1);
+        query.bindValue(":virtual_storage_parent_id",0);
+        query.bindValue(":virtual_storage_name","drive1");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",2);
+        query.bindValue(":virtual_storage_parent_id",0);
+        query.bindValue(":virtual_storage_name","drive2");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",3);
+        query.bindValue(":virtual_storage_parent_id",1);
+        query.bindValue(":virtual_storage_name","drive1sub1");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",4);
+        query.bindValue(":virtual_storage_parent_id",2);
+        query.bindValue(":virtual_storage_name","drive2sub1");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",5);
+        query.bindValue(":virtual_storage_parent_id",2);
+        query.bindValue(":virtual_storage_name","drive2sub2");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",6);
+        query.bindValue(":virtual_storage_parent_id",0);
+        query.bindValue(":virtual_storage_name","drive3");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",7);
+        query.bindValue(":virtual_storage_parent_id",3);
+        query.bindValue(":virtual_storage_name","drive1sub1sub1");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",8);
+        query.bindValue(":virtual_storage_parent_id",3);
+        query.bindValue(":virtual_storage_name","drive1sub1sub2");
+        query.exec();
+
+        query.bindValue(":virtual_storage_id",9);
+        query.bindValue(":virtual_storage_parent_id",8);
+        query.bindValue(":virtual_storage_name","drive1sub1sub2sub1");
+        query.exec();
+
+    }
+    //--------------------------------------------------------------------------
     void MainWindow::loadStorageTableToModel()
     {
         //Load, filter, and sort data model
@@ -555,6 +623,82 @@
             ui->Storage_pushButton_CreateList->setEnabled(false);
     }
     //--------------------------------------------------------------------------
+    void MainWindow::loadVirtualStorageTableToSelectionTreeModel()
+    {
+            //Add level 0
+            QSqlQuery query;
+            QString querySQL;
+            querySQL = QLatin1String(R"(
+                        SELECT  virtual_storage_id,
+                                virtual_storage_parent_id,
+                                virtual_storage_name
+                        FROM  virtual_storage
+                        WHERE virtual_storage_parent_id =:virtual_storage_parent_id
+                        ORDER BY virtual_storage_id
+                    )");
+            query.prepare(querySQL);
+
+            query.bindValue(":virtual_storage_parent_id",0);
+            query.exec();
+
+            QStandardItemModel *standardModel = new QStandardItemModel ;
+            QStandardItem *rootNode = standardModel->invisibleRootItem();
+
+            while(query.next()){
+                int id        = query.value(0).toInt();
+                QString name  = query.value(2).toString();
+
+                QStandardItem *drive0Item = new QStandardItem(name);
+                rootNode->appendRow(drive0Item);
+
+                //Add level 1
+                QSqlQuery query1;
+                query1.prepare(querySQL);
+                query1.bindValue(":virtual_storage_parent_id",id);
+                query1.exec();
+
+                while(query1.next()){
+                    int id1        = query1.value(0).toInt();
+                    QString name1  = query1.value(2).toString();
+
+                    QStandardItem *drive1Item = new QStandardItem(name1);
+                    drive0Item->appendRow(drive1Item);
+
+                    //Add level 2
+                    QSqlQuery query2;
+                    query2.prepare(querySQL);
+                    query2.bindValue(":virtual_storage_parent_id",id1);
+                    query2.exec();
+
+                    while(query2.next()){
+                        int id2        = query2.value(0).toInt();
+                        QString name2  = query2.value(2).toString();
+
+                        QStandardItem *drive2Item = new QStandardItem(name2);
+                        drive1Item->appendRow(drive2Item);
+
+                        //Add level 3
+                        QSqlQuery query3;
+                        query3.prepare(querySQL);
+                        query3.bindValue(":virtual_storage_parent_id",id2);
+                        query3.exec();
+
+                        while(query3.next()){
+                            //int id3        = query2.value(0).toInt();
+                            QString name3  = query3.value(2).toString();
+
+                            QStandardItem *drive3Item = new QStandardItem(name3);
+                            drive2Item->appendRow(drive3Item);
+                        }
+                    }
+                }
+            }
+
+            ui->Filters_treeView_Devices->setModel(standardModel);
+            ui->Filters_treeView_Devices->expandAll();
+
+    }
+    //----------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
     {
         //verify if path is available / not empty

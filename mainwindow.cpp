@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //#endif
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.21";
-        releaseDate     = "2023-05-19";
+        currentVersion  = "1.22";
+        releaseDate     = "2023-06-24";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -79,6 +79,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             if(developmentMode==false){
                 hideDevelopmentUIItems();
+            }
+            else{
+                ui->Filters_label_TreeSelectionTitle->hide();
             }
 
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);

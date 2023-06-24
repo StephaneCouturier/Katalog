@@ -153,6 +153,17 @@
         }
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1)
+    {
+        if (arg1==tr("Location / Storage / Catatog")){
+            loadStorageTableToSelectionTreeModel();
+        }
+        else if (arg1==tr("Virtual Storage")){
+            loadVirtualStorageFileToTable();
+            loadVirtualStorageTableToSelectionTreeModel();
+        }
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
     {
         setTreeExpandState(true);

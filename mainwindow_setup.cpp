@@ -139,6 +139,9 @@
         if (!q.exec(SQL_CREATE_STORAGE))
             return q.lastError();
 
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
+            return q.lastError();
+
         if (!q.exec(SQL_CREATE_FILE))
             return q.lastError();
 
@@ -368,6 +371,9 @@
     {
         //Tabs
             ui->tabWidget->removeTab(8);
+
+        //Filter
+            ui->Filter_comboBox_TreeType->hide();
 
         //Search
             //hide Krename if not linux

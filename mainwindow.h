@@ -297,8 +297,10 @@ class MainWindow : public QMainWindow
             void createStorageList();
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
+            void loadVirtualStorageFileToTable();
             void loadStorageTableToModel();
             void loadStorageTableToSelectionTreeModel();
+            void loadVirtualStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
@@ -349,6 +351,7 @@ class MainWindow : public QMainWindow
             void on_Filter_pushButton_Explore_clicked();
             void on_Filter_pushButton_Update_clicked();
             void on_Filters_pushButton_TreeExpandCollapse_clicked();
+            void on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1);
             void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
 
             void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
