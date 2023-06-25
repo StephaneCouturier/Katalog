@@ -289,6 +289,8 @@ class MainWindow : public QMainWindow
 
         //TAB: Storage
             QString storageFilePath;
+            QString virtualStorageFilePath;
+            QString virtualStorageCatalogFilePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             int lastStorageSortSection;
@@ -298,6 +300,7 @@ class MainWindow : public QMainWindow
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
             void loadVirtualStorageFileToTable();
+            void loadVirtualStorageCatalogFileToTable();
             void loadStorageTableToModel();
             void loadStorageTableToSelectionTreeModel();
             void loadVirtualStorageTableToSelectionTreeModel();

@@ -142,6 +142,9 @@
         if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
             return q.lastError();
 
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG))
+            return q.lastError();
+
         if (!q.exec(SQL_CREATE_FILE))
             return q.lastError();
 
@@ -703,6 +706,8 @@
     {
         searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
         storageFilePath       = collectionFolder + "/" + "storage.csv";
+        virtualStorageFilePath       = collectionFolder + "/" + "virtual_storage.csv";
+        virtualStorageCatalogFilePath = collectionFolder + "/" + "virtual_storage_catalog.csv";
         statisticsCatalogFileName    = "statistics_catalog.csv";
         statisticsCatalogFilePath    = collectionFolder + "/" + statisticsCatalogFileName;
         statisticsStorageFileName    = "statistics_storage.csv";

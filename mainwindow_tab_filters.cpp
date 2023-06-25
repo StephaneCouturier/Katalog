@@ -160,8 +160,12 @@
         }
         else if (arg1==tr("Virtual Storage")){
             loadVirtualStorageFileToTable();
+            loadVirtualStorageCatalogFileToTable();
             loadVirtualStorageTableToSelectionTreeModel();
         }
+
+        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Filters/LastTreeType", arg1);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()

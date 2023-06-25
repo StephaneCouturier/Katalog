@@ -88,6 +88,14 @@
                             virtual_storage_name        TEXT)
             )");
 
+        // VIRTUALSTORAGE CATALOG ------------------------------------------------------
+
+            const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
+                       CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
+                            virtual_storage_id      NUMERIC,
+                            catalog_name            TEXT)
+            )");
+
         // FILE (storing all catalogs files)-------------------------------------
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(

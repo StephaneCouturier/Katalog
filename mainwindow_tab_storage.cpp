@@ -457,50 +457,132 @@
                     )");
         query.prepare(querySQL);
 
-        query.bindValue(":virtual_storage_id",1);
-        query.bindValue(":virtual_storage_parent_id",0);
-        query.bindValue(":virtual_storage_name","drive1");
+        //Define storage file and prepare stream
+        QFile virtualStorageFile(virtualStorageFilePath);
+        QTextStream textStream(&virtualStorageFile);
+
+        //Open file or return information
+        if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
+                //if there is no storage file, reset data and buttons
+                QMessageBox::information(this,"Katalog","No virtual_storage file was found in the current collection folder."
+                                             "\nPlease create one with the button 'Create list'\n");
+
+                return;
+        }
+
+        //Test file validity (application breaks between v0.13 and v0.14)
+        QString line = textStream.readLine();
+        if (line.left(2)!="ID"){
+                QMessageBox::warning(this,"Katalog",
+                                     tr("A virtual_storage.csv file was found, but could not be loaded.\n"
+                                        "Likely, it was made with an older version of Katalog.\n"
+                                        "The file can be fixed manually, please visit the wiki page:\n"
+                                        "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>Storage/fixing-for-new-versions</a>")
+                                     );
+                return;
+        }
+
+        //Clear all entries of the current table
+        //queryDelete.exec();
+
+        //Load virtualStorage device lines to table
+        while (true)
+        {
+
+                QString line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                    if (line.left(2)!="ID"){//skip the first line with headers
+
+                        //Split the string with tabulation into a list
+                        QStringList fieldList = line.split('\t');
+
+                        QString querySQL = QLatin1String(R"(
+                                INSERT INTO virtual_storage(
+                                        virtual_storage_id,
+                                        virtual_storage_parent_id,
+                                        virtual_storage_name )
+                                VALUES(
+                                        :virtual_storage_id,
+                                        :virtual_storage_parent_id,
+                                        :virtual_storage_name )
+                                )");
+
+                        QSqlQuery insertQuery;
+                        insertQuery.prepare(querySQL);
+                        insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
+                        insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
+                        insertQuery.bindValue(":virtual_storage_name",fieldList[2]);
+                        insertQuery.exec();
+                    }
+        }
+        virtualStorageFile.close();
+
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::loadVirtualStorageCatalogFileToTable()
+    {
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
+                        DELETE FROM virtual_storage_catalog
+                    )");
+        query.prepare(querySQL);
         query.exec();
 
-        query.bindValue(":virtual_storage_id",2);
-        query.bindValue(":virtual_storage_parent_id",0);
-        query.bindValue(":virtual_storage_name","drive2");
-        query.exec();
+        querySQL = QLatin1String(R"(
+                        INSERT INTO virtual_storage_catalog (
+                                        virtual_storage_id,
+                                        catalog_name )
+                        VALUES(         :virtual_storage_id,
+                                        :catalog_name )
+                    )");
+        query.prepare(querySQL);
 
-        query.bindValue(":virtual_storage_id",3);
-        query.bindValue(":virtual_storage_parent_id",1);
-        query.bindValue(":virtual_storage_name","drive1sub1");
-        query.exec();
+        //Define storage file and prepare stream
+        QFile virtualStorageCatalogFile(virtualStorageCatalogFilePath);
+        QTextStream textStream(&virtualStorageCatalogFile);
 
-        query.bindValue(":virtual_storage_id",4);
-        query.bindValue(":virtual_storage_parent_id",2);
-        query.bindValue(":virtual_storage_name","drive2sub1");
-        query.exec();
+        //Open file or return information
+        if(!virtualStorageCatalogFile.open(QIODevice::ReadOnly)) {
+                    //if there is no storage file, reset data and buttons
+                    QMessageBox::information(this,"Katalog","No virtual_storage_catalog file was found in the current collection folder."
+                                                 "\nPlease create one with the button 'Create list'\n");
 
-        query.bindValue(":virtual_storage_id",5);
-        query.bindValue(":virtual_storage_parent_id",2);
-        query.bindValue(":virtual_storage_name","drive2sub2");
-        query.exec();
+                    return;
+        }
 
-        query.bindValue(":virtual_storage_id",6);
-        query.bindValue(":virtual_storage_parent_id",0);
-        query.bindValue(":virtual_storage_name","drive3");
-        query.exec();
+        //Test file validity (application breaks between v0.13 and v0.14)
+        QString line = textStream.readLine();
+        if (line.left(2)!="ID"){
+                    QMessageBox::warning(this,"Katalog",
+                                         tr("A virtual_storage_catalog.csv file was found, but could not be loaded.\n"
+                                            "Likely, it was made with an older version of Katalog.\n"
+                                            "The file can be fixed manually, please visit the wiki page:\n"
+                                            "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>Storage/fixing-for-new-versions</a>")
+                                         );
+                    return;
+        }
 
-        query.bindValue(":virtual_storage_id",7);
-        query.bindValue(":virtual_storage_parent_id",3);
-        query.bindValue(":virtual_storage_name","drive1sub1sub1");
-        query.exec();
+        //Load virtualStorage device lines to table
+        while (true)
+        {
 
-        query.bindValue(":virtual_storage_id",8);
-        query.bindValue(":virtual_storage_parent_id",3);
-        query.bindValue(":virtual_storage_name","drive1sub1sub2");
-        query.exec();
+                    QString line = textStream.readLine();
+                    if (line.isNull())
+                        break;
+                    else if (line.left(2)!="ID"){//skip the first line with headers
 
-        query.bindValue(":virtual_storage_id",9);
-        query.bindValue(":virtual_storage_parent_id",8);
-        query.bindValue(":virtual_storage_name","drive1sub1sub2sub1");
-        query.exec();
+                        //Split the string with tabulation into a list
+                        QStringList fieldList = line.split('\t');
+
+                        query.bindValue(":virtual_storage_id",fieldList[0].toInt());
+                        query.bindValue(":catalog_name",fieldList[1]);
+                        query.exec();
+                    }
+        }
+        virtualStorageCatalogFile.close();
 
     }
     //--------------------------------------------------------------------------
@@ -625,7 +707,21 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadVirtualStorageTableToSelectionTreeModel()
     {
-            //Add level 0
+
+            //Prepare query for catalogs
+            QSqlQuery queryCatalog;
+            QString queryCatalogSQL;
+            queryCatalogSQL = QLatin1String(R"(
+                        SELECT  catalog_name
+                        FROM  virtual_storage_catalog
+                        WHERE virtual_storage_id =:virtual_storage_id
+                        ORDER BY catalog_name
+                    )");
+
+            queryCatalog.prepare(queryCatalogSQL);
+
+
+            //Add virtual_storage level 0 (under hidden root item)
             QSqlQuery query;
             QString querySQL;
             querySQL = QLatin1String(R"(
@@ -645,16 +741,17 @@
             QStandardItem *rootNode = standardModel->invisibleRootItem();
 
             while(query.next()){
-                int id        = query.value(0).toInt();
+                int id0        = query.value(0).toInt();
                 QString name  = query.value(2).toString();
 
                 QStandardItem *drive0Item = new QStandardItem(name);
                 rootNode->appendRow(drive0Item);
 
-                //Add level 1
+
+                //Add virtual_storage level 1
                 QSqlQuery query1;
                 query1.prepare(querySQL);
-                query1.bindValue(":virtual_storage_parent_id",id);
+                query1.bindValue(":virtual_storage_parent_id",id0);
                 query1.exec();
 
                 while(query1.next()){
@@ -664,7 +761,20 @@
                     QStandardItem *drive1Item = new QStandardItem(name1);
                     drive0Item->appendRow(drive1Item);
 
-                    //Add level 2
+                    //Add Catalogs
+                    queryCatalog.bindValue(":virtual_storage_id",id0);
+                    queryCatalog.exec();
+
+                    while(queryCatalog.next()){
+                        //int id        = query.value(0).toInt();
+                        QString catalog_name  = query.value(1).toString();
+                        qDebug()<<name;
+                        QStandardItem *catalogItem = new QStandardItem(catalog_name);
+                        drive0Item->appendRow(catalogItem);
+
+                    }
+
+                    //Add virtual_storage level 2
                     QSqlQuery query2;
                     query2.prepare(querySQL);
                     query2.bindValue(":virtual_storage_parent_id",id1);
@@ -677,7 +787,23 @@
                         QStandardItem *drive2Item = new QStandardItem(name2);
                         drive1Item->appendRow(drive2Item);
 
-                        //Add level 3
+
+                        //Add Catalogs
+                        queryCatalog.bindValue(":virtual_storage_id",id1);
+                        queryCatalog.exec();
+                        qDebug()<<queryCatalog.lastError();
+
+                        while(queryCatalog.next()){
+                            //int id        = query.value(0).toInt();
+                            QString catalog_name  = query.value(0).toString();
+                            qDebug()<<catalog_name;
+
+                            QStandardItem *catalogItem = new QStandardItem(catalog_name);
+                            drive1Item->appendRow(catalogItem);
+
+                        }
+
+                        //Add virtual_storage level 3
                         QSqlQuery query3;
                         query3.prepare(querySQL);
                         query3.bindValue(":virtual_storage_parent_id",id2);
@@ -689,6 +815,18 @@
 
                             QStandardItem *drive3Item = new QStandardItem(name3);
                             drive2Item->appendRow(drive3Item);
+
+                            //Add Catalogs
+                            queryCatalog.bindValue(":virtual_storage_id",id2);
+                            queryCatalog.exec();
+
+                            while(queryCatalog.next()){
+                                //int id        = query.value(0).toInt();
+                                QString catalog_name  = query.value(1).toString();
+
+                                QStandardItem *catalogItem = new QStandardItem(catalog_name);
+                                drive2Item->appendRow(catalogItem);
+                            }
                         }
                     }
                 }

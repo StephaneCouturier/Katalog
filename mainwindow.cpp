@@ -175,6 +175,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             //Set file types
             setFileTypes();
 
+            //last tree type selected
+            QString selectedTreeType = settings.value("Filters/LastTreeType").toString();
+            ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
+
         //Setup tab: Explore
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
             ui->Explore_checkBox_DisplaySubFolders->setChecked(optionDisplaySubFolders);
