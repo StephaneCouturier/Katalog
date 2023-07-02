@@ -31,34 +31,33 @@
 #ifndef STORAGETREEITEM_H
 #define STORAGETREEITEM_H
 
-
 #include <QList>
 #include <QVariant>
 #include <QtSql>
 #include <QVector>
 
-class TreeItem
+class StorageTreeItem
 {
 public:
-    explicit TreeItem(const QVector<QVariant> &data, TreeItem *parent = nullptr);
-    ~TreeItem();
+    explicit StorageTreeItem(const QVector<QVariant> &data, StorageTreeItem *parent = nullptr);
+    ~StorageTreeItem();
 
-    TreeItem *child(int number);
+    StorageTreeItem *child(int number);
     int childCount() const;
     int columnCount() const;
     QVariant data(int column) const;
     bool insertChildren(int position, int count, int columns);
     bool insertColumns(int position, int columns);
-    TreeItem *parent();
+    StorageTreeItem *parent();
     bool removeChildren(int position, int count);
     bool removeColumns(int position, int columns);
     int childNumber() const;
     bool setData(int column, const QVariant &value);
 
 private:
-    QVector<TreeItem*> childItems;
+    QVector<StorageTreeItem*> childItems;
     QVector<QVariant> itemData;
-    TreeItem *parentItem;
+    StorageTreeItem *parentItem;
 };
 
 #endif // STORAGETREEITEM_H

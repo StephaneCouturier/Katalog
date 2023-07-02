@@ -274,7 +274,7 @@
                 selectedFilterCatalogName     = ui->Filters_label_DisplayCatalog->text();
 
                 //Refresh list
-                refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
+                refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
 
                 //Restore selcted catalog
                 ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);

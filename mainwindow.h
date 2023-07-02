@@ -167,6 +167,8 @@ class MainWindow : public QMainWindow
 
             QString selectedFilterStorageLocation;
             QString selectedFilterStorageName;
+            QString selectedFilterVirtualStorageID;
+            QString selectedFilterVirtualStorageName;
             QString selectedFilterCatalogName;
             QString selectedConnectedDrivePath;
 
@@ -191,7 +193,7 @@ class MainWindow : public QMainWindow
             void getSearchCriteria();
             void refreshLocationSelectionList();
             void refreshStorageSelectionList(QString selectedLocation);
-            void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage);
+            void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage, QString selectedVirtualStorage);
             QString exportSearchResults();
             void batchProcessSearchResults();
             void insertSearchHistoryToTable();
@@ -535,8 +537,8 @@ class MainWindow : public QMainWindow
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
 
         //DEV
-            void on_Storage_pushButton_TestMedia_clicked();
-
+            void on_TEST_pushButton_TestMedia_clicked();
+            void on_TEST_pushButton_VirtualStorage_clicked();
 };
 
 #endif // MAINWINDOW_H

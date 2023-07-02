@@ -1934,7 +1934,7 @@
             displayStorageList.insert(0,tr("All"));
         }
         //----------------------------------------------------------------------
-        void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage)
+        void MainWindow::refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage, QString selectedVirtualStorage)
         {//Update the list of selected catalogs, based on the selection of Location or Storage device
 
             //Prepare and run the query
@@ -1954,17 +1954,28 @@
                 {
                         getCatalogSelectionListSQL += " WHERE storage_location =:selectedLocation ";
                 }
-                else if ( selectedLocation != tr("All") and selectedStorage != tr("All"))
+                else if ( selectedLocation == tr("All") and selectedStorage == tr("All") and selectedVirtualStorage == tr("All"))
                 {
                         getCatalogSelectionListSQL += " WHERE c.catalog_storage =:selectedStorage"
                                                       " AND storage_location =:selectedLocation ";
+                } else
+               if ( selectedLocation == tr("All") and selectedStorage == tr("All") and selectedVirtualStorage != tr("All"))
+                {
+                        QString getCatalogSelectionListSQL = QLatin1String(R"(
+                                                        SELECT c.catalog_name
+                                                        FROM catalog AS c
+                                                        LEFT JOIN virtual_storage_catalog AS vsc ON c.catalog_name = vsc.catalog_name
+                                                        LEFT JOIN virtual_storage         AS vs  ON vs.virtual_storage_id = vsc.virtual_storage_id
+                                                    )");
+                        getCatalogSelectionListSQL += " WHERE vs.virtual_storage_name =':virtual_storage_name'";
                 }
 
                 //Order
-                getCatalogSelectionListSQL += " ORDER BY s.storage_location, s.storage_name, c.catalog_name ASC ";
+                getCatalogSelectionListSQL += " ORDER BY c.catalog_name ASC ";
 
                 //Run the query
                 getCatalogSelectionList.prepare(getCatalogSelectionListSQL);
+                getCatalogSelectionList.bindValue(":virtual_storage_name", selectedVirtualStorage);
                 getCatalogSelectionList.bindValue(":selectedLocation", selectedLocation);
                 getCatalogSelectionList.bindValue(":selectedStorage",  selectedStorage);
                 getCatalogSelectionList.exec();

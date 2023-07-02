@@ -352,7 +352,7 @@
                 }
 
                 loadCatalogsTableToModel();
-                refreshCatalogSelectionList("","");
+                refreshCatalogSelectionList("","","");
                 loadStorageTableToSelectionTreeModel();
             }
         }
@@ -532,48 +532,59 @@
     {
         //Generate SQL query from filters.
             QString loadCatalogSQL;
+            QSqlQuery loadCatalogQuery;
 
             //prepare the main part of the query
             loadCatalogSQL  = QLatin1String(R"(
                                         SELECT
-                                            catalog_name                 ,
-                                            catalog_file_path            ,
-                                            catalog_date_updated         ,
-                                            catalog_file_count           ,
-                                            catalog_total_file_size      ,
-                                            catalog_source_path          ,
-                                            catalog_file_type            ,
-                                            catalog_source_path_is_active,
-                                            catalog_include_hidden       ,
-                                            catalog_include_metadata     ,
-                                            catalog_storage              ,
-                                            storage_location             ,
-                                            catalog_is_full_device       ,
-                                            catalog_date_loaded          ,
-                                            catalog_app_version
+                                            c.catalog_name                 ,
+                                            c.catalog_file_path            ,
+                                            c.catalog_date_updated         ,
+                                            c.catalog_file_count           ,
+                                            c.catalog_total_file_size      ,
+                                            c.catalog_source_path          ,
+                                            c.catalog_file_type            ,
+                                            c.catalog_source_path_is_active,
+                                            c.catalog_include_hidden       ,
+                                            c.catalog_include_metadata     ,
+                                            c.catalog_storage              ,
+                                            s.storage_location             ,
+                                            c.catalog_is_full_device       ,
+                                            c.catalog_date_loaded          ,
+                                            c.catalog_app_version
                                         FROM catalog c
                                         LEFT JOIN storage s ON catalog_storage = storage_name
-                                        WHERE catalog_name !=''
-                                        )");
+                            )");
 
-            if (     selectedFilterStorageLocation == tr("All")
-                 and selectedFilterStorageName     == tr("All")
-                 and selectedFilterCatalogName     == tr("All") )
+            if (     selectedFilterStorageLocation    == tr("All")
+                 and selectedFilterStorageName        == tr("All")
+                 and selectedFilterCatalogName        == tr("All")
+                 and selectedFilterVirtualStorageName == tr("All"))
                 {//No filtering
+
             }
-            else if ( selectedDeviceType == "Location" )
-                loadCatalogSQL = loadCatalogSQL + " AND s.storage_location = '"+ selectedDeviceName +"' ";
+            else if ( selectedDeviceType == "Location" ){
+                loadCatalogSQL += " WHERE s.storage_location =:storage_location ";
+            }
 
-            else if ( selectedDeviceType == "Storage" )
-                loadCatalogSQL = loadCatalogSQL + " AND catalog_storage = '"+ selectedDeviceName +"' ";
-
-            else if ( selectedDeviceType == "Catalog" )
-                loadCatalogSQL = loadCatalogSQL + " AND catalog_name = '"+ selectedDeviceName +"' ";
-
+            else if ( selectedDeviceType == "Storage" ){
+                loadCatalogSQL += " WHERE catalog_storage =:catalog_storage ";
+            }
+            else if ( selectedDeviceType == "Catalog" ){
+                loadCatalogSQL += " WHERE catalog_name =:catalog_name ";
+            }
+            else if ( selectedDeviceType == "VirtualStorage" ){
+                loadCatalogSQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
+                loadCatalogSQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
+                loadCatalogSQL += " WHERE virtual_storage_name =:virtual_storage_name ";
+            }
 
             //Execute query
-            QSqlQuery loadCatalogQuery;
             loadCatalogQuery.prepare(loadCatalogSQL);
+            loadCatalogQuery.bindValue(":storage_location", selectedDeviceName);
+            loadCatalogQuery.bindValue(":catalog_storage", selectedDeviceName);
+            loadCatalogQuery.bindValue(":catalog_name", selectedDeviceName);
+            loadCatalogQuery.bindValue(":virtual_storage_name", selectedFilterVirtualStorageName);
             loadCatalogQuery.exec();
 
             //Format and send to Treeview
@@ -1222,7 +1233,7 @@
 
         //Refresh display
         loadCatalogsTableToModel();
-        refreshCatalogSelectionList("","");
+        refreshCatalogSelectionList("","","");
 
         //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
             if (       newCatalogSourcePath      != catalog->sourcePath

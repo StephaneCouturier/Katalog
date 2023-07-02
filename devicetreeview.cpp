@@ -101,6 +101,9 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
                     }
+                    else if( type=="VirtualStorage" ){
+                        return QIcon(QIcon::fromTheme("drive-harddisk-root"));
+                    }
                     else if( type=="Catalog" ){
                         QModelIndex idx = index.sibling(index.row(), 2);
                         if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
@@ -108,6 +111,9 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                         }
                         else
                             return QIcon(QIcon::fromTheme("media-optical"));
+                    }
+                    else if( type=="" ){
+                        return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                 }
                 break;

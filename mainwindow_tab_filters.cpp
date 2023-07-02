@@ -158,7 +158,7 @@
         if (arg1==tr("Location / Storage / Catatog")){
             loadStorageTableToSelectionTreeModel();
         }
-        else if (arg1==tr("Virtual Storage")){
+        else if (arg1==tr("Virtual Storage / Catalog")){
             loadVirtualStorageFileToTable();
             loadVirtualStorageCatalogFileToTable();
             loadVirtualStorageTableToSelectionTreeModel();
@@ -179,10 +179,15 @@
     {
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+
         if (selectedDeviceType=="Storage"){
             selectedDeviceID = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toInt();
             selectedStorage->setID(selectedDeviceID);
             selectedStorage->loadStorageMetaData();
+        }
+        else if (selectedDeviceType=="VirtualStorage"){
+            selectedFilterVirtualStorageName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+            selectedFilterVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toString();
         }
         else if (selectedDeviceType=="Catalog"){
             selectedCatalog->setName(selectedDeviceName);
@@ -247,13 +252,14 @@
         selectedFilterStorageLocation = tr("All");
         selectedFilterStorageName     = tr("All");
         selectedFilterCatalogName     = tr("All");
+        selectedFilterVirtualStorageName = tr("All");
         ui->Filters_label_DisplayLocation->setText(tr("All"));
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
         selectedCatalog->setName(tr(""));
         selectedCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedFilterStorageLocation);
-        refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName);
+        refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName,selectedFilterVirtualStorageName);
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
 
@@ -271,6 +277,78 @@
         settings.setValue("Selection/SelectedDeviceName", tr("All"));
         refreshDifferencesCatalogSelection();
 
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::filterFromSelectedDevices()
+    {
+        if(selectedDeviceType=="Location"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedFilterStorageLocation = selectedDeviceName;
+            selectedFilterStorageName = tr("All");
+            selectedFilterCatalogName = tr("All");
+            selectedFilterVirtualStorageName = tr("All");
+
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+        }
+        else if (selectedDeviceType=="Storage"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedFilterStorageLocation = tr("All");
+            selectedFilterStorageName = selectedDeviceName;
+            selectedFilterCatalogName = tr("All");
+            selectedFilterVirtualStorageName = tr("All");
+
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+        }
+        else if (selectedDeviceType=="Catalog"){
+            ui->Filter_pushButton_Explore->setEnabled(true);
+            ui->Filter_pushButton_Update->setEnabled(true);
+
+            selectedCatalog->setName(selectedDeviceName);
+            selectedCatalog->loadCatalogMetaData();
+
+            selectedFilterStorageLocation = tr("All");
+            selectedFilterStorageName = tr("All");
+            selectedFilterVirtualStorageName = tr("All");
+            selectedFilterCatalogName = selectedCatalog->name;
+        }
+        else if (selectedDeviceType=="VirtualStorage"){
+            ui->Filter_pushButton_Explore->setEnabled(false);
+            ui->Filter_pushButton_Update->setEnabled(false);
+
+            selectedFilterStorageLocation = tr("All");
+            selectedFilterStorageName = tr("All");
+            selectedFilterCatalogName = tr("All");
+
+            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
+            refreshStorageSelectionList(selectedFilterStorageLocation);
+        }
+
+        //Display selection values and save them
+        ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
+        ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
+        ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+        //ui->Filters_label_DisplayCatalog->setText(selectedFilterVirtualStorageName);
+
+        //Load matching Catalogs, Storage, and Statistics
+        //Load matching Catalogs
+        loadCatalogsTableToModel();
+
+        //Load matching Storage
+        loadStorageTableToModel();
+        updateStorageSelectionStatistics();
+
+        //Load matching Statistics
+        if(databaseMode=="Memory"){
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
+        }
+        loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::setTreeExpandState(bool toggle)
@@ -343,61 +421,214 @@
         //Restore Expand or Collapse Device Tree
         setTreeExpandState(false);
     }
-    //----------------------------------------------------------------------
-    void MainWindow::filterFromSelectedDevices()
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    void MainWindow::loadVirtualStorageTableToSelectionTreeModel()
     {
-        if(selectedDeviceType=="Location"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
+        //Prepare query for catalogs
+        QSqlQuery queryCatalog;
+        QString queryCatalogSQL;
+        queryCatalogSQL = QLatin1String(R"(
+                        SELECT vsc.catalog_name,'Catalog', c.catalog_source_path_is_active
+                        FROM  virtual_storage_catalog vsc
+                        INNER JOIN catalog c ON vsc.catalog_name = c.catalog_name
+                        WHERE vsc.virtual_storage_id =:virtual_storage_id
+                        ORDER BY vsc.catalog_name
+                    )");
+        queryCatalog.prepare(queryCatalogSQL);
 
-            selectedFilterStorageLocation = selectedDeviceName;
-            selectedFilterStorageName = tr("All");
-            selectedFilterCatalogName = tr("All");
+        // Create the tree model
+        QStandardItemModel *model = new QStandardItemModel();
+        model->setHorizontalHeaderLabels({ tr("Name"), tr("Device Type"), tr("ID"), tr("Parent ID") });
 
-            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
-            refreshStorageSelectionList(selectedFilterStorageLocation);
-        }
-        else if (selectedDeviceType=="Storage"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
+        // Retrieve data from the database
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
+                    SELECT  virtual_storage_id,
+                            virtual_storage_parent_id,
+                            virtual_storage_name
+                    FROM  virtual_storage
+                )");
+        query.prepare(querySQL);
+        query.exec();
 
-            selectedFilterStorageLocation = tr("All");
-            selectedFilterStorageName = selectedDeviceName;
-            selectedFilterCatalogName = tr("All");
+        //Populate Model
+        // Create a map to store items by ID for easy access
+        QMap<int, QStandardItem*> itemMap;
 
-            refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
-            refreshStorageSelectionList(selectedFilterStorageLocation);
-        }
-        else if (selectedDeviceType=="Catalog"){
-            ui->Filter_pushButton_Explore->setEnabled(true);
-            ui->Filter_pushButton_Update->setEnabled(true);
+        while (query.next()) {
+            int id = query.value(0).toInt();
+            int parentId = query.value(1).toInt();
+            QString name = query.value(2).toString();
 
-            selectedCatalog->setName(selectedDeviceName);
-            selectedCatalog->loadCatalogMetaData();
+            // Create the item for this row
+            QList<QStandardItem*> rowItems;
+            rowItems << new QStandardItem(name);
+            rowItems << new QStandardItem("VirtualStorage");
+            rowItems << new QStandardItem(QString::number(id));
+            rowItems << new QStandardItem(QString::number(parentId));
 
-            selectedFilterStorageLocation = tr("All");
-            selectedFilterStorageName = tr("All");
-            selectedFilterCatalogName = selectedCatalog->name;
-        }
+            QStandardItem* item = rowItems.at(0); // Get the item representing the name
+            QStandardItem* parentItem = itemMap.value(parentId);
 
-        //Display selection values and save them
-        ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
-        ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-        ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+            if (parentId == 0) {
+                model->appendRow(rowItems); // Add top-level items directly to the model
+            } else {
+                if (parentItem) {
+                    parentItem->appendRow(rowItems); // Append the row to the parent item
 
-        //Load matching Catalogs, Storage, and Statistics
-            //Load matching Catalogs
-            loadCatalogsTableToModel();
 
-            //Load matching Storage
-            loadStorageTableToModel();
-            updateStorageSelectionStatistics();
 
-            //Load matching Statistics
-            if(databaseMode=="Memory"){
-                loadStatisticsCatalogFileToTable();
-                loadStatisticsStorageFileToTable();
+                } else {
+                    qDebug() << "Parent item not found for ID:" << id;
+                    continue; // Skip this row and proceed to the next one
+                }
             }
-            loadStatisticsChart();
+
+            // Store the item in the map for future reference
+            itemMap.insert(id, item);
+
+            //Add Catalogs
+            queryCatalog.bindValue(":virtual_storage_id",id);
+            queryCatalog.exec();
+            while(queryCatalog.next()){
+                //Get data
+                QList<QStandardItem*> rowCatalogItems;
+                rowCatalogItems << new QStandardItem(queryCatalog.value(0).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(1).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(2).toString());
+                rowCatalogItems << new QStandardItem("");
+
+                //Add items
+                item->appendRow(rowCatalogItems);
+            }
+        }
+
+        //Load Model to treeview
+        DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView();
+        deviceTreeProxyModel->setSourceModel(model);
+        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
+        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
+        ui->Filters_treeView_Devices->hideColumn(1);
+        ui->Filters_treeView_Devices->hideColumn(2);
+        ui->Filters_treeView_Devices->hideColumn(3);
+        ui->Filters_treeView_Devices->setColumnWidth(2,0);
+        ui->Filters_treeView_Devices->collapseAll();
+        ui->Filters_treeView_Devices->header()->hide();
+
+        //Restore Expand or Collapse Device Tree
+        setTreeExpandState(false);
+
+        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
+        ui->Filters_treeView_Devices->expandAll();       
     }
+
     //----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    void MainWindow::on_TEST_pushButton_VirtualStorage_clicked()
+    {
+        //Prepare query for catalogs
+        QSqlQuery queryCatalog;
+        QString queryCatalogSQL;
+        queryCatalogSQL = QLatin1String(R"(
+                        SELECT vsc.catalog_name,'Catalog', c.catalog_source_path_is_active
+                        FROM  virtual_storage_catalog vsc
+                        INNER JOIN catalog c ON vsc.catalog_name = c.catalog_name
+                        WHERE vsc.virtual_storage_id =:virtual_storage_id
+                        ORDER BY vsc.catalog_name
+                    )");
+        queryCatalog.prepare(queryCatalogSQL);
+
+        // Create the tree model
+        QStandardItemModel *model = new QStandardItemModel();
+        model->setHorizontalHeaderLabels({ tr("Name"), tr("Device Type"), tr("ID"), tr("Parent ID") });
+
+        // Retrieve data from the database
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
+                    SELECT  virtual_storage_id,
+                            virtual_storage_parent_id,
+                            virtual_storage_name
+                    FROM  virtual_storage
+                )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Populate Model
+        // Create a map to store items by ID for easy access
+        QMap<int, QStandardItem*> itemMap;
+
+        while (query.next()) {
+            int id = query.value(0).toInt();
+            int parentId = query.value(1).toInt();
+            QString name = query.value(2).toString();
+
+            // Create the item for this row
+            QList<QStandardItem*> rowItems;
+            rowItems << new QStandardItem(name);
+            rowItems << new QStandardItem("VirtualStorage");
+            rowItems << new QStandardItem(QString::number(id));
+            rowItems << new QStandardItem(QString::number(parentId));
+
+            QStandardItem* item = rowItems.at(0); // Get the item representing the name
+            QStandardItem* parentItem = itemMap.value(parentId);
+
+            if (parentId == 0) {
+                model->appendRow(rowItems); // Add top-level items directly to the model
+            } else {
+                if (parentItem) {
+                    parentItem->appendRow(rowItems); // Append the row to the parent item
+
+
+
+                } else {
+                    qDebug() << "Parent item not found for ID:" << id;
+                    continue; // Skip this row and proceed to the next one
+                }
+            }
+
+            // Store the item in the map for future reference
+            itemMap.insert(id, item);
+
+            //Add Catalogs
+            queryCatalog.bindValue(":virtual_storage_id",id);
+            queryCatalog.exec();
+            while(queryCatalog.next()){
+                //Get data
+                QList<QStandardItem*> rowCatalogItems;
+                rowCatalogItems << new QStandardItem(queryCatalog.value(0).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(1).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(2).toString());
+                rowCatalogItems << new QStandardItem("");
+
+                //Add items
+                item->appendRow(rowCatalogItems);
+            }
+        }
+
+        //Load Model to treeview
+        DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView();
+        deviceTreeProxyModel->setSourceModel(model);
+        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
+        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
+        ui->Filters_treeView_Devices->hideColumn(1);
+        ui->Filters_treeView_Devices->hideColumn(2);
+        ui->Filters_treeView_Devices->hideColumn(3);
+        ui->Filters_treeView_Devices->setColumnWidth(2,0);
+        ui->Filters_treeView_Devices->collapseAll();
+        ui->Filters_treeView_Devices->header()->hide();
+
+        //Restore Expand or Collapse Device Tree
+        setTreeExpandState(false);
+
+        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
+        ui->Filters_treeView_Devices->expandAll();
+
+        //Load Model to Test treeview
+        ui->TEST_treeView_VirutalStorage->setModel(model);
+        ui->TEST_treeView_VirutalStorage->expandAll();
+    }

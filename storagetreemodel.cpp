@@ -41,7 +41,7 @@ StorageTreeModel::StorageTreeModel(const QStringList &headers, QObject *parent)
     for (const QString &header : headers)
         rootData << header;
 
-    rootItem = new TreeItem(rootData);
+    rootItem = new StorageTreeItem(rootData);
     setupModelData(rootItem);
 }
 
@@ -64,7 +64,7 @@ QVariant StorageTreeModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
-    TreeItem *item = getItem(index);
+    StorageTreeItem *item = getItem(index);
 
     return item->data(index.column());
 }
@@ -77,10 +77,10 @@ Qt::ItemFlags StorageTreeModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
 }
 
-TreeItem *StorageTreeModel::getItem(const QModelIndex &index) const
+StorageTreeItem *StorageTreeModel::getItem(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+        StorageTreeItem *item = static_cast<StorageTreeItem*>(index.internalPointer());
         if (item)
             return item;
     }
@@ -101,11 +101,11 @@ QModelIndex StorageTreeModel::index(int row, int column, const QModelIndex &pare
     if (parent.isValid() && parent.column() != 0)
         return QModelIndex();
 
-    TreeItem *parentItem = getItem(parent);
+    StorageTreeItem *parentItem = getItem(parent);
     if (!parentItem)
         return QModelIndex();
 
-    TreeItem *childItem = parentItem->child(row);
+    StorageTreeItem *childItem = parentItem->child(row);
     if (childItem)
         return createIndex(row, column, childItem);
     return QModelIndex();
@@ -122,7 +122,7 @@ bool StorageTreeModel::insertColumns(int position, int columns, const QModelInde
 
 bool StorageTreeModel::insertRows(int position, int rows, const QModelIndex &parent)
 {
-    TreeItem *parentItem = getItem(parent);
+    StorageTreeItem *parentItem = getItem(parent);
     if (!parentItem)
         return false;
 
@@ -140,8 +140,8 @@ QModelIndex StorageTreeModel::parent(const QModelIndex &index) const
     if (!index.isValid())
         return QModelIndex();
 
-    TreeItem *childItem = getItem(index);
-    TreeItem *parentItem = childItem ? childItem->parent() : nullptr;
+    StorageTreeItem *childItem = getItem(index);
+    StorageTreeItem *parentItem = childItem ? childItem->parent() : nullptr;
 
     if (parentItem == rootItem || !parentItem)
         return QModelIndex();
@@ -163,7 +163,7 @@ bool StorageTreeModel::removeColumns(int position, int columns, const QModelInde
 
 bool StorageTreeModel::removeRows(int position, int rows, const QModelIndex &parent)
 {
-    TreeItem *parentItem = getItem(parent);
+    StorageTreeItem *parentItem = getItem(parent);
     if (!parentItem)
         return false;
 
@@ -176,7 +176,7 @@ bool StorageTreeModel::removeRows(int position, int rows, const QModelIndex &par
 
 int StorageTreeModel::rowCount(const QModelIndex &parent) const
 {
-    const TreeItem *parentItem = getItem(parent);
+    const StorageTreeItem *parentItem = getItem(parent);
 
     return parentItem ? parentItem->childCount() : 0;
 }
@@ -186,7 +186,7 @@ bool StorageTreeModel::setData(const QModelIndex &index, const QVariant &value, 
     if (role != Qt::EditRole)
         return false;
 
-    TreeItem *item = getItem(index);
+    StorageTreeItem *item = getItem(index);
     bool result = item->setData(index.column(), value);
 
     if (result)
@@ -209,14 +209,15 @@ bool StorageTreeModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
-void StorageTreeModel::setupModelData(TreeItem *parent)
+void StorageTreeModel::setupModelData(StorageTreeItem *parent)
 {
-    QVector<TreeItem*> parents;
+    QVector<StorageTreeItem*> parents;
     parents << parent; //add rootItem
     int countLocation=0;
     int countStorage=0;
     int countCatalog=0;
 
+    //Add locations (under hidden root item)
     //Get list of Locations
     QSqlQuery queryLocationList;
     QString queryLocationListSQL = QLatin1String(R"(
@@ -227,7 +228,6 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
     queryLocationList.prepare(queryLocationListSQL);
     queryLocationList.exec();
 
-    //Add locations
     while (queryLocationList.next())
     {
         //Prepare data
@@ -237,7 +237,7 @@ void StorageTreeModel::setupModelData(TreeItem *parent)
         columnData << queryLocationList.value(1).toString();
 
         // Append a new item to the current parent's list of children.
-        TreeItem *parent = parents.last();
+        StorageTreeItem *parent = parents.last();
         parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
         for (int column = 0; column < columnData.size(); ++column)
             parent->child(parent->childCount() - 1)->setData(column, columnData[column]);

@@ -306,7 +306,7 @@
         //Load Storage list
         refreshLocationSelectionList();
         refreshStorageSelectionList(selectedFilterStorageLocation);
-        refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName);
+        refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
         loadStorageTableToSelectionTreeModel();
 
         //Add a storage device for catalogs without one

@@ -420,7 +420,7 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>Virtual Storage</string>
+                    <string>Virtual Storage / Catalog</string>
                    </property>
                   </item>
                  </widget>
@@ -8313,7 +8313,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            <attribute name="title">
             <string>TESTS</string>
            </attribute>
-           <widget class="QPushButton" name="Storage_pushButton_TestMedia">
+           <widget class="QPushButton" name="TEST_pushButton_TestMedia">
             <property name="geometry">
              <rect>
               <x>70</x>
@@ -8333,6 +8333,29 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <y>190</y>
               <width>581</width>
               <height>174</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="TEST_pushButton_VirtualStorage">
+            <property name="geometry">
+             <rect>
+              <x>80</x>
+              <y>410</y>
+              <width>231</width>
+              <height>26</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>TEST TreeModel VirtualStorage</string>
+            </property>
+           </widget>
+           <widget class="QTreeView" name="TEST_treeView_VirutalStorage">
+            <property name="geometry">
+             <rect>
+              <x>80</x>
+              <y>450</y>
+              <width>571</width>
+              <height>192</height>
              </rect>
             </property>
            </widget>

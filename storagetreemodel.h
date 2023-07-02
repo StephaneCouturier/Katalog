@@ -37,7 +37,7 @@
 #include <QVariant>
 #include <QtSql>
 
-class TreeItem;
+class StorageTreeItem;
 
 class StorageTreeModel : public QAbstractItemModel
 {
@@ -74,10 +74,10 @@ public:
                     const QModelIndex &parent = QModelIndex()) override;
 
 private:
-    void setupModelData(TreeItem *parent);
-    TreeItem *getItem(const QModelIndex &index) const;
+    void setupModelData(StorageTreeItem *parent);
+    StorageTreeItem *getItem(const QModelIndex &index) const;
 
-    TreeItem *rootItem;
+    StorageTreeItem *rootItem;
 };
 
 #endif // STORAGETREEMODEL_H

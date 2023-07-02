@@ -31,62 +31,62 @@
 #include "storagetreeitem.h"
 #include <QStringList>
 
-TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
+StorageTreeItem::StorageTreeItem(const QVector<QVariant> &data, StorageTreeItem *parent)
     : itemData(data),
       parentItem(parent)
 {}
 
-TreeItem::~TreeItem()
+StorageTreeItem::~StorageTreeItem()
 {
     qDeleteAll(childItems);
 }
 
-TreeItem *TreeItem::child(int number)
+StorageTreeItem *StorageTreeItem::child(int number)
 {
     if (number < 0 || number >= childItems.size())
         return nullptr;
     return childItems.at(number);
 }
 
-int TreeItem::childCount() const
+int StorageTreeItem::childCount() const
 {
     return childItems.count();
 }
 
-int TreeItem::childNumber() const
+int StorageTreeItem::childNumber() const
 {
     if (parentItem)
-        return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
+        return parentItem->childItems.indexOf(const_cast<StorageTreeItem*>(this));
     return 0;
 }
 
-int TreeItem::columnCount() const
+int StorageTreeItem::columnCount() const
 {
     return itemData.count();
 }
 
-QVariant TreeItem::data(int column) const
+QVariant StorageTreeItem::data(int column) const
 {
     if (column < 0 || column >= itemData.size())
         return QVariant();
     return itemData.at(column);
 }
 
-bool TreeItem::insertChildren(int position, int count, int columns)
+bool StorageTreeItem::insertChildren(int position, int count, int columns)
 {
     if (position < 0 || position > childItems.size())
         return false;
 
     for (int row = 0; row < count; ++row) {
         QVector<QVariant> data(columns);
-        TreeItem *item = new TreeItem(data, this);
+        StorageTreeItem *item = new StorageTreeItem(data, this);
         childItems.insert(position, item);
     }
 
     return true;
 }
 
-bool TreeItem::insertColumns(int position, int columns)
+bool StorageTreeItem::insertColumns(int position, int columns)
 {
     if (position < 0 || position > itemData.size())
         return false;
@@ -94,18 +94,18 @@ bool TreeItem::insertColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.insert(position, QVariant());
 
-    for (TreeItem *child : qAsConst(childItems))
+    for (StorageTreeItem *child : qAsConst(childItems))
         child->insertColumns(position, columns);
 
     return true;
 }
 
-TreeItem *TreeItem::parent()
+StorageTreeItem *StorageTreeItem::parent()
 {
     return parentItem;
 }
 
-bool TreeItem::removeChildren(int position, int count)
+bool StorageTreeItem::removeChildren(int position, int count)
 {
     if (position < 0 || position + count > childItems.size())
         return false;
@@ -116,7 +116,7 @@ bool TreeItem::removeChildren(int position, int count)
     return true;
 }
 
-bool TreeItem::removeColumns(int position, int columns)
+bool StorageTreeItem::removeColumns(int position, int columns)
 {
     if (position < 0 || position + columns > itemData.size())
         return false;
@@ -124,13 +124,13 @@ bool TreeItem::removeColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.remove(position);
 
-    for (TreeItem *child : qAsConst(childItems))
+    for (StorageTreeItem *child : qAsConst(childItems))
         child->removeColumns(position, columns);
 
     return true;
 }
 
-bool TreeItem::setData(int column, const QVariant &value)
+bool StorageTreeItem::setData(int column, const QVariant &value)
 {
     if (column < 0 || column >= itemData.size())
         return false;
