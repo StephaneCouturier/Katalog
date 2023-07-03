@@ -307,7 +307,14 @@
         refreshLocationSelectionList();
         refreshStorageSelectionList(selectedFilterStorageLocation);
         refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
-        loadStorageTableToSelectionTreeModel();
+        if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
+            loadStorageTableToSelectionTreeModel();
+        }
+        else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+            loadVirtualStorageFileToTable();
+            loadVirtualStorageCatalogFileToTable();
+            loadVirtualStorageTableToSelectionTreeModel();
+        }
 
         //Add a storage device for catalogs without one
 
