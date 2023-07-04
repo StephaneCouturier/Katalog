@@ -566,7 +566,6 @@
             else if ( selectedDeviceType == "Location" ){
                 loadCatalogSQL += " WHERE s.storage_location =:storage_location ";
             }
-
             else if ( selectedDeviceType == "Storage" ){
                 loadCatalogSQL += " WHERE catalog_storage =:catalog_storage ";
             }
@@ -576,7 +575,18 @@
             else if ( selectedDeviceType == "VirtualStorage" ){
                 loadCatalogSQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
                 loadCatalogSQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
-                loadCatalogSQL += " WHERE virtual_storage_name =:virtual_storage_name ";
+                loadCatalogSQL +=   " WHERE vsc.virtual_storage_id IN ( "
+                                    " WITH RECURSIVE hierarchy_cte AS ( "
+                                    "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
+                                    "       FROM virtual_storage "
+                                    "       WHERE virtual_storage_id = :virtual_storage_id "
+                                    "       UNION ALL "
+                                    "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
+                                    "       FROM virtual_storage t "
+                                    "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                    "  ) "
+                                    "  SELECT virtual_storage_id "
+                                    "  FROM hierarchy_cte) ";
             }
 
             //Execute query
@@ -584,7 +594,7 @@
             loadCatalogQuery.bindValue(":storage_location", selectedDeviceName);
             loadCatalogQuery.bindValue(":catalog_storage", selectedDeviceName);
             loadCatalogQuery.bindValue(":catalog_name", selectedDeviceName);
-            loadCatalogQuery.bindValue(":virtual_storage_name", selectedFilterVirtualStorageName);
+            loadCatalogQuery.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
             loadCatalogQuery.exec();
 
             //Format and send to Treeview

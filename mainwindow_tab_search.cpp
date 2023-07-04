@@ -1183,7 +1183,6 @@
             //Enable Export
             ui->Search_pushButton_ProcessResults->setEnabled(true);
             ui->Search_comboBox_SelectProcess->setEnabled(true);
-
         }
         //----------------------------------------------------------------------
         //run a search of files for the selected Catalog
@@ -1941,8 +1940,8 @@
                 QSqlQuery getCatalogSelectionList;
                 QString getCatalogSelectionListSQL = QLatin1String(R"(
                                                         SELECT c.catalog_name
-                                                        FROM catalog AS c
-                                                        LEFT JOIN storage AS s ON c.catalog_storage = s.storage_name
+                                                        FROM catalog c
+                                                        LEFT JOIN storage s ON c.catalog_storage = s.storage_name
                                                     )");
 
                 //Filter depending on location and selection.
@@ -1961,13 +1960,20 @@
                 } else
                if ( selectedLocation == tr("All") and selectedStorage == tr("All") and selectedVirtualStorage != tr("All"))
                 {
-                        QString getCatalogSelectionListSQL = QLatin1String(R"(
-                                                        SELECT c.catalog_name
-                                                        FROM catalog AS c
-                                                        LEFT JOIN virtual_storage_catalog AS vsc ON c.catalog_name = vsc.catalog_name
-                                                        LEFT JOIN virtual_storage         AS vs  ON vs.virtual_storage_id = vsc.virtual_storage_id
-                                                    )");
-                        getCatalogSelectionListSQL += " WHERE vs.virtual_storage_name =':virtual_storage_name'";
+                        getCatalogSelectionListSQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
+                        getCatalogSelectionListSQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
+                        getCatalogSelectionListSQL +=   " WHERE vsc.virtual_storage_id IN ( "
+                                                        " WITH RECURSIVE hierarchy_cte AS ( "
+                                                        "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
+                                                        "       FROM virtual_storage "
+                                                        "       WHERE virtual_storage_id = :virtual_storage_id "
+                                                        "       UNION ALL "
+                                                        "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
+                                                        "       FROM virtual_storage t "
+                                                        "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                                        "  ) "
+                                                        "  SELECT virtual_storage_id "
+                                                        "  FROM hierarchy_cte) ";
                 }
 
                 //Order
@@ -1975,9 +1981,9 @@
 
                 //Run the query
                 getCatalogSelectionList.prepare(getCatalogSelectionListSQL);
-                getCatalogSelectionList.bindValue(":virtual_storage_name", selectedVirtualStorage);
                 getCatalogSelectionList.bindValue(":selectedLocation", selectedLocation);
                 getCatalogSelectionList.bindValue(":selectedStorage",  selectedStorage);
+                getCatalogSelectionList.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
                 getCatalogSelectionList.exec();
 
             //Put the results in a list

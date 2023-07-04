@@ -474,13 +474,12 @@
 
             if (parentId == 0) {
                 model->appendRow(rowItems); // Add top-level items directly to the model
-            } else {
+            }
+            else{
                 if (parentItem) {
                     parentItem->appendRow(rowItems); // Append the row to the parent item
-
-
-
-                } else {
+                }
+                else{
                     qDebug() << "Parent item not found for ID:" << id;
                     continue; // Skip this row and proceed to the next one
                 }
