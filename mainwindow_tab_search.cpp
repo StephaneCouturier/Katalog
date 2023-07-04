@@ -679,22 +679,11 @@
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
             //Prepare the SEARCH -------------------------------
-                //Clear the temporary search
-                    newSearch = new Search;
-
-                //Search results are currently captured in the Catalog model, not the database.
-                //Clear exisitng lists of results and search variables
+                //Clear exisiting lists of results and search variables
                     filesFoundList.clear();
                     catalogFoundList.clear();
 
-                    //Set up temporary lists
-                    newSearch->sFileNames.clear();
-                    newSearch->sFileSizes.clear();
-                    newSearch->sFilePaths.clear();
-                    newSearch->sFileDateTimes.clear();
-                    newSearch->sFileCatalogs.clear();
-
-                //Get search criteria
+                //Clear the temporary search and get search criteria
                     getSearchCriteria();
 
                 // Searching "Begin With" for File name or Folder name is not supported yet
