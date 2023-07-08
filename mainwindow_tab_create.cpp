@@ -272,6 +272,7 @@
                 selectedFilterStorageLocation = ui->Filters_label_DisplayLocation->text();
                 selectedFilterStorageName     = ui->Filters_label_DisplayStorage->text();
                 selectedFilterCatalogName     = ui->Filters_label_DisplayCatalog->text();
+                selectedFilterVirtualStorageName  = ui->Filters_label_DisplayVirtualStorage->text();
 
                 //Refresh list
                 refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);

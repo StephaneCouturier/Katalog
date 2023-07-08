@@ -155,10 +155,11 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1)
     {
-        if (arg1==tr("Location / Storage / Catatog")){
+        selectedTreeType = arg1;
+        if (selectedTreeType==tr("Location / Storage / Catatog")){
             loadStorageTableToSelectionTreeModel();
         }
-        else if (arg1==tr("Virtual Storage / Catalog")){
+        else if (selectedTreeType==tr("Virtual Storage / Catalog")){
             loadVirtualStorageFileToTable();
             loadVirtualStorageCatalogFileToTable();
             loadVirtualStorageTableToSelectionTreeModel();
@@ -249,6 +250,7 @@
         //reset selected values
         selectedDeviceType = tr("All");
         selectedDeviceName = tr("All");
+        selectedDeviceID   = 0;
         selectedFilterStorageLocation = tr("All");
         selectedFilterStorageName     = tr("All");
         selectedFilterCatalogName     = tr("All");
@@ -256,25 +258,32 @@
         ui->Filters_label_DisplayLocation->setText(tr("All"));
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
+        ui->Filters_label_DisplayVirtualStorage->setText(tr("All"));
         selectedCatalog->setName(tr(""));
         selectedCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedFilterStorageLocation);
         refreshCatalogSelectionList(selectedFilterStorageLocation,selectedFilterStorageName,selectedFilterVirtualStorageName);
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
+        ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
 
         //reset device tree
         setTreeExpandState(false);
 
-        loadStorageTableToSelectionTreeModel();
+        if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
+            loadStorageTableToSelectionTreeModel();
+        }
+        else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+            loadVirtualStorageFileToTable();
+            loadVirtualStorageCatalogFileToTable();
+            loadVirtualStorageTableToSelectionTreeModel();
+        }
         filterFromSelectedDevices();
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-//        settings.setValue("LastSearch/SelectedSearchLocation", selectedFilterStorageLocation);
-//        settings.setValue("LastSearch/SelectedSearchStorage",  selectedFilterStorageName);
-//        settings.setValue("LastSearch/SelectedSearchCatalog",  selectedFilterCatalogName);
         settings.setValue("Selection/SelectedDeviceType", tr("All"));
         settings.setValue("Selection/SelectedDeviceName", tr("All"));
+        settings.setValue("Selection/SelectedDeviceID", 0);
         refreshDifferencesCatalogSelection();
 
     }
@@ -324,6 +333,7 @@
             selectedFilterStorageLocation = tr("All");
             selectedFilterStorageName = tr("All");
             selectedFilterCatalogName = tr("All");
+            selectedFilterVirtualStorageName = selectedDeviceName;
 
             refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
             refreshStorageSelectionList(selectedFilterStorageLocation);
@@ -333,7 +343,7 @@
         ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
         ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
         ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
-        //ui->Filters_label_DisplayCatalog->setText(selectedFilterVirtualStorageName);
+        ui->Filters_label_DisplayVirtualStorage->setText(selectedFilterVirtualStorageName);
 
         //Load matching Catalogs, Storage, and Statistics
         //Load matching Catalogs

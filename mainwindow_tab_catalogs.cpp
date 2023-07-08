@@ -110,6 +110,10 @@
             selectedFilterStorageName = tr("All");
             ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
 
+            selectedFilterVirtualStorageName = tr("All");
+            selectedFilterVirtualStorageID   = 0;
+            ui->Filters_label_DisplayVirtualStorage->setText(selectedFilterVirtualStorageName);
+
             selectedCatalog->setName(selectedCatalog->name);
             selectedCatalog->loadCatalogMetaData();
 
