@@ -295,10 +295,8 @@
             //Load Files to database
             loadSearchHistoryFileToTable();
             loadCatalogFilesToTable();
-            if(databaseMode=="Memory"){
-                loadStorageFileToTable();
-                loadVirtualStorageFileToTable();
-            }
+            loadStorageFileToTable();
+            loadVirtualStorageFileToTable();
         }
 
         //Load data from tables and update display
