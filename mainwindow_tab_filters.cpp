@@ -207,7 +207,6 @@
     }
     //----------------------------------------------------------------------
 
-
 //FILTERS / Connected drives -----------------------------------------------
 
     void MainWindow::on_Filters_treeView_Directory_clicked(const QModelIndex &index)
@@ -241,7 +240,6 @@
         loadFileSystem(selectedConnectedDrivePath);
     }
     //----------------------------------------------------------------------
-
 
 //FILTERS / data methods ---------------------------------------------------
 
@@ -432,7 +430,6 @@
         setTreeExpandState(false);
     }
     //--------------------------------------------------------------------------
-    //--------------------------------------------------------------------------
     void MainWindow::loadVirtualStorageTableToSelectionTreeModel()
     {
         //Prepare query for catalogs
@@ -533,111 +530,4 @@
         ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
         ui->Filters_treeView_Devices->expandAll();       
     }
-
     //----------------------------------------------------------------------
-    //----------------------------------------------------------------------
-    void MainWindow::on_TEST_pushButton_VirtualStorage_clicked()
-    {
-        //Prepare query for catalogs
-        QSqlQuery queryCatalog;
-        QString queryCatalogSQL;
-        queryCatalogSQL = QLatin1String(R"(
-                        SELECT vsc.catalog_name,'Catalog', c.catalog_source_path_is_active
-                        FROM  virtual_storage_catalog vsc
-                        INNER JOIN catalog c ON vsc.catalog_name = c.catalog_name
-                        WHERE vsc.virtual_storage_id =:virtual_storage_id
-                        ORDER BY vsc.catalog_name
-                    )");
-        queryCatalog.prepare(queryCatalogSQL);
-
-        // Create the tree model
-        QStandardItemModel *model = new QStandardItemModel();
-        model->setHorizontalHeaderLabels({ tr("Name"), tr("Device Type"), tr("ID"), tr("Parent ID") });
-
-        // Retrieve data from the database
-        QSqlQuery query;
-        QString querySQL;
-        querySQL = QLatin1String(R"(
-                    SELECT  virtual_storage_id,
-                            virtual_storage_parent_id,
-                            virtual_storage_name
-                    FROM  virtual_storage
-                )");
-        query.prepare(querySQL);
-        query.exec();
-
-        //Populate Model
-        // Create a map to store items by ID for easy access
-        QMap<int, QStandardItem*> itemMap;
-
-        while (query.next()) {
-            int id = query.value(0).toInt();
-            int parentId = query.value(1).toInt();
-            QString name = query.value(2).toString();
-
-            // Create the item for this row
-            QList<QStandardItem*> rowItems;
-            rowItems << new QStandardItem(name);
-            rowItems << new QStandardItem("VirtualStorage");
-            rowItems << new QStandardItem(QString::number(id));
-            rowItems << new QStandardItem(QString::number(parentId));
-
-            QStandardItem* item = rowItems.at(0); // Get the item representing the name
-            QStandardItem* parentItem = itemMap.value(parentId);
-
-            if (parentId == 0) {
-                model->appendRow(rowItems); // Add top-level items directly to the model
-            } else {
-                if (parentItem) {
-                    parentItem->appendRow(rowItems); // Append the row to the parent item
-
-
-
-                } else {
-                    qDebug() << "Parent item not found for ID:" << id;
-                    continue; // Skip this row and proceed to the next one
-                }
-            }
-
-            // Store the item in the map for future reference
-            itemMap.insert(id, item);
-
-            //Add Catalogs
-            queryCatalog.bindValue(":virtual_storage_id",id);
-            queryCatalog.exec();
-            while(queryCatalog.next()){
-                //Get data
-                QList<QStandardItem*> rowCatalogItems;
-                rowCatalogItems << new QStandardItem(queryCatalog.value(0).toString());
-                rowCatalogItems << new QStandardItem(queryCatalog.value(1).toString());
-                rowCatalogItems << new QStandardItem(queryCatalog.value(2).toString());
-                rowCatalogItems << new QStandardItem("");
-
-                //Add items
-                item->appendRow(rowCatalogItems);
-            }
-        }
-
-        //Load Model to treeview
-        DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView();
-        deviceTreeProxyModel->setSourceModel(model);
-        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
-        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
-        ui->Filters_treeView_Devices->hideColumn(1);
-        ui->Filters_treeView_Devices->hideColumn(2);
-        ui->Filters_treeView_Devices->hideColumn(3);
-        ui->Filters_treeView_Devices->setColumnWidth(2,0);
-        ui->Filters_treeView_Devices->collapseAll();
-        ui->Filters_treeView_Devices->header()->hide();
-
-        //Restore Expand or Collapse Device Tree
-        setTreeExpandState(false);
-
-        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
-        ui->Filters_treeView_Devices->expandAll();
-
-        //Load Model to Test treeview
-        ui->TEST_treeView_VirutalStorage->setModel(model);
-        ui->TEST_treeView_VirutalStorage->expandAll();
-    }

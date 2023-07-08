@@ -246,6 +246,7 @@
         ui->Explore_treeView_FileList->setIconSize(size);
         ui->Create_treeView_Explorer->setIconSize(size);
         ui->Storage_treeView_StorageList->setIconSize(size);
+        ui->Virtual_treeView_VirutalStorageList->setIconSize(size);
         ui->Tags_treeview_Explorer->setIconSize(size);
     }
     //----------------------------------------------------------------------
@@ -283,6 +284,7 @@
             QSqlQuery queryDelete;
             queryDelete.exec("DELETE FROM catalog");
             queryDelete.exec("DELETE FROM storage");
+            queryDelete.exec("DELETE FROM virtual_storage");
             queryDelete.exec("DELETE FROM file");
             queryDelete.exec("DELETE FROM filetemp");
             queryDelete.exec("DELETE FROM folder");
@@ -293,13 +295,16 @@
             //Load Files to database
             loadSearchHistoryFileToTable();
             loadCatalogFilesToTable();
-            if(databaseMode=="Memory")
+            if(databaseMode=="Memory"){
                 loadStorageFileToTable();
+                loadVirtualStorageFileToTable();
+            }
         }
 
         //Load data from tables and update display
         loadSearchHistoryTableToModel();
         loadStorageTableToModel();
+        loadVirtualStorageTableToTreeModel();
         updateStorageSelectionStatistics();
         loadCatalogsTableToModel();
 
@@ -311,7 +316,7 @@
             loadStorageTableToSelectionTreeModel();
         }
         else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageFileToTable();
+//loadVirtualStorageFileToTable();
             loadVirtualStorageCatalogFileToTable();
             loadVirtualStorageTableToSelectionTreeModel();
         }

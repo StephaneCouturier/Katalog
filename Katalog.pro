@@ -81,6 +81,7 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
+    mainwindow_tab_virtual.cpp \
     search.cpp \
     storage.cpp \
     storagetreeitem.cpp \

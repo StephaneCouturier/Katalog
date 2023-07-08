@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.22";
-        releaseDate     = "2023-06-24";
+        releaseDate     = "2023-07-08";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -109,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Catalogs_widget_EditCatalog->hide();
             ui->Storage_widget_Panel->hide();
             ui->Statistics_calendarWidget->hide();
+            ui->Virtual_widget_Edit->hide();
 
         //Load all other Settings and apply values
             loadSettings();
