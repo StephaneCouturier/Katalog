@@ -61,12 +61,33 @@ void MainWindow::on_Virtual_pushButton_Edit_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_Save_clicked()
 {
+    //Save name
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            UPDATE virtual_storage
+                            SET    virtual_storage_name=:virtual_storage_name
+                            WHERE  virtual_storage_id=:virtual_storage_id
+                                )");
+    query.prepare(querySQL);
+    query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
+    query.bindValue(":virtual_storage_name",ui->Virtual_lineEdit_Name->text());
+    query.exec();
 
+    ui->Virtual_widget_Edit->hide();
+
+    //Save data to file
+    if (databaseMode == "Memory"){
+        //Save file
+        saveVirtualStorageTableToFile(virtualStorageFilePath);
+    }
+
+    //Reload
+    loadVirtualStorageTableToTreeModel();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_Cancel_clicked()
 {
-
+    ui->Virtual_widget_Edit->hide();
 }
 void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index)
 {
