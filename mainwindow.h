@@ -318,10 +318,14 @@ class MainWindow : public QMainWindow
 
         //TAB: Virtual
             int selectedVirtualStorageID;
+            int selectedVirtualStorageParentID;
             QString selectedVirtualStorageName;
             void insertVirtualStorageItem(int parentID, QString name);
+            void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
+            void unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID);
             void deleteVirtualStorageItem();
             void saveVirtualStorageTableToFile(QString filePath);
+            void saveVirtualStorageCatalogTableToFile(QString filePath);
             void loadVirtualStorageTableToTreeModel();
 
         //TAB: Statistics
@@ -526,10 +530,15 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_PanelCancel_clicked();
 
         //Virtual
-            void on_Virtual_pushButton_Load_clicked();
             void on_Virtual_pushButton_InsertRootLevel_clicked();
             void on_Virtual_pushButton_InsertChild_clicked();
             void on_Virtual_pushButton_DeleteItem_clicked();
+            void on_Virtual_pushButton_Edit_clicked();
+            void on_Virtual_pushButton_Save_clicked();
+            void on_Virtual_pushButton_Cancel_clicked();
+            void on_Virtual_pushButton_AssignCatalog_clicked();
+            void on_Virtual_pushButton_UnassignCatalog_clicked();
+            void on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1);
             void on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index);
 
         //Statistics
@@ -554,10 +563,6 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-
-            void on_Virtual_pushButton_Edit_clicked();
-            void on_Virtual_pushButton_Save_clicked();
-            void on_Virtual_pushButton_Cancel_clicked();
 };
 
 #endif // MAINWINDOW_H

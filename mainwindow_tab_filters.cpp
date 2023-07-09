@@ -160,8 +160,6 @@
             loadStorageTableToSelectionTreeModel();
         }
         else if (selectedTreeType==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageFileToTable();
-            loadVirtualStorageCatalogFileToTable();
             loadVirtualStorageTableToSelectionTreeModel();
         }
 

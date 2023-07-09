@@ -297,6 +297,7 @@
             loadCatalogFilesToTable();
             loadStorageFileToTable();
             loadVirtualStorageFileToTable();
+            loadVirtualStorageCatalogFileToTable();
         }
 
         //Load data from tables and update display

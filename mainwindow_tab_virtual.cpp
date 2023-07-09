@@ -33,10 +33,6 @@
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
 
-void MainWindow::on_Virtual_pushButton_Load_clicked()
-{
-    loadVirtualStorageTableToTreeModel();
-}
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
 {
@@ -46,6 +42,22 @@ void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
 void MainWindow::on_Virtual_pushButton_InsertChild_clicked()
 {
     insertVirtualStorageItem(selectedVirtualStorageID,"child Item");
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
+{
+    assignCatalogToVirtualStorage(selectedCatalog->name, selectedVirtualStorageID);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Virtual_pushButton_UnassignCatalog_clicked()
+{
+    int result = QMessageBox::warning(this,"Katalog",
+                                      tr("Do you want to remove this catalog fron this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
+
+    if ( result ==QMessageBox::Yes){
+        unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
+        ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_DeleteItem_clicked()
@@ -83,16 +95,40 @@ void MainWindow::on_Virtual_pushButton_Save_clicked()
 
     //Reload
     loadVirtualStorageTableToTreeModel();
+
+    ui->Virtual_pushButton_Edit->setEnabled(false);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_Cancel_clicked()
 {
     ui->Virtual_widget_Edit->hide();
 }
+//--------------------------------------------------------------------------
+void MainWindow::on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1)
+{
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("Virtual/DisplayCatalogs", arg1);
+    loadVirtualStorageTableToTreeModel();
+}
+//--------------------------------------------------------------------------
 void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index)
 {
     selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 2, index.parent() ).data().toInt();
     selectedVirtualStorageName = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 0, index.parent() ).data().toString();
+    ui->Virtual_pushButton_Edit->setEnabled(true);
+    ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
+
+    // Get the parent item's index
+    QModelIndex parentIndex = index.parent();
+    // Get the parent item's ID
+    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 2).data().toInt();
+
+    QString selectedVirtualStorageType = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
+    if(selectedVirtualStorageType=="Catalog"){
+        ui->Virtual_pushButton_Edit->setEnabled(false);
+        ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
+        ui->Virtual_pushButton_UnassignCatalog->setEnabled(true);
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::insertVirtualStorageItem(int parentID, QString name)
@@ -136,30 +172,135 @@ void MainWindow::insertVirtualStorageItem(int parentID, QString name)
     //loadVirtualStorageTableToSelectionTreeModel()
 }
 //--------------------------------------------------------------------------
-void MainWindow::deleteVirtualStorageItem()
+void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID)
 {
-    int result = QMessageBox::warning(this,"Katalog",
-                                      tr("Do you want to delete this virtual storage item?")+"\n"+selectedCatalog->filePath,QMessageBox::Yes|QMessageBox::Cancel);
-
-    if ( result ==QMessageBox::Yes){
-        //Delete selected ID
+    if( virtualStorageID!=0 and catalogName!=""){
+        //Insert catalog
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                            DELETE FROM virtual_storage
-                            WHERE virtual_storage_id=:virtual_storage_id
+                            INSERT INTO virtual_storage_catalog(
+                                        virtual_storage_id,
+                                        catalog_name)
+                            VALUES(
+                                        :virtual_storage_id,
+                                        :catalog_name)
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
+        query.bindValue(":virtual_storage_id", virtualStorageID);
+        query.bindValue(":catalog_name", catalogName);
         query.exec();
+
         //Save data to file
         if (databaseMode == "Memory"){
             //Save file
-            saveVirtualStorageTableToFile(virtualStorageFilePath);
+            saveVirtualStorageCatalogTableToFile(virtualStorageCatalogFilePath);
         }
 
         //Reload
         loadVirtualStorageTableToTreeModel();
-        //loadVirtualStorageTableToSelectionTreeModel()
+        loadVirtualStorageTableToSelectionTreeModel();
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID)
+{
+    if( virtualStorageParentID!=0 and catalogName!=""){
+        //Insert catalog
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    DELETE FROM virtual_storage_catalog
+                                    WHERE virtual_storage_id=:virtual_storage_id
+                                    AND catalog_name=:catalog_name
+                                )");
+        query.prepare(querySQL);
+        query.bindValue(":virtual_storage_id",virtualStorageParentID);
+        query.bindValue(":catalog_name",catalogName);
+        query.exec();
+
+        //Save data to file
+        if (databaseMode == "Memory"){
+            //Save file
+            saveVirtualStorageCatalogTableToFile(virtualStorageCatalogFilePath);
+        }
+
+        //Reload
+        loadVirtualStorageTableToTreeModel();
+        loadVirtualStorageTableToSelectionTreeModel();
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::deleteVirtualStorageItem()
+{
+    bool hasChildren = false;
+    bool hasCatalog  = false;
+    QSqlQuery queryVerifyChildren;
+    QString queryVerifyChildrenSQL = QLatin1String(R"(
+                                SELECT COUNT(*)
+                                FROM virtual_storage
+                                WHERE virtual_storage_parent_id=:virtual_storage_parent_id
+                            )");
+    queryVerifyChildren.prepare(queryVerifyChildrenSQL);
+    queryVerifyChildren.bindValue(":virtual_storage_parent_id",selectedVirtualStorageID);
+    queryVerifyChildren.exec();
+    queryVerifyChildren.next();
+
+    if(queryVerifyChildren.value(0).toInt()>=1)
+        hasChildren = true;
+
+    QSqlQuery queryVerifyCatalog;
+    QString queryVerifyCatalogSQL = QLatin1String(R"(
+                                SELECT COUNT(*)
+                                FROM virtual_storage_catalog
+                                WHERE virtual_storage_id=:virtual_storage_id
+                            )");
+    queryVerifyCatalog.prepare(queryVerifyCatalogSQL);
+    queryVerifyCatalog.bindValue(":virtual_storage_id",selectedVirtualStorageID);
+    queryVerifyCatalog.exec();
+    queryVerifyCatalog.next();
+
+    if(queryVerifyCatalog.value(0).toInt()>=1)
+        hasCatalog = true;
+
+    if ( hasChildren == false ){
+        if ( hasCatalog == false ){
+            int result = QMessageBox::warning(this,"Katalog",
+                                              tr("Do you want to delete this virtual storage item?")+"<br/>"+selectedVirtualStorageName,QMessageBox::Yes|QMessageBox::Cancel);
+
+            if ( result ==QMessageBox::Yes){
+                //Delete selected ID
+                QSqlQuery query;
+                QString querySQL = QLatin1String(R"(
+                                    DELETE FROM virtual_storage
+                                    WHERE virtual_storage_id=:virtual_storage_id
+                                )");
+                query.prepare(querySQL);
+                query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
+                query.exec();
+                //Save data to file
+                if (databaseMode == "Memory"){
+                    //Save file
+                    saveVirtualStorageTableToFile(virtualStorageFilePath);
+                }
+
+                //Reload
+                loadVirtualStorageTableToTreeModel();
+                //loadVirtualStorageTableToSelectionTreeModel()
+            }
+        }
+        else{
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("The selected item cannot be deleted as long as it has catalogs linked."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+        }
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("The selected item cannot be deleted as long as it has children items."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
     }
 }
 //--------------------------------------------------------------------------
@@ -348,10 +489,12 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
         if (parentId == 0) {
             model->appendRow(rowItems); // Add top-level items directly to the model
-        } else {
+        }
+        else{
             if (parentItem) {
                 parentItem->appendRow(rowItems); // Append the row to the parent item
-            } else {
+            }
+            else{
                 qDebug() << "Parent item not found for ID:" << id;
                 continue; // Skip this row and proceed to the next one
             }
@@ -359,6 +502,23 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
         // Store the item in the map for future reference
         itemMap.insert(id, item);
+
+        if(ui->Virtual_checkBox_DisplayCatalogs->isChecked()==true){
+            //Add Catalogs
+            queryCatalog.bindValue(":virtual_storage_id",id);
+            queryCatalog.exec();
+            while(queryCatalog.next()){
+                //Get data
+                QList<QStandardItem*> rowCatalogItems;
+                rowCatalogItems << new QStandardItem(queryCatalog.value(0).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(1).toString());
+                rowCatalogItems << new QStandardItem(queryCatalog.value(2).toString());
+//                rowCatalogItems << new QStandardItem("");
+
+                //Add items
+                item->appendRow(rowCatalogItems);
+            }
+        }
     }
 
     //Load Model to treeview
@@ -373,7 +533,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
     ui->Virtual_treeView_VirutalStorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
     ui->Virtual_treeView_VirutalStorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(0, 300); //Name
+    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(0, 400); //Name
     ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(1, 125); //Type
     ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(2, 50); //ID
     ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(3, 50); //Parent ID
@@ -416,6 +576,49 @@ void MainWindow::saveVirtualStorageTableToFile(QString filePath)
             textStreamToFile << '\n';
         }
         virtualStorageFile.close();
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Error opening output file."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::saveVirtualStorageCatalogTableToFile(QString filePath)
+{
+    QFile virtualStorageCatalogFile(filePath);
+
+    //Get data
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                             SELECT * FROM virtual_storage_catalog
+                        )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //Write data
+    if (virtualStorageCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
+        QTextStream textStreamToFile(&virtualStorageCatalogFile);
+
+        //Prepare header line
+        textStreamToFile << "ID"    << "\t"
+                         << "Name"  << "\t"
+                         << '\n';
+
+        //Iterate the records and generate lines
+        while (query.next()) {
+            const QSqlRecord record = query.record();
+            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                if (i>0)
+                    textStreamToFile << '\t';
+                textStreamToFile << record.value(i).toString();
+            }
+            //Write the result in the file
+            textStreamToFile << '\n';
+        }
+        virtualStorageCatalogFile.close();
     }
     else{
         QMessageBox msgBox;

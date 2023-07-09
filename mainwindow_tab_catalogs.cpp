@@ -65,6 +65,7 @@
             ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(true);
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(true);
+            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
             ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
@@ -74,6 +75,7 @@
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
             ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
+            ui->Virtual_label_SelectCatalogDisplay->setText(selectedCatalog->name);
 
         }
         //----------------------------------------------------------------------

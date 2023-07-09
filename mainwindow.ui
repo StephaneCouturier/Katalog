@@ -6751,15 +6751,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <layout class="QHBoxLayout" name="Virtual_horizontalLayout_16">
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_Load">
-                <property name="text">
-                 <string>Load</string>
+               <widget class="QLabel" name="Virtual_label_VirtualStorageItems">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
                 </property>
-                <property name="icon">
-                 <iconset theme="media-optical">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="text">
+                 <string>Virtual Storage items</string>
                 </property>
                </widget>
               </item>
@@ -6787,6 +6789,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item>
                <widget class="QPushButton" name="Virtual_pushButton_Edit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Edit</string>
                 </property>
@@ -6808,7 +6813,113 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_9">
+               <spacer name="Virtual_horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="Virtual_line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="Virtual_horizontalLayout_18"/>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="2" column="2">
+               <widget class="QPushButton" name="Virtual_pushButton_UnassignCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Unassign selected catalog</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="Virtual_label_SelectCatalogLabel">
+                <property name="text">
+                 <string>Selected catalog (Catalogs screen)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="Virtual_label_SelectCatalogDisplay">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="Virtual_label_CatalogAssociation">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Catalog association</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="Virtual_pushButton_AssignCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Assign selected catalog</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QCheckBox" name="Virtual_checkBox_DisplayCatalogs">
+                <property name="text">
+                 <string>Display linked Catalogs</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="Virtual_label_SelectCatalogLabel_2">
+                <property name="text">
+                 <string>Selected catalog (this screen)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="Virtual_label_SelectCatalogDisplay_2">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <spacer name="Virtual_horizontalSpacer_3">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6824,36 +6935,54 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <widget class="QWidget" name="Virtual_widget_Edit" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
-                <widget class="QLineEdit" name="Virtual_lineEdit_Name"/>
-               </item>
-               <item>
-                <widget class="QPushButton" name="Virtual_pushButton_Save">
-                 <property name="text">
-                  <string>Save</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="Virtual_pushButton_Cancel">
-                 <property name="text">
-                  <string>Cancel</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
+                <widget class="Line" name="Virtual_line">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="Virtual_label_ItemEdition">
+                 <property name="text">
+                  <string>Virtual Storage name</string>
                  </property>
-                </spacer>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="Virtual_horizontalLayout_15">
+                 <item>
+                  <widget class="QLineEdit" name="Virtual_lineEdit_Name"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Virtual_pushButton_Save">
+                   <property name="text">
+                    <string>Save</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Virtual_pushButton_Cancel">
+                   <property name="text">
+                    <string>Cancel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="Virtual_horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>
