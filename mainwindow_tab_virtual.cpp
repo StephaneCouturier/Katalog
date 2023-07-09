@@ -113,21 +113,24 @@ void MainWindow::on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1)
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index)
 {
-    selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 2, index.parent() ).data().toInt();
+    //Get selection data
     selectedVirtualStorageName = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 0, index.parent() ).data().toString();
-    ui->Virtual_pushButton_Edit->setEnabled(true);
-    ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
-
-    // Get the parent item's index
+    selectedVirtualStorageType = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
+    selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     QModelIndex parentIndex = index.parent();
-    // Get the parent item's ID
     selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 2).data().toInt();
 
-    QString selectedVirtualStorageType = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
-    if(selectedVirtualStorageType=="Catalog"){
+    //Adapt buttons to selection
+    if(selectedVirtualStorageType=="VirtualStorage"){
+        ui->Virtual_pushButton_Edit->setEnabled(true);
+        ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
+        ui->Virtual_pushButton_DeleteItem->setEnabled(true);
+    }
+    else if(selectedVirtualStorageType=="Catalog"){
         ui->Virtual_pushButton_Edit->setEnabled(false);
         ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
         ui->Virtual_pushButton_UnassignCatalog->setEnabled(true);
+        ui->Virtual_pushButton_DeleteItem->setEnabled(false);
     }
 }
 //--------------------------------------------------------------------------
@@ -169,7 +172,9 @@ void MainWindow::insertVirtualStorageItem(int parentID, QString name)
 
     //Reload
     loadVirtualStorageTableToTreeModel();
-    //loadVirtualStorageTableToSelectionTreeModel()
+    if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+        loadVirtualStorageTableToSelectionTreeModel();
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID)
@@ -198,7 +203,9 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
 
         //Reload
         loadVirtualStorageTableToTreeModel();
-        loadVirtualStorageTableToSelectionTreeModel();
+        if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+            loadVirtualStorageTableToSelectionTreeModel();
+        }
     }
 }
 //--------------------------------------------------------------------------
@@ -225,7 +232,9 @@ void MainWindow::unassignCatalogToVirtualStorage(QString catalogName,int virtual
 
         //Reload
         loadVirtualStorageTableToTreeModel();
-        loadVirtualStorageTableToSelectionTreeModel();
+        if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+            loadVirtualStorageTableToSelectionTreeModel();
+        }
     }
 }
 //--------------------------------------------------------------------------
@@ -284,7 +293,9 @@ void MainWindow::deleteVirtualStorageItem()
 
                 //Reload
                 loadVirtualStorageTableToTreeModel();
-                //loadVirtualStorageTableToSelectionTreeModel()
+                if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+                    loadVirtualStorageTableToSelectionTreeModel();
+                }
             }
         }
         else{
@@ -454,7 +465,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
     // Create the tree model
     QStandardItemModel *model = new QStandardItemModel();
-    model->setHorizontalHeaderLabels({ tr("Name"), tr("Device Type"), tr("ID"), tr("Parent ID") });
+    model->setHorizontalHeaderLabels({ tr("Name"), tr("Device Type"), tr("Active"), tr("ID"), tr("Parent ID") });
 
     // Retrieve data from the database
     QSqlQuery query;
@@ -464,6 +475,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                             virtual_storage_parent_id,
                             virtual_storage_name
                     FROM  virtual_storage
+                    ORDER BY virtual_storage_id ASC
                 )");
     query.prepare(querySQL);
     query.exec();
@@ -481,6 +493,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
         QList<QStandardItem*> rowItems;
         rowItems << new QStandardItem(name);
         rowItems << new QStandardItem("VirtualStorage");
+        rowItems << new QStandardItem("");
         rowItems << new QStandardItem(QString::number(id));
         rowItems << new QStandardItem(QString::number(parentId));
 
@@ -525,19 +538,17 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
     // Connect model to tree/table view
     DeviceTreeView *proxyStorageModel = new DeviceTreeView(this);
     proxyStorageModel->setSourceModel(model);
-    //    proxyStorageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
-    //    proxyStorageModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
-    //    proxyStorageModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
-    //    proxyStorageModel->setHeaderData(3, Qt::Horizontal, tr("Location"));
     ui->Virtual_treeView_VirutalStorageList->setModel(proxyStorageModel);
 
     ui->Virtual_treeView_VirutalStorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
     ui->Virtual_treeView_VirutalStorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(0, 400); //Name
     ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(1, 125); //Type
-    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(2, 50); //ID
-    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(3, 50); //Parent ID
+    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(2, 50);  //Active
+    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(3, 100);  //ID
+    ui->Virtual_treeView_VirutalStorageList->header()->resizeSection(4, 100);  //Parent ID
     ui->Virtual_treeView_VirutalStorageList->header()->hideSection(1); //Type
+    ui->Virtual_treeView_VirutalStorageList->header()->hideSection(2); //Active
     ui->Virtual_treeView_VirutalStorageList->expandAll();
 }
 //--------------------------------------------------------------------------

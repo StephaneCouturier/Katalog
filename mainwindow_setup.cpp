@@ -376,7 +376,6 @@
             ui->tabWidget->removeTab(8);
 
         //Filter
-            ui->Filter_comboBox_TreeType->hide();
 
         //Search
             //hide Krename if not linux

@@ -319,6 +319,7 @@ class MainWindow : public QMainWindow
         //TAB: Virtual
             int selectedVirtualStorageID;
             int selectedVirtualStorageParentID;
+            QString selectedVirtualStorageType;
             QString selectedVirtualStorageName;
             void insertVirtualStorageItem(int parentID, QString name);
             void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
