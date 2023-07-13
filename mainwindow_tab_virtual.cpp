@@ -187,14 +187,17 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
         QString querySQL = QLatin1String(R"(
                             INSERT INTO virtual_storage_catalog(
                                         virtual_storage_id,
-                                        catalog_name)
+                                        catalog_name,
+                                        directory_path)
                             VALUES(
                                         :virtual_storage_id,
-                                        :catalog_name)
+                                        :catalog_name
+                                        :directory_path)
                         )");
         query.prepare(querySQL);
         query.bindValue(":virtual_storage_id", virtualStorageID);
         query.bindValue(":catalog_name", catalogName);
+        query.bindValue(":directory_path", "/");
         query.exec();
 
         //Save data to file
@@ -405,9 +408,11 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
     querySQL = QLatin1String(R"(
                         INSERT INTO virtual_storage_catalog (
                                         virtual_storage_id,
-                                        catalog_name )
+                                        catalog_name,
+                                        directory_path )
                         VALUES(         :virtual_storage_id,
-                                        :catalog_name )
+                                        :catalog_name,
+                                        :directory_path )
                     )");
     query.prepare(querySQL);
 
@@ -423,7 +428,8 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
             if (newVirtualStorageCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
                 QTextStream stream(&newVirtualStorageCatalogFile);
                 stream << "ID"            << "\t"
-                       << "Name"          << "\t"
+                       << "Catalog Name"          << "\t"
+                       << "Directory Path"          << "\t"
                        << '\n';
                 newVirtualStorageCatalogFile.close();
             }
@@ -445,6 +451,7 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
             QStringList fieldList = line.split('\t');
             query.bindValue(":virtual_storage_id",fieldList[0].toInt());
             query.bindValue(":catalog_name",fieldList[1]);
+            query.bindValue(":directory_path",fieldList[2]);
             query.exec();
         }
     }

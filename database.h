@@ -93,7 +93,8 @@
             const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
                        CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
                             virtual_storage_id      NUMERIC,
-                            catalog_name            TEXT)
+                            catalog_name            TEXT,
+                            directory_path          TEXT)
             )");
 
         // FILE (storing all catalogs files)-------------------------------------
