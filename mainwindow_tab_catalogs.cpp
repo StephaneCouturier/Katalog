@@ -75,7 +75,7 @@
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
             ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
-            ui->Virtual_label_SelectCatalogDisplay->setText(selectedCatalog->name);
+            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
 
         }
         //----------------------------------------------------------------------

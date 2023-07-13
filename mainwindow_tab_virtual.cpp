@@ -125,12 +125,14 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelInde
         ui->Virtual_pushButton_Edit->setEnabled(true);
         ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
         ui->Virtual_pushButton_DeleteItem->setEnabled(true);
+        ui->Virtual_label_SelectedAssignedCatalogDisplay->setText("");
     }
     else if(selectedVirtualStorageType=="Catalog"){
         ui->Virtual_pushButton_Edit->setEnabled(false);
         ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
         ui->Virtual_pushButton_UnassignCatalog->setEnabled(true);
         ui->Virtual_pushButton_DeleteItem->setEnabled(false);
+        ui->Virtual_label_SelectedAssignedCatalogDisplay->setText(selectedVirtualStorageName);
     }
 }
 //--------------------------------------------------------------------------
