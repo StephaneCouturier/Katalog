@@ -52,7 +52,7 @@ void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
 void MainWindow::on_Virtual_pushButton_UnassignCatalog_clicked()
 {
     int result = QMessageBox::warning(this,"Katalog",
-                                      tr("Do you want to remove this catalog fron this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
+                                      tr("Do you want to remove this catalog from this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
 
     if ( result ==QMessageBox::Yes){
         unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
@@ -118,7 +118,7 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelInde
     selectedVirtualStorageType = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
     selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     QModelIndex parentIndex = index.parent();
-    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 2).data().toInt();
+    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
 
     //Adapt buttons to selection
     if(selectedVirtualStorageType=="VirtualStorage"){
@@ -191,7 +191,7 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
                                         directory_path)
                             VALUES(
                                         :virtual_storage_id,
-                                        :catalog_name
+                                        :catalog_name,
                                         :directory_path)
                         )");
         query.prepare(querySQL);
@@ -216,6 +216,7 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
 //--------------------------------------------------------------------------
 void MainWindow::unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID)
 {
+        qDebug()<<catalogName<<virtualStorageParentID;
     if( virtualStorageParentID!=0 and catalogName!=""){
         //Insert catalog
         QSqlQuery query;
