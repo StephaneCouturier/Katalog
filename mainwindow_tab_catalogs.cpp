@@ -581,18 +581,18 @@
             else if ( selectedDeviceType == "VirtualStorage" ){
                 loadCatalogSQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
                 loadCatalogSQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
-                loadCatalogSQL +=   " WHERE vsc.virtual_storage_id IN ( "
-                                    " WITH RECURSIVE hierarchy_cte AS ( "
-                                    "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
-                                    "       FROM virtual_storage "
-                                    "       WHERE virtual_storage_id = :virtual_storage_id "
-                                    "       UNION ALL "
-                                    "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
-                                    "       FROM virtual_storage t "
-                                    "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
-                                    "  ) "
-                                    "  SELECT virtual_storage_id "
-                                    "  FROM hierarchy_cte) ";
+                loadCatalogSQL += " WHERE vsc.virtual_storage_id IN ( "
+                                  " WITH RECURSIVE hierarchy_cte AS ( "
+                                  "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
+                                  "       FROM virtual_storage "
+                                  "       WHERE virtual_storage_id = :virtual_storage_id "
+                                  "       UNION ALL "
+                                  "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
+                                  "       FROM virtual_storage t "
+                                  "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                  "  ) "
+                                  "  SELECT virtual_storage_id "
+                                  "  FROM hierarchy_cte) ";
             }
 
             //Execute query
@@ -657,30 +657,59 @@
                 ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             }
             //Populate catalogs statistics
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                SELECT COUNT(catalog_name),SUM(catalog_total_file_size),SUM(catalog_file_count)
-                                FROM catalog
-                                LEFT JOIN storage ON catalog_storage = storage_name
-                                WHERE catalog_name !=''
-                                            )");
+            QSqlQuery querySumCatalogValues;
+            QString querySumCatalogValuesSQL = QLatin1String(R"(
+                                        SELECT  COUNT(c.catalog_name),
+                                                SUM(c.catalog_total_file_size),
+                                                SUM(c.catalog_file_count)
+                                        FROM catalog c
+                                        LEFT JOIN storage s ON catalog_storage = storage_name
+                                )");
 
-            if ( selectedFilterStorageLocation !=tr("All")){
-                querySQL = querySQL + " AND storage_location =:storage_location";
+            if (    selectedFilterStorageLocation    == tr("All")
+                and selectedFilterStorageName        == tr("All")
+                and selectedFilterCatalogName        == tr("All")
+                and selectedFilterVirtualStorageName == tr("All"))
+            {//No filtering
+
             }
-            if ( selectedFilterStorageName !=tr("All")){
-                querySQL = querySQL + " AND catalog_storage =:catalog_storage";
+            else if ( selectedDeviceType == "Location" ){
+                querySumCatalogValuesSQL += " WHERE s.storage_location =:storage_location ";
+            }
+            else if ( selectedDeviceType == "Storage" ){
+                querySumCatalogValuesSQL += " WHERE catalog_storage =:catalog_storage ";
+            }
+            else if ( selectedDeviceType == "Catalog" ){
+                querySumCatalogValuesSQL += " WHERE catalog_name =:catalog_name ";
+            }
+            else if ( selectedDeviceType == "VirtualStorage" ){
+                querySumCatalogValuesSQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
+                querySumCatalogValuesSQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
+                querySumCatalogValuesSQL += " WHERE vsc.virtual_storage_id IN ( "
+                                            " WITH RECURSIVE hierarchy_cte AS ( "
+                                            "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
+                                            "       FROM virtual_storage "
+                                            "       WHERE virtual_storage_id = :virtual_storage_id "
+                                            "       UNION ALL "
+                                            "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
+                                            "       FROM virtual_storage t "
+                                            "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                            "  ) "
+                                            "  SELECT virtual_storage_id "
+                                            "  FROM hierarchy_cte) ";
             }
 
-            query.prepare(querySQL);
-            query.bindValue(":storage_location",selectedFilterStorageLocation);
-            query.bindValue(":catalog_storage", selectedFilterStorageName);
-            query.exec();
-            query.next();
+            querySumCatalogValues.prepare(querySumCatalogValuesSQL);
+            querySumCatalogValues.bindValue(":storage_location", selectedDeviceName);
+            querySumCatalogValues.bindValue(":catalog_storage", selectedDeviceName);
+            querySumCatalogValues.bindValue(":catalog_name", selectedDeviceName);
+            querySumCatalogValues.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+            querySumCatalogValues.exec();
+            querySumCatalogValues.next();
 
-            ui->Catalogs_label_Catalogs->setText(QString::number(query.value(0).toInt()));
-            ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(query.value(1).toLongLong()));
-            ui->Catalogs_label_TotalNumber->setText(QLocale().toString(query.value(2).toInt()));
+            ui->Catalogs_label_Catalogs->setText(QString::number(querySumCatalogValues.value(0).toInt()));
+            ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(querySumCatalogValues.value(1).toLongLong()));
+            ui->Catalogs_label_TotalNumber->setText(QLocale().toString(querySumCatalogValues.value(2).toInt()));
 
     }
     //--------------------------------------------------------------------------
