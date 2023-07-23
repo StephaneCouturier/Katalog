@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.22";
-        releaseDate     = "2023-07-09";
+        releaseDate     = "2023-07-23";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -184,6 +184,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Setup tab: Storage
             unsavedChanges = false;
 
+        //Setup tab: Virtual
+            ui->Virtual_checkBox_DisplayCatalogs->setChecked(optionDisplayAssignedCatalogs);
+
         //Setup tab: Search
             //Default values
             initiateSearchFields();
@@ -213,7 +216,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             filterFromSelectedDevices();
 
     //Context menu and other slots and signals
-            setupFileContextMenu();
+            setupFileContextMenus();
 
             //Header Order change
             connect(ui->Catalogs_treeView_CatalogList->header(), &QHeaderView::sortIndicatorChanged,
@@ -237,6 +240,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
+            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
 
 }
 

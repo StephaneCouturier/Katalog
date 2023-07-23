@@ -174,10 +174,12 @@
     //----------------------------------------------------------------------
 
 //Set up -------------------------------------------------------------------
-    void MainWindow::setupFileContextMenu(){
+    void MainWindow::setupFileContextMenus(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Virtual_treeView_VirutalStorageList->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
@@ -336,20 +338,21 @@
             ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.toString("yyyy-mm-dd"));
 
             //Restore last sort order for the catalogs and storage
-            lastCatalogsSortSection      = settings.value("Catalogs/lastCatlogsSortSection").toInt();
-            lastCatalogsSortOrder        = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
-            lastStorageSortSection       = settings.value("Storage/lastStorageSortSection").toInt();
-            lastStorageSortOrder         = settings.value("Storage/lastStorageSortOrder").toInt();
-            lastExploreSortSection       = settings.value("Explore/lastExploreSortSection").toInt();
-            lastExploreSortOrder         = settings.value("Explore/lastExploreSortOrder").toInt();
-            lastSearchSortSection        = settings.value("Search/lastSearchSortSection").toInt();
-            lastSearchSortOrder          = settings.value("Search/lastSearchSortOrder").toInt();
-            lastSearchHistorySortSection = settings.value("Search/lastSearchHistorySortSection").toInt();
-            lastSearchHistorySortOrder   = settings.value("Search/lastSearchHistorySortOrder").toInt();
-            optionDisplayFolders         = settings.value("Explore/DisplayFolders").toBool();
-            optionDisplaySubFolders      = settings.value("Explore/DisplaySubFolders").toBool();
+            lastCatalogsSortSection       = settings.value("Catalogs/lastCatlogsSortSection").toInt();
+            lastCatalogsSortOrder         = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
+            lastStorageSortSection        = settings.value("Storage/lastStorageSortSection").toInt();
+            lastStorageSortOrder          = settings.value("Storage/lastStorageSortOrder").toInt();
+            lastExploreSortSection        = settings.value("Explore/lastExploreSortSection").toInt();
+            lastExploreSortOrder          = settings.value("Explore/lastExploreSortOrder").toInt();
+            lastSearchSortSection         = settings.value("Search/lastSearchSortSection").toInt();
+            lastSearchSortOrder           = settings.value("Search/lastSearchSortOrder").toInt();
+            lastSearchHistorySortSection  = settings.value("Search/lastSearchHistorySortSection").toInt();
+            lastSearchHistorySortOrder    = settings.value("Search/lastSearchHistorySortOrder").toInt();
+            optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
+            optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
+            optionDisplayAssignedCatalogs = settings.value("Virtual/DisplayCatalogs").toBool();
 
-            //Restore Settings
+            //Restore DEV Settings
             if(developmentMode==true){
                 ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
             }

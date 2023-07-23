@@ -202,6 +202,68 @@
 
         refreshDifferencesCatalogSelection();
 
+        if(selectedDeviceType=="Catalog"){
+            if(selectedVirtualStorageName!=""){
+                ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+            }
+            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedDeviceName);
+        }
+        else{
+            ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
+            ui->Virtual_label_SelectedCatalogDisplay->setText("");
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos)
+    {
+        //Get selection data
+        QModelIndex index=ui->Filters_treeView_Devices->currentIndex();
+        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+//        selectedVirtualStorageName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
+//        selectedVirtualStorageType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+//        selectedVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
+//        QModelIndex parentIndex = index.parent();
+//        selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
+//        QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
+
+        //Physical Storage Tree
+        if (selectedTreeType==tr("Location / Storage / Catatog")){
+            //loadStorageTableToSelectionTreeModel();
+        }
+        //Virtual Storage Tree
+        else if (selectedTreeType==tr("Virtual Storage / Catalog")){
+            if (selectedDeviceType=="Storage"){
+                //Empty
+            }
+            else if (selectedDeviceType=="VirtualStorage"){
+                //Empty
+            }
+            else if (selectedDeviceType=="Catalog"){
+                /*
+                QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
+                QMenu virtualStorageContextMenu;
+
+                QString virtualStorageName = selectedVirtualStorageName;
+
+                QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Assign this catalog to a Virtual Storage device"), this);
+                virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+
+                connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName, index]() {
+                    on_Filters_treeView_Devices_clicked(index);
+                });
+
+                virtualStorageContextMenu.exec(globalPos);
+                ui->tabWidget->setCurrentIndex(5);
+                */
+            }
+        }
+
+        //Set actions for catalogs
+        if(selectedVirtualStorageType=="Catalog"){
+
+        }
+
     }
     //----------------------------------------------------------------------
 
@@ -262,6 +324,7 @@
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
         ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
+        ui->Virtual_label_SelectedCatalogDisplay->setText("");
 
         //reset device tree
         setTreeExpandState(false);

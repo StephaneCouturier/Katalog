@@ -51,13 +51,7 @@ void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_UnassignCatalog_clicked()
 {
-    int result = QMessageBox::warning(this,"Katalog",
-                                      tr("Do you want to remove this catalog from this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
-
-    if ( result ==QMessageBox::Yes){
         unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
-        ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
-    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_DeleteItem_clicked()
@@ -119,13 +113,19 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelInde
     selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     QModelIndex parentIndex = index.parent();
     selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
+    QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
 
     //Adapt buttons to selection
     if(selectedVirtualStorageType=="VirtualStorage"){
         ui->Virtual_pushButton_Edit->setEnabled(true);
+        if(selectedCatalog->name!=""){
+            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+        }
         ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
         ui->Virtual_pushButton_DeleteItem->setEnabled(true);
         ui->Virtual_label_SelectedAssignedCatalogDisplay->setText("");
+        ui->Virtual_label_SelectedVirtualStorage->setText(selectedVirtualStorageName);
+        ui->Virtual_label_SelectedVirtualStorageParent->setText("");
     }
     else if(selectedVirtualStorageType=="Catalog"){
         ui->Virtual_pushButton_Edit->setEnabled(false);
@@ -133,6 +133,67 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_clicked(const QModelInde
         ui->Virtual_pushButton_UnassignCatalog->setEnabled(true);
         ui->Virtual_pushButton_DeleteItem->setEnabled(false);
         ui->Virtual_label_SelectedAssignedCatalogDisplay->setText(selectedVirtualStorageName);
+        ui->Virtual_label_SelectedVirtualStorageParent->setText(selectedVirtualStorageParentName);
+        ui->Virtual_label_SelectedVirtualStorage->setText("");
+    }
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Virtual_treeView_VirutalStorageList_customContextMenuRequested(const QPoint &pos)
+{
+    //Get selection data
+    QModelIndex index=ui->Virtual_treeView_VirutalStorageList->currentIndex();
+    selectedVirtualStorageName = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 0, index.parent() ).data().toString();
+    selectedVirtualStorageType = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
+    selectedVirtualStorageID   = ui->Virtual_treeView_VirutalStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
+    QModelIndex parentIndex = index.parent();
+    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
+    QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
+
+    //Set actions for catalogs
+    if(selectedVirtualStorageType=="Catalog"){
+        QPoint globalPos = ui->Virtual_treeView_VirutalStorageList->mapToGlobal(pos);
+        QMenu virtualStorageContextMenu;
+
+        QString virtualStorageName = selectedVirtualStorageName;
+
+        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
+        virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+
+        connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
+            unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
+        });
+
+        virtualStorageContextMenu.exec(globalPos);
+    }
+    else{
+        QPoint globalPos = ui->Virtual_treeView_VirutalStorageList->mapToGlobal(pos);
+        QMenu virtualStorageContextMenu;
+
+        QString virtualStorageName = selectedVirtualStorageName;
+
+        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add child item"), this);
+        virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+
+        QAction *menuVirtualStorageAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
+        virtualStorageContextMenu.addAction(menuVirtualStorageAction2);
+
+        QAction *menuVirtualStorageAction3 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete item"), this);
+        virtualStorageContextMenu.addAction(menuVirtualStorageAction3);
+
+        connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
+            insertVirtualStorageItem(selectedVirtualStorageID,"child Item");
+        });
+
+        connect(menuVirtualStorageAction2, &QAction::triggered, this, [this, virtualStorageName]() {
+            ui->Virtual_widget_Edit->setVisible(true);
+            ui->Virtual_lineEdit_Name->setText(selectedVirtualStorageName);
+        });
+
+        connect(menuVirtualStorageAction3, &QAction::triggered, this, [this, virtualStorageName]() {
+            deleteVirtualStorageItem();
+        });
+
+        virtualStorageContextMenu.exec(globalPos);
     }
 }
 //--------------------------------------------------------------------------
@@ -216,31 +277,38 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
 //--------------------------------------------------------------------------
 void MainWindow::unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID)
 {
-        qDebug()<<catalogName<<virtualStorageParentID;
-    if( virtualStorageParentID!=0 and catalogName!=""){
-        //Insert catalog
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    DELETE FROM virtual_storage_catalog
-                                    WHERE virtual_storage_id=:virtual_storage_id
-                                    AND catalog_name=:catalog_name
-                                )");
-        query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",virtualStorageParentID);
-        query.bindValue(":catalog_name",catalogName);
-        query.exec();
+    int result = QMessageBox::warning(this,"Katalog",
+                                      tr("Do you want to remove this catalog from this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
 
-        //Save data to file
-        if (databaseMode == "Memory"){
-            //Save file
-            saveVirtualStorageCatalogTableToFile(virtualStorageCatalogFilePath);
-        }
+    if ( result ==QMessageBox::Yes){
+        //unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
 
-        //Reload
-        loadVirtualStorageTableToTreeModel();
-        if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageTableToSelectionTreeModel();
+        if( virtualStorageParentID!=0 and catalogName!=""){
+            //Insert catalog
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        DELETE FROM virtual_storage_catalog
+                                        WHERE virtual_storage_id=:virtual_storage_id
+                                        AND catalog_name=:catalog_name
+                                    )");
+            query.prepare(querySQL);
+            query.bindValue(":virtual_storage_id",virtualStorageParentID);
+            query.bindValue(":catalog_name",catalogName);
+            query.exec();
+
+            //Save data to file
+            if (databaseMode == "Memory"){
+                //Save file
+                saveVirtualStorageCatalogTableToFile(virtualStorageCatalogFilePath);
+            }
+
+            //Reload
+            loadVirtualStorageTableToTreeModel();
+            if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+                loadVirtualStorageTableToSelectionTreeModel();
+            }
         }
+        ui->Virtual_pushButton_UnassignCatalog->setEnabled(false);
     }
 }
 //--------------------------------------------------------------------------

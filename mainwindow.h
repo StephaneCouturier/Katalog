@@ -321,6 +321,7 @@ class MainWindow : public QMainWindow
             int selectedVirtualStorageParentID;
             QString selectedVirtualStorageType;
             QString selectedVirtualStorageName;
+            bool optionDisplayAssignedCatalogs;
             void insertVirtualStorageItem(int parentID, QString name);
             void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
             void unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID);
@@ -372,6 +373,7 @@ class MainWindow : public QMainWindow
             void on_Filters_pushButton_TreeExpandCollapse_clicked();
             void on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1);
             void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
+            void on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos);
 
             void on_Filters_treeView_Directory_clicked(const QModelIndex &index);
             void on_Filter_pushButton_PickPath_clicked();
@@ -439,7 +441,7 @@ class MainWindow : public QMainWindow
             void on_SearchTreeViewHistoryHeaderSortOrderChanged();
             void on_Search_splitter_Results_splitterMoved();
 
-            void setupFileContextMenu();
+            void setupFileContextMenus();
 
             //context menu
             void searchContextOpenFile();
@@ -541,6 +543,7 @@ class MainWindow : public QMainWindow
             void on_Virtual_pushButton_UnassignCatalog_clicked();
             void on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1);
             void on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index);
+            void on_Virtual_treeView_VirutalStorageList_customContextMenuRequested(const QPoint &pos);
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();

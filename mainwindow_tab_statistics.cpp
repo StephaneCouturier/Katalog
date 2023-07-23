@@ -58,7 +58,6 @@
         //Load the graph
         loadStatisticsChart();
     }
-
     //----------------------------------------------------------------------
     void MainWindow::on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog)
     {       
@@ -461,22 +460,45 @@
                 //Add Catalog data
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                    SELECT date_time, SUM(statistics_catalog.catalog_file_count), SUM(statistics_catalog.catalog_total_file_size)
-                                    FROM statistics_catalog
-                                    LEFT JOIN catalog ON catalog.catalog_name = statistics_catalog.catalog_name
-                                    LEFT JOIN storage ON catalog.catalog_storage = storage.storage_name
-                                    WHERE record_type = 'snapshot'
-                                  )");
+                                    SELECT date_time, SUM(sc.catalog_file_count), SUM(sc.catalog_total_file_size)
+                                    FROM statistics_catalog sc
+                                    LEFT JOIN catalog c ON c.catalog_name    = sc.catalog_name
+                                    LEFT JOIN storage s ON c.catalog_storage = s.storage_name
+                                )");
 
-                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" )
-                    querySQL += " AND storage.storage_location = '" + selectedDeviceName + "' ";
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" )
-                    querySQL += " AND catalog.catalog_storage = '" + selectedDeviceName + "' ";
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" )
-                    querySQL += " AND catalog.catalog_name = '" + selectedDeviceName + "' ";
-                else
-                    querySQL += " AND storage.storage_location !=''";
-
+                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" ){
+                    querySQL += " WHERE sc.record_type = 'snapshot' ";
+                    querySQL += " AND s.storage_location = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" ){
+                    querySQL += " WHERE sc.record_type = 'snapshot' ";
+                    querySQL += " AND c.catalog_storage = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" ){
+                    querySQL += " WHERE sc.record_type = 'snapshot' ";
+                    querySQL += " AND c.catalog_name = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="VirtualStorage" ){
+                    querySQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
+                    querySQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
+                    querySQL += " WHERE sc.record_type = 'snapshot' ";
+                    querySQL += " AND vsc.virtual_storage_id IN ( "
+                                      " WITH RECURSIVE hierarchy_cte AS ( "
+                                      "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
+                                      "       FROM virtual_storage "
+                                      "       WHERE virtual_storage_id = :virtual_storage_id "
+                                      "       UNION ALL "
+                                      "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
+                                      "       FROM virtual_storage t "
+                                      "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                      "  ) "
+                                      "  SELECT virtual_storage_id "
+                                      "  FROM hierarchy_cte) ";
+                }
+                else{
+                    querySQL += " WHERE sc.record_type = 'snapshot' ";
+                    querySQL += " AND s.storage_location !=''";
+                }
 
                 if ( !graphicStartDate.isNull() ){
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
@@ -486,6 +508,8 @@
 
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+                queryTotalSnapshots.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){
@@ -545,6 +569,11 @@
                         queryStorageSnapshotsSQL += "   LEFT JOIN catalog ON catalog.catalog_storage = storage.storage_name ";
                         queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
                         queryStorageSnapshotsSQL += "   AND catalog.catalog_name = '" + selectedDeviceName + "' ";
+                }
+                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="VirtualStorage" ){
+                        queryStorageSnapshotsSQL += "   WHERE record_type = 'no_value' ";
+                        //queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
+                        //queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDeviceName + "' ";
                 }
                 if ( !graphicStartDate.isNull() ){
                        queryStorageSnapshotsSQL += "    AND date_time > :graphStartDate ";
