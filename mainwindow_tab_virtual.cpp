@@ -36,12 +36,12 @@
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
 {
-    insertVirtualStorageItem(0,"root Item");
+    insertVirtualStorageItem(0,tr("Top Item"));
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_AddSubItem_clicked()
 {
-    insertVirtualStorageItem(selectedVirtualStorageID,tr("sub-Item"));
+    insertVirtualStorageItem(selectedVirtualStorageID,tr("Sub-Item"));
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
