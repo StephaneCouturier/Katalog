@@ -6761,9 +6761,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_InsertChild">
+               <widget class="QPushButton" name="Virtual_pushButton_AddSubItem">
                 <property name="text">
-                 <string>Add child item</string>
+                 <string>Add sub-item</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-new">

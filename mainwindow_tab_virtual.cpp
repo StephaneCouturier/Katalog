@@ -39,9 +39,9 @@ void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
     insertVirtualStorageItem(0,"root Item");
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_InsertChild_clicked()
+void MainWindow::on_Virtual_pushButton_AddSubItem_clicked()
 {
-    insertVirtualStorageItem(selectedVirtualStorageID,"child Item");
+    insertVirtualStorageItem(selectedVirtualStorageID,tr("sub-Item"));
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
@@ -171,7 +171,7 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_customContextMenuRequest
 
         QString virtualStorageName = selectedVirtualStorageName;
 
-        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add child item"), this);
+        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add sub-item"), this);
         virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
 
         QAction *menuVirtualStorageAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -181,7 +181,7 @@ void MainWindow::on_Virtual_treeView_VirutalStorageList_customContextMenuRequest
         virtualStorageContextMenu.addAction(menuVirtualStorageAction3);
 
         connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
-            insertVirtualStorageItem(selectedVirtualStorageID,"child Item");
+            insertVirtualStorageItem(selectedVirtualStorageID,"sub-item");
         });
 
         connect(menuVirtualStorageAction2, &QAction::triggered, this, [this, virtualStorageName]() {
@@ -383,7 +383,7 @@ void MainWindow::deleteVirtualStorageItem()
     else{
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("The selected item cannot be deleted as long as it has children items."));
+        msgBox.setText(tr("The selected item cannot be deleted as long as it has sub-items."));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
     }

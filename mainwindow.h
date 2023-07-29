@@ -534,7 +534,7 @@ class MainWindow : public QMainWindow
 
         //Virtual
             void on_Virtual_pushButton_InsertRootLevel_clicked();
-            void on_Virtual_pushButton_InsertChild_clicked();
+            void on_Virtual_pushButton_AddSubItem_clicked();
             void on_Virtual_pushButton_DeleteItem_clicked();
             void on_Virtual_pushButton_Edit_clicked();
             void on_Virtual_pushButton_Save_clicked();
