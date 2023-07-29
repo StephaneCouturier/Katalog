@@ -2667,9 +2667,14 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Nebyla poskytnuta žádná cesta. &lt;br/&gt;Upravte zařízení a zkuste to znovu.</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_virtual.cpp" line="39"/>
+        <source>Top Item</source>
+        <translation>top položka</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="44"/>
-        <source>sub-Item</source>
-        <translation>podpoložka</translation>
+        <source>Sub-Item</source>
+        <translation>Podpoložka</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="159"/>

@@ -2668,9 +2668,14 @@ to the trash?</source>
         <translation>Aucun chemin n&apos;a été fourni. &lt;br/&gt;Modifiez l&apos;appareil pour en fournir un et réessayez.</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_virtual.cpp" line="39"/>
+        <source>Top Item</source>
+        <translation>Premier élément</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="44"/>
-        <source>sub-Item</source>
-        <translation>sous-élément</translation>
+        <source>Sub-Item</source>
+        <translation>Sous-élément</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="159"/>

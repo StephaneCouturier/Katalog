@@ -2635,8 +2635,13 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_virtual.cpp" line="39"/>
+        <source>Top Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="44"/>
-        <source>sub-Item</source>
+        <source>Sub-Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

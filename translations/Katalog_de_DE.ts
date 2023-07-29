@@ -2667,8 +2667,13 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
         <translation>Es wurde kein Pfad angegeben. &lt;br/&gt;Ändern Sie das Gerät, um eines bereitzustellen, und versuchen Sie es erneut.</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_virtual.cpp" line="39"/>
+        <source>Top Item</source>
+        <translation>Top-element</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_virtual.cpp" line="44"/>
-        <source>sub-Item</source>
+        <source>Sub-Item</source>
         <translation>Unterpunkt</translation>
     </message>
     <message>
