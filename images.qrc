@@ -20,5 +20,8 @@
         <file>images/drive_orange.png</file>
         <file>images/drive_gray.png</file>
         <file>images/screenshots/Virtual_screen.png</file>
+        <file>images/screenshots/Filters_catalogs_storage.png</file>
+        <file>images/screenshots/Filters_catalogs_virtual.png</file>
+        <file>images/screenshots/Filters_connecteddrives.png</file>
     </qresource>
 </RCC>
