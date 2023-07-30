@@ -268,6 +268,11 @@
         <translation>Paměť</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="768"/>
+        <source>Reload all collection&apos;s data</source>
+        <translation>Laden Sie alle Daten der Sammlung neu</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="1077"/>
         <location filename="../mainwindow.ui" line="1881"/>
         <location filename="../mainwindow.ui" line="3245"/>
@@ -803,6 +808,12 @@
         <location filename="../mainwindow.ui" line="5110"/>
         <source>Order folders first</source>
         <translation>Nejprve objednejte složky</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="81"/>
+        <location filename="../mainwindow.ui" line="679"/>
+        <source>Show/Hide Filters</source>
+        <translation>Filter ein-/ausblenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="294"/>
@@ -1408,12 +1419,6 @@
         <translation>Znovu načtěte soubor s uloženými značkami</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="81"/>
-        <location filename="../mainwindow.ui" line="679"/>
-        <source>Show/Hide Filters and Settings</source>
-        <translation>Zobrazit / skrýt filtry a nastavení</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="739"/>
         <source>Reset all filters</source>
         <translation>Resetujte všechny filtry</translation>
@@ -1562,11 +1567,6 @@
         <location filename="../mainwindow.ui" line="8574"/>
         <source>Select a different Collection folder</source>
         <translation>Vyberte jinou složku Collection</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="768"/>
-        <source>Reload all catalog information</source>
-        <translation>Znovu načtěte všechny katalogové informace</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7895"/>

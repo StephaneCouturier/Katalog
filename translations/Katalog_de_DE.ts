@@ -55,12 +55,6 @@
         <translation>Katalog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="81"/>
-        <location filename="../mainwindow.ui" line="679"/>
-        <source>Show/Hide Filters and Settings</source>
-        <translation>Filter und Einstellungen anzeigen/ausblenden</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="739"/>
         <source>Reset all filters</source>
         <translation>Alle Filter zurücksetzen</translation>
@@ -252,11 +246,6 @@
         <location filename="../mainwindow.ui" line="8577"/>
         <source>Select</source>
         <translation>Auswählen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="768"/>
-        <source>Reload all catalog information</source>
-        <translation>Alle Kataloginformationen neu laden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6679"/>
@@ -519,6 +508,11 @@
         <location filename="../mainwindow_tab_explore.cpp" line="645"/>
         <source>Size</source>
         <translation>Größe</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="768"/>
+        <source>Reload all collection&apos;s data</source>
+        <translation>Laden Sie alle Daten der Sammlung neu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2036"/>
@@ -973,6 +967,12 @@
         <location filename="../mainwindow.ui" line="5110"/>
         <source>Order folders first</source>
         <translation>Ordner zuerst bestellen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="81"/>
+        <location filename="../mainwindow.ui" line="679"/>
+        <source>Show/Hide Filters</source>
+        <translation>Filter ein-/ausblenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="294"/>

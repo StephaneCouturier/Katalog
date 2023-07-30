@@ -210,6 +210,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="768"/>
+        <source>Reload all collection&apos;s data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2036"/>
         <location filename="../mainwindow.ui" line="2448"/>
         <source>&gt;</source>
@@ -505,6 +510,12 @@
     <message>
         <location filename="../mainwindow.ui" line="4766"/>
         <source>Directories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="81"/>
+        <location filename="../mainwindow.ui" line="679"/>
+        <source>Show/Hide Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1091,11 +1102,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="768"/>
-        <source>Reload all catalog information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="7931"/>
         <source>Other Settings</source>
         <translation type="unfinished"></translation>
@@ -1439,12 +1445,6 @@
     <message>
         <location filename="../mainwindow.ui" line="739"/>
         <source>Reset all filters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="81"/>
-        <location filename="../mainwindow.ui" line="679"/>
-        <source>Show/Hide Filters and Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

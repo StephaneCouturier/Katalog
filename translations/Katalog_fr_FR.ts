@@ -766,6 +766,11 @@
         <translation>&gt;</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="768"/>
+        <source>Reload all collection&apos;s data</source>
+        <translation>Recharger toutes les données de la collection</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2091"/>
         <source>File size unit for minimum value</source>
         <translation>Unité de taille de fichier pour la valeur minimum</translation>
@@ -857,6 +862,12 @@
         <translation>Voir les statistiques du catalogue sélectionné</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="81"/>
+        <location filename="../mainwindow.ui" line="679"/>
+        <source>Show/Hide Filters</source>
+        <translation>Afficher/masquer les Filtres</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="294"/>
         <location filename="../mainwindow.ui" line="6734"/>
         <source>Virtual</source>
@@ -874,6 +885,10 @@
         <location filename="../mainwindow_tab_virtual.cpp" line="370"/>
         <source>Virtual Storage / Catalog</source>
         <translation>Stockage virtuel / Catalogue</translation>
+    </message>
+    <message>
+        <source>Reload all collection data</source>
+        <translation type="obsolete">Recharger toutes les données de la collection</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3740"/>
@@ -1298,11 +1313,6 @@
         <translation>Sélectionner un dossier de Collection différent</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="768"/>
-        <source>Reload all catalog information</source>
-        <translation>Recharger toutes les informations de catalogues</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="7895"/>
         <location filename="../mainwindow.ui" line="8460"/>
         <location filename="../mainwindow.ui" line="8597"/>
@@ -1448,12 +1458,6 @@
         <location filename="../mainwindow.ui" line="739"/>
         <source>Reset all filters</source>
         <translation>Réinitialiser tous les filtres</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="81"/>
-        <location filename="../mainwindow.ui" line="679"/>
-        <source>Show/Hide Filters and Settings</source>
-        <translation>Montrer/Cacher les Filtres et Réglages</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8028"/>

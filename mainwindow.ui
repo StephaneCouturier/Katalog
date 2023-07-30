@@ -78,7 +78,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Show/Hide Filters and Settings</string>
+          <string>Show/Hide Filters</string>
          </property>
          <property name="statusTip">
           <string/>
@@ -676,7 +676,7 @@
               </size>
              </property>
              <property name="toolTip">
-              <string>Show/Hide Filters and Settings</string>
+              <string>Show/Hide Filters</string>
              </property>
              <property name="statusTip">
               <string/>
@@ -765,7 +765,7 @@
                 </size>
                </property>
                <property name="toolTip">
-                <string>Reload all catalog information</string>
+                <string>Reload all collection's data</string>
                </property>
                <property name="text">
                 <string/>

@@ -51,5 +51,6 @@
         <file>fallback-icons/media-optical-blu-ray.png</file>
         <file>fallback-icons/media-optical.png</file>
         <file>fallback-icons/drive-multidisk.png</file>
+        <file>fallback-icons/drive-harddisk-root.png</file>
     </qresource>
 </RCC>
