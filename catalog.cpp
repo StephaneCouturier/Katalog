@@ -30,6 +30,7 @@
 */
 
 #include "catalog.h"
+#include "qdir.h"
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -676,6 +677,23 @@ void Catalog::saveStatisticsToFile(QString filePath, QDateTime dateTime)
         stream << statisticsLine << "\n";
     }
     fileOut.close();
+}
+
+void Catalog::updateSourcePathIsActive()
+{
+    // Verify that the catalog path is accessible (so the related drive is mounted)
+    QDir dir(sourcePath);
+    sourcePathIsActive = dir.exists();
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            UPDATE catalog
+                            SET catalog_source_path_is_active=:catalog_source_path_is_active
+                            WHERE catalog_name=:catalog_name
+                        )");
+    query.prepare(querySQL);
+    query.bindValue(":catalog_source_path_is_active", sourcePathIsActive);
+    query.bindValue(":catalog_name", name);
+    query.exec();
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,

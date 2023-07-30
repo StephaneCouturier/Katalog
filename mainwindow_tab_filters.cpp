@@ -67,6 +67,7 @@
             createStorageList();
         }
         generateCollectionFilesPaths();
+        updateAllCatalogPathIsActive();
         loadCollection();
     }
     //----------------------------------------------------------------------

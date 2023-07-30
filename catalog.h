@@ -95,6 +95,7 @@ public:
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
+    void updateSourcePathIsActive();
 
     void populateFileData( const QList<QString> &fileNames,
                            const QList<qint64>  &fileSizes,

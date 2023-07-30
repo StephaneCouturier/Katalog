@@ -247,6 +247,7 @@ class MainWindow : public QMainWindow
             void loadCatalogFilesToTable();
             void loadCatalogsTableToModel();
             int verifyCatalogPath(QString catalogSourcePath);
+            void updateAllCatalogPathIsActive();
             void recordCollectionStats();
             void recordAllCatalogStats(QDateTime dateTime);
             void convertCatalog(QString catalogSourcePath);

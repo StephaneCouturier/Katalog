@@ -88,7 +88,6 @@
 
 
             //The selected catalog becomes the active catalog
-            //activeCatalog = selectedCatalog;
             selectedCatalog->setName(selectedCatalog->name);
             selectedCatalog->loadCatalogMetaData();
 
@@ -1448,4 +1447,24 @@
 
             loadStatisticsChart();
 
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::updateAllCatalogPathIsActive()
+    {//Update the value sourcePathIsActive of all Catalogs
+
+            //Get the list of catalogs
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        SELECT catalog_name
+                                        FROM catalog
+                                )");
+            query.prepare(querySQL);
+            query.exec();
+
+            //Save history for each catalog
+            while (query.next()){
+                tempCatalog->setName(query.value(0).toString());
+                tempCatalog->loadCatalogMetaData();
+                tempCatalog->updateSourcePathIsActive();
+            }
     }
