@@ -63,7 +63,9 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ReloadCollection_clicked()
     {
-        createStorageList();
+        if(databaseMode=="Memory"){
+            createStorageList();
+        }
         generateCollectionFilesPaths();
         loadCollection();
     }
