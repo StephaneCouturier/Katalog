@@ -330,7 +330,7 @@
         void MainWindow::on_Catalogs_pushButton_DeleteCatalog_clicked()
         {
             int result = QMessageBox::warning(this,"Katalog",
-                                                  tr("Do you want to delete this catalog?")+"\n"+selectedCatalog->filePath,QMessageBox::Yes|QMessageBox::Cancel);
+                                                  tr("Do you want to delete this catalog?")+"\n"+selectedCatalog->name,QMessageBox::Yes|QMessageBox::Cancel);
 
             if ( result ==QMessageBox::Yes){
 

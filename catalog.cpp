@@ -270,8 +270,17 @@ void Catalog::deleteCatalog()
                             WHERE catalog_name=:catalog_name
                         )");
     query.prepare(querySQL);
-    query.bindValue(":catalog_name",name);
+    query.bindValue(":catalog_name", name);
     query.exec();
+
+    querySQL = QLatin1String(R"(
+                        DELETE FROM file
+                        WHERE file_catalog =:file_catalog
+                    )");
+    query.prepare(querySQL);
+    query.bindValue(":file_catalog ", name);
+    query.exec();
+
 }
 
 void Catalog::loadCatalogMetaData()
