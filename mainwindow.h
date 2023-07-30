@@ -252,7 +252,7 @@ class MainWindow : public QMainWindow
             void convertCatalog(QString catalogSourcePath);
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
-            void updateSingleCatalog(Catalog *catalog);
+            void updateSingleCatalog(Catalog *catalog, bool updateStorage);
             void updateCatalogFileList(Catalog *catalog);
             QString requestSource;
             void saveCatalogChanges(Catalog *catalog);

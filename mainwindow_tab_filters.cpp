@@ -151,7 +151,7 @@
         if (selectedDeviceType=="Catalog"){
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(selectedCatalog);
+            updateSingleCatalog(selectedCatalog, true);
         }
     }
     //----------------------------------------------------------------------

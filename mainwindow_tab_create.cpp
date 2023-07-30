@@ -239,7 +239,7 @@
 
         //Launch the scan and cataloging of files
             requestSource = "create";
-            updateSingleCatalog(newCatalog);
+            updateSingleCatalog(newCatalog, false);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -290,9 +290,6 @@
             ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
             ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
-
-            //Refresh data
-            loadCollection();
     }
     //--------------------------------------------------------------------------
     void MainWindow::catalogDirectory(Catalog *catalog)

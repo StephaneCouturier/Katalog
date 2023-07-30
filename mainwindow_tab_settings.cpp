@@ -275,8 +275,8 @@
         //Generate collection files paths and statistics parameters
         generateCollectionFilesPaths();
 
-        //Create a Storage list (if none exists) + conversions
         if(databaseMode=="Memory"){
+            //Create a Storage list (if none exists) + conversions
             createStorageList();
             convertStatistics();
 
@@ -302,10 +302,10 @@
 
         //Load data from tables and update display
         loadSearchHistoryTableToModel();
+        loadCatalogsTableToModel();
         loadStorageTableToModel();
         loadVirtualStorageTableToTreeModel();
         updateStorageSelectionStatistics();
-        loadCatalogsTableToModel();
 
         //Load Storage list
         refreshLocationSelectionList();

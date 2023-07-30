@@ -165,7 +165,7 @@
         {
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(selectedCatalog);
+            updateSingleCatalog(selectedCatalog, true);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -735,7 +735,7 @@
         QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateSingleCatalog(Catalog *catalog)
+    void MainWindow::updateSingleCatalog(Catalog *catalog, bool updateStorage)
     {
         //Update catalog file list
         updateCatalogFileList(catalog);
@@ -760,7 +760,9 @@
             if ( selectedCatalogStoragePath!=""){
                 tempStorage->setID(selectedCatalogStorageID);
                 tempStorage->loadStorageMetaData();
-                updateStorageInfo(tempStorage);
+                if(updateStorage==true){
+                    updateStorageInfo(tempStorage);
+                }
             }
         }
 
