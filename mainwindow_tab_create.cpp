@@ -261,8 +261,7 @@
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
-            if(databaseMode=="Memory")
-                loadCatalogFilesToTable();
+            loadCatalogFilesToTable();
 
             //Refresh the catalog list for the Collection screen
             loadCatalogsTableToModel();
@@ -572,29 +571,33 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogToNewFile(QString newCatalogName)
     {
-        //Save a catalog to a new file
+        if(databaseMode=="Memory"){
 
-        // Get the file list from this model
-        QStringList filelist = fileListModel->stringList();
+            //Save a catalog to a new file
 
-        // Stream the list to the file
-        QFile fileOut( collectionFolder +"/"+ newCatalogName + ".idx" );
+            // Get the file list from this model
+            QStringList filelist = fileListModel->stringList();
 
-        // write data
+            // Stream the list to the file
+            QFile fileOut( collectionFolder +"/"+ newCatalogName + ".idx" );
 
-          if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            for (int i = 0; i < filelist.size(); ++i)
-              stream << filelist.at(i) << '\n';
-          } else {
-              QMessageBox msgBox;
-              msgBox.setWindowTitle("Katalog");
-              msgBox.setText(tr("Error opening output file."));
-              msgBox.setIcon(QMessageBox::Warning);
-              msgBox.exec();
-            //return EXIT_FAILURE;
-          }
-          fileOut.close();
+            // write data
+
+            if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                QTextStream stream(&fileOut);
+                for (int i = 0; i < filelist.size(); ++i)
+                  stream << filelist.at(i) << '\n';
+            }
+            else {
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(tr("Error opening output file."));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.exec();
+                //return EXIT_FAILURE;
+            }
+            fileOut.close();
+        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveFoldersToNewFile(QString newCatalogName)

@@ -337,7 +337,6 @@
                     //move file to trash
                     if ( selectedCatalog->filePath != ""){
 
-
                               QFile file (selectedCatalog->filePath);
                               file.moveToTrash();
 
@@ -421,12 +420,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
-        //Clear catalog table
+        if(databaseMode=="Memory"){
+            //Clear catalog table
             QSqlQuery queryDelete;
             queryDelete.prepare( "DELETE FROM catalog" );
             queryDelete.exec();
 
-        //Iterate in the directory to create a list of files and sort it
+            //Iterate in the directory to create a list of files and sort it
             QStringList catalogFileExtensions;
             catalogFileExtensions << "*.idx";
 
@@ -442,8 +442,8 @@
 
                 // Verify that the file can be opened
                 if(!catalogFile.open(QIODevice::ReadOnly)) {
-                    QMessageBox::information(this,"Katalog",tr("No catalog found."));
-                    return;
+                          QMessageBox::information(this,"Katalog",tr("No catalog found."));
+                          return;
                 }
 
                 //Prepare a textsteam for the file
@@ -454,83 +454,83 @@
                 QString line;
                 QString value;
                 for (int i=0; i<10; i++) {
-                    line = textStreamCatalogs.readLine();
-                    if (line !="" and QVariant(line.at(0)).toString()=="<"){
-                        value = line.right(line.size() - line.indexOf(">") - 1);
-                        if (value =="") catalogValues << "";
-                        else catalogValues << value;
-                    }
+                          line = textStreamCatalogs.readLine();
+                          if (line !="" and QVariant(line.at(0)).toString()=="<"){
+                       value = line.right(line.size() - line.indexOf(">") - 1);
+                       if (value =="") catalogValues << "";
+                       else catalogValues << value;
+                          }
                 }
                 if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
                 if (catalogValues.count()==8) catalogValues << "false"; //for older catalog without includeMetadata
                 if (catalogValues.count()==9) catalogValues << "";      //for older catalog without appVersion
 
                 if(catalogValues.length()>0){
-                    // Verify if path is active (drive connected)
-                    int isActive = verifyCatalogPath(catalogValues[0]);
+                          // Verify if path is active (drive connected)
+                          int isActive = verifyCatalogPath(catalogValues[0]);
 
-                    //Insert a line in the table with available data
+                          //Insert a line in the table with available data
 
-                    //prepare insert query for filesall
-                    QSqlQuery insertCatalogQuery;
-                    QString insertCatalogQuerySQL = QLatin1String(R"(
-                                            INSERT OR IGNORE INTO catalog (
-                                                            catalog_file_path,
-                                                            catalog_name,
-                                                            catalog_date_updated,
-                                                            catalog_source_path,
-                                                            catalog_file_count,
-                                                            catalog_total_file_size,
-                                                            catalog_source_path_is_active,
-                                                            catalog_include_hidden,
-                                                            catalog_file_type,
-                                                            catalog_storage,
-                                                            catalog_include_symblinks,
-                                                            catalog_is_full_device,
-                                                            catalog_date_loaded,
-                                                            catalog_include_metadata,
-                                                            catalog_app_version
-                                                            )
-                                            VALUES(
-                                                            :catalog_file_path,
-                                                            :catalog_name,
-                                                            :catalog_date_updated,
-                                                            :catalog_source_path,
-                                                            :catalog_file_count,
-                                                            :catalog_total_file_size,
-                                                            :catalog_source_path_is_active,
-                                                            :catalog_include_hidden,
-                                                            :catalog_file_type,
-                                                            :catalog_storage,
-                                                            :catalog_include_symblinks,
-                                                            :catalog_is_full_device,
-                                                            :catalog_date_loaded,
-                                                            :catalog_include_metadata,
-                                                            :catalog_app_version )
-                                        )");
+                          //prepare insert query for filesall
+                          QSqlQuery insertCatalogQuery;
+                          QString insertCatalogQuerySQL = QLatin1String(R"(
+                                        INSERT OR IGNORE INTO catalog (
+                                                        catalog_file_path,
+                                                        catalog_name,
+                                                        catalog_date_updated,
+                                                        catalog_source_path,
+                                                        catalog_file_count,
+                                                        catalog_total_file_size,
+                                                        catalog_source_path_is_active,
+                                                        catalog_include_hidden,
+                                                        catalog_file_type,
+                                                        catalog_storage,
+                                                        catalog_include_symblinks,
+                                                        catalog_is_full_device,
+                                                        catalog_date_loaded,
+                                                        catalog_include_metadata,
+                                                        catalog_app_version
+                                                        )
+                                        VALUES(
+                                                        :catalog_file_path,
+                                                        :catalog_name,
+                                                        :catalog_date_updated,
+                                                        :catalog_source_path,
+                                                        :catalog_file_count,
+                                                        :catalog_total_file_size,
+                                                        :catalog_source_path_is_active,
+                                                        :catalog_include_hidden,
+                                                        :catalog_file_type,
+                                                        :catalog_storage,
+                                                        :catalog_include_symblinks,
+                                                        :catalog_is_full_device,
+                                                        :catalog_date_loaded,
+                                                        :catalog_include_metadata,
+                                                        :catalog_app_version )
+                                    )");
 
-                    insertCatalogQuery.prepare(insertCatalogQuerySQL);
-                    insertCatalogQuery.bindValue(":catalog_file_path",catalogFileInfo.filePath());
-                    insertCatalogQuery.bindValue(":catalog_name",catalogFileInfo.completeBaseName());
-                    insertCatalogQuery.bindValue(":catalog_date_updated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-                    insertCatalogQuery.bindValue(":catalog_source_path",catalogValues[0]);
-                    insertCatalogQuery.bindValue(":catalog_file_count",catalogValues[1].toInt());
-                    insertCatalogQuery.bindValue(":catalog_total_file_size",catalogValues[2].toLongLong());
-                    insertCatalogQuery.bindValue(":catalog_source_path_is_active",isActive);
-                    insertCatalogQuery.bindValue(":catalog_include_hidden",catalogValues[3]);
-                    insertCatalogQuery.bindValue(":catalog_file_type",catalogValues[4]);
-                    insertCatalogQuery.bindValue(":catalog_storage",catalogValues[5]);
-                    insertCatalogQuery.bindValue(":catalog_include_symblinks",catalogValues[6]);
-                    insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
-                    insertCatalogQuery.bindValue(":catalog_date_loaded","");
-                    insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
-                    insertCatalogQuery.bindValue(":catalog_app_version",catalogValues[9]);
-                    insertCatalogQuery.exec();
+                          insertCatalogQuery.prepare(insertCatalogQuerySQL);
+                          insertCatalogQuery.bindValue(":catalog_file_path",catalogFileInfo.filePath());
+                          insertCatalogQuery.bindValue(":catalog_name",catalogFileInfo.completeBaseName());
+                          insertCatalogQuery.bindValue(":catalog_date_updated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+                          insertCatalogQuery.bindValue(":catalog_source_path",catalogValues[0]);
+                          insertCatalogQuery.bindValue(":catalog_file_count",catalogValues[1].toInt());
+                          insertCatalogQuery.bindValue(":catalog_total_file_size",catalogValues[2].toLongLong());
+                          insertCatalogQuery.bindValue(":catalog_source_path_is_active",isActive);
+                          insertCatalogQuery.bindValue(":catalog_include_hidden",catalogValues[3]);
+                          insertCatalogQuery.bindValue(":catalog_file_type",catalogValues[4]);
+                          insertCatalogQuery.bindValue(":catalog_storage",catalogValues[5]);
+                          insertCatalogQuery.bindValue(":catalog_include_symblinks",catalogValues[6]);
+                          insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
+                          insertCatalogQuery.bindValue(":catalog_date_loaded","");
+                          insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
+                          insertCatalogQuery.bindValue(":catalog_app_version",catalogValues[9]);
+                          insertCatalogQuery.exec();
 
                 }
                 catalogFile.close();
             }
-
+        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogsTableToModel()

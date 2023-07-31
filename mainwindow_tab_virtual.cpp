@@ -391,15 +391,16 @@ void MainWindow::deleteVirtualStorageItem()
 //--------------------------------------------------------------------------
 void MainWindow::loadVirtualStorageFileToTable()
 {
-    QSqlQuery query;
-    QString querySQL;
-    querySQL = QLatin1String(R"(
+    if(databaseMode=="Memory"){
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
                         DELETE FROM virtual_storage
                     )");
-    query.prepare(querySQL);
-    query.exec();
+        query.prepare(querySQL);
+        query.exec();
 
-    querySQL = QLatin1String(R"(
+        querySQL = QLatin1String(R"(
                         INSERT INTO virtual_storage (
                                         virtual_storage_id,
                                         virtual_storage_parent_id,
@@ -408,41 +409,41 @@ void MainWindow::loadVirtualStorageFileToTable()
                                         :virtual_storage_parent_id,
                                         :virtual_storage_name )
                     )");
-    query.prepare(querySQL);
+        query.prepare(querySQL);
 
-    //Define storage file and prepare stream
-    QFile virtualStorageFile(virtualStorageFilePath);
-    QTextStream textStream(&virtualStorageFile);
+        //Define storage file and prepare stream
+        QFile virtualStorageFile(virtualStorageFilePath);
+        QTextStream textStream(&virtualStorageFile);
 
-    //Open file or return information
-    if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
-        // Create it, if it does not exist
-        QFile newVirtualStorageFile(virtualStorageFilePath);
-        newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text);
-        QTextStream stream(&newVirtualStorageFile);
-        stream << "ID"            << "\t"
-               << "Parent ID"     << "\t"
-               << "Name"          << "\t"
-               << '\n';
-        newVirtualStorageFile.close();
-    }
+        //Open file or return information
+        if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
+            // Create it, if it does not exist
+            QFile newVirtualStorageFile(virtualStorageFilePath);
+            newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text);
+            QTextStream stream(&newVirtualStorageFile);
+            stream << "ID"            << "\t"
+                   << "Parent ID"     << "\t"
+                   << "Name"          << "\t"
+                   << '\n';
+            newVirtualStorageFile.close();
+        }
 
-    //Test file validity (application breaks between v0.13 and v0.14)
-    QString line = textStream.readLine();
-
-    //Load virtualStorage device lines to table
-    while (true)
-    {
+        //Test file validity (application breaks between v0.13 and v0.14)
         QString line = textStream.readLine();
-        if (line.isNull())
-            break;
-        else
-            if (line.left(2)!="ID"){//skip the first line with headers
 
-                //Split the string with tabulation into a list
-                QStringList fieldList = line.split('\t');
+        //Load virtualStorage device lines to table
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(2)!="ID"){//skip the first line with headers
 
-                QString querySQL = QLatin1String(R"(
+                    //Split the string with tabulation into a list
+                    QStringList fieldList = line.split('\t');
+
+                    QString querySQL = QLatin1String(R"(
                                 INSERT INTO virtual_storage(
                                         virtual_storage_id,
                                         virtual_storage_parent_id,
@@ -453,15 +454,16 @@ void MainWindow::loadVirtualStorageFileToTable()
                                         :virtual_storage_name )
                                 )");
 
-                QSqlQuery insertQuery;
-                insertQuery.prepare(querySQL);
-                insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
-                insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
-                insertQuery.bindValue(":virtual_storage_name",fieldList[2]);
-                insertQuery.exec();
-            }
+                    QSqlQuery insertQuery;
+                    insertQuery.prepare(querySQL);
+                    insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
+                    insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
+                    insertQuery.bindValue(":virtual_storage_name",fieldList[2]);
+                    insertQuery.exec();
+                }
+        }
+        virtualStorageFile.close();
     }
-    virtualStorageFile.close();
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadVirtualStorageCatalogFileToTable()

@@ -321,50 +321,49 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageFileToTable()
-    {
-        //Define storage file and prepare stream
-        QFile storageFile(storageFilePath);
-        QTextStream textStream(&storageFile);
+    {//load Storage file data to its table
+        if (databaseMode=="Memory"){
 
-        QSqlQuery queryDelete;
-        queryDelete.prepare( "DELETE FROM storage" );
+            //Define storage file and prepare stream
+            QFile storageFile(storageFilePath);
+            QTextStream textStream(&storageFile);
 
-        //Open file or return information
-        if(!storageFile.open(QIODevice::ReadOnly)) {
-            //if there is no storage file, reset data and buttons
-            //QMessageBox::information(this,"Katalog","No storage file was found in the current collection folder."
-            //                             "\nPlease create one with the button 'Create list'\n");
+            QSqlQuery queryDelete;
+            queryDelete.prepare( "DELETE FROM storage" );
 
-            queryDelete.exec();
+            //Open file or return information
+            if(!storageFile.open(QIODevice::ReadOnly)) {
 
-            //Disable all buttons, enable create list
-            ui->Storage_pushButton_Reload->setEnabled(false);
-            ui->Storage_pushButton_EditAll->setEnabled(false);
-            ui->Storage_pushButton_SaveAll->setEnabled(false);
-            ui->Storage_pushButton_New->setEnabled(false);
-            ui->Storage_pushButton_CreateList->setEnabled(true);
+                queryDelete.exec();
 
-            return;
-        }
+                //Disable all buttons, enable create list
+                ui->Storage_pushButton_Reload->setEnabled(false);
+                ui->Storage_pushButton_EditAll->setEnabled(false);
+                ui->Storage_pushButton_SaveAll->setEnabled(false);
+                ui->Storage_pushButton_New->setEnabled(false);
+                ui->Storage_pushButton_CreateList->setEnabled(true);
 
-        //Test file validity (application breaks between v0.13 and v0.14)
-        QString line = textStream.readLine();
-        if (line.left(2)!="ID"){
-               QMessageBox::warning(this,"Katalog",
-                                    tr("A storage.csv file was found, but could not be loaded.\n"
+                return;
+            }
+
+            //Test file validity (application breaks between v0.13 and v0.14)
+            QString line = textStream.readLine();
+            if (line.left(2)!="ID"){
+            QMessageBox::warning(this,"Katalog",
+                                 tr("A storage.csv file was found, but could not be loaded.\n"
                                     "Likely, it was made with an older version of Katalog.\n"
                                     "The file can be fixed manually, please visit the wiki page:\n"
                                     "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>Storage/fixing-for-new-versions</a>")
-                                    );
-               return;
-        }
+                                 );
+            return;
+            }
 
-        //Clear all entries of the current table
-        queryDelete.exec();
+            //Clear all entries of the current table
+            queryDelete.exec();
 
-        //Load storage device lines to table
-        while (true)
-        {
+            //Load storage device lines to table
+            while (true)
+            {
 
             QString line = textStream.readLine();
             if (line.isNull())
@@ -431,9 +430,9 @@
                     insertQuery.exec();
 
                 }
+            }
+            storageFile.close();
         }
-        storageFile.close();
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageTableToModel()
@@ -646,59 +645,59 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageModelToFile()
     {
-        //Prepare export file
-        storageFilePath = collectionFolder + "/" + "storage.csv";
-        QFile storageFile(storageFilePath);
-        QTextStream out(&storageFile);
+        if (databaseMode=="Memory"){
+            //Prepare export file
+            storageFilePath = collectionFolder + "/" + "storage.csv";
+            QFile storageFile(storageFilePath);
+            QTextStream out(&storageFile);
 
-        //Prepare header line
-        out  << "ID"            << "\t"
-             << "Name"          << "\t"
-             << "Type"          << "\t"
-             << "Location"      << "\t"
-             << "Path"          << "\t"
-             << "Label"         << "\t"
-             << "FileSystem"    << "\t"
-             << "Total"         << "\t"
-             << "Free"          << "\t"
-             << "BrandModel"    << "\t"
-             << "SerialNumber"  << "\t"
-             << "BuildDate"     << "\t"
-             << "ContentType"   << "\t"
-             << "Container"     << "\t"
-             << "Comment"       << "\t"
-             << '\n';
+            //Prepare header line
+            out  << "ID"            << "\t"
+                << "Name"          << "\t"
+                << "Type"          << "\t"
+                << "Location"      << "\t"
+                << "Path"          << "\t"
+                << "Label"         << "\t"
+                << "FileSystem"    << "\t"
+                << "Total"         << "\t"
+                << "Free"          << "\t"
+                << "BrandModel"    << "\t"
+                << "SerialNumber"  << "\t"
+                << "BuildDate"     << "\t"
+                << "ContentType"   << "\t"
+                << "Container"     << "\t"
+                << "Comment"       << "\t"
+                << '\n';
 
-        //Get data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                             SELECT * FROM storage
-                                        )");
-        query.prepare(querySQL);
-        query.exec();
+            //Get data
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                         SELECT * FROM storage
+                                    )");
+            query.prepare(querySQL);
+            query.exec();
 
-        //Iterate the records and generate lines
-        while (query.next()) {
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                if (i>0)
-                    out << '\t';
-                out << record.value(i).toString();
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //-- Write the result in the file
+                out << '\n';
+
             }
-            //-- Write the result in the file
-             out << '\n';
 
+            if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+                //out << textData;
+                //Close the file
+                //storageFile.close();
+            }
+            storageFile.close();
         }
-
-        if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-            //out << textData;
-            //Close the file
-            //storageFile.close();
-        }
-
-        //QMessageBox::information(this,"Katalog","Results exported to the collection folder:\n"+storageFile.fileName());
-        storageFile.close();
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageSelectionStatistics()

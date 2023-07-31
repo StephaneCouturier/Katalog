@@ -706,14 +706,14 @@
     //----------------------------------------------------------------------
     void MainWindow::generateCollectionFilesPaths()
     {
-        searchHistoryFilePath = collectionFolder + "/" + "search_history.csv";
-        storageFilePath       = collectionFolder + "/" + "storage.csv";
-        virtualStorageFilePath       = collectionFolder + "/" + "virtual_storage.csv";
+        searchHistoryFilePath         = collectionFolder + "/" + "search_history.csv";
+        storageFilePath               = collectionFolder + "/" + "storage.csv";
+        virtualStorageFilePath        = collectionFolder + "/" + "virtual_storage.csv";
         virtualStorageCatalogFilePath = collectionFolder + "/" + "virtual_storage_catalog.csv";
-        statisticsCatalogFileName    = "statistics_catalog.csv";
-        statisticsCatalogFilePath    = collectionFolder + "/" + statisticsCatalogFileName;
-        statisticsStorageFileName    = "statistics_storage.csv";
-        statisticsStorageFilePath    = collectionFolder + "/" + statisticsStorageFileName;
-        excludeFilePath       = collectionFolder + "/" + "exclude.csv";
+        statisticsCatalogFileName     = "statistics_catalog.csv";
+        statisticsCatalogFilePath     = collectionFolder + "/" + statisticsCatalogFileName;
+        statisticsStorageFileName     = "statistics_storage.csv";
+        statisticsStorageFilePath     = collectionFolder + "/" + statisticsStorageFileName;
+        excludeFilePath               = collectionFolder + "/" + "exclude.csv";
     }
     //----------------------------------------------------------------------
