@@ -170,6 +170,10 @@
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         {
             requestSource ="update";
+            globalUpdateTotalFiles = 0;
+            globalUpdateDeltaFiles = 0;
+            globalUpdateTotalSize = 0;
+            globalUpdateDeltaSize = 0;
 
             //user to confirm running this global update
                 int confirm = QMessageBox::warning(this, "Katalog",
@@ -266,8 +270,23 @@
                     }
                 }
             }
-            QMessageBox::information(this,"Katalog",tr("Update of displayed and active catalogs completed."));
+
+            QMessageBox msgBox;
+            QString message;
+            message = QString(tr("<br/>Update of displayed and active catalogs completed.<br/>"));
+            message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                               "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                               ).arg(QString::number(globalUpdateTotalFiles),
+                                QString::number(globalUpdateDeltaFiles),
+                                QLocale().formattedDataSize(globalUpdateTotalSize),
+                                QLocale().formattedDataSize(globalUpdateDeltaSize));
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+
             skipCatalogUpdateSummary= false;
+
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_EditCatalogFile_clicked()
@@ -853,6 +872,12 @@
                 msgBox.setIcon(QMessageBox::Information);
                 msgBox.exec();
             }
+
+            //global update
+            globalUpdateTotalFiles += catalog->fileCount;
+            globalUpdateDeltaFiles += deltaFileCount;
+            globalUpdateTotalSize  += catalog->totalFileSize;
+            globalUpdateDeltaSize  += deltaTotalFileSize;
         }
         else {
             QMessageBox::information(this,"Katalog",tr("The catalog %1 cannot be updated.\n"

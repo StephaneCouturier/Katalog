@@ -259,6 +259,11 @@ class MainWindow : public QMainWindow
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
 
+            qint64 globalUpdateTotalFiles;
+            qint64 globalUpdateDeltaFiles;
+            qint64 globalUpdateTotalSize;
+            qint64 globalUpdateDeltaSize;
+
         //TAB: Explore
             QString selectedDirectoryName;
             QString selectedDirectoryFullPath;
