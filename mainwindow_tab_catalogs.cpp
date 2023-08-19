@@ -902,6 +902,23 @@
         loadCatalogsTableToModel();
         loadStatisticsChart();
 
+        //Save to VirtualStorage table
+        QSqlQuery queryUpdateVirtualStorage;
+        QString queryUpdateVirtualStorageSQL = QLatin1String(R"(
+                                        UPDATE virtual_storage
+                                        SET virtual_storage_total_file_size = :virtual_storage_total_file_size,
+                                            virtual_storage_total_file_count  = :virtual_storage_total_file_count
+                                        WHERE virtual_storage_external_id = :virtual_storage_external_id
+                                        AND virtual_storage_type ='Catalog'
+                                        )");
+        queryUpdateVirtualStorage.prepare(queryUpdateVirtualStorageSQL);
+        queryUpdateVirtualStorage.bindValue(":virtual_storage_total_file_size",QString::number(catalog->totalFileSize));
+        queryUpdateVirtualStorage.bindValue(":virtual_storage_total_file_count",QString::number(catalog->fileCount));
+        queryUpdateVirtualStorage.bindValue(":virtual_storage_external_id", catalog->name);
+        queryUpdateVirtualStorage.exec();
+        qDebug()<<queryUpdateVirtualStorage.lastError();
+        saveVirtualStorageTableToFile(virtualStorageFilePath);
+        //loadVirtualStorageTableToTreeModel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()

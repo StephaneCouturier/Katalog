@@ -32,6 +32,7 @@
 #define DEVICETREEVIEW_H
 
 #include <QSortFilterProxyModel>
+#include <QList>
 
 class DeviceTreeView  : public QSortFilterProxyModel
 {
@@ -40,9 +41,12 @@ class DeviceTreeView  : public QSortFilterProxyModel
 public:
     DeviceTreeView(QObject *parent = nullptr);
 
+    QList<int> filesizeColumnList, filecountColumnList, percentColumnList, boldColumnList;
+
     QString m_selectedDeviceName;
     QString m_selectedDeviceType;
     void setSelectedDeviceInfo(QString selectedName,QString selectedType);
+    void initializeLists();
 
 private:
     QVariant data( const QModelIndex &index, int role ) const;

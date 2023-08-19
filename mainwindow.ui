@@ -6797,6 +6797,20 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Virtual_pushButton_ImportS">
+                <property name="text">
+                 <string>Import v1.22</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="Virtual_horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -6820,39 +6834,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="2" column="1">
-               <widget class="QLabel" name="Virtual_label_SelectedVirtualStorage">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="Virtual_label_SelectedCatalogLabel">
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
-                </property>
-                <property name="text">
-                 <string>Selected Catalog</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
+              <item row="3" column="3">
                <widget class="QLabel" name="Virtual_label_SelectedCatalogDisplay">
                 <property name="font">
                  <font>
@@ -6871,7 +6853,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
+              <item row="1" column="0">
                <widget class="QLabel" name="Virtual_label_CatalogAssociation">
                 <property name="minimumSize">
                  <size>
@@ -6880,11 +6862,94 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Assign Catalog to Virtual Storage</string>
+                 <string>Assign Storage or Catalog to Virtual Storage</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="3">
+              <item row="1" column="1">
+               <widget class="QLabel" name="Virtual_label_CatalogAssociation_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string>Selected Virtual Storage</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="Virtual_label_SelectedVirtualStorage">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="Virtual_label_SelectedStorageDisplay">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLabel" name="Virtual_label_SelectedCatalogLabel">
+                <property name="toolTip">
+                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
+                </property>
+                <property name="text">
+                 <string>Selected Catalog</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="Virtual_label_SelectedStorageLabel">
+                <property name="toolTip">
+                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
+                </property>
+                <property name="text">
+                 <string>Selected Storage</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3">
                <widget class="QPushButton" name="Virtual_pushButton_AssignCatalog">
                 <property name="enabled">
                  <bool>false</bool>
@@ -6910,51 +6975,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="Virtual_label_CatalogAssociation_2">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string>Selected Virtual Storage</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="Line" name="Virtual_line_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QGridLayout" name="gridLayout_28">
-              <item row="1" column="2">
-               <widget class="QLabel" name="Virtual_label_SelectedCatalogLabel_4">
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string>Assigned Catalog</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="4">
-               <widget class="QPushButton" name="Virtual_pushButton_UnassignCatalog">
+              <item row="4" column="2">
+               <widget class="QPushButton" name="Virtual_pushButton_AssignStorage">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -6971,96 +6993,99 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Unassign</string>
+                 <string>Assign</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-cut">
+                 <iconset theme="document-new">
                   <normaloff>.</normaloff>.</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="Virtual_label_CatalogAssociation_10">
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Remove Catalog from Virtual Storage</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="Virtual_checkBox_DisplayCatalogs">
-                <property name="text">
-                 <string>Display assigned Catalogs</string>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QLabel" name="Virtual_label_SelectedAssignedCatalogDisplay">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLabel" name="Virtual_label_SelectedVirtualStorageParent">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="Virtual_label_CatalogAssociation_11">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Parent Virtual Storage</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="Line" name="Virtual_line">
+             <widget class="Line" name="Virtual_line_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QLabel" name="Virtual_label_ItemEdition_2">
+                <property name="text">
+                 <string>Display options</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Virtual_pushButton_TreeExpandCollapse">
+                <property name="maximumSize">
+                 <size>
+                  <width>35</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Expand 1 level, 2 levels, or collapse</string>
+                </property>
+                <property name="statusTip">
+                 <string/>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">padding: 2px 10px;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset theme="expand-all">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Virtual_checkBox_DisplayPhysicalGroupOnly">
+                <property name="text">
+                 <string>Physical group only</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Virtual_checkBox_DisplayAllExceptPhysicalGroup">
+                <property name="text">
+                 <string>All except Physical group</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Virtual_checkBox_DisplayCatalogs">
+                <property name="text">
+                 <string>Assigned Catalogs</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Virtual_checkBox_DisplayFullTable">
+                <property name="text">
+                 <string>Full Table</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <widget class="QWidget" name="Virtual_widget_Edit" native="true">
@@ -7123,9 +7148,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item>
-             <widget class="QTreeView" name="Virtual_treeView_VirutalStorageList">
+             <widget class="QTreeView" name="Virtual_treeView_VirtualStorageList">
               <property name="editTriggers">
                <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
               </property>
               <property name="sortingEnabled">
                <bool>true</bool>

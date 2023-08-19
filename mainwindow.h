@@ -308,11 +308,9 @@ class MainWindow : public QMainWindow
             void createStorageList();
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
-            void loadVirtualStorageFileToTable();
-            void loadVirtualStorageCatalogFileToTable();
+
             void loadStorageTableToModel();
             void loadStorageTableToSelectionTreeModel();
-            void loadVirtualStorageTableToSelectionTreeModel();
             void saveStorageModelToFile();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
@@ -327,14 +325,28 @@ class MainWindow : public QMainWindow
             int selectedVirtualStorageParentID;
             QString selectedVirtualStorageType;
             QString selectedVirtualStorageName;
+
+            void setVirtualStorageTreeExpandState(bool toggle);
+            int  optionDeviceTreeExpandState;
             bool optionDisplayAssignedCatalogs;
-            void insertVirtualStorageItem(int parentID, QString name);
+            bool optionDisplayPhysicalGroupOnly;
+            bool optionDisplayAllExceptPhysicalGroup;
+            bool optionDisplayFullTable;
+
+            void loadVirtualStorageFileToTable();
+            void insertVirtualStorageItem(int parentID, QString name, QString type, int externalID);
+            void insertPhysicalStorageGroup();
             void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
-            void unassignCatalogToVirtualStorage(QString catalogName,int virtualStorageParentID);
+            void assignStorageToVirtualStorage(int storageID,int virtualStorageID);
+            void unassignPhysicalFromVirtualStorage(int virtualStorageID, int virtualStorageParentID);
             void deleteVirtualStorageItem();
             void saveVirtualStorageTableToFile(QString filePath);
-            void saveVirtualStorageCatalogTableToFile(QString filePath);
             void loadVirtualStorageTableToTreeModel();
+            void updateNumbers(int virtualStorageID, QString storageType);
+            void updateAllNumbers();
+            void synchCatalogAndStorageValues();
+            void convertVirtualStorageCatalogFile();
+            void importStorageCatalogLinks();
 
         //TAB: Statistics
             QString statisticsCatalogFileName;
@@ -546,10 +558,15 @@ class MainWindow : public QMainWindow
             void on_Virtual_pushButton_Save_clicked();
             void on_Virtual_pushButton_Cancel_clicked();
             void on_Virtual_pushButton_AssignCatalog_clicked();
-            void on_Virtual_pushButton_UnassignCatalog_clicked();
+            void on_Virtual_pushButton_AssignStorage_clicked();
             void on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1);
-            void on_Virtual_treeView_VirutalStorageList_clicked(const QModelIndex &index);
-            void on_Virtual_treeView_VirutalStorageList_customContextMenuRequested(const QPoint &pos);
+            void on_Virtual_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1);
+            void on_Virtual_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1);
+            void on_Virtual_checkBox_DisplayFullTable_stateChanged(int arg1);
+            void on_Virtual_treeView_VirtualStorageList_clicked(const QModelIndex &index);
+            void on_Virtual_treeView_VirtualStorageList_customContextMenuRequested(const QPoint &pos);
+            void on_Virtual_pushButton_ImportS_clicked();
+            void on_Virtual_pushButton_TreeExpandCollapse_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
@@ -573,6 +590,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
+
 };
 
 #endif // MAINWINDOW_H

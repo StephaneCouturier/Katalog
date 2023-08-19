@@ -38,15 +38,11 @@
 #include "mainwindow_tab_storage.cpp"
 #include "mainwindow_tab_tags.cpp"
 
-//#ifdef Q_OS_LINUX
-//MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent), ui(new Ui::MainWindow)
-//#else
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
-//#endif
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.22";
-        releaseDate     = "2023-07-31";
+        currentVersion  = "1.23";
+        releaseDate     = "2023-08-19";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -186,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Setup tab: Virtual
             ui->Virtual_checkBox_DisplayCatalogs->setChecked(optionDisplayAssignedCatalogs);
+            ui->Virtual_checkBox_DisplayPhysicalGroupOnly->setChecked(optionDisplayPhysicalGroupOnly);
+            ui->Virtual_checkBox_DisplayAllExceptPhysicalGroup->setChecked(optionDisplayAllExceptPhysicalGroup);
+            ui->Virtual_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
 
         //Setup tab: Search
             //Default values
@@ -262,14 +261,12 @@ void MainWindow::closeEvent (QCloseEvent *event)
             return;
         }
         else if ( result ==QMessageBox::Save){
-            //Save data to file and reload
-            if (databaseMode=="Memory"){
-                //Save model data to Storage file
-                saveStorageModelToFile();
+            //Save model data to Storage file
+            saveStorageModelToFile();
 
-                //Reload Storage file data to table
-                loadStorageFileToTable();
-            }
+            //Reload Storage file data to table
+            loadStorageFileToTable();
+
             event->accept();
             return;
         }
@@ -283,7 +280,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 //DEV Templates
 /*
 qDebug()<<"DEBUG     value:    " << value;
-qDebug()<<listCatalogQuery.lastError();
+qDebug()<<query.lastError();
 
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");

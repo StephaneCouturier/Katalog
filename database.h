@@ -38,7 +38,7 @@
         // CATALOG --------------------------------------------------------------
 
             const auto SQL_CREATE_CATALOG = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS catalog(
+                        CREATE TABLE IF NOT EXISTS catalog(
                             catalog_file_path             TEXT,
                             catalog_name                  TEXT,
                             catalog_date_updated          TEXT,
@@ -60,7 +60,7 @@
         // STORAGE --------------------------------------------------------------
 
             const auto SQL_CREATE_STORAGE = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS storage(
+                        CREATE TABLE IF NOT EXISTS storage(
                             storage_id  int  primary key default 0,
                             storage_name          TEXT,
                             storage_type          TEXT,
@@ -82,16 +82,24 @@
         // VIRTUALSTORAGE  ------------------------------------------------------
 
             const auto SQL_CREATE_VIRTUAL_STORAGE = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage(
-                            virtual_storage_id          NUMERIC,
-                            virtual_storage_parent_id   NUMERIC,
-                            virtual_storage_name        TEXT)
+                        CREATE TABLE IF NOT EXISTS virtual_storage(
+                            virtual_storage_id                  NUMERIC,
+                            virtual_storage_parent_id           NUMERIC,
+                            virtual_storage_name                TEXT,
+                            virtual_storage_type                TEXT,
+                            virtual_storage_external_id         NUMERIC,
+                            virtual_storage_path                TEXT,
+                            virtual_storage_total_file_size     NUMERIC default 0,
+                            virtual_storage_total_file_count    NUMERIC default 0,
+                            virtual_storage_total_space         NUMERIC default 0,
+                            virtual_storage_free_space          NUMERIC default 0,
+                            virtual_storage_active)
             )");
 
         // VIRTUALSTORAGE CATALOG ------------------------------------------------------
 
             const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
+                        CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
                             virtual_storage_id      NUMERIC,
                             catalog_name            TEXT,
                             directory_path          TEXT)
@@ -100,7 +108,7 @@
         // FILE (storing all catalogs files)-------------------------------------
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS file(
+                        CREATE TABLE IF NOT EXISTS file(
                             id_file           INTEGER,
                             file_name         TEXT,
                             file_folder_path  TEXT,
@@ -114,7 +122,7 @@
         // FILETEMP (one-off requests) ------------------------------------------
 
             const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  filetemp(
+                        CREATE TABLE IF NOT EXISTS  filetemp(
                             id_file              INTEGER,
                             file_name            TEXT,
                             file_folder_path     TEXT,
@@ -128,7 +136,7 @@
         // FOLDER ---------------------------------------------------------------
 
             const auto SQL_CREATE_FOLDER = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  folder(
+                        CREATE TABLE IF NOT EXISTS  folder(
                             folder_catalog_name  TEXT,
                             folder_path          TEXT,
                             PRIMARY KEY(folder_catalog_name,folder_path))
@@ -137,7 +145,7 @@
         // METADATA -------------------------------------------------------------
 
             const auto SQL_CREATE_METADATA = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  metadata(
+                        CREATE TABLE IF NOT EXISTS  metadata(
                             catalog_name        TEXT,
                             file_name           TEXT,
                             file_path           TEXT,
@@ -148,7 +156,7 @@
         // STATISTICS -----------------------------------------------------------
 
             const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  statistics_catalog(
+                        CREATE TABLE IF NOT EXISTS  statistics_catalog(
                             date_time               TEXT,
                             catalog_name            TEXT,
                             catalog_file_count      NUMERIC,
@@ -157,7 +165,7 @@
             )");
 
             const auto SQL_CREATE_STATISTICS_STORAGE = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  statistics_storage(
+                        CREATE TABLE IF NOT EXISTS  statistics_storage(
                             date_time               TEXT,
                             storage_id              TEXT,
                             storage_name            TEXT,
@@ -169,7 +177,7 @@
         // SEARCH ---------------------------------------------------------------
 
             const auto SQL_CREATE_SEARCH = QLatin1String(R"(
-                   CREATE TABLE IF NOT EXISTS  search(
+                        CREATE TABLE IF NOT EXISTS  search(
                             date_time                 TEXT,
                             text_checked              INTEGER,
                             text_phrase               TEXT,
@@ -212,7 +220,7 @@
         // TAG ------------------------------------------------------------------
 
             const auto SQL_CREATE_TAG = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS  tag(
+                        CREATE TABLE IF NOT EXISTS  tag(
                             name		TEXT,
                             path		TEXT,
                             type		TEXT,

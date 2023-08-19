@@ -246,7 +246,7 @@
         ui->Explore_treeView_FileList->setIconSize(size);
         ui->Create_treeView_Explorer->setIconSize(size);
         ui->Storage_treeView_StorageList->setIconSize(size);
-        ui->Virtual_treeView_VirutalStorageList->setIconSize(size);
+        ui->Virtual_treeView_VirtualStorageList->setIconSize(size);
         ui->Tags_treeview_Explorer->setIconSize(size);
     }
     //----------------------------------------------------------------------
@@ -275,6 +275,10 @@
         //Generate collection files paths and statistics parameters
         generateCollectionFilesPaths();
 
+        //Check active status and synch it
+        updateAllCatalogPathIsActive();
+        synchCatalogAndStorageValues();
+
         if(databaseMode=="Memory"){
             //Create a Storage list (if none exists) + conversions
             createStorageList();
@@ -297,7 +301,6 @@
             loadCatalogFilesToTable();
             loadStorageFileToTable();
             loadVirtualStorageFileToTable();
-            loadVirtualStorageCatalogFileToTable();
         }
 
         //Load data from tables and update display
@@ -310,14 +313,15 @@
         //Load Storage list
         refreshLocationSelectionList();
         refreshStorageSelectionList(selectedFilterStorageLocation);
-        refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
+        refreshCatalogSelectionList(selectedFilterStorageLocation,
+                                    selectedFilterStorageName,
+                                    selectedFilterVirtualStorageName);
         if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
             loadStorageTableToSelectionTreeModel();
         }
         else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-//loadVirtualStorageFileToTable();
-            loadVirtualStorageCatalogFileToTable();
-            loadVirtualStorageTableToSelectionTreeModel();
+            loadVirtualStorageFileToTable();
+            loadVirtualStorageTableToTreeModel();
         }
 
         //Add a storage device for catalogs without one
@@ -377,7 +381,6 @@
         QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
                                                                    collectionFolder,"*.db");
 
-
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
 
@@ -403,7 +406,6 @@
     //----------------------------------------------------------------------
     void MainWindow::selectNewDatabaseFolderPath()
     {
-        //QString newDir;
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to open:"),
                                                                    collectionFolder+"/newKatalogFile.db","*.db");

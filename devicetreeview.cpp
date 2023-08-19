@@ -38,23 +38,26 @@
 DeviceTreeView::DeviceTreeView(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
+    initializeLists(); //to populate the lists
+}
 
+
+void DeviceTreeView::initializeLists()
+{
+    filecountColumnList << 3 << 4 << 5 << 6;
+    filesizeColumnList << 7 << 8 << 9;
+    boldColumnList << 0;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 {
-    //Define list of column per type of data
-    QList<int> filesizeColumnList, filecountColumnList, percentColumnList;
-      filesizeColumnList <<7 <<8;
-
-
     switch ( role )
          {
             case Qt::DisplayRole:
             {
-                //Currency (Euro) columns
+                //File size columns
                 if( filesizeColumnList.contains(index.column()) ){
-                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toDouble()) + "  ");
+                    return QVariant( QLocale().formattedDataSize(QSortFilterProxyModel::data(index, role).toLongLong()) + "  ");
                 }
 
                 //Numbers columns (without units)
@@ -73,6 +76,16 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 
                 else QSortFilterProxyModel::data(index, role) ;
 
+                break;
+            }
+
+            case Qt::FontRole:
+            {
+                if( boldColumnList.contains(index.column()) ){
+                    QFont boldFont;
+                    boldFont.setBold(true);
+                    return boldFont;
+                }
                 break;
             }
 
@@ -102,7 +115,7 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
                     }
                     else if( type=="VirtualStorage" ){
-                        return QIcon(QIcon::fromTheme("drive-harddisk-root"));
+                        return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                     else if( type=="Catalog" ){
                         QModelIndex idx = index.sibling(index.row(), 2);

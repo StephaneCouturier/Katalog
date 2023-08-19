@@ -30,10 +30,6 @@
 */
 
 #include "storage.h"
-#include <QSqlQuery>
-#include <QVariant>
-#include <QMessageBox>
-#include <QCoreApplication>
 
 //set storage device definition
 void Storage::setID(int selectedID)
@@ -73,7 +69,8 @@ void Storage::createStorage()
     queryDeviceNumber.exec();
     queryDeviceNumber.next();
     int maxID = queryDeviceNumber.value(0).toInt();
-    int newID = maxID + 1;
+    ID = maxID + 1;
+    name = name + "_"+QString::number(ID);
 
     //Insert new device with default values
     QString querySQL = QLatin1String(R"(
@@ -113,14 +110,13 @@ void Storage::createStorage()
 
     QSqlQuery insertQuery;
     insertQuery.prepare(querySQL);
-    insertQuery.bindValue(":new_id", newID);
-    insertQuery.bindValue(":storage_name", name + "_"+QString::number(newID));
+    insertQuery.bindValue(":new_id", ID);
+    insertQuery.bindValue(":storage_name", name);
     if(name=="")
         insertQuery.bindValue(":storage_name","");
 
     insertQuery.bindValue(":new_location", location);
     insertQuery.exec();
-
 }
 
 void Storage::deleteStorage()
@@ -219,7 +215,7 @@ QList<qint64> Storage::updateStorageInfo()
 
         dateUpdated = QDateTime::currentDateTime();
 
-    //Save
+    //Save to Storage table
         QSqlQuery queryTotalSpace;
         QString queryTotalSpaceSQL = QLatin1String(R"(
                                         UPDATE storage
@@ -237,6 +233,19 @@ QList<qint64> Storage::updateStorageInfo()
         queryTotalSpace.bindValue(":storage_id", ID);
         queryTotalSpace.exec();
 
+    //Save to VirtualStorage table
+        queryTotalSpaceSQL = QLatin1String(R"(
+                                        UPDATE virtual_storage
+                                        SET virtual_storage_total_space = :virtual_storage_total_space,
+                                            virtual_storage_free_space  = :virtual_storage_free_space
+                                        WHERE virtual_storage_external_id = :virtual_storage_external_id
+                                        AND virtual_storage_type ='Storage'
+                                        )");
+        queryTotalSpace.prepare(queryTotalSpaceSQL);
+        queryTotalSpace.bindValue(":virtual_storage_total_space",QString::number(totalSpace));
+        queryTotalSpace.bindValue(":virtual_storage_free_space",QString::number(freeSpace));
+        queryTotalSpace.bindValue(":virtual_storage_external_id", ID);
+        queryTotalSpace.exec();
 
     //Stop if the update was not done (lastUpdate time did not change)
         if (lastUpdate == dateUpdated)

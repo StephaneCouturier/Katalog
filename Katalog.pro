@@ -87,7 +87,8 @@ SOURCES += \
     storagetreeitem.cpp \
     storagetreemodel.cpp \
     storageview.cpp \
-    tag.cpp
+    tag.cpp \
+    virtualstorage.cpp
 
 HEADERS += \
     catalog.h \
@@ -106,7 +107,8 @@ HEADERS += \
     storagetreeitem.h \
     storagetreemodel.h \
     storageview.h \
-    tag.h
+    tag.h \
+    virtualstorage.h
 
 FORMS += \
     mainwindow.ui

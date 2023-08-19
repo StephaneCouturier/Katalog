@@ -178,7 +178,7 @@
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
-        ui->Virtual_treeView_VirutalStorageList->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Virtual_treeView_VirtualStorageList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
@@ -351,6 +351,9 @@
             optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
             optionDisplayAssignedCatalogs = settings.value("Virtual/DisplayCatalogs").toBool();
+            optionDisplayPhysicalGroupOnly= settings.value("Virtual/DisplayPhysicalGroupOnly").toBool();
+            optionDisplayAllExceptPhysicalGroup= settings.value("Virtual/DisplayAllExceptPhysicalGroup").toBool();
+            optionDisplayFullTable        = settings.value("Virtual/DisplayFullTable").toBool();
 
             //Restore DEV Settings
             if(developmentMode==true){

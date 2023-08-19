@@ -22,61 +22,36 @@
 /*FILE DESCRIPTION
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   storage.h
-// Purpose:     Class/model for the storage device
+// File Name:   virtualstorage.h
+// Purpose:     Class/model for the virtual storage device
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
+#ifndef VIRTUALSTORAGE_H
+#define VIRTUALSTORAGE_H
 
-#ifndef STORAGE_H
-#define STORAGE_H
-
-#include <QStorageInfo>
-#include <QSqlQuery>
-#include <QRegularExpression>
-#include <QSqlQuery>
 #include <QVariant>
-#include <QMessageBox>
-#include <QCoreApplication>
+#include <QSqlQuery>
 
-class Storage
+class VirtualStorage
 {
 
 public:
-
     int ID;
+    int parentID;
     QString name;
     QString type;
-    QString location = ""; //avoid NULL in database
+    int externalID;
     QString path;
-    QString label;
-    QString fileSystem;
-    qint64  totalSpace;
-    qint64  freeSpace;
-    QString brand;
-    QString model;
-    QString serialNumber;
-    QString buildDate;
-    QString contentType;
-    QString container;
-    QString comment;
-    QDateTime dateUpdated;
+    qint64 total_file_size;
+    qint64 total_file_count;
+    qint64 total_space;
+    qint64 free_space;
 
-    void setID(int selectedID);
-    void setName(QString selectedName);
-    void setFreeSpace(qint64 selectedFreeSpace);
-    void setTotalSpace(qint64 selectedTotalSpace);
-    void setDateUpdated(QDateTime dateTime);
-    void setLocation(QString selectedLocation);
+    void loadVirtualStorage();
 
-    void createStorage();
-    void deleteStorage();
-    void loadStorageMetaData();
-    QList<qint64> updateStorageInfo();
-    void saveStatistics(QDateTime dateTime);
-    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 
 };
 
-#endif // STORAGE_H
+#endif // VIRTUALSTORAGE_H

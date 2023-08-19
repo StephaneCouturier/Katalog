@@ -150,6 +150,8 @@
     {
         skipCatalogUpdateSummary =false;
         updateStorageInfo(selectedStorage);
+        saveVirtualStorageTableToFile(virtualStorageFilePath);
+        loadVirtualStorageTableToTreeModel();
         loadStorageToPanel();
     }
     //--------------------------------------------------------------------------
@@ -232,49 +234,51 @@
 //Methods-----------------------------------------------------------------------
     void MainWindow::createStorageList()
     {
-        // Create it, if it does not exist
-        QFile newStorageFile(storageFilePath);
-        if(!newStorageFile.open(QIODevice::ReadOnly)) {
+        if(databaseMode=="Memory"){
+            // Create it, if it does not exist
+            QFile newStorageFile(storageFilePath);
+            if(!newStorageFile.open(QIODevice::ReadOnly)) {
 
-            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+                if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
 
-                  QTextStream stream(&newStorageFile);
+                    QTextStream stream(&newStorageFile);
 
-                  stream << "ID"            << "\t"
-                         << "Name"          << "\t"
-                         << "Type"          << "\t"
-                         << "Location"      << "\t"
-                         << "Path"          << "\t"
-                         << "Label"         << "\t"
-                         << "FileSystem"    << "\t"
-                         << "Total"         << "\t"
-                         << "Free"          << "\t"
-                         << "BrandModel"    << "\t"
-                         << "SerialNumber"  << "\t"
-                         << "BuildDate"     << "\t"
-                         << "ContentType"   << "\t"
-                         << "Container"     << "\t"
-                         << "Comment"       << "\t"
-                         << '\n';
+                    stream << "ID"            << "\t"
+                           << "Name"          << "\t"
+                           << "Type"          << "\t"
+                           << "Location"      << "\t"
+                           << "Path"          << "\t"
+                           << "Label"         << "\t"
+                           << "FileSystem"    << "\t"
+                           << "Total"         << "\t"
+                           << "Free"          << "\t"
+                           << "BrandModel"    << "\t"
+                           << "SerialNumber"  << "\t"
+                           << "BuildDate"     << "\t"
+                           << "ContentType"   << "\t"
+                           << "Container"     << "\t"
+                           << "Comment"       << "\t"
+                           << '\n';
 
-                  newStorageFile.close();
+                    newStorageFile.close();
 
-                  //Enable,Disable buttons
-                  ui->Storage_pushButton_Reload->setEnabled(true);
-                  ui->Storage_pushButton_EditAll->setEnabled(true);
+                    //Enable,Disable buttons
+                    ui->Storage_pushButton_Reload->setEnabled(true);
+                    ui->Storage_pushButton_EditAll->setEnabled(true);
 
-                  ui->Storage_pushButton_CreateList->setEnabled(false);
-                  ui->Storage_pushButton_SaveAll->setEnabled(true);
+                    ui->Storage_pushButton_CreateList->setEnabled(false);
+                    ui->Storage_pushButton_SaveAll->setEnabled(true);
 
-                  //Even if empty, load it to the model
-                  loadStorageFileToTable();
-                  loadStorageTableToModel();
-                  updateStorageSelectionStatistics();
+                    //Even if empty, load it to the model
+                    loadStorageFileToTable();
+                    loadStorageTableToModel();
+                    updateStorageSelectionStatistics();
 
-            return;
+                    return;
+                }
             }
         }
-    }
+   }
     //--------------------------------------------------------------------------
     void MainWindow::addStorageDevice(QString deviceName)
     {
@@ -318,6 +322,9 @@
         //Refresh Location list
         refreshLocationSelectionList();
 
+
+        //Create virtual storage under Physical group / default location
+        insertVirtualStorageItem(2, tempStorage->name, "Storage", tempStorage->ID);
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageFileToTable()
@@ -950,9 +957,9 @@
     {
         QStringList filePaths;
         filePaths << "/home/stephane/Vidéos/COPY/test6.mp4";
-        filePaths << "/home/stephane/Vidéos/COPY/test2.mkv";
-        filePaths << "/home/stephane/Vidéos/COPY/test3.mp3";
-        filePaths << "/home/stephane/Vidéos/COPY/test5.mkv";
+//        filePaths << "/home/stephane/Vidéos/COPY/test2.mkv";
+//        filePaths << "/home/stephane/Vidéos/COPY/test3.mp3";
+//        filePaths << "/home/stephane/Vidéos/COPY/test5.mkv";
 
         for(int i = 0; i<filePaths.length(); i++){
             setMediaFile(filePaths[i]);
