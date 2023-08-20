@@ -32,7 +32,7 @@
 #include "virtualstorage.h"
 
 void VirtualStorage::loadVirtualStorage(){
-    //Retrieve virtual_storage hierarchy
+    //Retrieve virtual_storage values
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT  virtual_storage_id,

@@ -313,9 +313,8 @@
         //Load Storage list
         refreshLocationSelectionList();
         refreshStorageSelectionList(selectedFilterStorageLocation);
-        refreshCatalogSelectionList(selectedFilterStorageLocation,
-                                    selectedFilterStorageName,
-                                    selectedFilterVirtualStorageName);
+        loadCatalogsTableToModel();
+
         if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
             loadStorageTableToSelectionTreeModel();
         }

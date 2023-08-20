@@ -177,9 +177,9 @@
     {
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
+        selectedDeviceID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
 
         if (selectedDeviceType=="Storage"){
-            selectedDeviceID = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toInt();
             selectedStorage->setID(selectedDeviceID);
             selectedStorage->loadStorageMetaData();
             ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
@@ -189,13 +189,17 @@
         }
         else if (selectedDeviceType=="VirtualStorage"){
             selectedFilterVirtualStorageName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-            selectedFilterVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 2, index.parent() ).data().toString();
+            selectedFilterVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toString();
             ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
             ui->Virtual_label_SelectedCatalogDisplay->setText("");
         }
         else if (selectedDeviceType=="Catalog"){
             selectedCatalog->setName(selectedDeviceName);
             selectedCatalog->loadCatalogMetaData();
+            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+            ui->Virtual_pushButton_AssignStorage->setEnabled(false);
+            ui->Virtual_label_SelectedStorageDisplay->setText("");
+            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedDeviceName);
             if(selectedVirtualStorageName!=""){
                 ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
             }
@@ -206,6 +210,7 @@
         settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
         settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
         settings.setValue("Selection/SelectedDeviceID",   selectedDeviceID);
+        settings.setValue("Selection/SelectedFilterVirtualStorageID",   selectedFilterVirtualStorageID);
 
         filterFromSelectedDevices();
 
@@ -318,9 +323,7 @@
         selectedCatalog->setName(tr(""));
         selectedCatalog->loadCatalogMetaData();
         refreshStorageSelectionList(selectedFilterStorageLocation);
-        refreshCatalogSelectionList(selectedFilterStorageLocation,
-                                    selectedFilterStorageName,
-                                    selectedFilterVirtualStorageName);
+        loadCatalogsTableToModel();
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
         ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
@@ -355,10 +358,7 @@
             selectedFilterStorageName = tr("All");
             selectedFilterCatalogName = tr("All");
             selectedFilterVirtualStorageName = tr("All");
-
-            refreshCatalogSelectionList(selectedFilterStorageLocation,
-                                        selectedFilterStorageName,
-                                        selectedFilterVirtualStorageName);
+            loadCatalogsTableToModel();
             refreshStorageSelectionList(selectedFilterStorageLocation);
         }
         else if (selectedDeviceType=="Storage"){
@@ -369,10 +369,7 @@
             selectedFilterStorageName = selectedDeviceName;
             selectedFilterCatalogName = tr("All");
             selectedFilterVirtualStorageName = tr("All");
-
-            refreshCatalogSelectionList(selectedFilterStorageLocation,
-                                        selectedFilterStorageName,
-                                        selectedFilterVirtualStorageName);
+            loadCatalogsTableToModel();
             refreshStorageSelectionList(selectedFilterStorageLocation);
         }
         else if (selectedDeviceType=="Catalog"){
@@ -395,10 +392,7 @@
             selectedFilterStorageName = tr("All");
             selectedFilterCatalogName = tr("All");
             selectedFilterVirtualStorageName = selectedDeviceName;
-
-            refreshCatalogSelectionList(selectedFilterStorageLocation,
-                                        selectedFilterStorageName,
-                                        selectedFilterVirtualStorageName);
+            loadCatalogsTableToModel();
             refreshStorageSelectionList(selectedFilterStorageLocation);
         }
 
@@ -409,19 +403,19 @@
         ui->Filters_label_DisplayVirtualStorage->setText(selectedFilterVirtualStorageName);
 
         //Load matching Catalogs, Storage, and Statistics
-        //Load matching Catalogs
-        loadCatalogsTableToModel();
+            //Load matching Catalogs
+            loadCatalogsTableToModel();
 
-        //Load matching Storage
-        loadStorageTableToModel();
-        updateStorageSelectionStatistics();
+            //Load matching Storage
+            loadStorageTableToModel();
+            updateStorageSelectionStatistics();
 
-        //Load matching Statistics
-        if(databaseMode=="Memory"){
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
-        }
-        loadStatisticsChart();
+            //Load matching Statistics
+            if(databaseMode=="Memory"){
+                loadStatisticsCatalogFileToTable();
+                loadStatisticsStorageFileToTable();
+            }
+            loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::setTreeExpandState(bool toggle)

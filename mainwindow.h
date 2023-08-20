@@ -194,7 +194,6 @@ class MainWindow : public QMainWindow
             void getSearchCriteria();
             void refreshLocationSelectionList();
             void refreshStorageSelectionList(QString selectedLocation);
-            void refreshCatalogSelectionList(QString selectedLocation, QString selectedStorage, QString selectedVirtualStorage);
             QString exportSearchResults();
             void batchProcessSearchResults();
             void insertSearchHistoryToTable();

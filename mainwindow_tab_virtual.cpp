@@ -294,7 +294,6 @@ void MainWindow::convertVirtualStorageCatalogFile() {
                         )");
     query.prepare(querySQL);
     query.exec();
-    qDebug()<<query.lastError();
 
     saveVirtualStorageTableToFile(virtualStorageFilePath);
     loadVirtualStorageFileToTable();
@@ -393,8 +392,6 @@ void MainWindow::importStorageCatalogLinks() {
         QString catalog_name = query.value(1).toString();
         QString storage_id   = query.value(2).toString();
         int vstorage_id   = query.value(3).toInt();
-
-        qDebug()<<storage_name<<catalog_name<<storage_id<<vstorage_id;
 
         selectedCatalog->setName(catalog_name);
         selectedCatalog->loadCatalogMetaData();

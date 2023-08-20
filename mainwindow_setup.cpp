@@ -258,6 +258,7 @@
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
             selectedDeviceID   = settings.value("Selection/SelectedDeviceID").toInt();
+            selectedFilterVirtualStorageID = settings.value("Selection/SelectedFilterVirtualStorageID").toString();
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
