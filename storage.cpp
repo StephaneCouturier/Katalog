@@ -30,6 +30,7 @@
 */
 
 #include "storage.h"
+#include "qsqlerror.h"
 
 //set storage device definition
 void Storage::setID(int selectedID)
@@ -157,24 +158,30 @@ void Storage::loadStorageMetaData()
                         )");
     query.prepare(querySQL);
     query.bindValue(":storage_id",ID);
-    query.exec();
-    query.next();
 
-    name         = query.value(1).toString();
-    type         = query.value(2).toString();
-    location     = query.value(3).toString();
-    path         = query.value(4).toString();
-    label        = query.value(5).toString();
-    fileSystem   = query.value(6).toString();
-    totalSpace   = query.value(7).toLongLong();
-    freeSpace    = query.value(8).toLongLong();
-    brand        = query.value(9).toString();
-    model        = query.value(9).toString();
-    serialNumber = query.value(10).toString();
-    buildDate    = query.value(11).toString();
-    contentType  = query.value(12).toString();
-    container    = query.value(13).toString();
-    comment      = query.value(14).toString();
+    if (query.exec()) {
+        if (query.next()) {
+            name         = query.value(1).toString();
+            type         = query.value(2).toString();
+            location     = query.value(3).toString();
+            path         = query.value(4).toString();
+            label        = query.value(5).toString();
+            fileSystem   = query.value(6).toString();
+            totalSpace   = query.value(7).toLongLong();
+            freeSpace    = query.value(8).toLongLong();
+            brand        = query.value(9).toString();
+            model        = query.value(10).toString();
+            serialNumber = query.value(11).toString();
+            buildDate    = query.value(12).toString();
+            contentType  = query.value(13).toString();
+            container    = query.value(14).toString();
+            comment      = query.value(15).toString();
+        } else {
+            qDebug() << "No record found for storage_id" << ID;
+        }
+    } else {
+        qDebug() << "Query execution failed:" << query.lastError().text();
+    }
 }
 
 QList<qint64> Storage::updateStorageInfo()

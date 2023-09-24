@@ -131,7 +131,7 @@
                     QMessageBox::warning(this,"Katalog","Database was not changed.");
                 }
 
-            createStorageList();
+            createStorageFile();
             generateCollectionFilesPaths();
             loadCollection();
         }
@@ -275,26 +275,14 @@
         //Generate collection files paths and statistics parameters
         generateCollectionFilesPaths();
 
-        //Check active status and synch it
-        updateAllCatalogPathIsActive();
-        synchCatalogAndStorageValues();
 
         if(databaseMode=="Memory"){
             //Create a Storage list (if none exists) + conversions
-            createStorageList();
+            createStorageFile();
             convertStatistics();
 
             //Clear database
-            QSqlQuery queryDelete;
-            queryDelete.exec("DELETE FROM catalog");
-            queryDelete.exec("DELETE FROM storage");
-            queryDelete.exec("DELETE FROM virtual_storage");
-            queryDelete.exec("DELETE FROM file");
-            queryDelete.exec("DELETE FROM filetemp");
-            queryDelete.exec("DELETE FROM folder");
-            queryDelete.exec("DELETE FROM statistics");
-            queryDelete.exec("DELETE FROM search");
-            queryDelete.exec("DELETE FROM tag");
+            clearDatabaseData();
 
             //Load Files to database
             loadSearchHistoryFileToTable();
@@ -303,7 +291,11 @@
             loadVirtualStorageFileToTable();
         }
 
-        //Load data from tables and update display
+        //Check active status and synch it
+        updateAllCatalogPathIsActive();
+        synchCatalogAndStorageValues();
+
+        //Load data from tables to models and update display
         loadSearchHistoryTableToModel();
         loadCatalogsTableToModel();
         loadStorageTableToModel();
@@ -323,30 +315,18 @@
             loadVirtualStorageTableToTreeModel();
         }
 
-        //Add a storage device for catalogs without one
-
-        QSqlQuery queryCatalog;
-        QString queryCatalogSQL = QLatin1String(R"(
-                                    SELECT count(*)
-                                    FROM catalog
-                                    WHERE catalog_storage=""
-                                            )");
-        queryCatalog.prepare(queryCatalogSQL);
-        queryCatalog.exec();
-        queryCatalog.next();
-
+        //Add a default storage device, to force any new catalog to have one
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
                                     SELECT count(*)
                                     FROM storage
-                                    WHERE storage_name=""
                                 )");
         queryStorage.prepare(queryStorageSQL);
         queryStorage.exec();
         queryStorage.next();
 
-        if (queryCatalog.value(0).toInt() >0 and queryStorage.value(0).toInt() == 0){
-            addStorageDevice("");
+        if (queryStorage.value(0).toInt() == 0){ //queryCatalog.value(0).toInt() >0 and
+            addStorageDevice("Default Storage");
         }
 
         //Load Statistics
@@ -393,9 +373,9 @@
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
 
-                    createStorageList();
-                    if(databaseMode=="Memory")
-                        generateCollectionFilesPaths();
+                    createStorageFile();
+                    generateCollectionFilesPaths();
+
                     loadCollection();
         }
 
@@ -438,7 +418,7 @@
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
 
-                    createStorageList();
+                    createStorageFile();
                     generateCollectionFilesPaths();
                     loadCollection();
         }

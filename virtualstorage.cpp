@@ -30,6 +30,7 @@
 */
 
 #include "virtualstorage.h"
+#include "qsqlerror.h"
 
 void VirtualStorage::loadVirtualStorage(){
     //Retrieve virtual_storage values
@@ -50,16 +51,22 @@ void VirtualStorage::loadVirtualStorage(){
                         )");
     query.prepare(querySQL);
     query.bindValue(":virtual_storage_id",ID);
-    query.exec();
-    query.next();
 
-    parentID    = query.value(1).toInt();
-    name        = query.value(2).toString();
-    type        = query.value(3).toString();
-    externalID  = query.value(4).toInt();
-    path        = query.value(5).toString();
-    total_file_size  = query.value(6).toLongLong();
-    total_file_count = query.value(7).toLongLong();
-    total_space = query.value(8).toLongLong();
-    free_space  = query.value(9).toLongLong();
+    if (query.exec()) {
+        if (query.next()) {
+            parentID    = query.value(1).toInt();
+            name        = query.value(2).toString();
+            type        = query.value(3).toString();
+            externalID  = query.value(4).toInt();
+            path        = query.value(5).toString();
+            total_file_size  = query.value(6).toLongLong();
+            total_file_count = query.value(7).toLongLong();
+            total_space = query.value(8).toLongLong();
+            free_space  = query.value(9).toLongLong();
+        } else {
+            qDebug() << "No record found for virtual storage_id" << ID;
+        }
+    } else {
+        qDebug() << "Query execution failed:" << query.lastError().text();
+    }
 }

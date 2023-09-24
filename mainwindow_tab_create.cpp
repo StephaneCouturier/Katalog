@@ -154,17 +154,6 @@
             ui->Filters_treeView_Directory->expandToDepth(1);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::loadStorageList()
-    {
-        //Prepare list for the Storage selection combobox
-        QStringList storageNameListforCombo = storageNameList;
-        storageNameListforCombo.prepend("");
-        fileListModel = new QStringListModel(this);
-        fileListModel->setStringList(storageNameListforCombo);
-        ui->Create_comboBox_StorageSelection->setModel(fileListModel);
-        ui->Catalogs_comboBox_Storage->setModel(fileListModel);
-    }
-    //--------------------------------------------------------------------------
     void MainWindow::createCatalog()
     {//Create a new catalog, launch the cataloging and save, and refresh data and UI
 
@@ -237,9 +226,17 @@
             //Save new catalog
             newCatalog->createCatalog();
 
+            //Add virtual device entry and associate to its storage
+            QVariant selectedData = ui->Create_comboBox_StorageSelection->currentData();
+            int selectedStorageId = selectedData.toInt();
+
+            insertVirtualStorageItem(0, selectedStorageId, newCatalog->name, "Catalog", newCatalog->name);
+
+            loadStorageList();
+
         //Launch the scan and cataloging of files
             requestSource = "create";
-            updateSingleCatalog(newCatalog, false);
+            updateSingleCatalog(newCatalog, true);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -263,9 +260,6 @@
             //Refresh the catalog list for the Search screen
             loadCatalogFilesToTable();
 
-            //Refresh the catalog list for the Collection screen
-            loadCatalogsTableToModel();
-
             //Refresh the catalog list for the combobox of the Search screen
                 //Get current search selection
                 selectedFilterStorageLocation = ui->Filters_label_DisplayLocation->text();
@@ -273,11 +267,23 @@
                 selectedFilterCatalogName     = ui->Filters_label_DisplayCatalog->text();
                 selectedFilterVirtualStorageName  = ui->Filters_label_DisplayVirtualStorage->text();
 
-                //Refresh list
-                refreshCatalogSelectionList(selectedFilterStorageLocation, selectedFilterStorageName, selectedFilterVirtualStorageName);
+            //Refresh Catalogs list
+                updateAllCatalogPathIsActive();
+                synchCatalogAndStorageValues();
+                loadCatalogsTableToModel();
+                loadVirtualStorageTableToTreeModel();
 
-                //Restore selcted catalog
-                ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+            //Restore selected catalog
+            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+
+            //Refresh filter tree
+            if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
+                loadStorageTableToSelectionTreeModel();
+            }
+            else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
+                loadVirtualStorageFileToTable();
+                loadVirtualStorageTableToTreeModel();
+            }
 
             //Change tab to show the result of the catalog creation
             ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
@@ -648,8 +654,33 @@
         QFile mediaFile(filePath);
         if(mediaFile.exists()==true){
             m_player = new QMediaPlayer(this);
-            connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
-            m_player->setSource(QUrl::fromLocalFile(filePath));
+//            connect(m_player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+//            m_player->setSource(QUrl::fromLocalFile(filePath));
+
+             QMediaPlayer *player = new QMediaPlayer(this);
+//            QMediaPlayer player;
+ //            player->setMedia(QUrl::fromLocalFile(filePath));
+
+            // Wait for the media to be loaded
+//            if (player->mediaStatus() != QMediaPlayer::LoadedMedia) {
+//                QObject::connect(&player, &QMediaPlayer::mediaStatusChanged, &app, [&player, &app](QMediaPlayer::MediaStatus status) {
+//                    if (status == QMediaPlayer::LoadedMedia) {
+//                        app.quit();
+//                    }
+//                });
+
+//                return a.exec();
+//            }
+
+            // Retrieve the video's metadata
+//            QVariant resolution = player->metaData(QMediaMetaData::Resolution);
+
+//            if (resolution.isValid()) {
+//                QSize videoResolution = resolution.toSize();
+//                qDebug() << "Video resolution:" << videoResolution.width() << "x" << videoResolution.height();
+//            } else {
+//                qDebug() << "Failed to retrieve video resolution.";
+//            }
         }
     }
     //--------------------------------------------------------------------------

@@ -63,7 +63,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ReloadCollection_clicked()
     {
-        createStorageList();
+        createStorageFile();
         loadCollection();
     }
     //----------------------------------------------------------------------
@@ -175,12 +175,20 @@
     // Device tree ---------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {
+        //Get selected device
         selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
         selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
         selectedDeviceID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
 
+        //Load selected device data
+        selectedVirtualStorage->ID = selectedDeviceID;
+        selectedVirtualStorage->loadVirtualStorage();
+        selectedFilterVirtualStorageName = selectedVirtualStorage->name;
+        selectedFilterVirtualStorageID = selectedVirtualStorage->ID;
+
+        //Adapt UI based on device type
         if (selectedDeviceType=="Storage"){
-            selectedStorage->setID(selectedDeviceID);
+            selectedStorage->setID(selectedVirtualStorage->externalID);
             selectedStorage->loadStorageMetaData();
             ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
             ui->Virtual_pushButton_AssignStorage->setEnabled(true);
@@ -188,8 +196,6 @@
             ui->Virtual_label_SelectedStorageDisplay->setText(selectedDeviceName);
         }
         else if (selectedDeviceType=="VirtualStorage"){
-            selectedFilterVirtualStorageName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-            selectedFilterVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toString();
             ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
             ui->Virtual_label_SelectedCatalogDisplay->setText("");
         }
@@ -210,7 +216,7 @@
         settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
         settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
         settings.setValue("Selection/SelectedDeviceID",   selectedDeviceID);
-        settings.setValue("Selection/SelectedFilterVirtualStorageID",   selectedFilterVirtualStorageID);
+        settings.setValue("Selection/SelectedFilterVirtualStorageID",   selectedVirtualStorage->ID);
 
         filterFromSelectedDevices();
 

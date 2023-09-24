@@ -63,10 +63,6 @@
             msgBox.exec();
             return;
         }
-
-        storageModel = new QSqlRelationalTableModel(this);
-        storageModel->setEditStrategy(QSqlTableModel::OnFieldChange);
-
     }
     //----------------------------------------------------------------------
     QSqlError MainWindow::initializeDatabase()
@@ -172,7 +168,21 @@
         return QSqlError();
     }
     //----------------------------------------------------------------------
-
+    void MainWindow::clearDatabaseData()
+    {   //Clear database date in the context of Memory mode, prior to reloading files to tables
+        if(databaseMode=="Memory"){
+            QSqlQuery queryDelete;
+            queryDelete.exec("DELETE FROM catalog");
+            queryDelete.exec("DELETE FROM storage");
+            queryDelete.exec("DELETE FROM virtual_storage");
+            queryDelete.exec("DELETE FROM file");
+            queryDelete.exec("DELETE FROM filetemp");
+            queryDelete.exec("DELETE FROM folder");
+            queryDelete.exec("DELETE FROM statistics");
+            queryDelete.exec("DELETE FROM search");
+            queryDelete.exec("DELETE FROM tag");
+        }
+    }
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -258,7 +268,7 @@
             selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
             selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
             selectedDeviceID   = settings.value("Selection/SelectedDeviceID").toInt();
-            selectedFilterVirtualStorageID = settings.value("Selection/SelectedFilterVirtualStorageID").toString();
+            selectedFilterVirtualStorageID = settings.value("Selection/SelectedFilterVirtualStorageID").toInt();
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
@@ -710,14 +720,16 @@
     //----------------------------------------------------------------------
     void MainWindow::generateCollectionFilesPaths()
     {
-        searchHistoryFilePath         = collectionFolder + "/" + "search_history.csv";
-        storageFilePath               = collectionFolder + "/" + "storage.csv";
-        virtualStorageFilePath        = collectionFolder + "/" + "virtual_storage.csv";
-        virtualStorageCatalogFilePath = collectionFolder + "/" + "virtual_storage_catalog.csv";
-        statisticsCatalogFileName     = "statistics_catalog.csv";
-        statisticsCatalogFilePath     = collectionFolder + "/" + statisticsCatalogFileName;
-        statisticsStorageFileName     = "statistics_storage.csv";
-        statisticsStorageFilePath     = collectionFolder + "/" + statisticsStorageFileName;
-        excludeFilePath               = collectionFolder + "/" + "exclude.csv";
+        if(databaseMode=="Memory"){
+            searchHistoryFilePath         = collectionFolder + "/" + "search_history.csv";
+            storageFilePath               = collectionFolder + "/" + "storage.csv";
+            virtualStorageFilePath        = collectionFolder + "/" + "virtual_storage.csv";
+            virtualStorageCatalogFilePath = collectionFolder + "/" + "virtual_storage_catalog.csv";
+            statisticsCatalogFileName     = "statistics_catalog.csv";
+            statisticsCatalogFilePath     = collectionFolder + "/" + statisticsCatalogFileName;
+            statisticsStorageFileName     = "statistics_storage.csv";
+            statisticsStorageFilePath     = collectionFolder + "/" + statisticsStorageFileName;
+            excludeFilePath               = collectionFolder + "/" + "exclude.csv";
+        }
     }
     //----------------------------------------------------------------------

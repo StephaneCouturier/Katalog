@@ -61,7 +61,7 @@
 
             const auto SQL_CREATE_STORAGE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS storage(
-                            storage_id  int  primary key default 0,
+                            storage_id            INTEGER  primary key default 0,
                             storage_name          TEXT,
                             storage_type          TEXT,
                             storage_location      TEXT,

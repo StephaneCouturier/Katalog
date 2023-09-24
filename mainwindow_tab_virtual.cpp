@@ -40,12 +40,12 @@
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
 {
-    insertVirtualStorageItem(0, tr("Top Item"), "VirtualStorage", 0);
+    insertVirtualStorageItem(0, 0, tr("Top Item"), "VirtualStorage", 0);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_AddSubItem_clicked()
 {
-    insertVirtualStorageItem(selectedVirtualStorageID, tr("Sub-Item"), "VirtualStorage", 0);
+    insertVirtualStorageItem(0, selectedVirtualStorageID, tr("Sub-Item"), "VirtualStorage", 0);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
@@ -236,7 +236,7 @@ void MainWindow::on_Virtual_treeView_VirtualStorageList_customContextMenuRequest
         virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
 
         connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
-            insertVirtualStorageItem(selectedVirtualStorageID, "sub-item", "VirtualStorage" , 0);
+            insertVirtualStorageItem(0, selectedVirtualStorageID, "sub-item", "VirtualStorage" , 0);
         });
 
 
@@ -406,31 +406,22 @@ void MainWindow::importStorageCatalogLinks() {
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
-void MainWindow::insertVirtualStorageItem(int parentID, QString name, QString type,int externalID)
+void MainWindow::insertVirtualStorageItem(int newID, int parentID, QString name, QString type, QString externalID)
 {
-    //Generate new ID
     QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                            SELECT MAX(virtual_storage_id)
-                            FROM virtual_storage
-                        )");
-    query.prepare(querySQL);
-    query.exec();
-    query.next();
-    int newID=query.value(0).toInt()+1;
+    QString querySQL;
 
-    /*
-                            virtual_storage_id,
-                            virtual_storage_parent_id,
-                            virtual_storage_name,
-                            virtual_storage_type,
-                            virtual_storage_external_id,
-                            virtual_storage_path,
-                            virtual_storage_total_file_size,
-                            virtual_storage_total_file_count,
-                            virtual_storage_total_space,
-                            virtual_storage_free_space
-    */
+    if(newID==0){
+        //Generate new ID
+        querySQL = QLatin1String(R"(
+                        SELECT MAX(virtual_storage_id)
+                        FROM virtual_storage
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+        query.next();
+        newID=query.value(0).toInt()+1;
+    }
 
     //Insert device
     querySQL = QLatin1String(R"(
@@ -954,6 +945,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
     //Create a map to store items by ID for easy access
     QMap<int, QStandardItem*> itemMap;
+
     //Populate model
     while (query.next()) {
 
@@ -1005,7 +997,6 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
         // Store the item in the map for future reference
         itemMap.insert(id, item);
     }
-
 
     //Load Model to treeview (Virtual tab)
         DeviceTreeView *deviceTreeViewForVirtualTab = new DeviceTreeView(this);
@@ -1270,8 +1261,8 @@ void MainWindow::insertPhysicalStorageGroup() {
     int result = query.value(0).toInt();
 
     if(result == 0){
-        insertVirtualStorageItem(0, tr(" Physical Group"), "VirtualStorage", 0);
-        insertVirtualStorageItem(1, tr("Default location"), "VirtualStorage", 0);
+        insertVirtualStorageItem(1, 0, tr(" Physical Group"), "VirtualStorage", 0);
+        insertVirtualStorageItem(2, 1, tr("Default location"), "VirtualStorage", 0);
     }
 
     saveVirtualStorageTableToFile(virtualStorageFilePath);
@@ -1325,5 +1316,33 @@ void MainWindow::setVirtualStorageTreeExpandState(bool toggle)
             ui->Filters_treeView_Devices->collapseAll();
         }
     }
+}
+//--------------------------------------------------------------------------
+void MainWindow::shiftIDsInVirtualStorageTable(int shiftAmount)
+{
+    QSqlQuery query;
+
+    // First, update the rows with parentID = 0 to keep them unchanged
+    QString sql = "UPDATE virtual_storage SET virtual_storage_id = virtual_storage_id + :shiftAmount "
+                  "WHERE virtual_storage_parent_id = 0";
+    query.prepare(sql);
+    query.bindValue(":shiftAmount", shiftAmount);
+    if (!query.exec()) {
+        qDebug() << "Error updating virtual_storage table:" << query.lastError().text();
+        return;
+    }
+
+    // Next, update the rows with parentID != 0 to shift their IDs
+    sql = "UPDATE virtual_storage SET virtual_storage_id = virtual_storage_id + :shiftAmount, "
+          "virtual_storage_parent_id = virtual_storage_parent_id + :shiftAmount "
+          "WHERE virtual_storage_parent_id != 0";
+    query.prepare(sql);
+    query.bindValue(":shiftAmount", shiftAmount);
+    if (!query.exec()) {
+        qDebug() << "Error updating virtual_storage table:" << query.lastError().text();
+        return;
+    }
+
+    qDebug() << "IDs shifted successfully by" << shiftAmount;
 }
 //--------------------------------------------------------------------------

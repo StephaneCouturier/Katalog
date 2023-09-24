@@ -692,6 +692,8 @@
                 ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             }
 
+
+
         //Populate catalogs statistics
         QSqlQuery querySumCatalogValues;
         QString querySumCatalogValuesSQL = QLatin1String(R"(
@@ -821,6 +823,29 @@
                 tempStorage->loadStorageMetaData();
                 if(updateStorage==true){
                     updateStorageInfo(tempStorage);
+                }
+            }
+            else{//Update path as catalog's path
+                tempStorage->path = catalog->sourcePath;
+
+                if(updateStorage==true){
+                    updateStorageInfo(tempStorage);
+
+                    //update path
+                    QSqlQuery queryTotalSpace;
+                    QString queryTotalSpaceSQL = QLatin1String(R"(
+                                        UPDATE storage
+                                        SET storage_path =:storage_path
+                                        WHERE storage_id = :storage_id
+                                        )");
+                    queryTotalSpace.prepare(queryTotalSpaceSQL);
+                    queryTotalSpace.bindValue(":storage_path", tempStorage->path);
+                    queryTotalSpace.bindValue(":storage_id", tempStorage->ID);
+                    queryTotalSpace.exec();
+
+                    saveStorageTableToFile();
+                    loadStorageFileToTable();
+                    loadStorageTableToModel();
                 }
             }
         }
@@ -1393,7 +1418,8 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::recordCollectionStats(){
+    void MainWindow::recordCollectionStats()
+    {
 
         //Get the current total values
         QSqlQuery queryLastCatalog;
@@ -1532,7 +1558,7 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateAllCatalogPathIsActive()
-    {//Update the value sourcePathIsActive of all Catalogs
+    {   //Update the value sourcePathIsActive of all Catalogs
 
             //Get the list of catalogs
             QSqlQuery query;
@@ -1543,7 +1569,7 @@
             query.prepare(querySQL);
             query.exec();
 
-            //Save history for each catalog
+            //Update and Save sourcePathIsActive for each catalog
             while (query.next()){
                 tempCatalog->setName(query.value(0).toString());
                 tempCatalog->loadCatalogMetaData();

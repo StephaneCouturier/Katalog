@@ -38,7 +38,7 @@
     //Full list ----------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_CreateList_clicked()
     {
-        createStorageList();
+        createStorageFile();
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Reload_clicked()
@@ -65,7 +65,7 @@
         //Save data to file and reload
         if (databaseMode=="Memory"){
             //Save model data to Storage file
-            saveStorageModelToFile();
+            saveStorageTableToFile();
 
             //Reload Storage file data to table
             loadStorageFileToTable();
@@ -176,7 +176,7 @@
             //Save data to file and reload
             if (databaseMode=="Memory"){
                 //Save model data to Storage file
-                saveStorageModelToFile();
+                saveStorageTableToFile();
 
                 //Reload Storage file data to table
                 loadStorageFileToTable();
@@ -232,7 +232,7 @@
     //--------------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
-    void MainWindow::createStorageList()
+    void MainWindow::createStorageFile()
     {
         if(databaseMode=="Memory"){
             // Create it, if it does not exist
@@ -295,36 +295,36 @@
             else
                 newLocation = "";
 
+        //Create Storage entry
             tempStorage->setName(deviceName);
             tempStorage->setLocation(newLocation);
             tempStorage->createStorage();
 
-        //load table to model
+        //Load table to model
         loadStorageTableToModel();
 
         //Save data to file and reload
         if (databaseMode=="Memory"){
             //Save model data to Storage file
-            saveStorageModelToFile();
+            saveStorageTableToFile();
 
             //Reload Storage file data to table
             loadStorageFileToTable();
         }
 
-        //refresh
+        //Refresh
         loadStorageTableToModel();
         updateStorageSelectionStatistics();
         loadStorageTableToSelectionTreeModel();
 
-        //enable save button
+        //Enable save button
         ui->Storage_pushButton_New->setEnabled(true);
 
         //Refresh Location list
         refreshLocationSelectionList();
 
-
-        //Create virtual storage under Physical group / default location
-        insertVirtualStorageItem(2, tempStorage->name, "Storage", tempStorage->ID);
+        //Create virtual storage under Physical group / Default location (ID=2)
+        insertVirtualStorageItem(0, 2, tempStorage->name, "Storage", QString::number(tempStorage->ID));
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageFileToTable()
@@ -444,34 +444,92 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageTableToModel()
     {
-        //Load, filter, and sort data model
-        storageModel->setTable("storage");
+        //Generate SQL query from filters
+        QSqlQuery loadStorageQuery;
+        QString loadStorageQuerySQL;
 
-        if ( selectedDeviceType == "Location" ){
-            QString tableFilter = "storage_location = '" + selectedDeviceName + "'";
-            storageModel->setFilter(tableFilter);
+        //Prepare the main part of the query
+        loadStorageQuerySQL  = QLatin1String(R"(
+                                        SELECT
+                                            DISTINCT storage_id   ,
+                                            storage_name          ,
+                                            storage_type          ,
+                                            storage_location      ,
+                                            storage_path          ,
+                                            storage_label         ,
+                                            storage_file_system   ,
+                                            storage_total_space   ,
+                                            storage_free_space    ,
+                                            storage_brand_model   ,
+                                            storage_serial_number ,
+                                            storage_build_date    ,
+                                            storage_content_type  ,
+                                            storage_container     ,
+                                            storage_comment       ,
+                                            storage_date_updated
+                                        FROM storage s
+                                        JOIN virtual_storage vs ON vs.virtual_storage_external_id = s.storage_id
+                            )");
+
+        if (    selectedFilterStorageLocation    == tr("All")
+            and selectedFilterStorageName        == tr("All")
+            and selectedFilterCatalogName        == tr("All")
+            and selectedFilterVirtualStorageName == tr("All"))
+        {
+            //No filtering
+        }
+
+
+        else if ( selectedDeviceType == "Location" ){
+            loadStorageQuerySQL += " WHERE storage_location =:storage_location ";
         }
         else if ( selectedDeviceType == "Storage" ){
-            QString tableFilter = "storage_name = '" + selectedDeviceName + "'";
-            storageModel->setFilter(tableFilter);
+            loadStorageQuerySQL += " WHERE storage_name =:storage_name ";
         }
-        else if ( selectedDeviceType == "Catalog" ){
-            QString tableFilter = "storage_name = '" + selectedCatalog->storageName + "'";
-            storageModel->setFilter(tableFilter);
+//         else if ( selectedDeviceType == "Catalog" ){
+//            loadStorageQuerySQL += " WHERE storage_name =:catalog_storage";
+//        }
+        else if ( selectedDeviceType == "VirtualStorage" ){
+            QString prepareSQL = QLatin1String(R"(
+                                    WHERE vs.virtual_storage_id IN (
+                                    WITH RECURSIVE hierarchy AS (
+                                         SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
+                                         FROM virtual_storage
+                                         WHERE virtual_storage_id = :virtual_storage_id
+                                         UNION ALL
+                                         SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name
+                                         FROM virtual_storage t
+                                         JOIN hierarchy h ON t.virtual_storage_parent_id = h.virtual_storage_id
+                                    )
+                                    SELECT virtual_storage_id
+                                    FROM hierarchy)
+                                                    )");
+            loadStorageQuerySQL += prepareSQL;
         }
 
-        storageModel->setSort(1, Qt::AscendingOrder);
+        //Execute query
+        loadStorageQuery.prepare(loadStorageQuerySQL);
+        loadStorageQuery.bindValue(":storage_name", selectedDeviceName);
+        loadStorageQuery.bindValue(":storage_location", selectedDeviceName);
+        loadStorageQuery.bindValue(":catalog_storage", selectedDeviceName);
+        loadStorageQuery.bindValue(":catalog_name", selectedDeviceName);
+        loadStorageQuery.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+        loadStorageQuery.exec();
+        loadStorageQuery.next();
 
-        // Populate the storageModel
-        if (!storageModel->select()) {
-            //showError(storageModel->lastError());
-            QMessageBox::information(this,"Katalog","storageModel loading error.");
-            return;
-        }
 
         // Connect model to tree/table view
+        QSqlQueryModel *storageQueryModel = new QSqlQueryModel();
+        storageQueryModel->setQuery(std::move(loadStorageQuery));
+
+        // Check for errors in the query
+        if (storageQueryModel->lastError().isValid()) {
+            // Handle the error, e.g., display an error message
+            qDebug() << "Error: " << storageQueryModel->lastError().text();
+        }
+
         StorageView *proxyStorageModel = new StorageView(this);
-        proxyStorageModel->setSourceModel(storageModel);
+        proxyStorageModel->setSourceModel(storageQueryModel);
         proxyStorageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
         proxyStorageModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
         proxyStorageModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
@@ -511,32 +569,6 @@
         ui->Storage_treeView_StorageList->header()->hideSection(15); //Last Update
 
         //Get the list of device names for the Create screen
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                           SELECT storage_name
-                           FROM storage
-                           WHERE storage_name !=''
-                                        )");
-
-        if ( selectedDeviceType == "Location" ){
-            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedDeviceName);
-        }
-        else if ( selectedDeviceType == "Storage" ){
-            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedDeviceName);
-            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
-        }
-        else if ( selectedDeviceType == "Catalog" ){
-            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedCatalog->storageName);
-        }
-
-        querySQL += " ORDER BY storage_name ";
-        query.prepare(querySQL);
-        query.exec();
-        storageNameList.clear();
-            while(query.next())
-            {
-                storageNameList<<query.value(0).toString();
-            }
         loadStorageList();
 
         //If a storage is selected, use it for the Create screen
@@ -639,7 +671,7 @@
         //save model data to file
         if (databaseMode=="Memory"){
                 //Save model data to Storage file
-                saveStorageModelToFile();
+                saveStorageTableToFile();
 
                 //Reload Storage file data to table
                 loadStorageFileToTable();
@@ -650,7 +682,7 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::saveStorageModelToFile()
+    void MainWindow::saveStorageTableToFile()
     {
         if (databaseMode=="Memory"){
             //Prepare export file
@@ -882,7 +914,7 @@
 
         //Save data to file
         if (databaseMode=="Memory"){
-            saveStorageModelToFile();
+            saveStorageTableToFile();
         }
 
         //Update name in statistics and catalogs
@@ -951,6 +983,46 @@
             }
         }
     }
+    //--------------------------------------------------------------------------
+    void MainWindow::loadStorageList()
+    {   //Load Storage selection to comboBoxes
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                SELECT s.storage_name, v.virtual_storage_id
+                                FROM storage s
+                                LEFT JOIN virtual_storage v ON s.storage_id = v.virtual_storage_external_id
+                                WHERE storage_name !=''
+                            )");
+
+        if ( selectedDeviceType == "Location" ){
+            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Storage" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedDeviceName);
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Catalog" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedCatalog->storageName);
+        }
+
+        querySQL += " ORDER BY storage_name ";
+        query.prepare(querySQL);
+        query.exec();
+
+        //Load to comboboxes
+        ui->Create_comboBox_StorageSelection->clear();
+        ui->Catalogs_comboBox_Storage->clear();
+
+        while(query.next())
+        {
+            ui->Create_comboBox_StorageSelection->addItem(query.value(0).toString(),query.value(1).toInt());
+            ui->Catalogs_comboBox_Storage->addItem(query.value(0).toString(),query.value(1).toInt());
+        }
+
+    }
+
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
     void MainWindow::on_TEST_pushButton_TestMedia_clicked()

@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.23";
-        releaseDate     = "2023-08-19";
+        releaseDate     = "2023-09-24";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -214,6 +214,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             //Restore last Search values
             filterFromSelectedDevices();
 
+        //Setup tab: Statistics
+            ui->Statistics_comboBox_SelectSource->setItemData(0, "catalog updates", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(1, "storage updates", Qt::UserRole);
+            ui->Statistics_comboBox_SelectSource->setItemData(2, "collection snapshots", Qt::UserRole);
+
     //Context menu and other slots and signals
             setupFileContextMenus();
 
@@ -262,7 +267,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }
         else if ( result ==QMessageBox::Save){
             //Save model data to Storage file
-            saveStorageModelToFile();
+            saveStorageTableToFile();
 
             //Reload Storage file data to table
             loadStorageFileToTable();

@@ -81,6 +81,7 @@
 #include "catalog.h"
 #include "search.h"
 #include "storage.h"
+#include "virtualstorage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -137,8 +138,6 @@ class MainWindow : public QMainWindow
             void setFileTypes();
 
             //Database
-            QSqlRelationalTableModel *storageModel;
-            //QSqlTableModel *storageModel;
             QSqlError initializeDatabase();
             QString databaseMode;
             void    startDatabase();
@@ -150,6 +149,7 @@ class MainWindow : public QMainWindow
             int     databasePort;
             QString databaseUserName;
             QString databasePassword;
+            void    clearDatabaseData();
 
             //Objects
             Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
@@ -157,6 +157,8 @@ class MainWindow : public QMainWindow
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
             Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
             Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
+            VirtualStorage *selectedVirtualStorage = new VirtualStorage(); //selected virtual storage used for individual virtual storage operations
+            VirtualStorage *tempVirtualStorage = new VirtualStorage(); //temporary virtual storage used for operations on a list of devices
 
         //Filters panel
             int  deviceTreeExpandState;
@@ -168,7 +170,7 @@ class MainWindow : public QMainWindow
 
             QString selectedFilterStorageLocation;
             QString selectedFilterStorageName;
-            QString selectedFilterVirtualStorageID;
+            int selectedFilterVirtualStorageID;
             QString selectedFilterVirtualStorageName;
             QString selectedFilterCatalogName;
             QString selectedConnectedDrivePath;
@@ -304,13 +306,13 @@ class MainWindow : public QMainWindow
             int lastStorageSortSection;
             int lastStorageSortOrder;
 
-            void createStorageList();
+            void createStorageFile();
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
 
             void loadStorageTableToModel();
             void loadStorageTableToSelectionTreeModel();
-            void saveStorageModelToFile();
+            void saveStorageTableToFile();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
             void recordAllStorageStats(QDateTime dateTime);
@@ -333,7 +335,7 @@ class MainWindow : public QMainWindow
             bool optionDisplayFullTable;
 
             void loadVirtualStorageFileToTable();
-            void insertVirtualStorageItem(int parentID, QString name, QString type, int externalID);
+            void insertVirtualStorageItem(int ID, int parentID, QString name, QString type, QString externalID);
             void insertPhysicalStorageGroup();
             void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
             void assignStorageToVirtualStorage(int storageID,int virtualStorageID);
@@ -346,6 +348,7 @@ class MainWindow : public QMainWindow
             void synchCatalogAndStorageValues();
             void convertVirtualStorageCatalogFile();
             void importStorageCatalogLinks();
+            void shiftIDsInVirtualStorageTable(int shiftAmount);
 
         //TAB: Statistics
             QString statisticsCatalogFileName;

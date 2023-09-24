@@ -799,104 +799,107 @@
     void MainWindow::convertStatistics()
     {//Convert former statistics.csv to new catalog/storage csv files (v1.19>v1.20)
 
-        QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
-        QFile statisticsFile(statisticsFilePath);
+        if(databaseMode=="Memory"){
 
-        QFile statisticsCatalogFile(statisticsCatalogFilePath);
-        QFile statisticsStorageFile(statisticsStorageFilePath);
+            QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+            QFile statisticsFile(statisticsFilePath);
 
-        if (statisticsFile.open(QIODevice::ReadOnly|QIODevice::Text)
-            and !statisticsCatalogFile.exists()
-            and !statisticsStorageFile.exists()){
+            QFile statisticsCatalogFile(statisticsCatalogFilePath);
+            QFile statisticsStorageFile(statisticsStorageFilePath);
 
-            //User confirmation
-            int result = QMessageBox::warning(this,"Katalog",
-                                                  tr("Katalog detected an old version to store device statistics.<br/> "
-                                                     "- It is necessary to convert it to read it with this version.<br/>"
-                                                     "- The old file will be renamed and kept after the conversion.<br/>"
-                                                     "- It will not be possible to run it later if you run any update in the mean time.<br/>"
-                                                     "You want to convert it now? <br/>"
-                                                     ),
-                                                  QMessageBox::Yes|QMessageBox::Cancel);
+            if (statisticsFile.open(QIODevice::ReadOnly|QIODevice::Text)
+                and !statisticsCatalogFile.exists()
+                and !statisticsStorageFile.exists()){
 
-                if ( !(result == QMessageBox::Yes)){
-                       return;
+                //User confirmation
+                int result = QMessageBox::warning(this,"Katalog",
+                                                      tr("Katalog detected an old version to store device statistics.<br/> "
+                                                         "- It is necessary to convert it to read it with this version.<br/>"
+                                                         "- The old file will be renamed and kept after the conversion.<br/>"
+                                                         "- It will not be possible to run it later if you run any update in the mean time.<br/>"
+                                                         "You want to convert it now? <br/>"
+                                                         ),
+                                                      QMessageBox::Yes|QMessageBox::Cancel);
+
+                    if ( !(result == QMessageBox::Yes)){
+                           return;
+                }
+
+                QTextStream textStream(&statisticsFile);
+                //set temporary values
+                QString     line;
+                QStringList fieldList;
+
+                QDateTime   dateTime;
+                QString     catalogName;
+                qint64      catalogFileCount;
+                qint64      catalogTotalFileSize;
+                QString     recordType;
+                static QRegularExpression tagExp("\t");
+
+                //Skip titles line
+                line = textStream.readLine();
+
+                //load file to database
+                while (!textStream.atEnd())
+                {
+                       line = textStream.readLine();
+
+                       if (line.isNull())
+                           break;
+                       else
+                       {
+                           //Split the string with \t (tabulation) into a list
+                           fieldList.clear();
+                           fieldList = line.split(tagExp);
+                           dateTime                = QDateTime::fromString(fieldList[0],"yyyy-MM-dd hh:mm:ss");
+                           catalogName             = fieldList[1];
+                           catalogFileCount        = fieldList[2].toLongLong();
+                           catalogTotalFileSize    = fieldList[3].toLongLong();
+                           recordType              = fieldList[4];
+
+                           if (recordType =="Storage"){//         = storage update
+                                tempStorage = new Storage;
+                                tempStorage->setName(catalogName);
+                                tempStorage->setFreeSpace(catalogFileCount);
+                                tempStorage->setTotalSpace(catalogTotalFileSize);
+                                tempStorage->setDateUpdated(dateTime);
+                                tempStorage->saveStatistics(dateTime);
+                                tempStorage->saveStatisticsToFile(statisticsStorageFilePath,dateTime);
+                           }
+                           else if (recordType =="Update"){//      = catalog update
+                                tempCatalog = new Catalog;
+                                tempCatalog->setName(catalogName);
+                                tempCatalog->setFileCount(catalogFileCount);
+                                tempCatalog->setTotalFileSize(catalogTotalFileSize);
+                                tempCatalog->setDateUpdated(dateTime);
+                                tempCatalog->saveStatistics(dateTime);
+                                tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
+                           }
+                           else if (recordType =="Snapshot"){//    = catalog snapshot
+                                tempCatalog = new Catalog;
+                                tempCatalog->setName(catalogName);
+                                tempCatalog->setFileCount(catalogFileCount);
+                                tempCatalog->setTotalFileSize(catalogTotalFileSize);
+                                tempCatalog->saveStatistics(dateTime);
+                                tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
+                           }
+                           else {
+                                //qDebug()<<"line could not be processed: "+line;
+                           }
+                       }
+                }
+                statisticsFile.close();
+
+                //rename old statistics file
+                statisticsFile.rename(collectionFolder + "/" + "statistics_csv.bak");
+
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText( tr("Conversion completed.") );
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
             }
-
-            QTextStream textStream(&statisticsFile);
-            //set temporary values
-            QString     line;
-            QStringList fieldList;
-
-            QDateTime   dateTime;
-            QString     catalogName;
-            qint64      catalogFileCount;
-            qint64      catalogTotalFileSize;
-            QString     recordType;
-            static QRegularExpression tagExp("\t");
-
-            //Skip titles line
-            line = textStream.readLine();
-
-            //load file to database
-            while (!textStream.atEnd())
-            {
-                   line = textStream.readLine();
-
-                   if (line.isNull())
-                       break;
-                   else
-                   {
-                       //Split the string with \t (tabulation) into a list
-                       fieldList.clear();
-                       fieldList = line.split(tagExp);
-                       dateTime                = QDateTime::fromString(fieldList[0],"yyyy-MM-dd hh:mm:ss");
-                       catalogName             = fieldList[1];
-                       catalogFileCount        = fieldList[2].toLongLong();
-                       catalogTotalFileSize    = fieldList[3].toLongLong();
-                       recordType              = fieldList[4];
-
-                       if (recordType =="Storage"){//         = storage update
-                            tempStorage = new Storage;
-                            tempStorage->setName(catalogName);
-                            tempStorage->setFreeSpace(catalogFileCount);
-                            tempStorage->setTotalSpace(catalogTotalFileSize);
-                            tempStorage->setDateUpdated(dateTime);
-                            tempStorage->saveStatistics(dateTime);
-                            tempStorage->saveStatisticsToFile(statisticsStorageFilePath,dateTime);
-                       }
-                       else if (recordType =="Update"){//      = catalog update
-                            tempCatalog = new Catalog;
-                            tempCatalog->setName(catalogName);
-                            tempCatalog->setFileCount(catalogFileCount);
-                            tempCatalog->setTotalFileSize(catalogTotalFileSize);
-                            tempCatalog->setDateUpdated(dateTime);
-                            tempCatalog->saveStatistics(dateTime);
-                            tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
-                       }
-                       else if (recordType =="Snapshot"){//    = catalog snapshot
-                            tempCatalog = new Catalog;
-                            tempCatalog->setName(catalogName);
-                            tempCatalog->setFileCount(catalogFileCount);
-                            tempCatalog->setTotalFileSize(catalogTotalFileSize);
-                            tempCatalog->saveStatistics(dateTime);
-                            tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
-                       }
-                       else {
-                            //qDebug()<<"line could not be processed: "+line;
-                       }
-                   }
-            }
-            statisticsFile.close();
-
-            //rename old statistics file
-            statisticsFile.rename(collectionFolder + "/" + "statistics_csv.bak");
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText( tr("Conversion completed.") );
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
         }
     }
     //----------------------------------------------------------------------
