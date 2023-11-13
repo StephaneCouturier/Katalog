@@ -48,14 +48,13 @@ public:
     int ID;
     QString name;
     QString type;
-    QString location = ""; //avoid NULL in database
+    QString location = ""; //to avoid NULL in database
     QString path;
     QString label;
     QString fileSystem;
     qint64  totalSpace;
     qint64  freeSpace;
-    QString brand;
-    QString model;
+    QString brand_model;
     QString serialNumber;
     QString buildDate;
     QString contentType;

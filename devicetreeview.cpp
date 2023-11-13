@@ -114,7 +114,7 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
                     }
-                    else if( type=="VirtualStorage" ){
+                    else if( type=="Virtual" ){
                         return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                     else if( type=="Catalog" ){

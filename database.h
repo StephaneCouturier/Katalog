@@ -93,7 +93,8 @@
                             virtual_storage_total_file_count    NUMERIC default 0,
                             virtual_storage_total_space         NUMERIC default 0,
                             virtual_storage_free_space          NUMERIC default 0,
-                            virtual_storage_active)
+                            virtual_storage_active              NUMERIC,
+                            virtual_storage_group_id            NUMERIC)
             )");
 
         // VIRTUALSTORAGE CATALOG ------------------------------------------------------

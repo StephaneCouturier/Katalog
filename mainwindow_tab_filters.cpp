@@ -32,8 +32,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "storagetreemodel.h"
-#include "devicetreeview.h"
+//#include "storagetreemodel.h"
+//#include "devicetreeview.h"
 #include "catalog.h"
 
 //FILTERS / Global ---------------------------------------------------------
@@ -131,8 +131,8 @@
     void MainWindow::on_Filter_pushButton_Explore_clicked()
     {
         //reloads catalog to explore at root level
-        if (selectedDeviceType=="Catalog"){
-            selectedCatalog->setName(selectedDeviceName);
+        if (selectedDevice->type=="Catalog"){
+            selectedCatalog->setName(selectedDevice->name);
             selectedCatalog->loadCatalogMetaData();
 
             openCatalogToExplore();
@@ -145,25 +145,11 @@
     void MainWindow::on_Filter_pushButton_Update_clicked()
     {
         //reloads catalog to explore at root level
-        if (selectedDeviceType=="Catalog"){
+        if (selectedDevice->type=="Catalog"){
             skipCatalogUpdateSummary= false;
             requestSource ="update";
             updateSingleCatalog(selectedCatalog, true);
         }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1)
-    {
-        selectedTreeType = arg1;
-        if (selectedTreeType==tr("Location / Storage / Catatog")){
-            loadStorageTableToSelectionTreeModel();
-        }
-        else if (selectedTreeType==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageTableToTreeModel();
-        }
-
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Filters/LastTreeType", arg1);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
@@ -174,49 +160,40 @@
 
     // Device tree ---------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
-    {
-        //Get selected device
-        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-        selectedDeviceID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
+    {//Get selected device data
 
         //Load selected device data
-        selectedVirtualStorage->ID = selectedDeviceID;
-        selectedVirtualStorage->loadVirtualStorage();
-        selectedFilterVirtualStorageName = selectedVirtualStorage->name;
-        selectedFilterVirtualStorageID = selectedVirtualStorage->ID;
+        selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();;
+        selectedDevice->loadDevice();
 
         //Adapt UI based on device type
-        if (selectedDeviceType=="Storage"){
-            selectedStorage->setID(selectedVirtualStorage->externalID);
+        if (selectedDevice->type=="Storage"){
+            selectedStorage->setID(selectedDevice->externalID);
             selectedStorage->loadStorageMetaData();
-            ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
-            ui->Virtual_pushButton_AssignStorage->setEnabled(true);
-            ui->Virtual_label_SelectedCatalogDisplay->setText("");
-            ui->Virtual_label_SelectedStorageDisplay->setText(selectedDeviceName);
+            ui->Devices_pushButton_AssignCatalog->setEnabled(false);
+            ui->Devices_pushButton_AssignStorage->setEnabled(true);
+            ui->Devices_label_SelectedCatalogDisplay->setText("");
+            ui->Devices_label_SelectedStorageDisplay->setText(selectedDevice->name);
         }
-        else if (selectedDeviceType=="VirtualStorage"){
-            ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
-            ui->Virtual_label_SelectedCatalogDisplay->setText("");
+        else if (selectedDevice->type=="Virtual"){
+            ui->Devices_pushButton_AssignCatalog->setEnabled(false);
+            ui->Devices_label_SelectedCatalogDisplay->setText("");
         }
-        else if (selectedDeviceType=="Catalog"){
-            selectedCatalog->setName(selectedDeviceName);
+        else if (selectedDevice->type=="Catalog"){
+            selectedCatalog->setName(selectedDevice->name);
             selectedCatalog->loadCatalogMetaData();
-            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
-            ui->Virtual_pushButton_AssignStorage->setEnabled(false);
-            ui->Virtual_label_SelectedStorageDisplay->setText("");
-            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedDeviceName);
-            if(selectedVirtualStorageName!=""){
-                ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+            ui->Devices_pushButton_AssignCatalog->setEnabled(true);
+            ui->Devices_pushButton_AssignStorage->setEnabled(false);
+            ui->Devices_label_SelectedStorageDisplay->setText("");
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
+            if(selectedDevice->name!=""){
+                ui->Devices_pushButton_AssignCatalog->setEnabled(true);
             }
-            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedDeviceName);
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
         }
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
-        settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
-        settings.setValue("Selection/SelectedDeviceID",   selectedDeviceID);
-        settings.setValue("Selection/SelectedFilterVirtualStorageID",   selectedVirtualStorage->ID);
+        settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
 
         filterFromSelectedDevices();
 
@@ -227,49 +204,37 @@
     {
         //Get selection data
         QModelIndex index=ui->Filters_treeView_Devices->currentIndex();
-        selectedDeviceName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-        selectedDeviceType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-//        selectedVirtualStorageName = ui->Filters_treeView_Devices->model()->index(index.row(), 0, index.parent() ).data().toString();
-//        selectedVirtualStorageType = ui->Filters_treeView_Devices->model()->index(index.row(), 1, index.parent() ).data().toString();
-//        selectedVirtualStorageID   = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
-//        QModelIndex parentIndex = index.parent();
-//        selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
-//        QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
+        selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
+        selectedDevice->loadDevice();
 
-        //Physical Storage Tree
-        if (selectedTreeType==tr("Location / Storage / Catatog")){
-            //loadStorageTableToSelectionTreeModel();
+        if (selectedDevice->type=="Storage"){
+            //Empty
         }
-        //Virtual Storage Tree
-        else if (selectedTreeType==tr("Virtual Storage / Catalog")){
-            if (selectedDeviceType=="Storage"){
-                //Empty
-            }
-            else if (selectedDeviceType=="VirtualStorage"){
-                //Empty
-            }
-            else if (selectedDeviceType=="Catalog"){
-                /*
-                QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
-                QMenu virtualStorageContextMenu;
-
-                QString virtualStorageName = selectedVirtualStorageName;
-
-                QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Assign this catalog to a Virtual Storage device"), this);
-                virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
-
-                connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName, index]() {
-                    on_Filters_treeView_Devices_clicked(index);
-                });
-
-                virtualStorageContextMenu.exec(globalPos);
-                ui->tabWidget->setCurrentIndex(5);
-                */
-            }
+        else if (selectedDevice->type=="Virtual"){
+            //Empty
         }
+        else if (selectedDevice->type=="Catalog"){
+            /*
+            QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
+            QMenu deviceContextMenu;
+
+            QString deviceName = selectedDeviceName;
+
+            QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Assign this catalog to a Virtual Storage device"), this);
+            deviceContextMenu.addAction(menuDeviceAction1);
+
+            connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName, index]() {
+                on_Filters_treeView_Devices_clicked(index);
+            });
+
+            deviceContextMenu.exec(globalPos);
+            ui->tabWidget->setCurrentIndex(5);
+            */
+        }
+
 
         //Set actions for catalogs
-        if(selectedVirtualStorageType=="Catalog"){
+        if(selectedDevice->type=="Catalog"){
 
         }
 
@@ -314,37 +279,28 @@
 
     void MainWindow::resetSelection()
     {
-        //reset selected values
-        selectedDeviceType = tr("All");
-        selectedDeviceName = tr("All");
-        selectedDeviceID   = 0;
-        selectedFilterStorageLocation = tr("All");
-        selectedFilterStorageName     = tr("All");
-        selectedFilterCatalogName     = tr("All");
-        selectedFilterVirtualStorageName = tr("All");
-        ui->Filters_label_DisplayLocation->setText(tr("All"));
+        //Reset selected values
+        selectedDevice = new Device();
+        selectedDevice->type = tr("All");
+        selectedStorage = new Storage();
+        selectedCatalog = new Catalog();
+
+        //Reset displayed values
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
-        ui->Filters_label_DisplayVirtualStorage->setText(tr("All"));
-        selectedCatalog->setName(tr(""));
-        selectedCatalog->loadCatalogMetaData();
-        refreshStorageSelectionList(selectedFilterStorageLocation);
-        loadCatalogsTableToModel();
+        ui->Filters_label_DisplayDevice->setText(tr("All"));
         ui->Filter_pushButton_Explore->setEnabled(false);
         ui->Filter_pushButton_Update->setEnabled(false);
-        ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
-        ui->Virtual_label_SelectedCatalogDisplay->setText("");
+        ui->Devices_label_SelectedCatalogDisplay->setText("");
 
-        //reset device tree
+        //Reload data
+        loadCatalogsTableToModel();
+
+        //Reset device tree
         setTreeExpandState(false);
+        loadDeviceFileToTable();
+        loadDeviceTableToTreeModel();
 
-        if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
-            loadStorageTableToSelectionTreeModel();
-        }
-        else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageFileToTable();
-            loadVirtualStorageTableToTreeModel();
-        }
         filterFromSelectedDevices();
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
@@ -356,57 +312,23 @@
     //----------------------------------------------------------------------
     void MainWindow::filterFromSelectedDevices()
     {
-        if(selectedDeviceType=="Location"){
+        if (selectedDevice->type=="Storage"){
             ui->Filter_pushButton_Explore->setEnabled(false);
             ui->Filter_pushButton_Update->setEnabled(false);
-
-            selectedFilterStorageLocation = selectedDeviceName;
-            selectedFilterStorageName = tr("All");
-            selectedFilterCatalogName = tr("All");
-            selectedFilterVirtualStorageName = tr("All");
-            loadCatalogsTableToModel();
-            refreshStorageSelectionList(selectedFilterStorageLocation);
         }
-        else if (selectedDeviceType=="Storage"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-
-            selectedFilterStorageLocation = tr("All");
-            selectedFilterStorageName = selectedDeviceName;
-            selectedFilterCatalogName = tr("All");
-            selectedFilterVirtualStorageName = tr("All");
-            loadCatalogsTableToModel();
-            refreshStorageSelectionList(selectedFilterStorageLocation);
-        }
-        else if (selectedDeviceType=="Catalog"){
+        else if (selectedDevice->type=="Catalog"){
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
-
-            selectedCatalog->setName(selectedDeviceName);
+            selectedCatalog->setName(selectedDevice->name);
             selectedCatalog->loadCatalogMetaData();
-
-            selectedFilterStorageLocation = tr("All");
-            selectedFilterStorageName = tr("All");
-            selectedFilterVirtualStorageName = tr("All");
-            selectedFilterCatalogName = selectedCatalog->name;
         }
-        else if (selectedDeviceType=="VirtualStorage"){
+        else if (selectedDevice->type=="Virtual"){
             ui->Filter_pushButton_Explore->setEnabled(false);
             ui->Filter_pushButton_Update->setEnabled(false);
-
-            selectedFilterStorageLocation = tr("All");
-            selectedFilterStorageName = tr("All");
-            selectedFilterCatalogName = tr("All");
-            selectedFilterVirtualStorageName = selectedDeviceName;
-            loadCatalogsTableToModel();
-            refreshStorageSelectionList(selectedFilterStorageLocation);
         }
 
-        //Display selection values and save them
-        ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
-        ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-        ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
-        ui->Filters_label_DisplayVirtualStorage->setText(selectedFilterVirtualStorageName);
+        //Display selection values
+        displaySelectedDeviceName();
 
         //Load matching Catalogs, Storage, and Statistics
             //Load matching Catalogs
@@ -414,6 +336,7 @@
 
             //Load matching Storage
             loadStorageTableToModel();
+            updateCatalogsScreenStatistics();
             updateStorageSelectionStatistics();
 
             //Load matching Statistics
@@ -473,26 +396,26 @@
         }
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadStorageTableToSelectionTreeModel()
-    {
-        const QStringList headers({tr("Location / Storage / Catalog"),tr("Type"),tr("Empty")});
-        StorageTreeModel *storageTreeModel = new StorageTreeModel(headers);
-
-        DeviceTreeView *deviceTreeProxyModel = new DeviceTreeView();
-        deviceTreeProxyModel->setSourceModel(storageTreeModel);
-
-        //LoadModel
-        ui->Filters_treeView_Devices->setModel(deviceTreeProxyModel);
-        deviceTreeProxyModel->boldColumnList.clear();
-        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
-        ui->Filters_treeView_Devices->hideColumn(1);
-        ui->Filters_treeView_Devices->hideColumn(2);
-        ui->Filters_treeView_Devices->setColumnWidth(2,0);
-        ui->Filters_treeView_Devices->collapseAll();
-        ui->Filters_treeView_Devices->header()->hide();
-
-        //Restore Expand or Collapse Device Tree
-        setTreeExpandState(false);
+    void MainWindow::displaySelectedDeviceName(){
+        if ( selectedDevice->type == "" )
+        {
+            ui->Filters_label_DisplayDevice->setText(tr("All"));
+            ui->Filters_label_DisplayStorage->setText(tr("All"));
+            ui->Filters_label_DisplayCatalog->setText(tr("All"));
+        }
+        else if ( selectedDevice->type == "Storage" ){
+            ui->Filters_label_DisplayStorage->setText(selectedDevice->name);
+            ui->Filters_label_DisplayDevice->setText(tr("All"));
+            ui->Filters_label_DisplayCatalog->setText(tr("All"));
+        }
+        else if ( selectedDevice->type == "Catalog" ){
+            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
+            ui->Filters_label_DisplayDevice->setText(tr("All"));
+            ui->Filters_label_DisplayStorage->setText(tr("All"));
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            ui->Filters_label_DisplayDevice->setText(selectedDevice->name);
+            ui->Filters_label_DisplayStorage->setText(tr("All"));
+            ui->Filters_label_DisplayCatalog->setText(tr("All"));
+        }
     }
-    //--------------------------------------------------------------------------

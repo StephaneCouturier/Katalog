@@ -60,14 +60,12 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog)
-    {       
-        //save selection in settings file;
+    {
+        //Save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
 
-        selectedFilterCatalogName = selectedCatalog;
-
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
@@ -75,11 +73,11 @@
     {
         QString typeOfData = ui->Statistics_comboBox_TypeOfData->itemData(ui->Statistics_comboBox_TypeOfData->currentIndex(),Qt::UserRole).toString();
 
-        //save selection in settings file;
+        //Save selection in settings file;
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/TypeOfData", typeOfData);
 
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
     }
 
@@ -110,7 +108,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
@@ -122,7 +120,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", "");
 
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
 
         ui->Statistics_calendarWidget->hide();
@@ -137,7 +135,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
-        //load the graph
+        //Load the graph
         loadStatisticsChart();
 
         ui->Statistics_calendarWidget->hide();
@@ -151,7 +149,7 @@
 
 //Methods-------------------------------------------------------------------
     void MainWindow::loadStatisticsDataTypes()
-    {//Populate the comboxboxes
+    {//Populate the Statistics comboxboxes
 
         //Populate the comboxbox for selected source
 
@@ -186,154 +184,157 @@
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsCatalogFileToTable()
     {// Load the contents of the statistics file into the database
+        if(databaseMode=="Memory"){
 
-        //clear database table
-            QSqlQuery deleteQuery;
-            deleteQuery.exec("DELETE FROM statistics_catalog");
+            //clear database table
+                QSqlQuery deleteQuery;
+                deleteQuery.exec("DELETE FROM statistics_catalog");
 
-        // Get infos stored in the file
-            QFile statisticsCatalogFile(statisticsCatalogFilePath);
-            if(!statisticsCatalogFile.open(QIODevice::ReadOnly)) {
-                return;
-            }
+            // Get infos stored in the file
+                QFile statisticsCatalogFile(statisticsCatalogFilePath);
+                if(!statisticsCatalogFile.open(QIODevice::ReadOnly)) {
+                    return;
+                }
 
-            QTextStream textStream(&statisticsCatalogFile);
+                QTextStream textStream(&statisticsCatalogFile);
 
-        //prepare query to load file info
-            QSqlQuery insertQuery;
-            QString insertSQL = QLatin1String(R"(
-                                INSERT INTO statistics_catalog (
-                                                date_time,
-                                                catalog_name,
-                                                catalog_file_count,
-                                                catalog_total_file_size,
-                                                record_type )
-                                VALUES(
-                                                :date_time,
-                                                :catalog_name,
-                                                :catalog_file_count,
-                                                :catalog_total_file_size,
-                                                :record_type )
-                                            )");
-            insertQuery.prepare(insertSQL);
+            //prepare query to load file info
+                QSqlQuery insertQuery;
+                QString insertSQL = QLatin1String(R"(
+                                    INSERT INTO statistics_catalog (
+                                                    date_time,
+                                                    catalog_name,
+                                                    catalog_file_count,
+                                                    catalog_total_file_size,
+                                                    record_type )
+                                    VALUES(
+                                                    :date_time,
+                                                    :catalog_name,
+                                                    :catalog_file_count,
+                                                    :catalog_total_file_size,
+                                                    :record_type )
+                                                )");
+                insertQuery.prepare(insertSQL);
 
-        //set temporary values
-            QString     line;
-            QStringList fieldList;
+            //set temporary values
+                QString     line;
+                QStringList fieldList;
 
-            QString     dateTime;
-            QString     catalogName;
-            qint64      catalogFileCount;
-            qint64      catalogTotalFileSize;
-            QString     recordType;
-            QRegularExpression tagExp("\t");
+                QString     dateTime;
+                QString     catalogName;
+                qint64      catalogFileCount;
+                qint64      catalogTotalFileSize;
+                QString     recordType;
+                QRegularExpression tagExp("\t");
 
-        //Skip titles line
-            line = textStream.readLine();
+            //Skip titles line
+                line = textStream.readLine();
 
-        //load file to database
-        while (!textStream.atEnd())
-        {
-            line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                {
-                //Split the string with \t (tabulation) into a list
-                    fieldList.clear();
-                    fieldList = line.split(tagExp);
-                    dateTime                = fieldList[0];
-                    catalogName             = fieldList[1];
-                    catalogFileCount        = fieldList[2].toLongLong();
-                    catalogTotalFileSize    = fieldList[3].toLongLong();
-                    recordType              = fieldList[4];
+            //load file to database
+            while (!textStream.atEnd())
+            {
+                line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                    {
+                    //Split the string with \t (tabulation) into a list
+                        fieldList.clear();
+                        fieldList = line.split(tagExp);
+                        dateTime                = fieldList[0];
+                        catalogName             = fieldList[1];
+                        catalogFileCount        = fieldList[2].toLongLong();
+                        catalogTotalFileSize    = fieldList[3].toLongLong();
+                        recordType              = fieldList[4];
 
-                    //Append data to the database
-                    insertQuery.bindValue(":date_time", dateTime);
-                    insertQuery.bindValue(":catalog_name", catalogName);
-                    insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
-                    insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
-                    insertQuery.bindValue(":record_type", recordType);
-                    insertQuery.exec();
+                        //Append data to the database
+                        insertQuery.bindValue(":date_time", dateTime);
+                        insertQuery.bindValue(":catalog_name", catalogName);
+                        insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
+                        insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
+                        insertQuery.bindValue(":record_type", recordType);
+                        insertQuery.exec();
+                }
             }
         }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsStorageFileToTable()
     {// Load the contents of the storage statistics file into the database
+        if(databaseMode=="Memory"){
+            //clear database table
+            QSqlQuery deleteQuery;
+            deleteQuery.exec("DELETE FROM statistics_storage");
 
-        //clear database table
-        QSqlQuery deleteQuery;
-        deleteQuery.exec("DELETE FROM statistics_storage");
+            // Get infos stored in the file
+            QFile statisticsStorageFile(statisticsStorageFilePath);
+            if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
+                return;
+            }
 
-        // Get infos stored in the file
-        QFile statisticsStorageFile(statisticsStorageFilePath);
-        if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
-            return;
-        }
+            QTextStream textStream(&statisticsStorageFile);
 
-        QTextStream textStream(&statisticsStorageFile);
+            //prepare query to load file info
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                    INSERT INTO statistics_storage (
+                                                    date_time,
+                                                    storage_id,
+                                                    storage_name,
+                                                    storage_free_space,
+                                                    storage_total_space,
+                                                    record_type )
+                                    VALUES(
+                                                    :date_time,
+                                                    :storage_id,
+                                                    :storage_name,
+                                                    :storage_free_space,
+                                                    :storage_total_space,
+                                                    :record_type )
+                                                )");
+            insertQuery.prepare(insertSQL);
 
-        //prepare query to load file info
-        QSqlQuery insertQuery;
-        QString insertSQL = QLatin1String(R"(
-                                INSERT INTO statistics_storage (
-                                                date_time,
-                                                storage_id,
-                                                storage_name,
-                                                storage_free_space,
-                                                storage_total_space,
-                                                record_type )
-                                VALUES(
-                                                :date_time,
-                                                :storage_id,
-                                                :storage_name,
-                                                :storage_free_space,
-                                                :storage_total_space,
-                                                :record_type )
-                                            )");
-        insertQuery.prepare(insertSQL);
+            //set temporary values
+            QString     line;
+            QStringList fieldList;
+            QString     dateTime;
+            int         storageID;
+            QString     storageName;
+            qint64      storageFreeSpace;
+            qint64      storageTotalSpace;
+            QString     recordType;
+            QRegularExpression tagExp("\t");
 
-        //set temporary values
-        QString     line;
-        QStringList fieldList;
-        QString     dateTime;
-        int         storageID;
-        QString     storageName;
-        qint64      storageFreeSpace;
-        qint64      storageTotalSpace;
-        QString     recordType;
-        QRegularExpression tagExp("\t");
-
-        //Skip titles line
-        line = textStream.readLine();
-
-        //load file to database
-        while (!textStream.atEnd())
-        {
+            //Skip titles line
             line = textStream.readLine();
-            if (line.isNull())
-                        break;
-            else
-            {
-                        //Split the string with \t (tabulation) into a list
-                        fieldList.clear();
-                        fieldList = line.split(tagExp);
-                        dateTime            = fieldList[0];
-                        storageName         = fieldList[1];
-                        storageFreeSpace    = fieldList[2].toLongLong();
-                        storageTotalSpace   = fieldList[3].toLongLong();
-                        storageID           = fieldList[4].toInt();
-                        recordType          = fieldList[5];
 
-                        //Append data to the database
-                        insertQuery.bindValue(":date_time", dateTime);
-                        insertQuery.bindValue(":storage_id", storageID);
-                        insertQuery.bindValue(":storage_name", storageName);
-                        insertQuery.bindValue(":storage_free_space", QString::number(storageFreeSpace));
-                        insertQuery.bindValue(":storage_total_space", QString::number(storageTotalSpace));
-                        insertQuery.bindValue(":record_type", recordType);
-                        insertQuery.exec();
+            //load file to database
+            while (!textStream.atEnd())
+            {
+                line = textStream.readLine();
+                if (line.isNull())
+                            break;
+                else
+                {
+                            //Split the string with \t (tabulation) into a list
+                            fieldList.clear();
+                            fieldList = line.split(tagExp);
+                            dateTime            = fieldList[0];
+                            storageName         = fieldList[1];
+                            storageFreeSpace    = fieldList[2].toLongLong();
+                            storageTotalSpace   = fieldList[3].toLongLong();
+                            storageID           = fieldList[4].toInt();
+                            recordType          = fieldList[5];
+
+                            //Append data to the database
+                            insertQuery.bindValue(":date_time", dateTime);
+                            insertQuery.bindValue(":storage_id", storageID);
+                            insertQuery.bindValue(":storage_name", storageName);
+                            insertQuery.bindValue(":storage_free_space", QString::number(storageFreeSpace));
+                            insertQuery.bindValue(":storage_total_space", QString::number(storageTotalSpace));
+                            insertQuery.bindValue(":record_type", recordType);
+                            insertQuery.exec();
+                }
             }
         }
     }
@@ -394,15 +395,11 @@
                      querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
-                if (selectedDeviceType == "Location"){
+                else if (selectedDevice->type == "Storage"){
                      invalidCombinaison = true;
                      invalidCase = tr("A Catalog should be selected for that report.");
                 }
-                else if (selectedDeviceType == "Storage"){
-                     invalidCombinaison = true;
-                     invalidCase = tr("A Catalog should be selected for that report.");
-                }
-                else if (selectedDeviceType == "Catalog"){
+                else if (selectedDevice->type == "Catalog"){
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":selectedCatalogforStats", selectedCatalogforStats);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
@@ -466,19 +463,15 @@
                                     LEFT JOIN storage s ON c.catalog_storage = s.storage_name
                                 )");
 
-                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" ){
+                if ( selectedDevice->name != tr("All") and selectedDevice->type=="Storage" ){
                     querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND s.storage_location = '" + selectedDeviceName + "' ";
+                    querySQL += " AND c.catalog_storage = '" + selectedDevice->name + "' ";
                 }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" ){
+                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Catalog" ){
                     querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND c.catalog_storage = '" + selectedDeviceName + "' ";
+                    querySQL += " AND c.catalog_name = '" + selectedDevice->name + "' ";
                 }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" ){
-                    querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND c.catalog_name = '" + selectedDeviceName + "' ";
-                }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="VirtualStorage" ){
+                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Virtual" ){
                     querySQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
                     querySQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
                     querySQL += " WHERE sc.record_type = 'snapshot' ";
@@ -508,7 +501,7 @@
 
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                queryTotalSnapshots.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+                queryTotalSnapshots.bindValue(":virtual_storage_id", selectedDevice->ID);
 
                 queryTotalSnapshots.exec();
 
@@ -557,20 +550,20 @@
                                                         LEFT JOIN storage ON storage.storage_name = statistics_storage.storage_name
                                                     )");
 
-                if ( selectedDeviceName != tr("All") and selectedDeviceType=="Location" ){
+                if ( selectedDevice->name != tr("All") and selectedDevice->type=="Location" ){
                         queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                        queryStorageSnapshotsSQL += "   AND storage.storage_location = '" + selectedDeviceName + "' ";
+                        queryStorageSnapshotsSQL += "   AND storage.storage_location = '" + selectedDevice->name + "' ";
                 }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Storage" ){
+                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Storage" ){
                         queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                        queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDeviceName + "' ";
+                        queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDevice->name + "' ";
                 }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="Catalog" ){
+                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Catalog" ){
                         queryStorageSnapshotsSQL += "   LEFT JOIN catalog ON catalog.catalog_storage = storage.storage_name ";
                         queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                        queryStorageSnapshotsSQL += "   AND catalog.catalog_name = '" + selectedDeviceName + "' ";
+                        queryStorageSnapshotsSQL += "   AND catalog.catalog_name = '" + selectedDevice->name + "' ";
                 }
-                else if ( selectedDeviceName != tr("All") and selectedDeviceType=="VirtualStorage" ){
+                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Virtual" ){
                         queryStorageSnapshotsSQL += "   WHERE record_type = 'no_value' ";
                         //queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
                         //queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDeviceName + "' ";
@@ -640,18 +633,18 @@
                     querySQL += " AND date_time > :graphStartDate ";
                 }
 
-                if (selectedDeviceType == "Storage"){
+                if (selectedDevice->type == "Storage"){
                     querySQL += " AND storage_name = :selectedStorageforStats ";
                     querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedStorageforStats);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
-                else if (selectedDeviceType == "Location"){
+                else if (selectedDevice->type == "Location"){
                     invalidCombinaison = true;
                     invalidCase = tr("A Storage or Catalog should be selected for that report.");
                 }
-                else if (selectedDeviceType == "Catalog"){
+                else if (selectedDevice->type == "Catalog"){
                     querySQL += " AND storage_name = :selectedStorageforStats ";
                     querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
@@ -720,7 +713,7 @@
                             "<span style=\"font-weight: bold; font-size: 14px; font-color: #AAA,\">"
                             + selectedTypeOfData + " "
                             +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"
-                            + selectedDeviceName +"</span>"+ displayUnit+"</span>");
+                            + selectedDevice->name +"</span>"+ displayUnit+"</span>");
 
             //Format axis
             chart->setLocalizeNumbers(true);

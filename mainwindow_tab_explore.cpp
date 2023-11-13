@@ -104,10 +104,6 @@
     //----------------------------------------------------------------------
     void MainWindow::on_ExplorePushButtonLoadClicked()
     {
-        //reloads catalog to explore at root level
-        if (selectedDeviceType=="Catalog" and selectedDeviceName != selectedFilterCatalogName){
-            selectedFilterCatalogName = selectedDeviceName;
-        }
         openCatalogToExplore();
     }
     //----------------------------------------------------------------------
@@ -508,7 +504,7 @@
         settings.setValue("Explore/lastSelectedCatalogFile", selectedCatalog->filePath);
         settings.setValue("Explore/lastSelectedCatalogName", selectedCatalog->name);
         settings.setValue("Explore/lastSelectedCatalogPath", selectedCatalog->sourcePath);
-        settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+        settings.setValue("Explore/lastSelectedDirectory",   selectedCatalog->sourcePath);
 
         //Stop animation
         QApplication::restoreOverrideCursor();
@@ -544,7 +540,7 @@
                                )");
             QSqlQuery countQuery;
             countQuery.prepare(countSQL);
-            countQuery.bindValue(":folder_catalog_name",selectedFilterCatalogName);
+            countQuery.bindValue(":folder_catalog_name", selectedCatalog->name);
             countQuery.exec();
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));

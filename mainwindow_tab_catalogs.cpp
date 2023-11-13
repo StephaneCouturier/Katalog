@@ -57,6 +57,10 @@
             selectedCatalog->setName(ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString());
             selectedCatalog->loadCatalogMetaData();
 
+            catalogDevice->name = selectedCatalog->name;
+            catalogDevice->getCatalogStorageID();
+            catalogDevice->loadDevice();
+
             // Display buttons
             ui->Catalogs_pushButton_Search->setEnabled(true);
             ui->Catalogs_pushButton_ExploreCatalog->setEnabled(true);
@@ -65,7 +69,7 @@
             ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
             ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(true);
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(true);
-            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+            ui->Devices_pushButton_AssignCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
             ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
@@ -75,18 +79,12 @@
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
             ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
-            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
 
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
-            //Start at the root folder of the catalog
-            selectedDirectoryName     = selectedCatalog->sourcePath;
-            selectedDirectoryFullPath = selectedCatalog->sourcePath;
-            selectedFilterCatalogName = selectedCatalog->name;
-
-
             //The selected catalog becomes the active catalog
             selectedCatalog->setName(selectedCatalog->name);
             selectedCatalog->loadCatalogMetaData();
@@ -100,30 +98,16 @@
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Search_clicked()
-        {
-            //Change the selected catalog in Search tab
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
-            selectedFilterCatalogName = selectedCatalog->name;
+        {//Change the selected device and catalog, and go to Search tab
 
-            selectedFilterStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
+            //Make the catalog the selected device
+            selectedDevice = catalogDevice;
 
-            selectedFilterStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-
-            selectedFilterVirtualStorageName = tr("All");
-            selectedFilterVirtualStorageID   = 0;
-            ui->Filters_label_DisplayVirtualStorage->setText(selectedFilterVirtualStorageName);
-
-            selectedCatalog->setName(selectedCatalog->name);
-            selectedCatalog->loadCatalogMetaData();
-
-            selectedDeviceName = selectedCatalog->name;
-            selectedDeviceType = "Catalog";
+            //Update the displayed name
+            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
-            settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+            settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
             filterFromSelectedDevices();
 
@@ -136,7 +120,6 @@
                 //Start at the root folder of the catalog
                 selectedDirectoryName     = selectedCatalog->sourcePath;
                 selectedDirectoryFullPath = selectedCatalog->sourcePath;
-                selectedFilterCatalogName       = selectedCatalog->name;
 
                 //The selected catalog becomes the active catalog
                 selectedCatalog->setName(selectedCatalog->name);
@@ -151,7 +134,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
         {
-            ui->Catalogs_lineEdit_Name->setText(selectedFilterCatalogName);
+            ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
             ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
             ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
@@ -195,7 +178,7 @@
                 }
 
             //Get list of displayed and active catalogs
-                //prepare the main part of the query
+                //Prepare the main part of the query
                 QString querySQL  = QLatin1String(R"(
                                             SELECT catalog_name, catalog_source_path_is_active, catalog_source_path, catalog_storage
                                             FROM catalog
@@ -203,20 +186,17 @@
                                             WHERE catalog_source_path_is_active = 1
                                             )");
 
-                    //add AND conditions for the selected filters
-                    if ( selectedFilterStorageLocation != tr("All") )
-                        querySQL = querySQL + " AND storage_location = '" + selectedFilterStorageLocation + "' ";
+                    //Add AND conditions for the selected filters
+                    if ( selectedDevice->type != tr("All") )
+                        querySQL = querySQL + " AND catalog_storage = '" + selectedDevice->name + "' ";
 
-                    if ( selectedFilterStorageName != tr("All") )
-                        querySQL = querySQL + " AND catalog_storage = '" + selectedFilterStorageName + "' ";
-
-                //run the query
+                //Run the query
                 QSqlQuery query;
                 query.prepare(querySQL);
                 query.exec();
 
 
-                //catalogSelectedList
+                //Loop through the catalogSelectedList
                 for (const QString &catalogName : catalogSelectedList) {
                         QDir dir (query.value(2).toString());
                         if (dir.exists()==true){
@@ -307,30 +287,23 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_ViewCatalogStats_clicked()
         {
-            //Change the selected catalog in Search tab
-            ui->Filters_label_DisplayCatalog->setText(selectedCatalog->name);
-            selectedFilterCatalogName = selectedCatalog->name;
+            //Make the catalog the selected device
+            selectedDevice = catalogDevice;
 
-            selectedFilterStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
+            //Update the displayed name
+            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
-            selectedFilterStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-
+            //The selected catalog becomes the active catalog
             selectedCatalog->setName(selectedCatalog->name);
             selectedCatalog->loadCatalogMetaData();
 
-            selectedDeviceName = selectedCatalog->name;
-            selectedDeviceType = "Catalog";
-
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Selection/SelectedDeviceType", selectedDeviceType);
-            settings.setValue("Selection/SelectedDeviceName", selectedDeviceName);
+            settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
             filterFromSelectedDevices();
 
             //Go to the Search tab
-            ui->tabWidget->setCurrentIndex(5); // tab 0 is the Search tab
+            ui->tabWidget->setCurrentIndex(6); // tab 6 is the Statitics tab
 
             //Select the type of display "selected catalog"
             ui->Statistics_comboBox_SelectSource->setCurrentText(tr("selected catalog"));
@@ -374,7 +347,6 @@
                 }
 
                 loadCatalogsTableToModel();
-                loadStorageTableToSelectionTreeModel();
             }
         }
         //----------------------------------------------------------------------
@@ -554,11 +526,11 @@
     {
         //Get catalog data based on filters
             //Generate SQL query from filters
-            QString loadCatalogSQL;
             QSqlQuery loadCatalogQuery;
+            QString loadCatalogQuerySQL;
 
             //Prepare the main part of the query
-            loadCatalogSQL  = QLatin1String(R"(
+            loadCatalogQuerySQL  = QLatin1String(R"(
                                         SELECT
                                             DISTINCT c.catalog_name        ,
                                             c.catalog_file_path            ,
@@ -571,58 +543,47 @@
                                             c.catalog_include_hidden       ,
                                             c.catalog_include_metadata     ,
                                             c.catalog_storage              ,
-                                            s.storage_location             ,
                                             c.catalog_is_full_device       ,
                                             c.catalog_date_loaded          ,
-                                            c.catalog_app_version
+                                            c.catalog_app_version          ,
+                                            vs.virtual_storage_id
                                         FROM catalog c
-                                        LEFT JOIN storage s ON catalog_storage = storage_name
+                                        LEFT JOIN virtual_storage vs ON vs.virtual_storage_name = c.catalog_name
                             )");
 
-            if (     selectedFilterStorageLocation    == tr("All")
-                 and selectedFilterStorageName        == tr("All")
-                 and selectedFilterCatalogName        == tr("All")
-                 and selectedFilterVirtualStorageName == tr("All"))
-                {
-                    //No filtering
-                }
-            else if ( selectedDeviceType == "Location" ){
-                loadCatalogSQL += " WHERE s.storage_location =:storage_location ";
+            if (      selectedDevice->type == "Storage" ){
+                loadCatalogQuerySQL += " WHERE virtual_storage_parent_id =:virtual_storage_parent_id ";
             }
-            else if ( selectedDeviceType == "Storage" ){
-                loadCatalogSQL += " WHERE catalog_storage =:catalog_storage ";
+            else if ( selectedDevice->type == "Catalog" ){
+                loadCatalogQuerySQL += " WHERE catalog_name =:catalog_name ";
             }
-            else if ( selectedDeviceType == "Catalog" ){
-                loadCatalogSQL += " WHERE catalog_name =:catalog_name ";
-            }
-            else if ( selectedDeviceType == "VirtualStorage" ){
+            else if ( selectedDevice->type == "Virtual" ){
                 QString prepareSQL = QLatin1String(R"(
-                                    INNER JOIN virtual_storage vs  ON vs.virtual_storage_external_id = c.catalog_name
-                                    WHERE vs.virtual_storage_id IN (
-                                    WITH RECURSIVE hierarchy AS (
-                                         SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
-                                         FROM virtual_storage
-                                         WHERE virtual_storage_id = :virtual_storage_id
-                                         UNION ALL
-                                         SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name
-                                         FROM virtual_storage t
-                                         JOIN hierarchy h ON t.virtual_storage_parent_id = h.virtual_storage_id
-                                    )
-                                    SELECT virtual_storage_id
-                                    FROM hierarchy)
-                                                    )");
-                loadCatalogSQL += prepareSQL;
+
+                                        WHERE vs.virtual_storage_id IN (
+                                        WITH RECURSIVE hierarchy AS (
+                                             SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
+                                             FROM virtual_storage
+                                             WHERE virtual_storage_id = :virtual_storage_id
+                                             UNION ALL
+                                             SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name
+                                             FROM virtual_storage t
+                                             JOIN hierarchy h ON t.virtual_storage_parent_id = h.virtual_storage_id
+                                        )
+                                        SELECT virtual_storage_id
+                                        FROM hierarchy)
+                                    )");
+                loadCatalogQuerySQL += prepareSQL;
+
             }
 
             //Execute query
-            loadCatalogQuery.prepare(loadCatalogSQL);
-
-            loadCatalogQuery.bindValue(":storage_location", selectedDeviceName);
-            loadCatalogQuery.bindValue(":catalog_storage", selectedDeviceName);
-            loadCatalogQuery.bindValue(":catalog_name", selectedDeviceName);
-            loadCatalogQuery.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+            loadCatalogQuery.prepare(loadCatalogQuerySQL);
+            loadCatalogQuery.bindValue(":catalog_storage", selectedDevice->name);
+            loadCatalogQuery.bindValue(":catalog_name", selectedDevice->name);
+            loadCatalogQuery.bindValue(":virtual_storage_id", selectedDevice->ID);
+            loadCatalogQuery.bindValue(":virtual_storage_parent_id", selectedDevice->ID);
             loadCatalogQuery.exec();
-
 
         //Put the results in a list
             //Clear the list of selected catalogs
@@ -636,7 +597,6 @@
             //Send list to the Statistics combobox
             QStringListModel *catalogListModelForStats = new QStringListModel(this);
             catalogListModelForStats->setStringList(catalogSelectedList);
-
 
         //Format and send to Treeview
             QSqlQueryModel *catalogQueryModel = new QSqlQueryModel;
@@ -692,9 +652,14 @@
                 ui->Catalogs_treeView_CatalogList->hideColumn(12); //isFullDevice
             }
 
+        //Update Catalogs screen statistics
+            updateCatalogsScreenStatistics();
 
+    }
+    //--------------------------------------------------------------------------
 
-        //Populate catalogs statistics
+    void MainWindow::updateCatalogsScreenStatistics()
+    {
         QSqlQuery querySumCatalogValues;
         QString querySumCatalogValuesSQL = QLatin1String(R"(
                                 SELECT  COUNT(agg.catalog_name),
@@ -705,44 +670,29 @@
                                             c.catalog_total_file_size,
                                             c.catalog_file_count
                                     FROM catalog c
-                                    LEFT JOIN storage s ON c.catalog_storage = s.storage_name
+                                    LEFT JOIN virtual_storage vs ON vs.virtual_storage_name = c.catalog_name
 
-                            )");
+                            )"); //LEFT JOIN storage s ON c.catalog_storage = s.storage_name
 
-        if (    selectedFilterStorageLocation    == tr("All")
-            and selectedFilterStorageName        == tr("All")
-            and selectedFilterCatalogName        == tr("All")
-            and selectedFilterVirtualStorageName == tr("All"))
-            {
-                //No filtering
-            }
-        else if ( selectedDeviceType == "Location" ){
-                QString prepareSQL2 = QLatin1String(R"(
-                                    WHERE s.storage_location =:storage_location
-                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
-                                ) agg
-                                                    )");
-                querySumCatalogValuesSQL += prepareSQL2;
-        }
-        else if ( selectedDeviceType == "Storage" ){
-                QString prepareSQL2 = QLatin1String(R"(
+        if (      selectedDevice->type == "Storage" ){
+            QString prepareSQL2 = QLatin1String(R"(
                                     WHERE c.catalog_storage =:catalog_storage
                                     GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
                                 ) agg
                                                     )");
-                querySumCatalogValuesSQL += prepareSQL2;
+            querySumCatalogValuesSQL += prepareSQL2;
         }
-        else if ( selectedDeviceType == "Catalog" ){
-                QString prepareSQL2 = QLatin1String(R"(
+        else if ( selectedDevice->type == "Catalog" ){
+            QString prepareSQL2 = QLatin1String(R"(
                                     WHERE catalog_name =:catalog_name
                                     GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
                                 ) agg
                                                     )");
-                querySumCatalogValuesSQL += prepareSQL2;
+            querySumCatalogValuesSQL += prepareSQL2;
         }
-        else if ( selectedDeviceType == "VirtualStorage" ){
-                QString prepareSQL2 = QLatin1String(R"(
-                                    INNER JOIN virtual_storage vs  ON vs.virtual_storage_external_id = c.catalog_name
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL2 = QLatin1String(R"(
+
                                     WHERE vs.virtual_storage_id IN (
                                     WITH RECURSIVE hierarchy AS (
                                              SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
@@ -758,20 +708,26 @@
                                     GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
                                 ) agg
                                                     )");
-                querySumCatalogValuesSQL += prepareSQL2;
+            querySumCatalogValuesSQL += prepareSQL2;
         }
+        else{
+            QString prepareSQL2 = QLatin1String(R"(
+                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
+                                ) agg
+                                                    )");
+            querySumCatalogValuesSQL += prepareSQL2;
+        }
+
         querySumCatalogValues.prepare(querySumCatalogValuesSQL);
-        querySumCatalogValues.bindValue(":storage_location", selectedDeviceName);
-        querySumCatalogValues.bindValue(":catalog_storage", selectedDeviceName);
-        querySumCatalogValues.bindValue(":catalog_name", selectedDeviceName);
-        querySumCatalogValues.bindValue(":virtual_storage_id", selectedFilterVirtualStorageID);
+        querySumCatalogValues.bindValue(":catalog_storage", selectedDevice->name);
+        querySumCatalogValues.bindValue(":catalog_name", selectedDevice->name);
+        querySumCatalogValues.bindValue(":virtual_storage_id", selectedDevice->ID);
         querySumCatalogValues.exec();
         querySumCatalogValues.next();
 
         ui->Catalogs_label_Catalogs->setText(QString::number(querySumCatalogValues.value(0).toInt()));
         ui->Catalogs_label_TotalSize->setText(QLocale().formattedDataSize(querySumCatalogValues.value(1).toLongLong()));
         ui->Catalogs_label_TotalNumber->setText(QLocale().toString(querySumCatalogValues.value(2).toInt()));
-
     }
     //--------------------------------------------------------------------------
     int MainWindow::verifyCatalogPath(QString catalogSourcePath)
@@ -968,23 +924,23 @@
         loadCatalogsTableToModel();
         loadStatisticsChart();
 
-        //Save to VirtualStorage table
-        QSqlQuery queryUpdateVirtualStorage;
-        QString queryUpdateVirtualStorageSQL = QLatin1String(R"(
+        //Save to Device table
+        QSqlQuery queryUpdateDevice;
+        QString queryUpdateDeviceSQL = QLatin1String(R"(
                                         UPDATE virtual_storage
                                         SET virtual_storage_total_file_size = :virtual_storage_total_file_size,
                                             virtual_storage_total_file_count  = :virtual_storage_total_file_count
                                         WHERE virtual_storage_external_id = :virtual_storage_external_id
                                         AND virtual_storage_type ='Catalog'
                                         )");
-        queryUpdateVirtualStorage.prepare(queryUpdateVirtualStorageSQL);
-        queryUpdateVirtualStorage.bindValue(":virtual_storage_total_file_size",QString::number(catalog->totalFileSize));
-        queryUpdateVirtualStorage.bindValue(":virtual_storage_total_file_count",QString::number(catalog->fileCount));
-        queryUpdateVirtualStorage.bindValue(":virtual_storage_external_id", catalog->name);
-        queryUpdateVirtualStorage.exec();
+        queryUpdateDevice.prepare(queryUpdateDeviceSQL);
+        queryUpdateDevice.bindValue(":virtual_storage_total_file_size",QString::number(catalog->totalFileSize));
+        queryUpdateDevice.bindValue(":virtual_storage_total_file_count",QString::number(catalog->fileCount));
+        queryUpdateDevice.bindValue(":virtual_storage_external_id", catalog->name);
+        queryUpdateDevice.exec();
 
-        saveVirtualStorageTableToFile(virtualStorageFilePath);
-        //loadVirtualStorageTableToTreeModel();
+        saveDeviceTableToFile(deviceFilePath);
+        //loadDeviceTableToTreeModel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
@@ -1411,7 +1367,6 @@
 
             loadCatalogsTableToModel();
             loadCatalogsTableToModel();
-            loadStorageTableToSelectionTreeModel();
 
         //Hide edition section
             ui->Catalogs_widget_EditCatalog->hide();

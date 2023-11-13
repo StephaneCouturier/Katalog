@@ -188,7 +188,7 @@
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeView_FileList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
-        ui->Virtual_treeView_VirtualStorageList->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Devices_treeView_DeviceList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
@@ -265,10 +265,8 @@
                 collectionFolder = settings.value("LastCollectionFolder").toString();
             }
 
-            selectedDeviceType = settings.value("Selection/SelectedDeviceType").toString();
-            selectedDeviceName = settings.value("Selection/SelectedDeviceName").toString();
-            selectedDeviceID   = settings.value("Selection/SelectedDeviceID").toInt();
-            selectedFilterVirtualStorageID = settings.value("Selection/SelectedFilterVirtualStorageID").toInt();
+            selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
+            selectedDevice->loadDevice();
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 
@@ -361,10 +359,11 @@
             lastSearchHistorySortOrder    = settings.value("Search/lastSearchHistorySortOrder").toInt();
             optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
-            optionDisplayAssignedCatalogs = settings.value("Virtual/DisplayCatalogs").toBool();
-            optionDisplayPhysicalGroupOnly= settings.value("Virtual/DisplayPhysicalGroupOnly").toBool();
-            optionDisplayAllExceptPhysicalGroup= settings.value("Virtual/DisplayAllExceptPhysicalGroup").toBool();
-            optionDisplayFullTable        = settings.value("Virtual/DisplayFullTable").toBool();
+            optionDisplayCatalogs         = settings.value("Devices/DisplayCatalogs").toBool();
+            optionDisplayStorage          = settings.value("Devices/DisplayStorage").toBool();
+            optionDisplayPhysicalGroupOnly= settings.value("Devices/DisplayPhysicalGroupOnly").toBool();
+            optionDisplayAllExceptPhysicalGroup= settings.value("Devices/DisplayAllExceptPhysicalGroup").toBool();
+            optionDisplayFullTable        = settings.value("Devices/DisplayFullTable").toBool();
 
             //Restore DEV Settings
             if(developmentMode==true){
@@ -721,15 +720,15 @@
     void MainWindow::generateCollectionFilesPaths()
     {
         if(databaseMode=="Memory"){
-            searchHistoryFilePath         = collectionFolder + "/" + "search_history.csv";
-            storageFilePath               = collectionFolder + "/" + "storage.csv";
-            virtualStorageFilePath        = collectionFolder + "/" + "virtual_storage.csv";
-            virtualStorageCatalogFilePath = collectionFolder + "/" + "virtual_storage_catalog.csv";
-            statisticsCatalogFileName     = "statistics_catalog.csv";
-            statisticsCatalogFilePath     = collectionFolder + "/" + statisticsCatalogFileName;
-            statisticsStorageFileName     = "statistics_storage.csv";
-            statisticsStorageFilePath     = collectionFolder + "/" + statisticsStorageFileName;
-            excludeFilePath               = collectionFolder + "/" + "exclude.csv";
+            searchHistoryFilePath       = collectionFolder + "/" + "search_history.csv";
+            storageFilePath             = collectionFolder + "/" + "storage.csv";
+            deviceFilePath              = collectionFolder + "/" + "virtual_storage.csv";
+            deviceCatalogFilePath       = collectionFolder + "/" + "virtual_storage_catalog.csv";
+            statisticsCatalogFileName   = "statistics_catalog.csv";
+            statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
+            statisticsStorageFileName   = "statistics_storage.csv";
+            statisticsStorageFilePath   = collectionFolder + "/" + statisticsStorageFileName;
+            excludeFilePath             = collectionFolder + "/" + "exclude.csv";
         }
     }
     //----------------------------------------------------------------------

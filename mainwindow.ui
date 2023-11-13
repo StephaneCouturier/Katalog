@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1158</width>
-    <height>936</height>
+    <height>1056</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -90,8 +90,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="go-next">
-           <normaloff>.</normaloff>.</iconset>
+          <iconset theme="go-next"/>
          </property>
         </widget>
        </item>
@@ -168,14 +167,30 @@
               </property>
               <item>
                <layout class="QGridLayout" name="gridLayout_2">
-                <item row="0" column="1">
-                 <widget class="QLabel" name="Filters_label_DisplayLocation">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="Filters_label_Catalog_2">
                   <property name="minimumSize">
                    <size>
-                    <width>120</width>
+                    <width>70</width>
                     <height>0</height>
                    </size>
                   </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Virtual</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="Filters_label_DisplayDevice">
                   <property name="font">
                    <font>
                     <bold>true</bold>
@@ -195,28 +210,6 @@
                   </property>
                   <property name="text">
                    <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="Filters_label_Location">
-                  <property name="minimumSize">
-                   <size>
-                    <width>80</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Location</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -242,19 +235,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
-                 <widget class="QLabel" name="Filters_label_DisplayCatalog">
-                  <property name="font">
-                   <font>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
+                <item row="2" column="0">
                  <widget class="QLabel" name="Filters_label_Catalog">
                   <property name="minimumSize">
                    <size>
@@ -276,30 +257,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="Filters_label_Catalog_2">
-                  <property name="minimumSize">
-                   <size>
-                    <width>70</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>40</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Virtual</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item row="2" column="1">
-                 <widget class="QLabel" name="Filters_label_DisplayVirtualStorage">
+                 <widget class="QLabel" name="Filters_label_DisplayCatalog">
                   <property name="font">
                    <font>
                     <bold>true</bold>
@@ -362,8 +321,7 @@
                    <string>Search</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-find">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-find"/>
                   </property>
                  </widget>
                 </item>
@@ -390,8 +348,7 @@
                    <string>Explore</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="view-list-tree">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="view-list-tree"/>
                   </property>
                  </widget>
                 </item>
@@ -418,8 +375,7 @@
                    <string>Update</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="media-playlist-repeat">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="media-playlist-repeat"/>
                   </property>
                  </widget>
                 </item>
@@ -428,36 +384,39 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_12">
                 <item>
-                 <widget class="QComboBox" name="Filter_comboBox_TreeType">
+                 <widget class="QLabel" name="Filters_label_DeviceTree">
                   <property name="minimumSize">
                    <size>
-                    <width>145</width>
+                    <width>70</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>16777215</width>
-                    <height>30</height>
+                    <width>40</width>
+                    <height>16777215</height>
                    </size>
                   </property>
-                  <property name="toolTip">
-                   <string>Define how the search text should be used.</string>
+                  <property name="text">
+                   <string>Device tree</string>
                   </property>
-                  <property name="whatsThis">
-                   <string>Define how the search text should be used.</string>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                   </property>
-                  <item>
-                   <property name="text">
-                    <string>Location / Storage / Catatog</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Virtual Storage / Catalog</string>
-                   </property>
-                  </item>
                  </widget>
+                </item>
+                <item>
+                 <spacer name="fihorizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                 <item>
                  <widget class="QPushButton" name="Filters_pushButton_TreeExpandCollapse">
@@ -480,8 +439,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="expand-all">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="expand-all"/>
                   </property>
                  </widget>
                 </item>
@@ -632,8 +590,7 @@
                    <string>Select</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-select">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-select"/>
                   </property>
                  </widget>
                 </item>
@@ -688,8 +645,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="go-previous">
-               <normaloff>.</normaloff>.</iconset>
+              <iconset theme="go-previous"/>
              </property>
             </widget>
            </item>
@@ -745,8 +701,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset theme="edit-clear-history">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset theme="edit-clear-history"/>
                </property>
               </widget>
              </item>
@@ -771,8 +726,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset theme="view-refresh">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset theme="view-refresh"/>
                </property>
               </widget>
              </item>
@@ -873,8 +827,7 @@
             <string/>
            </property>
            <attribute name="icon">
-            <iconset theme="edit-find">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="edit-find"/>
            </attribute>
            <attribute name="title">
             <string>Search</string>
@@ -953,8 +906,7 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset theme="go-up">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="go-up"/>
                      </property>
                     </widget>
                    </item>
@@ -1013,8 +965,7 @@
                       <string>Reset</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-clear-history">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="edit-clear-history"/>
                      </property>
                     </widget>
                    </item>
@@ -1145,8 +1096,7 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-paste">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="edit-paste"/>
                      </property>
                     </widget>
                    </item>
@@ -1187,8 +1137,7 @@
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-clear-history">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="edit-clear-history"/>
                      </property>
                     </widget>
                    </item>
@@ -1237,8 +1186,7 @@
                       <string>Search</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-find">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="edit-find"/>
                      </property>
                     </widget>
                    </item>
@@ -2288,8 +2236,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <string>Audio</string>
                          </property>
                          <property name="icon">
-                          <iconset theme="audio-x-mpeg">
-                           <normaloff>.</normaloff>.</iconset>
+                          <iconset theme="audio-x-mpeg"/>
                          </property>
                         </item>
                         <item>
@@ -2297,8 +2244,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <string>Image</string>
                          </property>
                          <property name="icon">
-                          <iconset theme="image-jpeg">
-                           <normaloff>.</normaloff>.</iconset>
+                          <iconset theme="image-jpeg"/>
                          </property>
                         </item>
                         <item>
@@ -2306,8 +2252,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <string>Text</string>
                          </property>
                          <property name="icon">
-                          <iconset theme="folder-text">
-                           <normaloff>.</normaloff>.</iconset>
+                          <iconset theme="folder-text"/>
                          </property>
                         </item>
                         <item>
@@ -2315,8 +2260,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <string>Video</string>
                          </property>
                          <property name="icon">
-                          <iconset theme="video-mp4">
-                           <normaloff>.</normaloff>.</iconset>
+                          <iconset theme="video-mp4"/>
                          </property>
                         </item>
                        </widget>
@@ -3509,8 +3453,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset theme="go-previous">
-                      <normaloff>.</normaloff>.</iconset>
+                     <iconset theme="go-previous"/>
                     </property>
                    </widget>
                   </item>
@@ -3585,8 +3528,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset theme="view-statistics">
-                      <normaloff>.</normaloff>.</iconset>
+                     <iconset theme="view-statistics"/>
                     </property>
                    </widget>
                   </item>
@@ -3745,8 +3687,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Export Results</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="document-export">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="document-export"/>
                      </property>
                     </item>
                     <item>
@@ -3754,8 +3695,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Rename (KRename)</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="document-edit">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="document-edit"/>
                      </property>
                     </item>
                     <item>
@@ -3763,8 +3703,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Move to Trash</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="user-trash">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="user-trash"/>
                      </property>
                     </item>
                     <item>
@@ -3772,8 +3711,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string>Delete</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-delete">
-                       <normaloff>.</normaloff>.</iconset>
+                      <iconset theme="edit-delete"/>
                      </property>
                     </item>
                    </widget>
@@ -3796,8 +3734,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset theme="document-export">
-                      <normaloff>.</normaloff>.</iconset>
+                     <iconset theme="document-export"/>
                     </property>
                    </widget>
                   </item>
@@ -3932,8 +3869,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="go-down">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="go-down"/>
                   </property>
                  </widget>
                 </item>
@@ -4014,8 +3950,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Catalogs">
            <attribute name="icon">
-            <iconset theme="address-book-new">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="address-book-new"/>
            </attribute>
            <attribute name="title">
             <string>Catalogs</string>
@@ -4192,8 +4127,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Search</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-find">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-find"/>
                   </property>
                  </widget>
                 </item>
@@ -4212,8 +4146,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Explore</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="view-list-tree">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="view-list-tree"/>
                   </property>
                  </widget>
                 </item>
@@ -4229,8 +4162,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Statistics</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="office-chart-line">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="office-chart-line"/>
                   </property>
                  </widget>
                 </item>
@@ -4246,8 +4178,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Edit</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-edit-sign"/>
                   </property>
                  </widget>
                 </item>
@@ -4263,8 +4194,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Update</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="media-playlist-repeat">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="media-playlist-repeat"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -4286,8 +4216,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>All active</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="media-playlist-repeat">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="media-playlist-repeat"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -4309,8 +4238,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Delete</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-delete">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-delete"/>
                   </property>
                  </widget>
                 </item>
@@ -4333,8 +4261,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Snapshot</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-save">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-save"/>
                   </property>
                  </widget>
                 </item>
@@ -4350,8 +4277,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Import</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="kontact-import-wizard">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="kontact-import-wizard"/>
                   </property>
                  </widget>
                 </item>
@@ -4377,10 +4303,71 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <layout class="QGridLayout" name="gridLayout_16">
                <item row="1" column="0">
                 <layout class="QGridLayout" name="Catalogs_gridLayout">
-                 <item row="0" column="6">
-                  <widget class="QLabel" name="Catalogs_label_Storage">
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="Catalogs_label_SourcePath">
                    <property name="text">
-                    <string>Storage</string>
+                    <string>Source Path</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="8">
+                  <widget class="QCheckBox" name="Catalogs_checkBox_IncludeMetadata">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>Include Metadata</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="10">
+                  <spacer name="Catalogs_horizontalSpacer_09">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="4" column="8">
+                  <widget class="QPushButton" name="Catalogs_pushButton_Cancel">
+                   <property name="minimumSize">
+                    <size>
+                     <width>125</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>125</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Cancel</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="dialog-cancel"/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -4393,20 +4380,73 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>Select</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="edit-select">
-                     <normaloff>.</normaloff>.</iconset>
+                    <iconset theme="edit-select"/>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="Catalogs_label_NameTitle">
+                 <item row="0" column="6">
+                  <widget class="QLabel" name="Catalogs_label_Storage">
                    <property name="text">
-                    <string>Name</string>
+                    <string>Storage</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="10">
-                  <spacer name="Catalogs_horizontalSpacer_09">
+                 <item row="2" column="7">
+                  <widget class="QComboBox" name="Catalogs_comboBox_FileType">
+                   <item>
+                    <property name="text">
+                     <string>All</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Audio</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="audio-x-mpeg"/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Image</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="image-jpeg"/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Text</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="folder-text"/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Video</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="video-mp4"/>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLineEdit" name="Catalogs_lineEdit_Name">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="5">
+                  <spacer name="Catalogs_horizontalSpacer_06">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -4437,164 +4477,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </spacer>
                  </item>
-                 <item row="0" column="7">
-                  <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLabel" name="Catalogs_label_SourcePath">
-                   <property name="text">
-                    <string>Source Path</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLineEdit" name="Catalogs_lineEdit_Name">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="8">
-                  <widget class="QPushButton" name="Catalogs_pushButton_Cancel">
-                   <property name="minimumSize">
-                    <size>
-                     <width>125</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>125</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Cancel</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="dialog-cancel">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="5">
-                  <spacer name="Catalogs_horizontalSpacer_06">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="4" column="2">
-                  <layout class="QHBoxLayout" name="Catalog_horizontalLayout_4">
-                   <item>
-                    <widget class="QPushButton" name="Catalogs_pushButton_Open">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Open in text editor</string>
-                     </property>
-                     <property name="icon">
-                      <iconset theme="document-edit-sign">
-                       <normaloff>.</normaloff>.</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="Catalog_horizontalSpacer_10">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="2" column="7">
-                  <widget class="QComboBox" name="Catalogs_comboBox_FileType">
-                   <item>
-                    <property name="text">
-                     <string>All</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Audio</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="audio-x-mpeg">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Image</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="image-jpeg">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Text</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="folder-text">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Video</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="video-mp4">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLineEdit" name="Catalogs_lineEdit_SourcePath">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="6">
-                  <widget class="QLabel" name="Catalogs_label_FileType">
-                   <property name="text">
-                    <string>File Type</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="4" column="7">
                   <widget class="QPushButton" name="Catalogs_pushButton_Save">
                    <property name="minimumSize">
@@ -4613,15 +4495,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>Save</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="document-save">
-                     <normaloff>.</normaloff>.</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="8">
-                  <widget class="QCheckBox" name="Catalogs_checkBox_isFullDevice">
-                   <property name="text">
-                    <string>is full device</string>
+                    <iconset theme="document-save"/>
                    </property>
                   </widget>
                  </item>
@@ -4635,13 +4509,57 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="8">
-                  <widget class="QCheckBox" name="Catalogs_checkBox_IncludeMetadata">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
+                 <item row="2" column="6">
+                  <widget class="QLabel" name="Catalogs_label_FileType">
                    <property name="text">
-                    <string>Include Metadata</string>
+                    <string>File Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="2">
+                  <layout class="QHBoxLayout" name="Catalog_horizontalLayout_4">
+                   <item>
+                    <widget class="QPushButton" name="Catalogs_pushButton_Open">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Open in text editor</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="document-edit-sign"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="Catalog_horizontalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="7">
+                  <widget class="QComboBox" name="Catalogs_comboBox_Storage"/>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="Catalogs_label_NameTitle">
+                   <property name="text">
+                    <string>Name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="8">
+                  <widget class="QCheckBox" name="Catalogs_checkBox_isFullDevice">
+                   <property name="text">
+                    <string>is full device</string>
                    </property>
                   </widget>
                  </item>
@@ -4700,8 +4618,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Explore">
            <attribute name="icon">
-            <iconset theme="view-list-tree">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="view-list-tree"/>
            </attribute>
            <attribute name="title">
             <string>Explore</string>
@@ -5110,8 +5027,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <string>Order folders first</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="view-sort">
-                   <normaloff>.</normaloff>.</iconset>
+                  <iconset theme="view-sort"/>
                  </property>
                 </widget>
                </item>
@@ -5139,8 +5055,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Create">
            <attribute name="icon">
-            <iconset theme="journal-new">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="journal-new"/>
            </attribute>
            <attribute name="title">
             <string>Create</string>
@@ -5293,8 +5208,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Image</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="image-jpeg">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="image-jpeg"/>
                   </property>
                  </widget>
                 </item>
@@ -5310,8 +5224,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Audio</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="audio-x-mpeg">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="audio-x-mpeg"/>
                   </property>
                  </widget>
                 </item>
@@ -5327,8 +5240,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Video</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="video-mp4">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="video-mp4"/>
                   </property>
                  </widget>
                 </item>
@@ -5344,8 +5256,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Text</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="folder-text">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="folder-text"/>
                   </property>
                  </widget>
                 </item>
@@ -5428,8 +5339,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Edit list of folders to be excluded</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-edit-sign"/>
                   </property>
                  </widget>
                 </item>
@@ -5574,8 +5484,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Add Storage</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="drive-harddisk">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="drive-harddisk"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -5653,8 +5562,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Generate</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="tools-wizard">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="tools-wizard"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -5718,8 +5626,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Create Catalog</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-save">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-save"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -5874,8 +5781,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Select</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-select">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-select"/>
                   </property>
                  </widget>
                 </item>
@@ -5890,8 +5796,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Storage">
            <attribute name="icon">
-            <iconset theme="drive-harddisk">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="drive-harddisk"/>
            </attribute>
            <attribute name="title">
             <string>Storage</string>
@@ -5926,8 +5831,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>New</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="folder-new">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="folder-new"/>
                 </property>
                </widget>
               </item>
@@ -5967,8 +5871,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Edit</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-edit-sign">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-edit-sign"/>
                 </property>
                </widget>
               </item>
@@ -5984,8 +5887,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Storage</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-find">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="edit-find"/>
                 </property>
                </widget>
               </item>
@@ -6001,8 +5903,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Location</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-find">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="edit-find"/>
                 </property>
                </widget>
               </item>
@@ -6018,8 +5919,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Catalog</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="journal-new">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="journal-new"/>
                 </property>
                </widget>
               </item>
@@ -6035,8 +5935,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Filelight</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="gparted">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="gparted"/>
                 </property>
                </widget>
               </item>
@@ -6052,8 +5951,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Update</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="media-playlist-repeat">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="media-playlist-repeat"/>
                 </property>
                </widget>
               </item>
@@ -6085,8 +5983,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Delete</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-delete">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="edit-delete"/>
                 </property>
                </widget>
               </item>
@@ -6159,56 +6056,46 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Name"/>
                       </item>
                       <item row="3" column="0">
-                       <widget class="QLabel" name="label_4">
-                        <property name="text">
-                         <string>Location</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="3" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Location"/>
-                      </item>
-                      <item row="4" column="0">
                        <widget class="QLabel" name="label_5">
                         <property name="text">
                          <string>Path</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="4" column="1">
+                      <item row="3" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Path"/>
                       </item>
-                      <item row="12" column="0">
+                      <item row="11" column="0">
                        <widget class="QLabel" name="label_14">
                         <property name="text">
                          <string>Content Type</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="12" column="1">
+                      <item row="11" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_ContentType"/>
                       </item>
-                      <item row="13" column="0">
+                      <item row="12" column="0">
                        <widget class="QLabel" name="label_15">
                         <property name="text">
                          <string>Container</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="13" column="1">
+                      <item row="12" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Container"/>
                       </item>
-                      <item row="14" column="0">
+                      <item row="13" column="0">
                        <widget class="QLabel" name="label_16">
                         <property name="text">
                          <string>Comment</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="14" column="1">
+                      <item row="13" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment"/>
                       </item>
-                      <item row="15" column="0">
+                      <item row="14" column="0">
                        <spacer name="horizontalSpacer_2">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
@@ -6221,7 +6108,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </spacer>
                       </item>
-                      <item row="16" column="1">
+                      <item row="15" column="1">
                        <layout class="QHBoxLayout" name="horizontalLayout_13">
                         <item>
                          <widget class="QPushButton" name="Storage_pushButton_PanelSave">
@@ -6229,8 +6116,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string>Save</string>
                           </property>
                           <property name="icon">
-                           <iconset theme="document-save">
-                            <normaloff>.</normaloff>.</iconset>
+                           <iconset theme="document-save"/>
                           </property>
                          </widget>
                         </item>
@@ -6240,8 +6126,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string>Cancel</string>
                           </property>
                           <property name="icon">
-                           <iconset theme="dialog-cancel">
-                            <normaloff>.</normaloff>.</iconset>
+                           <iconset theme="dialog-cancel"/>
                           </property>
                          </widget>
                         </item>
@@ -6645,8 +6530,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Create list</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-new">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-new"/>
                 </property>
                </widget>
               </item>
@@ -6662,8 +6546,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Edit list</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-edit-sign">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-edit-sign"/>
                 </property>
                </widget>
               </item>
@@ -6679,8 +6562,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Reload</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="view-refresh">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="view-refresh"/>
                 </property>
                </widget>
               </item>
@@ -6696,8 +6578,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Save All</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-save">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-save"/>
                 </property>
                </widget>
               </item>
@@ -6725,54 +6606,64 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab_Virtual">
+          <widget class="QWidget" name="tab_Devices">
            <attribute name="icon">
-            <iconset theme="drive-harddisk">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="drive-harddisk"/>
            </attribute>
            <attribute name="title">
-            <string>Virtual</string>
+            <string>Devices</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <layout class="QHBoxLayout" name="Virtual_horizontalLayout_16">
+             <layout class="QHBoxLayout" name="Devices_horizontalLayout_16">
               <item>
-               <widget class="QLabel" name="Virtual_label_VirtualStorageItems">
+               <widget class="QLabel" name="Devices_label_VirtualStorageItems">
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
+                  <width>50</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Virtual Storage items</string>
+                 <string>Devices</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_InsertRootLevel">
+               <widget class="QPushButton" name="Devices_pushButton_InsertRootLevel">
                 <property name="text">
-                 <string>Insert top item</string>
+                 <string>Insert top level</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-new">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-new"/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_AddSubItem">
+               <widget class="QPushButton" name="Devices_pushButton_AddVirtual">
                 <property name="text">
-                 <string>Add sub-item</string>
+                 <string>Add Virtual</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-new">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-new"/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_Edit">
+               <widget class="QPushButton" name="Devices_pushButton_AddStorage">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Add Storage</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Devices_pushButton_Edit">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -6780,38 +6671,49 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Edit</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-edit-sign">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-edit-sign"/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_DeleteItem">
+               <widget class="QPushButton" name="Devices_pushButton_DeleteItem">
                 <property name="text">
-                 <string>Delete item</string>
+                 <string>Delete</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="edit-delete">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="edit-delete"/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="Line" name="line">
+               <widget class="Line" name="Devices_line_separateButtons">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_ImportS">
+               <widget class="QPushButton" name="Devices_pushButton_ImportS">
                 <property name="text">
                  <string>Import v1.22</string>
                 </property>
                </widget>
               </item>
               <item>
-               <spacer name="Virtual_horizontalSpacer_9">
+               <widget class="QPushButton" name="Devices_pushButton_EditList">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Edit List</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-edit-sign"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="Devices_horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6826,105 +6728,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item>
-             <widget class="Line" name="Virtual_line_2">
+             <widget class="Line" name="Devices_line_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="3" column="3">
-               <widget class="QLabel" name="Virtual_label_SelectedCatalogDisplay">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="Virtual_label_CatalogAssociation">
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Assign Storage or Catalog to Virtual Storage</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="Virtual_label_CatalogAssociation_2">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string>Selected Virtual Storage</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="Virtual_label_SelectedVirtualStorage">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLabel" name="Virtual_label_SelectedStorageDisplay">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QLabel" name="Virtual_label_SelectedCatalogLabel">
+             <layout class="QGridLayout" name="Devices_gridLayout_5">
+              <item row="2" column="3">
+               <widget class="QLabel" name="Devices_label_SelectedCatalogLabel">
                 <property name="toolTip">
                  <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
                 </property>
@@ -6936,8 +6749,116 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
+              <item row="4" column="3">
+               <widget class="QLabel" name="Devices_label_SelectedCatalogDisplay">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="Devices_label_CatalogAssociation">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Assign Storage or Catalog to Virtual Device</string>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="2">
-               <widget class="QLabel" name="Virtual_label_SelectedStorageLabel">
+               <widget class="QPushButton" name="Devices_pushButton_verifStorage">
+                <property name="text">
+                 <string>verif stor</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3">
+               <widget class="QPushButton" name="Devices_pushButton_AssignCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Assign</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new"/>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QPushButton" name="Devices_pushButton_AssignStorage">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Assign</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new"/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="Devices_label_CatalogAssociation_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string>Selected Virtual Device</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="Devices_label_SelectedStorageLabel">
                 <property name="toolTip">
                  <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
                 </property>
@@ -6949,78 +6870,77 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="3">
-               <widget class="QPushButton" name="Virtual_pushButton_AssignCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
+              <item row="4" column="2">
+               <widget class="QLabel" name="Devices_label_SelectedStorageDisplay">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
                 </property>
                 <property name="text">
-                 <string>Assign</string>
+                 <string/>
                 </property>
-                <property name="icon">
-                 <iconset theme="document-new">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="4" column="2">
-               <widget class="QPushButton" name="Virtual_pushButton_AssignStorage">
-                <property name="enabled">
-                 <bool>false</bool>
+              <item row="4" column="1">
+               <widget class="QLabel" name="Devices_label_SelectedDeviceVirtual">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
                 </property>
                 <property name="text">
-                 <string>Assign</string>
+                 <string/>
                 </property>
-                <property name="icon">
-                 <iconset theme="document-new">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
+              </item>
+              <item row="4" column="4">
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="Line" name="Virtual_line_5">
+             <widget class="Line" name="Devices_line_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_15">
+             <layout class="QHBoxLayout" name="Devices_horizontalLayout_17">
               <item>
-               <widget class="QLabel" name="Virtual_label_ItemEdition_2">
+               <widget class="QLabel" name="Devices_label_ItemEdition_2">
                 <property name="text">
                  <string>Display options</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Virtual_pushButton_TreeExpandCollapse">
+               <widget class="QPushButton" name="Devices_pushButton_TreeExpandCollapse">
                 <property name="maximumSize">
                  <size>
                   <width>35</width>
@@ -7040,13 +6960,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset theme="expand-all">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="expand-all"/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Virtual_checkBox_DisplayPhysicalGroupOnly">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayPhysicalGroupOnly">
                 <property name="text">
                  <string>Physical group only</string>
                 </property>
@@ -7056,7 +6975,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Virtual_checkBox_DisplayAllExceptPhysicalGroup">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayAllExceptPhysicalGroup">
                 <property name="text">
                  <string>All except Physical group</string>
                 </property>
@@ -7066,9 +6985,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Virtual_checkBox_DisplayCatalogs">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayStorage">
                 <property name="text">
-                 <string>Assigned Catalogs</string>
+                 <string>Storage</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayStorageOnly">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="text">
+                 <string>Storage only</string>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
@@ -7076,7 +7008,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Virtual_checkBox_DisplayFullTable">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayCatalogs">
+                <property name="text">
+                 <string>Catalogs</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayFullTable">
                 <property name="text">
                  <string>Full Table</string>
                 </property>
@@ -7088,67 +7030,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item>
-             <widget class="QWidget" name="Virtual_widget_Edit" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_21">
-               <item>
-                <widget class="QLabel" name="Virtual_label_ItemEdition">
-                 <property name="text">
-                  <string>Virtual Storage</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="Virtual_horizontalLayout_15">
-                 <item>
-                  <widget class="QLabel" name="Virtual_label_ItemEditionName">
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Name</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="Virtual_lineEdit_Name"/>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Virtual_pushButton_Save">
-                   <property name="text">
-                    <string>Save</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="Virtual_pushButton_Cancel">
-                   <property name="text">
-                    <string>Cancel</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="Virtual_horizontalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTreeView" name="Virtual_treeView_VirtualStorageList">
+             <widget class="QTreeView" name="Devices_treeView_DeviceList">
               <property name="editTriggers">
                <set>QAbstractItemView::NoEditTriggers</set>
               </property>
@@ -7163,6 +7045,138 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QWidget" name="Devices_widget_Edit" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QLabel" name="Devices_label_ItemEdition">
+                 <property name="text">
+                  <string>Device</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="Devices_horizontalLayout_15">
+                 <item>
+                  <widget class="QPushButton" name="Devices_pushButton_Save">
+                   <property name="text">
+                    <string>Save</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="Devices_pushButton_Cancel">
+                   <property name="text">
+                    <string>Cancel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="Devices_horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QFormLayout" name="Devices_formLayout_4">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="Devices_label_ItemEditionName">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device Name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="Devices_lineEdit_Name"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="Devices_label_ItemEditionParent">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Parent name (ID)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QComboBox" name="Devices_comboBox_Parent"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="Devices_label_ItemDeviceType">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="Devices_label_ItemDeviceTypeValue">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="Devices_label_ItemDeviceID">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device ID</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="Devices_label_ItemDeviceIDValue">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device ID</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="tab_Statistics">
@@ -7170,8 +7184,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <bool>true</bool>
            </property>
            <attribute name="icon">
-            <iconset theme="office-chart-line">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="office-chart-line"/>
            </attribute>
            <attribute name="title">
             <string>Statistics</string>
@@ -7244,8 +7257,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>catalogs</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-edit-sign"/>
                   </property>
                  </widget>
                 </item>
@@ -7258,8 +7270,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>storage</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-edit-sign"/>
                   </property>
                  </widget>
                 </item>
@@ -7278,8 +7289,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Reload</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="view-refresh">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="view-refresh"/>
                   </property>
                  </widget>
                 </item>
@@ -7448,8 +7458,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-clear-history">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-clear-history"/>
                   </property>
                  </widget>
                 </item>
@@ -7484,8 +7493,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Tags">
            <attribute name="icon">
-            <iconset theme="tag">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="tag"/>
            </attribute>
            <attribute name="title">
             <string>Tags</string>
@@ -7535,8 +7543,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Open file</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="document-edit-sign"/>
                   </property>
                  </widget>
                 </item>
@@ -7555,8 +7562,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Reload</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="view-refresh">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="view-refresh"/>
                   </property>
                  </widget>
                 </item>
@@ -7612,8 +7618,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Select</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="edit-select">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="edit-select"/>
                   </property>
                  </widget>
                 </item>
@@ -7636,8 +7641,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Tag the folder</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="tag">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="tag"/>
                   </property>
                  </widget>
                 </item>
@@ -7662,8 +7666,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_Settings">
            <attribute name="icon">
-            <iconset theme="configure">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="configure"/>
            </attribute>
            <attribute name="title">
             <string>Settings</string>
@@ -7926,8 +7929,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Open</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="document-open">
-                  <normaloff>.</normaloff>.</iconset>
+                 <iconset theme="document-open"/>
                 </property>
                </widget>
               </item>
@@ -8090,8 +8092,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Release Notes</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="internet-web-browser">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="internet-web-browser"/>
                   </property>
                  </widget>
                 </item>
@@ -8120,8 +8121,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Katalog's Wiki</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="internet-web-browser">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="internet-web-browser"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -8211,11 +8211,338 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="1" column="0">
              <widget class="QWidget" name="Settings_widget_DataMode" native="true">
               <layout class="QGridLayout" name="gridLayout_14">
-               <item row="9" column="0">
-                <widget class="Line" name="Settings_line_5">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
+               <item row="1" column="0">
+                <widget class="QWidget" name="Settings_widget_DataModeSelection" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_18">
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_5">
+                    <item>
+                     <widget class="QLabel" name="Settings_label_DataMode">
+                      <property name="text">
+                       <string>Data mode</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
+                      <item>
+                       <property name="text">
+                        <string>Memory</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>File</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Hosted</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="Settings_label_DataModeRequiresRestart">
+                      <property name="text">
+                       <string>(requires to restart)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QWidget" name="Settings_widget_DataMode_LocalSQLite" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_15">
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_Dat">
+                    <item>
+                     <widget class="QLabel" name="Settings_label_DatabaseFilePath">
+                      <property name="minimumSize">
+                       <size>
+                        <width>125</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Database File Path</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
+                      <property name="font">
+                       <font>
+                        <pointsize>8</pointsize>
+                       </font>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_SelectDatabaseFilePath">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Select a different Collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Select</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="edit-select"/>
+                      </property>
+                      <property name="flat">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_EditDatabaseFile">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Open the collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Edit</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-open"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_NewDatabaseFile">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Create a new database file</string>
+                      </property>
+                      <property name="text">
+                       <string>New</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-open"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QWidget" name="Settings_widget_DataMode_CSVFiles" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_16">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_13">
+                    <item>
+                     <widget class="QLabel" name="Settings_label_CurrentFolder">
+                      <property name="minimumSize">
+                       <size>
+                        <width>125</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Collection folder</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="Settings_lineEdit_CollectionFolder">
+                      <property name="font">
+                       <font>
+                        <pointsize>8</pointsize>
+                       </font>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_4">
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_12">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_SelectFolder">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Select a different Collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Select</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="edit-select"/>
+                      </property>
+                      <property name="flat">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_OpenFolder">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Open the collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Open</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-open"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_11">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
+                    <property name="toolTip">
+                     <string>Always keep one back of each catalog</string>
+                    </property>
+                    <property name="text">
+                     <string>Auto-backup catalogs</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
+                    <property name="enabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>Preload last selected catalogs at start-up to accelerate next search</string>
+                    </property>
+                    <property name="text">
+                     <string>Preload last catalogs (this may slow down the startup a lot, but allows faster search after)</string>
+                    </property>
+                    <property name="checked">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
                <item row="8" column="0">
@@ -8389,352 +8716,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>Save</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="document-save">
-                      <normaloff>.</normaloff>.</iconset>
+                     <iconset theme="document-save"/>
                     </property>
                     <property name="flat">
                      <bool>false</bool>
                     </property>
                    </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QWidget" name="Settings_widget_DataMode_LocalSQLite" native="true">
-                 <layout class="QVBoxLayout" name="verticalLayout_15">
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_Dat">
-                    <item>
-                     <widget class="QLabel" name="Settings_label_DatabaseFilePath">
-                      <property name="minimumSize">
-                       <size>
-                        <width>125</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>10</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Database File Path</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
-                      <property name="font">
-                       <font>
-                        <pointsize>8</pointsize>
-                       </font>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_3">
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_16">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>125</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_SelectDatabaseFilePath">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Select a different Collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Select</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="edit-select">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                      <property name="flat">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_EditDatabaseFile">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Open the collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Edit</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-open">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_NewDatabaseFile">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Create a new database file</string>
-                      </property>
-                      <property name="text">
-                       <string>New</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-open">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_2">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QWidget" name="Settings_widget_DataMode_CSVFiles" native="true">
-                 <layout class="QVBoxLayout" name="verticalLayout_16">
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_13">
-                    <item>
-                     <widget class="QLabel" name="Settings_label_CurrentFolder">
-                      <property name="minimumSize">
-                       <size>
-                        <width>125</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>10</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Collection folder</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLineEdit" name="Settings_lineEdit_CollectionFolder">
-                      <property name="font">
-                       <font>
-                        <pointsize>8</pointsize>
-                       </font>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_4">
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_12">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>125</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_SelectFolder">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Select a different Collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Select</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="edit-select">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                      <property name="flat">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_OpenFolder">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Open the collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Open</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-open">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_11">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="Settings_checkBox_KeepOneBackUp">
-                    <property name="toolTip">
-                     <string>Always keep one back of each catalog</string>
-                    </property>
-                    <property name="text">
-                     <string>Auto-backup catalogs</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="toolTip">
-                     <string>Preload last selected catalogs at start-up to accelerate next search</string>
-                    </property>
-                    <property name="text">
-                     <string>Preload last catalogs (this may slow down the startup a lot, but allows faster search after)</string>
-                    </property>
-                    <property name="checked">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QWidget" name="Settings_widget_DataModeSelection" native="true">
-                 <layout class="QVBoxLayout" name="verticalLayout_18">
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_5">
-                    <item>
-                     <widget class="QLabel" name="Settings_label_DataMode">
-                      <property name="text">
-                       <string>Data mode</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
-                      <item>
-                       <property name="text">
-                        <string>Memory</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>File</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Hosted</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="Settings_label_DataModeRequiresRestart">
-                      <property name="text">
-                       <string>(requires to restart)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_6">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
                   </item>
                  </layout>
                 </widget>
@@ -8763,10 +8750,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab">
+          <widget class="QWidget" name="tabTEST">
            <attribute name="icon">
-            <iconset theme="video-display">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="video-display"/>
            </attribute>
            <attribute name="title">
             <string>TESTS</string>

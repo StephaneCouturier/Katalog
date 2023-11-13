@@ -31,7 +31,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-//#include QtWidget
+//QtWidget
 #include <QMainWindow>
 #include <QApplication>
 #include <QAbstractItemView>
@@ -40,7 +40,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>
-//#include QtCore
+//QtCore
 #include <QFile>
 #include <QFileInfo>
 #include <QStringList>
@@ -54,22 +54,22 @@
 #include <QTextStream>
 #include <QSaveFile>
 #include <QSettings>
-//#include QtGui
+//QtGui
 #include <QFileSystemModel>
 #include <QClipboard>
 #include <QStandardItemModel>
 #include <QDesktopServices>
 #include <QCloseEvent>
 #include <QPixmap>
-//#include QtSql
+//QtSql
 #include <QtSql>
-//#include QtMultimedia
+//QtMultimedia
 #include <QMediaPlayer>
 #include <QMediaMetaData>
-//#include QtNetwork
+//QtNetwork
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-//#include QtCharts
+//QtCharts
 #include <QDateTimeAxis>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
@@ -81,7 +81,7 @@
 #include "catalog.h"
 #include "search.h"
 #include "storage.h"
-#include "virtualstorage.h"
+#include "device.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -157,27 +157,19 @@ class MainWindow : public QMainWindow
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
             Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
             Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
-            VirtualStorage *selectedVirtualStorage = new VirtualStorage(); //selected virtual storage used for individual virtual storage operations
-            VirtualStorage *tempVirtualStorage = new VirtualStorage(); //temporary virtual storage used for operations on a list of devices
+            Device *selectedDevice   = new Device(); //selected    device used for individual device operations
+            Device *tempDevice       = new Device(); //temporary   device used for operations on a list of devices
+            Device *catalogDevice    = new Device(); //selected catalog/device from Catalog screen
+            QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
             int  deviceTreeExpandState;
-
-            QString selectedDeviceName;
-            QString selectedDeviceType;
-            int     selectedDeviceID;
-            QString selectedTreeType;
-
-            QString selectedFilterStorageLocation;
-            QString selectedFilterStorageName;
-            int selectedFilterVirtualStorageID;
-            QString selectedFilterVirtualStorageName;
-            QString selectedFilterCatalogName;
             QString selectedConnectedDrivePath;
 
             void setTreeExpandState(bool toggle);
             void filterFromSelectedDevices();
             void resetSelection();
+            void displaySelectedDeviceName();
 
         //TAB: Search
             Search *newSearch  = new Search(); //temporary search object used to handle the current search and results
@@ -194,8 +186,6 @@ class MainWindow : public QMainWindow
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
             void getSearchCriteria();
-            void refreshLocationSelectionList();
-            void refreshStorageSelectionList(QString selectedLocation);
             QString exportSearchResults();
             void batchProcessSearchResults();
             void insertSearchHistoryToTable();
@@ -247,6 +237,7 @@ class MainWindow : public QMainWindow
             void loadCollection();
             void loadCatalogFilesToTable();
             void loadCatalogsTableToModel();
+            void updateCatalogsScreenStatistics();
             int verifyCatalogPath(QString catalogSourcePath);
             void updateAllCatalogPathIsActive();
             void recordCollectionStats();
@@ -299,8 +290,8 @@ class MainWindow : public QMainWindow
 
         //TAB: Storage
             QString storageFilePath;
-            QString virtualStorageFilePath;
-            QString virtualStorageCatalogFilePath;
+            QString deviceFilePath;
+            QString deviceCatalogFilePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             int lastStorageSortSection;
@@ -309,9 +300,7 @@ class MainWindow : public QMainWindow
             void createStorageFile();
             void addStorageDevice(QString deviceName);
             void loadStorageFileToTable();
-
             void loadStorageTableToModel();
-            void loadStorageTableToSelectionTreeModel();
             void saveStorageTableToFile();
             void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
@@ -321,34 +310,35 @@ class MainWindow : public QMainWindow
             void loadStorageToPanel();
             void saveStorageFromPanel();
 
-        //TAB: Virtual
-            int selectedVirtualStorageID;
-            int selectedVirtualStorageParentID;
-            QString selectedVirtualStorageType;
-            QString selectedVirtualStorageName;
-
-            void setVirtualStorageTreeExpandState(bool toggle);
+        //TAB: Devices
+            void setDeviceTreeExpandState(bool toggle);
             int  optionDeviceTreeExpandState;
-            bool optionDisplayAssignedCatalogs;
+            bool optionDisplayCatalogs;
+            bool optionDisplayStorage;
             bool optionDisplayPhysicalGroupOnly;
             bool optionDisplayAllExceptPhysicalGroup;
             bool optionDisplayFullTable;
 
-            void loadVirtualStorageFileToTable();
-            void insertVirtualStorageItem(int ID, int parentID, QString name, QString type, QString externalID);
+            void loadDeviceFileToTable();
             void insertPhysicalStorageGroup();
-            void assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID);
-            void assignStorageToVirtualStorage(int storageID,int virtualStorageID);
-            void unassignPhysicalFromVirtualStorage(int virtualStorageID, int virtualStorageParentID);
-            void deleteVirtualStorageItem();
-            void saveVirtualStorageTableToFile(QString filePath);
-            void loadVirtualStorageTableToTreeModel();
-            void updateNumbers(int virtualStorageID, QString storageType);
+            void addVirtualDevice();
+            void addStorageDevice();
+            void editDevice();
+            void saveDevice();
+            void assignCatalogToDevice(QString catalogName,int deviceID);
+            void assignStorageToDevice(int storageID,int deviceID);
+            void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
+            void deleteDeviceItem();
+            void saveDeviceTableToFile(QString filePath);
+            void loadDeviceTableToTreeModel();
+            void updateNumbers(int deviceID, QString storageType);
             void updateAllNumbers();
             void synchCatalogAndStorageValues();
-            void convertVirtualStorageCatalogFile();
+            void convertDeviceCatalogFile();
             void importStorageCatalogLinks();
-            void shiftIDsInVirtualStorageTable(int shiftAmount);
+            void shiftIDsInDeviceTable(int shiftAmount);
+            void loadParentsList();
+            QList<int> verifyStorageWithOutDevice();
 
         //TAB: Statistics
             QString statisticsCatalogFileName;
@@ -391,7 +381,6 @@ class MainWindow : public QMainWindow
             void on_Filter_pushButton_Explore_clicked();
             void on_Filter_pushButton_Update_clicked();
             void on_Filters_pushButton_TreeExpandCollapse_clicked();
-            void on_Filter_comboBox_TreeType_currentTextChanged(const QString &arg1);
             void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
             void on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos);
 
@@ -543,7 +532,6 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_Update_clicked();
             void on_Storage_pushButton_Delete_clicked();
             void on_Storage_pushButton_SearchStorage_clicked();
-            void on_Storage_pushButton_SearchLocation_clicked();
             void on_Storage_pushButton_CreateCatalog_clicked();
             void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
             void on_Storage_treeView_StorageList_doubleClicked();
@@ -552,23 +540,28 @@ class MainWindow : public QMainWindow
             void on_Storage_pushButton_Edit_clicked();
             void on_Storage_pushButton_PanelCancel_clicked();
 
-        //Virtual
-            void on_Virtual_pushButton_InsertRootLevel_clicked();
-            void on_Virtual_pushButton_AddSubItem_clicked();
-            void on_Virtual_pushButton_DeleteItem_clicked();
-            void on_Virtual_pushButton_Edit_clicked();
-            void on_Virtual_pushButton_Save_clicked();
-            void on_Virtual_pushButton_Cancel_clicked();
-            void on_Virtual_pushButton_AssignCatalog_clicked();
-            void on_Virtual_pushButton_AssignStorage_clicked();
-            void on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1);
-            void on_Virtual_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1);
-            void on_Virtual_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1);
-            void on_Virtual_checkBox_DisplayFullTable_stateChanged(int arg1);
-            void on_Virtual_treeView_VirtualStorageList_clicked(const QModelIndex &index);
-            void on_Virtual_treeView_VirtualStorageList_customContextMenuRequested(const QPoint &pos);
-            void on_Virtual_pushButton_ImportS_clicked();
-            void on_Virtual_pushButton_TreeExpandCollapse_clicked();
+        //Devices
+            void on_Devices_pushButton_InsertRootLevel_clicked();
+            void on_Devices_pushButton_AddVirtual_clicked();
+            void on_Devices_pushButton_AddStorage_clicked();
+            void on_Devices_pushButton_DeleteItem_clicked();
+            void on_Devices_pushButton_Edit_clicked();
+            void on_Devices_pushButton_Save_clicked();
+            void on_Devices_pushButton_Cancel_clicked();
+            void on_Devices_pushButton_AssignCatalog_clicked();
+            void on_Devices_pushButton_AssignStorage_clicked();
+            void on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayStorage_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayStorageOnly_stateChanged(int arg1);
+            void on_Devices_treeView_DeviceList_clicked(const QModelIndex &index);
+            void on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos);
+            void on_Devices_pushButton_ImportS_clicked();
+            void on_Devices_pushButton_TreeExpandCollapse_clicked();
+            void on_Devices_pushButton_EditList_clicked();
+            void on_Devices_pushButton_verifStorage_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();

@@ -167,7 +167,6 @@ void Search::loadSearchHistoryCriteria()
         searchOnTags                = query.value(29).toBool();
         selectedTagName             = query.value(30).toString();
 
-        selectedLocation        = query.value(31).toString();
         selectedStorage         = query.value(32).toString();
         selectedCatalog         = query.value(33).toString();
         searchInCatalogsChecked = query.value(34).toBool();

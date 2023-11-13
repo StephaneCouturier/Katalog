@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.23";
-        releaseDate     = "2023-09-24";
+        releaseDate     = "2023-11-13";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 hideDevelopmentUIItems();
             }
 
+            //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
@@ -86,7 +87,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Settings_lineEdit_DataMode_Hosted_Port->setText(QVariant(databasePort).toString());
             ui->Settings_lineEdit_DataMode_Hosted_UserName->setText(databaseUserName);
             ui->Settings_lineEdit_DataMode_Hosted_Password->setText(databasePassword);
-
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Catalogs_widget_EditCatalog->hide();
             ui->Storage_widget_Panel->hide();
             ui->Statistics_calendarWidget->hide();
-            ui->Virtual_widget_Edit->hide();
+            ui->Devices_widget_Edit->hide();
 
         //Load all other Settings and apply values
             loadSettings();
@@ -125,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Load Collection
                 loadCollection();
+                filterFromSelectedDevices();
 
             //Restore last opened catalog to Explore tab
                 if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
@@ -171,7 +172,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //last tree type selected
             QString selectedTreeType = settings.value("Filters/LastTreeType").toString();
-            ui->Filter_comboBox_TreeType->setCurrentText(selectedTreeType);
 
         //Setup tab: Explore
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
@@ -180,11 +180,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Setup tab: Storage
             unsavedChanges = false;
 
-        //Setup tab: Virtual
-            ui->Virtual_checkBox_DisplayCatalogs->setChecked(optionDisplayAssignedCatalogs);
-            ui->Virtual_checkBox_DisplayPhysicalGroupOnly->setChecked(optionDisplayPhysicalGroupOnly);
-            ui->Virtual_checkBox_DisplayAllExceptPhysicalGroup->setChecked(optionDisplayAllExceptPhysicalGroup);
-            ui->Virtual_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
+        //Setup tab: Devices
+            ui->Devices_checkBox_DisplayCatalogs->setChecked(optionDisplayCatalogs);
+            ui->Devices_checkBox_DisplayStorage->setChecked(optionDisplayStorage);
+            ui->Devices_checkBox_DisplayPhysicalGroupOnly->setChecked(optionDisplayPhysicalGroupOnly);
+            ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->setChecked(optionDisplayAllExceptPhysicalGroup);
+            ui->Devices_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
+            loadParentsList();
 
         //Setup tab: Search
             //Default values
@@ -244,7 +246,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
-            ui->Virtual_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
 
 }
 

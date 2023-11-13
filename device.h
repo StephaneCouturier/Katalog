@@ -28,13 +28,13 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
-#ifndef VIRTUALSTORAGE_H
-#define VIRTUALSTORAGE_H
+#ifndef DEVICE_H
+#define DEVICE_H
 
 #include <QVariant>
 #include <QSqlQuery>
 
-class VirtualStorage
+class Device
 {
 
 public:
@@ -48,10 +48,19 @@ public:
     qint64 total_file_count;
     qint64 total_space;
     qint64 free_space;
+    int groupID;
 
-    void loadVirtualStorage();
+    bool hasSubDevice;
+    bool hasCatalog;
 
+    void loadDevice();
+    void loadDeviceCatalog(); //temp dev
 
+    void getCatalogStorageID();
+    void insertDeviceItem();
+    void verifyHasSubDevice();
+    void verifyHasCatalog();
+    void deleteDevice();
 };
 
-#endif // VIRTUALSTORAGE_H
+#endif // DEVICE_H

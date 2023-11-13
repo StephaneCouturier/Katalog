@@ -32,272 +32,306 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
-#include "virtualstorage.h"
+#include "device.h"
 
 //TAB: VIRTUAL -------------------------------------------------------------
 
 //--- UI -------------------------------------------------------------------
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_InsertRootLevel_clicked()
+void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
 {
-    insertVirtualStorageItem(0, 0, tr("Top Item"), "VirtualStorage", 0);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_AddSubItem_clicked()
-{
-    insertVirtualStorageItem(0, selectedVirtualStorageID, tr("Sub-Item"), "VirtualStorage", 0);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_AssignCatalog_clicked()
-{
-    assignCatalogToVirtualStorage(selectedCatalog->name, selectedVirtualStorageID);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_AssignStorage_clicked()
-{
-    assignStorageToVirtualStorage(selectedStorage->ID, selectedVirtualStorageID);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_DeleteItem_clicked()
-{
-    deleteVirtualStorageItem();
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_Edit_clicked()
-{
-    ui->Virtual_widget_Edit->setVisible(true);
-    ui->Virtual_lineEdit_Name->setText(selectedVirtualStorageName);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_Save_clicked()
-{
-    //Save name
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET    virtual_storage_name=:virtual_storage_name
-                            WHERE  virtual_storage_id=:virtual_storage_id
-                                )");
-    query.prepare(querySQL);
-    query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
-    query.bindValue(":virtual_storage_name",ui->Virtual_lineEdit_Name->text());
-    query.exec();
-
-    ui->Virtual_widget_Edit->hide();
+    Device *newDeviceItem = new Device();
+    newDeviceItem->ID = 0;
+    newDeviceItem->parentID = 0;
+    newDeviceItem->name = tr("Top Item");
+    newDeviceItem->type = "Virtual";
+    newDeviceItem->externalID = 0;
+    newDeviceItem->groupID = 1;
+    newDeviceItem->insertDeviceItem();
 
     //Save data to file
-    if (databaseMode == "Memory"){
-        //Save file
-        saveVirtualStorageTableToFile(virtualStorageFilePath);
-    }
+    saveDeviceTableToFile(deviceFilePath);
 
     //Reload
-    loadVirtualStorageTableToTreeModel();
-
-    ui->Virtual_pushButton_Edit->setEnabled(false);
+    loadDeviceTableToTreeModel();
+    loadParentsList();
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_Cancel_clicked()
+void MainWindow::on_Devices_pushButton_AddVirtual_clicked()
 {
-    ui->Virtual_widget_Edit->hide();
+    addVirtualDevice();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_pushButton_TreeExpandCollapse_clicked()
+void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 {
-    setVirtualStorageTreeExpandState(true);
+    addStorageDevice();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_checkBox_DisplayCatalogs_stateChanged(int arg1)
+void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
+{
+    assignCatalogToDevice(selectedCatalog->name, selectedDevice->ID);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_AssignStorage_clicked()
+{
+    assignStorageToDevice(selectedStorage->ID, selectedDevice->ID);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_DeleteItem_clicked()
+{
+    deleteDeviceItem();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_Edit_clicked()
+{
+    editDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_EditList_clicked()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(deviceFilePath));
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_Save_clicked()
+{
+    saveDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_Cancel_clicked()
+{
+    ui->Devices_widget_Edit->hide();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_TreeExpandCollapse_clicked()
+{
+    setDeviceTreeExpandState(true);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_checkBox_DisplayStorage_stateChanged(int arg1)
 {
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Virtual/DisplayCatalogs", arg1);
-    loadVirtualStorageTableToTreeModel();
+    settings.setValue("Devices/DisplayStorage", arg1);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1)
+void MainWindow::on_Devices_checkBox_DisplayStorageOnly_stateChanged(int arg1)
 {
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Virtual/DisplayPhysicalGroupOnly", arg1);
+    settings.setValue("Devices/DisplayStorageonly", arg1);
+    loadDeviceTableToTreeModel();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1)
+{
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("Devices/DisplayCatalogs", arg1);
+    loadDeviceTableToTreeModel();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1)
+{
+    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("Devices/DisplayPhysicalGroupOnly", arg1);
     if(arg1>0)
-        ui->Virtual_checkBox_DisplayAllExceptPhysicalGroup->setChecked(false);
-    loadVirtualStorageTableToTreeModel();
+        ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->setChecked(false);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1)
+void MainWindow::on_Devices_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1)
 {
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Virtual/DisplayAllExceptPhysicalGroup", arg1);
+    settings.setValue("Devices/DisplayAllExceptPhysicalGroup", arg1);
     if(arg1>0)
-        ui->Virtual_checkBox_DisplayPhysicalGroupOnly->setChecked(false);
-    loadVirtualStorageTableToTreeModel();
+        ui->Devices_checkBox_DisplayPhysicalGroupOnly->setChecked(false);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_checkBox_DisplayFullTable_stateChanged(int arg1)
+void MainWindow::on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1)
 {
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Virtual/DisplayFullTable", arg1);
-    loadVirtualStorageTableToTreeModel();
+    settings.setValue("Devices/DisplayFullTable", arg1);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_treeView_VirtualStorageList_clicked(const QModelIndex &index)
+void MainWindow::on_Devices_pushButton_verifStorage_clicked()
+{
+    verifyStorageWithOutDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index)
 {
     //Get selection data
-    selectedVirtualStorageName = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 0, index.parent() ).data().toString();
-    selectedVirtualStorageType = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
-    selectedVirtualStorageID   = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
-    QModelIndex parentIndex = index.parent();
-    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
-    QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
+    tempDevice->ID = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
+    tempDevice->loadDevice();
 
     //Adapt buttons to selection
-    if(selectedVirtualStorageType=="VirtualStorage"){
-        ui->Virtual_pushButton_Edit->setEnabled(true);
+    ui->Devices_pushButton_Edit->setEnabled(true);
+    //TESTING
+
+    if(tempDevice->type=="Virtual"){
+        ui->Devices_pushButton_Edit->setEnabled(true);
         if(selectedCatalog->name!=""){
-            ui->Virtual_pushButton_AssignCatalog->setEnabled(true);
+            ui->Devices_pushButton_AssignCatalog->setEnabled(true);
         }
-        ui->Virtual_pushButton_DeleteItem->setEnabled(true);
-        ui->Virtual_label_SelectedVirtualStorage->setText(selectedVirtualStorageName);
+        ui->Devices_pushButton_DeleteItem->setEnabled(true);
+        ui->Devices_label_SelectedDeviceVirtual->setText(tempDevice->name);
     }
-    else if(selectedVirtualStorageType=="Catalog"){
-        ui->Virtual_pushButton_Edit->setEnabled(false);
-        ui->Virtual_pushButton_AssignCatalog->setEnabled(false);
-        ui->Virtual_pushButton_DeleteItem->setEnabled(false);
-        ui->Virtual_label_SelectedVirtualStorage->setText("");
+    else if(tempDevice->type=="Catalog"){
+        ui->Devices_pushButton_Edit->setEnabled(false);
+        ui->Devices_pushButton_AssignCatalog->setEnabled(false);
+        ui->Devices_pushButton_DeleteItem->setEnabled(false);
+        ui->Devices_label_SelectedDeviceVirtual->setText("");
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Virtual_treeView_VirtualStorageList_customContextMenuRequested(const QPoint &pos)
+void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos)
 {
     //Get selection data
-    QModelIndex index=ui->Virtual_treeView_VirtualStorageList->currentIndex();
-    selectedVirtualStorageName = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 0, index.parent() ).data().toString();
-    selectedVirtualStorageType = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 1, index.parent() ).data().toString();
-    selectedVirtualStorageID   = ui->Virtual_treeView_VirtualStorageList->model()->index(index.row(), 3, index.parent() ).data().toInt();
-    QModelIndex parentIndex = index.parent();
-    selectedVirtualStorageParentID = parentIndex.sibling(parentIndex.row(), 3).data().toInt();
-    QString selectedVirtualStorageParentName = parentIndex.sibling(parentIndex.row(), 0).data().toString();
+    QModelIndex index=ui->Devices_treeView_DeviceList->currentIndex();
+    tempDevice->ID   = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
+    tempDevice->loadDevice();
 
     //Set actions for catalogs
-    if(selectedVirtualStorageType=="Catalog"){
-        QPoint globalPos = ui->Virtual_treeView_VirtualStorageList->mapToGlobal(pos);
-        QMenu virtualStorageContextMenu;
+    if(tempDevice->type=="Catalog"){
+        QPoint globalPos = ui->Devices_treeView_DeviceList->mapToGlobal(pos);
+        QMenu deviceContextMenu;
 
-        QString virtualStorageName = selectedVirtualStorageName;
+        QString deviceName = tempDevice->name;
 
-        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+        deviceContextMenu.addAction(menuDeviceAction1);
 
-        connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
+        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             updateAllNumbers();
         });
 
-        virtualStorageContextMenu.addSeparator();
+        deviceContextMenu.addSeparator();
 
-        QAction *menuVirtualStorageAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction3);
+        QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
+        deviceContextMenu.addAction(menuDeviceAction3);
 
-        connect(menuVirtualStorageAction3, &QAction::triggered, this, [this, virtualStorageName]() {
-            unassignPhysicalFromVirtualStorage(selectedVirtualStorageID, selectedVirtualStorageParentID);
+        connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+            unassignPhysicalFromDevice(tempDevice->ID, tempDevice->parentID);
         });
 
-        virtualStorageContextMenu.exec(globalPos);
+        deviceContextMenu.exec(globalPos);
     }
-    else if(selectedVirtualStorageType=="Storage"){
-        QPoint globalPos = ui->Virtual_treeView_VirtualStorageList->mapToGlobal(pos);
-        QMenu virtualStorageContextMenu;
+    else if(tempDevice->type=="Storage"){
+        QPoint globalPos = ui->Devices_treeView_DeviceList->mapToGlobal(pos);
+        QMenu deviceContextMenu;
 
-        QString virtualStorageName = selectedVirtualStorageName;
+        QString deviceName = tempDevice->name;
 
-        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+        deviceContextMenu.addAction(menuDeviceAction1);
 
-        connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
-            updateNumbers(selectedVirtualStorageID, selectedVirtualStorageType);
+        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+            updateAllNumbers();
         });
 
-        virtualStorageContextMenu.addSeparator();
+        QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
+        deviceContextMenu.addAction(menuDeviceAction2);
 
-        QAction *menuVirtualStorageAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this storage"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction3);
-
-        connect(menuVirtualStorageAction3, &QAction::triggered, this, [this, virtualStorageName]() {
-            unassignPhysicalFromVirtualStorage(selectedVirtualStorageID, selectedVirtualStorageParentID);
+        connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
+            editDevice();
         });
 
-        virtualStorageContextMenu.exec(globalPos);
+        deviceContextMenu.addSeparator();
+
+        QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this storage"), this);
+        deviceContextMenu.addAction(menuDeviceAction3);
+
+        connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+            unassignPhysicalFromDevice(tempDevice->ID, tempDevice->parentID);
+        });
+
+        deviceContextMenu.exec(globalPos);
     }
     else{
-        QPoint globalPos = ui->Virtual_treeView_VirtualStorageList->mapToGlobal(pos);
-        QMenu virtualStorageContextMenu;
+        QPoint globalPos = ui->Devices_treeView_DeviceList->mapToGlobal(pos);
+        QMenu deviceContextMenu;
 
-        QString virtualStorageName = selectedVirtualStorageName;
+        QString deviceName = tempDevice->name;
 
-        QAction *menuVirtualStorageAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add sub-item"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction1);
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add Virtual device"), this);
+        deviceContextMenu.addAction(menuDeviceAction1);
 
-        connect(menuVirtualStorageAction1, &QAction::triggered, this, [this, virtualStorageName]() {
-            insertVirtualStorageItem(0, selectedVirtualStorageID, "sub-item", "VirtualStorage" , 0);
+        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+            addVirtualDevice();
         });
 
+        QAction *menuDeviceAction6 = new QAction(QIcon::fromTheme("document-new"), tr("Add Storage device"), this);
+        deviceContextMenu.addAction(menuDeviceAction6);
 
-        QAction *menuVirtualStorageAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction2);
-
-        connect(menuVirtualStorageAction2, &QAction::triggered, this, [this, virtualStorageName]() {
-            ui->Virtual_widget_Edit->setVisible(true);
-            ui->Virtual_lineEdit_Name->setText(selectedVirtualStorageName);
+        connect(menuDeviceAction6, &QAction::triggered, this, [this, deviceName]() {
+            addStorageDevice();
         });
 
-        QAction *menuVirtualStorageAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction3);
+        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
+        deviceContextMenu.addAction(menuDeviceAction5);
 
-        connect(menuVirtualStorageAction3, &QAction::triggered, this, [this, virtualStorageName]() {
-            updateNumbers(selectedVirtualStorageID, selectedVirtualStorageType);
+        connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
+            assignStorageToDevice(selectedStorage->ID, tempDevice->ID);
         });
 
-        virtualStorageContextMenu.addSeparator();
+        QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
+        deviceContextMenu.addAction(menuDeviceAction2);
 
-        QAction *menuVirtualStorageAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
-        virtualStorageContextMenu.addAction(menuVirtualStorageAction4);
-
-        connect(menuVirtualStorageAction4, &QAction::triggered, this, [this, virtualStorageName]() {
-            deleteVirtualStorageItem();
+        connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
+            editDevice();
         });
 
-        virtualStorageContextMenu.exec(globalPos);
+        QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+        deviceContextMenu.addAction(menuDeviceAction3);
+
+        connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+            updateNumbers(tempDevice->ID, tempDevice->type);
+        });
+
+        deviceContextMenu.addSeparator();
+
+        QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
+        deviceContextMenu.addAction(menuDeviceAction4);
+
+        connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
+            deleteDeviceItem();
+        });
+
+        deviceContextMenu.exec(globalPos);
     }
 }
 //--------------------------------------------------------------------------
 
 //--- UI / Methods temp v1.x -----------------------------------------------
-void MainWindow::on_Virtual_pushButton_ImportS_clicked()
+void MainWindow::on_Devices_pushButton_ImportS_clicked()
 {
-    convertVirtualStorageCatalogFile();
+    convertDeviceCatalogFile();
     importStorageCatalogLinks();
 }
 //--------------------------------------------------------------------------
-void MainWindow::convertVirtualStorageCatalogFile() {
+void MainWindow::convertDeviceCatalogFile() {
 
     QSqlQuery query;
     QString querySQL;
 
-    //Update VirtualStorage type
+    //Update Device type
     //save table to update columns and reload
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageFileToTable();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceFileToTable();
 
     //update type
     querySQL = QLatin1String(R"(
                             UPDATE virtual_storage
-                            SET virtual_storage_type="VirtualStorage"
+                            SET virtual_storage_type="Virtual"
                             WHERE virtual_storage_type=""
                         )");
     query.prepare(querySQL);
     query.exec();
 
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageFileToTable();
-    loadVirtualStorageTableToTreeModel();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceFileToTable();
+    loadDeviceTableToTreeModel();
 
     //Insert Catalog assignments from virtual_storage_catalog
     querySQL = QLatin1String(R"(
@@ -316,25 +350,25 @@ void MainWindow::convertVirtualStorageCatalogFile() {
     query.prepare(querySQL);
 
     //Define storage file and prepare stream
-    QFile virtualStorageCatalogFile(virtualStorageCatalogFilePath);
-    QTextStream textStream(&virtualStorageCatalogFile);
+    QFile deviceCatalogFile(deviceCatalogFilePath);
+    QTextStream textStream(&deviceCatalogFile);
 
     //Open file or return information
-    if(!virtualStorageCatalogFile.open(QIODevice::ReadOnly)) {
+    if(!deviceCatalogFile.open(QIODevice::ReadOnly)) {
         // Create it, if it does not exist
-        QFile newVirtualStorageCatalogFile(virtualStorageCatalogFilePath);
-        if(!newVirtualStorageCatalogFile.open(QIODevice::ReadOnly)) {
-            if (newVirtualStorageCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
-                QTextStream stream(&newVirtualStorageCatalogFile);
+        QFile newDeviceCatalogFile(deviceCatalogFilePath);
+        if(!newDeviceCatalogFile.open(QIODevice::ReadOnly)) {
+            if (newDeviceCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
+                QTextStream stream(&newDeviceCatalogFile);
                 stream << "ID"            << "\t"
                        << "Catalog Name"          << "\t"
                        << "Directory Path"          << "\t"
                        << '\n';
-                newVirtualStorageCatalogFile.close();
+                newDeviceCatalogFile.close();
             }
         }
     }
-    //Load virtualStorage device lines to table
+    //Load Device device lines to table
     while (true)
     {
         QString line = textStream.readLine();
@@ -364,10 +398,10 @@ void MainWindow::convertVirtualStorageCatalogFile() {
             query.exec();
         }
     }
-    virtualStorageCatalogFile.close();
+    deviceCatalogFile.close();
     //Save file
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageTableToTreeModel();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceTableToTreeModel();
 
 }
 //--------------------------------------------------------------------------
@@ -396,69 +430,46 @@ void MainWindow::importStorageCatalogLinks() {
         selectedCatalog->setName(catalog_name);
         selectedCatalog->loadCatalogMetaData();
 
-        assignCatalogToVirtualStorage(catalog_name,vstorage_id);
+        assignCatalogToDevice(catalog_name,vstorage_id);
 
-        saveVirtualStorageTableToFile(virtualStorageFilePath);
-        loadVirtualStorageTableToTreeModel();
+        saveDeviceTableToFile(deviceFilePath);
+        loadDeviceTableToTreeModel();
     }
+}
+//--------------------------------------------------------------------------
+QList<int> MainWindow::verifyStorageWithOutDevice()
+{
+    QList<int> gaps;
+    QSqlQuery query;
+    QString querySQL;
+    querySQL = QLatin1String(R"(
+                            SELECT storage_id
+                            FROM storage
+                            WHERE storage_id NOT IN(
+                                SELECT virtual_storage_external_id
+                                FROM virtual_storage
+                                WHERE virtual_storage_type = 'Storage'
+                            )
+                         )");
+
+    query.prepare(querySQL);
+    query.exec();
+    qDebug()<< "verifyStorageWithOutDevice:" << query.lastError();
+
+    while (query.next()) {
+        gaps << query.value(0).toInt();
+        qDebug()<< "gap:" << query.value(0).toInt();
+    }
+
+    return gaps;
 }
 //--------------------------------------------------------------------------
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
-void MainWindow::insertVirtualStorageItem(int newID, int parentID, QString name, QString type, QString externalID)
+void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
 {
-    QSqlQuery query;
-    QString querySQL;
-
-    if(newID==0){
-        //Generate new ID
-        querySQL = QLatin1String(R"(
-                        SELECT MAX(virtual_storage_id)
-                        FROM virtual_storage
-                    )");
-        query.prepare(querySQL);
-        query.exec();
-        query.next();
-        newID=query.value(0).toInt()+1;
-    }
-
-    //Insert device
-    querySQL = QLatin1String(R"(
-                            INSERT INTO virtual_storage(
-                                        virtual_storage_id,
-                                        virtual_storage_parent_id,
-                                        virtual_storage_name,
-                                        virtual_storage_type,
-                                        virtual_storage_external_id)
-                            VALUES(
-                                        :virtual_storage_id,
-                                        :virtual_storage_parent_id,
-                                        :virtual_storage_name,
-                                        :virtual_storage_type,
-                                        :virtual_storage_external_id)
-                                )");
-    query.prepare(querySQL);
-    query.bindValue(":virtual_storage_id",newID);
-    query.bindValue(":virtual_storage_parent_id",parentID);
-    query.bindValue(":virtual_storage_name",name);
-    query.bindValue(":virtual_storage_type", type);
-    query.bindValue(":virtual_storage_external_id", externalID);
-    query.exec();
-
-    //Save data to file
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-
-    //Reload
-    loadVirtualStorageTableToTreeModel();
-    if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-        loadVirtualStorageTableToTreeModel();
-    }
-}
-//--------------------------------------------------------------------------
-void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualStorageID)
-{
-    if( virtualStorageID!=0 and catalogName!=""){
+    if( deviceID!=0 and catalogName!=""){
 
         //Generate new ID
         QSqlQuery queryID;
@@ -499,7 +510,7 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
                         )");
         query.prepare(querySQL);
         query.bindValue(":virtual_storage_id", newID);
-        query.bindValue(":virtual_storage_parent_id", virtualStorageID);
+        query.bindValue(":virtual_storage_parent_id", deviceID);
         query.bindValue(":virtual_storage_name", selectedCatalog->name);
         query.bindValue(":virtual_storage_type", "Catalog");
         query.bindValue(":virtual_storage_external_id", selectedCatalog->name);
@@ -513,21 +524,19 @@ void MainWindow::assignCatalogToVirtualStorage(QString catalogName,int virtualSt
         //Save data to file
         if (databaseMode == "Memory"){
             //Save file
-            saveVirtualStorageTableToFile(virtualStorageFilePath);
+            saveDeviceTableToFile(deviceFilePath);
         }
 
         //Reload
-        loadVirtualStorageTableToTreeModel();
-        if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageTableToTreeModel();
-        }
+        loadDeviceTableToTreeModel();
+        loadDeviceTableToTreeModel();
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::assignStorageToVirtualStorage(int storageID,int virtualStorageID)
+void MainWindow::assignStorageToDevice(int storageID,int deviceID)
 {
-    if( virtualStorageID!=0 and storageID!=0){
-
+    qDebug()<<storageID<<deviceID;
+    if( deviceID!=0 and storageID!=0){
         //Generate new ID
         QSqlQuery queryID;
         QString queryIDSQL = QLatin1String(R"(
@@ -567,7 +576,7 @@ void MainWindow::assignStorageToVirtualStorage(int storageID,int virtualStorageI
                         )");
         query.prepare(querySQL);
         query.bindValue(":virtual_storage_id", newID);
-        query.bindValue(":virtual_storage_parent_id", virtualStorageID);
+        query.bindValue(":virtual_storage_parent_id", deviceID);
         query.bindValue(":virtual_storage_name", selectedStorage->name);
         query.bindValue(":virtual_storage_type", "Storage");
         query.bindValue(":virtual_storage_external_id", selectedStorage->ID);
@@ -581,26 +590,22 @@ void MainWindow::assignStorageToVirtualStorage(int storageID,int virtualStorageI
         //Save data to file
         if (databaseMode == "Memory"){
             //Save file
-            saveVirtualStorageTableToFile(virtualStorageFilePath);
+            saveDeviceTableToFile(deviceFilePath);
         }
 
         //Reload
-        loadVirtualStorageTableToTreeModel();
-        if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            //loadVirtualStorageTableToSelectionTreeModel();
-        }
+        loadDeviceTableToTreeModel();
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::unassignPhysicalFromVirtualStorage(int virtualStorageID, int virtualStorageParentID)
+void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 {
     int result = QMessageBox::warning(this,"Katalog",
-                                      tr("Do you want to remove this storage or catalog from this virtual storage?"),QMessageBox::Yes|QMessageBox::Cancel);
+                                      tr("Do you want to remove this storage or catalog from this virtual device?"),QMessageBox::Yes|QMessageBox::Cancel);
 
     if ( result ==QMessageBox::Yes){
-        //unassignCatalogToVirtualStorage(selectedVirtualStorageName, selectedVirtualStorageParentID);
 
-        if( virtualStorageID!=0 and virtualStorageParentID!=0){
+        if( deviceID!=0 and deviceParentID!=0){
             //Insert catalog
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
@@ -609,89 +614,63 @@ void MainWindow::unassignPhysicalFromVirtualStorage(int virtualStorageID, int vi
                                         AND   virtual_storage_parent_id=:virtual_storage_parent_id
                                     )");
             query.prepare(querySQL);
-            query.bindValue(":virtual_storage_id",virtualStorageID);
-            query.bindValue(":virtual_storage_parent_id",virtualStorageParentID);
+            query.bindValue(":virtual_storage_id",deviceID);
+            query.bindValue(":virtual_storage_parent_id",deviceParentID);
             query.exec();
 
             //Save data to file
             if (databaseMode == "Memory"){
                 //Save file
-                saveVirtualStorageTableToFile(virtualStorageCatalogFilePath);
+                saveDeviceTableToFile(deviceCatalogFilePath);
             }
 
             //Reload
-            loadVirtualStorageTableToTreeModel();
-            if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-                loadVirtualStorageTableToTreeModel();
-            }
+            loadDeviceTableToTreeModel();
         }
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::deleteVirtualStorageItem()
+void MainWindow::deleteDeviceItem()
 {
-    bool hasChildren = false;
-    bool hasCatalog  = false;
-    QSqlQuery queryVerifyChildren;
-    QString queryVerifyChildrenSQL = QLatin1String(R"(
-                                SELECT COUNT(*)
-                                FROM virtual_storage
-                                WHERE virtual_storage_parent_id=:virtual_storage_parent_id
-                            )");
-    queryVerifyChildren.prepare(queryVerifyChildrenSQL);
-    queryVerifyChildren.bindValue(":virtual_storage_parent_id",selectedVirtualStorageID);
-    queryVerifyChildren.exec();
-    queryVerifyChildren.next();
+    tempDevice->verifyHasSubDevice();
+    tempDevice->verifyHasCatalog();
 
-    if(queryVerifyChildren.value(0).toInt()>=1)
-        hasChildren = true;
+    if ( tempDevice->hasSubDevice == false ){
 
-    QSqlQuery queryVerifyCatalog;
-    QString queryVerifyCatalogSQL = QLatin1String(R"(
-                                SELECT COUNT(*)
-                                FROM virtual_storage_catalog
-                                WHERE virtual_storage_id=:virtual_storage_id
-                            )");
-    queryVerifyCatalog.prepare(queryVerifyCatalogSQL);
-    queryVerifyCatalog.bindValue(":virtual_storage_id",selectedVirtualStorageID);
-    queryVerifyCatalog.exec();
-    queryVerifyCatalog.next();
+        if ( tempDevice->hasCatalog == false ){
 
-    if(queryVerifyCatalog.value(0).toInt()>=1)
-        hasCatalog = true;
-
-    if ( hasChildren == false ){
-        if ( hasCatalog == false ){
             int result = QMessageBox::warning(this,"Katalog",
-                                              tr("Do you want to delete this virtual storage item?")+"<br/>"+selectedVirtualStorageName,QMessageBox::Yes|QMessageBox::Cancel);
+                                              tr("Do you want to <span style='color: red';>delete</span> this %1 device?"
+                                                 "<table>"
+                                                 "<tr><td>ID:   </td><td><b> %2 </td></tr>"
+                                                 "<tr><td>Name: </td><td><b> %3 </td></tr>"
+                                                 "</table>").arg(tempDevice->type, QString::number(tempDevice->ID), tempDevice->name)
+                                              ,QMessageBox::Yes|QMessageBox::Cancel);
 
             if ( result ==QMessageBox::Yes){
+
                 //Delete selected ID
-                QSqlQuery query;
-                QString querySQL = QLatin1String(R"(
-                                    DELETE FROM virtual_storage
-                                    WHERE virtual_storage_id=:virtual_storage_id
-                                )");
-                query.prepare(querySQL);
-                query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
-                query.exec();
-                //Save data to file
-                if (databaseMode == "Memory"){
-                    //Save file
-                    saveVirtualStorageTableToFile(virtualStorageFilePath);
+                tempDevice->deleteDevice();
+                if(tempDevice->type == "Storage"){
+                    tempStorage->ID = tempDevice->externalID;
+                    tempStorage->deleteStorage();
                 }
 
-                //Reload
-                loadVirtualStorageTableToTreeModel();
-                if(ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-                    loadVirtualStorageTableToTreeModel();
-                }
+                //Save data to files
+                saveDeviceTableToFile(deviceFilePath);
+                saveStorageTableToFile();
+
+                //Reload data to models
+                loadDeviceTableToTreeModel();
+                loadStorageTableToModel();
+                updateStorageSelectionStatistics();
+                loadDeviceTableToTreeModel();
             }
         }
         else{
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("The selected item cannot be deleted as long as it has catalogs linked."));
+            msgBox.setText(tr("The selected device cannot be deleted as long as it has catalogs linked."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }
@@ -699,13 +678,13 @@ void MainWindow::deleteVirtualStorageItem()
     else{
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("The selected item cannot be deleted as long as it has sub-items."));
+        msgBox.setText(tr("The selected device cannot be deleted as long as it has sub-devices."));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::loadVirtualStorageFileToTable()
+void MainWindow::loadDeviceFileToTable()
 {
     if(databaseMode=="Memory"){
         //Clear table
@@ -718,23 +697,23 @@ void MainWindow::loadVirtualStorageFileToTable()
         query.exec();
 
         //Define storage file and prepare stream
-        QFile virtualStorageFile(virtualStorageFilePath);
-        QTextStream textStream(&virtualStorageFile);
+        QFile deviceFile(deviceFilePath);
+        QTextStream textStream(&deviceFile);
 
         //Open file or create it
-        if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
+        if(!deviceFile.open(QIODevice::ReadOnly)) {
             // Create it, if it does not exist
-            QFile newVirtualStorageFile(virtualStorageFilePath);
-            newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text);
-            QTextStream stream(&newVirtualStorageFile);
+            QFile newDeviceFile(deviceFilePath);
+            newDeviceFile.open(QFile::WriteOnly | QFile::Text);
+            QTextStream stream(&newDeviceFile);
             stream << "ID"            << "\t"
                    << "Parent ID"     << "\t"
                    << "Name"          << "\t"
                    << '\n';
-            newVirtualStorageFile.close();
+            newDeviceFile.close();
         }
 
-        //Load virtualStorage device lines to table
+        //Load Device device lines to table
         while (true)
         {
             QString line = textStream.readLine();
@@ -757,7 +736,8 @@ void MainWindow::loadVirtualStorageFileToTable()
                                         virtual_storage_total_file_size,
                                         virtual_storage_total_file_count,
                                         virtual_storage_total_space,
-                                        virtual_storage_free_space )
+                                        virtual_storage_free_space,
+                                        virtual_storage_group_id )
                         VALUES(
                                         :virtual_storage_id,
                                         :virtual_storage_parent_id,
@@ -768,7 +748,8 @@ void MainWindow::loadVirtualStorageFileToTable()
                                         :virtual_storage_total_file_size,
                                         :virtual_storage_total_file_count,
                                         :virtual_storage_total_space,
-                                        :virtual_storage_free_space )
+                                        :virtual_storage_free_space,
+                                        :virtual_storage_group_id )
                     )");
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
@@ -782,18 +763,21 @@ void MainWindow::loadVirtualStorageFileToTable()
                         insertQuery.bindValue(":virtual_storage_total_file_count",fieldList[7]);
                         insertQuery.bindValue(":virtual_storage_total_space",fieldList[8]);
                         insertQuery.bindValue(":virtual_storage_free_space",fieldList[9]);
+                        insertQuery.bindValue(":virtual_storage_group_id",fieldList[11]);
                     }
                     insertQuery.exec();
                 }
         }
-        virtualStorageFile.close();
+        deviceFile.close();
 
         insertPhysicalStorageGroup();
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::loadVirtualStorageTableToTreeModel()
+void MainWindow::loadDeviceTableToTreeModel()
 {
+    QList<QStandardItem*> firstColumnItems;
+
     //Synch data to virtual_storage
     synchCatalogAndStorageValues();
 
@@ -812,11 +796,12 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                             virtual_storage_total_file_count,
                             virtual_storage_total_space,
                             virtual_storage_free_space,
-                            virtual_storage_active
+                            virtual_storage_active,
+                            virtual_storage_group_id
                     FROM  virtual_storage
                 )");
 
-    if (ui->Virtual_checkBox_DisplayPhysicalGroupOnly->isChecked() == true) {
+    if (ui->Devices_checkBox_DisplayPhysicalGroupOnly->isChecked() == true) {
         querySQL = QLatin1String(R"(
 
                     WITH RECURSIVE virtual_storage_tree AS (
@@ -831,7 +816,8 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         virtual_storage_total_file_count,
                         virtual_storage_total_space,
                         virtual_storage_free_space,
-                        virtual_storage_active
+                        virtual_storage_active,
+                        virtual_storage_group_id
                       FROM virtual_storage
                       WHERE virtual_storage_id = 1
 
@@ -848,7 +834,8 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         child.virtual_storage_total_file_count,
                         child.virtual_storage_total_space,
                         child.virtual_storage_free_space,
-                        child.virtual_storage_active
+                        child.virtual_storage_active,
+                        child.virtual_storage_group_id
                       FROM virtual_storage_tree parent
                       JOIN virtual_storage child ON child.virtual_storage_parent_id = parent.virtual_storage_id
                     )
@@ -863,11 +850,12 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         virtual_storage_total_file_count,
                         virtual_storage_total_space,
                         virtual_storage_free_space,
-                        virtual_storage_active
+                        virtual_storage_active,
+                        virtual_storage_group_id
                     FROM virtual_storage_tree
                 )");
     }
-    else if (ui->Virtual_checkBox_DisplayAllExceptPhysicalGroup->isChecked() == true) {
+    else if (ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->isChecked() == true) {
         querySQL = QLatin1String(R"(
                     WITH RECURSIVE virtual_storage_tree AS (
                       SELECT
@@ -881,7 +869,8 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         virtual_storage_total_file_count,
                         virtual_storage_total_space,
                         virtual_storage_free_space,
-                        virtual_storage_active
+                        virtual_storage_active,
+                        virtual_storage_group_id
                       FROM virtual_storage
                       WHERE virtual_storage_id <> 1
 
@@ -898,7 +887,8 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         child.virtual_storage_total_file_count,
                         child.virtual_storage_total_space,
                         child.virtual_storage_free_space,
-                        child.virtual_storage_active
+                        child.virtual_storage_active,
+                        child.virtual_storage_group_id
                       FROM virtual_storage_tree parent
                       JOIN virtual_storage child ON child.virtual_storage_parent_id = parent.virtual_storage_id
                       WHERE parent.virtual_storage_id <> 1
@@ -914,24 +904,43 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                         virtual_storage_total_file_count,
                         virtual_storage_total_space,
                         virtual_storage_free_space,
-                        virtual_storage_active
+                        virtual_storage_active,
+                        virtual_storage_group_id
                     FROM virtual_storage_tree
                 )");
     }
 
-    if (ui->Virtual_checkBox_DisplayCatalogs->isChecked() == false) {
+    //Add an always true WHERE close to add AND statements after more easily
+    querySQL += QLatin1String(R"(
+                    WHERE 1=1
+                )");
+
+    if (ui->Devices_checkBox_DisplayCatalogs->isChecked() == false) {
         querySQL += QLatin1String(R"(
-                    WHERE virtual_storage_type !='Catalog'
+                    AND virtual_storage_type !='Catalog'
                 )");
     }
 
-    querySQL +=" ORDER BY virtual_storage_id ASC ";
+    if (ui->Devices_checkBox_DisplayStorage->isChecked() == false) {
+        querySQL += QLatin1String(R"(
+                    AND virtual_storage_type !='Storage'
+                    AND virtual_storage_type !='Catalog'
+                )");
+    }
+
+    if (ui->Devices_checkBox_DisplayStorageOnly->isChecked() == true) {
+        querySQL += QLatin1String(R"(
+                    AND virtual_storage_type ='Storage'
+                )");
+    }
+
+    querySQL +=" ORDER BY virtual_storage_type DESC, virtual_storage_parent_id ASC, virtual_storage_id ASC ";
     query.prepare(querySQL);
     query.exec();
 
     //Prepare the tree model: headers
-    QStandardItemModel *model = new QStandardItemModel();
-    model->setHorizontalHeaderLabels({tr("Name"),
+    deviceTreeModel->clear();
+    deviceTreeModel->setHorizontalHeaderLabels({tr("Name"),
                                       tr("Device Type"),
                                       tr("Active"),
                                       tr("ID"),
@@ -941,6 +950,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
                                       tr("Total Size"),
                                       tr("Total space"),
                                       tr("Free space"),
+                                      tr("group ID"),
                                       "" });
 
     //Create a map to store items by ID for easy access
@@ -960,6 +970,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
         qint64 total_space = query.value(8).toLongLong();
         qint64 free_space = query.value(9).toLongLong();
         bool isActive = query.value(10).toBool();
+        int groupID = query.value(11).toBool();
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
@@ -973,6 +984,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
         rowItems << new QStandardItem(QString::number(size));
         rowItems << new QStandardItem(QString::number(total_space));
         rowItems << new QStandardItem(QString::number(free_space));
+        rowItems << new QStandardItem(QString::number(groupID));
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -980,7 +992,7 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
 
         //Add top-level items directly to the model
         if (parentId == 0) {
-            model->appendRow(rowItems);
+            deviceTreeModel->appendRow(rowItems);
         }
         //else append the row to the parent item
         else{
@@ -999,87 +1011,100 @@ void MainWindow::loadVirtualStorageTableToTreeModel()
     }
 
     //Load Model to treeview (Virtual tab)
-        DeviceTreeView *deviceTreeViewForVirtualTab = new DeviceTreeView(this);
-        deviceTreeViewForVirtualTab->setSourceModel(model);
-        ui->Virtual_treeView_VirtualStorageList->setModel(deviceTreeViewForVirtualTab);
+        DeviceTreeView *deviceTreeViewForDeviceTab = new DeviceTreeView(this);
+        deviceTreeViewForDeviceTab->setSourceModel(deviceTreeModel);
+        ui->Devices_treeView_DeviceList->setModel(deviceTreeViewForDeviceTab);
 
         //Customize tree display
-        ui->Virtual_treeView_VirtualStorageList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->Virtual_treeView_VirtualStorageList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(0, 350); //Name
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(1, 100); //Type
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(2,  25); //Active
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(3,  25); //ID
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(4,  25); //Parent ID
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(5,  25); //External ID
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(6, 100); //Number of Files
-        ui->Virtual_treeView_VirtualStorageList->header()->resizeSection(7, 100); //Total File Size
+        ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
+        ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(QHeaderView::Interactive);
+        ui->Devices_treeView_DeviceList->header()->resizeSection(0, 350); //Name
+        ui->Devices_treeView_DeviceList->header()->resizeSection(1, 100); //Type
+        ui->Devices_treeView_DeviceList->header()->resizeSection(2,  25); //Active
+        ui->Devices_treeView_DeviceList->header()->resizeSection(3,  25); //ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection(4,  25); //Parent ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection(5,  25); //External ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection(6, 100); //Number of Files
+        ui->Devices_treeView_DeviceList->header()->resizeSection(7, 100); //Total File Size
+        ui->Devices_treeView_DeviceList->header()->resizeSection(8, 100); //Total space
+        ui->Devices_treeView_DeviceList->header()->resizeSection(9, 100); //Free space
+        ui->Devices_treeView_DeviceList->header()->resizeSection(10, 25); //group ID
 
-        if (ui->Virtual_checkBox_DisplayFullTable->isChecked()) {
-            ui->Virtual_treeView_VirtualStorageList->header()->showSection(1); //Type
-            ui->Virtual_treeView_VirtualStorageList->header()->showSection(2); //Active
-            ui->Virtual_treeView_VirtualStorageList->header()->showSection(3); //ID
-            ui->Virtual_treeView_VirtualStorageList->header()->showSection(4); //Parent ID
-            ui->Virtual_treeView_VirtualStorageList->header()->showSection(5); //External ID
+        if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
+            ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
+            ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
+            ui->Devices_treeView_DeviceList->header()->showSection(3); //ID
+            ui->Devices_treeView_DeviceList->header()->showSection(4); //Parent ID
+            ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
+            ui->Devices_treeView_DeviceList->header()->showSection(10); //group ID
         } else {
-            ui->Virtual_treeView_VirtualStorageList->header()->hideSection(1); //Type
-            ui->Virtual_treeView_VirtualStorageList->header()->hideSection(2); //Active
-            ui->Virtual_treeView_VirtualStorageList->header()->hideSection(3); //ID
-            ui->Virtual_treeView_VirtualStorageList->header()->hideSection(4); //Parent ID
-            ui->Virtual_treeView_VirtualStorageList->header()->hideSection(5); //External ID
+            ui->Devices_treeView_DeviceList->header()->hideSection(1); //Type
+            ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
+            ui->Devices_treeView_DeviceList->header()->hideSection(3); //ID
+            ui->Devices_treeView_DeviceList->header()->hideSection(4); //Parent ID
+            ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
+            ui->Devices_treeView_DeviceList->header()->hideSection(10); //group ID
         }
 
-        ui->Virtual_treeView_VirtualStorageList->expandAll();
+        ui->Devices_treeView_DeviceList->expandAll();
 
     //Load Model to treeview (Filters/Device tree)
-        if(selectedTreeType==tr("Virtual Storage / Catalog")){
-            DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
+        DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
 
-            ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
-            deviceTreeViewForSelectionPanel->setSourceModel(model);
-            ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-            ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
-            ui->Filters_treeView_Devices->hideColumn(1);
-            ui->Filters_treeView_Devices->hideColumn(2);
-            ui->Filters_treeView_Devices->hideColumn(3);
-            ui->Filters_treeView_Devices->setColumnWidth(2,0);
-            ui->Filters_treeView_Devices->collapseAll();
-            ui->Filters_treeView_Devices->header()->hide();
+        ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
+        deviceTreeViewForSelectionPanel->setSourceModel(deviceTreeModel);
+        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
+        ui->Filters_treeView_Devices->hideColumn(1);
+        ui->Filters_treeView_Devices->hideColumn(2);
+        ui->Filters_treeView_Devices->hideColumn(3);
+        ui->Filters_treeView_Devices->setColumnWidth(2,0);
+        ui->Filters_treeView_Devices->collapseAll();
+        ui->Filters_treeView_Devices->header()->hide();
 
-            for (int var = 1; var < deviceTreeViewForSelectionPanel->columnCount(); ++var) {
-                ui->Filters_treeView_Devices->header()->hideSection(var);
-            }
-
-            //Restore Expand or Collapse Device Tree
-            setTreeExpandState(false);
-            deviceTreeViewForSelectionPanel->boldColumnList.clear();
-            ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
-            ui->Filters_treeView_Devices->expandAll();
+        for (int var = 1; var < deviceTreeViewForSelectionPanel->columnCount(); ++var) {
+            ui->Filters_treeView_Devices->header()->hideSection(var);
         }
+
+        //Restore Expand or Collapse Device Tree
+        setTreeExpandState(false);
+        deviceTreeViewForSelectionPanel->boldColumnList.clear();
+        ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
+        ui->Filters_treeView_Devices->expandAll();
 }
 //--------------------------------------------------------------------------
-void MainWindow::saveVirtualStorageTableToFile(QString filePath)
+void MainWindow::saveDeviceTableToFile(QString filePath)
 {
     if (databaseMode == "Memory"){
-        QFile virtualStorageFile(filePath);
+        QFile deviceFile(filePath);
 
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                 SELECT * FROM virtual_storage
-                                            )");
+                                    SELECT *
+                                    FROM virtual_storage
+                            )");
         query.prepare(querySQL);
         query.exec();
 
         //Write data
-        if (virtualStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+        if (deviceFile.open(QFile::WriteOnly | QFile::Text)) {
 
-            QTextStream textStreamToFile(&virtualStorageFile);
+            QTextStream textStreamToFile(&deviceFile);
 
             //Prepare header line
             textStreamToFile << "ID"         << "\t"
                              << "Parent ID"  << "\t"
                              << "Name"       << "\t"
+                             << "Type"       << "\t"
+                             << "ExternalID" << "\t"
+                             << "Path"       << "\t"
+                             << "total_file_size" << "\t"
+                             << "total_file_count"<< "\t"
+                             << "total_space"<< "\t"
+                             << "free_space" << "\t"
+                             << "active"     << "\t"
+                             << "groupID"    << "\t"
                              << '\n';
 
             //Iterate the records and generate lines
@@ -1089,11 +1114,12 @@ void MainWindow::saveVirtualStorageTableToFile(QString filePath)
                     if (i>0)
                         textStreamToFile << '\t';
                     textStreamToFile << record.value(i).toString();
+                    //qDebug()<<record.value(i).toString();
                 }
                 //Write the result in the file
                 textStreamToFile << '\n';
             }
-            virtualStorageFile.close();
+            deviceFile.close();
         }
         else{
             QMessageBox msgBox;
@@ -1105,11 +1131,11 @@ void MainWindow::saveVirtualStorageTableToFile(QString filePath)
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::updateNumbers(int virtualStorageID, QString storageType) {
+void MainWindow::updateNumbers(int deviceID, QString storageType) {
     QSqlQuery query;
     QString querySQL;
 
-    if(storageType=="Storage"  or storageType=="VirtualStorage"){
+    if(storageType=="Storage"  or storageType=="Virtual"){
         //virtual_storage_total_file_count
         querySQL = QLatin1String(R"(
                             UPDATE virtual_storage
@@ -1120,7 +1146,7 @@ void MainWindow::updateNumbers(int virtualStorageID, QString storageType) {
                             WHERE virtual_storage_id = :virtual_storage_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",virtualStorageID);
+        query.bindValue(":virtual_storage_id", deviceID);
         query.exec();
 
         //virtual_storage_total_file_size
@@ -1133,11 +1159,11 @@ void MainWindow::updateNumbers(int virtualStorageID, QString storageType) {
                             WHERE virtual_storage_id = :virtual_storage_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",virtualStorageID);
+        query.bindValue(":virtual_storage_id", deviceID);
         query.exec();
     }
 
-    if(storageType !="Storage" and storageType=="VirtualStorage"){
+    if(storageType !="Storage" and storageType=="Virtual"){
         //virtual_storage_total_space
         querySQL = QLatin1String(R"(
                             UPDATE virtual_storage
@@ -1148,7 +1174,7 @@ void MainWindow::updateNumbers(int virtualStorageID, QString storageType) {
                             WHERE virtual_storage_id = :virtual_storage_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",virtualStorageID);
+        query.bindValue(":virtual_storage_id",deviceID);
         query.exec();
 
         //virtual_storage_free_space
@@ -1161,11 +1187,11 @@ void MainWindow::updateNumbers(int virtualStorageID, QString storageType) {
                             WHERE virtual_storage_id = :virtual_storage_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",virtualStorageID);
+        query.bindValue(":virtual_storage_id",deviceID);
         query.exec();
     }
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageTableToTreeModel();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
 void MainWindow::synchCatalogAndStorageValues() {
@@ -1173,31 +1199,27 @@ void MainWindow::synchCatalogAndStorageValues() {
     QString querySQL;
 
     //Synch Catalog numbers
-//    if(selectedVirtualStorageType=="Catalog"){
         querySQL = QLatin1String(R"(
                         UPDATE virtual_storage
                         SET virtual_storage_total_file_count = catalog.catalog_file_count,
                             virtual_storage_total_file_size  = catalog.catalog_total_file_size,
                             virtual_storage_active = catalog.catalog_source_path_is_active
                         FROM catalog
-                        WHERE virtual_storage.virtual_storage_external_id = catalog.catalog_name;
+                        WHERE virtual_storage.virtual_storage_name = catalog.catalog_name;
                     )");
         query.prepare(querySQL);
         query.exec();
-//    }
-//    //Synch Storage numbers
-//    else if(selectedVirtualStorageType=="Storage"){
+
+    //Synch Storage numbers
         querySQL = QLatin1String(R"(
                         UPDATE virtual_storage
-                        SET virtual_storage_name = storage.storage_name,
-                            virtual_storage_total_space = storage.storage_total_space,
+                        SET virtual_storage_total_space = storage.storage_total_space,
                             virtual_storage_free_space = storage.storage_free_space
                         FROM storage
                         WHERE virtual_storage.virtual_storage_external_id = storage.storage_id;
                     )");
         query.prepare(querySQL);
         query.exec();
-//    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::updateAllNumbers() {
@@ -1228,22 +1250,22 @@ void MainWindow::updateAllNumbers() {
                         FROM virtual_storage_tree
                     )");
     query.prepare(querySQL);
-    query.bindValue(":virtual_storage_id",selectedVirtualStorageID);
+    query.bindValue(":virtual_storage_id",tempDevice->ID);
     query.exec();
 
     //Update parents
     while (query.next()) {
         int tempID = query.value(0).toInt();
 
-        VirtualStorage *tempCurrentVirtualStorage = new VirtualStorage;
-        tempCurrentVirtualStorage->ID = tempID;
-        tempCurrentVirtualStorage->loadVirtualStorage();
+        Device *tempCurrentDevice = new Device;
+        tempCurrentDevice->ID = tempID;
+        tempCurrentDevice->loadDevice();
 
-        updateNumbers(tempCurrentVirtualStorage->ID, tempCurrentVirtualStorage->type);
+        updateNumbers(tempCurrentDevice->ID, tempCurrentDevice->type);
     }
 
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageTableToTreeModel();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
 void MainWindow::insertPhysicalStorageGroup() {
@@ -1261,15 +1283,30 @@ void MainWindow::insertPhysicalStorageGroup() {
     int result = query.value(0).toInt();
 
     if(result == 0){
-        insertVirtualStorageItem(1, 0, tr(" Physical Group"), "VirtualStorage", 0);
-        insertVirtualStorageItem(2, 1, tr("Default location"), "VirtualStorage", 0);
+        Device *newDeviceItem1 = new Device();
+        newDeviceItem1->ID = 1;
+        newDeviceItem1->parentID = 0;
+        newDeviceItem1->name = tr(" Physical Group");
+        newDeviceItem1->type = "Virtual";
+        newDeviceItem1->externalID = 0;
+        newDeviceItem1->groupID = 0;
+        newDeviceItem1->insertDeviceItem();
+
+        Device *newDeviceItem2 = new Device();
+        newDeviceItem2->ID = 2;
+        newDeviceItem2->parentID = 1;
+        newDeviceItem2->name = tr("Default location");
+        newDeviceItem2->type = "Virtual";
+        newDeviceItem2->externalID = 0;
+        newDeviceItem2->groupID = 0;
+        newDeviceItem2->insertDeviceItem();
     }
 
-    saveVirtualStorageTableToFile(virtualStorageFilePath);
-    loadVirtualStorageTableToTreeModel();
+    saveDeviceTableToFile(deviceFilePath);
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::setVirtualStorageTreeExpandState(bool toggle)
+void MainWindow::setDeviceTreeExpandState(bool toggle)
 {
     //optionDeviceTreeExpandState values:  collapseAll or 2 =collapse / 0=exp.level0 / 1=exp.level1
     QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
@@ -1279,23 +1316,23 @@ void MainWindow::setVirtualStorageTreeExpandState(bool toggle)
 
         if ( optionDeviceTreeExpandState == 2 ){
             //collapsed > expand first level
-            ui->Virtual_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
             optionDeviceTreeExpandState = 0;
-            ui->Virtual_treeView_VirtualStorageList->expandToDepth(0);
+            ui->Devices_treeView_DeviceList->expandToDepth(0);
             settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
         }
         else if ( optionDeviceTreeExpandState == 0 ){
             //expanded first level > expand to second level
-            ui->Virtual_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
             optionDeviceTreeExpandState = 1;
-            ui->Virtual_treeView_VirtualStorageList->expandToDepth(1);
+            ui->Devices_treeView_DeviceList->expandToDepth(1);
             settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
         }
         else if ( optionDeviceTreeExpandState == 1 ){
             //expanded second level > collapse
-            ui->Virtual_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
             optionDeviceTreeExpandState = 2;
-            ui->Virtual_treeView_VirtualStorageList->collapseAll();
+            ui->Devices_treeView_DeviceList->collapseAll();
             settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
         }
     }
@@ -1318,7 +1355,7 @@ void MainWindow::setVirtualStorageTreeExpandState(bool toggle)
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::shiftIDsInVirtualStorageTable(int shiftAmount)
+void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
 {
     QSqlQuery query;
 
@@ -1344,5 +1381,292 @@ void MainWindow::shiftIDsInVirtualStorageTable(int shiftAmount)
     }
 
     qDebug() << "IDs shifted successfully by" << shiftAmount;
+}
+//--------------------------------------------------------------------------
+void MainWindow::loadParentsList()
+{   //Load valid list of parents to the panel comboBox. It enables a selection to change the parent of a device
+
+    //Get data
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                SELECT v.virtual_storage_name, v.virtual_storage_id
+                                FROM virtual_storage v
+
+                                WHERE virtual_storage_type NOT IN ("Catalog","Storage")
+                                AND virtual_storage_id !=0
+                                AND virtual_storage_id !=:selected_virtual_storage_id
+                            )");
+    // WHERE v.virtual_storage_group_id = 0
+
+    /*
+        if ( selectedDeviceType == "Location" ){
+            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Storage" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedDeviceName);
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDeviceName);
+        }
+        else if ( selectedDeviceType == "Catalog" ){
+            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedCatalog->storageName);
+        }
+*/
+
+    //querySQL += " ORDER BY virtual_storage_name ";
+    query.prepare(querySQL);
+    query.bindValue(":selected_virtual_storage_id", tempDevice->ID);
+    query.exec();
+
+    //Load to comboboxes
+    ui->Devices_comboBox_Parent->clear();
+    ui->Devices_comboBox_Parent->addItem("Top level",query.value(1).toInt());
+
+    while(query.next())
+    {
+        ui->Devices_comboBox_Parent->addItem(query.value(0).toString()+" ("+query.value(1).toString()+")",query.value(1).toInt());
+    }
+
+    // QList<QStandardItem*> firstColumnItems;
+
+    //Get the list of device names  0 corresponds to the first column
+    // Get values from the first two columns
+    //QList<QVariant> column1Values;
+    //QList<QVariant> column2Values;
+
+    // for (int row = 0; row < deviceTreeModel->rowCount(); ++row) {
+    //     for (int column = 0; column < deviceTreeModel->columnCount(); ++column) {
+    //         QStandardItem *item = deviceTreeModel->item(row, column);
+    //         if (item) {
+    //             qDebug() << "Value at row" << row << ", column" << column << ":" << item->text();
+    //         }
+    //     }
+
+    //     // Recursively call the function for child items
+    //     getValuesFromModel(deviceTreeModel->item(row), deviceTreeModel->columnCount());
+    // }
+
+
+    // for (int row = 0; row < deviceTreeModel->rowCount(); ++row) {
+    //     QModelIndex index1 = deviceTreeModel->index(row, 0);
+    //     QModelIndex index2 = deviceTreeModel->index(row, 3);
+
+    //     QString deviceName = deviceTreeModel->data(index1).toString();
+    //     QString deviceID   = deviceTreeModel->data(index2).toString();
+
+    //     ui->Devices_comboBox_Parent->addItem( deviceName +" (" + deviceID + ")", deviceID.toInt());
+    // }
+
+
+}
+//--------------------------------------------------------------------------
+void MainWindow::addVirtualDevice()
+{   //Create a new virtual device and add it to the selected Device
+
+    Device *newDeviceItem = new Device();
+    newDeviceItem->ID = 0;
+    newDeviceItem->parentID = tempDevice->ID;
+    newDeviceItem->name = tr("Sub-item");
+    newDeviceItem->type = "Virtual";
+    newDeviceItem->externalID = 0;
+    newDeviceItem->groupID = 1;
+    newDeviceItem->insertDeviceItem();
+
+    //Save data to file
+    saveDeviceTableToFile(deviceFilePath);
+
+    //Reload
+    loadDeviceTableToTreeModel();
+    loadParentsList();
+}
+//--------------------------------------------------------------------------
+void MainWindow::addStorageDevice()
+{   //Create a new storage device and add it to the selected Device
+
+    //Create Storage entry
+    tempStorage->setName(tr("Storage"));
+    tempStorage->setLocation(tempDevice->name);
+    tempStorage->createStorage();
+
+    //Create Device under Physical group (ID=0)
+    Device *newDeviceItem = new Device();
+    newDeviceItem->ID = 0;
+    newDeviceItem->parentID = tempDevice->ID;
+    newDeviceItem->name = tempStorage->name;
+    newDeviceItem->type = "Storage";
+    newDeviceItem->externalID = tempStorage->ID;
+    newDeviceItem->groupID = 0;
+    newDeviceItem->insertDeviceItem();
+
+    //Save data to file
+    saveDeviceTableToFile(deviceFilePath);
+
+    //Reload
+    loadDeviceTableToTreeModel();
+    loadParentsList();
+
+    //Load table to model
+    loadStorageTableToModel();
+
+    //Save data to file and reload
+    saveStorageTableToFile();
+    loadStorageFileToTable();
+
+    //Refresh
+    loadStorageTableToModel();
+    updateStorageSelectionStatistics();
+
+    //Enable save button
+    //ui->Storage_pushButton_New->setEnabled(true);
+
+    loadParentsList();
+}
+//--------------------------------------------------------------------------
+void MainWindow::editDevice()
+{   //Display a panel to edit the device values
+
+    //Refresh parent combobox
+    loadParentsList();
+
+    //Load panel and values
+    ui->Devices_widget_Edit->setVisible(true);
+    ui->Devices_lineEdit_Name->setText(tempDevice->name);
+    ui->Devices_label_ItemDeviceTypeValue->setText(tempDevice->type);
+    ui->Devices_label_ItemDeviceIDValue->setText(QString::number(tempDevice->ID));
+
+    //Get parent and selected it the combobox
+    Device *newDeviceItem = new Device();
+    newDeviceItem->ID = tempDevice->parentID;
+    newDeviceItem->loadDevice();
+    ui->Devices_comboBox_Parent->setCurrentText(newDeviceItem->name+" ("+QString::number(newDeviceItem->ID)+")");
+}
+//--------------------------------------------------------------------------
+void MainWindow::saveDevice()
+{   //Save the device values from the edit panel
+
+    //Get the ID of the selected parent
+    QVariant selectedData = ui->Devices_comboBox_Parent->currentData();
+    tempDevice->parentID = selectedData.toInt();
+    tempDevice->name = ui->Devices_lineEdit_Name->text();
+
+    //Save name and parent ID
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            UPDATE virtual_storage
+                            SET    virtual_storage_name =:virtual_storage_name,
+                                   virtual_storage_parent_id =:virtual_storage_parent_id
+                            WHERE  virtual_storage_id=:virtual_storage_id
+                                )");
+    query.prepare(querySQL);
+    query.bindValue(":virtual_storage_id",  tempDevice->ID);
+    query.bindValue(":virtual_storage_name", tempDevice->name);
+    query.bindValue(":virtual_storage_parent_id",  tempDevice->parentID);
+    query.exec();
+
+    //If device = Physical Storage
+    if(tempDevice->type == "Storage"){
+
+        QString currentStorageName = tempDevice->name; //selectedStorage->name;
+        QString newStorageName     = ui->Devices_lineEdit_Name->text();
+
+        //Update Storage name
+        querySQL = QLatin1String(R"(
+                                    UPDATE storage
+                                    SET storage_name =:storage_name
+                                    WHERE storage_id =:storage_id
+                                )");
+
+        QSqlQuery updateQuery;
+        updateQuery.prepare(querySQL);
+        updateQuery.bindValue(":storage_name", tempDevice->name);
+        updateQuery.bindValue(":storage_id",   tempDevice->externalID);
+        updateQuery.exec();
+        qDebug() << updateQuery.lastError() << tempDevice->type << tempDevice->ID << tempDevice->name << tempDevice->parentID;
+
+        loadStorageTableToModel();
+        updateStorageSelectionStatistics();
+
+        //Save data to file
+        if (databaseMode=="Memory"){
+            saveStorageTableToFile();
+        }
+
+        //Update name in statistics and catalogs
+        if (currentStorageName != newStorageName){
+            //Update statistics
+            QString updateNameQuerySQL = QLatin1String(R"(
+                                    UPDATE statistics_storage
+                                    SET storage_name = :new_storage_name
+                                    WHERE storage_id =:storage_id
+                                )");
+
+            QSqlQuery updateNameQuery;
+            updateNameQuery.prepare(updateNameQuerySQL);
+            updateNameQuery.bindValue(":new_storage_name", newStorageName);
+            updateNameQuery.bindValue(":storage_id", selectedStorage->ID);
+            updateNameQuery.exec();
+
+            if (databaseMode=="Memory"){
+                saveStatiticsToFile();
+            }
+
+            //Update catalogs (database mode)
+            QString updateCatalogQuerySQL = QLatin1String(R"(
+                                    UPDATE catalog
+                                    SET catalog_storage = :new_storage_name
+                                    WHERE catalog_storage =:current_storage_name
+                                )");
+
+            QSqlQuery updateCatalogQuery;
+            updateCatalogQuery.prepare(updateCatalogQuerySQL);
+            updateCatalogQuery.bindValue(":current_storage_name", currentStorageName);
+            updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
+            updateCatalogQuery.exec();
+
+            //Update catalogs (memory mode)
+            if (databaseMode=="Memory"){
+
+                //List catalogs
+                QString listCatalogQuerySQL = QLatin1String(R"(
+                                    SELECT catalog_name
+                                    FROM catalog
+                                    WHERE catalog_storage =:new_storage_name
+                                )");
+
+                QSqlQuery listCatalogQuery;
+                listCatalogQuery.prepare(listCatalogQuerySQL);
+                listCatalogQuery.bindValue(":new_storage_name", newStorageName);
+                listCatalogQuery.exec();
+
+                //Edit and save each one
+                while (listCatalogQuery.next()){
+                    tempCatalog = new Catalog;
+                    tempCatalog->setName(listCatalogQuery.value(0).toString());
+                    tempCatalog->loadCatalogMetaData();
+                    tempCatalog->setStorageName(newStorageName);
+                    tempCatalog->updateStorageNameToFile();
+                }
+
+                //Refresh
+                if(databaseMode=="Memory")
+                    loadCatalogFilesToTable();
+
+                loadCatalogsTableToModel();
+                loadCatalogsTableToModel();
+            }
+        }
+    }
+
+    //Finalize
+    ui->Devices_widget_Edit->hide();
+
+    //Save data to file
+    if (databaseMode == "Memory"){
+        //Save file
+        saveDeviceTableToFile(deviceFilePath);
+    }
+
+    //Reload
+    loadDeviceTableToTreeModel();
+
+    ui->Devices_pushButton_Edit->setEnabled(false);
 }
 //--------------------------------------------------------------------------

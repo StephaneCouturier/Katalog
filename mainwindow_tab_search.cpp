@@ -105,14 +105,10 @@
             //Refine the seach with the selction of one of the catalogs that have results
 
             //Get file from selected row
-            selectedFilterCatalogName = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
-
-            selectedFilterStorageLocation = tr("All");
-            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
-
-            selectedFilterStorageName = tr("All");
-            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
+            selectedDevice->type= "Catalog";
+            selectedDevice->name = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            selectedDevice->loadDeviceCatalog();
+            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
             //Seach again but only on the selected catalog
             searchFiles();
@@ -687,11 +683,11 @@
                     getSearchCriteria();
 
                 // Searching "Begin With" for File name or Folder name is not supported yet
-                    //Stop animation
+
                     if (newSearch->selectedTextCriteria==tr("Begins With") and newSearch->selectedSearchIn !=tr("File names only")){
-                        QApplication::restoreOverrideCursor();
+                        QApplication::restoreOverrideCursor(); //Stop animation
                         QMessageBox::information(this,"Katalog",tr("The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
-                        return;;
+                        return;
                     }
 
             //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
@@ -700,7 +696,7 @@
 
                         //List of catalogs to search from: catalogSelectedList
                             //Search every catalog if "All" is selected
-                            if ( selectedFilterCatalogName ==tr("All")){
+                            if ( selectedDevice->type != "Catalog"){
                                 //For differences, only process with the selected catalogs
                                 if (ui->Search_checkBox_Differences->isChecked() == true){
                                     QStringList differenceCatalogs;
@@ -720,7 +716,7 @@
 
                             //Otherwise just search files in the selected catalog
                             else{
-                                searchFilesInCatalog(selectedFilterCatalogName);
+                                searchFilesInCatalog(selectedDevice->name);
 
                                 //but also load the second catalog for Differences
                                 if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
@@ -728,10 +724,10 @@
                                          or newSearch->differencesOnSize == true
                                          or newSearch->differencesOnDate == true)){
 
-                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!=selectedFilterCatalogName)
+                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!= selectedCatalog->name)
                                             searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog1->currentText());
 
-                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!=selectedFilterCatalogName)
+                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!= selectedCatalog->name)
                                             searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog2->currentText());
                                 }
                             }
@@ -1763,13 +1759,8 @@
             }
 
             ui->Filters_lineEdit_SeletedDirectory->setText(search->connectedDirectory);
-
-            selectedFilterStorageLocation = search->selectedLocation;
-            selectedFilterStorageName = search->selectedStorage;
-            selectedFilterCatalogName = search->selectedCatalog;
-            ui->Filters_label_DisplayLocation->setText(selectedFilterStorageLocation);
-            ui->Filters_label_DisplayStorage->setText(selectedFilterStorageName);
-            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+            ui->Filters_label_DisplayStorage->setText(search->selectedStorage);
+            ui->Filters_label_DisplayCatalog->setText(search->selectedCatalog);
 
                 //File name
                 ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
@@ -1860,66 +1851,12 @@
                 newSearch->searchOnTags             = ui->Search_checkBox_Tags->isChecked();
                 newSearch->selectedTagName          = ui->Search_comboBox_Tags->currentText();
 
-                newSearch->selectedLocation         = ui->Filters_label_DisplayLocation->text();
                 newSearch->selectedStorage          = ui->Filters_label_DisplayStorage->text();
                 newSearch->selectedCatalog          = ui->Filters_label_DisplayCatalog->text();
                 newSearch->searchInCatalogsChecked  = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                 newSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
                 newSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
 
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::refreshLocationSelectionList()
-        {
-            //Query the full list of locations
-            QSqlQuery getLocationList;
-            QString getLocationListSQL = QLatin1String(R"(
-                                            SELECT DISTINCT storage_location
-                                            FROM storage
-                                            ORDER BY storage_location
-                            )");
-            getLocationList.prepare(getLocationListSQL);
-            getLocationList.exec();
-
-            //Put the results in a list
-            QStringList locationList;
-            while (getLocationList.next()) {
-                locationList << getLocationList.value(0).toString();
-            }
-
-            QStringList displayLocationList = locationList;
-            //Add the "All" option at the beginning
-            displayLocationList.insert(0,tr("All"));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::refreshStorageSelectionList(QString selectedLocation)
-        {
-            //Query the full list of locations
-            QSqlQuery getStorageList;
-
-            QString queryText = "SELECT storage_name FROM storage ";
-
-            if ( selectedLocation == tr("All")){
-                    queryText = queryText + " ORDER BY storage_name ";
-                    getStorageList.prepare(queryText);
-            }
-            else{
-                    queryText = queryText + " WHERE storage_location ='" + selectedLocation + "'";
-                    queryText = queryText + " ORDER BY storage_name ";
-                    getStorageList.prepare(queryText);
-            }
-            getStorageList.exec();
-
-            //Put the results in a list
-            QStringList storageList;
-            while (getStorageList.next()) {
-                storageList << getStorageList.value(0).toString();
-            }
-
-            //Prepare list for the Location combobox
-            QStringList displayStorageList = storageList;
-            //Add the "All" option at the beginning
-            displayStorageList.insert(0,tr("All"));
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
@@ -2233,9 +2170,8 @@
             query.bindValue(":show_folders",              ui->Search_checkBox_ShowFolders->isChecked());
             query.bindValue(":tag_checked",               ui->Search_checkBox_Tags->isChecked());
             query.bindValue(":tag",                       ui->Search_comboBox_Tags->currentText());
-            query.bindValue(":search_location",           selectedFilterStorageLocation);
-            query.bindValue(":search_storage",            selectedFilterStorageName);
-            query.bindValue(":search_catalog",            selectedFilterCatalogName);
+            query.bindValue(":search_storage",            selectedDevice->name);
+            query.bindValue(":search_catalog",            selectedDevice->name);
             query.bindValue(":search_catalog_checked",    ui->Filters_checkBox_SearchInCatalogs->isChecked());
             query.bindValue(":search_directory_checked",  ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
             query.bindValue(":selected_directory",        ui->Filters_lineEdit_SeletedDirectory->text());

@@ -89,7 +89,6 @@ public:
     bool searchOnTags;
     QString selectedTagName;
 
-    QString selectedLocation;
     QString selectedStorage;
     QString selectedCatalog;
     bool    searchInCatalogsChecked;

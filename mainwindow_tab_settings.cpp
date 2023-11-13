@@ -246,7 +246,7 @@
         ui->Explore_treeView_FileList->setIconSize(size);
         ui->Create_treeView_Explorer->setIconSize(size);
         ui->Storage_treeView_StorageList->setIconSize(size);
-        ui->Virtual_treeView_VirtualStorageList->setIconSize(size);
+        ui->Devices_treeView_DeviceList->setIconSize(size);
         ui->Tags_treeview_Explorer->setIconSize(size);
     }
     //----------------------------------------------------------------------
@@ -275,8 +275,7 @@
         //Generate collection files paths and statistics parameters
         generateCollectionFilesPaths();
 
-
-        if(databaseMode=="Memory"){
+        //Load data from files to database
             //Create a Storage list (if none exists) + conversions
             createStorageFile();
             convertStatistics();
@@ -288,8 +287,7 @@
             loadSearchHistoryFileToTable();
             loadCatalogFilesToTable();
             loadStorageFileToTable();
-            loadVirtualStorageFileToTable();
-        }
+            loadDeviceFileToTable();
 
         //Check active status and synch it
         updateAllCatalogPathIsActive();
@@ -299,21 +297,9 @@
         loadSearchHistoryTableToModel();
         loadCatalogsTableToModel();
         loadStorageTableToModel();
-        loadVirtualStorageTableToTreeModel();
-        updateStorageSelectionStatistics();
+        loadDeviceTableToTreeModel();
+        filterFromSelectedDevices();
 
-        //Load Storage list
-        refreshLocationSelectionList();
-        refreshStorageSelectionList(selectedFilterStorageLocation);
-        loadCatalogsTableToModel();
-
-        if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
-            loadStorageTableToSelectionTreeModel();
-        }
-        else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-            loadVirtualStorageFileToTable();
-            loadVirtualStorageTableToTreeModel();
-        }
 
         //Add a default storage device, to force any new catalog to have one
         QSqlQuery queryStorage;
@@ -325,16 +311,14 @@
         queryStorage.exec();
         queryStorage.next();
 
-        if (queryStorage.value(0).toInt() == 0){ //queryCatalog.value(0).toInt() >0 and
+        if (queryStorage.value(0).toInt() == 0){
             addStorageDevice("Default Storage");
         }
 
         //Load Statistics
         loadStatisticsDataTypes();
-        if(databaseMode=="Memory"){
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
-        }
+        loadStatisticsCatalogFileToTable();
+        loadStatisticsStorageFileToTable();
         loadStatisticsChart();
 
         //Load Tags
@@ -413,7 +397,6 @@
                     //Save Settings for the new collection folder value;
                     QSettings settings(settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
-                    //QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
 
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);

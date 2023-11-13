@@ -62,6 +62,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     catalog.cpp \
     catalogsview.cpp \
+    device.cpp \
     devicetreeview.cpp \
     directorytreeitem.cpp \
     directorytreemodel.cpp \
@@ -74,6 +75,7 @@ SOURCES += \
     mainwindow_setup.cpp \
     mainwindow_tab_catalogs.cpp \
     mainwindow_tab_create.cpp \
+    mainwindow_tab_device.cpp \
     mainwindow_tab_explore.cpp \
     mainwindow_tab_filters.cpp \
     mainwindow_tab_search.cpp \
@@ -81,19 +83,18 @@ SOURCES += \
     mainwindow_tab_statistics.cpp \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
-    mainwindow_tab_virtual.cpp \
     search.cpp \
     storage.cpp \
     storagetreeitem.cpp \
     storagetreemodel.cpp \
     storageview.cpp \
-    tag.cpp \
-    virtualstorage.cpp
+    tag.cpp
 
 HEADERS += \
     catalog.h \
     catalogsview.h \
     database.h \
+    device.h \
     devicetreeview.h \
     directorytreeitem.h \
     directorytreemodel.h \
@@ -107,8 +108,7 @@ HEADERS += \
     storagetreeitem.h \
     storagetreemodel.h \
     storageview.h \
-    tag.h \
-    virtualstorage.h
+    tag.h
 
 FORMS += \
     mainwindow.ui

@@ -230,8 +230,20 @@
             QVariant selectedData = ui->Create_comboBox_StorageSelection->currentData();
             int selectedStorageId = selectedData.toInt();
 
-            insertVirtualStorageItem(0, selectedStorageId, newCatalog->name, "Catalog", newCatalog->name);
+            Device *newDeviceItem = new Device();
+            newDeviceItem->ID = 0;
+            newDeviceItem->parentID = selectedStorageId;
+            newDeviceItem->name = newCatalog->name;
+            newDeviceItem->type = "Catalog";
+            newDeviceItem->externalID = 0;
+            newDeviceItem->groupID = 0;
+            newDeviceItem->insertDeviceItem();
 
+            //Save data to file
+            saveDeviceTableToFile(deviceFilePath);
+
+            //Reload
+            loadDeviceTableToTreeModel();
             loadStorageList();
 
         //Launch the scan and cataloging of files
@@ -261,29 +273,20 @@
             loadCatalogFilesToTable();
 
             //Refresh the catalog list for the combobox of the Search screen
-                //Get current search selection
-                selectedFilterStorageLocation = ui->Filters_label_DisplayLocation->text();
-                selectedFilterStorageName     = ui->Filters_label_DisplayStorage->text();
-                selectedFilterCatalogName     = ui->Filters_label_DisplayCatalog->text();
-                selectedFilterVirtualStorageName  = ui->Filters_label_DisplayVirtualStorage->text();
+            refreshDifferencesCatalogSelection();
 
             //Refresh Catalogs list
                 updateAllCatalogPathIsActive();
                 synchCatalogAndStorageValues();
                 loadCatalogsTableToModel();
-                loadVirtualStorageTableToTreeModel();
+                loadDeviceTableToTreeModel();
 
             //Restore selected catalog
-            ui->Filters_label_DisplayCatalog->setText(selectedFilterCatalogName);
+            ui->Filters_label_DisplayCatalog->setText(ui->Filters_label_DisplayCatalog->text());
 
             //Refresh filter tree
-            if (ui->Filter_comboBox_TreeType->currentText()==tr("Location / Storage / Catatog")){
-                loadStorageTableToSelectionTreeModel();
-            }
-            else if (ui->Filter_comboBox_TreeType->currentText()==tr("Virtual Storage / Catalog")){
-                loadVirtualStorageFileToTable();
-                loadVirtualStorageTableToTreeModel();
-            }
+            loadDeviceFileToTable();
+            loadDeviceTableToTreeModel();
 
             //Change tab to show the result of the catalog creation
             ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
