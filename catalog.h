@@ -46,7 +46,7 @@ class Catalog : public QAbstractTableModel
 public:
     Catalog(QObject *parent = nullptr);
 
-    QString ID;
+    int ID;
     QString name;
     QString filePath;
     QDateTime dateUpdated;
@@ -68,22 +68,12 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void setName(QString selectedName);
-    void setFilePath(QString selectedFilePath);
     void setSourcePath(QString selectedSourcePath);
-    void setFileCount(qint64 selectedFileCount);
     void updateFileCount();//from database
-    void setTotalFileSize(qint64 selectedTotalFileSize);
     void updateTotalFileSize();//from database
-    void setIncludeHidden(bool selectedIncludeHidden);
-    void setFileType(QString selectedFileType);
     void setStorageName(QString selectedStorageName);
-    void setIncludeSymblinks(bool selectedIncludeSymblinks);
-    void setIsFullDevice(bool selectedIsFullDevice);
     void setDateLoaded(QDateTime dateTime);
     void setDateUpdated(QDateTime dateTime);
-    void setIncludeMetadata(bool selectedIncludeMetadata);
-    void setAppVersion(QString selectedAppVersion);
 
     void createCatalog();
     void deleteCatalog();

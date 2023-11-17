@@ -135,10 +135,10 @@
         if (!q.exec(SQL_CREATE_STORAGE))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
+        if (!q.exec(SQL_CREATE_DEVICE))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG))
+        if (!q.exec(SQL_CREATE_DEVICE_CATALOG))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_FILE))
@@ -174,7 +174,7 @@
             QSqlQuery queryDelete;
             queryDelete.exec("DELETE FROM catalog");
             queryDelete.exec("DELETE FROM storage");
-            queryDelete.exec("DELETE FROM virtual_storage");
+            queryDelete.exec("DELETE FROM device");
             queryDelete.exec("DELETE FROM file");
             queryDelete.exec("DELETE FROM filetemp");
             queryDelete.exec("DELETE FROM folder");
@@ -722,8 +722,8 @@
         if(databaseMode=="Memory"){
             searchHistoryFilePath       = collectionFolder + "/" + "search_history.csv";
             storageFilePath             = collectionFolder + "/" + "storage.csv";
-            deviceFilePath              = collectionFolder + "/" + "virtual_storage.csv";
-            deviceCatalogFilePath       = collectionFolder + "/" + "virtual_storage_catalog.csv";
+            deviceFilePath              = collectionFolder + "/" + "device.csv";
+            deviceCatalogFilePath       = collectionFolder + "/" + "device_catalog.csv";
             statisticsCatalogFileName   = "statistics_catalog.csv";
             statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
             statisticsStorageFileName   = "statistics_storage.csv";

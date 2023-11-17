@@ -191,6 +191,9 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
     QModelIndex index=ui->Devices_treeView_DeviceList->currentIndex();
     tempDevice->ID   = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     tempDevice->loadDevice();
+    Device *tempParentDevice = new Device();
+    tempParentDevice->ID = tempDevice->parentID;
+    tempParentDevice->loadDevice();
 
     //Set actions for catalogs
     if(tempDevice->type=="Catalog"){
@@ -203,6 +206,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+            tempCatalog->name = tempDevice->name;
+            tempCatalog->loadCatalogMetaData();
+            updateSingleCatalog(tempCatalog, true);
+
             updateAllNumbers();
         });
 
@@ -322,9 +329,9 @@ void MainWindow::convertDeviceCatalogFile() {
 
     //update type
     querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET virtual_storage_type="Virtual"
-                            WHERE virtual_storage_type=""
+                            UPDATE device
+                            SET device_type="Virtual"
+                            WHERE device_type=""
                         )");
     query.prepare(querySQL);
     query.exec();
@@ -333,19 +340,19 @@ void MainWindow::convertDeviceCatalogFile() {
     loadDeviceFileToTable();
     loadDeviceTableToTreeModel();
 
-    //Insert Catalog assignments from virtual_storage_catalog
+    //Insert Catalog assignments from device_catalog
     querySQL = QLatin1String(R"(
-                        INSERT INTO virtual_storage(
-                                        virtual_storage_id,
-                                        virtual_storage_parent_id,
-                                        virtual_storage_name,
-                                        virtual_storage_type,
-                                        virtual_storage_external_id )
-                        VALUES(         :virtual_storage_id,
-                                        :virtual_storage_parent_id,
-                                        :virtual_storage_name,
-                                        :virtual_storage_type,
-                                        :virtual_storage_external_id )
+                        INSERT INTO device(
+                                        device_id,
+                                        device_parent_id,
+                                        device_name,
+                                        device_type,
+                                        device_external_id )
+                        VALUES(         :device_id,
+                                        :device_parent_id,
+                                        :device_name,
+                                        :device_type,
+                                        :device_external_id )
                     )");
     query.prepare(querySQL);
 
@@ -379,8 +386,8 @@ void MainWindow::convertDeviceCatalogFile() {
             //Generate new ID
             QSqlQuery queryID;
             QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(virtual_storage_id)
-                            FROM virtual_storage
+                            SELECT MAX(device_id)
+                            FROM device
                         )");
             queryID.prepare(queryIDSQL);
             queryID.exec();
@@ -390,11 +397,11 @@ void MainWindow::convertDeviceCatalogFile() {
             //Split the string with tabulation into a list
             QStringList fieldList = line.split('\t');
 
-            query.bindValue(":virtual_storage_id",newID);
-            query.bindValue(":virtual_storage_parent_id",fieldList[0]);
-            query.bindValue(":virtual_storage_name",fieldList[1]);
-            query.bindValue(":virtual_storage_type","Catalog");
-            query.bindValue(":virtual_storage_external_id",fieldList[1]);
+            query.bindValue(":device_id",newID);
+            query.bindValue(":device_parent_id",fieldList[0]);
+            query.bindValue(":device_name",fieldList[1]);
+            query.bindValue(":device_type","Catalog");
+            query.bindValue(":device_external_id",fieldList[1]);
             query.exec();
         }
     }
@@ -413,10 +420,10 @@ void MainWindow::importStorageCatalogLinks() {
                             SELECT catalog_storage,
                                     catalog_name,
                                     storage.storage_id,
-                                    virtual_storage.virtual_storage_id
+                                    device.device_id
                             FROM catalog
                             JOIN storage ON storage.storage_name = catalog.catalog_storage
-                            JOIN virtual_storage ON storage.storage_id = virtual_storage.virtual_storage_external_id
+                            JOIN device ON storage.storage_id = device.device_external_id
                          )");
     query.prepare(querySQL);
     query.exec();
@@ -425,12 +432,12 @@ void MainWindow::importStorageCatalogLinks() {
         QString storage_name = query.value(0).toString();
         QString catalog_name = query.value(1).toString();
         QString storage_id   = query.value(2).toString();
-        int vstorage_id   = query.value(3).toInt();
+        int device_id   = query.value(3).toInt();
 
-        selectedCatalog->setName(catalog_name);
+        selectedCatalog->name = catalog_name;
         selectedCatalog->loadCatalogMetaData();
 
-        assignCatalogToDevice(catalog_name,vstorage_id);
+        assignCatalogToDevice(catalog_name,device_id);
 
         saveDeviceTableToFile(deviceFilePath);
         loadDeviceTableToTreeModel();
@@ -446,9 +453,9 @@ QList<int> MainWindow::verifyStorageWithOutDevice()
                             SELECT storage_id
                             FROM storage
                             WHERE storage_id NOT IN(
-                                SELECT virtual_storage_external_id
-                                FROM virtual_storage
-                                WHERE virtual_storage_type = 'Storage'
+                                SELECT device_external_id
+                                FROM device
+                                WHERE device_type = 'Storage'
                             )
                          )");
 
@@ -474,8 +481,8 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
         //Generate new ID
         QSqlQuery queryID;
         QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(virtual_storage_id)
-                            FROM virtual_storage
+                            SELECT MAX(device_id)
+                            FROM device
                         )");
         queryID.prepare(queryIDSQL);
         queryID.exec();
@@ -485,40 +492,40 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
         //Insert catalog
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                            INSERT INTO virtual_storage(
-                                        virtual_storage_id,
-                                        virtual_storage_parent_id,
-                                        virtual_storage_name,
-                                        virtual_storage_type,
-                                        virtual_storage_external_id,
-                                        virtual_storage_path,
-                                        virtual_storage_total_file_size,
-                                        virtual_storage_total_file_count,
-                                        virtual_storage_total_space,
-                                        virtual_storage_free_space)
+                            INSERT INTO device(
+                                        device_id,
+                                        device_parent_id,
+                                        device_name,
+                                        device_type,
+                                        device_external_id,
+                                        device_path,
+                                        device_total_file_size,
+                                        device_total_file_count,
+                                        device_total_space,
+                                        device_free_space)
                             VALUES(
-                                        :virtual_storage_id,
-                                        :virtual_storage_parent_id,
-                                        :virtual_storage_name,
-                                        :virtual_storage_type,
-                                        :virtual_storage_external_id,
-                                        :virtual_storage_path,
-                                        :virtual_storage_total_file_size,
-                                        :virtual_storage_total_file_count,
-                                        :virtual_storage_total_space,
-                                        :virtual_storage_free_space)
+                                        :device_id,
+                                        :device_parent_id,
+                                        :device_name,
+                                        :device_type,
+                                        :device_external_id,
+                                        :device_path,
+                                        :device_total_file_size,
+                                        :device_total_file_count,
+                                        :device_total_space,
+                                        :device_free_space)
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id", newID);
-        query.bindValue(":virtual_storage_parent_id", deviceID);
-        query.bindValue(":virtual_storage_name", selectedCatalog->name);
-        query.bindValue(":virtual_storage_type", "Catalog");
-        query.bindValue(":virtual_storage_external_id", selectedCatalog->name);
-        query.bindValue(":virtual_storage_path", selectedCatalog->sourcePath);
-        query.bindValue(":virtual_storage_total_file_size", selectedCatalog->totalFileSize);
-        query.bindValue(":virtual_storage_total_file_count", selectedCatalog->fileCount);
-        query.bindValue(":virtual_storage_total_space", 0);
-        query.bindValue(":virtual_storage_free_space", 0);
+        query.bindValue(":device_id", newID);
+        query.bindValue(":device_parent_id", deviceID);
+        query.bindValue(":device_name", selectedCatalog->name);
+        query.bindValue(":device_type", "Catalog");
+        query.bindValue(":device_external_id", selectedCatalog->name);
+        query.bindValue(":device_path", selectedCatalog->sourcePath);
+        query.bindValue(":device_total_file_size", selectedCatalog->totalFileSize);
+        query.bindValue(":device_total_file_count", selectedCatalog->fileCount);
+        query.bindValue(":device_total_space", 0);
+        query.bindValue(":device_free_space", 0);
         query.exec();
 
         //Save data to file
@@ -540,8 +547,8 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
         //Generate new ID
         QSqlQuery queryID;
         QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(virtual_storage_id)
-                            FROM virtual_storage
+                            SELECT MAX(device_id)
+                            FROM device
                         )");
         queryID.prepare(queryIDSQL);
         queryID.exec();
@@ -551,40 +558,40 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
         //Insert storage
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                            INSERT INTO virtual_storage(
-                                        virtual_storage_id,
-                                        virtual_storage_parent_id,
-                                        virtual_storage_name,
-                                        virtual_storage_type,
-                                        virtual_storage_external_id,
-                                        virtual_storage_path,
-                                        virtual_storage_total_file_size,
-                                        virtual_storage_total_file_count,
-                                        virtual_storage_total_space,
-                                        virtual_storage_free_space)
+                            INSERT INTO device(
+                                        device_id,
+                                        device_parent_id,
+                                        device_name,
+                                        device_type,
+                                        device_external_id,
+                                        device_path,
+                                        device_total_file_size,
+                                        device_total_file_count,
+                                        device_total_space,
+                                        device_free_space)
                             VALUES(
-                                        :virtual_storage_id,
-                                        :virtual_storage_parent_id,
-                                        :virtual_storage_name,
-                                        :virtual_storage_type,
-                                        :virtual_storage_external_id,
-                                        :virtual_storage_path,
-                                        :virtual_storage_total_file_size,
-                                        :virtual_storage_total_file_count,
-                                        :virtual_storage_total_space,
-                                        :virtual_storage_free_space)
+                                        :device_id,
+                                        :device_parent_id,
+                                        :device_name,
+                                        :device_type,
+                                        :device_external_id,
+                                        :device_path,
+                                        :device_total_file_size,
+                                        :device_total_file_count,
+                                        :device_total_space,
+                                        :device_free_space)
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id", newID);
-        query.bindValue(":virtual_storage_parent_id", deviceID);
-        query.bindValue(":virtual_storage_name", selectedStorage->name);
-        query.bindValue(":virtual_storage_type", "Storage");
-        query.bindValue(":virtual_storage_external_id", selectedStorage->ID);
-        query.bindValue(":virtual_storage_path", selectedStorage->path);
-        query.bindValue(":virtual_storage_total_file_size", 0);
-        query.bindValue(":virtual_storage_total_file_count", 0);
-        query.bindValue(":virtual_storage_total_space", selectedStorage->totalSpace);
-        query.bindValue(":virtual_storage_free_space", selectedStorage->freeSpace);
+        query.bindValue(":device_id", newID);
+        query.bindValue(":device_parent_id", deviceID);
+        query.bindValue(":device_name", selectedStorage->name);
+        query.bindValue(":device_type", "Storage");
+        query.bindValue(":device_external_id", selectedStorage->ID);
+        query.bindValue(":device_path", selectedStorage->path);
+        query.bindValue(":device_total_file_size", 0);
+        query.bindValue(":device_total_file_count", 0);
+        query.bindValue(":device_total_space", selectedStorage->totalSpace);
+        query.bindValue(":device_free_space", selectedStorage->freeSpace);
         query.exec();
 
         //Save data to file
@@ -609,13 +616,13 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
             //Insert catalog
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                        DELETE FROM virtual_storage
-                                        WHERE virtual_storage_id=:virtual_storage_id
-                                        AND   virtual_storage_parent_id=:virtual_storage_parent_id
+                                        DELETE FROM device
+                                        WHERE device_id=:device_id
+                                        AND   device_parent_id=:device_parent_id
                                     )");
             query.prepare(querySQL);
-            query.bindValue(":virtual_storage_id",deviceID);
-            query.bindValue(":virtual_storage_parent_id",deviceParentID);
+            query.bindValue(":device_id",deviceID);
+            query.bindValue(":device_parent_id",deviceParentID);
             query.exec();
 
             //Save data to file
@@ -691,7 +698,7 @@ void MainWindow::loadDeviceFileToTable()
         QSqlQuery query;
         QString querySQL;
         querySQL = QLatin1String(R"(
-                        DELETE FROM virtual_storage
+                        DELETE FROM device
                     )");
         query.prepare(querySQL);
         query.exec();
@@ -726,44 +733,44 @@ void MainWindow::loadDeviceFileToTable()
                     QStringList fieldList = line.split('\t');
                     QSqlQuery insertQuery;
                     querySQL = QLatin1String(R"(
-                        INSERT INTO virtual_storage (
-                                        virtual_storage_id,
-                                        virtual_storage_parent_id,
-                                        virtual_storage_name,
-                                        virtual_storage_type,
-                                        virtual_storage_external_id,
-                                        virtual_storage_path,
-                                        virtual_storage_total_file_size,
-                                        virtual_storage_total_file_count,
-                                        virtual_storage_total_space,
-                                        virtual_storage_free_space,
-                                        virtual_storage_group_id )
+                        INSERT INTO device (
+                                        device_id,
+                                        device_parent_id,
+                                        device_name,
+                                        device_type,
+                                        device_external_id,
+                                        device_path,
+                                        device_total_file_size,
+                                        device_total_file_count,
+                                        device_total_space,
+                                        device_free_space,
+                                        device_group_id )
                         VALUES(
-                                        :virtual_storage_id,
-                                        :virtual_storage_parent_id,
-                                        :virtual_storage_name,
-                                        :virtual_storage_type,
-                                        :virtual_storage_external_id,
-                                        :virtual_storage_path,
-                                        :virtual_storage_total_file_size,
-                                        :virtual_storage_total_file_count,
-                                        :virtual_storage_total_space,
-                                        :virtual_storage_free_space,
-                                        :virtual_storage_group_id )
+                                        :device_id,
+                                        :device_parent_id,
+                                        :device_name,
+                                        :device_type,
+                                        :device_external_id,
+                                        :device_path,
+                                        :device_total_file_size,
+                                        :device_total_file_count,
+                                        :device_total_space,
+                                        :device_free_space,
+                                        :device_group_id )
                     )");
                     insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
-                    insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
-                    insertQuery.bindValue(":virtual_storage_name",fieldList[2]);
+                    insertQuery.bindValue(":device_id",fieldList[0].toInt());
+                    insertQuery.bindValue(":device_parent_id",fieldList[1]);
+                    insertQuery.bindValue(":device_name",fieldList[2]);
                     if(fieldList.size()>3){//prevent issues with files created in v1.22
-                        insertQuery.bindValue(":virtual_storage_type",fieldList[3]);
-                        insertQuery.bindValue(":virtual_storage_external_id",fieldList[4]);
-                        insertQuery.bindValue(":virtual_storage_path",fieldList[5]);
-                        insertQuery.bindValue(":virtual_storage_total_file_size",fieldList[6]);
-                        insertQuery.bindValue(":virtual_storage_total_file_count",fieldList[7]);
-                        insertQuery.bindValue(":virtual_storage_total_space",fieldList[8]);
-                        insertQuery.bindValue(":virtual_storage_free_space",fieldList[9]);
-                        insertQuery.bindValue(":virtual_storage_group_id",fieldList[11]);
+                        insertQuery.bindValue(":device_type",fieldList[3]);
+                        insertQuery.bindValue(":device_external_id",fieldList[4]);
+                        insertQuery.bindValue(":device_path",fieldList[5]);
+                        insertQuery.bindValue(":device_total_file_size",fieldList[6]);
+                        insertQuery.bindValue(":device_total_file_count",fieldList[7]);
+                        insertQuery.bindValue(":device_total_space",fieldList[8]);
+                        insertQuery.bindValue(":device_free_space",fieldList[9]);
+                        insertQuery.bindValue(":device_group_id",fieldList[11]);
                     }
                     insertQuery.exec();
                 }
@@ -778,135 +785,135 @@ void MainWindow::loadDeviceTableToTreeModel()
 {
     QList<QStandardItem*> firstColumnItems;
 
-    //Synch data to virtual_storage
+    //Synch data to device
     synchCatalogAndStorageValues();
 
-    //Retrieve virtual_storage hierarchy
+    //Retrieve device hierarchy
     QSqlQuery query;
     QString querySQL;
 
     querySQL = QLatin1String(R"(
-                    SELECT  virtual_storage_id,
-                            virtual_storage_parent_id,
-                            virtual_storage_name,
-                            virtual_storage_type,
-                            virtual_storage_external_id,
-                            virtual_storage_path,
-                            virtual_storage_total_file_size,
-                            virtual_storage_total_file_count,
-                            virtual_storage_total_space,
-                            virtual_storage_free_space,
-                            virtual_storage_active,
-                            virtual_storage_group_id
-                    FROM  virtual_storage
+                    SELECT  device_id,
+                            device_parent_id,
+                            device_name,
+                            device_type,
+                            device_external_id,
+                            device_path,
+                            device_total_file_size,
+                            device_total_file_count,
+                            device_total_space,
+                            device_free_space,
+                            device_active,
+                            device_group_id
+                    FROM  device
                 )");
 
     if (ui->Devices_checkBox_DisplayPhysicalGroupOnly->isChecked() == true) {
         querySQL = QLatin1String(R"(
 
-                    WITH RECURSIVE virtual_storage_tree AS (
+                    WITH RECURSIVE device_tree AS (
                       SELECT
-                        virtual_storage_id,
-                        virtual_storage_parent_id,
-                        virtual_storage_name,
-                        virtual_storage_type,
-                        virtual_storage_external_id,
-                        virtual_storage_path,
-                        virtual_storage_total_file_size,
-                        virtual_storage_total_file_count,
-                        virtual_storage_total_space,
-                        virtual_storage_free_space,
-                        virtual_storage_active,
-                        virtual_storage_group_id
-                      FROM virtual_storage
-                      WHERE virtual_storage_id = 1
+                        device_id,
+                        device_parent_id,
+                        device_name,
+                        device_type,
+                        device_external_id,
+                        device_path,
+                        device_total_file_size,
+                        device_total_file_count,
+                        device_total_space,
+                        device_free_space,
+                        device_active,
+                        device_group_id
+                      FROM device
+                      WHERE device_id = 1
 
                       UNION ALL
 
                       SELECT
-                        child.virtual_storage_id,
-                        child.virtual_storage_parent_id,
-                        child.virtual_storage_name,
-                        child.virtual_storage_type,
-                        child.virtual_storage_external_id,
-                        child.virtual_storage_path,
-                        child.virtual_storage_total_file_size,
-                        child.virtual_storage_total_file_count,
-                        child.virtual_storage_total_space,
-                        child.virtual_storage_free_space,
-                        child.virtual_storage_active,
-                        child.virtual_storage_group_id
-                      FROM virtual_storage_tree parent
-                      JOIN virtual_storage child ON child.virtual_storage_parent_id = parent.virtual_storage_id
+                        child.device_id,
+                        child.device_parent_id,
+                        child.device_name,
+                        child.device_type,
+                        child.device_external_id,
+                        child.device_path,
+                        child.device_total_file_size,
+                        child.device_total_file_count,
+                        child.device_total_space,
+                        child.device_free_space,
+                        child.device_active,
+                        child.device_group_id
+                      FROM device_tree parent
+                      JOIN device child ON child.device_parent_id = parent.device_id
                     )
                     SELECT
-                        virtual_storage_id,
-                        virtual_storage_parent_id,
-                        virtual_storage_name,
-                        virtual_storage_type,
-                        virtual_storage_external_id,
-                        virtual_storage_path,
-                        virtual_storage_total_file_size,
-                        virtual_storage_total_file_count,
-                        virtual_storage_total_space,
-                        virtual_storage_free_space,
-                        virtual_storage_active,
-                        virtual_storage_group_id
-                    FROM virtual_storage_tree
+                        device_id,
+                        device_parent_id,
+                        device_name,
+                        device_type,
+                        device_external_id,
+                        device_path,
+                        device_total_file_size,
+                        device_total_file_count,
+                        device_total_space,
+                        device_free_space,
+                        device_active,
+                        device_group_id
+                    FROM device_tree
                 )");
     }
     else if (ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->isChecked() == true) {
         querySQL = QLatin1String(R"(
-                    WITH RECURSIVE virtual_storage_tree AS (
+                    WITH RECURSIVE device_tree AS (
                       SELECT
-                        virtual_storage_id,
-                        virtual_storage_parent_id,
-                        virtual_storage_name,
-                        virtual_storage_type,
-                        virtual_storage_external_id,
-                        virtual_storage_path,
-                        virtual_storage_total_file_size,
-                        virtual_storage_total_file_count,
-                        virtual_storage_total_space,
-                        virtual_storage_free_space,
-                        virtual_storage_active,
-                        virtual_storage_group_id
-                      FROM virtual_storage
-                      WHERE virtual_storage_id <> 1
+                        device_id,
+                        device_parent_id,
+                        device_name,
+                        device_type,
+                        device_external_id,
+                        device_path,
+                        device_total_file_size,
+                        device_total_file_count,
+                        device_total_space,
+                        device_free_space,
+                        device_active,
+                        device_group_id
+                      FROM device
+                      WHERE device_id <> 1
 
                       UNION ALL
 
                       SELECT
-                        child.virtual_storage_id,
-                        child.virtual_storage_parent_id,
-                        child.virtual_storage_name,
-                        child.virtual_storage_type,
-                        child.virtual_storage_external_id,
-                        child.virtual_storage_path,
-                        child.virtual_storage_total_file_size,
-                        child.virtual_storage_total_file_count,
-                        child.virtual_storage_total_space,
-                        child.virtual_storage_free_space,
-                        child.virtual_storage_active,
-                        child.virtual_storage_group_id
-                      FROM virtual_storage_tree parent
-                      JOIN virtual_storage child ON child.virtual_storage_parent_id = parent.virtual_storage_id
-                      WHERE parent.virtual_storage_id <> 1
+                        child.device_id,
+                        child.device_parent_id,
+                        child.device_name,
+                        child.device_type,
+                        child.device_external_id,
+                        child.device_path,
+                        child.device_total_file_size,
+                        child.device_total_file_count,
+                        child.device_total_space,
+                        child.device_free_space,
+                        child.device_active,
+                        child.device_group_id
+                      FROM device_tree parent
+                      JOIN device child ON child.device_parent_id = parent.device_id
+                      WHERE parent.device_id <> 1
                     )
                     SELECT DISTINCT -- Add DISTINCT to remove duplicates
-                        virtual_storage_id,
-                        virtual_storage_parent_id,
-                        virtual_storage_name,
-                        virtual_storage_type,
-                        virtual_storage_external_id,
-                        virtual_storage_path,
-                        virtual_storage_total_file_size,
-                        virtual_storage_total_file_count,
-                        virtual_storage_total_space,
-                        virtual_storage_free_space,
-                        virtual_storage_active,
-                        virtual_storage_group_id
-                    FROM virtual_storage_tree
+                        device_id,
+                        device_parent_id,
+                        device_name,
+                        device_type,
+                        device_external_id,
+                        device_path,
+                        device_total_file_size,
+                        device_total_file_count,
+                        device_total_space,
+                        device_free_space,
+                        device_active,
+                        device_group_id
+                    FROM device_tree
                 )");
     }
 
@@ -917,24 +924,24 @@ void MainWindow::loadDeviceTableToTreeModel()
 
     if (ui->Devices_checkBox_DisplayCatalogs->isChecked() == false) {
         querySQL += QLatin1String(R"(
-                    AND virtual_storage_type !='Catalog'
+                    AND device_type !='Catalog'
                 )");
     }
 
     if (ui->Devices_checkBox_DisplayStorage->isChecked() == false) {
         querySQL += QLatin1String(R"(
-                    AND virtual_storage_type !='Storage'
-                    AND virtual_storage_type !='Catalog'
+                    AND device_type !='Storage'
+                    AND device_type !='Catalog'
                 )");
     }
 
     if (ui->Devices_checkBox_DisplayStorageOnly->isChecked() == true) {
         querySQL += QLatin1String(R"(
-                    AND virtual_storage_type ='Storage'
+                    AND device_type ='Storage'
                 )");
     }
 
-    querySQL +=" ORDER BY virtual_storage_type DESC, virtual_storage_parent_id ASC, virtual_storage_id ASC ";
+    querySQL +=" ORDER BY device_type DESC, device_parent_id ASC, device_id ASC ";
     query.prepare(querySQL);
     query.exec();
 
@@ -1082,7 +1089,7 @@ void MainWindow::saveDeviceTableToFile(QString filePath)
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                     SELECT *
-                                    FROM virtual_storage
+                                    FROM device
                             )");
         query.prepare(querySQL);
         query.exec();
@@ -1136,58 +1143,58 @@ void MainWindow::updateNumbers(int deviceID, QString storageType) {
     QString querySQL;
 
     if(storageType=="Storage"  or storageType=="Virtual"){
-        //virtual_storage_total_file_count
+        //device_total_file_count
         querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET virtual_storage_total_file_count =
-                                (SELECT SUM(virtual_storage_total_file_count)
-                                FROM virtual_storage
-                                WHERE virtual_storage_parent_id = :virtual_storage_id)
-                            WHERE virtual_storage_id = :virtual_storage_id
+                            UPDATE device
+                            SET device_total_file_count =
+                                (SELECT SUM(device_total_file_count)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id", deviceID);
+        query.bindValue(":device_id", deviceID);
         query.exec();
 
-        //virtual_storage_total_file_size
+        //device_total_file_size
         querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET virtual_storage_total_file_size =
-                                (SELECT SUM(virtual_storage_total_file_size)
-                                FROM virtual_storage
-                                WHERE virtual_storage_parent_id = :virtual_storage_id)
-                            WHERE virtual_storage_id = :virtual_storage_id
+                            UPDATE device
+                            SET device_total_file_size =
+                                (SELECT SUM(device_total_file_size)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id", deviceID);
+        query.bindValue(":device_id", deviceID);
         query.exec();
     }
 
     if(storageType !="Storage" and storageType=="Virtual"){
-        //virtual_storage_total_space
+        //device_total_space
         querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET virtual_storage_total_space =
-                                (SELECT SUM(virtual_storage_total_space)
-                                FROM virtual_storage
-                                WHERE virtual_storage_parent_id = :virtual_storage_id)
-                            WHERE virtual_storage_id = :virtual_storage_id
+                            UPDATE device
+                            SET device_total_space =
+                                (SELECT SUM(device_total_space)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",deviceID);
+        query.bindValue(":device_id",deviceID);
         query.exec();
 
-        //virtual_storage_free_space
+        //device_free_space
         querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET virtual_storage_free_space =
-                                (SELECT SUM(virtual_storage_free_space)
-                                FROM virtual_storage
-                                WHERE virtual_storage_parent_id = :virtual_storage_id)
-                            WHERE virtual_storage_id = :virtual_storage_id
+                            UPDATE device
+                            SET device_free_space =
+                                (SELECT SUM(device_free_space)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
                         )");
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_id",deviceID);
+        query.bindValue(":device_id",deviceID);
         query.exec();
     }
     saveDeviceTableToFile(deviceFilePath);
@@ -1200,23 +1207,23 @@ void MainWindow::synchCatalogAndStorageValues() {
 
     //Synch Catalog numbers
         querySQL = QLatin1String(R"(
-                        UPDATE virtual_storage
-                        SET virtual_storage_total_file_count = catalog.catalog_file_count,
-                            virtual_storage_total_file_size  = catalog.catalog_total_file_size,
-                            virtual_storage_active = catalog.catalog_source_path_is_active
+                        UPDATE device
+                        SET device_total_file_count = catalog.catalog_file_count,
+                            device_total_file_size  = catalog.catalog_total_file_size,
+                            device_active = catalog.catalog_source_path_is_active
                         FROM catalog
-                        WHERE virtual_storage.virtual_storage_name = catalog.catalog_name;
+                        WHERE device.device_name = catalog.catalog_name;
                     )");
         query.prepare(querySQL);
         query.exec();
 
     //Synch Storage numbers
         querySQL = QLatin1String(R"(
-                        UPDATE virtual_storage
-                        SET virtual_storage_total_space = storage.storage_total_space,
-                            virtual_storage_free_space = storage.storage_free_space
+                        UPDATE device
+                        SET device_total_space = storage.storage_total_space,
+                            device_free_space = storage.storage_free_space
                         FROM storage
-                        WHERE virtual_storage.virtual_storage_external_id = storage.storage_id;
+                        WHERE device.device_external_id = storage.storage_id;
                     )");
         query.prepare(querySQL);
         query.exec();
@@ -1230,27 +1237,27 @@ void MainWindow::updateAllNumbers() {
     QString querySQL;
     //Get List of parent items
     querySQL = QLatin1String(R"(
-                        WITH RECURSIVE virtual_storage_tree AS (
+                        WITH RECURSIVE device_tree AS (
                           SELECT
-                            virtual_storage_id,
-                            virtual_storage_parent_id
-                          FROM virtual_storage
-                          WHERE virtual_storage_id = :virtual_storage_id
+                            device_id,
+                            device_parent_id
+                          FROM device
+                          WHERE device_id = :device_id
 
                           UNION ALL
 
                           SELECT
-                            parent.virtual_storage_id,
-                            parent.virtual_storage_parent_id
-                          FROM virtual_storage_tree child
-                          JOIN virtual_storage parent
-                            ON parent.virtual_storage_id = child.virtual_storage_parent_id
+                            parent.device_id,
+                            parent.device_parent_id
+                          FROM device_tree child
+                          JOIN device parent
+                            ON parent.device_id = child.device_parent_id
                         )
-                        SELECT virtual_storage_id
-                        FROM virtual_storage_tree
+                        SELECT device_id
+                        FROM device_tree
                     )");
     query.prepare(querySQL);
-    query.bindValue(":virtual_storage_id",tempDevice->ID);
+    query.bindValue(":device_id",tempDevice->ID);
     query.exec();
 
     //Update parents
@@ -1274,8 +1281,8 @@ void MainWindow::insertPhysicalStorageGroup() {
 
     querySQL = QLatin1String(R"(
                             SELECT COUNT(*)
-                            FROM virtual_storage
-                            WHERE virtual_storage_id = 1
+                            FROM device
+                            WHERE device_id = 1
                         )");
     query.prepare(querySQL);
     query.exec();
@@ -1360,23 +1367,23 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
     QSqlQuery query;
 
     // First, update the rows with parentID = 0 to keep them unchanged
-    QString sql = "UPDATE virtual_storage SET virtual_storage_id = virtual_storage_id + :shiftAmount "
-                  "WHERE virtual_storage_parent_id = 0";
+    QString sql = "UPDATE device SET device_id = device_id + :shiftAmount "
+                  "WHERE device_parent_id = 0";
     query.prepare(sql);
     query.bindValue(":shiftAmount", shiftAmount);
     if (!query.exec()) {
-        qDebug() << "Error updating virtual_storage table:" << query.lastError().text();
+        qDebug() << "Error updating device table:" << query.lastError().text();
         return;
     }
 
     // Next, update the rows with parentID != 0 to shift their IDs
-    sql = "UPDATE virtual_storage SET virtual_storage_id = virtual_storage_id + :shiftAmount, "
-          "virtual_storage_parent_id = virtual_storage_parent_id + :shiftAmount "
-          "WHERE virtual_storage_parent_id != 0";
+    sql = "UPDATE device SET device_id = device_id + :shiftAmount, "
+          "device_parent_id = device_parent_id + :shiftAmount "
+          "WHERE device_parent_id != 0";
     query.prepare(sql);
     query.bindValue(":shiftAmount", shiftAmount);
     if (!query.exec()) {
-        qDebug() << "Error updating virtual_storage table:" << query.lastError().text();
+        qDebug() << "Error updating device table:" << query.lastError().text();
         return;
     }
 
@@ -1389,14 +1396,14 @@ void MainWindow::loadParentsList()
     //Get data
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                SELECT v.virtual_storage_name, v.virtual_storage_id
-                                FROM virtual_storage v
+                                SELECT v.device_name, v.device_id
+                                FROM device v
 
-                                WHERE virtual_storage_type NOT IN ("Catalog","Storage")
-                                AND virtual_storage_id !=0
-                                AND virtual_storage_id !=:selected_virtual_storage_id
+                                WHERE device_type NOT IN ("Catalog","Storage")
+                                AND device_id !=0
+                                AND device_id !=:selected_device_id
                             )");
-    // WHERE v.virtual_storage_group_id = 0
+    // WHERE v.device_group_id = 0
 
     /*
         if ( selectedDeviceType == "Location" ){
@@ -1411,9 +1418,9 @@ void MainWindow::loadParentsList()
         }
 */
 
-    //querySQL += " ORDER BY virtual_storage_name ";
+    //querySQL += " ORDER BY device_name ";
     query.prepare(querySQL);
-    query.bindValue(":selected_virtual_storage_id", tempDevice->ID);
+    query.bindValue(":selected_device_id", tempDevice->ID);
     query.exec();
 
     //Load to comboboxes
@@ -1482,8 +1489,7 @@ void MainWindow::addStorageDevice()
 {   //Create a new storage device and add it to the selected Device
 
     //Create Storage entry
-    tempStorage->setName(tr("Storage"));
-    tempStorage->setLocation(tempDevice->name);
+    tempStorage->name = tr("Storage");
     tempStorage->createStorage();
 
     //Create Device under Physical group (ID=0)
@@ -1550,15 +1556,15 @@ void MainWindow::saveDevice()
     //Save name and parent ID
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                            UPDATE virtual_storage
-                            SET    virtual_storage_name =:virtual_storage_name,
-                                   virtual_storage_parent_id =:virtual_storage_parent_id
-                            WHERE  virtual_storage_id=:virtual_storage_id
+                            UPDATE device
+                            SET    device_name =:device_name,
+                                   device_parent_id =:device_parent_id
+                            WHERE  device_id=:device_id
                                 )");
     query.prepare(querySQL);
-    query.bindValue(":virtual_storage_id",  tempDevice->ID);
-    query.bindValue(":virtual_storage_name", tempDevice->name);
-    query.bindValue(":virtual_storage_parent_id",  tempDevice->parentID);
+    query.bindValue(":device_id",  tempDevice->ID);
+    query.bindValue(":device_name", tempDevice->name);
+    query.bindValue(":device_parent_id",  tempDevice->parentID);
     query.exec();
 
     //If device = Physical Storage
@@ -1639,9 +1645,9 @@ void MainWindow::saveDevice()
                 //Edit and save each one
                 while (listCatalogQuery.next()){
                     tempCatalog = new Catalog;
-                    tempCatalog->setName(listCatalogQuery.value(0).toString());
+                    tempCatalog->name = listCatalogQuery.value(0).toString();
                     tempCatalog->loadCatalogMetaData();
-                    tempCatalog->setStorageName(newStorageName);
+                    tempCatalog->storageName = newStorageName;
                     tempCatalog->updateStorageNameToFile();
                 }
 

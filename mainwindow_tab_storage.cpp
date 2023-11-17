@@ -82,7 +82,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
     {
-        selectedStorage->setID(ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt());
+        selectedStorage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
         selectedStorage->loadStorageMetaData();
 
         //display buttons
@@ -271,22 +271,8 @@
     //--------------------------------------------------------------------------
     void MainWindow::addStorageDevice(QString deviceName)
     {
-        //Get inputs
-
-            //Generate Location based on current selection
-            QString newLocation;
-            if(selectedDevice->type == "Location"){
-                newLocation = selectedDevice->name;
-            }
-            else if(selectedStorage->location != tr("All")){
-                newLocation = selectedStorage->location;
-            }
-            else
-                newLocation = "";
-
         //Create Storage entry
-            tempStorage->setName(deviceName);
-            tempStorage->setLocation(newLocation);
+            tempStorage->name = deviceName;
             tempStorage->createStorage();
 
         //Load table to model
@@ -461,32 +447,32 @@
                                             storage_container     ,
                                             storage_comment       ,
                                             storage_date_updated  ,
-                                            virtual_storage_id
+                                            device_id
                                         FROM storage s
-                                        LEFT JOIN virtual_storage vs ON vs.virtual_storage_external_id = s.storage_id
+                                        LEFT JOIN device d ON d.device_external_id = s.storage_id
                             )");
         if (    selectedDevice->type == tr("All") ){
             //No filtering
         }
         else if ( selectedDevice->type == "Storage" ){
-            loadStorageQuerySQL += " WHERE virtual_storage_id =:virtual_storage_id ";
+            loadStorageQuerySQL += " WHERE device_id =:device_id ";
         }
         else if ( selectedDevice->type == "Catalog" ){
             loadStorageQuerySQL += " WHERE storage_name =:catalog_storage";
         }
         else if ( selectedDevice->type == "Virtual" ){
             QString prepareSQL = QLatin1String(R"(
-                                    WHERE vs.virtual_storage_id IN (
+                                    WHERE d.device_id IN (
                                     WITH RECURSIVE hierarchy AS (
-                                         SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
-                                         FROM virtual_storage
-                                         WHERE virtual_storage_id = :virtual_storage_id
+                                         SELECT device_id, device_parent_id, device_name
+                                         FROM device
+                                         WHERE device_id = :device_id
                                          UNION ALL
-                                         SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name
-                                         FROM virtual_storage t
-                                         JOIN hierarchy h ON t.virtual_storage_parent_id = h.virtual_storage_id
+                                         SELECT t.device_id, t.device_parent_id, t.device_name
+                                         FROM device t
+                                         JOIN hierarchy h ON t.device_parent_id = h.device_id
                                     )
-                                    SELECT virtual_storage_id
+                                    SELECT device_id
                                     FROM hierarchy)
                                                     )");
             loadStorageQuerySQL += prepareSQL;
@@ -498,7 +484,7 @@
         loadStorageQuery.bindValue(":storage_location", selectedDevice->name);
         loadStorageQuery.bindValue(":catalog_storage", selectedDevice->name);
         loadStorageQuery.bindValue(":catalog_name", selectedDevice->name);
-        loadStorageQuery.bindValue(":virtual_storage_id", selectedDevice->ID);
+        loadStorageQuery.bindValue(":device_id", selectedDevice->ID);
         loadStorageQuery.exec();
         loadStorageQuery.next();
 
@@ -742,7 +728,7 @@
                                             SUM(s.storage_total_space)
 
                                         FROM storage s
-                                        LEFT JOIN virtual_storage vs ON vs.virtual_storage_external_id = s.storage_id
+                                        LEFT JOIN device d ON d.device_external_id = s.storage_id
                             )");
         if (    selectedDevice->type  == tr("All") )
         {
@@ -750,24 +736,24 @@
         }
 
         else if ( selectedDevice->type == "Storage" ){
-            querySQL += " WHERE virtual_storage_name =:virtual_storage_name ";
+            querySQL += " WHERE device_name =:device_name ";
         }
         //         else if ( selectedDeviceType == "Catalog" ){
         //            loadStorageQuerySQL += " WHERE storage_name =:catalog_storage";
         //        }
         else if ( selectedDevice->type == "Virtual" ){
             QString prepareSQL = QLatin1String(R"(
-                                    WHERE vs.virtual_storage_id IN (
+                                    WHERE d.device_id IN (
                                     WITH RECURSIVE hierarchy AS (
-                                         SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name
-                                         FROM virtual_storage
-                                         WHERE virtual_storage_id = :virtual_storage_id
+                                         SELECT device_id, device_parent_id, device_name
+                                         FROM device
+                                         WHERE device_id = :device_id
                                          UNION ALL
-                                         SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name
-                                         FROM virtual_storage t
-                                         JOIN hierarchy h ON t.virtual_storage_parent_id = h.virtual_storage_id
+                                         SELECT t.device_id, t.device_parent_id, t.device_name
+                                         FROM device t
+                                         JOIN hierarchy h ON t.device_parent_id = h.device_id
                                     )
-                                    SELECT virtual_storage_id
+                                    SELECT device_id
                                     FROM hierarchy)
                                                     )");
             querySQL += prepareSQL;
@@ -775,10 +761,10 @@
 
         //Execute query
         query.prepare(querySQL);
-        query.bindValue(":virtual_storage_name", selectedDevice->name);
+        query.bindValue(":device_name", selectedDevice->name);
         //query.bindValue(":catalog_storage", selectedDevice->name);
         query.bindValue(":catalog_name", selectedDevice->name);
-        query.bindValue(":virtual_storage_id", selectedDevice->ID);
+        query.bindValue(":device_id", selectedDevice->ID);
         query.exec();
         query.next();
 
@@ -820,7 +806,7 @@
 
         //Save values for each storage device
         while(query.next()){
-            tempStorage->setID(query.value(0).toInt());
+            tempStorage->ID = query.value(0).toInt();
             tempStorage->loadStorageMetaData();
             tempStorage->saveStatistics(dateTime);
 
@@ -984,9 +970,9 @@
                 //Edit and save each one
                 while (listCatalogQuery.next()){
                     tempCatalog = new Catalog;
-                    tempCatalog->setName(listCatalogQuery.value(0).toString());
+                    tempCatalog->name = listCatalogQuery.value(0).toString();
                     tempCatalog->loadCatalogMetaData();
-                    tempCatalog->setStorageName(newStorageName);
+                    tempCatalog->storageName = newStorageName;
                     tempCatalog->updateStorageNameToFile();
                 }
 
@@ -1006,9 +992,9 @@
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT s.storage_name, v.virtual_storage_id
+                                SELECT s.storage_name, v.device_id
                                 FROM storage s
-                                LEFT JOIN virtual_storage v ON s.storage_id = v.virtual_storage_external_id
+                                LEFT JOIN device v ON s.storage_id = v.device_external_id
                                 WHERE storage_name !=''
                             )");
 

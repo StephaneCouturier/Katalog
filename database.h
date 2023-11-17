@@ -35,10 +35,29 @@
 
 //CREATE TABLES -----------------------------------------------------------------
 
+        // DEVICE  --------------------------------------------------------------
+
+            const auto SQL_CREATE_DEVICE = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS device(
+                            device_id                  NUMERIC,
+                            device_parent_id           NUMERIC,
+                            device_name                TEXT,
+                            device_type                TEXT,
+                            device_external_id         NUMERIC,
+                            device_path                TEXT,
+                            device_total_file_size     NUMERIC default 0,
+                            device_total_file_count    NUMERIC default 0,
+                            device_total_space         NUMERIC default 0,
+                            device_free_space          NUMERIC default 0,
+                            device_active              NUMERIC,
+                            device_group_id            NUMERIC)
+            )");
+
         // CATALOG --------------------------------------------------------------
 
             const auto SQL_CREATE_CATALOG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS catalog(
+                            catalog_id                    NUMERIC,
                             catalog_file_path             TEXT,
                             catalog_name                  TEXT,
                             catalog_date_updated          TEXT,
@@ -79,29 +98,11 @@
                             storage_date_updated  TEXT)
             )");
 
-        // VIRTUALSTORAGE  ------------------------------------------------------
-
-            const auto SQL_CREATE_VIRTUAL_STORAGE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS virtual_storage(
-                            virtual_storage_id                  NUMERIC,
-                            virtual_storage_parent_id           NUMERIC,
-                            virtual_storage_name                TEXT,
-                            virtual_storage_type                TEXT,
-                            virtual_storage_external_id         NUMERIC,
-                            virtual_storage_path                TEXT,
-                            virtual_storage_total_file_size     NUMERIC default 0,
-                            virtual_storage_total_file_count    NUMERIC default 0,
-                            virtual_storage_total_space         NUMERIC default 0,
-                            virtual_storage_free_space          NUMERIC default 0,
-                            virtual_storage_active              NUMERIC,
-                            virtual_storage_group_id            NUMERIC)
-            )");
-
         // VIRTUALSTORAGE CATALOG ------------------------------------------------------
 
-            const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
-                            virtual_storage_id      NUMERIC,
+            const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS device_catalog(
+                            device_id      NUMERIC,
                             catalog_name            TEXT,
                             directory_path          TEXT)
             )");

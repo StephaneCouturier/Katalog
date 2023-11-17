@@ -472,20 +472,20 @@
                     querySQL += " AND c.catalog_name = '" + selectedDevice->name + "' ";
                 }
                 else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Virtual" ){
-                    querySQL += " INNER JOIN virtual_storage_catalog vsc ON c.catalog_name = vsc.catalog_name ";
-                    querySQL += " INNER JOIN virtual_storage         vs  ON vs.virtual_storage_id = vsc.virtual_storage_id ";
+                    querySQL += " INNER JOIN device_catalog vsc ON c.catalog_name = vsc.catalog_name ";
+                    querySQL += " INNER JOIN device         vs  ON vs.device_id = vsc.device_id ";
                     querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND vsc.virtual_storage_id IN ( "
+                    querySQL += " AND vsc.device_id IN ( "
                                       " WITH RECURSIVE hierarchy_cte AS ( "
-                                      "       SELECT virtual_storage_id, virtual_storage_parent_id, virtual_storage_name "
-                                      "       FROM virtual_storage "
-                                      "       WHERE virtual_storage_id = :virtual_storage_id "
+                                      "       SELECT device_id, device_parent_id, device_name "
+                                      "       FROM device "
+                                      "       WHERE device_id = :device_id "
                                       "       UNION ALL "
-                                      "       SELECT t.virtual_storage_id, t.virtual_storage_parent_id, t.virtual_storage_name "
-                                      "       FROM virtual_storage t "
-                                      "       JOIN hierarchy_cte cte ON t.virtual_storage_parent_id = cte.virtual_storage_id "
+                                      "       SELECT t.device_id, t.device_parent_id, t.device_name "
+                                      "       FROM device t "
+                                      "       JOIN hierarchy_cte cte ON t.device_parent_id = cte.device_id "
                                       "  ) "
-                                      "  SELECT virtual_storage_id "
+                                      "  SELECT device_id "
                                       "  FROM hierarchy_cte) ";
                 }
                 else{
@@ -501,7 +501,7 @@
 
                 queryTotalSnapshots.prepare(querySQL);
                 queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                queryTotalSnapshots.bindValue(":virtual_storage_id", selectedDevice->ID);
+                queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
 
                 queryTotalSnapshots.exec();
 
@@ -853,27 +853,27 @@
 
                            if (recordType =="Storage"){//         = storage update
                                 tempStorage = new Storage;
-                                tempStorage->setName(catalogName);
-                                tempStorage->setFreeSpace(catalogFileCount);
-                                tempStorage->setTotalSpace(catalogTotalFileSize);
-                                tempStorage->setDateUpdated(dateTime);
+                                tempStorage->name = catalogName;
+                                tempStorage->freeSpace = catalogFileCount;
+                                tempStorage->totalSpace = catalogTotalFileSize;
+                                tempStorage->dateUpdated = dateTime;
                                 tempStorage->saveStatistics(dateTime);
                                 tempStorage->saveStatisticsToFile(statisticsStorageFilePath,dateTime);
                            }
                            else if (recordType =="Update"){//      = catalog update
                                 tempCatalog = new Catalog;
-                                tempCatalog->setName(catalogName);
-                                tempCatalog->setFileCount(catalogFileCount);
-                                tempCatalog->setTotalFileSize(catalogTotalFileSize);
+                                tempCatalog->name = catalogName;
+                                tempCatalog->fileCount = catalogFileCount;
+                                tempCatalog->totalFileSize = catalogTotalFileSize;
                                 tempCatalog->setDateUpdated(dateTime);
                                 tempCatalog->saveStatistics(dateTime);
                                 tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
                            }
                            else if (recordType =="Snapshot"){//    = catalog snapshot
                                 tempCatalog = new Catalog;
-                                tempCatalog->setName(catalogName);
-                                tempCatalog->setFileCount(catalogFileCount);
-                                tempCatalog->setTotalFileSize(catalogTotalFileSize);
+                                tempCatalog->name = catalogName;
+                                tempCatalog->fileCount = catalogFileCount;
+                                tempCatalog->totalFileSize = catalogTotalFileSize;
                                 tempCatalog->saveStatistics(dateTime);
                                 tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
                            }

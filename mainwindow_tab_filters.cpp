@@ -132,7 +132,7 @@
     {
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
-            selectedCatalog->setName(selectedDevice->name);
+            selectedCatalog->name = selectedDevice->name;
             selectedCatalog->loadCatalogMetaData();
 
             openCatalogToExplore();
@@ -168,7 +168,7 @@
 
         //Adapt UI based on device type
         if (selectedDevice->type=="Storage"){
-            selectedStorage->setID(selectedDevice->externalID);
+            selectedStorage->ID = selectedDevice->externalID;
             selectedStorage->loadStorageMetaData();
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
             ui->Devices_pushButton_AssignStorage->setEnabled(true);
@@ -180,7 +180,7 @@
             ui->Devices_label_SelectedCatalogDisplay->setText("");
         }
         else if (selectedDevice->type=="Catalog"){
-            selectedCatalog->setName(selectedDevice->name);
+            selectedCatalog->name = selectedDevice->name;
             selectedCatalog->loadCatalogMetaData();
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
             ui->Devices_pushButton_AssignStorage->setEnabled(false);
@@ -319,7 +319,7 @@
         else if (selectedDevice->type=="Catalog"){
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
-            selectedCatalog->setName(selectedDevice->name);
+            selectedCatalog->name = selectedDevice->name;
             selectedCatalog->loadCatalogMetaData();
         }
         else if (selectedDevice->type=="Virtual"){

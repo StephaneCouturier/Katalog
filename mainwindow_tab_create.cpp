@@ -161,15 +161,15 @@
             newCatalog = new Catalog();
             //Get inputs and set values of the newCatalog
 
-            newCatalog->setName(ui->Create_lineEdit_NewCatalogName->text());
-            newCatalog->setFilePath(collectionFolder + "/" + newCatalog->name + ".idx");
-            newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
-            newCatalog->setIncludeHidden(ui->Create_checkBox_IncludeHidden->isChecked());
-            newCatalog->setStorageName(ui->Create_comboBox_StorageSelection->currentText());
-            newCatalog->setIncludeSymblinks(ui->Create_checkBox_IncludeSymblinks->isChecked());
-            newCatalog->setIsFullDevice(ui->Create_checkBox_isFullDevice->isChecked());
-            newCatalog->setIncludeMetadata(ui->Create_checkBox_IncludeMetadata->isChecked());
-            newCatalog->setAppVersion(currentVersion);
+            newCatalog->name = ui->Create_lineEdit_NewCatalogName->text();
+            newCatalog->filePath = collectionFolder + "/" + newCatalog->name + ".idx";
+            newCatalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
+            newCatalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+            newCatalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
+            newCatalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+            newCatalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+            newCatalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+            newCatalog->appVersion = currentVersion;
 
             //Get the file type for the catalog
             if      ( ui->Create_radioButton_FileType_Image->isChecked() ){

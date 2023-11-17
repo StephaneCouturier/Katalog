@@ -465,7 +465,7 @@
             QString selectedFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
 
             //Prepare inputs for the Explore
-            selectedCatalog->setName(selectedFileCatalog);
+            selectedCatalog->name = selectedFileCatalog;
             selectedCatalog->loadCatalogMetaData();
             selectedDirectoryName = selectedFileFolder.remove(selectedCatalog->sourcePath + "/");
 
@@ -1173,7 +1173,7 @@
         //run a search of files for the selected Catalog
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
-            tempCatalog->setName(sourceCatalogName);
+            tempCatalog->name = sourceCatalogName;
             tempCatalog->loadCatalogMetaData();
 
             //Prepare Inputs

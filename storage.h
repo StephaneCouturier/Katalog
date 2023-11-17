@@ -48,7 +48,6 @@ public:
     int ID;
     QString name;
     QString type;
-    QString location = ""; //to avoid NULL in database
     QString path;
     QString label;
     QString fileSystem;
@@ -61,13 +60,6 @@ public:
     QString container;
     QString comment;
     QDateTime dateUpdated;
-
-    void setID(int selectedID);
-    void setName(QString selectedName);
-    void setFreeSpace(qint64 selectedFreeSpace);
-    void setTotalSpace(qint64 selectedTotalSpace);
-    void setDateUpdated(QDateTime dateTime);
-    void setLocation(QString selectedLocation);
 
     void createStorage();
     void deleteStorage();

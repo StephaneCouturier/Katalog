@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "1.23";
-        releaseDate     = "2023-11-13";
+        releaseDate     = "2023-11-16";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -104,6 +104,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
 
+            if( databaseMode != "Memory"){
+                //Hide file edtion items
+                ui->Devices_pushButton_Edit->hide();
+                ui->Storage_pushButton_Edit->hide();
+                ui->Storage_pushButton_Reload->hide();
+                ui->Statistics_label_EditRecords->hide();
+                ui->Statistics_pushButton_EditStorageStatisticsFile->hide();
+                ui->Statistics_pushButton_EditCatalogStatisticsFile->hide();
+                ui->Statistics_pushButton_Reload->hide();
+            }
+
         //Load all other Settings and apply values
             loadSettings();
 
@@ -129,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Restore last opened catalog to Explore tab
                 if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
-                    selectedCatalog->setName(settings.value("Explore/lastSelectedCatalogName").toString());
+                    selectedCatalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
                     selectedCatalog->loadCatalogMetaData();
                     selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
                     selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
@@ -286,12 +297,12 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
 //DEV Templates
 /*
-qDebug()<<"DEBUG     value:    " << value;
-qDebug()<<query.lastError();
+qDebug()<<"DEBUG value: " << value;
 
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");
 msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
+msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
 msgBox.setIcon(QMessageBox::Information);
 msgBox.exec();
 
@@ -301,4 +312,5 @@ QString querySQL = QLatin1String(R"(
                                 )");
 query.prepare(querySQL);
 query.exec();
+qDebug()<<query.lastError();
 */

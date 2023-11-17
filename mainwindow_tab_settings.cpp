@@ -332,7 +332,7 @@
     {
         foreach(sourceCatalog,catalogSelectedList)
         {
-                    selectedCatalog->setName(sourceCatalog);
+                    selectedCatalog->name = sourceCatalog;
                     selectedCatalog->loadCatalogMetaData();
                     selectedCatalog->loadCatalogFileListToTable();
         }

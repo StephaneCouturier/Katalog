@@ -32,31 +32,6 @@
 #include "storage.h"
 #include "qsqlerror.h"
 
-//set storage device definition
-void Storage::setID(int selectedID)
-{
-    ID = selectedID;
-}
-void Storage::setName(QString selectedName)
-{
-    name = selectedName;
-}
-void Storage::setFreeSpace(qint64 selectedFreeSpace)
-{
-    freeSpace = selectedFreeSpace;
-}
-void Storage::setTotalSpace(qint64 selectedTotalSpace)
-{
-    totalSpace = selectedTotalSpace;
-}
-void Storage::setDateUpdated(QDateTime dateTime)
-{
-    dateUpdated = dateTime;
-}
-void Storage::setLocation(QString selectedLocation){
-    location = selectedLocation;
-}
-
 //storage data operation
 void Storage::createStorage()
 {
@@ -79,7 +54,6 @@ void Storage::createStorage()
                             storage_id,
                             storage_name,
                             storage_type,
-                            storage_location,
                             storage_path,
                             storage_label,
                             storage_file_system,
@@ -95,7 +69,6 @@ void Storage::createStorage()
                             :new_id,
                             :storage_name,
                             "",
-                            :new_location,
                             "",
                             "",
                             "",
@@ -116,7 +89,6 @@ void Storage::createStorage()
     if(name=="")
         insertQuery.bindValue(":storage_name","");
 
-    insertQuery.bindValue(":new_location", location);
     insertQuery.exec();
 }
 
@@ -141,7 +113,6 @@ void Storage::loadStorageMetaData()
                                 storage_id,
                                 storage_name,
                                 storage_type,
-                                storage_location,
                                 storage_path,
                                 storage_label,
                                 storage_file_system,
@@ -163,7 +134,6 @@ void Storage::loadStorageMetaData()
         if (query.next()) {
             name         = query.value(1).toString();
             type         = query.value(2).toString();
-            location     = query.value(3).toString();
             path         = query.value(4).toString();
             label        = query.value(5).toString();
             fileSystem   = query.value(6).toString();
@@ -241,16 +211,16 @@ QList<qint64> Storage::updateStorageInfo()
 
     //Save to VirtualStorage table
         queryTotalSpaceSQL = QLatin1String(R"(
-                                        UPDATE virtual_storage
-                                        SET virtual_storage_total_space = :virtual_storage_total_space,
-                                            virtual_storage_free_space  = :virtual_storage_free_space
-                                        WHERE virtual_storage_external_id = :virtual_storage_external_id
-                                        AND virtual_storage_type ='Storage'
+                                        UPDATE device
+                                        SET device_total_space = :device_total_space,
+                                            device_free_space  = :device_free_space
+                                        WHERE device_external_id = :device_external_id
+                                        AND device_type ='Storage'
                                         )");
         queryTotalSpace.prepare(queryTotalSpaceSQL);
-        queryTotalSpace.bindValue(":virtual_storage_total_space",QString::number(totalSpace));
-        queryTotalSpace.bindValue(":virtual_storage_free_space",QString::number(freeSpace));
-        queryTotalSpace.bindValue(":virtual_storage_external_id", ID);
+        queryTotalSpace.bindValue(":device_total_space",QString::number(totalSpace));
+        queryTotalSpace.bindValue(":device_free_space",QString::number(freeSpace));
+        queryTotalSpace.bindValue(":device_external_id", ID);
         queryTotalSpace.exec();
 
     //Stop if the update was not done (lastUpdate time did not change)

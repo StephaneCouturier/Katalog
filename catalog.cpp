@@ -81,14 +81,6 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
 
 
 //set catalog definition
-void Catalog::setName(QString selectedName)
-{
-    name = selectedName;
-}
-void Catalog::setFilePath(QString selectedFilePath)
-{
-    filePath = selectedFilePath;
-}
 void Catalog::setSourcePath(QString selectedSourcePath)
 {
     sourcePath = selectedSourcePath;
@@ -101,10 +93,6 @@ void Catalog::setSourcePath(QString selectedSourcePath)
             sourcePath.remove(pathLength-1,1);
         }
     }
-}
-void Catalog::setFileCount(qint64 selectedFileCount)
-{
-        fileCount = selectedFileCount;
 }
 void Catalog::updateFileCount()
 {
@@ -120,10 +108,6 @@ void Catalog::updateFileCount()
     query.next();
     fileCount = query.value(0).toLongLong();
 }
-void Catalog::setTotalFileSize(qint64 selectedTotalFileSize)
-{
-    totalFileSize = selectedTotalFileSize;
-}
 void Catalog::updateTotalFileSize()
 {
     QSqlQuery query;
@@ -137,26 +121,6 @@ void Catalog::updateTotalFileSize()
     query.exec();
     query.next();
     totalFileSize = query.value(0).toLongLong();
-}
-void Catalog::setIncludeHidden(bool selectedIncludeHidden)
-{
-    includeHidden = selectedIncludeHidden;
-}
-void Catalog::setFileType(QString selectedFileType)
-{
-    fileType = selectedFileType;
-}
-void Catalog::setStorageName(QString selectedStorageName)
-{
-    storageName = selectedStorageName;
-}
-void Catalog::setIncludeSymblinks(bool selectedIncludeSymblinks)
-{
-    includeSymblinks = selectedIncludeSymblinks;
-}
-void Catalog::setIsFullDevice(bool selectedIsFullDevice)
-{
-    isFullDevice = selectedIsFullDevice;
 }
 void Catalog::setDateLoaded(QDateTime dateTime)
 {
@@ -195,14 +159,6 @@ void Catalog::setDateUpdated(QDateTime dateTime)
     }
     else
         dateUpdated = dateTime;
-}
-void Catalog::setIncludeMetadata(bool selectedIncludeMetadata)
-{
-    includeMetadata = selectedIncludeMetadata;
-}
-void Catalog::setAppVersion(QString selectedAppVersion)
-{
-    appVersion = selectedAppVersion;
 }
 
 //catalog files data operation
