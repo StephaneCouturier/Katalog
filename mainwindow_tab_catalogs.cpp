@@ -54,12 +54,15 @@
     //Catalog operations
         void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
         {
-            selectedCatalog->name = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedCatalog->loadCatalogMetaData();
+            tempDevice->ID = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
+            tempDevice->loadDevice();
+            tempDevice->catalog->name = tempDevice->name;
+            tempDevice->catalog->loadCatalogMetaData();
 
-            catalogDevice->name = selectedCatalog->name;
-            catalogDevice->getCatalogStorageID();
-            catalogDevice->loadDevice();
+            qDebug()<<tempDevice->ID
+                    <<tempDevice->name
+                    <<tempDevice->type
+                     <<tempDevice->catalog->sourcePath;
 
             // Display buttons
             ui->Catalogs_pushButton_Search->setEnabled(true);
@@ -72,15 +75,14 @@
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
-            ui->Catalogs_lineEdit_Name->setText(selectedCatalog->name);
-            ui->Catalogs_lineEdit_SourcePath->setText(selectedCatalog->sourcePath);
-            ui->Catalogs_comboBox_FileType->setCurrentText(selectedCatalog->fileType);
-            ui->Catalogs_comboBox_Storage->setCurrentText(selectedCatalog->storageName);
-            ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedCatalog->includeHidden);
-            ui->Catalogs_checkBox_IncludeMetadata->setChecked(selectedCatalog->includeMetadata);
+            ui->Catalogs_lineEdit_Name->setText(tempDevice->catalog->name);
+            ui->Catalogs_lineEdit_SourcePath->setText(tempDevice->catalog->sourcePath);
+            ui->Catalogs_comboBox_FileType->setCurrentText(tempDevice->catalog->fileType);
+            ui->Catalogs_comboBox_Storage->setCurrentText(tempDevice->catalog->storageName);
+            ui->Catalogs_checkBox_IncludeHidden->setChecked(tempDevice->catalog->includeHidden);
+            ui->Catalogs_checkBox_IncludeMetadata->setChecked(tempDevice->catalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
-            ui->Devices_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
-
+            ui->Devices_label_SelectedCatalogDisplay->setText(tempDevice->catalog->name);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
@@ -147,7 +149,7 @@
         {
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(selectedCatalog, true);
+            updateSingleCatalog(tempDevice->catalog, true);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -560,7 +562,7 @@
             else if ( selectedDevice->type == "Virtual" ){
                 QString prepareSQL = QLatin1String(R"(
 
-                                        WHERE vs.device_id IN (
+                                        WHERE d.device_id IN (
                                         WITH RECURSIVE hierarchy AS (
                                              SELECT device_id, device_parent_id, device_name
                                              FROM device
@@ -574,7 +576,6 @@
                                         FROM hierarchy)
                                     )");
                 loadCatalogQuerySQL += prepareSQL;
-
             }
 
             //Execute query
@@ -619,6 +620,7 @@
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
             proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Last Loaded"));
             proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("App Version"));
+            proxyResultsModel->setHeaderData(14,Qt::Horizontal, tr("Device ID"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -756,51 +758,42 @@
         updateCatalogFileList(catalog);
 
         //Update its storage
-        if ( catalog->storageName != ""){
-            //get Storage ID
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                    SELECT storage_id, storage_path
-                                    FROM storage
-                                    WHERE storage_name =:storage_name
-                                )");
-            query.prepare(querySQL);
-            query.bindValue(":storage_name",catalog->storageName);
-            query.exec();
-            query.next();
-            int     selectedCatalogStorageID   = query.value(0).toInt();
-            QString selectedCatalogStoragePath = query.value(1).toString();
+        Device catalogDevice;
+        catalogDevice.ID = catalog->ID;
+
+        Device parentStorageDevice;
+        parentStorageDevice.ID = catalogDevice.parentID;
+        parentStorageDevice.loadDevice();
 
             //Update storage
-            if ( selectedCatalogStoragePath!=""){
-                tempStorage->ID = selectedCatalogStorageID;
+        if ( parentStorageDevice.path !=""){
+            tempStorage->ID = parentStorageDevice.externalID;
                 tempStorage->loadStorageMetaData();
                 if(updateStorage==true){
                     updateStorageInfo(tempStorage);
                 }
             }
-            else{//Update path as catalog's path
-                tempStorage->path = catalog->sourcePath;
+        else{//Update path as catalog's path
+            tempStorage->path = catalog->sourcePath;
 
-                if(updateStorage==true){
-                    updateStorageInfo(tempStorage);
+            if(updateStorage==true){
+                updateStorageInfo(tempStorage);
 
-                    //update path
-                    QSqlQuery queryTotalSpace;
-                    QString queryTotalSpaceSQL = QLatin1String(R"(
-                                        UPDATE storage
-                                        SET storage_path =:storage_path
-                                        WHERE storage_id = :storage_id
-                                        )");
-                    queryTotalSpace.prepare(queryTotalSpaceSQL);
-                    queryTotalSpace.bindValue(":storage_path", tempStorage->path);
-                    queryTotalSpace.bindValue(":storage_id", tempStorage->ID);
-                    queryTotalSpace.exec();
+                //update path
+                QSqlQuery queryTotalSpace;
+                QString queryTotalSpaceSQL = QLatin1String(R"(
+                                    UPDATE storage
+                                    SET storage_path =:storage_path
+                                    WHERE storage_id = :storage_id
+                                    )");
+                queryTotalSpace.prepare(queryTotalSpaceSQL);
+                queryTotalSpace.bindValue(":storage_path", tempStorage->path);
+                queryTotalSpace.bindValue(":storage_id", tempStorage->ID);
+                queryTotalSpace.exec();
 
-                    saveStorageTableToFile();
-                    loadStorageFileToTable();
-                    loadStorageTableToModel();
-                }
+                saveStorageTableToFile();
+                loadStorageFileToTable();
+                loadStorageTableToModel();
             }
         }
 
@@ -938,7 +931,6 @@
         queryUpdateDevice.exec();
 
         saveDeviceTableToFile(deviceFilePath);
-        //loadDeviceTableToTreeModel();
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
@@ -999,7 +991,7 @@
                 line = textStream.readLine();
 
                 //Split the line into a fieldlist
-                QStringList headerList = line.split('\t');
+                //QStringList headerList = line.split('\t');
 
                 //Check this is the right source format
                 if (line.left(6)!="Volume"){
@@ -1126,6 +1118,14 @@
 
     }
     //--------------------------------------------------------------------------
+    void MainWindow::generateCatalogIDs()
+    {
+        //Get catalogs
+
+        //Loop and generate and ID if not >1
+    }
+    //--------------------------------------------------------------------------
+
     void MainWindow::saveCatalogChanges(Catalog *catalog)
     {
             //Get new values

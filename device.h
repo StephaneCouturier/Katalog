@@ -34,6 +34,9 @@
 #include <QVariant>
 #include <QSqlQuery>
 
+#include "storage.h"
+#include "catalog.h"
+
 class Device
 {
 
@@ -49,6 +52,9 @@ public:
     qint64 total_space;
     qint64 free_space;
     int groupID;
+
+    Storage *storage = new Storage;
+    Catalog *catalog = new Catalog;
 
     bool hasSubDevice;
     bool hasCatalog;

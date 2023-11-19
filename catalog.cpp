@@ -31,6 +31,7 @@
 
 #include "catalog.h"
 #include "qdir.h"
+#include "qsqlerror.h"
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -164,9 +165,23 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 //catalog files data operation
 void Catalog::createCatalog()
 {
+    //Generate ID
+    QSqlQuery queryCatalogID;
+    QString queryCatalogIDSQL = QLatin1String(R"(
+                                    SELECT MAX (catalog_id)
+                                    FROM catalog
+                                )");
+    queryCatalogID.prepare(queryCatalogIDSQL);
+    queryCatalogID.exec();
+    queryCatalogID.next();
+    int maxID = queryCatalogID.value(0).toInt();
+    ID = maxID + 1;
+
+    //Insert new entry
     QSqlQuery insertCatalogQuery;
     QString insertCatalogQuerySQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO catalog (
+                                                        catalog_id,
                                                         catalog_file_path,
                                                         catalog_name,
                                                         catalog_date_updated,
@@ -183,7 +198,8 @@ void Catalog::createCatalog()
                                                         catalog_include_metadata,
                                                         catalog_app_version
                                                         )
-                                        VALUES(         :catalog_file_path,
+                                        VALUES(         :catalog_id,
+                                                        :catalog_file_path,
                                                         :catalog_name,
                                                         :catalog_date_updated,
                                                         :catalog_source_path,
@@ -201,6 +217,7 @@ void Catalog::createCatalog()
                                     )");
 
     insertCatalogQuery.prepare(insertCatalogQuerySQL);
+    insertCatalogQuery.bindValue(":catalog_id", ID);
     insertCatalogQuery.bindValue(":catalog_file_path", filePath);
     insertCatalogQuery.bindValue(":catalog_name",name);
     insertCatalogQuery.bindValue(":catalog_date_updated",dateUpdated);
@@ -245,6 +262,7 @@ void Catalog::loadCatalogMetaData()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT
+                                catalog_id                   ,
                                 catalog_file_path            ,
                                 catalog_name                 ,
                                 catalog_date_updated         ,
@@ -268,21 +286,22 @@ void Catalog::loadCatalogMetaData()
     query.bindValue(":catalog_name",name);
     query.exec();
     if (query.next()){
-        filePath           = query.value(0).toString();
-        name               = query.value(1).toString();
-        dateUpdated        = query.value(2).toDateTime();
-        sourcePath         = query.value(3).toString();
-        fileCount          = query.value(4).toLongLong();
-        totalFileSize      = query.value(5).toLongLong();
-        sourcePathIsActive = query.value(6).toBool();
-        includeHidden      = query.value(7).toBool();
-        fileType           = query.value(8).toString();
-        storageName        = query.value(9).toString();
-        includeSymblinks   = query.value(10).toBool();
-        isFullDevice       = query.value(11).toBool();
-        dateLoaded         = query.value(12).toDateTime();
-        includeMetadata    = query.value(13).toBool();
-        appVersion         = query.value(14).toString();
+        ID                 = query.value(0).toInt();
+        filePath           = query.value(1).toString();
+        name               = query.value(2).toString();
+        dateUpdated        = query.value(3).toDateTime();
+        sourcePath         = query.value(4).toString();
+        fileCount          = query.value(5).toLongLong();
+        totalFileSize      = query.value(6).toLongLong();
+        sourcePathIsActive = query.value(7).toBool();
+        includeHidden      = query.value(8).toBool();
+        fileType           = query.value(9).toString();
+        storageName        = query.value(10).toString();
+        includeSymblinks   = query.value(11).toBool();
+        isFullDevice       = query.value(12).toBool();
+        dateLoaded         = query.value(13).toDateTime();
+        includeMetadata    = query.value(14).toBool();
+        appVersion         = query.value(15).toString();
     }
 }
 
@@ -650,6 +669,28 @@ void Catalog::updateSourcePathIsActive()
     query.bindValue(":catalog_source_path_is_active", sourcePathIsActive);
     query.bindValue(":catalog_name", name);
     query.exec();
+}
+
+bool Catalog::catalogNameExists()
+{
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT COUNT(*)
+                                    FROM catalog
+                                    WHERE catalog_name = :catalog_name
+                                )");
+
+    query.prepare(querySQL);
+    query.bindValue(":catalog_name", name);
+
+    if (!query.exec()) {
+        // Handle SQL error
+        qDebug() << "Error executing catalogFileExists:" << query.lastError().text();
+        return false;
+    }
+
+    query.next();
+    return query.value(0).toInt() > 0;
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,

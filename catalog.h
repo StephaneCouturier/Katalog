@@ -38,6 +38,7 @@
 #include <QSqlQuery>
 #include <QFileInfo>
 #include <QRegularExpression>
+#include <QMessageBox>
 
 class Catalog : public QAbstractTableModel
 {
@@ -77,6 +78,7 @@ public:
 
     void createCatalog();
     void deleteCatalog();
+
     void loadCatalogMetaData();//from database
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
@@ -86,6 +88,7 @@ public:
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
     void updateSourcePathIsActive();
+    bool catalogNameExists();
 
     void populateFileData( const QList<QString> &fileNames,
                            const QList<qint64>  &fileSizes,

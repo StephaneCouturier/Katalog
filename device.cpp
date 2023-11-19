@@ -33,7 +33,7 @@
 #include "qsqlerror.h"
 
 void Device::loadDevice(){
-    //Retrieve device values
+    //Load device values
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT  device_id,
@@ -70,6 +70,19 @@ void Device::loadDevice(){
         }
     } else {
         qDebug() << "Query execution failed:" << query.lastError().text();
+    }
+
+    //Load storage values
+    if(type == "Storage"){
+        storage->ID = externalID;
+        storage->loadStorageMetaData();
+    }
+
+    //Load catalog values
+    if(type == "Catalog"){
+        catalog->ID = externalID;
+        catalog->name = name; //temp
+        catalog->loadCatalogMetaData();
     }
 }
 

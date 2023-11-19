@@ -98,7 +98,7 @@
                             storage_date_updated  TEXT)
             )");
 
-        // VIRTUALSTORAGE CATALOG ------------------------------------------------------
+        // DEVICE CATALOG ------------------------------------------------------
 
             const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS device_catalog(
@@ -160,6 +160,7 @@
             const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  statistics_catalog(
                             date_time               TEXT,
+                            catalog_id              NUMERIC,
                             catalog_name            TEXT,
                             catalog_file_count      NUMERIC,
                             catalog_total_file_size NUMERIC,
@@ -173,6 +174,18 @@
                             storage_name            TEXT,
                             storage_free_space      NUMERIC,
                             storage_total_space     NUMERIC,
+                            record_type             TEXT)
+            )");
+
+            const auto SQL_CREATE_STATISTICS_VIRTUAL = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS  statistics_device(
+                            date_time               TEXT,
+                            device_id               TEXT,
+                            device_name             TEXT,
+                            device_file_count       NUMERIC,
+                            device_total_file_size  NUMERIC,
+                            device_free_space       NUMERIC,
+                            device_total_space      NUMERIC,
                             record_type             TEXT)
             )");
 

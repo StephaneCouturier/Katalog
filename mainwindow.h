@@ -250,6 +250,7 @@ class MainWindow : public QMainWindow
             QString requestSource;
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
+            void generateCatalogIDs();
 
             qint64 globalUpdateTotalFiles;
             qint64 globalUpdateDeltaFiles;

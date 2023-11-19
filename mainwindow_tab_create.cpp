@@ -201,18 +201,8 @@
                 return;
             }
 
-            //Check if the catalog (file) already exists
-                QSqlQuery query;
-                QString querySQL = QLatin1String(R"(
-                                    SELECT catalog_name
-                                    FROM catalog
-                                    WHERE catalog_name=:catalog_name
-                                )");
-                query.prepare(querySQL);
-                query.bindValue(":catalog_name",newCatalog->name);
-                query.exec();
-                query.next();
-                if (query.value(0).toString() !=""){
+            //Check if the catalog name (so the csv file name) already exists
+                if (newCatalog->catalogNameExists()){
                     QMessageBox msgBox;
                     msgBox.setWindowTitle("Katalog");
                     msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
@@ -226,7 +216,7 @@
             //Save new catalog
             newCatalog->createCatalog();
 
-            //Add virtual device entry and associate to its storage
+            //Add Device entry and associate to the new catalog
             QVariant selectedData = ui->Create_comboBox_StorageSelection->currentData();
             int selectedStorageId = selectedData.toInt();
 
@@ -235,7 +225,7 @@
             newDeviceItem->parentID = selectedStorageId;
             newDeviceItem->name = newCatalog->name;
             newDeviceItem->type = "Catalog";
-            newDeviceItem->externalID = 0;
+            newDeviceItem->externalID = newCatalog->ID;
             newDeviceItem->groupID = 0;
             newDeviceItem->insertDeviceItem();
 
