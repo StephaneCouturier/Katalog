@@ -61,7 +61,8 @@ public:
     QString comment;
     QDateTime dateUpdated;
 
-    void createStorage();
+    void generateID();
+    void insertStorage();
     void deleteStorage();
     void loadStorageMetaData();
     QList<qint64> updateStorageInfo();

@@ -49,19 +49,20 @@
     {//Pick a directory from a dialog window
 
         //Get current selected path as default path for the dialog window
-        newCatalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
+        QString newSelectedPath = ui->Create_lineEdit_NewCatalogPath->text();
+        //newDevice->catalog->setSourcePath(ui->Create_lineEdit_NewCatalogPath->text());
 
         //Open a dialog for the user to select the directory to be cataloged. Only show directories.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
-                                                        newCatalog->sourcePath,
+                                                        newSelectedPath,
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
         //Save selected directory, and update input line for the source path
-        newCatalog->setSourcePath(dir);
-        ui->Create_lineEdit_NewCatalogPath->setText(newCatalog->sourcePath);
+        //newDevice->catalog->setSourcePath(dir);
+        ui->Create_lineEdit_NewCatalogPath->setText(newSelectedPath);
 
         //Select this directory in the treeview.
-        loadFileSystem(newCatalog->sourcePath);
+        loadFileSystem(newSelectedPath);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
@@ -157,77 +158,76 @@
     void MainWindow::createCatalog()
     {//Create a new catalog, launch the cataloging and save, and refresh data and UI
 
-        //Create a new catalog
-            newCatalog = new Catalog();
-            //Get inputs and set values of the newCatalog
+        //Check if mandatory inputs are provided
+        if (ui->Create_lineEdit_NewCatalogName->text() == ""){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Provide a name for this new catalog.<br/>"));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
+        if (ui->Create_lineEdit_NewCatalogPath->text() == ""){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Provide a path for this new catalog.<br/>"));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
 
-            newCatalog->name = ui->Create_lineEdit_NewCatalogName->text();
-            newCatalog->filePath = collectionFolder + "/" + newCatalog->name + ".idx";
-            newCatalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
-            newCatalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-            newCatalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
-            newCatalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-            newCatalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
-            newCatalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
-            newCatalog->appVersion = currentVersion;
+        //Create a new device and catalog
+
+            //Add Device entry and associate to the new catalog and its parent
+            Device *newDevice = new Device();
+            newDevice->generateDeviceID();
+            newDevice->type = "Catalog";
+            newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
+
+            //Check if the catalog name (so the csv file name) already exists
+            if (newDevice->catalog->catalogNameExists()){
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
+                               + newDevice->catalog->name
+                               + "</b><br/><br/>"+tr("Choose a different name and try again."));
+                msgBox.setIcon(QMessageBox::Critical);
+                msgBox.exec();
+                return;
+            }
+
+            //Continue populating values
+            newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
+            newDevice->catalog->generateID();
+            newDevice->externalID = newDevice->catalog->ID;
+            newDevice->groupID = 0; //ADAPT
+            newDevice->insertDevice();
+
+            //Get inputs and set values of the newCatalog
+            newDevice->catalog->name = newDevice->name; //REMOVE
+            newDevice->catalog->filePath = collectionFolder + "/" + newDevice->catalog->name + ".idx";
+            newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
+            newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+            newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //REMOVE
+            newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+            newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+            newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+            newDevice->catalog->appVersion = currentVersion;
 
             //Get the file type for the catalog
             if      ( ui->Create_radioButton_FileType_Image->isChecked() ){
-                    newCatalog->fileType = "Image";}
+                    newDevice->catalog->fileType = "Image";}
             else if ( ui->Create_radioButton_FileType_Audio->isChecked() ){
-                    newCatalog->fileType = "Audio";}
+                    newDevice->catalog->fileType = "Audio";}
             else if ( ui->Create_radioButton_FileType_Video->isChecked() ){
-                    newCatalog->fileType = "Video";}
+                    newDevice->catalog->fileType = "Video";}
             else if ( ui->Create_radioButton_FileType_Text->isChecked() ){
-                    newCatalog->fileType = "Text";}
+                    newDevice->catalog->fileType = "Text";}
             else
-                    newCatalog->fileType = "All";
-
-            //Check if input where provided
-            if (newCatalog->name==""){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Provide a name for this new catalog.<br/>"));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-                return;
-            }
-            if (newCatalog->sourcePath==""){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Provide a path for this new catalog.<br/>"));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-                return;
-            }
-
-            //Check if the catalog name (so the csv file name) already exists
-                if (newCatalog->catalogNameExists()){
-                    QMessageBox msgBox;
-                    msgBox.setWindowTitle("Katalog");
-                    msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
-                                   + newCatalog->name
-                                   + "</b><br/><br/>"+tr("Choose a different name."));
-                    msgBox.setIcon(QMessageBox::Critical);
-                    msgBox.exec();
-                    return;
-            }
+                    newDevice->catalog->fileType = "All";
 
             //Save new catalog
-            newCatalog->createCatalog();
-
-            //Add Device entry and associate to the new catalog
-            QVariant selectedData = ui->Create_comboBox_StorageSelection->currentData();
-            int selectedStorageId = selectedData.toInt();
-
-            Device *newDeviceItem = new Device();
-            newDeviceItem->ID = 0;
-            newDeviceItem->parentID = selectedStorageId;
-            newDeviceItem->name = newCatalog->name;
-            newDeviceItem->type = "Catalog";
-            newDeviceItem->externalID = newCatalog->ID;
-            newDeviceItem->groupID = 0;
-            newDeviceItem->insertDeviceItem();
+            newDevice->catalog->insertCatalog();
 
             //Save data to file
             saveDeviceTableToFile(deviceFilePath);
@@ -238,7 +238,7 @@
 
         //Launch the scan and cataloging of files
             requestSource = "create";
-            updateSingleCatalog(newCatalog, true);
+            updateSingleCatalog(newDevice->catalog, true);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -256,7 +256,7 @@
 
             //Update the new catalog loadedversion to indicate that files are already in memory
             QDateTime emptyDateTime = *new QDateTime;
-            newCatalog->setDateLoaded(emptyDateTime);
+            newDevice->catalog->setDateLoaded(emptyDateTime);
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
@@ -503,7 +503,7 @@
                 catalog->updateFileCount();
                 catalog->updateTotalFileSize();
 
-        //Generate csv files
+        //Populate model with lines for csv files
         if(databaseMode=="Memory"){
             //Save data to file
             QStringList fileList;
@@ -523,6 +523,7 @@
             };
 
             //Prepare the catalog file data, adding first the catalog metadata at the beginning
+            fileList.prepend("<catalogID>"              + QString::number(catalog->ID));
             fileList.prepend("<catalogAppVersion>"      + currentVersion);
             fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
             fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
@@ -593,7 +594,6 @@
                 msgBox.setText(tr("Error opening output file."));
                 msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
-                //return EXIT_FAILURE;
             }
             fileOut.close();
         }
@@ -604,7 +604,6 @@
         //Save a catalog to a new file
 
         // Get the folder list from database
-        //QStringList filelist = fileListModel->stringList();
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                 SELECT

@@ -63,10 +63,12 @@ public:
     void loadDeviceCatalog(); //temp dev
 
     void getCatalogStorageID();
-    void insertDeviceItem();
+    void generateDeviceID();
+    void insertDevice();
     void verifyHasSubDevice();
     void verifyHasCatalog();
     void deleteDevice();
+    void saveDevice();
 };
 
 #endif // DEVICE_H

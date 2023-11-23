@@ -40,14 +40,14 @@
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
 {
-    Device *newDeviceItem = new Device();
-    newDeviceItem->ID = 0;
-    newDeviceItem->parentID = 0;
-    newDeviceItem->name = tr("Top Item");
-    newDeviceItem->type = "Virtual";
-    newDeviceItem->externalID = 0;
-    newDeviceItem->groupID = 1;
-    newDeviceItem->insertDeviceItem();
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->type = "Virtual";
+    newDevice->name = tr("Virtual Top Item");
+    newDevice->parentID = 0;
+    newDevice->externalID = 0;
+    newDevice->groupID = 1; //only DeviceID 1 can be a top item in group 0 (Pyhsical group)
+    newDevice->insertDevice();
 
     //Save data to file
     saveDeviceTableToFile(deviceFilePath);
@@ -60,12 +60,12 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddVirtual_clicked()
 {
-    addVirtualDevice();
+    addDeviceVirtual();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 {
-    addStorageDevice();
+    addDeviceStorage();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
@@ -112,13 +112,6 @@ void MainWindow::on_Devices_checkBox_DisplayStorage_stateChanged(int arg1)
 {
     QSettings settings(settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayStorage", arg1);
-    loadDeviceTableToTreeModel();
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Devices_checkBox_DisplayStorageOnly_stateChanged(int arg1)
-{
-    QSettings settings(settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Devices/DisplayStorageonly", arg1);
     loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
@@ -265,14 +258,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            addVirtualDevice();
+            addDeviceVirtual();
         });
 
         QAction *menuDeviceAction6 = new QAction(QIcon::fromTheme("document-new"), tr("Add Storage device"), this);
         deviceContextMenu.addAction(menuDeviceAction6);
 
         connect(menuDeviceAction6, &QAction::triggered, this, [this, deviceName]() {
-            addStorageDevice();
+            addDeviceStorage();
         });
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
@@ -783,7 +776,7 @@ void MainWindow::loadDeviceFileToTable()
 //--------------------------------------------------------------------------
 void MainWindow::loadDeviceTableToTreeModel()
 {
-    QList<QStandardItem*> firstColumnItems;
+    //QList<QStandardItem*> firstColumnItems;
 
     //Synch data to device
     synchCatalogAndStorageValues();
@@ -932,12 +925,6 @@ void MainWindow::loadDeviceTableToTreeModel()
         querySQL += QLatin1String(R"(
                     AND device_type !='Storage'
                     AND device_type !='Catalog'
-                )");
-    }
-
-    if (ui->Devices_checkBox_DisplayStorageOnly->isChecked() == true) {
-        querySQL += QLatin1String(R"(
-                    AND device_type ='Storage'
                 )");
     }
 
@@ -1297,16 +1284,16 @@ void MainWindow::insertPhysicalStorageGroup() {
         newDeviceItem1->type = "Virtual";
         newDeviceItem1->externalID = 0;
         newDeviceItem1->groupID = 0;
-        newDeviceItem1->insertDeviceItem();
+        newDeviceItem1->insertDevice();
 
         Device *newDeviceItem2 = new Device();
         newDeviceItem2->ID = 2;
         newDeviceItem2->parentID = 1;
-        newDeviceItem2->name = tr("Default location");
+        newDeviceItem2->name = tr("Default Virtual group");
         newDeviceItem2->type = "Virtual";
         newDeviceItem2->externalID = 0;
         newDeviceItem2->groupID = 0;
-        newDeviceItem2->insertDeviceItem();
+        newDeviceItem2->insertDevice();
     }
 
     saveDeviceTableToFile(deviceFilePath);
@@ -1465,17 +1452,17 @@ void MainWindow::loadParentsList()
 
 }
 //--------------------------------------------------------------------------
-void MainWindow::addVirtualDevice()
+void MainWindow::addDeviceVirtual()
 {   //Create a new virtual device and add it to the selected Device
 
-    Device *newDeviceItem = new Device();
-    newDeviceItem->ID = 0;
-    newDeviceItem->parentID = tempDevice->ID;
-    newDeviceItem->name = tr("Sub-item");
-    newDeviceItem->type = "Virtual";
-    newDeviceItem->externalID = 0;
-    newDeviceItem->groupID = 1;
-    newDeviceItem->insertDeviceItem();
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->parentID = tempDevice->ID;
+    newDevice->name = tr("Virtual") + "_" + QString::number(newDevice->ID);
+    newDevice->type = "Virtual";
+    newDevice->externalID = 0;
+    newDevice->groupID = 0;
+    newDevice->insertDevice();
 
     //Save data to file
     saveDeviceTableToFile(deviceFilePath);
@@ -1485,22 +1472,21 @@ void MainWindow::addVirtualDevice()
     loadParentsList();
 }
 //--------------------------------------------------------------------------
-void MainWindow::addStorageDevice()
-{   //Create a new storage device and add it to the selected Device
+void MainWindow::addDeviceStorage()
+{//Create a new storage device and add it to the selected Device
 
-    //Create Storage entry
-    tempStorage->name = tr("Storage");
-    tempStorage->createStorage();
-
-    //Create Device under Physical group (ID=0)
-    Device *newDeviceItem = new Device();
-    newDeviceItem->ID = 0;
-    newDeviceItem->parentID = tempDevice->ID;
-    newDeviceItem->name = tempStorage->name;
-    newDeviceItem->type = "Storage";
-    newDeviceItem->externalID = tempStorage->ID;
-    newDeviceItem->groupID = 0;
-    newDeviceItem->insertDeviceItem();
+    //Create Device and related Storage under Physical group (ID=0)
+    Device *newDevice = new Device();
+    newDevice->generateDeviceID();
+    newDevice->parentID = tempDevice->ID;
+    newDevice->name = tr("Storage") + "_" + QString::number(newDevice->ID);
+    newDevice->type = "Storage";
+    newDevice->storage->generateID();
+    newDevice->externalID = newDevice->storage->ID;
+    newDevice->groupID = 0;
+    newDevice->insertDevice();
+    newDevice->storage->name = newDevice->name; //REMOVE
+    newDevice->storage->insertStorage();
 
     //Save data to file
     saveDeviceTableToFile(deviceFilePath);

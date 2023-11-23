@@ -54,15 +54,10 @@
     //Catalog operations
         void MainWindow::on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index)
         {
-            tempDevice->ID = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
+            tempDevice->ID = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 15, QModelIndex()).data().toInt();
             tempDevice->loadDevice();
             tempDevice->catalog->name = tempDevice->name;
             tempDevice->catalog->loadCatalogMetaData();
-
-            qDebug()<<tempDevice->ID
-                    <<tempDevice->name
-                    <<tempDevice->type
-                     <<tempDevice->catalog->sourcePath;
 
             // Display buttons
             ui->Catalogs_pushButton_Search->setEnabled(true);
@@ -444,7 +439,7 @@
                 QStringList catalogValues;
                 QString line;
                 QString value;
-                for (int i=0; i<10; i++) {
+                for (int i=0; i<11; i++) {
                           line = textStreamCatalogs.readLine();
                           if (line !="" and QVariant(line.at(0)).toString()=="<"){
                        value = line.right(line.size() - line.indexOf(">") - 1);
@@ -452,72 +447,75 @@
                        else catalogValues << value;
                           }
                 }
-                if (catalogValues.count()==7) catalogValues << "false"; //for older catalog without isFullDevice
-                if (catalogValues.count()==8) catalogValues << "false"; //for older catalog without includeMetadata
-                if (catalogValues.count()==9) catalogValues << "";      //for older catalog without appVersion
+                if (catalogValues.count()== 7) catalogValues << "false"; //for older catalog without isFullDevice
+                if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata
+                if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion
+                if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID
 
                 if(catalogValues.length()>0){
-                          // Verify if path is active (drive connected)
-                          int isActive = verifyCatalogPath(catalogValues[0]);
+                    //Verify if path is active (drive connected)
+                    int isActive = verifyCatalogPath(catalogValues[0]);
 
-                          //Insert a line in the table with available data
+                    //Insert a line in the table with available data
 
-                          //prepare insert query for filesall
-                          QSqlQuery insertCatalogQuery;
-                          QString insertCatalogQuerySQL = QLatin1String(R"(
-                                        INSERT OR IGNORE INTO catalog (
-                                                        catalog_file_path,
-                                                        catalog_name,
-                                                        catalog_date_updated,
-                                                        catalog_source_path,
-                                                        catalog_file_count,
-                                                        catalog_total_file_size,
-                                                        catalog_source_path_is_active,
-                                                        catalog_include_hidden,
-                                                        catalog_file_type,
-                                                        catalog_storage,
-                                                        catalog_include_symblinks,
-                                                        catalog_is_full_device,
-                                                        catalog_date_loaded,
-                                                        catalog_include_metadata,
-                                                        catalog_app_version
-                                                        )
-                                        VALUES(
-                                                        :catalog_file_path,
-                                                        :catalog_name,
-                                                        :catalog_date_updated,
-                                                        :catalog_source_path,
-                                                        :catalog_file_count,
-                                                        :catalog_total_file_size,
-                                                        :catalog_source_path_is_active,
-                                                        :catalog_include_hidden,
-                                                        :catalog_file_type,
-                                                        :catalog_storage,
-                                                        :catalog_include_symblinks,
-                                                        :catalog_is_full_device,
-                                                        :catalog_date_loaded,
-                                                        :catalog_include_metadata,
-                                                        :catalog_app_version )
-                                    )");
+                    //Prepare insert query for filesall
+                    QSqlQuery insertCatalogQuery;
+                    QString insertCatalogQuerySQL = QLatin1String(R"(
+                                INSERT OR IGNORE INTO catalog (
+                                                catalog_id,
+                                                catalog_file_path,
+                                                catalog_name,
+                                                catalog_date_updated,
+                                                catalog_source_path,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                catalog_source_path_is_active,
+                                                catalog_include_hidden,
+                                                catalog_file_type,
+                                                catalog_storage,
+                                                catalog_include_symblinks,
+                                                catalog_is_full_device,
+                                                catalog_date_loaded,
+                                                catalog_include_metadata,
+                                                catalog_app_version
+                                                )
+                                VALUES(
+                                                :catalog_id,
+                                                :catalog_file_path,
+                                                :catalog_name,
+                                                :catalog_date_updated,
+                                                :catalog_source_path,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :catalog_source_path_is_active,
+                                                :catalog_include_hidden,
+                                                :catalog_file_type,
+                                                :catalog_storage,
+                                                :catalog_include_symblinks,
+                                                :catalog_is_full_device,
+                                                :catalog_date_loaded,
+                                                :catalog_include_metadata,
+                                                :catalog_app_version )
+                            )");
 
-                          insertCatalogQuery.prepare(insertCatalogQuerySQL);
-                          insertCatalogQuery.bindValue(":catalog_file_path",catalogFileInfo.filePath());
-                          insertCatalogQuery.bindValue(":catalog_name",catalogFileInfo.completeBaseName());
-                          insertCatalogQuery.bindValue(":catalog_date_updated",catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-                          insertCatalogQuery.bindValue(":catalog_source_path",catalogValues[0]);
-                          insertCatalogQuery.bindValue(":catalog_file_count",catalogValues[1].toInt());
-                          insertCatalogQuery.bindValue(":catalog_total_file_size",catalogValues[2].toLongLong());
-                          insertCatalogQuery.bindValue(":catalog_source_path_is_active",isActive);
-                          insertCatalogQuery.bindValue(":catalog_include_hidden",catalogValues[3]);
-                          insertCatalogQuery.bindValue(":catalog_file_type",catalogValues[4]);
-                          insertCatalogQuery.bindValue(":catalog_storage",catalogValues[5]);
-                          insertCatalogQuery.bindValue(":catalog_include_symblinks",catalogValues[6]);
-                          insertCatalogQuery.bindValue(":catalog_is_full_device",catalogValues[7]);
-                          insertCatalogQuery.bindValue(":catalog_date_loaded","");
-                          insertCatalogQuery.bindValue(":catalog_include_metadata",catalogValues[8]);
-                          insertCatalogQuery.bindValue(":catalog_app_version",catalogValues[9]);
-                          insertCatalogQuery.exec();
-
+                    insertCatalogQuery.prepare(insertCatalogQuerySQL);
+                    insertCatalogQuery.bindValue(":catalog_id",                 catalogValues[10]);
+                    insertCatalogQuery.bindValue(":catalog_file_path",          catalogFileInfo.filePath());
+                    insertCatalogQuery.bindValue(":catalog_name",               catalogFileInfo.completeBaseName());
+                    insertCatalogQuery.bindValue(":catalog_date_updated",       catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+                    insertCatalogQuery.bindValue(":catalog_source_path",        catalogValues[0]);
+                    insertCatalogQuery.bindValue(":catalog_file_count",         catalogValues[1].toInt());
+                    insertCatalogQuery.bindValue(":catalog_total_file_size",    catalogValues[2].toLongLong());
+                    insertCatalogQuery.bindValue(":catalog_source_path_is_active",isActive);
+                    insertCatalogQuery.bindValue(":catalog_include_hidden",     catalogValues[3]);
+                    insertCatalogQuery.bindValue(":catalog_file_type",          catalogValues[4]);
+                    insertCatalogQuery.bindValue(":catalog_storage",            catalogValues[5]);
+                    insertCatalogQuery.bindValue(":catalog_include_symblinks",  catalogValues[6]);
+                    insertCatalogQuery.bindValue(":catalog_is_full_device",     catalogValues[7]);
+                    insertCatalogQuery.bindValue(":catalog_date_loaded","");
+                    insertCatalogQuery.bindValue(":catalog_include_metadata",   catalogValues[8]);
+                    insertCatalogQuery.bindValue(":catalog_app_version",        catalogValues[9]);
+                    insertCatalogQuery.exec();
                 }
                 catalogFile.close();
             }
@@ -534,7 +532,7 @@
             //Prepare the main part of the query
             loadCatalogQuerySQL  = QLatin1String(R"(
                                         SELECT
-                                            DISTINCT c.catalog_name        ,
+                                            c.catalog_name                 ,
                                             c.catalog_file_path            ,
                                             c.catalog_date_updated         ,
                                             c.catalog_file_count           ,
@@ -548,6 +546,7 @@
                                             c.catalog_is_full_device       ,
                                             c.catalog_date_loaded          ,
                                             c.catalog_app_version          ,
+                                            c.catalog_id                   ,
                                             d.device_id
                                         FROM catalog c
                                         LEFT JOIN device d ON d.device_name = c.catalog_name
@@ -577,6 +576,8 @@
                                     )");
                 loadCatalogQuerySQL += prepareSQL;
             }
+
+            loadCatalogQuerySQL += " AND device_type = 'Catalog' ";
 
             //Execute query
             loadCatalogQuery.prepare(loadCatalogQuerySQL);
@@ -620,7 +621,8 @@
             proxyResultsModel->setHeaderData(11,Qt::Horizontal, tr("Full Device"));
             proxyResultsModel->setHeaderData(12,Qt::Horizontal, tr("Last Loaded"));
             proxyResultsModel->setHeaderData(13,Qt::Horizontal, tr("App Version"));
-            proxyResultsModel->setHeaderData(14,Qt::Horizontal, tr("Device ID"));
+            proxyResultsModel->setHeaderData(14,Qt::Horizontal, tr("Catalog ID"));
+            proxyResultsModel->setHeaderData(15,Qt::Horizontal, tr("Device ID"));
 
             //Connect model to tree/table view
             ui->Catalogs_treeView_CatalogList->setModel(proxyResultsModel);
@@ -644,6 +646,8 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(11, 50); //FullDevice
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(12,150); //Last Loaded
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(13,150); //App Version
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(14, 50); //Catalog ID
+            ui->Catalogs_treeView_CatalogList->header()->resizeSection(15, 50); //Device ID
 
             //Hide columns
             if(developmentMode==false){
@@ -915,7 +919,7 @@
         loadCatalogsTableToModel();
         loadStatisticsChart();
 
-        //Save to Device table
+        //Update Device table
         QSqlQuery queryUpdateDevice;
         QString queryUpdateDeviceSQL = QLatin1String(R"(
                                         UPDATE device
@@ -1118,11 +1122,41 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::generateCatalogIDs()
+    void MainWindow::generateCatalogMissingIDs()
     {
-        //Get catalogs
+        //Get catalogs with missing ID
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT device_id, catalog_name
+                                    FROM catalog
+                                    LEFT JOIN device ON device_name = catalog_name
+                                    WHERE catalog_id IS NULL or catalog_id = ''
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+        qDebug()<<query.lastError();
 
-        //Loop and generate and ID if not >1
+        //Loop and generate an ID
+        while(query.next()){
+            Device *device = new Device;
+            device->ID = query.value(0).toInt();
+            device->loadDevice();
+            //tempDevice->catalog->loadCatalogMetaData();
+            device->catalog->generateID();
+            qDebug()<<device->catalog->ID;
+
+            device->externalID = device->catalog->ID;
+            device->saveDevice();
+            device->catalog->saveCatalog();
+
+            qDebug()<<device->ID
+                     <<device->name
+                     <<device->externalID
+                     <<device->catalog->ID;
+
+            //saveDeviceTableToFile(deviceFilePath);
+
+        }
     }
     //--------------------------------------------------------------------------
 

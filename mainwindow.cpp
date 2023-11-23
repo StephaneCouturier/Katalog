@@ -41,9 +41,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     //Set current version, release date, and development mode
-        currentVersion  = "1.23";
-        releaseDate     = "2023-11-16";
-        developmentMode = false;
+        currentVersion  = "2.0";
+        releaseDate     = "2023-11-23";
+        developmentMode = true;
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
@@ -306,11 +306,22 @@ msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
 msgBox.setIcon(QMessageBox::Information);
 msgBox.exec();
 
-QSqlQuery query;
-QString querySQL = QLatin1String(R"(
-
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT *
+                                    FROM table
+                                    WHERE 1=1
                                 )");
-query.prepare(querySQL);
-query.exec();
-qDebug()<<query.lastError();
+        query.prepare(querySQL);
+        query.exec();
+        qDebug()<<query.lastError();
+        while(query.next()){
+            qDebug()<<query.value(0).toString()<<query.value(1).toString();
+        }
 */
+
+void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
+{
+    generateCatalogMissingIDs();
+}
+

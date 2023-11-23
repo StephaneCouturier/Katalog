@@ -152,7 +152,7 @@ class MainWindow : public QMainWindow
             void    clearDatabaseData();
 
             //Objects
-            Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
+            //Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
             Catalog *selectedCatalog = new Catalog(); // selected catalog used for individual catalog operations
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
             Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
@@ -250,7 +250,7 @@ class MainWindow : public QMainWindow
             QString requestSource;
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
-            void generateCatalogIDs();
+            void generateCatalogMissingIDs();
 
             qint64 globalUpdateTotalFiles;
             qint64 globalUpdateDeltaFiles;
@@ -322,8 +322,8 @@ class MainWindow : public QMainWindow
 
             void loadDeviceFileToTable();
             void insertPhysicalStorageGroup();
-            void addVirtualDevice();
-            void addStorageDevice();
+            void addDeviceVirtual();
+            void addDeviceStorage();
             void editDevice();
             void saveDevice();
             void assignCatalogToDevice(QString catalogName,int deviceID);
@@ -556,7 +556,6 @@ class MainWindow : public QMainWindow
             void on_Devices_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1);
-            void on_Devices_checkBox_DisplayStorageOnly_stateChanged(int arg1);
             void on_Devices_treeView_DeviceList_clicked(const QModelIndex &index);
             void on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos);
             void on_Devices_pushButton_ImportS_clicked();
@@ -586,7 +585,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-
+            void on_TEST_pushButton_GenerateMissingIDs_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -76,8 +76,10 @@ public:
     void setDateLoaded(QDateTime dateTime);
     void setDateUpdated(QDateTime dateTime);
 
-    void createCatalog();
+    void generateID();
+    void insertCatalog();
     void deleteCatalog();
+    void saveCatalog();
 
     void loadCatalogMetaData();//from database
     void renameCatalog(QString newCatalogName);

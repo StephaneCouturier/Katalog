@@ -304,7 +304,7 @@
         //Add a default storage device, to force any new catalog to have one
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
-                                    SELECT count(*)
+                                    SELECT COUNT(*)
                                     FROM storage
                                 )");
         queryStorage.prepare(queryStorageSQL);

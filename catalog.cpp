@@ -163,9 +163,8 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 }
 
 //catalog files data operation
-void Catalog::createCatalog()
-{
-    //Generate ID
+void Catalog::generateID()
+{//Generate ID
     QSqlQuery queryCatalogID;
     QString queryCatalogIDSQL = QLatin1String(R"(
                                     SELECT MAX (catalog_id)
@@ -176,8 +175,9 @@ void Catalog::createCatalog()
     queryCatalogID.next();
     int maxID = queryCatalogID.value(0).toInt();
     ID = maxID + 1;
-
-    //Insert new entry
+}
+void Catalog::insertCatalog()
+{//Insert new catalog entry
     QSqlQuery insertCatalogQuery;
     QString insertCatalogQuerySQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO catalog (
@@ -255,6 +255,21 @@ void Catalog::deleteCatalog()
     query.bindValue(":file_catalog ", name);
     query.exec();
 
+}
+
+void Catalog::saveCatalog()
+{//Update database with catalog values
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            UPDATE catalog
+                            SET    catalog_id =:catalog_id
+                            WHERE  catalog_name=:catalog_name
+                                )");
+    query.prepare(querySQL);
+    query.bindValue(":catalog_id", ID);
+    query.bindValue(":catalog_name", name);
+    query.exec();
+    qDebug()<<"saveCatalog: "<<query.lastError();
 }
 
 void Catalog::loadCatalogMetaData()
@@ -350,6 +365,7 @@ void Catalog::updateStorageNameToFile()
 
                 //add file data line
                 if(!line.startsWith("<catalogSourcePath")
+                    and !line.startsWith("<catalogID")
                     and !line.startsWith("<catalogIncludeHidden")
                     and !line.startsWith("<catalogFileType")
                     and !line.startsWith("<catalogStorage")
@@ -378,6 +394,9 @@ void Catalog::updateStorageNameToFile()
                     }
                     if(line.startsWith("<catalogIncludeMetadata>")){
                         fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+                    }
+                    if(line.startsWith("<catalogID>")){
+                        fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
                     }
                 }
             }

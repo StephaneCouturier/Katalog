@@ -33,21 +33,23 @@
 #include "qsqlerror.h"
 
 //storage data operation
-void Storage::createStorage()
-{
-    //Generate ID
+
+void Storage::generateID()
+{//Generate ID and add it to name
     QSqlQuery queryDeviceNumber;
     QString queryDeviceNumberSQL = QLatin1String(R"(
-                                    SELECT MAX (storage_id)
-                                    FROM storage
-                                )");
+                                        SELECT MAX (storage_id)
+                                        FROM storage
+                                    )");
     queryDeviceNumber.prepare(queryDeviceNumberSQL);
     queryDeviceNumber.exec();
     queryDeviceNumber.next();
     int maxID = queryDeviceNumber.value(0).toInt();
     ID = maxID + 1;
     name = name + "_"+QString::number(ID);
-
+}
+void Storage::insertStorage()
+{
     //Insert new device with default values
     QString querySQL = QLatin1String(R"(
             INSERT INTO storage(

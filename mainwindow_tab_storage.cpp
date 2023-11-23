@@ -273,7 +273,8 @@
     {
         //Create Storage entry
             tempStorage->name = deviceName;
-            tempStorage->createStorage();
+            tempStorage->generateID();
+            tempStorage->insertStorage();
 
         //Load table to model
         loadStorageTableToModel();
@@ -291,13 +292,13 @@
 
         //Create virtual storage under Physical group (ID=0) / Default device (ID=2)
         Device *newDeviceItem = new Device();
-        newDeviceItem->ID = 0;
+        newDeviceItem->generateDeviceID();
         newDeviceItem->parentID = 2;
         newDeviceItem->name = tempStorage->name;
         newDeviceItem->type = "Storage";
         newDeviceItem->groupID = 0;
         newDeviceItem->externalID = tempStorage->ID;
-        newDeviceItem->insertDeviceItem();
+        newDeviceItem->insertDevice();
 
         //Save data to file
         saveDeviceTableToFile(deviceFilePath);
@@ -449,7 +450,7 @@
                                             storage_date_updated  ,
                                             device_id
                                         FROM storage s
-                                        LEFT JOIN device d ON d.device_external_id = s.storage_id
+                                        JOIN device d ON d.device_external_id = s.storage_id
                             )");
         if (    selectedDevice->type == tr("All") ){
             //No filtering
@@ -477,6 +478,8 @@
                                                     )");
             loadStorageQuerySQL += prepareSQL;
         }
+
+        loadStorageQuerySQL += " AND device_type ='Storage' ";
 
         //Execute query
         loadStorageQuery.prepare(loadStorageQuerySQL);
@@ -992,9 +995,9 @@
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT s.storage_name, v.device_id
+                                SELECT s.storage_name, d.device_id
                                 FROM storage s
-                                LEFT JOIN device v ON s.storage_id = v.device_external_id
+                                LEFT JOIN device d ON s.storage_id = d.device_external_id
                                 WHERE storage_name !=''
                             )");
 

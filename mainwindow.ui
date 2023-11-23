@@ -6995,19 +6995,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Devices_checkBox_DisplayStorageOnly">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Storage only</string>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QCheckBox" name="Devices_checkBox_DisplayCatalogs">
                 <property name="text">
                  <string>Catalogs</string>
@@ -8778,6 +8765,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <width>741</width>
               <height>174</height>
              </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="TEST_pushButton_GenerateMissingIDs">
+            <property name="geometry">
+             <rect>
+              <x>270</x>
+              <y>10</y>
+              <width>231</width>
+              <height>26</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>generateMissingIDs</string>
             </property>
            </widget>
           </widget>

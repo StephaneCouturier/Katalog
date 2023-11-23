@@ -70,6 +70,7 @@ void Device::loadDevice(){
         }
     } else {
         qDebug() << "Query execution failed:" << query.lastError().text();
+        return;
     }
 
     //Load storage values
@@ -158,24 +159,26 @@ void Device::getCatalogStorageID(){
     }
 }
 
-void Device::insertDeviceItem(){
-
-    QSqlQuery query;
-    QString querySQL;
-
+void Device::generateDeviceID()
+{//Generate new ID
     if(ID==0){
-        //Generate new ID
+        QSqlQuery query;
+        QString querySQL;
         querySQL = QLatin1String(R"(
-                        SELECT MAX(device_id)
-                        FROM device
-                    )");
+                            SELECT MAX(device_id)
+                            FROM device
+                        )");
         query.prepare(querySQL);
         query.exec();
         query.next();
         ID = query.value(0).toInt() + 1;
     }
+}
+void Device::insertDevice()
+{//Insert device in table
 
-    //Insert device
+    QSqlQuery query;
+    QString querySQL;
     querySQL = QLatin1String(R"(
                             INSERT INTO device(
                                         device_id,
@@ -247,4 +250,23 @@ void Device::deleteDevice(){
     query.bindValue(":device_id", ID);
     query.exec();
 
+}
+
+void Device::saveDevice()
+{//Update database with device values
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            UPDATE device
+                            SET    device_name =:device_name,
+                                   device_parent_id =:device_parent_id,
+                                   device_external_id =:device_external_id
+                            WHERE  device_id=:device_id
+                                )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", ID);
+    query.bindValue(":device_name", name);
+    query.bindValue(":device_parent_id", parentID);
+    query.bindValue(":device_external_id", externalID);
+    query.exec();
+    qDebug()<<query.lastError();
 }
