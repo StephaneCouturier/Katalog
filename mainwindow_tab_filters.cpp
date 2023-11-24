@@ -340,10 +340,8 @@
             updateStorageSelectionStatistics();
 
             //Load matching Statistics
-            if(databaseMode=="Memory"){
-                loadStatisticsCatalogFileToTable();
-                loadStatisticsStorageFileToTable();
-            }
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
             loadStatisticsChart();
     }
     //----------------------------------------------------------------------

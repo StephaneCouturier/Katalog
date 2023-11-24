@@ -1,4 +1,4 @@
-/*LICENCE
+ /*LICENCE
     This file is part of Katalog
 
     Copyright (C) 2020, the Katalog Development team
@@ -43,7 +43,7 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
     Device *newDevice = new Device();
     newDevice->generateDeviceID();
     newDevice->type = "Virtual";
-    newDevice->name = tr("Virtual Top Item");
+    newDevice->name = tr("Virtual Top Item") + "_" + QString::number(newDevice->ID);
     newDevice->parentID = 0;
     newDevice->externalID = 0;
     newDevice->groupID = 1; //only DeviceID 1 can be a top item in group 0 (Pyhsical group)
@@ -184,6 +184,8 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
     QModelIndex index=ui->Devices_treeView_DeviceList->currentIndex();
     tempDevice->ID   = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     tempDevice->loadDevice();
+    tempDevice->loadSubDeviceList();
+
     Device *tempParentDevice = new Device();
     tempParentDevice->ID = tempDevice->parentID;
     tempParentDevice->loadDevice();
@@ -1461,7 +1463,7 @@ void MainWindow::addDeviceVirtual()
     newDevice->name = tr("Virtual") + "_" + QString::number(newDevice->ID);
     newDevice->type = "Virtual";
     newDevice->externalID = 0;
-    newDevice->groupID = 0;
+    newDevice->groupID = tempDevice->groupID;
     newDevice->insertDevice();
 
     //Save data to file
@@ -1483,7 +1485,7 @@ void MainWindow::addDeviceStorage()
     newDevice->type = "Storage";
     newDevice->storage->generateID();
     newDevice->externalID = newDevice->storage->ID;
-    newDevice->groupID = 0;
+    newDevice->groupID = tempDevice->groupID;
     newDevice->insertDevice();
     newDevice->storage->name = newDevice->name; //REMOVE
     newDevice->storage->insertStorage();
@@ -1532,26 +1534,48 @@ void MainWindow::editDevice()
 }
 //--------------------------------------------------------------------------
 void MainWindow::saveDevice()
-{   //Save the device values from the edit panel
+{//Save the device values from the edit panel
 
     //Get the ID of the selected parent
     QVariant selectedData = ui->Devices_comboBox_Parent->currentData();
     tempDevice->parentID = selectedData.toInt();
     tempDevice->name = ui->Devices_lineEdit_Name->text();
 
+    Device *parentDevice = new Device();
+    parentDevice->ID = tempDevice->parentID;
+    parentDevice->loadDevice();
+
+    int newGroupID = parentDevice->groupID;
+    if(parentDevice->ID == 0) //If the new parent is root the group_id should be 1 (0 is reserved for the Physical group)
+        newGroupID=1;
+
     //Save name and parent ID
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET    device_name =:device_name,
-                                   device_parent_id =:device_parent_id
-                            WHERE  device_id=:device_id
+                            UPDATE  device
+                            SET     device_name =:device_name,
+                                    device_parent_id =:device_parent_id,
+                                    device_group_id =:device_group_id
+                            WHERE   device_id=:device_id
                                 )");
     query.prepare(querySQL);
-    query.bindValue(":device_id",  tempDevice->ID);
-    query.bindValue(":device_name", tempDevice->name);
-    query.bindValue(":device_parent_id",  tempDevice->parentID);
+    query.bindValue(":device_id",        tempDevice->ID);
+    query.bindValue(":device_name",      tempDevice->name);
+    query.bindValue(":device_parent_id", tempDevice->parentID);
+    query.bindValue(":device_group_id",  newGroupID);
     query.exec();
+
+    //Also change the group_id of sub-devices
+    Device *loopDevice = new Device();
+    if(tempDevice->groupID != newGroupID){
+        tempDevice->loadSubDeviceList();
+        for(int i=0; i<tempDevice->deviceIDList.count(); i++) {
+            loopDevice->ID = tempDevice->deviceIDList[i];
+            loopDevice->loadDevice();
+            loopDevice->groupID = newGroupID;
+            loopDevice->saveDevice();
+        }
+    }
 
     //If device = Physical Storage
     if(tempDevice->type == "Storage"){
@@ -1571,7 +1595,6 @@ void MainWindow::saveDevice()
         updateQuery.bindValue(":storage_name", tempDevice->name);
         updateQuery.bindValue(":storage_id",   tempDevice->externalID);
         updateQuery.exec();
-        qDebug() << updateQuery.lastError() << tempDevice->type << tempDevice->ID << tempDevice->name << tempDevice->parentID;
 
         loadStorageTableToModel();
         updateStorageSelectionStatistics();

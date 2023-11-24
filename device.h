@@ -55,12 +55,14 @@ public:
 
     Storage *storage = new Storage;
     Catalog *catalog = new Catalog;
+    QList<int> deviceIDList;
 
     bool hasSubDevice;
     bool hasCatalog;
 
     void loadDevice();
     void loadDeviceCatalog(); //temp dev
+    void loadSubDeviceList();
 
     void getCatalogStorageID();
     void generateDeviceID();

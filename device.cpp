@@ -65,6 +65,7 @@ void Device::loadDevice(){
             total_file_count = query.value(7).toLongLong();
             total_space = query.value(8).toLongLong();
             free_space  = query.value(9).toLongLong();
+            groupID     = query.value(10).toInt();
         } else {
             qDebug() << "loadDevice failed, no record found for device_id" << ID;
         }
@@ -84,6 +85,45 @@ void Device::loadDevice(){
         catalog->ID = externalID;
         catalog->name = name; //temp
         catalog->loadCatalogMetaData();
+    }
+}
+
+void Device::loadSubDeviceList()
+{
+    //Get catalog data based on filters
+    //Generate SQL query from filters
+    QSqlQuery query;
+    QString querySQL;
+
+    //Prepare Query
+    querySQL  = QLatin1String(R"(
+                                        SELECT
+                                            device_id
+                                        FROM device
+                                        WHERE device_id IN (
+                                        WITH RECURSIVE hierarchy AS (
+                                             SELECT device_id, device_parent_id, device_name
+                                             FROM device
+                                             WHERE device_id = :device_id
+                                             UNION ALL
+                                             SELECT t.device_id, t.device_parent_id, t.device_name
+                                             FROM device t
+                                             JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                        )
+                                        SELECT device_id
+                                        FROM hierarchy )
+                                        AND device_id != :device_id
+                            )");
+
+    //Execute query
+    query.prepare(querySQL);
+    query.bindValue(":device_id",        ID);
+    query.bindValue(":device_parent_id", ID);
+    query.exec();
+
+    deviceIDList.clear();
+    while (query.next()) {
+        deviceIDList<<query.value(0).toInt();
     }
 }
 
@@ -174,6 +214,7 @@ void Device::generateDeviceID()
         ID = query.value(0).toInt() + 1;
     }
 }
+
 void Device::insertDevice()
 {//Insert device in table
 
@@ -257,16 +298,17 @@ void Device::saveDevice()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             UPDATE device
-                            SET    device_name =:device_name,
-                                   device_parent_id =:device_parent_id,
-                                   device_external_id =:device_external_id
-                            WHERE  device_id=:device_id
+                            SET     device_name =:device_name,
+                                    device_parent_id =:device_parent_id,
+                                    device_external_id =:device_external_id,
+                                    device_group_id =:device_group_id
+                            WHERE   device_id=:device_id
                                 )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
     query.bindValue(":device_name", name);
     query.bindValue(":device_parent_id", parentID);
     query.bindValue(":device_external_id", externalID);
+    query.bindValue(":device_group_id", groupID);
     query.exec();
-    qDebug()<<query.lastError();
 }
