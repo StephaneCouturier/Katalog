@@ -594,9 +594,9 @@
         {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder does not contain any file.<br/><br/>"
+            msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder '%1' does not contain any file.<br/><br/>"
                                                                      "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>"
-                                                                     "Force trying to get values anyhow?")
+                                                                     "Force trying to get values anyhow?").arg(storage->path)
                            );
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);

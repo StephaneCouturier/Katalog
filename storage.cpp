@@ -112,7 +112,6 @@ void Storage::loadStorageMetaData()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             SELECT
-                                storage_id,
                                 storage_name,
                                 storage_type,
                                 storage_path,
@@ -134,19 +133,19 @@ void Storage::loadStorageMetaData()
 
     if (query.exec()) {
         if (query.next()) {
-            name         = query.value(1).toString();
-            type         = query.value(2).toString();
-            path         = query.value(4).toString();
-            label        = query.value(5).toString();
-            fileSystem   = query.value(6).toString();
-            totalSpace   = query.value(7).toLongLong();
-            freeSpace    = query.value(8).toLongLong();
-            brand_model  = query.value(9).toString();
-            serialNumber = query.value(10).toString();
-            buildDate    = query.value(11).toString();
-            contentType  = query.value(12).toString();
-            container    = query.value(13).toString();
-            comment      = query.value(14).toString();
+            name         = query.value(0).toString();
+            type         = query.value(1).toString();
+            path         = query.value(2).toString();
+            label        = query.value(3).toString();
+            fileSystem   = query.value(4).toString();
+            totalSpace   = query.value(5).toLongLong();
+            freeSpace    = query.value(6).toLongLong();
+            brand_model  = query.value(7).toString();
+            serialNumber = query.value(8).toString();
+            buildDate    = query.value(9).toString();
+            contentType  = query.value(10).toString();
+            container    = query.value(11).toString();
+            comment      = query.value(12).toString();
         } else {
             qDebug() << "No record found for storage_id" << ID;
         }
