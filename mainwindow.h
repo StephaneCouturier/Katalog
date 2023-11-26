@@ -171,50 +171,37 @@ class MainWindow : public QMainWindow
             void displaySelectedDeviceName();
 
         //TAB: Search
-            Search *newSearch  = new Search(); //temporary search object used to handle the current search and results
+            Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
             Search *loadSearch = new Search(); //temporary search object used to load criteria from a previous search.
             Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
-
-            //Criteria
-            QString regexPattern;
 
             //Search processing
             QString sourceCatalog;
             QStringList catalogSelectedList;
+
             void resetToDefaultSearchCriteria();
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
             void getSearchCriteria();
+
             QString exportSearchResults();
+
             void batchProcessSearchResults();
             void insertSearchHistoryToTable();
             void loadSearchHistoryTableToModel();
             void saveSearchHistoryTableToFile();
             void loadSearchHistoryFileToTable();
+
             QString searchHistoryFilePath;
             int lastSearchSortSection;
             int lastSearchSortOrder;
-            void refreshDifferencesCatalogSelection();
 
-            //Search results
-            QString regexSearchtext;
-            QString regexFileType;
+            void refreshDifferencesCatalogSelection();
             void searchFiles();
             void searchFilesInCatalog(const QString &sourceCatalog);
             void searchFilesInDirectory(const QString &sourceDirectory);
-            qint64 filesFoundNumber;
-            qint64 filesFoundTotalSize;
-            qint64 filesFoundAverageSize;
-            qint64 filesFoundMinSize;
-            qint64 filesFoundMaxSize;
-            QString filesFoundMinDate;
-            QString filesFoundMaxDate;
 
-            //Outputs
-            QStringListModel *catalogFoundListModel;
-            QStringList searchTextList;
-
-            //search history
+            //Search history
             int lastSearchHistorySortSection;
             int lastSearchHistorySortOrder;
 

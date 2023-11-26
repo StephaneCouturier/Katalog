@@ -328,13 +328,13 @@
                               "<tr><td>Max Date:     </td><td><b> %7 </b>  </td></tr>"
                               "</table>"
                               ).arg(
-                                   QString::number(filesFoundNumber),
-                                   QLocale().formattedDataSize(filesFoundTotalSize),
-                                   QLocale().formattedDataSize(filesFoundAverageSize),
-                                   QLocale().formattedDataSize(filesFoundMinSize),
-                                   QLocale().formattedDataSize(filesFoundMaxSize),
-                                   filesFoundMinDate,
-                                   filesFoundMaxDate));
+                                   QString::number(newSearch->filesFoundNumber),
+                                   QLocale().formattedDataSize(newSearch->filesFoundTotalSize),
+                                   QLocale().formattedDataSize(newSearch->filesFoundAverageSize),
+                                   QLocale().formattedDataSize(newSearch->filesFoundMinSize),
+                                   QLocale().formattedDataSize(newSearch->filesFoundMaxSize),
+                                   newSearch->filesFoundMinDate,
+                                   newSearch->filesFoundMaxDate));
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
@@ -753,9 +753,9 @@
                     }
 
                     //Load list of catalogs in which files where found
-                    catalogFoundListModel = new QStringListModel(this);
-                    catalogFoundListModel->setStringList(newSearch->catalogFoundList);
-                    ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
+                    newSearch->catalogFoundListModel = new QStringListModel(this);
+                    newSearch->catalogFoundListModel->setStringList(newSearch->catalogFoundList);
+                    ui->Search_listView_CatalogsFound->setModel(newSearch->catalogFoundListModel);
 
                 //Process search results: list of files
 
@@ -968,7 +968,7 @@
                                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
                                 ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
-                                filesFoundNumber = fileViewModel->rowCount();
+                                newSearch->filesFoundNumber = fileViewModel->rowCount();
 
                         }
 
@@ -1121,38 +1121,38 @@
 
                 //Files found Statistics
                     //Reset from previous search
-                        filesFoundNumber = 0;
-                        filesFoundTotalSize = 0;
-                        filesFoundAverageSize = 0;
-                        filesFoundMinSize = 0;
-                        filesFoundMaxSize = 0;
-                        filesFoundMinDate = "";
-                        filesFoundMaxDate = "";
+                        newSearch->filesFoundNumber = 0;
+                        newSearch->filesFoundTotalSize = 0;
+                        newSearch->filesFoundAverageSize = 0;
+                        newSearch->filesFoundMinSize = 0;
+                        newSearch->filesFoundMaxSize = 0;
+                        newSearch->filesFoundMinDate = "";
+                        newSearch->filesFoundMaxDate = "";
 
                     //Number of files found
-                    filesFoundNumber = fileViewModel->rowCount();
-                    ui->Search_label_NumberResults->setText(QString::number(filesFoundNumber));
+                    newSearch->filesFoundNumber = fileViewModel->rowCount();
+                    ui->Search_label_NumberResults->setText(QString::number(newSearch->filesFoundNumber));
 
                     //Total size of files found
                     qint64 sizeItem;
-                    filesFoundTotalSize = 0;
+                    newSearch->filesFoundTotalSize = 0;
                     foreach (sizeItem, newSearch->sFileSizes) {
-                                filesFoundTotalSize = filesFoundTotalSize + sizeItem;
+                                newSearch->filesFoundTotalSize = newSearch->filesFoundTotalSize + sizeItem;
                     }
-                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(filesFoundTotalSize));
+                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(newSearch->filesFoundTotalSize));
 
                     //Other statistics, covering the case where no results are returned.
-                    if (filesFoundNumber !=0){
-                                filesFoundAverageSize = filesFoundTotalSize / filesFoundNumber;
+                    if (newSearch->filesFoundNumber !=0){
+                                newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
                                 QList<qint64> fileSizeList = newSearch->sFileSizes;
                                 std::sort(fileSizeList.begin(), fileSizeList.end());
-                                filesFoundMinSize = fileSizeList.first();
-                                filesFoundMaxSize = fileSizeList.last();
+                                newSearch->filesFoundMinSize = fileSizeList.first();
+                                newSearch->filesFoundMaxSize = fileSizeList.last();
 
                                 QList<QString> fileDateList = newSearch->sFileDateTimes;
                                 std::sort(fileDateList.begin(), fileDateList.end());
-                                filesFoundMinDate = fileDateList.first();
-                                filesFoundMaxDate = fileDateList.last();
+                                newSearch->filesFoundMinDate = fileDateList.first();
+                                newSearch->filesFoundMaxDate = fileDateList.last();
 
                                 ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
                     }
@@ -1185,11 +1185,11 @@
 
                 //Define how to use the search text
                     if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
-                        regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
+                        newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
                     else if(newSearch->selectedTextCriteria == tr("Begins With"))
-                        regexSearchtext="(^"+newSearch->searchText+")";
+                        newSearch->regexSearchtext="(^"+newSearch->searchText+")";
                     else if(newSearch->selectedTextCriteria == tr("Any Word"))
-                        regexSearchtext=newSearch->searchText.replace(" ","|");
+                        newSearch->regexSearchtext=newSearch->searchText.replace(" ","|");
                     else if(newSearch->selectedTextCriteria == tr("All Words")){
                         QString searchTextToSplit = newSearch->searchText;
                         QString groupRegEx = "";
@@ -1200,39 +1200,39 @@
                         for (int i=0; i<(numberOfSearchWords); i++){
                             groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
                         }
-                        regexSearchtext = groupRegEx;
+                        newSearch->regexSearchtext = groupRegEx;
                     }
                     else {
-                        regexSearchtext="";
+                        newSearch->regexSearchtext="";
                          }
 
-                    regexPattern = regexSearchtext;
+                    newSearch->regexPattern = newSearch->regexSearchtext;
 
                 //Prepare the regexFileType for file types
                 if( newSearch->searchOnFileCriteria==true and newSearch->searchOnType ==true and newSearch->selectedFileType !="All"){
                     //Get the list of file extension and join it into one string
                     if(newSearch->selectedFileType =="Audio"){
-                                regexFileType = fileType_AudioS.join("|");
+                                newSearch->regexFileType = fileType_AudioS.join("|");
                     }
                     if(newSearch->selectedFileType =="Image"){
-                                regexFileType = fileType_ImageS.join("|");
+                                newSearch->regexFileType = fileType_ImageS.join("|");
                     }
                     if(newSearch->selectedFileType =="Text"){
-                                regexFileType = fileType_TextS.join("|");
+                                newSearch->regexFileType = fileType_TextS.join("|");
                     }
                     if(newSearch->selectedFileType =="Video"){
-                                regexFileType = fileType_VideoS.join("|");
+                                newSearch->regexFileType = fileType_VideoS.join("|");
                     }
 
                     //Replace the *. by .* needed for regex
-                    regexFileType = regexFileType.replace("*.",".*");
+                    newSearch->regexFileType = newSearch->regexFileType.replace("*.",".*");
 
                     //Add the file type expression to the regex
-                    regexPattern = regexSearchtext  + "(" + regexFileType + ")";
+                    newSearch->regexPattern = newSearch->regexSearchtext  + "(" + newSearch->regexFileType + ")";
 
                  }
                  else
-                    regexPattern = regexSearchtext;
+                    newSearch->regexPattern = newSearch->regexSearchtext;
 
                 //Add the words to exclude to the regex
                 if ( newSearch->selectedSearchExclude !=""){
@@ -1255,11 +1255,11 @@
                         excludeGroupRegEx = excludeGroupRegEx + "))";
 
                     //Add regex group to exclude to the global regexPattern
-                    regexPattern = excludeGroupRegEx + regexPattern;
+                    newSearch->regexPattern = excludeGroupRegEx + newSearch->regexPattern;
                 }
 
                 //Initiate Regular Expression
-                QRegularExpression regex(regexPattern);
+                QRegularExpression regex(newSearch->regexPattern);
                 if (newSearch->caseSensitive != true) {
                     regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
                 }
@@ -1350,11 +1350,11 @@
                             {
 
                                 //Check that the folder name matches the search text
-                                regex.setPattern(regexSearchtext);
+                                regex.setPattern(newSearch->regexSearchtext);
                                 foldermatch = regex.match(lineFilePath);
                                 //If it does, then check that the file matches the selected file type
                                 if (foldermatch.hasMatch() and newSearch->searchOnType==true){
-                                    regex.setPattern(regexFileType);
+                                    regex.setPattern(newSearch->regexFileType);
                                     match = regex.match(lineFileName);
                                 }
                                 else
@@ -1379,7 +1379,7 @@
                         else{
                             //verify file matches the selected file type
                             if (newSearch->searchOnType==true){
-                                regex.setPattern(regexFileType);
+                                regex.setPattern(newSearch->regexFileType);
                             }
                             match = regex.match(lineFilePath);
                             if (!match.hasMatch()){
@@ -1407,11 +1407,11 @@
         {
             //Define how to use the search text //COMMON to searchFilesInCatalog
                 if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
-                    regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
+                    newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
                 else if(newSearch->selectedTextCriteria == tr("Begins With"))
-                    regexSearchtext="(^"+newSearch->searchText+")";
+                    newSearch->regexSearchtext="(^"+newSearch->searchText+")";
                 else if(newSearch->selectedTextCriteria == tr("Any Word"))
-                    regexSearchtext=newSearch->searchText.replace(" ","|");
+                    newSearch->regexSearchtext=newSearch->searchText.replace(" ","|");
                 else if(newSearch->selectedTextCriteria == tr("All Words")){
                     QString searchTextToSplit = newSearch->searchText;
                     QString groupRegEx = "";
@@ -1422,35 +1422,35 @@
                     for (int i=0; i<(numberOfSearchWords); i++){
                         groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
                     }
-                    regexSearchtext = groupRegEx;
+                    newSearch->regexSearchtext = groupRegEx;
                 }
                 else {
-                    regexSearchtext="";
+                    newSearch->regexSearchtext="";
                      }
 
-                regexPattern = regexSearchtext;
+                newSearch->regexPattern = newSearch->regexSearchtext;
 
             //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
             if ( newSearch->searchOnFileCriteria==true and newSearch->selectedFileType !=tr("All")){
                 //Get the list of file extension and join it into one string
                 if(newSearch->selectedFileType ==tr("Audio")){
-                            regexFileType = fileType_AudioS.join("|");
+                            newSearch->regexFileType = fileType_AudioS.join("|");
                 }
                 if(newSearch->selectedFileType ==tr("Image")){
-                            regexFileType = fileType_ImageS.join("|");
+                            newSearch->regexFileType = fileType_ImageS.join("|");
                 }
                 if(newSearch->selectedFileType ==tr("Text")){
-                            regexFileType = fileType_TextS.join("|");
+                            newSearch->regexFileType = fileType_TextS.join("|");
                 }
                 if(newSearch->selectedFileType ==tr("Video")){
-                            regexFileType = fileType_VideoS.join("|");
+                            newSearch->regexFileType = fileType_VideoS.join("|");
                 }
 
                 //Replace the *. by .* needed for regex
-                regexFileType = regexFileType.replace("*.",".*");
+                newSearch->regexFileType = newSearch->regexFileType.replace("*.",".*");
 
                 //Add the file type expression to the regex
-                regexPattern = regexSearchtext  + "(" + regexFileType + ")";
+                newSearch->regexPattern = newSearch->regexSearchtext  + "(" + newSearch->regexFileType + ")";
              }
 
             //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
@@ -1475,10 +1475,10 @@
                     excludeGroupRegEx = excludeGroupRegEx + "))";
 
                 //Add regex group to exclude to the global regexPattern
-                regexPattern = excludeGroupRegEx + regexPattern;
+                newSearch->regexPattern = excludeGroupRegEx + newSearch->regexPattern;
             }
 
-            QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
+            QRegularExpression regex(newSearch->regexPattern, QRegularExpression::CaseInsensitiveOption);
 
             //Filetypes
                     //Get the file type for the catalog
@@ -1587,13 +1587,13 @@
                             reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
                             //Check the fodler name matches the search text
-                            regex.setPattern(regexSearchtext);
+                            regex.setPattern(newSearch->regexSearchtext);
 
                             foldermatch = regex.match(reducedLine);
 
                             //if it does, then check that the file matches the selected file type
                             if (foldermatch.hasMatch()){
-                                regex.setPattern(regexFileType);
+                                regex.setPattern(newSearch->regexFileType);
 
                                 match = regex.match(lineFilePath);
                             }
@@ -1921,7 +1921,7 @@
                     if (QMessageBox::warning(this,
                                              tr("Confirmation"),
                                              "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
                                              QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
                             for (int i = 0; i < newSearch->sFileNames.size(); ++i)
@@ -1935,7 +1935,7 @@
                             else
                          movedFiles+=1;
                             }
-                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(filesFoundNumber)));
+                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(newSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1958,7 +1958,7 @@
                     if (QMessageBox::critical(this,
                                               tr("Confirmation"),
                                               "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(filesFoundNumber), QLocale().formattedDataSize(filesFoundTotalSize)),
+                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
                                               QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
                         for (int i = 0; i < newSearch->sFileNames.size(); ++i)
@@ -1969,7 +1969,7 @@
                             }
                             result="";
                         }
-                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(filesFoundNumber)));
+                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(newSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1986,7 +1986,7 @@
         }
         //----------------------------------------------------------------------
         QString MainWindow::exportSearchResults()
-        {
+        {//Export search results to file, returns fullFileName
             QString fileExtension;
             QStringList catalogMetadata;
             QString fullFileName;

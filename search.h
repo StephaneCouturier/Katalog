@@ -36,6 +36,7 @@
 #include <QAbstractTableModel>
 #include <QCoreApplication>
 #include <QSqlQuery>
+#include <QStringListModel>
 
 class Search : public QAbstractTableModel
 {
@@ -49,9 +50,13 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    //Search Criteria
+    //Search Inputs
     QString searchDateTime;
+    QString regexPattern;
+    QString regexSearchtext;
+    QString regexFileType;
 
+    //Search Criteria
     bool searchOnFileName;
     QString searchText;
     QString selectedTextCriteria;
@@ -96,8 +101,19 @@ public:
     QString connectedDirectory;
 
     //Results
+    qint64 filesFoundNumber;
+    qint64 filesFoundTotalSize;
+    qint64 filesFoundAverageSize;
+    qint64 filesFoundMinSize;
+    qint64 filesFoundMaxSize;
+    QString filesFoundMinDate;
+    QString filesFoundMaxDate;
+
     QStringList filesFoundList;
     QStringList catalogFoundList;
+
+    QStringListModel *catalogFoundListModel;
+    QStringList searchTextList;
 
     QList<QString>  sFileNames;
     QList<qint64>   sFileSizes;
