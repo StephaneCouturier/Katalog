@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
         releaseDate     = "2023-11-26";
-        developmentMode = true;
+        developmentMode = false;
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 hideDevelopmentUIItems();
             }
 
-            //Settings screen
+        //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
@@ -132,28 +132,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             else if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (dark)") ){
                 loadCustomThemeDark();
             }
+
     //Load Collection data
 
-            //Load Collection
-                loadCollection();
-                filterFromSelectedDevices();
+        //Load Collection
+            loadCollection();
+            selectedDevice->loadDevice();
+            filterFromSelectedDevices();
 
-            //Restore last opened catalog to Explore tab
-                if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
-                    selectedCatalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
-                    selectedCatalog->loadCatalog();
-                    selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-                    selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
-                    ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-                    if (selectedCatalog->filePath != ""){
-                        openCatalogToExplore();
-                    }
+        //Restore last opened catalog to Explore tab
+            if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
+                selectedCatalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
+                selectedCatalog->loadCatalog();
+                selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
+                selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
+                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+                if (selectedCatalog->filePath != ""){
+                    openCatalogToExplore();
                 }
+            }
 
-            //Preload last selected catalogs contents to memory
-                if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
-                    preloadCatalogs();
-                }
+        //Preload last selected catalogs contents to memory
+            if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
+                preloadCatalogs();
+            }
 
     //Setup tabs
 

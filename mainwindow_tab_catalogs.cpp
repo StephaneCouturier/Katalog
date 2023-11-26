@@ -583,9 +583,9 @@
 
             //Execute query
             loadCatalogQuery.prepare(loadCatalogQuerySQL);
-            loadCatalogQuery.bindValue(":catalog_storage", selectedDevice->name);
-            loadCatalogQuery.bindValue(":catalog_name", selectedDevice->name);
-            loadCatalogQuery.bindValue(":device_id", selectedDevice->ID);
+            loadCatalogQuery.bindValue(":catalog_storage",  selectedDevice->name);
+            loadCatalogQuery.bindValue(":catalog_name",     selectedDevice->name);
+            loadCatalogQuery.bindValue(":device_id",        selectedDevice->ID);
             loadCatalogQuery.bindValue(":device_parent_id", selectedDevice->ID);
             loadCatalogQuery.exec();
 

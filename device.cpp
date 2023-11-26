@@ -52,7 +52,7 @@ void Device::loadDevice(){
                         )");
 
     query.prepare(querySQL);
-    query.bindValue(":device_id",ID);
+    query.bindValue(":device_id", ID);
 
     if (query.exec()) {
         if (query.next()) {

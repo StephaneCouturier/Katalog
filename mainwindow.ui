@@ -6921,6 +6921,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </spacer>
               </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="TEST_pushButton_GenerateMissingIDs">
+                <property name="text">
+                 <string>GenerateMissingIDs</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -8765,19 +8772,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <width>741</width>
               <height>174</height>
              </rect>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="TEST_pushButton_GenerateMissingIDs">
-            <property name="geometry">
-             <rect>
-              <x>270</x>
-              <y>10</y>
-              <width>231</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>generateMissingIDs</string>
             </property>
            </widget>
           </widget>
