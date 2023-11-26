@@ -77,14 +77,14 @@ void Device::loadDevice(){
     //Load storage values
     if(type == "Storage"){
         storage->ID = externalID;
-        storage->loadStorageMetaData();
+        storage->loadStorage();
     }
 
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
         catalog->name = name; //temp
-        catalog->loadCatalogMetaData();
+        catalog->loadCatalog();
     }
 }
 
@@ -311,4 +311,10 @@ void Device::saveDevice()
     query.bindValue(":device_external_id", externalID);
     query.bindValue(":device_group_id", groupID);
     query.exec();
+}
+
+void Device::updateDevice()
+{//Update device and related storage or catalog information where relevant
+    /*QList<qint64> catalogUpdates = */catalog->updateCatalogFiles();
+
 }

@@ -83,7 +83,7 @@
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
     {
         selectedStorage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
-        selectedStorage->loadStorageMetaData();
+        selectedStorage->loadStorage();
 
         //display buttons
         ui->Storage_pushButton_Edit->setEnabled(true);
@@ -452,16 +452,10 @@
                                         FROM storage s
                                         JOIN device d ON d.device_external_id = s.storage_id
                             )");
-        if (    selectedDevice->type == tr("All") ){
-            //No filtering
+        if ( selectedDevice->type == "Catalog" ){
+            loadStorageQuerySQL += " WHERE device_id =:device_parent_id";
         }
-        else if ( selectedDevice->type == "Storage" ){
-            loadStorageQuerySQL += " WHERE device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            loadStorageQuerySQL += " WHERE storage_name =:catalog_storage";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
+        else{
             QString prepareSQL = QLatin1String(R"(
                                     WHERE d.device_id IN (
                                     WITH RECURSIVE hierarchy AS (
@@ -483,11 +477,8 @@
 
         //Execute query
         loadStorageQuery.prepare(loadStorageQuerySQL);
-        loadStorageQuery.bindValue(":storage_name", selectedDevice->name);
-        loadStorageQuery.bindValue(":storage_location", selectedDevice->name);
-        loadStorageQuery.bindValue(":catalog_storage", selectedDevice->name);
-        loadStorageQuery.bindValue(":catalog_name", selectedDevice->name);
         loadStorageQuery.bindValue(":device_id", selectedDevice->ID);
+        loadStorageQuery.bindValue(":device_parent_id", selectedDevice->parentID);
         loadStorageQuery.exec();
         loadStorageQuery.next();
 
@@ -569,57 +560,18 @@
         //Update Storage screen statistics
             updateStorageSelectionStatistics();
 
-
     }
     //----------------------------------------------------------------------
     void MainWindow::updateStorageInfo(Storage* storage)
     {
-        //verify if path is available / not empty
-        QDir dir (storage->path);
-
-        //Warning if no Path is provided
-        if ( storage->path == "" ){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "No Path was provided. <br/>"
-                                                                     "Modify the device to provide one and try again."));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-
-            return;
-        }
-
-        ///Warning and choice if the result is 0 files
-        if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
-        {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder '%1' does not contain any file.<br/><br/>"
-                                                                     "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>"
-                                                                     "Force trying to get values anyhow?").arg(storage->path)
-                           );
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            int result = msgBox.exec();
-
-            if ( result == QMessageBox::Cancel){
-                    return;
-            }
-        }
-
         //Update device information
             QList<qint64> updates = storage->updateStorageInfo();
 
-        //Save statistics
-            QDateTime dateTime = QDateTime::currentDateTime();
-            storage->saveStatistics(dateTime);
-
-            //save to file
-                if(databaseMode=="Memory"){
-                    QString storageStatisticsFilePath = collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
-                    storage->saveStatisticsToFile(storageStatisticsFilePath, dateTime);
-                }
+        //Save statistics to file
+            if(databaseMode=="Memory"){
+                QString storageStatisticsFilePath = collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
+                storage->saveStatisticsToFile(storageStatisticsFilePath, storage->dateTimeUpdated);
+            }
 
         //Inform user about the update
         if(skipCatalogUpdateSummary !=true and updates.count()>0){
@@ -810,7 +762,7 @@
         //Save values for each storage device
         while(query.next()){
             tempStorage->ID = query.value(0).toInt();
-            tempStorage->loadStorageMetaData();
+            tempStorage->loadStorage();
             tempStorage->saveStatistics(dateTime);
 
             if(databaseMode=="Memory")
@@ -974,7 +926,7 @@
                 while (listCatalogQuery.next()){
                     tempCatalog = new Catalog;
                     tempCatalog->name = listCatalogQuery.value(0).toString();
-                    tempCatalog->loadCatalogMetaData();
+                    tempCatalog->loadCatalog();
                     tempCatalog->storageName = newStorageName;
                     tempCatalog->updateStorageNameToFile();
                 }

@@ -63,6 +63,7 @@ public:
     void loadDevice();
     void loadDeviceCatalog(); //temp dev
     void loadSubDeviceList();
+    void updateDevice();
 
     void getCatalogStorageID();
     void generateDeviceID();

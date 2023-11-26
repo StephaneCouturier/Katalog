@@ -133,7 +133,7 @@
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
             selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
 
             openCatalogToExplore();
 
@@ -169,7 +169,7 @@
         //Adapt UI based on device type
         if (selectedDevice->type=="Storage"){
             selectedStorage->ID = selectedDevice->externalID;
-            selectedStorage->loadStorageMetaData();
+            selectedStorage->loadStorage();
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
             ui->Devices_pushButton_AssignStorage->setEnabled(true);
             ui->Devices_label_SelectedCatalogDisplay->setText("");
@@ -181,7 +181,7 @@
         }
         else if (selectedDevice->type=="Catalog"){
             selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
             ui->Devices_pushButton_AssignStorage->setEnabled(false);
             ui->Devices_label_SelectedStorageDisplay->setText("");
@@ -320,7 +320,7 @@
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
             selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
         }
         else if (selectedDevice->type=="Virtual"){
             ui->Filter_pushButton_Explore->setEnabled(false);
@@ -331,15 +331,15 @@
         displaySelectedDeviceName();
 
         //Load matching Catalogs, Storage, and Statistics
-            //Load matching Catalogs
+            //Catalogs
             loadCatalogsTableToModel();
 
-            //Load matching Storage
+            //Storage
             loadStorageTableToModel();
             updateCatalogsScreenStatistics();
             updateStorageSelectionStatistics();
 
-            //Load matching Statistics
+            //Statistics
             loadStatisticsCatalogFileToTable();
             loadStatisticsStorageFileToTable();
             loadStatisticsChart();

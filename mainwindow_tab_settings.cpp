@@ -333,7 +333,7 @@
         foreach(sourceCatalog,catalogSelectedList)
         {
                     selectedCatalog->name = sourceCatalog;
-                    selectedCatalog->loadCatalogMetaData();
+                    selectedCatalog->loadCatalog();
                     selectedCatalog->loadCatalogFileListToTable();
         }
     }

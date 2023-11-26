@@ -202,7 +202,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             tempCatalog->name = tempDevice->name;
-            tempCatalog->loadCatalogMetaData();
+            tempCatalog->loadCatalog();
             updateSingleCatalog(tempCatalog, true);
 
             updateAllNumbers();
@@ -430,7 +430,7 @@ void MainWindow::importStorageCatalogLinks() {
         int device_id   = query.value(3).toInt();
 
         selectedCatalog->name = catalog_name;
-        selectedCatalog->loadCatalogMetaData();
+        selectedCatalog->loadCatalog();
 
         assignCatalogToDevice(catalog_name,device_id);
 
@@ -1655,7 +1655,7 @@ void MainWindow::saveDevice()
                 while (listCatalogQuery.next()){
                     tempCatalog = new Catalog;
                     tempCatalog->name = listCatalogQuery.value(0).toString();
-                    tempCatalog->loadCatalogMetaData();
+                    tempCatalog->loadCatalog();
                     tempCatalog->storageName = newStorageName;
                     tempCatalog->updateStorageNameToFile();
                 }

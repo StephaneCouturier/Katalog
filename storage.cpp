@@ -107,7 +107,7 @@ void Storage::deleteStorage()
     queryDeviceNumber.exec();
 }
 
-void Storage::loadStorageMetaData()
+void Storage::loadStorage()
 {
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
@@ -158,11 +158,45 @@ QList<qint64> Storage::updateStorageInfo()
 {
     QList<qint64> list;
 
+    //verify if path is available / not empty
+    QDir dir (path);
+
+    //Warning if no Path is provided
+    if ( path == "" ){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow", "No Path was provided. <br/>"
+                                                                 "Modify the device to provide one and try again."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+
+        return list;
+    }
+
+    ///Warning and choice if the result is 0 files
+    if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder '%1' does not contain any file.<br/><br/>"
+                                                                 "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>"
+                                                                 "Force trying to get values anyhow?").arg(path)
+                       );
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int result = msgBox.exec();
+
+        if ( result == QMessageBox::Cancel){
+            return list;
+        }
+    }
+
     //Get current values for comparison later
     qint64 previousStorageFreeSpace  = freeSpace;
     qint64 previousStorageTotalSpace = totalSpace;
     qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-    QDateTime lastUpdate  = dateUpdated;
+    QDateTime lastUpdate  = dateTimeUpdated;
 
     //Get device information
         QStorageInfo storageInfo;
@@ -190,7 +224,7 @@ QList<qint64> Storage::updateStorageInfo()
             return list;
         }
 
-        dateUpdated = QDateTime::currentDateTime();
+        dateTimeUpdated = QDateTime::currentDateTime();
 
     //Save to Storage table
         QSqlQuery queryTotalSpace;
@@ -225,7 +259,7 @@ QList<qint64> Storage::updateStorageInfo()
         queryTotalSpace.exec();
 
     //Stop if the update was not done (lastUpdate time did not change)
-        if (lastUpdate == dateUpdated)
+        if (lastUpdate == dateTimeUpdated)
             return list;
 
     //Prepare to report changes to the storage
@@ -243,6 +277,11 @@ QList<qint64> Storage::updateStorageInfo()
         list.append(newStorageTotalSpace);
         list.append(deltaStorageTotalSpace);
 
+    //Save statistics
+        dateTimeUpdated = QDateTime::currentDateTime();
+        saveStatistics(dateTimeUpdated);
+
+    //Return the list of update information
         return list;
 
 }
@@ -269,7 +308,7 @@ void Storage::saveStatistics(QDateTime dateTime)
         querySaveStatistics.bindValue(":storage_name", name);
         querySaveStatistics.bindValue(":storage_free_space", freeSpace);
         querySaveStatistics.bindValue(":storage_total_space", totalSpace);
-        if (dateTime == dateUpdated)
+        if (dateTime == dateTimeUpdated)
             querySaveStatistics.bindValue(":record_type", "update");
         else
             querySaveStatistics.bindValue(":record_type", "snapshot");
@@ -282,7 +321,7 @@ void Storage::saveStatisticsToFile(QString filePath, QDateTime dateTime)
         //Prepare file and data
         QFile fileOut(filePath);
         QString record_type;
-        if (dateTime == dateUpdated)
+        if (dateTime == dateTimeUpdated)
             record_type = "update";
         else
             record_type = "snapshot";

@@ -466,7 +466,7 @@
 
             //Prepare inputs for the Explore
             selectedCatalog->name = selectedFileCatalog;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
             selectedDirectoryName = selectedFileFolder.remove(selectedCatalog->sourcePath + "/");
 
             //Open the catalog into the Explore
@@ -1174,7 +1174,7 @@
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
             tempCatalog->name = sourceCatalogName;
-            tempCatalog->loadCatalogMetaData();
+            tempCatalog->loadCatalog();
 
             //Prepare Inputs
                 QFile catalogFile(tempCatalog->sourcePath);

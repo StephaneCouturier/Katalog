@@ -57,7 +57,7 @@
             tempDevice->ID = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 15, QModelIndex()).data().toInt();
             tempDevice->loadDevice();
             tempDevice->catalog->name = tempDevice->name;
-            tempDevice->catalog->loadCatalogMetaData();
+            tempDevice->catalog->loadCatalog();
 
             // Display buttons
             ui->Catalogs_pushButton_Search->setEnabled(true);
@@ -84,7 +84,7 @@
         {
             //The selected catalog becomes the active catalog
             selectedCatalog->name = selectedCatalog->name;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
 
             //Load
             openCatalogToExplore();
@@ -120,7 +120,7 @@
 
                 //The selected catalog becomes the active catalog
                 selectedCatalog->name = selectedCatalog->name;
-                selectedCatalog->loadCatalogMetaData();
+                selectedCatalog->loadCatalog();
 
                 //Load
                 openCatalogToExplore();
@@ -144,7 +144,9 @@
         {
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(tempDevice->catalog, true);
+            updateSingleCatalog(tempDevice->catalog, true);//remove
+
+            //tempDevice->updateDevice(); //new not working
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -208,7 +210,7 @@
                             else{
                                 //Update catalog
                                 tempCatalog->name = catalogName;
-                                tempCatalog->loadCatalogMetaData();
+                                tempCatalog->loadCatalog();
                                 if(tempCatalog->sourcePathIsActive==true){
                                     updateCatalogFileList(tempCatalog);
                                 }
@@ -232,7 +234,7 @@
                                     //Update storage
                                     if ( selectedCatalogStoragePath!=""){
                                         tempStorage->ID = selectedCatalogStorageID;
-                                        tempStorage->loadStorageMetaData();
+                                        tempStorage->loadStorage();
                                         updateStorageInfo(tempStorage);
                                     }
                                     else
@@ -292,7 +294,7 @@
 
             //The selected catalog becomes the active catalog
             selectedCatalog->name = selectedCatalog->name;
-            selectedCatalog->loadCatalogMetaData();
+            selectedCatalog->loadCatalog();
 
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
@@ -550,17 +552,17 @@
                                             d.device_id
                                         FROM catalog c
                                         LEFT JOIN device d ON d.device_name = c.catalog_name
-                            )");
+                            )"); //LEFT JOIN device d ON d.device_external_id = c.catalog_id
 
             if (      selectedDevice->type == "Storage" ){
                 loadCatalogQuerySQL += " WHERE device_parent_id =:device_parent_id ";
             }
             else if ( selectedDevice->type == "Catalog" ){
                 loadCatalogQuerySQL += " WHERE catalog_name =:catalog_name ";
+                //loadCatalogQuerySQL += " WHERE device_id =:device_id ";
             }
-            else if ( selectedDevice->type == "Virtual" ){
+            else if ( selectedDevice->type == "Virtual" ){//or selectedDevice->type == "Storage"
                 QString prepareSQL = QLatin1String(R"(
-
                                         WHERE d.device_id IN (
                                         WITH RECURSIVE hierarchy AS (
                                              SELECT device_id, device_parent_id, device_name
@@ -772,7 +774,7 @@
             //Update storage
         if ( parentStorageDevice.path !=""){
             tempStorage->ID = parentStorageDevice.externalID;
-                tempStorage->loadStorageMetaData();
+                tempStorage->loadStorage();
                 if(updateStorage==true){
                     updateStorageInfo(tempStorage);
                 }
@@ -1388,7 +1390,7 @@
                                                   | QMessageBox::No);
                 if ( updatechoice == QMessageBox::Yes){
                     tempCatalog->name = newCatalogName;
-                    tempCatalog->loadCatalogMetaData();
+                    tempCatalog->loadCatalog();
                     updateCatalogFileList(tempCatalog);
                 }
             }
@@ -1525,7 +1527,7 @@
            //Save history for each catalog
             while (query.next()){
                 tempCatalog->name = query.value(0).toString();
-                tempCatalog->loadCatalogMetaData();
+                tempCatalog->loadCatalog();
                 tempCatalog->saveStatistics(dateTime);
 
                 if(databaseMode=="Memory")
@@ -1559,7 +1561,7 @@
             //Update and Save sourcePathIsActive for each catalog
             while (query.next()){
                 tempCatalog->name = query.value(0).toString();
-                tempCatalog->loadCatalogMetaData();
+                tempCatalog->loadCatalog();
                 tempCatalog->updateSourcePathIsActive();
             }
     }

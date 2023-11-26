@@ -80,8 +80,11 @@ public:
     void insertCatalog();
     void deleteCatalog();
     void saveCatalog();
+    QList<qint64> updateCatalogFiles();
+    void catalogDirectory();
 
-    void loadCatalogMetaData();//from database
+
+    void loadCatalog();//from database
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
     void updateStorageNameToFile();

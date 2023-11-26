@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-11-23";
+        releaseDate     = "2023-11-26";
         developmentMode = true;
 
     //Prepare paths, user setting file, check version
@@ -141,7 +141,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             //Restore last opened catalog to Explore tab
                 if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
                     selectedCatalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
-                    selectedCatalog->loadCatalogMetaData();
+                    selectedCatalog->loadCatalog();
                     selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
                     selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
                     ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);

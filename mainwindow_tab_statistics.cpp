@@ -856,7 +856,7 @@
                                 tempStorage->name = catalogName;
                                 tempStorage->freeSpace = catalogFileCount;
                                 tempStorage->totalSpace = catalogTotalFileSize;
-                                tempStorage->dateUpdated = dateTime;
+                                tempStorage->dateTimeUpdated = dateTime;
                                 tempStorage->saveStatistics(dateTime);
                                 tempStorage->saveStatisticsToFile(statisticsStorageFilePath,dateTime);
                            }

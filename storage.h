@@ -59,12 +59,12 @@ public:
     QString contentType;
     QString container;
     QString comment;
-    QDateTime dateUpdated;
+    QDateTime dateTimeUpdated;
 
     void generateID();
     void insertStorage();
     void deleteStorage();
-    void loadStorageMetaData();
+    void loadStorage();
     QList<qint64> updateStorageInfo();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
