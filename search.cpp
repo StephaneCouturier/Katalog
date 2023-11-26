@@ -55,11 +55,11 @@ QVariant Search::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     switch (index.column()){
-    case 0: return QString(fileNames[index.row()]);
-    case 1: return qint64 (fileSizes[index.row()]);
-    case 3: return QString(filePaths[index.row()]);
-    case 2: return QString(fileDateTimes[index.row()]);
-    case 4: return QString(fileCatalogs[index.row()]);
+        case 0: return QString(fileNames[index.row()]);
+        case 1: return qint64 (fileSizes[index.row()]);
+        case 3: return QString(filePaths[index.row()]);
+        case 2: return QString(fileDateTimes[index.row()]);
+        case 4: return QString(fileCatalogs[index.row()]);
     }
     return QVariant();
 }
@@ -68,11 +68,11 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
-        case 0: return QString(tr("Name"));
-        case 1: return QString(tr("Size"));
-        case 3: return QString(tr("Folder"));
-        case 2: return QString(tr("Date"));
-        case 4: return QString(tr("Catalog"));
+            case 0: return QString(tr("Name"));
+            case 1: return QString(tr("Size"));
+            case 3: return QString(tr("Folder"));
+            case 2: return QString(tr("Date"));
+            case 4: return QString(tr("Catalog"));
         }
     }
     return QVariant();
@@ -130,7 +130,6 @@ void Search::loadSearchHistoryCriteria()
     query.exec();
 
     if (query.next()){
-        //searchDateTime              = query.value(0).toDateTime();
         searchOnFileName       = query.value(1).toBool();
         searchText             = query.value(2).toString();
         selectedTextCriteria   = query.value(3).toString();
@@ -161,12 +160,10 @@ void Search::loadSearchHistoryCriteria()
             differencesCatalog1 = differencesCatalogs[0];
             differencesCatalog2 = differencesCatalogs[1];
         }
-        searchOnFolderCriteria      = query.value(27).toBool();
-        showFoldersOnly             = query.value(28).toBool();
-
-        searchOnTags                = query.value(29).toBool();
-        selectedTagName             = query.value(30).toString();
-
+        searchOnFolderCriteria  = query.value(27).toBool();
+        showFoldersOnly         = query.value(28).toBool();
+        searchOnTags            = query.value(29).toBool();
+        selectedTagName         = query.value(30).toString();
         selectedStorage         = query.value(32).toString();
         selectedCatalog         = query.value(33).toString();
         searchInCatalogsChecked = query.value(34).toBool();
@@ -179,22 +176,22 @@ void Search::setMultipliers()
 {//Define a size multiplier depending on the size unit selected
     sizeMultiplierMin=1;
     if      (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
-        sizeMultiplierMin = sizeMultiplierMin *1024;
+            sizeMultiplierMin = sizeMultiplierMin *1024;
     else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
-        sizeMultiplierMin = sizeMultiplierMin *1024*1024;
+            sizeMultiplierMin = sizeMultiplierMin *1024*1024;
     else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
-        sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
+            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024;
     else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
-        sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024*1024;
+            sizeMultiplierMin = sizeMultiplierMin *1024*1024*1024*1024;
     sizeMultiplierMax=1;
     if      (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
-        sizeMultiplierMax = sizeMultiplierMax *1024;
+            sizeMultiplierMax = sizeMultiplierMax *1024;
     else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
-        sizeMultiplierMax = sizeMultiplierMax *1024*1024;
+            sizeMultiplierMax = sizeMultiplierMax *1024*1024;
     else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
-        sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
+            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024;
     else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
-        sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
+            sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 }
 
 void Search::populateFileData( const QList<QString> &newfileName,
