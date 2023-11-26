@@ -84,6 +84,8 @@
     {
         selectedStorage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
         selectedStorage->loadStorage();
+        tempDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
+        tempDevice->loadDevice();
 
         //display buttons
         ui->Storage_pushButton_Edit->setEnabled(true);
@@ -567,6 +569,9 @@
         //Update device information
             QList<qint64> updates = storage->updateStorageInfo();
 
+        //Update values of parent devices
+            updateAllNumbers();
+
         //Save statistics to file
             if(databaseMode=="Memory"){
                 QString storageStatisticsFilePath = collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
@@ -678,27 +683,25 @@
         //Prepare the main part of the query
         QString querySQL = QLatin1String(R"(
                                         SELECT
-                                            COUNT (s.storage_id),
-                                            SUM(s.storage_free_space),
-                                            SUM(s.storage_total_space)
-
-                                        FROM storage s
-                                        LEFT JOIN device d ON d.device_external_id = s.storage_id
+                                            COUNT (device_id),
+                                            SUM(device_free_space),
+                                            SUM(device_total_space)
+                                        FROM device
+                                        WHERE device_type = 'Storage'
                             )");
         if (    selectedDevice->type  == tr("All") )
         {
             //No filtering
         }
-
         else if ( selectedDevice->type == "Storage" ){
-            querySQL += " WHERE device_name =:device_name ";
+            querySQL += " AND device_id =:device_id ";
         }
-        //         else if ( selectedDeviceType == "Catalog" ){
-        //            loadStorageQuerySQL += " WHERE storage_name =:catalog_storage";
-        //        }
+        else if ( selectedDevice->type == "Catalog" ){
+           querySQL += " AND device_id =:device_parent_id";
+        }
         else if ( selectedDevice->type == "Virtual" ){
             QString prepareSQL = QLatin1String(R"(
-                                    WHERE d.device_id IN (
+                                    AND  device_id IN (
                                     WITH RECURSIVE hierarchy AS (
                                          SELECT device_id, device_parent_id, device_name
                                          FROM device
@@ -716,10 +719,8 @@
 
         //Execute query
         query.prepare(querySQL);
-        query.bindValue(":device_name", selectedDevice->name);
-        //query.bindValue(":catalog_storage", selectedDevice->name);
-        query.bindValue(":catalog_name", selectedDevice->name);
         query.bindValue(":device_id", selectedDevice->ID);
+        query.bindValue(":device_parent_id", selectedDevice->parentID);
         query.exec();
         query.next();
 
