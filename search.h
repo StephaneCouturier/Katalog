@@ -95,6 +95,10 @@ public:
     bool    searchInConnectedChecked;
     QString connectedDirectory;
 
+    //Results
+    QStringList filesFoundList;
+    QStringList catalogFoundList;
+
     QList<QString>  sFileNames;
     QList<qint64>   sFileSizes;
     QList<QString>  sFilePaths;

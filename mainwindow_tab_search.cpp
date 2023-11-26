@@ -44,6 +44,11 @@
             searchFiles();
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_Search_clicked()
+        {
+            searchFiles();
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
         {
             QClipboard *clipboard = QGuiApplication::clipboard();
@@ -51,32 +56,26 @@
             ui->Search_lineEdit_SearchText->setText(originalText);
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_pushButton_Search_clicked()
-        {
-            searchFiles();
-        }
-        //----------------------------------------------------------------------
+
         void MainWindow::on_Search_pushButton_CleanSearchText_clicked()
         {
-            QString originalText;
-            originalText = ui->Search_lineEdit_SearchText->text();
+            QString cleanedSearchText = ui->Search_lineEdit_SearchText->text();
+            cleanedSearchText.replace("."," ");
+            cleanedSearchText.replace(","," ");
+            cleanedSearchText.replace("_"," ");
+            cleanedSearchText.replace("-"," ");
+            cleanedSearchText.replace("("," ");
+            cleanedSearchText.replace(")"," ");
+            cleanedSearchText.replace("["," ");
+            cleanedSearchText.replace("]"," ");
+            cleanedSearchText.replace("{"," ");
+            cleanedSearchText.replace("}"," ");
+            cleanedSearchText.replace("/"," ");
+            cleanedSearchText.replace("\\"," ");
+            cleanedSearchText.replace("'"," ");
+            cleanedSearchText.replace("\""," ");
 
-            originalText.replace("."," ");
-            originalText.replace(","," ");
-            originalText.replace("_"," ");
-            originalText.replace("-"," ");
-            originalText.replace("("," ");
-            originalText.replace(")"," ");
-            originalText.replace("["," ");
-            originalText.replace("]"," ");
-            originalText.replace("{"," ");
-            originalText.replace("}"," ");
-            originalText.replace("/"," ");
-            originalText.replace("\\"," ");
-            originalText.replace("'"," ");
-            originalText.replace("\""," ");
-
-            ui->Search_lineEdit_SearchText->setText(originalText);
+            ui->Search_lineEdit_SearchText->setText(cleanedSearchText);
 
         }
         //----------------------------------------------------------------------
@@ -675,9 +674,11 @@
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
             //Prepare the SEARCH -------------------------------
+            newSearch = new Search;
+
                 //Clear exisiting lists of results and search variables
-                    filesFoundList.clear();
-                    catalogFoundList.clear();
+                    newSearch->filesFoundList.clear();
+                    newSearch->catalogFoundList.clear();
 
                 //Clear the temporary search and get search criteria
                     getSearchCriteria();
@@ -740,20 +741,20 @@
 
                 //Process search results: list of catalogs with results
                     //Remove duplicates so the catalogs are listed only once, and sort the list
-                    catalogFoundList.removeDuplicates();
-                    catalogFoundList.sort();
+                    newSearch->catalogFoundList.removeDuplicates();
+                    newSearch->catalogFoundList.sort();
 
                     //Keep the catalog file name only
-                    foreach(QString item, catalogFoundList){
-                            int index = catalogFoundList.indexOf(item);
+                    foreach(QString item, newSearch->catalogFoundList){
+                            int index = newSearch->catalogFoundList.indexOf(item);
                             //QDir dir(item);
                             QFileInfo fileInfo(item);
-                            catalogFoundList[index] = fileInfo.baseName();
+                            newSearch->catalogFoundList[index] = fileInfo.baseName();
                     }
 
                     //Load list of catalogs in which files where found
                     catalogFoundListModel = new QStringListModel(this);
-                    catalogFoundListModel->setStringList(catalogFoundList);
+                    catalogFoundListModel->setStringList(newSearch->catalogFoundList);
                     ui->Search_listView_CatalogsFound->setModel(catalogFoundListModel);
 
                 //Process search results: list of files
@@ -1364,8 +1365,8 @@
                             }
                             //If the file is matching the criteria, add it and its catalog to the search results
                             if (match.hasMatch()){
-                                filesFoundList << lineFilePath;
-                                catalogFoundList.insert(0,sourceCatalogName);
+                                newSearch->filesFoundList << lineFilePath;
+                                newSearch->catalogFoundList.insert(0,sourceCatalogName);
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
@@ -1387,8 +1388,8 @@
 
                             //Add the file and its catalog to the results, excluding blank lines
                             if (lineFilePath !=""){
-                                filesFoundList << lineFilePath;
-                                catalogFoundList.insert(0,sourceCatalogName);
+                                newSearch->filesFoundList << lineFilePath;
+                                newSearch->catalogFoundList.insert(0,sourceCatalogName);
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
@@ -1596,7 +1597,6 @@
 
                                 match = regex.match(lineFilePath);
                             }
-
                         }
                         else {
                             match = regex.match(lineFilePath);
@@ -1606,7 +1606,7 @@
                         //COMMON to searchFilesInCatalog
                         if (match.hasMatch()){
 
-                            filesFoundList << lineFilePath;
+                            newSearch->filesFoundList << lineFilePath;
 
                             //COMMON to searchFilesInCatalog
                             //Retrieve other file info
@@ -1630,8 +1630,8 @@
 
                         //Add the file and its catalog to the results, excluding blank lines
                         if (lineFilePath !=""){
-                            filesFoundList << lineFilePath;
-                            catalogFoundList.insert(0,sourceDirectory);
+                            newSearch->filesFoundList << lineFilePath;
+                            newSearch->catalogFoundList.insert(0,sourceDirectory);
 
                             //Retrieve other file info
                             QFileInfo file(lineFilePath);
@@ -1742,7 +1742,7 @@
             ui->Search_listView_CatalogsFound->setModel(empty);
 
             //Clear results and disable export
-            filesFoundList.clear();
+            newSearch->filesFoundList.clear();
             ui->Search_pushButton_ProcessResults->setEnabled(false);
             ui->Search_comboBox_SelectProcess->setEnabled(false);
         }

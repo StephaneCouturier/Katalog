@@ -152,7 +152,6 @@ class MainWindow : public QMainWindow
             void    clearDatabaseData();
 
             //Objects
-            //Catalog *newCatalog      = new Catalog(); //temporary catalog used to create a new catalog entry
             Catalog *selectedCatalog = new Catalog(); // selected catalog used for individual catalog operations
             Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
             Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
@@ -211,9 +210,7 @@ class MainWindow : public QMainWindow
             QString filesFoundMinDate;
             QString filesFoundMaxDate;
 
-            //outputs
-            QStringList filesFoundList;
-            QStringList catalogFoundList;
+            //Outputs
             QStringListModel *catalogFoundListModel;
             QStringList searchTextList;
 
