@@ -947,36 +947,32 @@
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                SELECT s.storage_name, d.device_id
-                                FROM storage s
-                                LEFT JOIN device d ON s.storage_id = d.device_external_id
-                                WHERE storage_name !=''
+                                SELECT device_id, device_name
+                                FROM device
+                                WHERE device_type= 'Storage'
+                                AND device_group_id = 0
                             )");
 
-        if ( selectedDevice->type == "Location" ){
-            querySQL += QLatin1String(R"( AND storage_location ='%1' )").arg(selectedDevice->name);
-        }
-        else if ( selectedDevice->type == "Storage" ){
-            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedDevice->name);
-            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
+        if ( selectedDevice->type == "Storage" ){
+            querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name); //replace by ID
         }
         else if ( selectedDevice->type == "Catalog" ){
-            querySQL += QLatin1String(R"( AND storage_name ='%1' )").arg(selectedCatalog->storageName);
+            querySQL += QLatin1String(R"( AND device_id ='%1' )").arg(QString::number(selectedDevice->parentID)); //replace by ID
         }
 
-        querySQL += " ORDER BY storage_name ";
+        querySQL += " ORDER BY device_name ";
         query.prepare(querySQL);
         query.exec();
 
-        //Load to comboboxes
+        //Clear comboboxes and load selected Storage device list
         ui->Create_comboBox_StorageSelection->clear();
         ui->Catalogs_comboBox_Storage->clear();
         while(query.next())
         {
-            ui->Create_comboBox_StorageSelection->addItem(query.value(0).toString(),query.value(1).toInt());
-            ui->Catalogs_comboBox_Storage->addItem(query.value(0).toString(),query.value(1).toInt());
+            ui->Create_comboBox_StorageSelection->addItem(query.value(1).toString(),query.value(0).toInt());
+            ui->Catalogs_comboBox_Storage->addItem(query.value(1).toString(),query.value(0).toInt());
         }
-
     }
     //--------------------------------------------------------------------------
 
