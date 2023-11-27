@@ -703,13 +703,13 @@
                                     QStringList differenceCatalogs;
                                     differenceCatalogs << newSearch->differencesCatalog1;
                                     differenceCatalogs << newSearch->differencesCatalog2;
-                                    foreach(sourceCatalog,differenceCatalogs)
+                                    foreach(QString sourceCatalog,differenceCatalogs)
                                         {
                                             searchFilesInCatalog(sourceCatalog);
                                         }
                                 }
                                 //Otherwise process all selected globally
-                                else foreach(sourceCatalog,catalogSelectedList)
+                                else foreach(QString sourceCatalog,catalogSelectedList)
                                         {
                                             searchFilesInCatalog(sourceCatalog);
                                         }
@@ -1862,7 +1862,7 @@
         void MainWindow::refreshDifferencesCatalogSelection(){
             ui->Search_comboBox_DifferencesCatalog1->clear();
             ui->Search_comboBox_DifferencesCatalog2->clear();
-            foreach(sourceCatalog,catalogSelectedList)
+            foreach(QString sourceCatalog,catalogSelectedList)
                     {
                         ui->Search_comboBox_DifferencesCatalog1->addItem(sourceCatalog);
                         ui->Search_comboBox_DifferencesCatalog2->addItem(sourceCatalog);

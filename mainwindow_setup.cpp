@@ -731,6 +731,8 @@
             statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
             statisticsStorageFileName   = "statistics_storage.csv";
             statisticsStorageFilePath   = collectionFolder + "/" + statisticsStorageFileName;
+            statisticsDeviceFileName    = "statistics_device.csv";
+            statisticsDeviceFilePath    = collectionFolder + "/" + statisticsDeviceFileName;
             excludeFilePath             = collectionFolder + "/" + "exclude.csv";
         }
     }

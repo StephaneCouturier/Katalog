@@ -113,9 +113,6 @@ class MainWindow : public QMainWindow
             bool unsavedChanges;
             void closeEvent (QCloseEvent *event);
 
-            //KDE menus/icons
-            void setupActions();
-
             //Application settings
             QString settingsFilePath;
             void loadSettings();
@@ -175,10 +172,6 @@ class MainWindow : public QMainWindow
             Search *loadSearch = new Search(); //temporary search object used to load criteria from a previous search.
             Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
 
-            //Search processing
-            QString sourceCatalog;
-            QStringList catalogSelectedList;
-
             void resetToDefaultSearchCriteria();
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
@@ -213,6 +206,7 @@ class MainWindow : public QMainWindow
             QString collectionFolder;
             QStringListModel catalogListModel;
             QStringList catalogFileList;
+            QStringList catalogSelectedList;
 
             bool skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
@@ -330,6 +324,8 @@ class MainWindow : public QMainWindow
             QString statisticsCatalogFilePath;
             QString statisticsStorageFileName;
             QString statisticsStorageFilePath;
+            QString statisticsDeviceFileName;
+            QString statisticsDeviceFilePath;
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
@@ -337,6 +333,7 @@ class MainWindow : public QMainWindow
             void loadStatisticsDataTypes();
             void loadStatisticsCatalogFileToTable();
             void loadStatisticsStorageFileToTable();
+            void loadStatisticsDeviceFileToTable();
             void loadStatisticsChart();
             void convertStatistics();
             void saveStatiticsToFile();

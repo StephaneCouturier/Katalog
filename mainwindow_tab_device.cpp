@@ -289,6 +289,9 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
             updateNumbers(tempDevice->ID, tempDevice->type);
+            QDateTime dateTime = QDateTime::currentDateTime();
+            tempDevice->saveStatistics(dateTime);
+            tempDevice->saveStatisticsToFile(statisticsDeviceFilePath, dateTime);
         });
 
         deviceContextMenu.addSeparator();

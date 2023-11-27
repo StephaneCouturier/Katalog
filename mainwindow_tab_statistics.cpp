@@ -339,15 +339,107 @@
         }
     }
     //----------------------------------------------------------------------
+    void MainWindow::loadStatisticsDeviceFileToTable()
+    {// Load the contents of the storage statistics file into the database
+        if(databaseMode=="Memory"){
+            //clear database table
+            QSqlQuery deleteQuery;
+            deleteQuery.exec("DELETE FROM statistics_device");
+
+            // Get infos stored in the file
+            QFile statisticsStorageFile(statisticsDeviceFilePath);
+            if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
+                return;
+            }
+
+            QTextStream textStream(&statisticsStorageFile);
+
+            //prepare query to load file info
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                    INSERT INTO statistics_device (
+                                                date_time               TEXT,
+                                                device_id               TEXT,
+                                                device_name             TEXT,
+                                                device_type             TEXT,
+                                                device_file_count       NUMERIC,
+                                                device_total_file_size  NUMERIC,
+                                                device_free_space       NUMERIC,
+                                                device_total_space      NUMERIC,
+                                                record_type             TEXT)
+                                    VALUES(
+                                                :date_time               TEXT,
+                                                :device_id               TEXT,
+                                                :device_name             TEXT,
+                                                :device_type             TEXT,
+                                                :device_file_count       NUMERIC,
+                                                :device_total_file_size  NUMERIC,
+                                                :device_free_space       NUMERIC,
+                                                :device_total_space      NUMERIC,
+                                                :record_type             TEXT)
+                                                )");
+            insertQuery.prepare(insertSQL);
+
+            //set temporary values
+            QString     line;
+            QStringList fieldList;
+            QString     dateTime;
+            int         deviceID;
+            QString     deviceName;
+            QString     deviceType;
+            qint64      deviceFileCount;
+            qint64      deviceTotalFileSize;
+            qint64      deviceFreeSpace;
+            qint64      deviceTotalSpace;
+            QString     recordType;
+            QRegularExpression tagExp("\t");
+
+            //Skip titles line
+            line = textStream.readLine();
+
+            //load file to database
+            while (!textStream.atEnd())
+            {
+                line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                {
+                    //Split the string with \t (tabulation) into a list
+                    fieldList.clear();
+                    fieldList = line.split(tagExp);
+                    dateTime            = fieldList[0];
+                    deviceID            = fieldList[1].toInt();
+                    deviceName          = fieldList[2];
+                    deviceType          = fieldList[3];
+                    deviceFileCount     = fieldList[4].toLongLong();
+                    deviceTotalFileSize = fieldList[5].toLongLong();
+                    deviceFreeSpace     = fieldList[6].toLongLong();
+                    deviceTotalSpace    = fieldList[7].toLongLong();
+                    recordType          = fieldList[8];
+
+                    //Append data to the database
+                    insertQuery.bindValue(":date_time", dateTime);
+                    insertQuery.bindValue(":device_id", deviceID);
+                    insertQuery.bindValue(":device_name", deviceName);
+                    insertQuery.bindValue(":device_type", deviceType);
+                    insertQuery.bindValue(":device_file_count", QString::number(deviceFileCount));
+                    insertQuery.bindValue(":device_total_file_size", QString::number(deviceTotalFileSize));
+                    insertQuery.bindValue(":device_free_space", QString::number(deviceFreeSpace));
+                    insertQuery.bindValue(":device_total_space", QString::number(deviceTotalSpace));
+                    insertQuery.bindValue(":record_type", recordType);
+                    insertQuery.exec();
+                }
+            }
+        }
+    }
+    //----------------------------------------------------------------------
     void MainWindow::loadStatisticsChart()
     {// Plot the statistics data into a graph based on selections
 
         //Get inputs
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
-            QString selectedStorageforStats  = ui->Filters_label_DisplayStorage->text();
-            QString selectedCatalogforStats  = ui->Filters_label_DisplayCatalog->text();
-
             qint64  maxValueGraphRange = 0.0;
             QString displayUnit;
             QLineSeries *series1 = new QLineSeries();
@@ -401,7 +493,7 @@
                 }
                 else if (selectedDevice->type == "Catalog"){
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedCatalogforStats", selectedCatalogforStats);
+                    queryTotalSnapshots.bindValue(":selectedCatalogforStats", selectedDevice->catalog->name);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                     queryTotalSnapshots.exec();
 
@@ -637,10 +729,10 @@
                     querySQL += " AND storage_name = :selectedStorageforStats ";
                     querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedStorageforStats);
+                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedDevice->storage->name);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
-                else if (selectedDevice->type == "Location"){
+                else if (selectedDevice->type == "Virtual"){
                     invalidCombinaison = true;
                     invalidCase = tr("A Storage or Catalog should be selected for that report.");
                 }

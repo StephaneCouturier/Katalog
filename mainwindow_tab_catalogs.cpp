@@ -699,8 +699,8 @@
         else if ( selectedDevice->type == "Virtual" ){
             QString prepareSQL2 = QLatin1String(R"(
 
-                                    WHERE vs.device_id IN (
-                                    WITH RECURSIVE hierarchy AS (
+                                        WHERE d.device_id IN (
+                                        WITH RECURSIVE hierarchy AS (
                                              SELECT device_id, device_parent_id, device_name
                                              FROM device
                                              WHERE device_id = :device_id
@@ -711,7 +711,7 @@
                                         )
                                         SELECT device_id
                                         FROM hierarchy)
-                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
+                                        GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
                                 ) agg
                                                     )");
             querySumCatalogValuesSQL += prepareSQL2;

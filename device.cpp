@@ -61,10 +61,10 @@ void Device::loadDevice(){
             type        = query.value(3).toString();
             externalID  = query.value(4).toInt();
             path        = query.value(5).toString();
-            total_file_size  = query.value(6).toLongLong();
-            total_file_count = query.value(7).toLongLong();
-            total_space = query.value(8).toLongLong();
-            free_space  = query.value(9).toLongLong();
+            totalFileSize  = query.value(6).toLongLong();
+            totalFileCount = query.value(7).toLongLong();
+            totalSpace = query.value(8).toLongLong();
+            freeSpace  = query.value(9).toLongLong();
             groupID     = query.value(10).toInt();
         } else {
             qDebug() << "loadDevice failed, no record found for device_id" << ID;
@@ -156,10 +156,10 @@ void Device::loadDeviceCatalog(){
             type        = query.value(3).toString();
             externalID  = query.value(4).toInt();
             path        = query.value(5).toString();
-            total_file_size  = query.value(6).toLongLong();
-            total_file_count = query.value(7).toLongLong();
-            total_space = query.value(8).toLongLong();
-            free_space  = query.value(9).toLongLong();
+            totalFileSize  = query.value(6).toLongLong();
+            totalFileCount = query.value(7).toLongLong();
+            totalSpace = query.value(8).toLongLong();
+            freeSpace  = query.value(9).toLongLong();
         } else {
             qDebug() << "loadDeviceCatalog failed, no record found for device_id" << ID;
         }
@@ -316,5 +316,75 @@ void Device::saveDevice()
 void Device::updateDevice()
 {//Update device and related storage or catalog information where relevant
     /*QList<qint64> catalogUpdates = */catalog->updateCatalogFiles();
+    dateTimeUpdated = QDateTime::currentDateTime();
+}
 
+void Device::saveStatistics(QDateTime dateTime)
+{
+    QSqlQuery querySaveStatistics;
+    QString querySaveStatisticsSQL = QLatin1String(R"(
+                                        INSERT INTO statistics_device(
+                                                date_time,
+                                                device_id,
+                                                device_name,
+                                                device_type,
+                                                device_file_count,
+                                                device_total_file_size,
+                                                device_free_space,
+                                                device_total_space,
+                                                record_type)
+                                        VALUES(
+                                                :date_time,
+                                                :device_id,
+                                                :device_name,
+                                                :device_type,
+                                                :device_file_count,
+                                                :device_total_file_size,
+                                                :device_free_space,
+                                                :device_total_space,
+                                                :record_type)
+                                    )");
+    querySaveStatistics.prepare(querySaveStatisticsSQL);
+    querySaveStatistics.bindValue(":date_time", dateTime.toString("yyyy-MM-dd hh:mm:ss"));
+    querySaveStatistics.bindValue(":device_id",     ID);
+    querySaveStatistics.bindValue(":device_name",   name);
+    querySaveStatistics.bindValue(":device_type",   type);
+    querySaveStatistics.bindValue(":device_file_count", totalFileCount);
+    querySaveStatistics.bindValue(":device_total_file_size", totalFileSize);
+    querySaveStatistics.bindValue(":device_free_space", freeSpace);
+    querySaveStatistics.bindValue(":device_total_space", totalSpace);
+    if (dateTime == dateTimeUpdated)
+        querySaveStatistics.bindValue(":record_type", "update");
+    else
+        querySaveStatistics.bindValue(":record_type", "snapshot");
+
+    querySaveStatistics.exec();
+}
+
+void Device::saveStatisticsToFile(QString filePath, QDateTime dateTime)
+{
+    //Prepare file and data
+    QFile fileOut(filePath);
+    QString record_type;
+    if (dateTime == dateTimeUpdated)
+        record_type = "update";
+    else
+        record_type = "snapshot";
+
+    QString statisticsLine =   dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+                             + QString::number(ID) + "\t"
+                             + name + "\t"
+                             + type + "\t"
+                             + QString::number(totalFileCount) + "\t"
+                             + QString::number(totalFileSize) + "\t"
+                             + QString::number(freeSpace) + "\t"
+                             + QString::number(totalSpace) + "\t"
+                             + record_type;
+
+    // Write data
+    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+        QTextStream stream(&fileOut);
+        stream << statisticsLine << "\n";
+    }
+    fileOut.close();
 }

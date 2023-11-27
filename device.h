@@ -47,11 +47,12 @@ public:
     QString type;
     int externalID;
     QString path;
-    qint64 total_file_size;
-    qint64 total_file_count;
-    qint64 total_space;
-    qint64 free_space;
+    qint64 totalFileSize;
+    qint64 totalFileCount;
+    qint64 totalSpace;
+    qint64 freeSpace;
     int groupID;
+    QDateTime dateTimeUpdated;
 
     Storage *storage = new Storage;
     Catalog *catalog = new Catalog;
@@ -72,6 +73,9 @@ public:
     void verifyHasCatalog();
     void deleteDevice();
     void saveDevice();
+
+    void saveStatistics(QDateTime dateTime);
+    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 };
 
 #endif // DEVICE_H

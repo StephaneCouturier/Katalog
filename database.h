@@ -182,6 +182,7 @@
                             date_time               TEXT,
                             device_id               TEXT,
                             device_name             TEXT,
+                            device_type             TEXT,
                             device_file_count       NUMERIC,
                             device_total_file_size  NUMERIC,
                             device_free_space       NUMERIC,

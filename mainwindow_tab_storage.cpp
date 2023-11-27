@@ -615,7 +615,6 @@
 
         //refresh storage screen statistics
         updateStorageSelectionStatistics();
-
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageTableToFile()

@@ -335,14 +335,14 @@
             loadCatalogsTableToModel();
 
             //Storage
-            loadStorageTableToModel();
-            updateCatalogsScreenStatistics();
-            updateStorageSelectionStatistics();
+           loadStorageTableToModel();
+           updateCatalogsScreenStatistics();
+           updateStorageSelectionStatistics();
 
             //Statistics
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
-            loadStatisticsChart();
+           loadStatisticsCatalogFileToTable();
+           loadStatisticsStorageFileToTable();
+           loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::setTreeExpandState(bool toggle)

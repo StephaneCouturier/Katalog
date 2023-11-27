@@ -330,7 +330,7 @@
     //----------------------------------------------------------------------
     void MainWindow::preloadCatalogs()
     {
-        foreach(sourceCatalog,catalogSelectedList)
+        foreach(QString sourceCatalog,catalogSelectedList)
         {
                     selectedCatalog->name = sourceCatalog;
                     selectedCatalog->loadCatalog();
