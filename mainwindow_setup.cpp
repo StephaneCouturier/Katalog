@@ -153,13 +153,13 @@
         if (!q.exec(SQL_CREATE_METADATA))
             return q.lastError();
 
+        if (!q.exec(SQL_CREATE_STATISTICS_DEVICE))
+            return q.lastError();
+
         if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STATISTICS_VIRTUAL))
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_SEARCH))

@@ -54,7 +54,6 @@ public:
     QString sourcePath;
     qint64  fileCount = 0;
     qint64  totalFileSize = 0;
-    bool    sourcePathIsActive;
     bool    includeHidden;
     QString fileType;
     QString storageName;
@@ -92,7 +91,6 @@ public:
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
-    void updateSourcePathIsActive();
     bool catalogNameExists();
 
     void populateFileData( const QList<QString> &fileNames,

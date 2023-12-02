@@ -546,8 +546,8 @@
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
         }
         else if ( selectedDevice->type == "Catalog" ){
-            ui->Create_comboBox_StorageSelection->setCurrentText(selectedCatalog->storageName);
-            ui->Create_lineEdit_NewCatalogPath->setText(selectedCatalog->sourcePath);
+            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->catalog->storageName);
+            ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->catalog->sourcePath);
         }
 
         //Enable buttons
@@ -906,6 +906,8 @@
             updateCatalogQuery.bindValue(":current_storage_name", currentStorageName);
             updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
             updateCatalogQuery.exec();
+
+            Catalog *tempCatalog     = new Catalog();
 
             //Update catalogs (memory mode)
             if (databaseMode=="Memory"){

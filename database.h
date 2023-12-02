@@ -157,6 +157,19 @@
 
         // STATISTICS -----------------------------------------------------------
 
+            const auto SQL_CREATE_STATISTICS_DEVICE = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS  statistics_device(
+                            date_time               TEXT,
+                            device_id               TEXT,
+                            device_name             TEXT,
+                            device_type             TEXT,
+                            device_file_count       NUMERIC,
+                            device_total_file_size  NUMERIC,
+                            device_free_space       NUMERIC,
+                            device_total_space      NUMERIC,
+                            record_type             TEXT)
+            )");
+
             const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  statistics_catalog(
                             date_time               TEXT,
@@ -174,19 +187,6 @@
                             storage_name            TEXT,
                             storage_free_space      NUMERIC,
                             storage_total_space     NUMERIC,
-                            record_type             TEXT)
-            )");
-
-            const auto SQL_CREATE_STATISTICS_VIRTUAL = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_device(
-                            date_time               TEXT,
-                            device_id               TEXT,
-                            device_name             TEXT,
-                            device_type             TEXT,
-                            device_file_count       NUMERIC,
-                            device_total_file_size  NUMERIC,
-                            device_free_space       NUMERIC,
-                            device_total_space      NUMERIC,
                             record_type             TEXT)
             )");
 

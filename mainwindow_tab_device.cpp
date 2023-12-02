@@ -70,7 +70,7 @@ void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
 {
-    assignCatalogToDevice(selectedCatalog->name, selectedDevice->ID);
+    assignCatalogToDevice(selectedDevice->catalog->name, tempDevice->ID);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignStorage_clicked()
@@ -164,7 +164,7 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
 
     if(tempDevice->type=="Virtual"){
         ui->Devices_pushButton_Edit->setEnabled(true);
-        if(selectedCatalog->name!=""){
+        if(tempDevice->catalog->name!=""){
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
         }
         ui->Devices_pushButton_DeleteItem->setEnabled(true);
@@ -201,9 +201,9 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            tempCatalog->name = tempDevice->name;
-            tempCatalog->loadCatalog();
-            updateSingleCatalog(tempCatalog, true);
+            tempDevice->catalog->name = tempDevice->name;
+            tempDevice->catalog->loadCatalog();
+            updateSingleCatalog(tempDevice->catalog, true);
 
             updateAllNumbers();
         });
@@ -229,6 +229,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+            tempDevice->storage->updateStorageInfo();
+
+            skipCatalogUpdateSummary =false;
+            updateStorageInfo(tempDevice->storage);
+            saveDeviceTableToFile(deviceFilePath);
+            loadDeviceTableToTreeModel();
+            loadStorageToPanel();
+
             updateAllNumbers();
         });
 
@@ -432,8 +440,8 @@ void MainWindow::importStorageCatalogLinks() {
         QString storage_id   = query.value(2).toString();
         int device_id   = query.value(3).toInt();
 
-        selectedCatalog->name = catalog_name;
-        selectedCatalog->loadCatalog();
+        tempDevice->catalog->name = catalog_name;
+        tempDevice->catalog->loadCatalog();
 
         assignCatalogToDevice(catalog_name,device_id);
 
@@ -516,12 +524,12 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
         query.prepare(querySQL);
         query.bindValue(":device_id", newID);
         query.bindValue(":device_parent_id", deviceID);
-        query.bindValue(":device_name", selectedCatalog->name);
+        query.bindValue(":device_name", selectedDevice->catalog->name);
         query.bindValue(":device_type", "Catalog");
-        query.bindValue(":device_external_id", selectedCatalog->name);
-        query.bindValue(":device_path", selectedCatalog->sourcePath);
-        query.bindValue(":device_total_file_size", selectedCatalog->totalFileSize);
-        query.bindValue(":device_total_file_count", selectedCatalog->fileCount);
+        query.bindValue(":device_external_id", selectedDevice->catalog->name);
+        query.bindValue(":device_path", selectedDevice->catalog->sourcePath);
+        query.bindValue(":device_total_file_size", selectedDevice->catalog->totalFileSize);
+        query.bindValue(":device_total_file_count", selectedDevice->catalog->fileCount);
         query.bindValue(":device_total_space", 0);
         query.bindValue(":device_free_space", 0);
         query.exec();
@@ -781,8 +789,6 @@ void MainWindow::loadDeviceFileToTable()
 //--------------------------------------------------------------------------
 void MainWindow::loadDeviceTableToTreeModel()
 {
-    //QList<QStandardItem*> firstColumnItems;
-
     //Synch data to device
     synchCatalogAndStorageValues();
 
@@ -1201,8 +1207,7 @@ void MainWindow::synchCatalogAndStorageValues() {
         querySQL = QLatin1String(R"(
                         UPDATE device
                         SET device_total_file_count = catalog.catalog_file_count,
-                            device_total_file_size  = catalog.catalog_total_file_size,
-                            device_active = catalog.catalog_source_path_is_active
+                            device_total_file_size  = catalog.catalog_total_file_size
                         FROM catalog
                         WHERE device.device_name = catalog.catalog_name;
                     )");
@@ -1656,11 +1661,11 @@ void MainWindow::saveDevice()
 
                 //Edit and save each one
                 while (listCatalogQuery.next()){
-                    tempCatalog = new Catalog;
-                    tempCatalog->name = listCatalogQuery.value(0).toString();
-                    tempCatalog->loadCatalog();
-                    tempCatalog->storageName = newStorageName;
-                    tempCatalog->updateStorageNameToFile();
+                    tempDevice->catalog = new Catalog;
+                    tempDevice->catalog->name = listCatalogQuery.value(0).toString();
+                    tempDevice->catalog->loadCatalog();
+                    tempDevice->catalog->storageName = newStorageName;
+                    tempDevice->catalog->updateStorageNameToFile();
                 }
 
                 //Refresh
@@ -1688,3 +1693,70 @@ void MainWindow::saveDevice()
     ui->Devices_pushButton_Edit->setEnabled(false);
 }
 //--------------------------------------------------------------------------
+void MainWindow::recordAllDeviceStats(QDateTime dateTime)
+{// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
+
+    //Get the list of storage devices
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                        SELECT
+                                            device_id,
+                                            device_name,
+                                            device_total_file_size,
+                                            device_total_file_count,
+                                            device_total_space,
+                                            device_free_space
+                                        FROM device
+                                        )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //Save values for each storage device
+    while(query.next()){
+        tempDevice->ID = query.value(0).toInt();
+        tempDevice->loadDevice();
+        tempDevice->saveStatistics(dateTime);
+
+        if(databaseMode=="Memory")
+        {
+            QString filePath = collectionFolder + "/" + "statistics_storage.csv";
+            tempDevice->saveStatisticsToFile(filePath, dateTime);
+        }
+    }
+
+    //Refresh
+    if(databaseMode=="Memory"){
+        loadStatisticsCatalogFileToTable();
+        loadStatisticsStorageFileToTable();
+        loadStatisticsDeviceFileToTable();
+    }
+
+    loadStatisticsChart();
+
+}
+
+//--------------------------------------------------------------------------
+void MainWindow::updateAllDeviceActive()
+{//Update the value Active for all Devices
+
+    //Storage and Catalog devices
+        //Get the list of devices
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                            SELECT device_id
+                                            FROM   device
+                                    )");
+        //WHERE  device_type = 'Storage' OR device_type = 'Catalog'
+        //WHERE device_type IN ('Storage','Catalog')
+        query.prepare(querySQL);
+        query.exec();
+
+        //Update and Save sourcePathIsActive for each catalog
+        while (query.next()){
+            tempDevice->ID = query.value(0).toInt();
+            tempDevice->loadDevice();
+            tempDevice->updateActive();
+        }
+
+
+}

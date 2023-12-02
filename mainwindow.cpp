@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-11-26";
+        releaseDate     = "2023-12-02";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -142,12 +142,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
-                selectedCatalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
-                selectedCatalog->loadCatalog();
+                selectedDevice->catalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
+                selectedDevice->catalog->loadCatalog();
                 selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-                selectedDirectoryFullPath = selectedCatalog->sourcePath + "/" + selectedDirectoryName;
+                selectedDirectoryFullPath = selectedDevice->catalog->sourcePath + "/" + selectedDirectoryName;
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
-                if (selectedCatalog->filePath != ""){
+                if (selectedDevice->catalog->filePath != ""){
                     openCatalogToExplore();
                 }
             }
@@ -259,7 +259,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
-            ui->Devices_label_SelectedCatalogDisplay->setText(selectedCatalog->name);
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->catalog->name);
 
 }
 
@@ -321,9 +321,3 @@ msgBox.exec();
             qDebug()<<query.value(0).toString()<<query.value(1).toString();
         }
 */
-
-void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
-{
-    generateCatalogMissingIDs();
-}
-

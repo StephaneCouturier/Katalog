@@ -105,9 +105,11 @@
 
             //Get file from selected row
             selectedDevice->type= "Catalog";
+            //selectedDevice->ID = ui->Search_listView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
             selectedDevice->name = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
             selectedDevice->loadDeviceCatalog();
-            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
+            displaySelectedDeviceName();
+            //ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
             //Seach again but only on the selected catalog
             searchFiles();
@@ -464,9 +466,9 @@
             QString selectedFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
 
             //Prepare inputs for the Explore
-            selectedCatalog->name = selectedFileCatalog;
-            selectedCatalog->loadCatalog();
-            selectedDirectoryName = selectedFileFolder.remove(selectedCatalog->sourcePath + "/");
+            tempDevice->ID = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toInt();
+            tempDevice->loadDevice();
+            selectedDirectoryName = selectedFileFolder.remove(selectedDevice->catalog->sourcePath + "/");
 
             //Open the catalog into the Explore
             openCatalogToExplore();
@@ -725,10 +727,10 @@
                                          or newSearch->differencesOnSize == true
                                          or newSearch->differencesOnDate == true)){
 
-                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!= selectedCatalog->name)
+                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!= selectedDevice->catalog->name)
                                             searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog1->currentText());
 
-                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!= selectedCatalog->name)
+                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!= selectedDevice->catalog->name)
                                             searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog2->currentText());
                                 }
                             }
@@ -1174,11 +1176,8 @@
         //run a search of files for the selected Catalog
         void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
         {
-            tempCatalog->name = sourceCatalogName;
-            tempCatalog->loadCatalog();
-
             //Prepare Inputs
-                QFile catalogFile(tempCatalog->sourcePath);
+                QFile catalogFile(tempDevice->catalog->sourcePath);
 
                 QRegularExpressionMatch match;
                 QRegularExpressionMatch foldermatch;
@@ -1265,7 +1264,7 @@
                 }
 
             //Load the catalog file contents if not already loaded in memory
-                tempCatalog->loadCatalogFileListToTable();
+                tempDevice->catalog->loadCatalogFileListToTable();
 
             //Search loop for all lines in the catalog file
                 //Load the files of the Catalog

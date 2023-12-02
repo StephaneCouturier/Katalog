@@ -32,10 +32,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//#include "storagetreemodel.h"
-//#include "devicetreeview.h"
-#include "catalog.h"
-
 //FILTERS / Global ---------------------------------------------------------
 
     void MainWindow::on_Filters_pushButton_Filters_Hide_clicked()
@@ -132,8 +128,6 @@
     {
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
-            selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalog();
 
             openCatalogToExplore();
 
@@ -148,7 +142,7 @@
         if (selectedDevice->type=="Catalog"){
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(selectedCatalog, true);
+            updateSingleCatalog(selectedDevice->catalog, true);
         }
     }
     //----------------------------------------------------------------------
@@ -180,8 +174,6 @@
             ui->Devices_label_SelectedCatalogDisplay->setText("");
         }
         else if (selectedDevice->type=="Catalog"){
-            selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalog();
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
             ui->Devices_pushButton_AssignStorage->setEnabled(false);
             ui->Devices_label_SelectedStorageDisplay->setText("");
@@ -283,7 +275,6 @@
         selectedDevice = new Device();
         selectedDevice->type = tr("All");
         selectedStorage = new Storage();
-        selectedCatalog = new Catalog();
 
         //Reset displayed values
         ui->Filters_label_DisplayStorage->setText(tr("All"));
@@ -319,8 +310,6 @@
         else if (selectedDevice->type=="Catalog"){
             ui->Filter_pushButton_Explore->setEnabled(true);
             ui->Filter_pushButton_Update->setEnabled(true);
-            selectedCatalog->name = selectedDevice->name;
-            selectedCatalog->loadCatalog();
         }
         else if (selectedDevice->type=="Virtual"){
             ui->Filter_pushButton_Explore->setEnabled(false);

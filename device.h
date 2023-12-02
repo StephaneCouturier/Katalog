@@ -22,7 +22,7 @@
 /*FILE DESCRIPTION
  * /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   virtualstorage.h
+// File Name:   device.h
 // Purpose:     Class/model for the virtual storage device
 // Description:
 // Author:      Stephane Couturier
@@ -41,41 +41,48 @@ class Device
 {
 
 public:
-    int ID;
-    int parentID;
-    QString name;
-    QString type;
-    int externalID;
-    QString path;
-    qint64 totalFileSize;
-    qint64 totalFileCount;
-    qint64 totalSpace;
-    qint64 freeSpace;
-    int groupID;
-    QDateTime dateTimeUpdated;
+    //Attributes
+        //Saved
+        int ID;
+        int parentID;
+        QString name;
+        QString type;
+        int externalID;
+        QString path;
+        qint64 totalFileSize;
+        qint64 totalFileCount;
+        qint64 totalSpace;
+        qint64 freeSpace;
+        int groupID;
+        QDateTime dateTimeUpdated;
 
-    Storage *storage = new Storage;
-    Catalog *catalog = new Catalog;
-    QList<int> deviceIDList;
+        //Contents
+        Storage *storage = new Storage;
+        Catalog *catalog = new Catalog;
+        QList<int> deviceIDList;
 
-    bool hasSubDevice;
-    bool hasCatalog;
+        //States
+        bool hasSubDevice;
+        bool hasCatalog;
+        bool active;
 
-    void loadDevice();
-    void loadDeviceCatalog(); //temp dev
-    void loadSubDeviceList();
-    void updateDevice();
+    //Methods
+        void loadDevice();
+        void loadDeviceCatalog(); //temp dev
+        void loadSubDeviceList();
+        void updateDevice();
+        void verifyHasSubDevice();
+        void verifyHasCatalog();
+        void updateActive();
 
-    void getCatalogStorageID();
-    void generateDeviceID();
-    void insertDevice();
-    void verifyHasSubDevice();
-    void verifyHasCatalog();
-    void deleteDevice();
-    void saveDevice();
+        void getCatalogStorageID();
+        void generateDeviceID();
+        void insertDevice();
+        void deleteDevice();
+        void saveDevice();
 
-    void saveStatistics(QDateTime dateTime);
-    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
+        void saveStatistics(QDateTime dateTime);
+        void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 };
 
 #endif // DEVICE_H

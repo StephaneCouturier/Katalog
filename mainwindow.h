@@ -149,8 +149,6 @@ class MainWindow : public QMainWindow
             void    clearDatabaseData();
 
             //Objects
-            Catalog *selectedCatalog = new Catalog(); // selected catalog used for individual catalog operations
-            Catalog *tempCatalog     = new Catalog(); //temporary catalog used for operations on a list of catalogs
             Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
             Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
             Device *selectedDevice   = new Device(); //selected    device used for individual device operations
@@ -216,8 +214,6 @@ class MainWindow : public QMainWindow
             void loadCatalogFilesToTable();
             void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
-            int verifyCatalogPath(QString catalogSourcePath);
-            void updateAllCatalogPathIsActive();
             void recordCollectionStats();
             void recordAllCatalogStats(QDateTime dateTime);
             void convertCatalog(QString catalogSourcePath);
@@ -317,7 +313,9 @@ class MainWindow : public QMainWindow
             void importStorageCatalogLinks();
             void shiftIDsInDeviceTable(int shiftAmount);
             void loadParentsList();
+            void recordAllDeviceStats(QDateTime dateTime);
             QList<int> verifyStorageWithOutDevice();
+            void updateAllDeviceActive();
 
         //TAB: Statistics
             QString statisticsCatalogFileName;
@@ -566,7 +564,6 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-            void on_TEST_pushButton_GenerateMissingIDs_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -266,7 +266,7 @@
             refreshDifferencesCatalogSelection();
 
             //Refresh Catalogs list
-                updateAllCatalogPathIsActive();
+                updateAllDeviceActive();
                 synchCatalogAndStorageValues();
                 loadCatalogsTableToModel();
                 loadDeviceTableToTreeModel();

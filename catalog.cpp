@@ -188,7 +188,6 @@ void Catalog::insertCatalog()
                                                         catalog_source_path,
                                                         catalog_file_count,
                                                         catalog_total_file_size,
-                                                        catalog_source_path_is_active,
                                                         catalog_include_hidden,
                                                         catalog_file_type,
                                                         catalog_storage,
@@ -205,7 +204,6 @@ void Catalog::insertCatalog()
                                                         :catalog_source_path,
                                                         :catalog_file_count,
                                                         :catalog_total_file_size,
-                                                        :catalog_source_path_is_active,
                                                         :catalog_include_hidden,
                                                         :catalog_file_type,
                                                         :catalog_storage,
@@ -224,7 +222,6 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_source_path",sourcePath);
     insertCatalogQuery.bindValue(":catalog_file_count",fileCount);
     insertCatalogQuery.bindValue(":catalog_total_file_size",totalFileSize);
-    insertCatalogQuery.bindValue(":catalog_source_path_is_active",sourcePathIsActive);
     insertCatalogQuery.bindValue(":catalog_include_hidden",includeHidden);
     insertCatalogQuery.bindValue(":catalog_file_type",fileType);
     insertCatalogQuery.bindValue(":catalog_storage",storageName);
@@ -673,7 +670,6 @@ void Catalog::loadCatalog()
                                 catalog_source_path          ,
                                 catalog_file_count           ,
                                 catalog_total_file_size      ,
-                                catalog_source_path_is_active,
                                 catalog_include_hidden       ,
                                 catalog_file_type            ,
                                 catalog_storage              ,
@@ -697,15 +693,14 @@ void Catalog::loadCatalog()
         sourcePath         = query.value(4).toString();
         fileCount          = query.value(5).toLongLong();
         totalFileSize      = query.value(6).toLongLong();
-        sourcePathIsActive = query.value(7).toBool();
-        includeHidden      = query.value(8).toBool();
-        fileType           = query.value(9).toString();
-        storageName        = query.value(10).toString();
-        includeSymblinks   = query.value(11).toBool();
-        isFullDevice       = query.value(12).toBool();
-        dateLoaded         = query.value(13).toDateTime();
-        includeMetadata    = query.value(14).toBool();
-        appVersion         = query.value(15).toString();
+        includeHidden      = query.value(7).toBool();
+        fileType           = query.value(8).toString();
+        storageName        = query.value(9).toString();
+        includeSymblinks   = query.value(10).toBool();
+        isFullDevice       = query.value(11).toBool();
+        dateLoaded         = query.value(12).toDateTime();
+        includeMetadata    = query.value(13).toBool();
+        appVersion         = query.value(14).toString();
     }
 }
 
@@ -1060,23 +1055,6 @@ void Catalog::saveStatisticsToFile(QString filePath, QDateTime dateTime)
         stream << statisticsLine << "\n";
     }
     fileOut.close();
-}
-
-void Catalog::updateSourcePathIsActive()
-{
-    // Verify that the catalog path is accessible (so the related drive is mounted)
-    QDir dir(sourcePath);
-    sourcePathIsActive = dir.exists();
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                            UPDATE catalog
-                            SET catalog_source_path_is_active=:catalog_source_path_is_active
-                            WHERE catalog_name=:catalog_name
-                        )");
-    query.prepare(querySQL);
-    query.bindValue(":catalog_source_path_is_active", sourcePathIsActive);
-    query.bindValue(":catalog_name", name);
-    query.exec();
 }
 
 bool Catalog::catalogNameExists()

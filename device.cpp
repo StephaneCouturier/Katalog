@@ -78,6 +78,7 @@ void Device::loadDevice(){
     if(type == "Storage"){
         storage->ID = externalID;
         storage->loadStorage();
+        path = storage->path;
     }
 
     //Load catalog values
@@ -85,7 +86,13 @@ void Device::loadDevice(){
         catalog->ID = externalID;
         catalog->name = name; //temp
         catalog->loadCatalog();
+        path = catalog->sourcePath;
     }
+
+    //Update states
+    verifyHasSubDevice();
+    verifyHasCatalog();
+    updateActive();
 }
 
 void Device::loadSubDeviceList()
@@ -317,6 +324,30 @@ void Device::updateDevice()
 {//Update device and related storage or catalog information where relevant
     /*QList<qint64> catalogUpdates = */catalog->updateCatalogFiles();
     dateTimeUpdated = QDateTime::currentDateTime();
+    updateActive();
+}
+
+void Device::updateActive()
+{
+    // Verify that the path is active (= the related drive is mounted)
+    if(path !=""){
+        QDir dir(path);
+        active = dir.exists();
+    }
+    else {
+        active = false;
+    }
+
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                        UPDATE device
+                        SET    device_active =:device_active
+                        WHERE  device_id =:device_id
+                    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_active", active);
+    query.bindValue(":device_id", ID);
+    query.exec();
 }
 
 void Device::saveStatistics(QDateTime dateTime)

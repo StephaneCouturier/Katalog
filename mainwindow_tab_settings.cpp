@@ -290,15 +290,15 @@
             loadDeviceFileToTable();
 
         //Check active status and synch it
-        updateAllCatalogPathIsActive();
-        synchCatalogAndStorageValues();
+            updateAllDeviceActive();
+            synchCatalogAndStorageValues();
 
         //Load data from tables to models and update display
-        loadSearchHistoryTableToModel();
-        loadCatalogsTableToModel();
-        loadStorageTableToModel();
-        loadDeviceTableToTreeModel();
-        filterFromSelectedDevices();
+            loadSearchHistoryTableToModel();
+            loadCatalogsTableToModel();
+            loadStorageTableToModel();
+            loadDeviceTableToTreeModel();
+            filterFromSelectedDevices();
 
 
         //Add a default storage device, to force any new catalog to have one
@@ -319,6 +319,7 @@
         loadStatisticsDataTypes();
         loadStatisticsCatalogFileToTable();
         loadStatisticsStorageFileToTable();
+        loadStatisticsDeviceFileToTable();
         loadStatisticsChart();
 
         //Load Tags
@@ -332,9 +333,9 @@
     {
         foreach(QString sourceCatalog,catalogSelectedList)
         {
-                    selectedCatalog->name = sourceCatalog;
-                    selectedCatalog->loadCatalog();
-                    selectedCatalog->loadCatalogFileListToTable();
+                    selectedDevice->catalog->name = sourceCatalog;
+                    selectedDevice->catalog->loadCatalog();
+                    selectedDevice->catalog->loadCatalogFileListToTable();
         }
     }
     //----------------------------------------------------------------------
