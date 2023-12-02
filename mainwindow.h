@@ -149,8 +149,6 @@ class MainWindow : public QMainWindow
             void    clearDatabaseData();
 
             //Objects
-            Storage *selectedStorage = new Storage(); // selected storage used for individual storage operations
-            Storage *tempStorage     = new Storage(); //temporary storage used for operations on a list of devices
             Device *selectedDevice   = new Device(); //selected    device used for individual device operations
             Device *tempDevice       = new Device(); //temporary   device used for operations on a list of devices
             Device *catalogDevice    = new Device(); //selected catalog/device from Catalog screen

@@ -409,7 +409,6 @@
                     fieldList.clear();
                     fieldList = line.split(tagExp);
 
-                    qDebug()<<"fieldList.count: "<<fieldList.count();
                     if(fieldList.count()==9){
                         dateTime            = fieldList[0];
                         deviceID            = fieldList[1].toInt();
@@ -433,8 +432,6 @@
                     insertQuery.bindValue(":device_total_space", QString::number(deviceTotalSpace));
                     insertQuery.bindValue(":record_type", recordType);
                     insertQuery.exec();
-
-                    qDebug()<<insertQuery.lastError()<<deviceName;
                 }
             }
         }
@@ -1050,6 +1047,8 @@
                            catalogFileCount        = fieldList[2].toLongLong();
                            catalogTotalFileSize    = fieldList[3].toLongLong();
                            recordType              = fieldList[4];
+
+                           Storage *tempStorage    = new Storage();
 
                            if (recordType =="Storage"){//         = storage update
                                 tempStorage = new Storage;

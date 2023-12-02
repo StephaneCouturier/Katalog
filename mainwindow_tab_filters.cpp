@@ -162,8 +162,8 @@
 
         //Adapt UI based on device type
         if (selectedDevice->type=="Storage"){
-            selectedStorage->ID = selectedDevice->externalID;
-            selectedStorage->loadStorage();
+            selectedDevice->storage->ID = selectedDevice->externalID;
+            selectedDevice->storage->loadStorage();
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
             ui->Devices_pushButton_AssignStorage->setEnabled(true);
             ui->Devices_label_SelectedCatalogDisplay->setText("");
@@ -274,7 +274,6 @@
         //Reset selected values
         selectedDevice = new Device();
         selectedDevice->type = tr("All");
-        selectedStorage = new Storage();
 
         //Reset displayed values
         ui->Filters_label_DisplayStorage->setText(tr("All"));

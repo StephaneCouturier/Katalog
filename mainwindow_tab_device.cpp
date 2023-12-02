@@ -75,7 +75,7 @@ void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignStorage_clicked()
 {
-    assignStorageToDevice(selectedStorage->ID, selectedDevice->ID);
+    assignStorageToDevice(selectedDevice->storage->ID, selectedDevice->ID);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_DeleteItem_clicked()
@@ -282,7 +282,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction5);
 
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-            assignStorageToDevice(selectedStorage->ID, tempDevice->ID);
+            assignStorageToDevice(selectedDevice->storage->ID, tempDevice->ID);
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -467,7 +467,6 @@ QList<int> MainWindow::verifyStorageWithOutDevice()
 
     query.prepare(querySQL);
     query.exec();
-    qDebug()<< "verifyStorageWithOutDevice:" << query.lastError();
 
     while (query.next()) {
         gaps << query.value(0).toInt();
@@ -548,7 +547,6 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
 //--------------------------------------------------------------------------
 void MainWindow::assignStorageToDevice(int storageID,int deviceID)
 {
-    qDebug()<<storageID<<deviceID;
     if( deviceID!=0 and storageID!=0){
         //Generate new ID
         QSqlQuery queryID;
@@ -590,14 +588,14 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
         query.prepare(querySQL);
         query.bindValue(":device_id", newID);
         query.bindValue(":device_parent_id", deviceID);
-        query.bindValue(":device_name", selectedStorage->name);
+        query.bindValue(":device_name", selectedDevice->storage->name);
         query.bindValue(":device_type", "Storage");
-        query.bindValue(":device_external_id", selectedStorage->ID);
-        query.bindValue(":device_path", selectedStorage->path);
+        query.bindValue(":device_external_id", selectedDevice->storage->ID);
+        query.bindValue(":device_path", selectedDevice->storage->path);
         query.bindValue(":device_total_file_size", 0);
         query.bindValue(":device_total_file_count", 0);
-        query.bindValue(":device_total_space", selectedStorage->totalSpace);
-        query.bindValue(":device_free_space", selectedStorage->freeSpace);
+        query.bindValue(":device_total_space", selectedDevice->storage->totalSpace);
+        query.bindValue(":device_free_space", selectedDevice->storage->freeSpace);
         query.exec();
 
         //Save data to file
@@ -665,8 +663,8 @@ void MainWindow::deleteDeviceItem()
                 //Delete selected ID
                 tempDevice->deleteDevice();
                 if(tempDevice->type == "Storage"){
-                    tempStorage->ID = tempDevice->externalID;
-                    tempStorage->deleteStorage();
+                    tempDevice->storage->ID = tempDevice->externalID;
+                    tempDevice->storage->deleteStorage();
                 }
 
                 //Save data to files
@@ -1119,7 +1117,6 @@ void MainWindow::saveDeviceTableToFile(QString filePath)
                     if (i>0)
                         textStreamToFile << '\t';
                     textStreamToFile << record.value(i).toString();
-                    //qDebug()<<record.value(i).toString();
                 }
                 //Write the result in the file
                 textStreamToFile << '\n';
@@ -1624,7 +1621,7 @@ void MainWindow::saveDevice()
             QSqlQuery updateNameQuery;
             updateNameQuery.prepare(updateNameQuerySQL);
             updateNameQuery.bindValue(":new_storage_name", newStorageName);
-            updateNameQuery.bindValue(":storage_id", selectedStorage->ID);
+            updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
             updateNameQuery.exec();
 
             if (databaseMode=="Memory"){

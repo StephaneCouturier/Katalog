@@ -192,7 +192,6 @@
                 query.prepare(querySQL);
                 query.exec();
 
-
                 //Loop through the catalogSelectedList
                 for (const QString &catalogName : catalogSelectedList) {
                         QDir dir (query.value(2).toString());
@@ -229,9 +228,9 @@
 
                                     //Update storage
                                     if ( selectedCatalogStoragePath!=""){
-                                        tempStorage->ID = selectedCatalogStorageID;
-                                        tempStorage->loadStorage();
-                                        updateStorageInfo(tempStorage);
+                                        tempDevice->storage->ID = selectedCatalogStorageID;
+                                        tempDevice->storage->loadStorage();
+                                        updateStorageInfo(tempDevice->storage);
                                     }
                                     else
                                         QMessageBox::information(this,"Katalog",tr("The storage device name may not be correct:\n %1 ").arg(selectedCatalogStorage));
@@ -755,17 +754,17 @@
 
             //Update storage
         if ( parentStorageDevice.path !=""){
-            tempStorage->ID = parentStorageDevice.externalID;
-                tempStorage->loadStorage();
+            tempDevice->storage->ID = parentStorageDevice.externalID;
+                tempDevice->storage->loadStorage();
                 if(updateStorage==true){
-                    updateStorageInfo(tempStorage);
+                    updateStorageInfo(tempDevice->storage);
                 }
             }
         else{//Update path as catalog's path
-            tempStorage->path = catalog->sourcePath;
+            tempDevice->storage->path = catalog->sourcePath;
 
             if(updateStorage==true){
-                updateStorageInfo(tempStorage);
+                updateStorageInfo(tempDevice->storage);
 
                 //update path
                 QSqlQuery queryTotalSpace;
@@ -775,8 +774,8 @@
                                     WHERE storage_id = :storage_id
                                     )");
                 queryTotalSpace.prepare(queryTotalSpaceSQL);
-                queryTotalSpace.bindValue(":storage_path", tempStorage->path);
-                queryTotalSpace.bindValue(":storage_id", tempStorage->ID);
+                queryTotalSpace.bindValue(":storage_path", tempDevice->storage->path);
+                queryTotalSpace.bindValue(":storage_id", tempDevice->storage->ID);
                 queryTotalSpace.exec();
 
                 saveStorageTableToFile();
@@ -1121,28 +1120,17 @@
                                 )");
         query.prepare(querySQL);
         query.exec();
-        qDebug()<<query.lastError();
 
         //Loop and generate an ID
         while(query.next()){
             Device *device = new Device;
             device->ID = query.value(0).toInt();
             device->loadDevice();
-            //tempDevice->catalog->loadCatalogMetaData();
             device->catalog->generateID();
-            qDebug()<<device->catalog->ID;
 
             device->externalID = device->catalog->ID;
             device->saveDevice();
             device->catalog->saveCatalog();
-
-            qDebug()<<device->ID
-                     <<device->name
-                     <<device->externalID
-                     <<device->catalog->ID;
-
-            //saveDeviceTableToFile(deviceFilePath);
-
         }
     }
     //--------------------------------------------------------------------------

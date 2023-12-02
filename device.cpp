@@ -171,7 +171,7 @@ void Device::loadDeviceCatalog(){
             qDebug() << "loadDeviceCatalog failed, no record found for device_id" << ID;
         }
     } else {
-        qDebug() << "Query execution failed:" << query.lastError().text();
+        qDebug() << "loadDeviceCatalog query execution failed:" << query.lastError().text();
     }
 }
 
@@ -202,7 +202,7 @@ void Device::getCatalogStorageID(){
             qDebug() << "getCatalogStorageID failed, no record found for device_name" << name;
         }
     } else {
-        qDebug() << "Query execution failed:" << query.lastError().text();
+        qDebug() << "getCatalogStorageID query execution failed:" << query.lastError().text();
     }
 }
 

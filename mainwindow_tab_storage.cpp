@@ -82,8 +82,8 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
     {
-        selectedStorage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
-        selectedStorage->loadStorage();
+        selectedDevice->storage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
+        selectedDevice->storage->loadStorage();
         tempDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
         tempDevice->loadDevice();
 
@@ -113,7 +113,7 @@
         //Change tab to show the Search screen
         ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_label_DisplayStorage->setText(selectedStorage->name);
+        ui->Filters_label_DisplayStorage->setText(selectedDevice->storage->name);
     }
     //--------------------------------------------------------------------------
 
@@ -121,12 +121,12 @@
     void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
     {
         //Send selection to Create screen
-        ui->Create_lineEdit_NewCatalogPath->setText(selectedStorage->path);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedStorage->name);
-        ui->Create_lineEdit_NewCatalogName->setText(selectedStorage->name);
+        ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->storage->path);
+        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->storage->name);
+        ui->Create_lineEdit_NewCatalogName->setText(selectedDevice->storage->name);
 
         //Select this directory in the treeview.
-        loadFileSystem(selectedStorage->path);
+        loadFileSystem(selectedDevice->storage->path);
 
         //Change tab to show the result of the catalog creation
         ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create catalog tab
@@ -135,13 +135,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
     {
-        QProcess::startDetached("filelight", QStringList() << selectedStorage->path);
+        QProcess::startDetached("filelight", QStringList() << selectedDevice->storage->path);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
         skipCatalogUpdateSummary =false;
-        updateStorageInfo(selectedStorage);
+        updateStorageInfo(selectedDevice->storage);
         saveDeviceTableToFile(deviceFilePath);
         loadDeviceTableToTreeModel();
         loadStorageToPanel();
@@ -154,13 +154,13 @@
                    "<table>"
                    "<tr><td>ID:   </td><td><b> %1 </td></tr>"
                    "<tr><td>Name: </td><td><b> %2 </td></tr>"
-                   "</table>").arg(QString::number(selectedStorage->ID),selectedStorage->name)
+                   "</table>").arg(QString::number(selectedDevice->storage->ID),selectedDevice->storage->name)
                   ,QMessageBox::Yes|QMessageBox::Cancel);
 
         if ( result ==QMessageBox::Yes){
 
             //Delete from the table
-            selectedStorage->deleteStorage();
+            selectedDevice->storage->deleteStorage();
 
             //Reload data to model
             loadStorageTableToModel();
@@ -274,6 +274,7 @@
     void MainWindow::addStorageDevice(QString deviceName)
     {
         //Create Storage entry
+        Storage *tempStorage = new Storage;
             tempStorage->name = deviceName;
             tempStorage->generateID();
             tempStorage->insertStorage();
@@ -760,6 +761,7 @@
         query.exec();
 
         //Save values for each storage device
+        Storage *tempStorage = new Storage;
         while(query.next()){
             tempStorage->ID = query.value(0).toInt();
             tempStorage->loadStorage();
@@ -784,7 +786,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::displayStoragePicture()
     {//Load and display the picture of the storage device
-        QString picturePath = collectionFolder + "/images/" + QString::number(selectedStorage->ID) + ".jpg";
+        QString picturePath = collectionFolder + "/images/" + QString::number(selectedDevice->storage->ID) + ".jpg";
         QPixmap pic(picturePath);
         QFile file(picturePath);
         if(file.exists()){
@@ -799,24 +801,24 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageToPanel()
     {//Load selected Storage device to the edition panel
-        ui->Storage_lineEdit_Panel_ID->setText(QString::number(selectedStorage->ID));
-        ui->Storage_lineEdit_Panel_Name->setText(selectedStorage->name);
-        ui->Storage_lineEdit_Panel_Type->setText(selectedStorage->type);
-        ui->Storage_lineEdit_Panel_Path->setText(selectedStorage->path);
-        ui->Storage_lineEdit_Panel_Label->setText(selectedStorage->label);
-        ui->Storage_lineEdit_Panel_FileSystem->setText(selectedStorage->fileSystem);
+        ui->Storage_lineEdit_Panel_ID->setText(QString::number(selectedDevice->storage->ID));
+        ui->Storage_lineEdit_Panel_Name->setText(selectedDevice->storage->name);
+        ui->Storage_lineEdit_Panel_Type->setText(selectedDevice->storage->type);
+        ui->Storage_lineEdit_Panel_Path->setText(selectedDevice->storage->path);
+        ui->Storage_lineEdit_Panel_Label->setText(selectedDevice->storage->label);
+        ui->Storage_lineEdit_Panel_FileSystem->setText(selectedDevice->storage->fileSystem);
 
-        ui->Storage_lineEdit_Panel_Total->setText(QString::number(selectedStorage->totalSpace));
-        ui->Storage_lineEdit_Panel_Free->setText(QString::number(selectedStorage->freeSpace));
-        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(selectedStorage->totalSpace));
-        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(selectedStorage->freeSpace));
+        ui->Storage_lineEdit_Panel_Total->setText(QString::number(selectedDevice->storage->totalSpace));
+        ui->Storage_lineEdit_Panel_Free->setText(QString::number(selectedDevice->storage->freeSpace));
+        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(selectedDevice->storage->totalSpace));
+        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(selectedDevice->storage->freeSpace));
 
-        ui->Storage_lineEdit_Panel_BrandModel->setText(selectedStorage->brand_model);
-        ui->Storage_lineEdit_Panel_SerialNumber->setText(selectedStorage->serialNumber);
-        ui->Storage_lineEdit_Panel_BuildDate->setText(selectedStorage->buildDate);
-        ui->Storage_lineEdit_Panel_ContentType->setText(selectedStorage->contentType);
-        ui->Storage_lineEdit_Panel_Container->setText(selectedStorage->container);
-        ui->Storage_lineEdit_Panel_Comment->setText(selectedStorage->comment);
+        ui->Storage_lineEdit_Panel_BrandModel->setText(selectedDevice->storage->brand_model);
+        ui->Storage_lineEdit_Panel_SerialNumber->setText(selectedDevice->storage->serialNumber);
+        ui->Storage_lineEdit_Panel_BuildDate->setText(selectedDevice->storage->buildDate);
+        ui->Storage_lineEdit_Panel_ContentType->setText(selectedDevice->storage->contentType);
+        ui->Storage_lineEdit_Panel_Container->setText(selectedDevice->storage->container);
+        ui->Storage_lineEdit_Panel_Comment->setText(selectedDevice->storage->comment);
 
         displayStoragePicture();
     }
@@ -824,7 +826,7 @@
     void MainWindow::saveStorageFromPanel()
     {//Save changes to selected Storage device from the edition panel
 
-        QString currentStorageName = selectedStorage->name;
+        QString currentStorageName = selectedDevice->storage->name;
         QString newStorageName     = ui->Storage_lineEdit_Panel_Name->text();
 
         //Update
@@ -864,7 +866,7 @@
         updateQuery.bindValue(":storage_content_type",  ui->Storage_lineEdit_Panel_ContentType->text());
         updateQuery.bindValue(":storage_container",     ui->Storage_lineEdit_Panel_Container->text());
         updateQuery.bindValue(":storage_comment",       ui->Storage_lineEdit_Panel_Comment->text());
-        updateQuery.bindValue(":storage_id",            selectedStorage->ID);
+        updateQuery.bindValue(":storage_id",            selectedDevice->storage->ID);
         updateQuery.exec();
 
         loadStorageTableToModel();
@@ -887,7 +889,7 @@
             QSqlQuery updateNameQuery;
             updateNameQuery.prepare(updateNameQuerySQL);
             updateNameQuery.bindValue(":new_storage_name", newStorageName);
-            updateNameQuery.bindValue(":storage_id", selectedStorage->ID);
+            updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
             updateNameQuery.exec();
 
             if (databaseMode=="Memory"){
