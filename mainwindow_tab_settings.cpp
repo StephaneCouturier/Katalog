@@ -291,7 +291,6 @@
 
         //Check active status and synch it
             updateAllDeviceActive();
-            synchCatalogAndStorageValues();
 
         //Load data from tables to models and update display
             loadSearchHistoryTableToModel();

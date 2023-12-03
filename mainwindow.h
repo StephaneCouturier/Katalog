@@ -217,8 +217,8 @@ class MainWindow : public QMainWindow
             void convertCatalog(QString catalogSourcePath);
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
-            void updateSingleCatalog(Catalog *catalog, bool updateStorage);
-            void updateCatalogFileList(Catalog *catalog);
+            void updateSingleCatalog(Device *device, bool updateStorage);
+            void updateCatalogFileList(Device *device);
             QString requestSource;
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
@@ -256,7 +256,7 @@ class MainWindow : public QMainWindow
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
-            void catalogDirectory(Catalog *catalog);
+            void catalogDirectory(Device *device);
             void loadStorageList();
             void saveCatalogToNewFile(QString newCatalogName);
             void saveFoldersToNewFile(QString newCatalogName);
@@ -304,9 +304,8 @@ class MainWindow : public QMainWindow
             void deleteDeviceItem();
             void saveDeviceTableToFile(QString filePath);
             void loadDeviceTableToTreeModel();
-            void updateNumbers(int deviceID, QString storageType);
+            void updateNumbers();
             void updateAllNumbers();
-            void synchCatalogAndStorageValues();
             void convertDeviceCatalogFile();
             void importStorageCatalogLinks();
             void shiftIDsInDeviceTable(int shiftAmount);

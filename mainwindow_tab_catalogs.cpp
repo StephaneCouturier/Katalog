@@ -141,10 +141,14 @@
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {
             skipCatalogUpdateSummary= false;
-            requestSource ="update";
-            updateSingleCatalog(tempDevice->catalog, true);//remove
 
-            //tempDevice->updateDevice(); //new not working
+            //tempDevice->updateDevice("update"); //DEV: to replace methods here
+
+            requestSource ="update";
+
+            updateSingleCatalog(tempDevice, true);//DEV: remove
+
+            //tempDevice->updateDevice(); //DEV: new not working
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -207,7 +211,7 @@
                             else{
                                 //Update catalog
                                 if(tempDevice->active == true){
-                                    updateCatalogFileList(tempDevice->catalog);
+                                    updateCatalogFileList(tempDevice);
                                 }
                                 //Update storage
                                 QString selectedCatalogStorage = query.value(3).toString();
@@ -739,29 +743,26 @@
         QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateSingleCatalog(Catalog *catalog, bool updateStorage)
+    void MainWindow::updateSingleCatalog(Device *device, bool updateStorage)
     {
         //Update catalog file list
-        updateCatalogFileList(catalog);
+        updateCatalogFileList(device);
 
         //Update its storage
-        Device catalogDevice;
-        catalogDevice.ID = catalog->ID;
-
-        Device parentStorageDevice;
-        parentStorageDevice.ID = catalogDevice.parentID;
-        parentStorageDevice.loadDevice();
+        Device *parentStorageDevice = new Device;
+        parentStorageDevice->ID = device->parentID;
+        parentStorageDevice->loadDevice();
 
             //Update storage
-        if ( parentStorageDevice.path !=""){
-            tempDevice->storage->ID = parentStorageDevice.externalID;
+        if ( parentStorageDevice->path !=""){
+            tempDevice->storage->ID = parentStorageDevice->externalID;
                 tempDevice->storage->loadStorage();
                 if(updateStorage==true){
                     updateStorageInfo(tempDevice->storage);
                 }
             }
         else{//Update path as catalog's path
-            tempDevice->storage->path = catalog->sourcePath;
+            tempDevice->storage->path = device->catalog->sourcePath;
 
             if(updateStorage==true){
                 updateStorageInfo(tempDevice->storage);
@@ -789,12 +790,12 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateCatalogFileList(Catalog *catalog)
+    void MainWindow::updateCatalogFileList(Device *device)
     {
         if(databaseMode=="Memory"){
            //Check if the update can be done, inform the user otherwise.
            //Deal with old versions, where necessary info may have not have been available
-           if(catalog->filePath == "not recorded" or catalog->name == "not recorded" or catalog->sourcePath == "not recorded"){
+            if(device->catalog->filePath == "not recorded" or device->name == "not recorded" or device->catalog->sourcePath == "not recorded"){
                 QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
                                                              "Edit it and make sure it has the following first 2 lines:\n\n"
                                                              "<catalogSourcePath>/folderpath\n"
@@ -807,24 +808,25 @@
            }
 
            //Deal with other cases where some input information is missing
-           if(catalog->filePath == "" or catalog->name == "" or catalog->sourcePath == ""){
+           if(device->catalog->filePath == "" or device->name == "" or device->catalog->sourcePath == ""){
                 QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
-                                                              catalog->filePath, catalog->name, catalog->sourcePath));
+                                                              device->catalog->filePath, device->name, device->catalog->sourcePath));
                 return;
            }
 
            //BackUp the file before, if the option is selected
            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-                backupCatalogFile(catalog->filePath);
+                backupCatalogFile(device->catalog->filePath);
            }
         }
 
+
         //Capture previous FileCount and TotalFileSize to report the changes after the update
-            qint64 previousFileCount     = catalog->fileCount;
-            qint64 previousTotalFileSize = catalog->totalFileSize;
+            qint64 previousFileCount     = device->catalog->fileCount;
+            qint64 previousTotalFileSize = device->catalog->totalFileSize;
 
         //Process if dir exists
-        QDir dir (catalog->sourcePath);
+        QDir dir (device->catalog->sourcePath);
         if (dir.exists()==true){
             ///Warning and choice if the result is 0 files
             if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
@@ -840,32 +842,32 @@
             }
 
             //catalog the directory (iterator)
-            catalogDirectory(catalog);
+            catalogDirectory(device);
 
             if(databaseMode=="Memory"){
                 //save it to csv files
-                saveCatalogToNewFile(catalog->name);
-                saveFoldersToNewFile(catalog->name);
+                saveCatalogToNewFile(device->name);
+                saveFoldersToNewFile(device->name);
             }
 
             //Prepare to report changes to the catalog
-            qint64 deltaFileCount     = catalog->fileCount     - previousFileCount;
-            qint64 deltaTotalFileSize = catalog->totalFileSize - previousTotalFileSize;
+            qint64 deltaFileCount     = device->catalog->fileCount     - previousFileCount;
+            qint64 deltaTotalFileSize = device->catalog->totalFileSize - previousTotalFileSize;
 
             //Inform user about the update
             if(skipCatalogUpdateSummary !=true){
                 QMessageBox msgBox;
                 QString message;
                 if (requestSource=="update")
-                    message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(catalog->name);
+                    message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(device->name);
                 else if (requestSource=="create")
-                    message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(catalog->name);
+                    message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(device->name);
 
                 message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
                                      "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                                     ).arg(QString::number(catalog->fileCount),
+                                     ).arg(QString::number(device->catalog->fileCount),
                                            QString::number(deltaFileCount),
-                                           QLocale().formattedDataSize(catalog->totalFileSize),
+                                           QLocale().formattedDataSize(device->catalog->totalFileSize),
                                            QLocale().formattedDataSize(deltaTotalFileSize));
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setText(message);
@@ -874,9 +876,9 @@
             }
 
             //global update
-            globalUpdateTotalFiles += catalog->fileCount;
+            globalUpdateTotalFiles += device->catalog->fileCount;
             globalUpdateDeltaFiles += deltaFileCount;
-            globalUpdateTotalSize  += catalog->totalFileSize;
+            globalUpdateTotalSize  += device->catalog->totalFileSize;
             globalUpdateDeltaSize  += deltaTotalFileSize;
         }
         else {
@@ -885,17 +887,17 @@
                                             "\n Possible reasons:\n"
                                             "    - the device is not connected and mounted,\n"
                                             "    - the source folder was moved or renamed.")
-                                            .arg(catalog->name,
-                                                   catalog->sourcePath)
+                                            .arg(device->name,
+                                                   device->catalog->sourcePath)
                                      );
         }
 
         //record catalog statistics if option is selected
         if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
             //Save values
-            QDateTime dateTime = catalog->dateUpdated;
-            catalog->saveStatistics(dateTime);
-            catalog->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
+            QDateTime dateTime = device->catalog->dateUpdated;
+            device->saveStatistics(dateTime);
+            device->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
 
             selectedDevice->saveStatistics(dateTime);
             selectedDevice->saveStatisticsToFile(statisticsDeviceFilePath, dateTime);
@@ -915,9 +917,9 @@
                                         AND device_type ='Catalog'
                                         )");
         queryUpdateDevice.prepare(queryUpdateDeviceSQL);
-        queryUpdateDevice.bindValue(":device_total_file_size",QString::number(catalog->totalFileSize));
-        queryUpdateDevice.bindValue(":device_total_file_count",QString::number(catalog->fileCount));
-        queryUpdateDevice.bindValue(":device_external_id", catalog->name);
+        queryUpdateDevice.bindValue(":device_total_file_size",QString::number(device->catalog->totalFileSize));
+        queryUpdateDevice.bindValue(":device_total_file_count",QString::number(device->catalog->fileCount));
+        queryUpdateDevice.bindValue(":device_external_id", device->name);
         queryUpdateDevice.exec();
 
         saveDeviceTableToFile(deviceFilePath);
@@ -1364,7 +1366,7 @@
                 if ( updatechoice == QMessageBox::Yes){
                     tempDevice->catalog->name = newCatalogName;
                     tempDevice->catalog->loadCatalog();
-                    updateCatalogFileList(tempDevice->catalog);
+                    updateCatalogFileList(tempDevice);
                 }
             }
 

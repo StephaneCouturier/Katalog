@@ -142,7 +142,7 @@
         if (selectedDevice->type=="Catalog"){
             skipCatalogUpdateSummary= false;
             requestSource ="update";
-            updateSingleCatalog(selectedDevice->catalog, true);
+            updateSingleCatalog(selectedDevice, true);
         }
     }
     //----------------------------------------------------------------------

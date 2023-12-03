@@ -203,7 +203,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             tempDevice->catalog->name = tempDevice->name;
             tempDevice->catalog->loadCatalog();
-            updateSingleCatalog(tempDevice->catalog, true);
+            updateSingleCatalog(tempDevice, true);
 
             updateAllNumbers();
         });
@@ -229,10 +229,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            tempDevice->storage->updateStorageInfo();
+            tempDevice->storage->updateStorageInfo();//DEV: does not work yet
 
             skipCatalogUpdateSummary =false;
-            updateStorageInfo(tempDevice->storage);
+            updateStorageInfo(tempDevice->storage); //DEV: to be removed
             saveDeviceTableToFile(deviceFilePath);
             loadDeviceTableToTreeModel();
             loadStorageToPanel();
@@ -296,7 +296,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction3);
 
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            updateNumbers(tempDevice->ID, tempDevice->type);
+            //DEV: trigger updates of all children first
+            //tempDevice->updateDevice();
+            tempDevice->updateNumbersFromChildren();
+            tempDevice->updateParentsNumbers();
+            saveDeviceTableToFile(deviceFilePath);
+            loadDeviceTableToTreeModel();
             QDateTime dateTime = QDateTime::currentDateTime();
             tempDevice->saveStatistics(dateTime);
             tempDevice->saveStatisticsToFile(statisticsDeviceFilePath, dateTime);
@@ -787,9 +792,6 @@ void MainWindow::loadDeviceFileToTable()
 //--------------------------------------------------------------------------
 void MainWindow::loadDeviceTableToTreeModel()
 {
-    //Synch data to device
-    synchCatalogAndStorageValues();
-
     //Retrieve device hierarchy
     QSqlQuery query;
     QString querySQL;
@@ -1133,137 +1135,17 @@ void MainWindow::saveDeviceTableToFile(QString filePath)
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::updateNumbers(int deviceID, QString storageType) {
-    QSqlQuery query;
-    QString querySQL;
+void MainWindow::updateNumbers() {
 
-    if(storageType=="Storage"  or storageType=="Virtual"){
-        //device_total_file_count
-        querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET device_total_file_count =
-                                (SELECT SUM(device_total_file_count)
-                                FROM device
-                                WHERE device_parent_id = :device_id)
-                            WHERE device_id = :device_id
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id", deviceID);
-        query.exec();
+    tempDevice->updateNumbersFromChildren();
 
-        //device_total_file_size
-        querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET device_total_file_size =
-                                (SELECT SUM(device_total_file_size)
-                                FROM device
-                                WHERE device_parent_id = :device_id)
-                            WHERE device_id = :device_id
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id", deviceID);
-        query.exec();
-    }
-
-    if(storageType !="Storage" and storageType=="Virtual"){
-        //device_total_space
-        querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET device_total_space =
-                                (SELECT SUM(device_total_space)
-                                FROM device
-                                WHERE device_parent_id = :device_id)
-                            WHERE device_id = :device_id
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id",deviceID);
-        query.exec();
-
-        //device_free_space
-        querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET device_free_space =
-                                (SELECT SUM(device_free_space)
-                                FROM device
-                                WHERE device_parent_id = :device_id)
-                            WHERE device_id = :device_id
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id",deviceID);
-        query.exec();
-    }
     saveDeviceTableToFile(deviceFilePath);
     loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::synchCatalogAndStorageValues() {
-    QSqlQuery query;
-    QString querySQL;
-
-    //Synch Catalog numbers
-        querySQL = QLatin1String(R"(
-                        UPDATE device
-                        SET device_total_file_count = catalog.catalog_file_count,
-                            device_total_file_size  = catalog.catalog_total_file_size
-                        FROM catalog
-                        WHERE device.device_name = catalog.catalog_name;
-                    )");
-        query.prepare(querySQL);
-        query.exec();
-
-    //Synch Storage numbers
-        querySQL = QLatin1String(R"(
-                        UPDATE device
-                        SET device_total_space = storage.storage_total_space,
-                            device_free_space = storage.storage_free_space
-                        FROM storage
-                        WHERE device.device_external_id = storage.storage_id;
-                    )");
-        query.prepare(querySQL);
-        query.exec();
-}
-//--------------------------------------------------------------------------
-void MainWindow::updateAllNumbers() {
-
-    synchCatalogAndStorageValues();
-
-    QSqlQuery query;
-    QString querySQL;
-    //Get List of parent items
-    querySQL = QLatin1String(R"(
-                        WITH RECURSIVE device_tree AS (
-                          SELECT
-                            device_id,
-                            device_parent_id
-                          FROM device
-                          WHERE device_id = :device_id
-
-                          UNION ALL
-
-                          SELECT
-                            parent.device_id,
-                            parent.device_parent_id
-                          FROM device_tree child
-                          JOIN device parent
-                            ON parent.device_id = child.device_parent_id
-                        )
-                        SELECT device_id
-                        FROM device_tree
-                    )");
-    query.prepare(querySQL);
-    query.bindValue(":device_id",tempDevice->ID);
-    query.exec();
-
-    //Update parents
-    while (query.next()) {
-        int tempID = query.value(0).toInt();
-
-        Device *tempCurrentDevice = new Device;
-        tempCurrentDevice->ID = tempID;
-        tempCurrentDevice->loadDevice();
-
-        updateNumbers(tempCurrentDevice->ID, tempCurrentDevice->type);
-    }
+void MainWindow::updateAllNumbers()
+{
+    tempDevice->updateParentsNumbers();
 
     saveDeviceTableToFile(deviceFilePath);
     loadDeviceTableToTreeModel();

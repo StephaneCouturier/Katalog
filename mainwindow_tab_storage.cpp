@@ -455,7 +455,10 @@
                                         FROM storage s
                                         JOIN device d ON d.device_external_id = s.storage_id
                             )");
-        if ( selectedDevice->type == "Catalog" ){
+        if ( selectedDevice->ID == 0 ){
+            //No filter
+        }
+        else if ( selectedDevice->type == "Catalog" ){
             loadStorageQuerySQL += " WHERE device_id =:device_parent_id";
         }
         else{

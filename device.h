@@ -70,10 +70,13 @@ public:
         void loadDevice();
         void loadDeviceCatalog(); //temp dev
         void loadSubDeviceList();
-        void updateDevice();
         void verifyHasSubDevice();
         void verifyHasCatalog();
         void updateActive();
+
+        QList<qint64> updateDevice(QString requestSource);
+        void updateNumbersFromChildren();
+        void updateParentsNumbers();
 
         void getCatalogStorageID();
         void generateDeviceID();

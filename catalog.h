@@ -39,6 +39,7 @@
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QMessageBox>
+#include <QCoreApplication>
 
 class Catalog : public QAbstractTableModel
 {

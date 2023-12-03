@@ -320,11 +320,150 @@ void Device::saveDevice()
     query.exec();
 }
 
-void Device::updateDevice()
-{//Update device and related storage or catalog information where relevant
-    /*QList<qint64> catalogUpdates = */catalog->updateCatalogFiles();
+QList<qint64> Device::updateDevice(QString requestSource)
+{//Update device and related children storage or catalog information where relevant
+
+    //Prepare
+    QList<qint64> deviceUpdates;
     dateTimeUpdated = QDateTime::currentDateTime();
     updateActive();
+
+    //Update device and children depending on type
+    if (type=="Catalog"){
+        //Update this device/catalog (files) and its storage (space)
+        /*QList<qint64> catalogUpdates =*/ catalog->updateCatalogFiles();
+
+    }
+    else if (type=="Storage"){
+        //Update all catalogs, and this device/storage
+        //Get list of catalogs
+        loadSubDeviceList();
+
+        //Process the list
+        foreach (ID, deviceIDList) {
+            Device *updatedDevice = new Device;
+            updatedDevice->ID = ID;
+            updatedDevice->loadDevice();
+            /*QList<qint64> catalogUpdates = */updatedDevice->catalog->updateCatalogFiles();
+        }
+        /*QList<qint64> storageUpdates = */ //catalog->updateCatalogFiles();
+
+    }
+    else if (type=="Virtual"){
+        //Update all sub virtual devices, storage, catalogs, and this device
+
+
+    }
+
+    //Update parent devices
+    updateParentsNumbers();
+
+    return deviceUpdates;
+}
+
+void Device::updateNumbersFromChildren()
+{
+    QSqlQuery query;
+    QString querySQL;
+
+    //Update file values
+    if(type=="Storage"  or type=="Virtual"){
+        //device_total_file_count
+        querySQL = QLatin1String(R"(
+                            UPDATE device
+                            SET device_total_file_count =
+                                (SELECT SUM(device_total_file_count)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
+                        )");
+        query.prepare(querySQL);
+        query.bindValue(":device_id", ID);
+        query.exec();
+
+        //device_total_file_size
+        querySQL = QLatin1String(R"(
+                            UPDATE device
+                            SET device_total_file_size =
+                                (SELECT SUM(device_total_file_size)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
+                        )");
+        query.prepare(querySQL);
+        query.bindValue(":device_id", ID);
+        query.exec();
+    }
+
+    //Update space values
+    if(type=="Virtual"){
+        //device_total_space
+        querySQL = QLatin1String(R"(
+                            UPDATE device
+                            SET device_total_space =
+                                (SELECT SUM(device_total_space)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
+                        )");
+        query.prepare(querySQL);
+        query.bindValue(":device_id", ID);
+        query.exec();
+
+        //device_free_space
+        querySQL = QLatin1String(R"(
+                            UPDATE device
+                            SET device_free_space =
+                                (SELECT SUM(device_free_space)
+                                FROM device
+                                WHERE device_parent_id = :device_id)
+                            WHERE device_id = :device_id
+                        )");
+        query.prepare(querySQL);
+        query.bindValue(":device_id", ID);
+        query.exec();
+    }
+}
+
+void Device::updateParentsNumbers()
+{//recursively update parent numbers, from bottom to top
+    QSqlQuery query;
+    QString querySQL;
+
+    //Get List of parent items
+    querySQL = QLatin1String(R"(
+                        WITH RECURSIVE device_tree AS (
+                          SELECT
+                            device_id,
+                            device_parent_id
+                          FROM device
+                          WHERE device_id = :device_id
+
+                          UNION ALL
+
+                          SELECT
+                            parent.device_id,
+                            parent.device_parent_id
+                          FROM device_tree child
+                          JOIN device parent
+                            ON parent.device_id = child.device_parent_id
+                        )
+                        SELECT device_id
+                        FROM device_tree
+                    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", ID);
+    query.exec();
+
+    //Update parents
+    while (query.next()) {
+        int tempID = query.value(0).toInt();
+
+        Device *tempCurrentDevice = new Device;
+        tempCurrentDevice->ID = tempID;
+        tempCurrentDevice->loadDevice();
+        tempCurrentDevice->updateNumbersFromChildren();
+    }
 }
 
 void Device::updateActive()

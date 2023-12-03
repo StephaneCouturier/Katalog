@@ -238,7 +238,7 @@
 
         //Launch the scan and cataloging of files
             requestSource = "create";
-            updateSingleCatalog(newDevice->catalog, true);
+            updateSingleCatalog(newDevice, true);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -266,10 +266,9 @@
             refreshDifferencesCatalogSelection();
 
             //Refresh Catalogs list
-                updateAllDeviceActive();
-                synchCatalogAndStorageValues();
-                loadCatalogsTableToModel();
-                loadDeviceTableToTreeModel();
+            updateAllDeviceActive();
+            loadCatalogsTableToModel();
+            loadDeviceTableToTreeModel();
 
             //Restore selected catalog
             ui->Filters_label_DisplayCatalog->setText(ui->Filters_label_DisplayCatalog->text());
@@ -290,7 +289,7 @@
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::catalogDirectory(Catalog *catalog)
+    void MainWindow::catalogDirectory(Device *device)
     {
         //Catalog the files of a directory and add catalog meta-data
             // Start animation while cataloging
@@ -299,13 +298,13 @@
         //Prepare inputs
             //Define the extensions of files to be included
             QStringList fileExtensions;
-            if      ( catalog->fileType == "Image")
+            if      ( device->catalog->fileType == "Image")
                                     fileExtensions = fileType_Image;
-            else if ( catalog->fileType == "Audio")
+            else if ( device->catalog->fileType == "Audio")
                                     fileExtensions = fileType_Audio;
-            else if ( catalog->fileType == "Video")
+            else if ( device->catalog->fileType == "Video")
                                     fileExtensions = fileType_Video;
-            else if ( catalog->fileType == "Text")
+            else if ( device->catalog->fileType == "Text")
                                     fileExtensions = fileType_Text;
 
             // Get directories to exclude
@@ -334,7 +333,7 @@
                                             WHERE file_catalog=:file_catalog
                                         )");
             deleteFileQuery.prepare(deleteFileQuerySQL);
-            deleteFileQuery.bindValue(":file_catalog",catalog->name);
+            deleteFileQuery.bindValue(":file_catalog",device->name);
             deleteFileQuery.exec();
 
             QSqlQuery deleteFolderQuery;
@@ -343,7 +342,7 @@
                                             WHERE folder_catalog_name=:folder_catalog_name
                                         )");
             deleteFolderQuery.prepare(deleteFolderQuerySQL);
-            deleteFolderQuery.bindValue(":folder_catalog_name",catalog->name);
+            deleteFolderQuery.bindValue(":folder_catalog_name",device->name);
             deleteFolderQuery.exec();
 
             //prepare insert query for file
@@ -382,8 +381,8 @@
 
             //insert root folder (so that it is displayed even when there are no sub-folders)
             insertFolderQuery.prepare(insertFolderSQL);
-            insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
-            insertFolderQuery.bindValue(":folder_path",         catalog->sourcePath);
+            insertFolderQuery.bindValue(":folder_catalog_name", device->name);
+            insertFolderQuery.bindValue(":folder_path",         device->catalog->sourcePath);
             insertFolderQuery.exec();
 
         //Scan entries with iterator
@@ -400,8 +399,8 @@
 
 
             //Iterator
-            if (catalog->includeHidden == true){
-                QDirIterator iterator(catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
+            if (device->catalog->includeHidden == true){
+                QDirIterator iterator(device->catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot|QDir::Hidden, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
@@ -418,7 +417,7 @@
                         //Insert dirs
                         if (entry.isDir()) {
                               insertFolderQuery.prepare(insertFolderSQL);
-                              insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
+                              insertFolderQuery.bindValue(":folder_catalog_name", device->name);
                               insertFolderQuery.bindValue(":folder_path",         entryPath);
                               insertFolderQuery.exec();
                         }
@@ -431,13 +430,13 @@
                               insertFileQuery.bindValue(":file_size",         file.size());
                               insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
                               insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
-                              insertFileQuery.bindValue(":file_catalog",      catalog->name);
+                              insertFileQuery.bindValue(":file_catalog",      device->name);
                               insertFileQuery.bindValue(":file_full_path",    entryPath);
                               insertFileQuery.exec();
 
                               //Media File Metadata
                               if(developmentMode==true){
-                                  if(catalog->includeMetadata == true){
+                                  if(device->catalog->includeMetadata == true){
                                       setMediaFile(entryPath);
                                   }
                               }
@@ -446,7 +445,7 @@
                 }
             }
             else{
-                QDirIterator iterator(catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                QDirIterator iterator(device->catalog->sourcePath+"/", fileExtensions, QDir::AllEntries|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
                 while (iterator.hasNext()){
                     entryPath = iterator.next();
                     QFileInfo entry(entryPath);
@@ -463,7 +462,7 @@
 
                         //Insert dirs
                         if (entry.isDir()) {
-                            insertFolderQuery.bindValue(":folder_catalog_name", catalog->name);
+                            insertFolderQuery.bindValue(":folder_catalog_name", device->name);
                             insertFolderQuery.bindValue(":folder_path",         entryPath);
                             insertFolderQuery.exec();
                         }
@@ -476,13 +475,13 @@
                             insertFileQuery.bindValue(":file_size",         file.size());
                             insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
                             insertFileQuery.bindValue(":file_date_updated", entry.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
-                            insertFileQuery.bindValue(":file_catalog",      catalog->name);
+                            insertFileQuery.bindValue(":file_catalog",      device->name);
                             insertFileQuery.bindValue(":file_full_path",    entryPath);
                             insertFileQuery.exec();
 
                             //Media File Metadata
                             if(developmentMode==true){
-                              if(catalog->includeMetadata == true){
+                              if(device->catalog->includeMetadata == true){
                                   setMediaFile(entryPath);
                               }
                            }
@@ -500,8 +499,8 @@
             commitQuery.exec();
 
             //update Catalog metadata
-                catalog->updateFileCount();
-                catalog->updateTotalFileSize();
+                device->catalog->updateFileCount();
+                device->catalog->updateTotalFileSize();
 
         //Populate model with lines for csv files
         if(databaseMode=="Memory"){
@@ -515,7 +514,7 @@
                         WHERE file_catalog=:file_catalog
                     )");
             query.prepare(querySQL);
-            query.bindValue(":file_catalog",catalog->name);
+            query.bindValue(":file_catalog",device->name);
             query.exec();
 
             while(query.next()){
@@ -523,17 +522,17 @@
             };
 
             //Prepare the catalog file data, adding first the catalog metadata at the beginning
-            fileList.prepend("<catalogID>"              + QString::number(catalog->ID));
+            fileList.prepend("<catalogID>"              + QString::number(device->ID));
             fileList.prepend("<catalogAppVersion>"      + currentVersion);
-            fileList.prepend("<catalogIncludeMetadata>" + QVariant(catalog->includeMetadata).toString());
-            fileList.prepend("<catalogIsFullDevice>"    + QVariant(catalog->isFullDevice).toString());
-            fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(catalog->includeSymblinks).toString());
-            fileList.prepend("<catalogStorage>"         + catalog->storageName);
-            fileList.prepend("<catalogFileType>"        + catalog->fileType);
-            fileList.prepend("<catalogIncludeHidden>"   + QVariant(catalog->includeHidden).toString());
-            fileList.prepend("<catalogTotalFileSize>"   + QString::number(catalog->totalFileSize));
-            fileList.prepend("<catalogFileCount>"       + QString::number(catalog->fileCount));
-            fileList.prepend("<catalogSourcePath>"      + catalog->sourcePath);
+            fileList.prepend("<catalogIncludeMetadata>" + QVariant(device->catalog->includeMetadata).toString());
+            fileList.prepend("<catalogIsFullDevice>"    + QVariant(device->catalog->isFullDevice).toString());
+            fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(device->catalog->includeSymblinks).toString());
+            fileList.prepend("<catalogStorage>"         + device->catalog->storageName);
+            fileList.prepend("<catalogFileType>"        + device->catalog->fileType);
+            fileList.prepend("<catalogIncludeHidden>"   + QVariant(device->catalog->includeHidden).toString());
+            fileList.prepend("<catalogTotalFileSize>"   + QString::number(device->catalog->totalFileSize));
+            fileList.prepend("<catalogFileCount>"       + QString::number(device->catalog->fileCount));
+            fileList.prepend("<catalogSourcePath>"      + device->catalog->sourcePath);
 
             //Define and populate a model
             fileListModel = new QStringListModel(this);
@@ -551,19 +550,19 @@
                                 WHERE catalog_name =:catalog_name
                             )");
         query.prepare(querySQL);
-        query.bindValue(":catalog_include_symblinks", catalog->includeSymblinks);
-        query.bindValue(":catalog_file_count", catalog->fileCount);
-        query.bindValue(":catalog_total_file_size", catalog->totalFileSize);
+        query.bindValue(":catalog_include_symblinks", device->catalog->includeSymblinks);
+        query.bindValue(":catalog_file_count", device->catalog->fileCount);
+        query.bindValue(":catalog_total_file_size", device->catalog->totalFileSize);
         query.bindValue(":catalog_app_version", currentVersion);
-        query.bindValue(":catalog_name", catalog->name);
+        query.bindValue(":catalog_name", device->name);
         query.exec();
 
         loadCatalogsTableToModel();
 
         //Update catalog date loaded and updated
         QDateTime emptyDateTime = *new QDateTime;
-        catalog->setDateUpdated(emptyDateTime);
-        catalog->setDateLoaded(emptyDateTime);
+        device->catalog->setDateUpdated(emptyDateTime);
+        device->catalog->setDateLoaded(emptyDateTime);
 
         //Stop animation
         QApplication::restoreOverrideCursor();
