@@ -499,17 +499,14 @@
                     queryTotalSnapshots.bindValue(":device_id", selectedDevice->catalog->ID);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                     queryTotalSnapshots.exec();
-                    qDebug()<<queryTotalSnapshots.lastError();
 
                     while (queryTotalSnapshots.next()){
 
                         QDateTime datetime = queryTotalSnapshots.value(0).toDateTime();
-                        qDebug()<<datetime;
 
                         if ( selectedTypeOfData == tr("Number of Files") )
                        {
                            numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
-                            qDebug()<<numberOrSizeTotal;
 
                            if ( numberOrSizeTotal > maxValueGraphRange )
                                maxValueGraphRange = numberOrSizeTotal;
@@ -517,7 +514,6 @@
                         else if ( selectedTypeOfData == tr("Total File Size") )
                        {
                            numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
-                           qDebug()<<numberOrSizeTotal;
 
                            if ( freeSpace > 2000000000 ){
                                freeSpace = freeSpace/1024/1024/1024;
@@ -610,7 +606,6 @@
                 queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
 
                 queryTotalSnapshots.exec();
-                qDebug()<<queryTotalSnapshots.lastError();
 
                 while (queryTotalSnapshots.next()){
 

@@ -475,7 +475,7 @@ QList<int> MainWindow::verifyStorageWithOutDevice()
 
     while (query.next()) {
         gaps << query.value(0).toInt();
-        qDebug()<< "gap:" << query.value(0).toInt();
+        qDebug()<< "verifyStorageWithOutDevice - gap:" << query.value(0).toInt();
     }
 
     return gaps;
@@ -1006,7 +1006,7 @@ void MainWindow::loadDeviceTableToTreeModel()
             }
             else{
                 // Skip this row and proceed to the next one
-                qDebug() << "Parent item not found for ID:" << id;
+                qDebug() << "loadDeviceTableToTreeModel - Parent item not found for ID:" << id;
                 continue;
             }
         }
@@ -1248,7 +1248,7 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
     query.prepare(sql);
     query.bindValue(":shiftAmount", shiftAmount);
     if (!query.exec()) {
-        qDebug() << "Error updating device table:" << query.lastError().text();
+        qDebug() << "shiftIDsInDeviceTable - Error updating device table:" << query.lastError().text();
         return;
     }
 
@@ -1263,7 +1263,7 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
         return;
     }
 
-    qDebug() << "IDs shifted successfully by" << shiftAmount;
+    qDebug() << "shiftIDsInDeviceTable - IDs shifted successfully by" << shiftAmount;
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadParentsList()

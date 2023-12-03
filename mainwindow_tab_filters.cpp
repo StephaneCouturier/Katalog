@@ -187,7 +187,7 @@
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
 
-        filterFromSelectedDevices();
+        filterFromSelectedDevice();
 
         refreshDifferencesCatalogSelection();
     }
@@ -291,7 +291,7 @@
         loadDeviceFileToTable();
         loadDeviceTableToTreeModel();
 
-        filterFromSelectedDevices();
+        filterFromSelectedDevice();
 
         QSettings settings(settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceType", tr("All"));
@@ -300,8 +300,9 @@
         refreshDifferencesCatalogSelection();
     }
     //----------------------------------------------------------------------
-    void MainWindow::filterFromSelectedDevices()
+    void MainWindow::filterFromSelectedDevice()
     {
+        //Enable/Disable panel's buttons
         if (selectedDevice->type=="Storage"){
             ui->Filter_pushButton_Explore->setEnabled(false);
             ui->Filter_pushButton_Update->setEnabled(false);
@@ -323,14 +324,14 @@
             loadCatalogsTableToModel();
 
             //Storage
-           loadStorageTableToModel();
-           updateCatalogsScreenStatistics();
-           updateStorageSelectionStatistics();
+            loadStorageTableToModel();
+            updateCatalogsScreenStatistics();
+            updateStorageSelectionStatistics();
 
             //Statistics
-           loadStatisticsCatalogFileToTable();
-           loadStatisticsStorageFileToTable();
-           loadStatisticsChart();
+            loadStatisticsCatalogFileToTable();
+            loadStatisticsStorageFileToTable();
+            loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::setTreeExpandState(bool toggle)

@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-12-02";
+        releaseDate     = "2023-12-03";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Load Collection
             loadCollection();
             selectedDevice->loadDevice();
-            filterFromSelectedDevices();
+            filterFromSelectedDevice();
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
@@ -227,7 +227,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             loadSearchCriteria(lastSearch);
 
             //Restore last Search values
-            filterFromSelectedDevices();
+            filterFromSelectedDevice();
 
         //Setup tab: Statistics
             ui->Statistics_comboBox_SelectSource->setItemData(0, "catalog updates", Qt::UserRole);

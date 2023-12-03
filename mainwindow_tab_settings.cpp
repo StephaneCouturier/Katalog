@@ -297,7 +297,7 @@
             loadCatalogsTableToModel();
             loadStorageTableToModel();
             loadDeviceTableToTreeModel();
-            filterFromSelectedDevices();
+            filterFromSelectedDevice();
 
 
         //Add a default storage device, to force any new catalog to have one

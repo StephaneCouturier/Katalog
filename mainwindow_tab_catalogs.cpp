@@ -104,7 +104,7 @@
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
-            filterFromSelectedDevices();
+            filterFromSelectedDevice();
 
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
@@ -298,7 +298,7 @@
             QSettings settings(settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
-            filterFromSelectedDevices();
+            filterFromSelectedDevice();
 
             //Go to the Search tab
             ui->tabWidget->setCurrentIndex(6); // tab 6 is the Statitics tab

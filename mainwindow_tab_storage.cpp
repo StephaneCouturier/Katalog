@@ -492,12 +492,6 @@
         QSqlQueryModel *storageQueryModel = new QSqlQueryModel();
         storageQueryModel->setQuery(std::move(loadStorageQuery));
 
-        // Check for errors in the query
-        if (storageQueryModel->lastError().isValid()) {
-            // Handle the error, e.g., display an error message
-            qDebug() << "Error: " << storageQueryModel->lastError().text();
-        }
-
         StorageView *proxyStorageModel = new StorageView(this);
         proxyStorageModel->setSourceModel(storageQueryModel);
         proxyStorageModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
@@ -912,8 +906,6 @@
             updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
             updateCatalogQuery.exec();
 
-            Catalog *tempCatalog     = new Catalog();
-
             //Update catalogs (memory mode)
             if (databaseMode=="Memory"){
 
@@ -931,11 +923,11 @@
 
                 //Edit and save each one
                 while (listCatalogQuery.next()){
-                    tempCatalog = new Catalog;
-                    tempCatalog->name = listCatalogQuery.value(0).toString();
-                    tempCatalog->loadCatalog();
-                    tempCatalog->storageName = newStorageName;
-                    tempCatalog->updateStorageNameToFile();
+                    Catalog tempCatalog;
+                    tempCatalog.name = listCatalogQuery.value(0).toString();
+                    tempCatalog.loadCatalog();
+                    tempCatalog.storageName = newStorageName;
+                    tempCatalog.updateStorageNameToFile();
                 }
 
                 //Refresh
@@ -949,27 +941,46 @@
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageList()
-    {   //Load Storage selection to comboBoxes
+    {//Load Storage selection to comboBoxes
 
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                 SELECT device_id, device_name
-                                FROM device
-                                WHERE device_type= 'Storage'
-                                AND device_group_id = 0
-                            )");
+                                FROM   device
+                                WHERE  device_type = 'Storage'
+
+                            )");//AND    device_group_id = 0
 
         if ( selectedDevice->type == "Storage" ){
             querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name); //replace by ID
         }
         else if ( selectedDevice->type == "Catalog" ){
-            querySQL += QLatin1String(R"( AND device_id ='%1' )").arg(QString::number(selectedDevice->parentID)); //replace by ID
+            querySQL += " AND device_id =:device_parent_id";
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL = QLatin1String(R"(
+                                AND device_id IN (
+                                WITH RECURSIVE hierarchy AS (
+                                     SELECT device_id, device_parent_id, device_name
+                                     FROM device
+                                     WHERE device_id = :device_id
+                                     UNION ALL
+                                     SELECT t.device_id, t.device_parent_id, t.device_name
+                                     FROM device t
+                                     JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                )
+                                SELECT device_id
+                                FROM hierarchy)
+            )");
+            querySQL += prepareSQL;
         }
 
         querySQL += " ORDER BY device_name ";
         query.prepare(querySQL);
+        query.bindValue(":device_id", selectedDevice->ID);
+        query.bindValue(":device_parent_id", selectedDevice->parentID);
         query.exec();
 
         //Clear comboboxes and load selected Storage device list
