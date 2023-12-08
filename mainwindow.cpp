@@ -207,9 +207,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             resetToDefaultSearchCriteria();
 
             //Load an empty model to display headers
-            Catalog *empty = new Catalog(this);
-            ui->Search_treeView_FilesFound->setModel(empty);
-            ui->Search_listView_CatalogsFound->setModel(empty);
+            Catalog *emptyCatalog = new Catalog;
+            ui->Search_treeView_FilesFound->setModel(emptyCatalog);
+            QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
+            ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
 
             //Restore last Search values
             QSqlQuery query;

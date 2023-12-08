@@ -519,6 +519,9 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogsTableToModel()
     {
+        //Refresh active state
+        updateAllDeviceActive();
+
         //Get catalog data based on filters
             //Generate SQL query from filters
             QSqlQuery loadCatalogQuery;
@@ -656,7 +659,6 @@
 
     }
     //--------------------------------------------------------------------------
-
     void MainWindow::updateCatalogsScreenStatistics()
     {
         QSqlQuery querySumCatalogValues;
@@ -842,11 +844,11 @@
             }
 
             //catalog the directory (iterator)
-            catalogDirectory(device);
+            device->catalog->catalogDirectory(databaseMode);
 
             if(databaseMode=="Memory"){
                 //save it to csv files
-                saveCatalogToNewFile(device->name);
+                saveCatalogToNewFile(device);
                 saveFoldersToNewFile(device->name);
             }
 
@@ -875,7 +877,7 @@
                 msgBox.exec();
             }
 
-            //global update
+           //Global update
             globalUpdateTotalFiles += device->catalog->fileCount;
             globalUpdateDeltaFiles += deltaFileCount;
             globalUpdateTotalSize  += device->catalog->totalFileSize;
@@ -923,6 +925,7 @@
         queryUpdateDevice.exec();
 
         saveDeviceTableToFile(deviceFilePath);
+
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()
@@ -1136,7 +1139,6 @@
         }
     }
     //--------------------------------------------------------------------------
-
     void MainWindow::saveCatalogChanges(Catalog *catalog)
     {
             //Get new values

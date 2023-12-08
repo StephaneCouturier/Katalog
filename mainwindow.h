@@ -169,6 +169,7 @@ class MainWindow : public QMainWindow
             Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
 
             void resetToDefaultSearchCriteria();
+            void clearSearchResults();
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
             void getSearchCriteria();
@@ -187,7 +188,7 @@ class MainWindow : public QMainWindow
 
             void refreshDifferencesCatalogSelection();
             void searchFiles();
-            void searchFilesInCatalog(const QString &sourceCatalog);
+            void searchFilesInCatalog(Device *device);
             void searchFilesInDirectory(const QString &sourceDirectory);
 
             //Search history
@@ -244,7 +245,6 @@ class MainWindow : public QMainWindow
 
         //TAB: Create
             QFileSystemModel *fileSystemModel;
-            QStringListModel *fileListModel;
 
             QStringList storageNameList;
             QString excludeFilePath;
@@ -256,9 +256,9 @@ class MainWindow : public QMainWindow
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
-            void catalogDirectory(Device *device);
+            //void catalogDirectory(Device *device);
             void loadStorageList();
-            void saveCatalogToNewFile(QString newCatalogName);
+            void saveCatalogToNewFile(Device *device);
             void saveFoldersToNewFile(QString newCatalogName);
 
         //TAB: Storage
@@ -401,7 +401,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_PasteFromClipboard_clicked();
             void on_Search_lineEdit_SearchText_returnPressed();
 
-            void on_Search_listView_CatalogsFound_clicked(const QModelIndex &index);
+            void on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_customContextMenuRequested(const QPoint &pos);
             void on_Search_pushButton_ShowHideSearchCriteria_clicked();

@@ -99,17 +99,15 @@
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
         }
         //----------------------------------------------------------------------
-        void MainWindow::on_Search_listView_CatalogsFound_clicked(const QModelIndex &index)
+        void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
         {
             //Refine the seach with the selction of one of the catalogs that have results
 
             //Get file from selected row
             selectedDevice->type= "Catalog";
-            //selectedDevice->ID = ui->Search_listView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
-            selectedDevice->name = ui->Search_listView_CatalogsFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            selectedDevice->loadDeviceCatalog();
+            selectedDevice->ID = ui->Search_treeView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
+            selectedDevice->loadDevice();
             displaySelectedDeviceName();
-            //ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
             //Seach again but only on the selected catalog
             searchFiles();
@@ -217,14 +215,14 @@
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
                 ui->Search_checkBox_DuplicatesSize->setEnabled(false);
                 ui->Search_checkBox_DuplicatesDateModified->setEnabled(false);
-                ui->Search_listView_CatalogsFound->setEnabled(false);
+                ui->Search_treeView_CatalogsFound->setEnabled(false);
             }
             else{
                 ui->Search_widget_DifferencesCatalogs->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
-                ui->Search_listView_CatalogsFound->setEnabled(true);
+                ui->Search_treeView_CatalogsFound->setEnabled(true);
             }
         }
         //----------------------------------------------------------------------
@@ -676,17 +674,11 @@
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
             //Prepare the SEARCH -------------------------------
-            newSearch = new Search;
 
-                //Clear exisiting lists of results and search variables
-                    newSearch->filesFoundList.clear();
-                    newSearch->catalogFoundList.clear();
-
-                //Clear the temporary search and get search criteria
+                //Clear the object newSearch and get new search criteria
                     getSearchCriteria();
 
-                // Searching "Begin With" for File name or Folder name is not supported yet
-
+                // Searching "Begin With" for "File name or Folder name" is not supported yet
                     if (newSearch->selectedTextCriteria==tr("Begins With") and newSearch->selectedSearchIn !=tr("File names only")){
                         QApplication::restoreOverrideCursor(); //Stop animation
                         QMessageBox::information(this,"Katalog",tr("The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
@@ -696,7 +688,6 @@
             //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
                 //Process the SEARCH in CATALOGS
                     if (newSearch->searchInCatalogsChecked == true){
-
                         //List of catalogs to search from: catalogSelectedList
                             //Search every catalog if "All" is selected
                             if ( selectedDevice->type != "Catalog"){
@@ -707,19 +698,26 @@
                                     differenceCatalogs << newSearch->differencesCatalog2;
                                     foreach(QString sourceCatalog,differenceCatalogs)
                                         {
-                                            searchFilesInCatalog(sourceCatalog);
+                                            searchFilesInCatalog(selectedDevice);
                                         }
                                 }
                                 //Otherwise process all selected globally
-                                else foreach(QString sourceCatalog,catalogSelectedList)
-                                        {
-                                            searchFilesInCatalog(sourceCatalog);
+                                else{
+                                    selectedDevice->loadSubDeviceList();
+                                    foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
+                                        if(row.type == "Catalog"){
+                                            Device *device = new Device;
+                                            device->ID = row.ID;
+                                            device->loadDevice();
+                                            searchFilesInCatalog(device);
                                         }
+                                    }
                                 }
+                            }
 
                             //Otherwise just search files in the selected catalog
                             else{
-                                searchFilesInCatalog(selectedDevice->name);
+                                searchFilesInCatalog(selectedDevice);
 
                                 //but also load the second catalog for Differences
                                 if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
@@ -727,11 +725,16 @@
                                          or newSearch->differencesOnSize == true
                                          or newSearch->differencesOnDate == true)){
 
+                                    Device *diffDevice1 = new Device;
+                                    diffDevice1->ID = 0; //DEV: wont work //ui->Search_comboBox_DifferencesCatalog1->currentText()
+                                    Device *diffDevice2 = new Device;
+                                    diffDevice2->ID = 0; //DEV: wont work //ui->Search_comboBox_DifferencesCatalog2->currentText()
+
                                         if(ui->Search_comboBox_DifferencesCatalog1->currentText()!= selectedDevice->catalog->name)
-                                            searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog1->currentText());
+                                            searchFilesInCatalog(diffDevice1);
 
                                         if(ui->Search_comboBox_DifferencesCatalog2->currentText()!= selectedDevice->catalog->name)
-                                            searchFilesInCatalog(ui->Search_comboBox_DifferencesCatalog2->currentText());
+                                            searchFilesInCatalog(diffDevice2);
                                 }
                             }
                     }
@@ -743,21 +746,33 @@
 
                 //Process search results: list of catalogs with results
                     //Remove duplicates so the catalogs are listed only once, and sort the list
-                    newSearch->catalogFoundList.removeDuplicates();
-                    newSearch->catalogFoundList.sort();
+                    newSearch->deviceFoundIDList.removeDuplicates();
+                    newSearch->deviceFoundIDList.sort();
 
                     //Keep the catalog file name only
-                    foreach(QString item, newSearch->catalogFoundList){
-                            int index = newSearch->catalogFoundList.indexOf(item);
+                    foreach(QString item, newSearch->deviceFoundIDList){
+                            int index = newSearch->deviceFoundIDList.indexOf(item);
                             //QDir dir(item);
                             QFileInfo fileInfo(item);
-                            newSearch->catalogFoundList[index] = fileInfo.baseName();
+                            newSearch->deviceFoundIDList[index] = fileInfo.baseName();
                     }
 
-                    //Load list of catalogs in which files where found
-                    newSearch->catalogFoundListModel = new QStringListModel(this);
-                    newSearch->catalogFoundListModel->setStringList(newSearch->catalogFoundList);
-                    ui->Search_listView_CatalogsFound->setModel(newSearch->catalogFoundListModel);
+                    //Create model and load to the views
+                    newSearch->deviceFoundModel = new QStandardItemModel;
+                    newSearch->deviceFoundModel->setHorizontalHeaderLabels({ "Catalog with results", "ID" });
+
+                    Device *device = new Device;
+                    for (const QString &ID : newSearch->deviceFoundIDList) {
+                        device->ID = ID.toInt();
+                        device->loadDevice();
+                        QList<QStandardItem *> items;
+                        items << new QStandardItem(device->name);
+                        items << new QStandardItem(QString::number(device->ID));
+                        newSearch->deviceFoundModel->appendRow(items);
+                    }
+
+                    ui->Search_treeView_CatalogsFound->setModel(newSearch->deviceFoundModel);
+                    ui->Search_treeView_CatalogsFound->hideColumn(1);
 
                 //Process search results: list of files
 
@@ -1174,10 +1189,10 @@
         }
         //----------------------------------------------------------------------
         //run a search of files for the selected Catalog
-        void MainWindow::searchFilesInCatalog(const QString &sourceCatalogName)
+        void MainWindow::searchFilesInCatalog(Device *device)
         {
-            //Prepare Inputs
-                QFile catalogFile(tempDevice->catalog->sourcePath);
+            //Prepare Inputs including Regular Expression
+                QFile catalogFile(device->catalog->sourcePath);
 
                 QRegularExpressionMatch match;
                 QRegularExpressionMatch foldermatch;
@@ -1233,7 +1248,7 @@
                  else
                     newSearch->regexPattern = newSearch->regexSearchtext;
 
-                //Add the words to exclude to the regex
+                //Add the words to exclude to the Regular Expression
                 if ( newSearch->selectedSearchExclude !=""){
 
                     //Prepare
@@ -1264,7 +1279,7 @@
                 }
 
             //Load the catalog file contents if not already loaded in memory
-                tempDevice->catalog->loadCatalogFileListToTable();
+                device->catalog->loadCatalogFileListToTable();
 
             //Search loop for all lines in the catalog file
                 //Load the files of the Catalog
@@ -1289,11 +1304,11 @@
                         getFilesQuerySQL = getFilesQuerySQL+" AND file_date_updated<=:file_date_updated_max ";
                     }
                     getFilesQuery.prepare(getFilesQuerySQL);
-                    getFilesQuery.bindValue(":file_catalog",sourceCatalogName);
-                    getFilesQuery.bindValue(":file_size_min",newSearch->selectedMinimumSize * newSearch->sizeMultiplierMin);
-                    getFilesQuery.bindValue(":file_size_max",newSearch->selectedMaximumSize * newSearch->sizeMultiplierMax);
-                    getFilesQuery.bindValue(":file_date_updated_min",newSearch->selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
-                    getFilesQuery.bindValue(":file_date_updated_max",newSearch->selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
+                    getFilesQuery.bindValue(":file_catalog", device->name);
+                    getFilesQuery.bindValue(":file_size_min", newSearch->selectedMinimumSize * newSearch->sizeMultiplierMin);
+                    getFilesQuery.bindValue(":file_size_max", newSearch->selectedMaximumSize * newSearch->sizeMultiplierMax);
+                    getFilesQuery.bindValue(":file_date_updated_min", newSearch->selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
+                    getFilesQuery.bindValue(":file_date_updated_max", newSearch->selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
                     getFilesQuery.exec();
 
                 //File by file, test if the file is matching all search criteria
@@ -1307,7 +1322,7 @@
                     QString   lineFileFullPath = lineFilePath + "/" + lineFileName;
                     bool      fileIsMatchingTag;
 
-                    //Continue if the file is matching the tags
+                    //Continue to the next file if the current file is not matching the tags
                         if (newSearch->searchOnFolderCriteria==true and newSearch->searchOnTags==true and newSearch->selectedTagName!=""){
 
                             fileIsMatchingTag = false;
@@ -1365,14 +1380,14 @@
                             //If the file is matching the criteria, add it and its catalog to the search results
                             if (match.hasMatch()){
                                 newSearch->filesFoundList << lineFilePath;
-                                newSearch->catalogFoundList.insert(0,sourceCatalogName);
+                                newSearch->deviceFoundIDList.insert(0,QString::number(device->ID));
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
                                 newSearch->sFilePaths.append(lineFilePath);
                                 newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
                                 newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                newSearch->sFileCatalogs.append(sourceCatalogName);
+                                newSearch->sFileCatalogs.append(device->name);
                             }
                         }
                         else{
@@ -1388,14 +1403,14 @@
                             //Add the file and its catalog to the results, excluding blank lines
                             if (lineFilePath !=""){
                                 newSearch->filesFoundList << lineFilePath;
-                                newSearch->catalogFoundList.insert(0,sourceCatalogName);
+                                newSearch->deviceFoundIDList.insert(0, QString::number(device->ID));
 
                                 //Populate result lists
                                 newSearch->sFileNames.append(lineFileName);
                                 newSearch->sFilePaths.append(lineFilePath);
                                 newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
                                 newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                newSearch->sFileCatalogs.append(sourceCatalogName);
+                                newSearch->sFileCatalogs.append(device->name);
                             }
                         }
                 }
@@ -1630,7 +1645,7 @@
                         //Add the file and its catalog to the results, excluding blank lines
                         if (lineFilePath !=""){
                             newSearch->filesFoundList << lineFilePath;
-                            newSearch->catalogFoundList.insert(0,sourceDirectory);
+                            newSearch->deviceFoundIDList.insert(0, sourceDirectory);
 
                             //Retrieve other file info
                             QFileInfo file(lineFilePath);
@@ -1736,9 +1751,7 @@
             ui->Search_pushButton_FileFoundMoreStatistics->setDisabled(true);
 
             //Clear catalog and file results (load an empty model)
-            Catalog *empty = new Catalog(this);
-            ui->Search_treeView_FilesFound->setModel(empty);
-            ui->Search_listView_CatalogsFound->setModel(empty);
+            clearSearchResults();
 
             //Clear results and disable export
             newSearch->filesFoundList.clear();
@@ -1800,10 +1813,7 @@
                 ui->Search_comboBox_Tags->setCurrentText(search->selectedTagName);
 
                 //Clear previous results (load an empty model)
-                Catalog *empty = new Catalog(this);
-                ui->Search_treeView_FilesFound->setModel(empty);
-                ui->Search_listView_CatalogsFound->setModel(empty);
-
+                clearSearchResults();
 
         }
         //----------------------------------------------------------------------
@@ -2509,4 +2519,14 @@
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
+        }
+
+        void MainWindow::clearSearchResults()
+        {
+            Catalog *empty = new Catalog(this);
+            ui->Search_treeView_FilesFound->setModel(empty);
+            QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
+            emptyQStandardItemModel->setHorizontalHeaderLabels({ "Catalog with results", "ID" });
+            ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
+            ui->Search_treeView_CatalogsFound->hideColumn(1);
         }

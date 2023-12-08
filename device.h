@@ -61,6 +61,15 @@ public:
         Catalog *catalog = new Catalog;
         QList<int> deviceIDList;
 
+
+        //Define a structure to represent a row with multiple columns
+        struct deviceListRow {
+            int ID;
+            QString type;
+        };
+
+        // Define a QVector to store the rows
+        QVector<deviceListRow> deviceListTable;
         //States
         bool hasSubDevice;
         bool hasCatalog;
@@ -74,7 +83,7 @@ public:
         void verifyHasCatalog();
         void updateActive();
 
-        QList<qint64> updateDevice(QString requestSource);
+        QList<qint64> updateDevice(QString requestSource, QString databaseMode);
         void updateNumbersFromChildren();
         void updateParentsNumbers();
 

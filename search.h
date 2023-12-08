@@ -33,6 +33,7 @@
 #define SEARCH_H
 
 #include "qdatetime.h"
+#include "qstandarditemmodel.h"
 #include <QAbstractTableModel>
 #include <QCoreApplication>
 #include <QSqlQuery>
@@ -110,9 +111,9 @@ public:
     QString filesFoundMaxDate;
 
     QStringList filesFoundList;
-    QStringList catalogFoundList;
+    QStringList deviceFoundIDList;
+    QStandardItemModel *deviceFoundModel = new QStandardItemModel;
 
-    QStringListModel *catalogFoundListModel;
     QStringList searchTextList;
 
     QList<QString>  sFileNames;

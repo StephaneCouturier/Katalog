@@ -176,6 +176,7 @@ void Catalog::generateID()
     int maxID = queryCatalogID.value(0).toInt();
     ID = maxID + 1;
 }
+
 void Catalog::insertCatalog()
 {//Insert new catalog entry
     QSqlQuery insertCatalogQuery;
@@ -269,7 +270,7 @@ void Catalog::saveCatalog()
     qDebug()<<"saveCatalog: "<<query.lastError();
 }
 
-QList<qint64> Catalog::updateCatalogFiles()
+QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
 {//Update the files of the catalog and return a list with update information
     QList<qint64> list;
 
@@ -328,7 +329,7 @@ QList<qint64> Catalog::updateCatalogFiles()
         }
 
         //catalog the directory (iterator)
-        catalogDirectory();
+        catalogDirectory(databaseMode);
 
         /*
         if(databaseMode=="Memory"){
@@ -834,15 +835,19 @@ void Catalog::populateFileData( const QList<QString> &cfileName,
     return;
 }
 
+void Catalog::getFileTypes()
+{//Populate file type list
 
-void Catalog::catalogDirectory()
-{//Catalog the files of a directory and update catalog attributes
+    QStringList fileType_Image;
+    QStringList fileType_Audio;
+    QStringList fileType_Video;
+    QStringList fileType_Text;
 
+    fileType_Image<< "*.png" << "*.jpg" << "*.gif" << "*.xcf" << "*.tif" << "*.bmp";
+    fileType_Audio<< "*.mp3" << "*.wav" << "*.ogg" << "*.aif";
+    fileType_Video<< "*.wmv" << "*.avi" << "*.mp4" << "*.mkv" << "*.flv"  << "*.webm" << "*.m4v" << "*.vob" << "*.ogv" << "*.mov";
+    fileType_Text << "*.txt" << "*.pdf" << "*.odt" << "*.idx" << "*.html" << "*.rtf" << "*.doc" << "*.docx" << "*.epub";
 
-/*
-    //Prepare inputs
-    //Define the extensions of files to be included
-    QStringList fileExtensions;
     if      ( fileType == "Image")
         fileExtensions = fileType_Image;
     else if ( fileType == "Audio")
@@ -851,8 +856,20 @@ void Catalog::catalogDirectory()
         fileExtensions = fileType_Video;
     else if ( fileType == "Text")
         fileExtensions = fileType_Text;
+}
 
+void Catalog::catalogDirectory(QString databaseMode)
+{//Catalog the files of a directory and update catalog attributes
 
+    //DEV: 1 QString excludeFilePath ="DEV: TEMP no folder"; //DEV: temp
+    //DEV: 2 Media File Metadata
+    //DEV: 3 //Populate model with lines for csv files  if(databaseMode=="Memory"){
+
+    //Prepare inputs
+    //Define the extensions of files to be included
+    //getFileTypes();
+
+    QString excludeFilePath ="DEV: TEMP no folder"; //DEV: temp
     // Get directories to exclude
     QStringList excludedFolders;
     QFile excludeFile(excludeFilePath);
@@ -873,6 +890,7 @@ void Catalog::catalogDirectory()
     //Prepare database and queries
 
     //Remove any former files from db for older catalog with same name
+    //DEV: replace by ID
     QSqlQuery deleteFileQuery;
     QString deleteFileQuerySQL = QLatin1String(R"(
                                             DELETE FROM file
@@ -981,11 +999,12 @@ void Catalog::catalogDirectory()
                     insertFileQuery.exec();
 
                     //Media File Metadata
-                    if(developmentMode==true){
-                        if(includeMetadata == true){
-                            setMediaFile(entryPath);
-                        }
-                    }
+                    //DEV: includeMetadata
+                    // if(developmentMode==true){
+                    //     if(includeMetadata == true){
+                    //         setMediaFile(entryPath);
+                    //     }
+                    // }
                 }
             }
         }
@@ -1026,11 +1045,12 @@ void Catalog::catalogDirectory()
                     insertFileQuery.exec();
 
                     //Media File Metadata
-                    if(developmentMode==true){
-                        if(includeMetadata == true){
-                            setMediaFile(entryPath);
-                        }
-                    }
+                    //DEV: includeMetadata
+                    // if(developmentMode==true){
+                    //     if(includeMetadata == true){
+                    //         setMediaFile(entryPath);
+                    //     }
+                    // }
                 }
             }
         }
@@ -1053,23 +1073,23 @@ void Catalog::catalogDirectory()
         //Save data to file
         QStringList fileList;
 
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
+        QSqlQuery queryFileList;
+        QString queryFileListSQL = QLatin1String(R"(
                         SELECT file_full_path, file_size, file_date_updated
                         FROM file
                         WHERE file_catalog=:file_catalog
                     )");
-        query.prepare(querySQL);
-        query.bindValue(":file_catalog",name);
-        query.exec();
+        queryFileList.prepare(queryFileListSQL);
+        queryFileList.bindValue(":file_catalog",name);
+        queryFileList.exec();
 
-        while(query.next()){
-            fileList << query.value(0).toString() + "\t" + query.value(1).toString() + "\t" + query.value(2).toString();
+        while(queryFileList.next()){
+            fileList << queryFileList.value(0).toString() + "\t" + queryFileList.value(1).toString() + "\t" + queryFileList.value(2).toString();
         };
 
         //Prepare the catalog file data, adding first the catalog metadata at the beginning
         fileList.prepend("<catalogID>"              + QString::number(ID));
-        fileList.prepend("<catalogAppVersion>"      + currentVersion);
+        fileList.prepend("<catalogAppVersion>"      + appVersion);
         fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
@@ -1086,6 +1106,7 @@ void Catalog::catalogDirectory()
     }
 
     //Update catalog in db
+
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
@@ -1099,15 +1120,15 @@ void Catalog::catalogDirectory()
     query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.bindValue(":catalog_file_count", fileCount);
     query.bindValue(":catalog_total_file_size", totalFileSize);
-    query.bindValue(":catalog_app_version", currentVersion);
+    query.bindValue(":catalog_app_version", appVersion);
     query.bindValue(":catalog_name", name);
     query.exec();
 
-    loadCatalogsTableToModel();
+    //loadCatalogsTableToModel();
 
     //Update catalog date loaded and updated
     QDateTime emptyDateTime = *new QDateTime;
-    catalog->setDateUpdated(emptyDateTime);
-    catalog->setDateLoaded(emptyDateTime);
-*/
+    setDateUpdated(emptyDateTime);
+    setDateLoaded(emptyDateTime);
 }
+

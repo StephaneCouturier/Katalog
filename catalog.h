@@ -40,6 +40,8 @@
 #include <QRegularExpression>
 #include <QMessageBox>
 #include <QCoreApplication>
+#include <QDirIterator>
+#include <QStringListModel>
 
 class Catalog : public QAbstractTableModel
 {
@@ -48,21 +50,25 @@ class Catalog : public QAbstractTableModel
 public:
     Catalog(QObject *parent = nullptr);
 
-    int ID;
-    QString name;
-    QString filePath;
-    QDateTime dateUpdated;
-    QString sourcePath;
-    qint64  fileCount = 0;
-    qint64  totalFileSize = 0;
-    bool    includeHidden;
-    QString fileType;
-    QString storageName;
-    bool    includeSymblinks;
-    bool    isFullDevice;
-    QDateTime dateLoaded;
-    bool    includeMetadata;
-    QString appVersion;
+    //Attributes
+    //Saved
+        int ID;
+        QString name;
+        QString filePath;
+        QDateTime dateUpdated;
+        QString sourcePath;
+        qint64  fileCount = 0;
+        qint64  totalFileSize = 0;
+        bool    includeHidden;
+        QString fileType;
+        QString storageName;
+        bool    includeSymblinks;
+        bool    isFullDevice;
+        QDateTime dateLoaded;
+        bool    includeMetadata;
+        QString appVersion;
+
+    QStringListModel *fileListModel;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -80,9 +86,8 @@ public:
     void insertCatalog();
     void deleteCatalog();
     void saveCatalog();
-    QList<qint64> updateCatalogFiles();
-    void catalogDirectory();
-
+    QList<qint64> updateCatalogFiles(QString databaseMode);
+    void catalogDirectory(QString databaseMode);
 
     void loadCatalog();//from database
     void renameCatalog(QString newCatalogName);
@@ -101,11 +106,16 @@ public:
                            const QList<QString> &fileCatalogs);
 
 private:
+    QStringList fileExtensions;
+
     QList<QString> fileNames;
     QList<qint64>  fileSizes;
     QList<QString> filePaths;
     QList<QString> fileDateTimes;
     QList<QString> fileCatalogs;
+
+    void getFileTypes();
+
 };
 
 #endif // CATALOG_H

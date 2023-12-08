@@ -3477,7 +3477,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <locale language="English" country="UnitedStates"/>
                     </property>
                     <property name="text">
-                     <string>Catalogs with results</string>
+                     <string/>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -3782,7 +3782,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QListView" name="Search_listView_CatalogsFound">
+                     <widget class="QTreeView" name="Search_treeView_CatalogsFound">
                       <property name="minimumSize">
                        <size>
                         <width>150</width>
@@ -7317,6 +7317,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item>
                    <property name="text">
+                    <string>collection snapshots</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
                     <string>catalog updates</string>
                    </property>
                   </item>
@@ -7327,7 +7332,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </item>
                   <item>
                    <property name="text">
-                    <string>collection snapshots</string>
+                    <string>virtual device updates</string>
                    </property>
                   </item>
                  </widget>

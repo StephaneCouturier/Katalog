@@ -103,24 +103,33 @@ void Device::loadSubDeviceList()
     QString querySQL;
 
     //Prepare Query
-    querySQL  = QLatin1String(R"(
-                                        SELECT
-                                            device_id
-                                        FROM device
-                                        WHERE device_id IN (
-                                        WITH RECURSIVE hierarchy AS (
-                                             SELECT device_id, device_parent_id, device_name
-                                             FROM device
-                                             WHERE device_id = :device_id
-                                             UNION ALL
-                                             SELECT t.device_id, t.device_parent_id, t.device_name
-                                             FROM device t
-                                             JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                        )
+    if(type !="All"){
+        querySQL  = QLatin1String(R"(
+                                    SELECT
+                                        device_id, device_type
+                                    FROM device
+                                    WHERE device_id IN (
+                                    WITH RECURSIVE hierarchy AS (
                                         SELECT device_id
-                                        FROM hierarchy )
-                                        AND device_id != :device_id
+                                        FROM device
+                                        WHERE device_id = :device_id
+                                        UNION ALL
+                                        SELECT t.device_id
+                                        FROM device t
+                                        JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                    )
+                                    SELECT device_id
+                                    FROM hierarchy )
+                                    AND device_id != :device_id
                             )");
+    }
+    else{
+        querySQL  = QLatin1String(R"(
+                                    SELECT
+                                        device_id, device_type
+                                    FROM device
+                            )");
+    }
 
     //Execute query
     query.prepare(querySQL);
@@ -129,8 +138,10 @@ void Device::loadSubDeviceList()
     query.exec();
 
     deviceIDList.clear();
+    deviceListTable.clear();
     while (query.next()) {
         deviceIDList<<query.value(0).toInt();
+        deviceListTable.append({query.value(0).toInt(),query.value(1).toString()});
     }
 }
 
@@ -320,7 +331,7 @@ void Device::saveDevice()
     query.exec();
 }
 
-QList<qint64> Device::updateDevice(QString requestSource)
+QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
 {//Update device and related children storage or catalog information where relevant
 
     //Prepare
@@ -331,7 +342,7 @@ QList<qint64> Device::updateDevice(QString requestSource)
     //Update device and children depending on type
     if (type=="Catalog"){
         //Update this device/catalog (files) and its storage (space)
-        /*QList<qint64> catalogUpdates =*/ catalog->updateCatalogFiles();
+        /*QList<qint64> catalogUpdates =*/ catalog->updateCatalogFiles(databaseMode);
 
     }
     else if (type=="Storage"){
@@ -344,7 +355,7 @@ QList<qint64> Device::updateDevice(QString requestSource)
             Device *updatedDevice = new Device;
             updatedDevice->ID = ID;
             updatedDevice->loadDevice();
-            /*QList<qint64> catalogUpdates = */updatedDevice->catalog->updateCatalogFiles();
+            /*QList<qint64> catalogUpdates = */updatedDevice->catalog->updateCatalogFiles(databaseMode);
         }
         /*QList<qint64> storageUpdates = */ //catalog->updateCatalogFiles();
 

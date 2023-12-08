@@ -792,6 +792,9 @@ void MainWindow::loadDeviceFileToTable()
 //--------------------------------------------------------------------------
 void MainWindow::loadDeviceTableToTreeModel()
 {
+    //Refresh active state
+    updateAllDeviceActive();
+
     //Retrieve device hierarchy
     QSqlQuery query;
     QString querySQL;
