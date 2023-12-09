@@ -89,6 +89,9 @@ void Device::loadDevice(){
         path = catalog->sourcePath;
     }
 
+    //Load sub-device list
+    loadSubDeviceList();
+
     //Update states
     verifyHasSubDevice();
     verifyHasCatalog();

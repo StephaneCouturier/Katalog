@@ -48,6 +48,7 @@ void Storage::generateID()
     ID = maxID + 1;
     name = name + "_"+QString::number(ID);
 }
+
 void Storage::insertStorage()
 {
     //Insert new device with default values

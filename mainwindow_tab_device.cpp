@@ -184,7 +184,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
     QModelIndex index=ui->Devices_treeView_DeviceList->currentIndex();
     tempDevice->ID   = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     tempDevice->loadDevice();
-    tempDevice->loadSubDeviceList();
 
     Device *tempParentDevice = new Device();
     tempParentDevice->ID = tempDevice->parentID;
@@ -1458,7 +1457,6 @@ void MainWindow::saveDevice()
     //Also change the group_id of sub-devices
     Device *loopDevice = new Device();
     if(tempDevice->groupID != newGroupID){
-        tempDevice->loadSubDeviceList();
         for(int i=0; i<tempDevice->deviceIDList.count(); i++) {
             loopDevice->ID = tempDevice->deviceIDList[i];
             loopDevice->loadDevice();

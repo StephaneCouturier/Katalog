@@ -798,8 +798,8 @@ bool Catalog::catalogNameExists()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
-                                    FROM catalog
-                                    WHERE catalog_name = :catalog_name
+                                    FROM   catalog
+                                    WHERE  catalog_name = :catalog_name
                                 )");
 
     query.prepare(querySQL);

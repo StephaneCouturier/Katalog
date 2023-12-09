@@ -183,6 +183,7 @@
             newDevice->generateDeviceID();
             newDevice->type = "Catalog";
             newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
+            newDevice->catalog->name = ui->Create_lineEdit_NewCatalogName->text();
 
             //Check if the catalog name (so the csv file name) already exists
             if (newDevice->catalog->catalogNameExists()){

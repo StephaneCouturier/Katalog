@@ -688,55 +688,30 @@
             //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
                 //Process the SEARCH in CATALOGS
                     if (newSearch->searchInCatalogsChecked == true){
-                        //List of catalogs to search from: catalogSelectedList
-                            //Search every catalog if "All" is selected
-                            if ( selectedDevice->type != "Catalog"){
-                                //For differences, only process with the selected catalogs
-                                if (ui->Search_checkBox_Differences->isChecked() == true){
-                                    QStringList differenceCatalogs;
-                                    differenceCatalogs << newSearch->differencesCatalog1;
-                                    differenceCatalogs << newSearch->differencesCatalog2;
-                                    foreach(QString sourceCatalog,differenceCatalogs)
-                                        {
-                                            searchFilesInCatalog(selectedDevice);
-                                        }
-                                }
-                                //Otherwise process all selected globally
-                                else{
-                                    selectedDevice->loadSubDeviceList();
-                                    foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
-                                        if(row.type == "Catalog"){
-                                            Device *device = new Device;
-                                            device->ID = row.ID;
-                                            device->loadDevice();
-                                            searchFilesInCatalog(device);
-                                        }
-                                    }
+
+                        //For differences, only process the 2 selected catalogs
+                        if (ui->Search_checkBox_Differences->isChecked() == true){
+
+                            Device *diffDevice = new Device;
+                            diffDevice->ID = ui->Search_comboBox_DifferencesCatalog1->currentData().toInt();
+                            diffDevice->loadDevice();
+                            searchFilesInCatalog(diffDevice);
+
+                            diffDevice->ID = ui->Search_comboBox_DifferencesCatalog2->currentData().toInt();
+                            diffDevice->loadDevice();
+                            searchFilesInCatalog(diffDevice);
+                        }
+                        //Otherwise search in the list of catalogs in the selectedDevice
+                        else{
+                            foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
+                                if(row.type == "Catalog"){
+                                    Device *device = new Device;
+                                    device->ID = row.ID;
+                                    device->loadDevice();
+                                    searchFilesInCatalog(device);
                                 }
                             }
-
-                            //Otherwise just search files in the selected catalog
-                            else{
-                                searchFilesInCatalog(selectedDevice);
-
-                                //but also load the second catalog for Differences
-                                if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
-                                    and (   newSearch->differencesOnName == true
-                                         or newSearch->differencesOnSize == true
-                                         or newSearch->differencesOnDate == true)){
-
-                                    Device *diffDevice1 = new Device;
-                                    diffDevice1->ID = 0; //DEV: wont work //ui->Search_comboBox_DifferencesCatalog1->currentText()
-                                    Device *diffDevice2 = new Device;
-                                    diffDevice2->ID = 0; //DEV: wont work //ui->Search_comboBox_DifferencesCatalog2->currentText()
-
-                                        if(ui->Search_comboBox_DifferencesCatalog1->currentText()!= selectedDevice->catalog->name)
-                                            searchFilesInCatalog(diffDevice1);
-
-                                        if(ui->Search_comboBox_DifferencesCatalog2->currentText()!= selectedDevice->catalog->name)
-                                            searchFilesInCatalog(diffDevice2);
-                                }
-                            }
+                        }
                     }
                 //Process the SEARCH in SELECTED DIRECTORY
                     else if (newSearch->searchInConnectedChecked == true){
@@ -752,22 +727,21 @@
                     //Keep the catalog file name only
                     foreach(QString item, newSearch->deviceFoundIDList){
                             int index = newSearch->deviceFoundIDList.indexOf(item);
-                            //QDir dir(item);
                             QFileInfo fileInfo(item);
                             newSearch->deviceFoundIDList[index] = fileInfo.baseName();
                     }
 
-                    //Create model and load to the views
+                    //Create model and load to the view
                     newSearch->deviceFoundModel = new QStandardItemModel;
                     newSearch->deviceFoundModel->setHorizontalHeaderLabels({ "Catalog with results", "ID" });
 
-                    Device *device = new Device;
+                    Device loopDevice;
                     for (const QString &ID : newSearch->deviceFoundIDList) {
-                        device->ID = ID.toInt();
-                        device->loadDevice();
+                        loopDevice.ID = ID.toInt();
+                        loopDevice.loadDevice();
                         QList<QStandardItem *> items;
-                        items << new QStandardItem(device->name);
-                        items << new QStandardItem(QString::number(device->ID));
+                        items << new QStandardItem(loopDevice.name);
+                        items << new QStandardItem(QString::number(loopDevice.ID));
                         newSearch->deviceFoundModel->appendRow(items);
                     }
 
@@ -776,12 +750,12 @@
 
                 //Process search results: list of files
 
-                    // Prepare query model
+                    //Prepare query model
                     QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
                     // Prepare model to display
                     FilesView *fileViewModel = new FilesView(this);
 
-                    // Populate model with folders only if this option is selected
+                    //Populate model with folders only if this option is selected
                     if ( newSearch->searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
                     {
                         newSearch->sFilePaths.removeDuplicates();
@@ -824,7 +798,7 @@
                         ui->Search_label_FoundTitle->setText(tr("Folders found"));
                     }
 
-                    // Populate model with files if the folder option is not selected
+                    //Populate model with files if the folder option is not selected
                     else
                     {
                         // Populate model with data
@@ -1871,11 +1845,17 @@
         void MainWindow::refreshDifferencesCatalogSelection(){
             ui->Search_comboBox_DifferencesCatalog1->clear();
             ui->Search_comboBox_DifferencesCatalog2->clear();
-            foreach(QString sourceCatalog,catalogSelectedList)
-                    {
-                        ui->Search_comboBox_DifferencesCatalog1->addItem(sourceCatalog);
-                        ui->Search_comboBox_DifferencesCatalog2->addItem(sourceCatalog);
-                    }
+
+            Device loopDevice;// = new Device;
+            foreach(int ID, selectedDevice->deviceIDList)
+            {
+                loopDevice.ID = ID;
+                loopDevice.loadDevice();
+                if(loopDevice.type == "Catalog"){
+                    ui->Search_comboBox_DifferencesCatalog1->addItem(loopDevice.name,loopDevice.ID);
+                    ui->Search_comboBox_DifferencesCatalog2->addItem(loopDevice.name,loopDevice.ID);
+                }
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::batchProcessSearchResults()

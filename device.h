@@ -78,7 +78,7 @@ public:
     //Methods
         void loadDevice();
         void loadDeviceCatalog(); //temp dev
-        void loadSubDeviceList();
+
         void verifyHasSubDevice();
         void verifyHasCatalog();
         void updateActive();
@@ -95,6 +95,11 @@ public:
 
         void saveStatistics(QDateTime dateTime);
         void saveStatisticsToFile(QString filePath, QDateTime dateTime);
+
+private:
+        void loadSubDeviceList();
+
+
 };
 
 #endif // DEVICE_H
