@@ -120,14 +120,14 @@
                     ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_widget_SearchCriteria->setHidden(true);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchCriteria", "go-down");
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-up"));
                     ui->Search_widget_SearchCriteria->setHidden(false);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchCriteria", "go-up");
             }
         }
@@ -141,7 +141,7 @@
                     ui->Search_widget_ResultsCatalogs->setHidden(true);
                     ui->Search_label_CatalogsWithResults->setHidden(true);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideCatalogResults", "go-next");
             }
             else{ //Show
@@ -150,7 +150,7 @@
                     ui->Search_widget_ResultsCatalogs->setHidden(false);
                     ui->Search_label_CatalogsWithResults->setHidden(false);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideCatalogResults", "go-previous");
             }
 
@@ -164,14 +164,14 @@
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-up"));
                     ui->Search_treeView_History->setHidden(true);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-up");
             }
             else{ //Show
                     ui->Search_pushButton_ShowHideSearchHistory->setIcon(QIcon::fromTheme("go-down"));
                     ui->Search_treeView_History->setHidden(false);
 
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
                     settings.setValue("Settings/ShowHideSearchHistory", "go-down");
             }
         }
@@ -341,7 +341,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_SearchTreeViewFilesFoundHeaderSortOrderChanged(){
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             QHeaderView *searchTreeHeader = ui->Search_treeView_FilesFound->header();
 
             lastSearchSortSection = searchTreeHeader->sortIndicatorSection();
@@ -353,7 +353,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_SearchTreeViewHistoryHeaderSortOrderChanged(){
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             QHeaderView *searchHistoryTreeHeader = ui->Search_treeView_History->header();
 
             lastSearchHistorySortSection = searchHistoryTreeHeader->sortIndicatorSection();
@@ -365,7 +365,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_splitter_Results_splitterMoved()
         {
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Search/ResultsSplitterWidget1Size", ui->Search_widget_ResultsCatalogs->size());
             settings.setValue("Search/ResultsSplitterWidget2Size", ui->Search_widget_ResultsFiles->size());
         }
@@ -541,7 +541,7 @@
                 if (file.exists()) {
                     //Open a dialog for the user to select the target folder
                     QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                    collectionFolder,
+                                                                    collection->collectionFolder,
                                                                     QFileDialog::ShowDirsOnly
                                                                     | QFileDialog::DontResolveSymlinks);
 
@@ -1150,7 +1150,7 @@
 
             //Save the search criteria to the search history
             insertSearchHistoryToTable();
-            if(databaseMode=="Memory")
+            if(collection->databaseMode=="Memory")
                 saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
 
@@ -2009,7 +2009,7 @@
                 QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
                 QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
                 QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
-                fullFileName = collectionFolder+"/"+fileNameWithExtension;
+                fullFileName = collection->collectionFolder+"/"+fileNameWithExtension;
                 QFile exportFile(fullFileName);
 
                 //Export search results to file
@@ -2172,7 +2172,7 @@
         void MainWindow::saveSearchHistoryTableToFile()
         {
             //Prepare export
-            QFile searchFile(searchHistoryFilePath);
+            QFile searchFile(collection->searchHistoryFilePath);
             if(searchFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
                 QTextStream out(&searchFile);
@@ -2241,10 +2241,10 @@
         //--------------------------------------------------------------------------
         void MainWindow::loadSearchHistoryFileToTable()
         {
-            if(databaseMode=="Memory"){
+            if(collection->databaseMode=="Memory"){
 
                 //Define storage file and prepare stream
-                QFile searchFile(searchHistoryFilePath);
+                QFile searchFile(collection->searchHistoryFilePath);
                 QTextStream textStream(&searchFile);
 
                 QSqlQuery queryDelete;

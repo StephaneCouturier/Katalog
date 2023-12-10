@@ -59,17 +59,11 @@ public:
         //Contents
         Storage *storage = new Storage;
         Catalog *catalog = new Catalog;
+
         QList<int> deviceIDList;
-
-
-        //Define a structure to represent a row with multiple columns
-        struct deviceListRow {
-            int ID;
-            QString type;
-        };
-
-        // Define a QVector to store the rows
+        struct deviceListRow { int ID; QString type; };
         QVector<deviceListRow> deviceListTable;
+
         //States
         bool hasSubDevice;
         bool hasCatalog;
@@ -77,7 +71,6 @@ public:
 
     //Methods
         void loadDevice();
-        void loadDeviceCatalog(); //temp dev
 
         void verifyHasSubDevice();
         void verifyHasCatalog();

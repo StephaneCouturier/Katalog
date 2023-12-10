@@ -40,7 +40,7 @@
     //Catalog UI display
         void MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged(){
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
             QHeaderView *catalogsTreeHeader = ui->Catalogs_treeView_CatalogList->header();
 
@@ -101,7 +101,7 @@
             //Update the displayed name
             ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
             filterFromSelectedDevice();
@@ -295,7 +295,7 @@
             selectedDevice->ID = tempDevice->ID;
             selectedDevice->loadDevice();
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
             filterFromSelectedDevice();
@@ -325,7 +325,7 @@
                 selectedDevice->catalog->deleteCatalog();
 
 
-                if(databaseMode=="Memory"){
+                if(collection->databaseMode=="Memory"){
                     //DEV: move to object
 
                     //move file to trash
@@ -407,7 +407,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogFilesToTable()
     {
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
             //Clear catalog table
             QSqlQuery queryDelete;
             queryDelete.prepare( "DELETE FROM catalog" );
@@ -417,7 +417,7 @@
             QStringList catalogFileExtensions;
             catalogFileExtensions << "*.idx";
 
-            QDirIterator iterator(collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
+            QDirIterator iterator(collection->collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
             while (iterator.hasNext()){
 
                 // Iterate to the next file
@@ -755,7 +755,7 @@
         parentStorageDevice->ID = device->parentID;
         parentStorageDevice->loadDevice();
 
-            //Update storage
+        //Update storage
         if ( parentStorageDevice->path !=""){
             tempDevice->storage->ID = parentStorageDevice->externalID;
                 tempDevice->storage->loadStorage();
@@ -794,7 +794,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::updateCatalogFileList(Device *device)
     {
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
            //Check if the update can be done, inform the user otherwise.
            //Deal with old versions, where necessary info may have not have been available
             if(device->catalog->filePath == "not recorded" or device->name == "not recorded" or device->catalog->sourcePath == "not recorded"){
@@ -844,9 +844,9 @@
             }
 
             //catalog the directory (iterator)
-            device->catalog->catalogDirectory(databaseMode);
+            device->catalog->catalogDirectory(collection->databaseMode);
 
-            if(databaseMode=="Memory"){
+            if(collection->databaseMode=="Memory"){
                 //save it to csv files
                 saveCatalogToNewFile(device);
                 saveFoldersToNewFile(device->name);
@@ -899,10 +899,10 @@
             //Save values
             QDateTime dateTime = device->catalog->dateUpdated;
             device->saveStatistics(dateTime);
-            device->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
+            device->saveStatisticsToFile(collection->statisticsCatalogFilePath, dateTime);
 
             selectedDevice->saveStatistics(dateTime);
-            selectedDevice->saveStatisticsToFile(statisticsDeviceFilePath, dateTime);
+            selectedDevice->saveStatisticsToFile(collection->statisticsDeviceFilePath, dateTime);
         }
 
         //Refresh data to UI
@@ -924,7 +924,7 @@
         queryUpdateDevice.bindValue(":device_external_id", device->name);
         queryUpdateDevice.exec();
 
-        saveDeviceTableToFile(deviceFilePath);
+        collection->saveDeviceTableToFile();
 
     }
     //--------------------------------------------------------------------------
@@ -1051,7 +1051,7 @@
                     newCatalogName.replace("\\","_");
 
                 //Prepare the catalog file path
-                    QFile fileOut( collectionFolder +"/"+ newCatalogName + ".idx" );
+                    QFile fileOut( collection->collectionFolder +"/"+ newCatalogName + ".idx" );
 
                 //Get statistics of the files for the list
                     QString listCatalogSQL = QLatin1String(R"(
@@ -1217,7 +1217,7 @@
             loadCatalogsTableToModel();
 
         //Write changes to catalog file (update headers only)
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
             QFile catalogFile(catalog->filePath);
             if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
             {
@@ -1304,7 +1304,7 @@
 
             catalog->renameCatalog(newCatalogName);
 
-            if(databaseMode=="Memory"){
+            if(collection->databaseMode=="Memory"){
                 catalog->renameCatalogFile(newCatalogName);
                 loadCatalogFilesToTable();
                 loadCatalogsTableToModel();
@@ -1315,8 +1315,8 @@
                                                     , QMessageBox::Yes | QMessageBox::No);
 
             if (renameChoice == QMessageBox::Yes){
-                if(databaseMode=="Memory"){
-                    QFile f(statisticsCatalogFilePath);
+                if(collection->databaseMode=="Memory"){
+                    QFile f(collection->statisticsCatalogFilePath);
                     if(f.open(QIODevice::ReadWrite | QIODevice::Text))
                     {
                         QString s;
@@ -1336,7 +1336,7 @@
                         f.close();
                     }
                 }
-                else if(databaseMode=="File"){
+                else if(collection->databaseMode=="File"){
                     QSqlQuery query;
                     QString querySQL = QLatin1String(R"(
                                     UPDATE statistics
@@ -1373,7 +1373,7 @@
             }
 
         //Refresh
-            if(databaseMode=="Memory")
+            if(collection->databaseMode=="Memory")
                 loadCatalogFilesToTable();
 
             loadCatalogsTableToModel();
@@ -1507,19 +1507,47 @@
                 tempDevice->catalog->loadCatalog();
                 tempDevice->catalog->saveStatistics(dateTime);
 
-                if(databaseMode=="Memory")
+                if(collection->databaseMode=="Memory")
                 {
-                    tempDevice->catalog->saveStatisticsToFile(statisticsCatalogFilePath, dateTime);
+                    tempDevice->catalog->saveStatisticsToFile(collection->statisticsCatalogFilePath, dateTime);
                 }
             }
 
             //Refresh
-            if(databaseMode=="Memory"){
-                loadStatisticsCatalogFileToTable();
-                loadStatisticsStorageFileToTable();
+            if(collection->databaseMode=="Memory"){
+                collection->loadStatisticsCatalogFileToTable();
+                collection->loadStatisticsStorageFileToTable();
             }
 
             loadStatisticsChart();
 
     }
     //--------------------------------------------------------------------------
+    void MainWindow::reportAllUpdates(QList<qint64> list){
+
+        // foreach(qint64 value, list){
+        //     qDebug()<<value;
+        // }
+
+        //put request source in list? hide "added" when source=create
+
+        QMessageBox msgBox;
+        QString message;
+
+        if (requestSource=="create")
+            message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(tempDevice->name);
+        else
+            message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(tempDevice->name);
+
+        message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
+                           "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
+                           ).arg(QString::number(list[0]),
+                            QString::number(list[1]),
+                            QLocale().formattedDataSize(list[2]),
+                            QLocale().formattedDataSize(list[3]));
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(message);
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+
+    }

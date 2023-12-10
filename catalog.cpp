@@ -366,6 +366,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
         // globalUpdateDeltaFiles += deltaFileCount;
         // globalUpdateTotalSize  += catalog->totalFileSize;
         // globalUpdateDeltaSize  += deltaTotalFileSize;
+
     }
     else {
         QMessageBox msgBox;
@@ -863,7 +864,6 @@ void Catalog::catalogDirectory(QString databaseMode)
 
     //DEV: 1 QString excludeFilePath ="DEV: TEMP no folder"; //DEV: temp
     //DEV: 2 Media File Metadata
-    //DEV: 3 //Populate model with lines for csv files  if(databaseMode=="Memory"){
 
     //Prepare inputs
     //Define the extensions of files to be included
@@ -1106,7 +1106,6 @@ void Catalog::catalogDirectory(QString databaseMode)
     }
 
     //Update catalog in db
-
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
@@ -1123,8 +1122,6 @@ void Catalog::catalogDirectory(QString databaseMode)
     query.bindValue(":catalog_app_version", appVersion);
     query.bindValue(":catalog_name", name);
     query.exec();
-
-    //loadCatalogsTableToModel();
 
     //Update catalog date loaded and updated
     QDateTime emptyDateTime = *new QDateTime;

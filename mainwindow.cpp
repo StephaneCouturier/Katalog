@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-12-03";
+        releaseDate     = "2023-12-10";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -53,13 +53,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Define Setting file path and name
             //For portable mode, check if there is a settings file located with the executable
-            settingsFilePath = applicationDirPath + "/katalog_settings.ini";
-            QFile settingsFile(settingsFilePath);
+            collection->settingsFilePath = applicationDirPath + "/katalog_settings.ini";
+            QFile settingsFile(collection->settingsFilePath);
             if(!settingsFile.exists()) {
                 //otherwise fall back to default katalog_settings path
-                settingsFilePath = homePath + "/.config/katalog_settings.ini";
+                collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
             }
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
         //Check for new version
             checkVersionChoice = settings.value("Settings/CheckVersion", true).toBool();
@@ -78,15 +78,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             }
 
         //Settings screen
-            ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(1, "File", Qt::UserRole);
             ui->Settings_comboBox_DatabaseMode->setItemData(2, "Hosted", Qt::UserRole);
-            ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(databaseHostName);
-            ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->setText(databaseName);
-            ui->Settings_lineEdit_DataMode_Hosted_Port->setText(QVariant(databasePort).toString());
-            ui->Settings_lineEdit_DataMode_Hosted_UserName->setText(databaseUserName);
-            ui->Settings_lineEdit_DataMode_Hosted_Password->setText(databasePassword);
+            ui->Settings_lineEdit_DataMode_Hosted_HostName->setText(collection->databaseHostName);
+            ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->setText(collection->databaseName);
+            ui->Settings_lineEdit_DataMode_Hosted_Port->setText(QVariant(collection->databasePort).toString());
+            ui->Settings_lineEdit_DataMode_Hosted_UserName->setText(collection->databaseUserName);
+            ui->Settings_lineEdit_DataMode_Hosted_Password->setText(collection->databasePassword);
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
@@ -104,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
 
-            if( databaseMode != "Memory"){
+            if( collection->databaseMode != "Memory"){
                 //Hide file edtion items
                 ui->Devices_pushButton_Edit->hide();
                 ui->Storage_pushButton_Edit->hide();
@@ -178,7 +178,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Setup tab: Settings
             //Load path of last collection used
-            ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
 
             //Set file types
             setFileTypes();

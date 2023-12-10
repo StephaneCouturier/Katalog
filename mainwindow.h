@@ -78,6 +78,7 @@
 #include <QtCharts/QValueAxis>
 
 //Katalog object classes
+#include "collection.h"
 #include "catalog.h"
 #include "search.h"
 #include "storage.h"
@@ -114,10 +115,8 @@ class MainWindow : public QMainWindow
             void closeEvent (QCloseEvent *event);
 
             //Application settings
-            QString settingsFilePath;
             void loadSettings();
             void preloadCatalogs();
-            void generateCollectionFilesPaths();
 
             //Parameters
             int selectedTab;
@@ -136,22 +135,16 @@ class MainWindow : public QMainWindow
 
             //Database
             QSqlError initializeDatabase();
-            QString databaseMode;
             void    startDatabase();
-            QString databaseFilePath;
             void    selectDatabaseFilePath();
             void    selectNewDatabaseFolderPath();
-            QString databaseHostName;
-            QString databaseName;
-            int     databasePort;
-            QString databaseUserName;
-            QString databasePassword;
             void    clearDatabaseData();
 
             //Objects
-            Device *selectedDevice   = new Device(); //selected    device used for individual device operations
-            Device *tempDevice       = new Device(); //temporary   device used for operations on a list of devices
-            Device *catalogDevice    = new Device(); //selected catalog/device from Catalog screen
+            Collection *collection = new Collection();
+            Device *selectedDevice = new Device(); //selected    device used for individual device operations
+            Device *tempDevice     = new Device(); //temporary   device used for operations on a list of devices
+            Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
@@ -182,7 +175,6 @@ class MainWindow : public QMainWindow
             void saveSearchHistoryTableToFile();
             void loadSearchHistoryFileToTable();
 
-            QString searchHistoryFilePath;
             int lastSearchSortSection;
             int lastSearchSortOrder;
 
@@ -200,7 +192,7 @@ class MainWindow : public QMainWindow
             QString deleteFile(QString fileFullPath);
 
         //TAB: Catalogs
-            QString collectionFolder;
+
             QStringListModel catalogListModel;
             QStringList catalogFileList;
             QStringList catalogSelectedList;
@@ -229,6 +221,7 @@ class MainWindow : public QMainWindow
             qint64 globalUpdateDeltaFiles;
             qint64 globalUpdateTotalSize;
             qint64 globalUpdateDeltaSize;
+            void reportAllUpdates(QList<qint64> list);
 
         //TAB: Explore
             QString selectedDirectoryName;
@@ -247,7 +240,6 @@ class MainWindow : public QMainWindow
             QFileSystemModel *fileSystemModel;
 
             QStringList storageNameList;
-            QString excludeFilePath;
 
             QString fileMetadataString;
             //QMediaMetaData mediaMetadata;
@@ -256,15 +248,11 @@ class MainWindow : public QMainWindow
 
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
-            //void catalogDirectory(Device *device);
             void loadStorageList();
             void saveCatalogToNewFile(Device *device);
             void saveFoldersToNewFile(QString newCatalogName);
 
         //TAB: Storage
-            QString storageFilePath;
-            QString deviceFilePath;
-            QString deviceCatalogFilePath;
             int     selectedStorageIndexRow;
             QStringListModel *storageListModel;
             int lastStorageSortSection;
@@ -302,7 +290,6 @@ class MainWindow : public QMainWindow
             void assignStorageToDevice(int storageID,int deviceID);
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();
-            void saveDeviceTableToFile(QString filePath);
             void loadDeviceTableToTreeModel();
             void updateNumbers();
             void updateAllNumbers();
@@ -315,23 +302,14 @@ class MainWindow : public QMainWindow
             void updateAllDeviceActive();
 
         //TAB: Statistics
-            QString statisticsCatalogFileName;
-            QString statisticsCatalogFilePath;
-            QString statisticsStorageFileName;
-            QString statisticsStorageFilePath;
-            QString statisticsDeviceFileName;
-            QString statisticsDeviceFilePath;
             QStringList typeOfData;
             QString selectedTypeOfData;
             QStringListModel *listModel;
             QDateTime graphicStartDate;
             void loadStatisticsDataTypes();
-            void loadStatisticsCatalogFileToTable();
-            void loadStatisticsStorageFileToTable();
-            void loadStatisticsDeviceFileToTable();
             void loadStatisticsChart();
             void convertStatistics();
-            void saveStatiticsToFile();
+
 
         //TAB: Tags
             void reloadTagsData();
@@ -341,7 +319,6 @@ class MainWindow : public QMainWindow
             void loadFileSystemTags(QString newTagFolderPath);
             QStringListModel *tagListModel;
             QString selectedTagListName;
-            QString tagsFilePath;
             QString newTagFolderPath;
 
    private slots:

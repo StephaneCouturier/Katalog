@@ -69,9 +69,9 @@
     {//Edit Exclusion list
 
         //Verify if a folder exclusion list exists
-        QFile excludeFile(excludeFilePath);
+        QFile excludeFile(collection->excludeFilePath);
         if ( excludeFile.exists()){
-            QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(collection->excludeFilePath));
         }
         else{
             //if not, propose to create it
@@ -95,7 +95,7 @@
                           excludeFile.close();
 
                           //and open it for edition
-                          QDesktopServices::openUrl(QUrl::fromLocalFile(excludeFilePath));
+                          QDesktopServices::openUrl(QUrl::fromLocalFile(collection->excludeFilePath));
                     }
                 }
             }
@@ -206,7 +206,7 @@
 
             //Get inputs and set values of the newCatalog
             newDevice->catalog->name = newDevice->name; //DEV: REMOVE
-            newDevice->catalog->filePath = collectionFolder + "/" + newDevice->catalog->name + ".idx";
+            newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->catalog->name + ".idx";
             newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
             newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //DEV: REMOVE
@@ -231,7 +231,7 @@
             newDevice->catalog->insertCatalog();
 
             //Save data to file
-            saveDeviceTableToFile(deviceFilePath);
+            collection->saveDeviceTableToFile();
 
             //Reload
             loadDeviceTableToTreeModel();
@@ -293,7 +293,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogToNewFile(Device *device)
     {
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
 
             //Save a catalog to a new file
 
@@ -303,7 +303,7 @@
             QStringList filelist = device->catalog->fileListModel->stringList();
 
             // Stream the list to the file
-            QFile fileOut( collectionFolder +"/"+ device->name + ".idx" );
+            QFile fileOut( collection->collectionFolder +"/"+ device->name + ".idx" );
 
             // write data
 
@@ -341,7 +341,7 @@
         query.exec();
 
         // Stream the list to the file
-        QFile fileOut( collectionFolder +"/"+ newCatalogName + ".folders.idx" );
+        QFile fileOut( collection->collectionFolder +"/"+ newCatalogName + ".folders.idx" );
 
         // write data
 

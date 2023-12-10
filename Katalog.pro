@@ -62,6 +62,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     catalog.cpp \
     catalogsview.cpp \
+    collection.cpp \
     device.cpp \
     devicetreeview.cpp \
     directorytreeitem.cpp \
@@ -93,6 +94,7 @@ SOURCES += \
 HEADERS += \
     catalog.h \
     catalogsview.h \
+    collection.h \
     database.h \
     device.h \
     devicetreeview.h \

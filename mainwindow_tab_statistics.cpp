@@ -38,7 +38,7 @@
         QString selectedSource = ui->Statistics_comboBox_SelectSource->itemData(ui->Statistics_comboBox_SelectSource->currentIndex(),Qt::UserRole).toString();
 
         //Save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedSource", selectedSource);
 
         //Display selection combo boxes depending on data source
@@ -62,7 +62,7 @@
     void MainWindow::on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog)
     {
         //Save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedCatalog", selectedCatalog);
 
         //Load the graph
@@ -74,7 +74,7 @@
         QString typeOfData = ui->Statistics_comboBox_TypeOfData->itemData(ui->Statistics_comboBox_TypeOfData->currentIndex(),Qt::UserRole).toString();
 
         //Save selection in settings file;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/TypeOfData", typeOfData);
 
         //Load the graph
@@ -84,19 +84,19 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_EditCatalogStatisticsFile_clicked()
     {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(statisticsCatalogFilePath));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->statisticsCatalogFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_EditStorageStatisticsFile_clicked()
     {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(statisticsStorageFilePath));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->statisticsStorageFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_Reload_clicked()
     {
-        if(databaseMode=="Memory"){
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
+        if(collection->databaseMode=="Memory"){
+            collection->loadStatisticsCatalogFileToTable();
+            collection->loadStatisticsStorageFileToTable();
         }
         loadStatisticsChart();
     }
@@ -105,7 +105,7 @@
     {
         graphicStartDate = QDateTime::fromString(ui->Statistics_lineEdit_GraphicStartDate->text(),"yyyy-mm-dd");
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
         //Load the graph
@@ -117,7 +117,7 @@
         graphicStartDate = *new QDateTime;
         ui->Statistics_lineEdit_GraphicStartDate->setText("");
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", "");
 
         //Load the graph
@@ -132,7 +132,7 @@
         graphicStartDate.setTime(QTime::fromString("00:00:00"));
         ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.date().toString("yyyy-MM-dd"));
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
         //Load the graph
@@ -154,7 +154,7 @@
         //Populate the comboxbox for selected source
 
             //Get last value
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             QString lastSelectedSourceValue = settings.value("Statistics/SelectedSource").toString();
 
             //Generate list of values
@@ -180,261 +180,6 @@
             if (lastValue !=""){
                 ui->Statistics_comboBox_TypeOfData->setCurrentText(tr(lastValue.toUtf8()));
             }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::loadStatisticsCatalogFileToTable()
-    {// Load the contents of the statistics file into the database
-        if(databaseMode=="Memory"){
-
-            //clear database table
-                QSqlQuery deleteQuery;
-                deleteQuery.exec("DELETE FROM statistics_catalog");
-
-            // Get infos stored in the file
-                QFile statisticsCatalogFile(statisticsCatalogFilePath);
-                if(!statisticsCatalogFile.open(QIODevice::ReadOnly)) {
-                    return;
-                }
-
-                QTextStream textStream(&statisticsCatalogFile);
-
-            //prepare query to load file info
-                QSqlQuery insertQuery;
-                QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO statistics_catalog (
-                                                    date_time,
-                                                    catalog_name,
-                                                    catalog_file_count,
-                                                    catalog_total_file_size,
-                                                    record_type )
-                                    VALUES(
-                                                    :date_time,
-                                                    :catalog_name,
-                                                    :catalog_file_count,
-                                                    :catalog_total_file_size,
-                                                    :record_type )
-                                                )");
-                insertQuery.prepare(insertSQL);
-
-            //set temporary values
-                QString     line;
-                QStringList fieldList;
-
-                QString     dateTime;
-                QString     catalogName;
-                qint64      catalogFileCount;
-                qint64      catalogTotalFileSize;
-                QString     recordType;
-                QRegularExpression tagExp("\t");
-
-            //Skip titles line
-                line = textStream.readLine();
-
-            //load file to database
-            while (!textStream.atEnd())
-            {
-                line = textStream.readLine();
-                if (line.isNull())
-                    break;
-                else
-                    {
-                    //Split the string with \t (tabulation) into a list
-                        fieldList.clear();
-                        fieldList = line.split(tagExp);
-                        dateTime                = fieldList[0];
-                        catalogName             = fieldList[1];
-                        catalogFileCount        = fieldList[2].toLongLong();
-                        catalogTotalFileSize    = fieldList[3].toLongLong();
-                        recordType              = fieldList[4];
-
-                        //Append data to the database
-                        insertQuery.bindValue(":date_time", dateTime);
-                        insertQuery.bindValue(":catalog_name", catalogName);
-                        insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
-                        insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
-                        insertQuery.bindValue(":record_type", recordType);
-                        insertQuery.exec();
-                }
-            }
-        }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::loadStatisticsStorageFileToTable()
-    {// Load the contents of the storage statistics file into the database
-        if(databaseMode=="Memory"){
-            //clear database table
-            QSqlQuery deleteQuery;
-            deleteQuery.exec("DELETE FROM statistics_storage");
-
-            // Get infos stored in the file
-            QFile statisticsStorageFile(statisticsStorageFilePath);
-            if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
-                return;
-            }
-
-            QTextStream textStream(&statisticsStorageFile);
-
-            //prepare query to load file info
-            QSqlQuery insertQuery;
-            QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO statistics_storage (
-                                                    date_time,
-                                                    storage_id,
-                                                    storage_name,
-                                                    storage_free_space,
-                                                    storage_total_space,
-                                                    record_type )
-                                    VALUES(
-                                                    :date_time,
-                                                    :storage_id,
-                                                    :storage_name,
-                                                    :storage_free_space,
-                                                    :storage_total_space,
-                                                    :record_type )
-                                                )");
-            insertQuery.prepare(insertSQL);
-
-            //set temporary values
-            QString     line;
-            QStringList fieldList;
-            QString     dateTime;
-            int         storageID;
-            QString     storageName;
-            qint64      storageFreeSpace;
-            qint64      storageTotalSpace;
-            QString     recordType;
-            QRegularExpression tagExp("\t");
-
-            //Skip titles line
-            line = textStream.readLine();
-
-            //load file to database
-            while (!textStream.atEnd())
-            {
-                line = textStream.readLine();
-                if (line.isNull())
-                            break;
-                else
-                {
-                            //Split the string with \t (tabulation) into a list
-                            fieldList.clear();
-                            fieldList = line.split(tagExp);
-                            dateTime            = fieldList[0];
-                            storageName         = fieldList[1];
-                            storageFreeSpace    = fieldList[2].toLongLong();
-                            storageTotalSpace   = fieldList[3].toLongLong();
-                            storageID           = fieldList[4].toInt();
-                            recordType          = fieldList[5];
-
-                            //Append data to the database
-                            insertQuery.bindValue(":date_time", dateTime);
-                            insertQuery.bindValue(":storage_id", storageID);
-                            insertQuery.bindValue(":storage_name", storageName);
-                            insertQuery.bindValue(":storage_free_space", QString::number(storageFreeSpace));
-                            insertQuery.bindValue(":storage_total_space", QString::number(storageTotalSpace));
-                            insertQuery.bindValue(":record_type", recordType);
-                            insertQuery.exec();
-                }
-            }
-        }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::loadStatisticsDeviceFileToTable()
-    {// Load the contents of the storage statistics file into the database
-        if(databaseMode=="Memory"){
-            //clear database table
-            QSqlQuery deleteQuery;
-            deleteQuery.exec("DELETE FROM statistics_device");
-
-            // Get infos stored in the file
-            QFile statisticsDeviceFile(statisticsDeviceFilePath);
-            if(!statisticsDeviceFile.open(QIODevice::ReadOnly)) {
-                return;
-            }
-
-            QTextStream textStream(&statisticsDeviceFile);
-
-            //prepare query to load file info
-            QSqlQuery insertQuery;
-            QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO statistics_device (
-                                                date_time               ,
-                                                device_id               ,
-                                                device_name             ,
-                                                device_type             ,
-                                                device_file_count       ,
-                                                device_total_file_size  ,
-                                                device_free_space       ,
-                                                device_total_space      ,
-                                                record_type             )
-                                    VALUES(
-                                                :date_time              ,
-                                                :device_id              ,
-                                                :device_name            ,
-                                                :device_type            ,
-                                                :device_file_count      ,
-                                                :device_total_file_size ,
-                                                :device_free_space      ,
-                                                :device_total_space     ,
-                                                :record_type            )
-                                                )");
-            insertQuery.prepare(insertSQL);
-
-            //set temporary values
-            QString     line;
-            QStringList fieldList;
-            QString     dateTime;
-            int         deviceID;
-            QString     deviceName;
-            QString     deviceType;
-            qint64      deviceFileCount;
-            qint64      deviceTotalFileSize;
-            qint64      deviceFreeSpace;
-            qint64      deviceTotalSpace;
-            QString     recordType;
-            QRegularExpression tagExp("\t");
-
-            //Skip titles line
-            line = textStream.readLine();
-
-            //load file to database
-            while (!textStream.atEnd())
-            {
-                line = textStream.readLine();
-                if (line.isNull())
-                    break;
-                else
-                {
-                    //Split the string with \t (tabulation) into a list
-                    fieldList.clear();
-                    fieldList = line.split(tagExp);
-
-                    if(fieldList.count()==9){
-                        dateTime            = fieldList[0];
-                        deviceID            = fieldList[1].toInt();
-                        deviceName          = fieldList[2];
-                        deviceType          = fieldList[3];
-                        deviceFileCount     = fieldList[4].toLongLong();
-                        deviceTotalFileSize = fieldList[5].toLongLong();
-                        deviceFreeSpace     = fieldList[6].toLongLong();
-                        deviceTotalSpace    = fieldList[7].toLongLong();
-                        recordType          = fieldList[8];
-                    }
-
-                    //Append data to the database
-                    insertQuery.bindValue(":date_time", dateTime);
-                    insertQuery.bindValue(":device_id", deviceID);
-                    insertQuery.bindValue(":device_name", deviceName);
-                    insertQuery.bindValue(":device_type", deviceType);
-                    insertQuery.bindValue(":device_file_count", QString::number(deviceFileCount));
-                    insertQuery.bindValue(":device_total_file_size", QString::number(deviceTotalFileSize));
-                    insertQuery.bindValue(":device_free_space", QString::number(deviceFreeSpace));
-                    insertQuery.bindValue(":device_total_space", QString::number(deviceTotalSpace));
-                    insertQuery.bindValue(":record_type", recordType);
-                    insertQuery.exec();
-                }
-            }
-        }
     }
     //----------------------------------------------------------------------
     void MainWindow::loadStatisticsChart()
@@ -982,13 +727,13 @@
     void MainWindow::convertStatistics()
     {//Convert former statistics.csv to new catalog/storage csv files (v1.19>v1.20)
 
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
 
-            QString statisticsFilePath = collectionFolder + "/" + "statistics.csv";
+            QString statisticsFilePath = collection->collectionFolder + "/" + "statistics.csv";
             QFile statisticsFile(statisticsFilePath);
 
-            QFile statisticsCatalogFile(statisticsCatalogFilePath);
-            QFile statisticsStorageFile(statisticsStorageFilePath);
+            QFile statisticsCatalogFile(collection->statisticsCatalogFilePath);
+            QFile statisticsStorageFile(collection->statisticsStorageFilePath);
 
             if (statisticsFile.open(QIODevice::ReadOnly|QIODevice::Text)
                 and !statisticsCatalogFile.exists()
@@ -1023,7 +768,7 @@
                 //Skip titles line
                 line = textStream.readLine();
 
-                Catalog *tempCatalog     = new Catalog();
+
 
                 //load file to database
                 while (!textStream.atEnd())
@@ -1052,24 +797,24 @@
                                 tempStorage->totalSpace = catalogTotalFileSize;
                                 tempStorage->dateTimeUpdated = dateTime;
                                 tempStorage->saveStatistics(dateTime);
-                                tempStorage->saveStatisticsToFile(statisticsStorageFilePath,dateTime);
+                                tempStorage->saveStatisticsToFile(collection->statisticsStorageFilePath,dateTime);
                            }
                            else if (recordType =="Update"){//      = catalog update
-                                tempCatalog = new Catalog;
-                                tempCatalog->name = catalogName;
-                                tempCatalog->fileCount = catalogFileCount;
-                                tempCatalog->totalFileSize = catalogTotalFileSize;
-                                tempCatalog->setDateUpdated(dateTime);
-                                tempCatalog->saveStatistics(dateTime);
-                                tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
+                                Catalog tempCatalog;
+                                tempCatalog.name = catalogName;
+                                tempCatalog.fileCount = catalogFileCount;
+                                tempCatalog.totalFileSize = catalogTotalFileSize;
+                                tempCatalog.setDateUpdated(dateTime);
+                                tempCatalog.saveStatistics(dateTime);
+                                tempCatalog.saveStatisticsToFile(collection->statisticsCatalogFilePath,dateTime);
                            }
                            else if (recordType =="Snapshot"){//    = catalog snapshot
-                                tempCatalog = new Catalog;
-                                tempCatalog->name = catalogName;
-                                tempCatalog->fileCount = catalogFileCount;
-                                tempCatalog->totalFileSize = catalogTotalFileSize;
-                                tempCatalog->saveStatistics(dateTime);
-                                tempCatalog->saveStatisticsToFile(statisticsCatalogFilePath,dateTime);
+                                Catalog tempCatalog;
+                                tempCatalog.name = catalogName;
+                                tempCatalog.fileCount = catalogFileCount;
+                                tempCatalog.totalFileSize = catalogTotalFileSize;
+                                tempCatalog.saveStatistics(dateTime);
+                                tempCatalog.saveStatisticsToFile(collection->statisticsCatalogFilePath,dateTime);
                            }
                            else {
                                 //qDebug()<<"line could not be processed: "+line;
@@ -1079,7 +824,7 @@
                 statisticsFile.close();
 
                 //rename old statistics file
-                statisticsFile.rename(collectionFolder + "/" + "statistics_csv.bak");
+                statisticsFile.rename(collection->collectionFolder + "/" + "statistics_csv.bak");
 
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
@@ -1088,46 +833,5 @@
                 msgBox.exec();
             }
         }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::saveStatiticsToFile()
-    {
-        //Prepare export file
-        QFile statisticsFile(statisticsStorageFilePath);
-        QTextStream out(&statisticsFile);
-
-        //Get data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                SELECT  date_time,
-                                        storage_name,
-                                        storage_free_space,
-                                        storage_total_space,
-                                        storage_id,
-                                        record_type
-                                FROM statistics_storage
-                            )");
-        query.prepare(querySQL);
-        query.exec();
-
-        //Iterate the records and generate lines
-        while (query.next()) {
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                   if (i>0)
-                       out << '\t';
-                   out << record.value(i).toString();
-            }
-            //-- Write the result in the file
-            out << '\n';
-        }
-
-        if(statisticsFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            //out << textData;
-            //Close the file
-            //storageFile.close();
-        }
-
-        statisticsFile.close();
     }
     //----------------------------------------------------------------------

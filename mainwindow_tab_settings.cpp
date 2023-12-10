@@ -37,7 +37,7 @@
 //SETTINGS / GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
         QSize widget1Size = ui->splitter_widget_Filters->size();
         QSize widget2Size = ui->splitter_widget_TabWidget->size();
@@ -50,7 +50,7 @@
     void MainWindow::on_tabWidget_currentChanged(int index)
     {
         selectedTab = index;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/selectedTab", ui->tabWidget->currentIndex());
     }
     //----------------------------------------------------------------------
@@ -59,7 +59,7 @@
     void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
         QString newDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/databaseMode", newDatabaseMode);
 
         if(newDatabaseMode=="Memory"){
@@ -83,8 +83,8 @@
     //Memory ---------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastCollectionFolder", collectionFolder);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("LastCollectionFolder", collection->collectionFolder);
 
         loadCollection();
     }
@@ -93,27 +93,27 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                        collectionFolder,
+                                                        collection->collectionFolder,
                                                         QFileDialog::ShowDirsOnly
                                                         | QFileDialog::DontResolveSymlinks);
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( dir !=""){
 
-            collectionFolder = dir;
+            collection->collectionFolder = dir;
 
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("LastCollectionFolder", collectionFolder);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("LastCollectionFolder", collection->collectionFolder);
 
             //Set the new path in Settings tab
-            ui->Settings_lineEdit_CollectionFolder->setText(collectionFolder);
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
 
             //Redefine the path of the Storage file
-            storageFilePath = collectionFolder + "/" + "storage.csv";
+            collection->storageFilePath = collection->collectionFolder + "/" + "storage.csv";
 
             //Load the collection from this new folder;
                 //Clear database if mode is Memory
-                if(databaseMode=="Memory"){
+                if(collection->databaseMode=="Memory"){
                     //Clear current entires from the tables
                         QSqlQuery queryDelete;
                         queryDelete.exec("DELETE FROM catalog");
@@ -125,14 +125,14 @@
                         queryDelete.exec("DELETE FROM search");
                         queryDelete.exec("DELETE FROM tag");
                 }
-                if(databaseMode=="File"){
+                if(collection->databaseMode=="File"){
                     //Open database file
                     //DEV
                     QMessageBox::warning(this,"Katalog","Database was not changed.");
                 }
 
             createStorageFile();
-            generateCollectionFilesPaths();
+            collection->generateCollectionFilesPaths();
             loadCollection();
         }
 
@@ -143,18 +143,18 @@
     void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
     {
         //Open the selected collection folder
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collectionFolder));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->collectionFolder));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/KeepOneBackUp", ui->Settings_checkBox_KeepOneBackUp->isChecked());
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/PreloadCatalogs", arg1);
     }
     //----------------------------------------------------------------------
@@ -167,8 +167,8 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_EditDatabaseFile_clicked()
     {
-        databaseFilePath = ui->Settings_lineEdit_DatabaseFilePath->text();
-        QDesktopServices::openUrl(QUrl::fromLocalFile(databaseFilePath));
+        collection->databaseFilePath = ui->Settings_lineEdit_DatabaseFilePath->text();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->databaseFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_NewDatabaseFile_clicked()
@@ -180,7 +180,7 @@
     //Hosted ---------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_SaveHostedParameters_clicked()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
         settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
         settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
@@ -197,37 +197,37 @@
 //SETTINGS / Language & Theme ----------------------------------------------
     void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/Language", selectedLanguage);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_comboBox_Theme_currentIndexChanged(int index)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/Theme", index);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());       
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/LoadLastCatalog", arg1);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_OpenSettingsFile_clicked()
     {
         //Open the selected collection folder
-        QDesktopServices::openUrl(QUrl::fromLocalFile(settingsFilePath));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->settingsFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/ThemeBiggerIconSize", arg1);
 
         QSize size;
@@ -263,7 +263,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_CheckVersion_stateChanged()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
     }
     //----------------------------------------------------------------------
@@ -273,7 +273,7 @@
     void MainWindow::loadCollection()
     {
         //Generate collection files paths and statistics parameters
-        generateCollectionFilesPaths();
+        collection->generateCollectionFilesPaths();
 
         //Load data from files to database
             //Create a Storage list (if none exists) + conversions
@@ -316,9 +316,9 @@
 
         //Load Statistics
         loadStatisticsDataTypes();
-        loadStatisticsCatalogFileToTable();
-        loadStatisticsStorageFileToTable();
-        loadStatisticsDeviceFileToTable();
+        collection->loadStatisticsCatalogFileToTable();
+        collection->loadStatisticsStorageFileToTable();
+        collection->loadStatisticsDeviceFileToTable();
         loadStatisticsChart();
 
         //Load Tags
@@ -342,23 +342,22 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
-                                                                   collectionFolder,"*.db");
+                                                                   collection->collectionFolder,"*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
 
-                    databaseFilePath = newDatabaseFilePath;
+                    collection->databaseFilePath = newDatabaseFilePath;
 
                     //Save Settings for the new collection folder value;
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
-                    //QMessageBox msgBox; msgBox.setWindowTitle("Katalog"); msgBox.setText("newDatabaseFilePath:<br/>"+QVariant(newDatabaseFilePath).toString()); msgBox.setIcon(QMessageBox::Information); msgBox.exec();
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
 
                     //Set the new path in Settings tab
-                    ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
                     createStorageFile();
-                    generateCollectionFilesPaths();
+                    collection->generateCollectionFilesPaths();
 
                     loadCollection();
         }
@@ -371,14 +370,14 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to open:"),
-                                                                   collectionFolder+"/newKatalogFile.db","*.db");
+                                                                   collection->collectionFolder+"/newKatalogFile.db","*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
 
-                    databaseFilePath = newDatabaseFilePath;
+                    collection->databaseFilePath = newDatabaseFilePath;
 
-                    QFile fileOut( databaseFilePath );
+                    QFile fileOut(collection->databaseFilePath);
                     if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
                         //create an empty file
                     }
@@ -395,14 +394,14 @@
                     q.exec(SQL_CREATE_TAG);
 
                     //Save Settings for the new collection folder value;
-                    QSettings settings(settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/DatabaseFilePath", databaseFilePath);
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
 
                     //Set the new path in Settings tab
-                    ui->Settings_lineEdit_DatabaseFilePath->setText(databaseFilePath);
+                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
                     createStorageFile();
-                    generateCollectionFilesPaths();
+                    collection->generateCollectionFilesPaths();
                     loadCollection();
         }
 

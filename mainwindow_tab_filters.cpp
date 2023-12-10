@@ -39,7 +39,7 @@
         ui->splitter_widget_Filters->setHidden(true);
         ui->main_widget_ShowFilters->setHidden(false);
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/ShowHideFilters", "go-next");
     }
     //----------------------------------------------------------------------
@@ -48,7 +48,7 @@
         ui->splitter_widget_Filters->setHidden(false);
         ui->main_widget_ShowFilters->setHidden(true);
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Settings/ShowHideFilters", "go-previous");
     }
     //----------------------------------------------------------------------
@@ -65,7 +65,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastSearch/searchInFileCatalogsChecked", checked);
 
         if(checked==1){
@@ -88,7 +88,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastSearch/searchInConnectedDriveChecked", checked);
 
         if(checked==1){
@@ -184,7 +184,7 @@
             ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
         }
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
 
         filterFromSelectedDevice();
@@ -293,7 +293,7 @@
 
         filterFromSelectedDevice();
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceType", tr("All"));
         settings.setValue("Selection/SelectedDeviceName", tr("All"));
         settings.setValue("Selection/SelectedDeviceID", 0);
@@ -329,8 +329,8 @@
             updateStorageSelectionStatistics();
 
             //Statistics
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
+            collection->loadStatisticsCatalogFileToTable();
+            collection->loadStatisticsStorageFileToTable();
             loadStatisticsChart();
     }
     //----------------------------------------------------------------------
@@ -338,7 +338,7 @@
     {
         //deviceTreeExpandState values:  collapseAll or 2 =collapse / 0=exp.level0 / 1=exp.level1
         QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
         if (toggle==true){
 

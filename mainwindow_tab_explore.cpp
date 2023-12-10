@@ -49,7 +49,7 @@
         ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
 
         //Remember selected directory name
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
         //Load directory files
@@ -74,7 +74,7 @@
             selectedDirectoryName     = selectedFileFolder.remove(selectedDevice->catalog->sourcePath + "/");
 
             //Remember selected directory name
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
 
             //Reload
@@ -85,7 +85,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged(){
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         QHeaderView *exploreTreeHeader = ui->Explore_treeView_FileList->header();
 
         lastExploreSortSection = exploreTreeHeader->sortIndicatorSection();
@@ -97,7 +97,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Explore_splitter_splitterMoved()
     {
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Explore/ExploreSplitterWidget1Size", ui->Explore_splitter_widget_Directory->size());
         settings.setValue("Explore/ExploreSplitterWidget2Size", ui->Explore_splitter_widget_Files->size());
     }
@@ -110,7 +110,7 @@
     void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
     {
         optionDisplayFolders = checked;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Explore/DisplayFolders", optionDisplayFolders);
         loadSelectedDirectoryFilesToExplore();
         if(checked==true){
@@ -126,7 +126,7 @@
     void MainWindow::on_Explore_checkBox_DisplaySubFolders_toggled(bool checked)
     {
         optionDisplaySubFolders = checked;
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Explore/DisplaySubFolders", optionDisplaySubFolders);
         loadSelectedDirectoryFilesToExplore();
     }
@@ -349,7 +349,7 @@
             if (file.exists()) {
                 //Open a dialog for the user to select the target folder
                 QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                collectionFolder,
+                                                                collection->collectionFolder,
                                                                 QFileDialog::ShowDirsOnly
                                                                 | QFileDialog::DontResolveSymlinks);
 
@@ -453,7 +453,7 @@
         selectedDirectoryFullPath = selectedDevice->catalog->sourcePath;
 
         //Check catalog's number of files and confirm load if too big
-        if( databaseMode == "Memory"
+        if( collection->databaseMode == "Memory"
             and (selectedDevice->catalog->dateLoaded < selectedDevice->catalog->dateUpdated)){
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
@@ -481,13 +481,13 @@
         }
 
         //Load folders of the Selected Catalog
-            if( databaseMode == "Memory")
+            if( collection->databaseMode == "Memory")
                 selectedDevice->catalog->loadFoldersToTable();
 
             loadCatalogDirectoriesToExplore();
 
         //Load the files of the Selected Catalog
-            if( databaseMode == "Memory")
+            if( collection->databaseMode == "Memory")
                 selectedDevice->catalog->loadCatalogFileListToTable();
 
             loadSelectedDirectoryFilesToExplore();
@@ -500,7 +500,7 @@
         ui->Explore_label_CatalogPathDisplay->setText(selectedDevice->catalog->sourcePath);
 
         //Remember last opened catalog
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Explore/lastSelectedCatalogFile", selectedDevice->catalog->filePath);
         settings.setValue("Explore/lastSelectedCatalogName", selectedDevice->catalog->name);
         settings.setValue("Explore/lastSelectedCatalogPath", selectedDevice->catalog->sourcePath);

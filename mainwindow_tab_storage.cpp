@@ -57,13 +57,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_EditAll_clicked()
     {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(storageFilePath));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->storageFilePath));
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_SaveAll_clicked()
     {
         //Save data to file and reload
-        if (databaseMode=="Memory"){
+        if (collection->databaseMode=="Memory"){
             //Save model data to Storage file
             saveStorageTableToFile();
 
@@ -142,7 +142,7 @@
     {
         skipCatalogUpdateSummary =false;
         updateStorageInfo(selectedDevice->storage);
-        saveDeviceTableToFile(deviceFilePath);
+        collection->saveDeviceTableToFile();
         loadDeviceTableToTreeModel();
         loadStorageToPanel();
     }
@@ -166,7 +166,7 @@
             loadStorageTableToModel();
 
             //Save data to file and reload
-            if (databaseMode=="Memory"){
+            if (collection->databaseMode=="Memory"){
                 //Save model data to Storage file
                 saveStorageTableToFile();
 
@@ -192,7 +192,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged(){
 
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         QHeaderView *storageTreeHeader = ui->Storage_treeView_StorageList->header();
 
         lastStorageSortSection = storageTreeHeader->sortIndicatorSection();
@@ -225,9 +225,9 @@
 //Methods-----------------------------------------------------------------------
     void MainWindow::createStorageFile()
     {
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
             // Create it, if it does not exist
-            QFile newStorageFile(storageFilePath);
+            QFile newStorageFile(collection->storageFilePath);
             if(!newStorageFile.open(QIODevice::ReadOnly)) {
 
                 if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
@@ -304,7 +304,7 @@
         newDeviceItem->insertDevice();
 
         //Save data to file
-        saveDeviceTableToFile(deviceFilePath);
+        collection->saveDeviceTableToFile();
 
         //Reload
         loadDeviceTableToTreeModel();
@@ -313,10 +313,10 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageFileToTable()
     {//load Storage file data to its table
-        if (databaseMode=="Memory"){
+        if (collection->databaseMode=="Memory"){
 
             //Define storage file and prepare stream
-            QFile storageFile(storageFilePath);
+            QFile storageFile(collection->storageFilePath);
             QTextStream textStream(&storageFile);
 
             QSqlQuery queryDelete;
@@ -571,8 +571,8 @@
             updateAllNumbers();
 
         //Save statistics to file
-            if(databaseMode=="Memory"){
-                QString storageStatisticsFilePath = collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
+            if(collection->databaseMode=="Memory"){
+                QString storageStatisticsFilePath = collection->collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
                 storage->saveStatisticsToFile(storageStatisticsFilePath, storage->dateTimeUpdated);
             }
 
@@ -603,7 +603,7 @@
         loadStorageTableToModel();
 
         //save model data to file
-        if (databaseMode=="Memory"){
+        if (collection->databaseMode=="Memory"){
                 //Save model data to Storage file
                 saveStorageTableToFile();
 
@@ -617,10 +617,9 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveStorageTableToFile()
     {
-        if (databaseMode=="Memory"){
+        if (collection->databaseMode=="Memory"){
             //Prepare export file
-            storageFilePath = collectionFolder + "/" + "storage.csv";
-            QFile storageFile(storageFilePath);
+            QFile storageFile(collection->storageFilePath);
             QTextStream out(&storageFile);
 
             //Prepare header line
@@ -764,17 +763,17 @@
             tempStorage->loadStorage();
             tempStorage->saveStatistics(dateTime);
 
-            if(databaseMode=="Memory")
+            if(collection->databaseMode=="Memory")
             {
-                QString filePath = collectionFolder + "/" + "statistics_storage.csv";
+                QString filePath = collection->collectionFolder + "/" + "statistics_storage.csv";
                 tempStorage->saveStatisticsToFile(filePath, dateTime);
             }
         }
 
         //Refresh
-        if(databaseMode=="Memory"){
-            loadStatisticsCatalogFileToTable();
-            loadStatisticsStorageFileToTable();
+        if(collection->databaseMode=="Memory"){
+            collection->loadStatisticsCatalogFileToTable();
+            collection->loadStatisticsStorageFileToTable();
         }
 
         loadStatisticsChart();
@@ -783,7 +782,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::displayStoragePicture()
     {//Load and display the picture of the storage device
-        QString picturePath = collectionFolder + "/images/" + QString::number(selectedDevice->storage->ID) + ".jpg";
+        QString picturePath = collection->collectionFolder + "/images/" + QString::number(selectedDevice->storage->ID) + ".jpg";
         QPixmap pic(picturePath);
         QFile file(picturePath);
         if(file.exists()){
@@ -870,7 +869,7 @@
         updateStorageSelectionStatistics();
 
         //Save data to file
-        if (databaseMode=="Memory"){
+        if (collection->databaseMode=="Memory"){
             saveStorageTableToFile();
         }
 
@@ -889,8 +888,8 @@
             updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
             updateNameQuery.exec();
 
-            if (databaseMode=="Memory"){
-                saveStatiticsToFile();
+            if (collection->databaseMode=="Memory"){
+                collection->saveStatiticsToFile();
             }
 
             //Update catalogs (database mode)
@@ -907,7 +906,7 @@
             updateCatalogQuery.exec();
 
             //Update catalogs (memory mode)
-            if (databaseMode=="Memory"){
+            if (collection->databaseMode=="Memory"){
 
                 //List catalogs
                 QString listCatalogQuerySQL = QLatin1String(R"(
@@ -931,7 +930,7 @@
                 }
 
                 //Refresh
-                if(databaseMode=="Memory")
+                if(collection->databaseMode=="Memory")
                     loadCatalogFilesToTable();
 
                 loadCatalogsTableToModel();

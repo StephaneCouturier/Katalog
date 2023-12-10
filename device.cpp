@@ -148,47 +148,6 @@ void Device::loadSubDeviceList()
     }
 }
 
-void Device::loadDeviceCatalog(){
-    //Retrieve device values
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                            SELECT  device_id,
-                                    device_parent_id,
-                                    device_name,
-                                    device_type,
-                                    device_external_id,
-                                    device_path,
-                                    device_total_file_size,
-                                    device_total_file_count,
-                                    device_total_space,
-                                    device_free_space,
-                                    device_group_id
-                            FROM  device
-                            WHERE device_name =:device_name
-                        )");
-
-    query.prepare(querySQL);
-    query.bindValue(":device_name",name);
-
-    if (query.exec()) {
-        if (query.next()) {
-            parentID    = query.value(1).toInt();
-            name        = query.value(2).toString();
-            type        = query.value(3).toString();
-            externalID  = query.value(4).toInt();
-            path        = query.value(5).toString();
-            totalFileSize  = query.value(6).toLongLong();
-            totalFileCount = query.value(7).toLongLong();
-            totalSpace = query.value(8).toLongLong();
-            freeSpace  = query.value(9).toLongLong();
-        } else {
-            qDebug() << "loadDeviceCatalog failed, no record found for device_id" << ID;
-        }
-    } else {
-        qDebug() << "loadDeviceCatalog query execution failed:" << query.lastError().text();
-    }
-}
-
 void Device::getCatalogStorageID(){
     //Retrieve device_parent_id for an item in the physical group
     QSqlQuery query;
@@ -311,7 +270,6 @@ void Device::deleteDevice(){
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
     query.exec();
-
 }
 
 void Device::saveDevice()
@@ -319,11 +277,13 @@ void Device::saveDevice()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             UPDATE device
-                            SET     device_name =:device_name,
-                                    device_parent_id =:device_parent_id,
-                                    device_external_id =:device_external_id,
-                                    device_group_id =:device_group_id
-                            WHERE   device_id=:device_id
+                            SET    device_name =:device_name,
+                                   device_parent_id =:device_parent_id,
+                                   device_external_id =:device_external_id,
+                                   device_group_id =:device_group_id
+                                   device_total_file_size =:device_total_file_size,
+                                   device_total_file_count =:device_total_file_count
+                            WHERE  device_id=:device_id
                                 )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
@@ -331,6 +291,8 @@ void Device::saveDevice()
     query.bindValue(":device_parent_id", parentID);
     query.bindValue(":device_external_id", externalID);
     query.bindValue(":device_group_id", groupID);
+    query.bindValue(":device_total_file_size", totalFileSize);
+    query.bindValue(":device_total_file_count", totalFileCount);
     query.exec();
 }
 
@@ -344,10 +306,16 @@ QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
 
     //Update device and children depending on type
     if (type=="Catalog"){
+        qDebug()<<"update catalog";
         //Update this device/catalog (files) and its storage (space)
-        /*QList<qint64> catalogUpdates =*/ catalog->updateCatalogFiles(databaseMode);
+        deviceUpdates  = catalog->updateCatalogFiles(databaseMode);
+        totalFileSize  = deviceUpdates[0];
+        totalFileCount = deviceUpdates[2];
+        qDebug()<<totalFileSize;//DEV:
+        qDebug()<<totalFileCount;//DEV:
 
     }
+
     else if (type=="Storage"){
         //Update all catalogs, and this device/storage
         //Get list of catalogs
@@ -368,6 +336,9 @@ QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
 
 
     }
+
+    //Save changes
+    saveDevice();
 
     //Update parent devices
     updateParentsNumbers();

@@ -69,19 +69,19 @@
     {
 
         //Get database mode ("Memory", "File", or "Hosted") and fields
-        QSettings settings(settingsFilePath, QSettings:: IniFormat);
-        databaseMode     = settings.value("Settings/databaseMode").toString();
-        databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
-        databaseHostName = settings.value("Settings/databaseHostName").toString();
-        databaseName     = settings.value("Settings/databaseName").toString();
-        databasePort     = settings.value("Settings/databasePort").toInt();
-        databaseUserName = settings.value("Settings/databaseUserName").toString();
-        databasePassword = settings.value("Settings/databasePassword").toString();
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        collection->databaseMode     = settings.value("Settings/databaseMode").toString();
+        collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
+        collection->databaseHostName = settings.value("Settings/databaseHostName").toString();
+        collection->databaseName     = settings.value("Settings/databaseName").toString();
+        collection->databasePort     = settings.value("Settings/databasePort").toInt();
+        collection->databaseUserName = settings.value("Settings/databaseUserName").toString();
+        collection->databasePassword = settings.value("Settings/databasePassword").toString();
 
-        if(databaseMode=="")
-            databaseMode="Memory";
+        if(collection->databaseMode=="")
+            collection->databaseMode="Memory";
 
-        else if(databaseMode=="Memory"){
+        else if(collection->databaseMode=="Memory"){
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -89,30 +89,30 @@
             if (!db.open())
                 return db.lastError();
         }
-        else if(databaseMode=="File"){
-            QFile databaseFile(databaseFilePath);
+        else if(collection->databaseMode=="File"){
+            QFile databaseFile(collection->databaseFilePath);
             if (!databaseFile.exists()){
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("The Database file cannot be found:<br/>") + databaseFilePath);
+                msgBox.setText(tr("The Database file cannot be found:<br/>") + collection->databaseFilePath);
                 msgBox.setIcon(QMessageBox::Information);
                 msgBox.exec();
                 selectDatabaseFilePath();
             }
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-            db.setDatabaseName(databaseFilePath);
+            db.setDatabaseName(collection->databaseFilePath);
             if (!db.open())
                 return db.lastError();
         }
-        else if(databaseMode=="Hosted"){
+        else if(collection->databaseMode=="Hosted"){
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-            db.setHostName(databaseHostName);
-            db.setDatabaseName(databaseName);
-            db.setPort(databasePort);
-            db.setUserName(databaseUserName);
-            db.setPassword(databasePassword);
+            db.setHostName(collection->databaseHostName);
+            db.setDatabaseName(collection->databaseName);
+            db.setPort(collection->databasePort);
+            db.setUserName(collection->databaseUserName);
+            db.setPassword(collection->databasePassword);
 
             if (!db.open()){
                 QSqlError error = db.lastError();
@@ -173,7 +173,7 @@
     //----------------------------------------------------------------------
     void MainWindow::clearDatabaseData()
     {   //Clear database date in the context of Memory mode, prior to reloading files to tables
-        if(databaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
             QSqlQuery queryDelete;
             queryDelete.exec("DELETE FROM catalog");
             queryDelete.exec("DELETE FROM storage");
@@ -198,19 +198,19 @@
     void MainWindow::loadSettings()
     {
         //Check if a settings file already exists. If not, it is considered first use and one gets generated
-            QFile settingsFile(settingsFilePath);
+            QFile settingsFile(collection->settingsFilePath);
             int themeID = 1; //default value for the theme.
             selectedTab = 3; //default value for the first launch. Create screen
-            QSettings settings(settingsFilePath, QSettings:: IniFormat);
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
             firstRun =false;
 
             if (!settingsFile.exists())
                 firstRun =true;
 
-            collectionFolder = settings.value("LastCollectionFolder").toString();
+            collection->collectionFolder = settings.value("LastCollectionFolder").toString();
 
-            if (collectionFolder == "")
+            if (collection->collectionFolder == "")
                 firstRun =true;
 
             if (firstRun == true){
@@ -238,17 +238,17 @@
 
                 //Collection folder choice
                     //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-                    collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                                collectionFolder,
+                    collection->collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                                collection->collectionFolder,
                                                                 QFileDialog::ShowDirsOnly
                                                                 | QFileDialog::DontResolveSymlinks);
 
                     //set the location of the application as a default value if a folder was not provided
-                    if (collectionFolder =="")
-                        collectionFolder = QApplication::applicationDirPath();
+                    if (collection->collectionFolder =="")
+                        collection->collectionFolder = QApplication::applicationDirPath();
 
                     //save setting
-                    settings.setValue("LastCollectionFolder", collectionFolder);
+                    settings.setValue("LastCollectionFolder", collection->collectionFolder);
 
                 //Go to Create screen
                 QMessageBox msgBox2;
@@ -265,7 +265,7 @@
 
             //Collection folder
             if (firstRun != true){
-                collectionFolder = settings.value("LastCollectionFolder").toString();
+                collection->collectionFolder = settings.value("LastCollectionFolder").toString();
             }
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
@@ -370,7 +370,7 @@
 
             //Restore DEV Settings
             if(developmentMode==true){
-                ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(databaseMode.toStdString().c_str()));
+                ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(collection->databaseMode.toStdString().c_str()));
             }
     }
     //----------------------------------------------------------------------
@@ -720,20 +720,4 @@
         }
     }
     //----------------------------------------------------------------------
-    void MainWindow::generateCollectionFilesPaths()
-    {
-        if(databaseMode=="Memory"){
-            searchHistoryFilePath       = collectionFolder + "/" + "search_history.csv";
-            storageFilePath             = collectionFolder + "/" + "storage.csv";
-            deviceFilePath              = collectionFolder + "/" + "device.csv";
-            deviceCatalogFilePath       = collectionFolder + "/" + "device_catalog.csv";
-            statisticsCatalogFileName   = "statistics_catalog.csv";
-            statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
-            statisticsStorageFileName   = "statistics_storage.csv";
-            statisticsStorageFilePath   = collectionFolder + "/" + statisticsStorageFileName;
-            statisticsDeviceFileName    = "statistics_device.csv";
-            statisticsDeviceFilePath    = collectionFolder + "/" + statisticsDeviceFileName;
-            excludeFilePath             = collectionFolder + "/" + "exclude.csv";
-        }
-    }
-    //----------------------------------------------------------------------
+
