@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-12-10";
+        releaseDate     = "2023-12-11";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -148,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 selectedDirectoryFullPath = selectedDevice->catalog->sourcePath + "/" + selectedDirectoryName;
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
                 if (selectedDevice->catalog->filePath != ""){
-                    openCatalogToExplore();
+                    openCatalogToExplore(selectedDevice);
                 }
             }
 

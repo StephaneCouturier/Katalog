@@ -230,16 +230,20 @@
             //Save new catalog
             newDevice->catalog->insertCatalog();
 
-            //Save data to file
-            collection->saveDeviceTableToFile();
+
 
             //Reload
             loadDeviceTableToTreeModel();
             loadStorageList();
 
         //Launch the scan and cataloging of files
-            requestSource = "create";
-            updateSingleCatalog(newDevice, true);
+            reportAllUpdates(newDevice, newDevice->updateDevice("create", collection->databaseMode),"create");
+            newDevice->saveDevice();
+
+            //Save data to files
+            collection->saveDeviceTableToFile();
+            saveCatalogToNewFile(newDevice);
+            saveFoldersToNewFile(newDevice->name);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list

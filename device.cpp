@@ -280,11 +280,11 @@ void Device::saveDevice()
                             SET    device_name =:device_name,
                                    device_parent_id =:device_parent_id,
                                    device_external_id =:device_external_id,
-                                   device_group_id =:device_group_id
+                                   device_group_id =:device_group_id,
                                    device_total_file_size =:device_total_file_size,
                                    device_total_file_count =:device_total_file_count
                             WHERE  device_id=:device_id
-                                )");
+                        )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
     query.bindValue(":device_name", name);
@@ -300,20 +300,24 @@ QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
 {//Update device and related children storage or catalog information where relevant
 
     //Prepare
-    QList<qint64> deviceUpdates;
+    QList<qint64> deviceUpdatesList;
     dateTimeUpdated = QDateTime::currentDateTime();
     updateActive();
 
     //Update device and children depending on type
     if (type=="Catalog"){
-        qDebug()<<"update catalog";
         //Update this device/catalog (files) and its storage (space)
-        deviceUpdates  = catalog->updateCatalogFiles(databaseMode);
-        totalFileSize  = deviceUpdates[0];
-        totalFileCount = deviceUpdates[2];
-        qDebug()<<totalFileSize;//DEV:
-        qDebug()<<totalFileCount;//DEV:
+        deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode);
+        if( deviceUpdatesList.count() > 0){
+            totalFileCount = deviceUpdatesList[0];
+            totalFileSize  = deviceUpdatesList[2];
 
+            //Update the parent Storage and add the update values to the list
+            Device parentDevice;
+            parentDevice.ID = parentID;
+            parentDevice.loadDevice();
+            deviceUpdatesList << parentDevice.storage->updateStorageInfo();
+        }
     }
 
     else if (type=="Storage"){
@@ -323,10 +327,10 @@ QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
 
         //Process the list
         foreach (ID, deviceIDList) {
-            Device *updatedDevice = new Device;
-            updatedDevice->ID = ID;
-            updatedDevice->loadDevice();
-            /*QList<qint64> catalogUpdates = */updatedDevice->catalog->updateCatalogFiles(databaseMode);
+            Device updatedDevice;
+            updatedDevice.ID = ID;
+            updatedDevice.loadDevice();
+            /*QList<qint64> catalogUpdates = */updatedDevice.catalog->updateCatalogFiles(databaseMode);
         }
         /*QList<qint64> storageUpdates = */ //catalog->updateCatalogFiles();
 
@@ -343,7 +347,13 @@ QList<qint64> Device::updateDevice(QString requestSource, QString databaseMode)
     //Update parent devices
     updateParentsNumbers();
 
-    return deviceUpdates;
+    //Save device values for statistics
+    saveStatistics(dateTimeUpdated, requestSource);
+
+    if( deviceUpdatesList.count() == 0)
+        deviceUpdatesList<<0;
+
+    return deviceUpdatesList;
 }
 
 void Device::updateNumbersFromChildren()
@@ -474,7 +484,7 @@ void Device::updateActive()
     query.exec();
 }
 
-void Device::saveStatistics(QDateTime dateTime)
+void Device::saveStatistics(QDateTime dateTime, QString requestSource)
 {
     QSqlQuery querySaveStatistics;
     QString querySaveStatisticsSQL = QLatin1String(R"(
@@ -501,45 +511,14 @@ void Device::saveStatistics(QDateTime dateTime)
                                     )");
     querySaveStatistics.prepare(querySaveStatisticsSQL);
     querySaveStatistics.bindValue(":date_time", dateTime.toString("yyyy-MM-dd hh:mm:ss"));
-    querySaveStatistics.bindValue(":device_id",     ID);
-    querySaveStatistics.bindValue(":device_name",   name);
-    querySaveStatistics.bindValue(":device_type",   type);
+    querySaveStatistics.bindValue(":device_id", ID);
+    querySaveStatistics.bindValue(":device_name", name);
+    querySaveStatistics.bindValue(":device_type", type);
     querySaveStatistics.bindValue(":device_file_count", totalFileCount);
     querySaveStatistics.bindValue(":device_total_file_size", totalFileSize);
     querySaveStatistics.bindValue(":device_free_space", freeSpace);
     querySaveStatistics.bindValue(":device_total_space", totalSpace);
-    if (dateTime == dateTimeUpdated)
-        querySaveStatistics.bindValue(":record_type", "update");
-    else
-        querySaveStatistics.bindValue(":record_type", "snapshot");
+    querySaveStatistics.bindValue(":record_type", requestSource);
 
     querySaveStatistics.exec();
-}
-
-void Device::saveStatisticsToFile(QString filePath, QDateTime dateTime)
-{
-    //Prepare file and data
-    QFile fileOut(filePath);
-    QString record_type;
-    if (dateTime == dateTimeUpdated)
-        record_type = "update";
-    else
-        record_type = "snapshot";
-
-    QString statisticsLine =   dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                             + QString::number(ID) + "\t"
-                             + name + "\t"
-                             + type + "\t"
-                             + QString::number(totalFileCount) + "\t"
-                             + QString::number(totalFileSize) + "\t"
-                             + QString::number(freeSpace) + "\t"
-                             + QString::number(totalSpace) + "\t"
-                             + record_type;
-
-    // Write data
-    if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-        QTextStream stream(&fileOut);
-        stream << statisticsLine << "\n";
-    }
-    fileOut.close();
 }

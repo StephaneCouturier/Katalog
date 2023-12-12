@@ -835,3 +835,30 @@
         }
     }
     //----------------------------------------------------------------------
+    // void MainWindow::saveStatisticsToFile(Device *device)
+    // {
+    //     //Prepare file and data
+    //     QFile fileOut(collection->statisticsDeviceFilePath);
+    //     QString record_type;
+    //     if (dateTime == dateTimeUpdated)
+    //         record_type = "update";
+    //     else
+    //         record_type = "snapshot";
+
+    //     QString statisticsLine =   device->dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss") + "\t"
+    //                              + QString::number(device->ID) + "\t"
+    //                              + device->name + "\t"
+    //                              + device->type + "\t"
+    //                              + QString::number(device->totalFileCount) + "\t"
+    //                              + QString::number(device->totalFileSize) + "\t"
+    //                              + QString::number(device->freeSpace) + "\t"
+    //                              + QString::number(device->totalSpace) + "\t"
+    //                              + record_type;
+
+    //     // Write data
+    //     if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
+    //         QTextStream stream(&fileOut);
+    //         stream << statisticsLine << "\n";
+    //     }
+    //     fileOut.close();
+    // }

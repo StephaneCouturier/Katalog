@@ -104,7 +104,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_ExplorePushButtonLoadClicked()
     {
-        openCatalogToExplore();
+        openCatalogToExplore(selectedDevice);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Explore_checkBox_DisplayFolders_toggled(bool checked)
@@ -442,19 +442,19 @@
 
 //Methods-----------------------------------------------------------------------
 
-    void MainWindow::openCatalogToExplore()
+    void MainWindow::openCatalogToExplore(Device *device)
     {//Load the contents of a catalog to display folders in a tree and files in a list for direct browsing
 
         // Start animation while opening
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Start at the root folder of the catalog
-        selectedDirectoryName     = selectedDevice->catalog->sourcePath;
-        selectedDirectoryFullPath = selectedDevice->catalog->sourcePath;
+        selectedDirectoryName     = device->catalog->sourcePath;
+        selectedDirectoryFullPath = device->catalog->sourcePath;
 
         //Check catalog's number of files and confirm load if too big
         if( collection->databaseMode == "Memory"
-            and (selectedDevice->catalog->dateLoaded < selectedDevice->catalog->dateUpdated)){
+            and (device->catalog->dateLoaded < device->catalog->dateUpdated)){
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
                                 SELECT catalog_file_count
@@ -462,7 +462,7 @@
                                 WHERE catalog_name=:catalog_name
                                             )");
             query.prepare(querySQL);
-            query.bindValue(":catalog_name",selectedDevice->catalog->name);
+            query.bindValue(":catalog_name",device->catalog->name);
             query.exec();
             query.next();
             int selectedcatalogFileCount = query.value(0).toInt();
@@ -482,13 +482,13 @@
 
         //Load folders of the Selected Catalog
             if( collection->databaseMode == "Memory")
-                selectedDevice->catalog->loadFoldersToTable();
+                device->catalog->loadFoldersToTable();
 
             loadCatalogDirectoriesToExplore();
 
         //Load the files of the Selected Catalog
             if( collection->databaseMode == "Memory")
-                selectedDevice->catalog->loadCatalogFileListToTable();
+                device->catalog->loadCatalogFileListToTable();
 
             loadSelectedDirectoryFilesToExplore();
 
@@ -496,15 +496,15 @@
             loadCatalogsTableToModel();
 
         //Go to the Explorer tab
-        ui->Explore_label_CatalogNameDisplay->setText(selectedDevice->catalog->name);
-        ui->Explore_label_CatalogPathDisplay->setText(selectedDevice->catalog->sourcePath);
+        ui->Explore_label_CatalogNameDisplay->setText(device->catalog->name);
+        ui->Explore_label_CatalogPathDisplay->setText(device->catalog->sourcePath);
 
         //Remember last opened catalog
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedCatalogFile", selectedDevice->catalog->filePath);
-        settings.setValue("Explore/lastSelectedCatalogName", selectedDevice->catalog->name);
-        settings.setValue("Explore/lastSelectedCatalogPath", selectedDevice->catalog->sourcePath);
-        settings.setValue("Explore/lastSelectedDirectory",   selectedDevice->catalog->sourcePath);
+        settings.setValue("Explore/lastSelectedCatalogFile", device->catalog->filePath);
+        settings.setValue("Explore/lastSelectedCatalogName", device->catalog->name);
+        settings.setValue("Explore/lastSelectedCatalogPath", device->catalog->sourcePath);
+        settings.setValue("Explore/lastSelectedDirectory",   device->catalog->sourcePath);
 
         //Stop animation
         QApplication::restoreOverrideCursor();

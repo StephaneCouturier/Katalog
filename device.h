@@ -85,13 +85,10 @@ public:
         void insertDevice();
         void deleteDevice();
         void saveDevice();
-
-        void saveStatistics(QDateTime dateTime);
-        void saveStatisticsToFile(QString filePath, QDateTime dateTime);
+        void saveStatistics(QDateTime dateTime, QString requestSource);
 
 private:
         void loadSubDeviceList();
-
 
 };
 

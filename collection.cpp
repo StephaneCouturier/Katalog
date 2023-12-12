@@ -54,7 +54,20 @@ void Collection::saveDeviceTableToFile()
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                    SELECT *
+                                    SELECT
+                                            device_id                  ,
+                                            device_parent_id           ,
+                                            device_name                ,
+                                            device_type                ,
+                                            device_external_id         ,
+                                            device_path                ,
+                                            device_total_file_size     ,
+                                            device_total_file_count    ,
+                                            device_total_space         ,
+                                            device_free_space          ,
+                                            device_active              ,
+                                            device_group_id            ,
+                                            device_date_updated
                                     FROM device
                             )");
         query.prepare(querySQL);
@@ -78,6 +91,7 @@ void Collection::saveDeviceTableToFile()
                              << "free_space" << "\t"
                              << "active"     << "\t"
                              << "groupID"    << "\t"
+                             << "date updated"    << "\t"
                              << '\n';
 
             //Iterate the records and generate lines

@@ -135,7 +135,7 @@ void Catalog::setDateLoaded(QDateTime dateTime)
                                         WHERE catalog_name =:catalog_name
                                       )");
         catalogQuery.prepare(catalogQuerySQL);
-        catalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
+        catalogQuery.bindValue(":catalog_date_loaded", dateLoaded.toString("yyyy-MM-dd hh:mm:ss"));
         catalogQuery.bindValue(":catalog_name",        name);
         catalogQuery.exec();
     }
@@ -154,7 +154,7 @@ void Catalog::setDateUpdated(QDateTime dateTime)
                                             WHERE catalog_name =:catalog_name
                                           )");
         catalogQuery.prepare(catalogQuerySQL);
-        catalogQuery.bindValue(":catalog_date_updated", dateUpdated);
+        catalogQuery.bindValue(":catalog_date_updated", dateUpdated.toString("yyyy-MM-dd hh:mm:ss"));
         catalogQuery.bindValue(":catalog_name",        name);
         catalogQuery.exec();
     }
@@ -308,7 +308,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
     qint64 previousFileCount     = fileCount;
     qint64 previousTotalFileSize = totalFileSize;
 
-    //Process if dir exists
+    //If dir exists, catalog the directory (iterator)
     QDir dir (sourcePath);
     if (dir.exists() == true){
         ///Warning and choice if the result is 0 files
@@ -339,60 +339,32 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
         }
         */
 
-        //Inform user about the update
-        /*
-        if(skipCatalogUpdateSummary !=true){
-            QMessageBox msgBox;
-            QString message;
-            if (requestSource=="update")
-                message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(catalog->name);
-            else if (requestSource=="create")
-                message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(catalog->name);
+        //Populate list to report changes
+        qint64 newFileCount       = fileCount;
+        qint64 deltaFileCount     = newFileCount - previousFileCount;
+        qint64 newTotalFileSize   = totalFileSize;
+        qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
 
-            message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
-                               "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                               ).arg(QString::number(catalog->fileCount),
-                                QString::number(deltaFileCount),
-                                QLocale().formattedDataSize(catalog->totalFileSize),
-                                QLocale().formattedDataSize(deltaTotalFileSize));
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(message);
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-        }
-*/
-        //global update
-        // globalUpdateTotalFiles += catalog->fileCount;
-        // globalUpdateDeltaFiles += deltaFileCount;
-        // globalUpdateTotalSize  += catalog->totalFileSize;
-        // globalUpdateDeltaSize  += deltaTotalFileSize;
+        list.append(newFileCount);
+        list.append(deltaFileCount);
+        list.append(newTotalFileSize);
+        list.append(deltaTotalFileSize);
+
+        return list;
 
     }
     else {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(QCoreApplication::translate("MainWindow", "The catalog %1 cannot be updated.<br/>"
-                                                                 "<br/> The source folder - %2 - was not found.<br/>"
+        msgBox.setText(QCoreApplication::translate("MainWindow", "The catalog <b>%1</b> cannot be updated.<br/>"
+                                                                 "<br/> The source folder was not found.<br/><b>%2</b><br/>"
                                                                  "<br/> Possible reasons:<br/>"
                                                                  "    - the device is not connected and mounted,<br/>"
                                                                  "    - the source folder was moved or renamed.").arg(name,sourcePath));
         msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
         msgBox.exec();
+        return list;
     }
-
-    //Populate list to report changes
-    qint64 newFileCount       = fileCount;
-    qint64 deltaFileCount     = newFileCount - previousFileCount;
-    qint64 newTotalFileSize   = totalFileSize;
-    qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
-
-    list.append(newFileCount);
-    list.append(deltaFileCount);
-    list.append(newTotalFileSize);
-    list.append(deltaTotalFileSize);
-
-    return list;
 }
 
 void Catalog::loadCatalog()

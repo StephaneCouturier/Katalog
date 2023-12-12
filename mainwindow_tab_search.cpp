@@ -464,12 +464,10 @@
             QString selectedFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
 
             //Prepare inputs for the Explore
-            tempDevice->ID = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toInt();
-            tempDevice->loadDevice();
-            selectedDirectoryName = selectedFileFolder.remove(selectedDevice->catalog->sourcePath + "/");
+            selectedDirectoryName = selectedFileFolder.remove(activeDevice->catalog->sourcePath + "/");
 
             //Open the catalog into the Explore
-            openCatalogToExplore();
+            openCatalogToExplore(activeDevice);
             ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------

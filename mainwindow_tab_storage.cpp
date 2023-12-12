@@ -84,8 +84,8 @@
     {
         selectedDevice->storage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
         selectedDevice->storage->loadStorage();
-        tempDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
-        tempDevice->loadDevice();
+        activeDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
+        activeDevice->loadDevice();
 
         //display buttons
         ui->Storage_pushButton_Edit->setEnabled(true);

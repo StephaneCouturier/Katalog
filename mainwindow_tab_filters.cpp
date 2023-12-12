@@ -129,7 +129,7 @@
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
 
-            openCatalogToExplore();
+            openCatalogToExplore(selectedDevice);
 
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
@@ -141,8 +141,7 @@
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
             skipCatalogUpdateSummary= false;
-            requestSource ="update";
-            updateSingleCatalog(selectedDevice, true);
+            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode),"update");
         }
     }
     //----------------------------------------------------------------------

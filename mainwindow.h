@@ -142,9 +142,9 @@ class MainWindow : public QMainWindow
 
             //Objects
             Collection *collection = new Collection();
-            Device *selectedDevice = new Device(); //selected    device used for individual device operations
-            Device *tempDevice     = new Device(); //temporary   device used for operations on a list of devices
-            Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
+            Device *selectedDevice = new Device();   //selected device from selection panel, used for operations on any screen
+            Device *activeDevice     = new Device(); //active device from any screen, used for operations on that screen
+            Device *catalogDevice  = new Device();   //selected catalog/device from Catalog screen
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
@@ -211,8 +211,6 @@ class MainWindow : public QMainWindow
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
             void updateSingleCatalog(Device *device, bool updateStorage);
-            void updateCatalogFileList(Device *device);
-            QString requestSource;
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
             void generateCatalogMissingIDs();
@@ -221,13 +219,13 @@ class MainWindow : public QMainWindow
             qint64 globalUpdateDeltaFiles;
             qint64 globalUpdateTotalSize;
             qint64 globalUpdateDeltaSize;
-            void reportAllUpdates(QList<qint64> list);
+            void reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
         //TAB: Explore
             QString selectedDirectoryName;
             QString selectedDirectoryFullPath;
 
-            void openCatalogToExplore();
+            void openCatalogToExplore(Device *device);
             void loadSelectedDirectoryFilesToExplore();
             void loadCatalogDirectoriesToExplore();
 
@@ -527,7 +525,7 @@ class MainWindow : public QMainWindow
             void on_Statistics_pushButton_ClearDate_clicked();
             void on_Statistics_pushButton_PickDate_clicked();
             void on_Statistics_calendarWidget_clicked(const QDate &date);
-
+            //void saveStatisticsToFile(Device *device);
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();
             void on_Tags_pushButton_TagFolder_clicked();
