@@ -251,6 +251,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
         });
 
+        QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this storage"), this);
+        deviceContextMenu.addAction(menuDeviceAction4);
+
+        connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
+            deleteDeviceItem();
+        });
+
         deviceContextMenu.exec(globalPos);
     }
     else{
@@ -327,7 +334,7 @@ void MainWindow::convertDeviceCatalogFile() {
     //Update Device type
     //save table to update columns and reload
     collection->saveDeviceTableToFile();
-    loadDeviceFileToTable();
+    collection->loadDeviceFileToTable();
 
     //update type
     querySQL = QLatin1String(R"(
@@ -339,7 +346,7 @@ void MainWindow::convertDeviceCatalogFile() {
     query.exec();
 
     collection->saveDeviceTableToFile();
-    loadDeviceFileToTable();
+    collection->loadDeviceFileToTable();
     loadDeviceTableToTreeModel();
 
     //Insert Catalog assignments from device_catalog
@@ -639,147 +646,20 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 //--------------------------------------------------------------------------
 void MainWindow::deleteDeviceItem()
 {
-    activeDevice->verifyHasSubDevice();
-    activeDevice->verifyHasCatalog();
+    activeDevice->deleteDevice();
 
-    if ( activeDevice->hasSubDevice == false ){
+    //Save data to files
+    collection->saveDeviceTableToFile();
+    saveStorageTableToFile();
 
-        if ( activeDevice->hasCatalog == false ){
-
-            int result = QMessageBox::warning(this,"Katalog",
-                                              tr("Do you want to <span style='color: red';>delete</span> this %1 device?"
-                                                 "<table>"
-                                                 "<tr><td>ID:   </td><td><b> %2 </td></tr>"
-                                                 "<tr><td>Name: </td><td><b> %3 </td></tr>"
-                                                 "</table>").arg(activeDevice->type, QString::number(activeDevice->ID), activeDevice->name)
-                                              ,QMessageBox::Yes|QMessageBox::Cancel);
-
-            if ( result ==QMessageBox::Yes){
-
-                //Delete selected ID
-                activeDevice->deleteDevice();
-                if(activeDevice->type == "Storage"){
-                    activeDevice->storage->ID = activeDevice->externalID;
-                    activeDevice->storage->deleteStorage();
-                }
-
-                //Save data to files
-                collection->saveDeviceTableToFile();
-                saveStorageTableToFile();
-
-                //Reload data to models
-                loadDeviceTableToTreeModel();
-                loadStorageTableToModel();
-                updateStorageSelectionStatistics();
-                loadDeviceTableToTreeModel();
-            }
-        }
-        else{
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("The selected device cannot be deleted as long as it has catalogs linked."));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-        }
-    }
-    else{
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("The selected device cannot be deleted as long as it has sub-devices."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-    }
+    //Reload data to models
+    loadDeviceTableToTreeModel();
+    loadStorageTableToModel();
+    updateStorageSelectionStatistics();
+    loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::loadDeviceFileToTable()
-{
-    if(collection->databaseMode=="Memory"){
-        //Clear table
-        QSqlQuery query;
-        QString querySQL;
-        querySQL = QLatin1String(R"(
-                        DELETE FROM device
-                    )");
-        query.prepare(querySQL);
-        query.exec();
 
-        //Define storage file and prepare stream
-        QFile deviceFile(collection->deviceFilePath);
-        QTextStream textStream(&deviceFile);
-
-        //Open file or create it
-        if(!deviceFile.open(QIODevice::ReadOnly)) {
-            // Create it, if it does not exist
-            QFile newDeviceFile(collection->deviceFilePath);
-            newDeviceFile.open(QFile::WriteOnly | QFile::Text);
-            QTextStream stream(&newDeviceFile);
-            stream << "ID"            << "\t"
-                   << "Parent ID"     << "\t"
-                   << "Name"          << "\t"
-                   << '\n';
-            newDeviceFile.close();
-        }
-
-        //Load Device device lines to table
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                if (line.left(2)!="ID"){//skip the first line with headers
-
-                    //Split the string with tabulation into a list
-                    QStringList fieldList = line.split('\t');
-                    QSqlQuery insertQuery;
-                    querySQL = QLatin1String(R"(
-                        INSERT INTO device (
-                                        device_id,
-                                        device_parent_id,
-                                        device_name,
-                                        device_type,
-                                        device_external_id,
-                                        device_path,
-                                        device_total_file_size,
-                                        device_total_file_count,
-                                        device_total_space,
-                                        device_free_space,
-                                        device_group_id )
-                        VALUES(
-                                        :device_id,
-                                        :device_parent_id,
-                                        :device_name,
-                                        :device_type,
-                                        :device_external_id,
-                                        :device_path,
-                                        :device_total_file_size,
-                                        :device_total_file_count,
-                                        :device_total_space,
-                                        :device_free_space,
-                                        :device_group_id )
-                    )");
-                    insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":device_id",fieldList[0].toInt());
-                    insertQuery.bindValue(":device_parent_id",fieldList[1]);
-                    insertQuery.bindValue(":device_name",fieldList[2]);
-                    if(fieldList.size()>3){//prevent issues with files created in v1.22
-                        insertQuery.bindValue(":device_type",fieldList[3]);
-                        insertQuery.bindValue(":device_external_id",fieldList[4]);
-                        insertQuery.bindValue(":device_path",fieldList[5]);
-                        insertQuery.bindValue(":device_total_file_size",fieldList[6]);
-                        insertQuery.bindValue(":device_total_file_count",fieldList[7]);
-                        insertQuery.bindValue(":device_total_space",fieldList[8]);
-                        insertQuery.bindValue(":device_free_space",fieldList[9]);
-                        insertQuery.bindValue(":device_group_id",fieldList[11]);
-                    }
-                    insertQuery.exec();
-                }
-        }
-        deviceFile.close();
-
-        insertPhysicalStorageGroup();
-    }
-}
 //--------------------------------------------------------------------------
 void MainWindow::loadDeviceTableToTreeModel()
 {
@@ -1083,44 +963,6 @@ void MainWindow::updateNumbers() {
 void MainWindow::updateAllNumbers()
 {
     activeDevice->updateParentsNumbers();
-
-    collection->saveDeviceTableToFile();
-    loadDeviceTableToTreeModel();
-}
-//--------------------------------------------------------------------------
-void MainWindow::insertPhysicalStorageGroup() {
-    QSqlQuery query;
-    QString querySQL;
-
-    querySQL = QLatin1String(R"(
-                            SELECT COUNT(*)
-                            FROM device
-                            WHERE device_id = 1
-                        )");
-    query.prepare(querySQL);
-    query.exec();
-    query.next();
-    int result = query.value(0).toInt();
-
-    if(result == 0){
-        Device *newDeviceItem1 = new Device();
-        newDeviceItem1->ID = 1;
-        newDeviceItem1->parentID = 0;
-        newDeviceItem1->name = tr(" Physical Group");
-        newDeviceItem1->type = "Virtual";
-        newDeviceItem1->externalID = 0;
-        newDeviceItem1->groupID = 0;
-        newDeviceItem1->insertDevice();
-
-        Device *newDeviceItem2 = new Device();
-        newDeviceItem2->ID = 2;
-        newDeviceItem2->parentID = 1;
-        newDeviceItem2->name = tr("Default Virtual group");
-        newDeviceItem2->type = "Virtual";
-        newDeviceItem2->externalID = 0;
-        newDeviceItem2->groupID = 0;
-        newDeviceItem2->insertDevice();
-    }
 
     collection->saveDeviceTableToFile();
     loadDeviceTableToTreeModel();
@@ -1565,4 +1407,11 @@ void MainWindow::updateAllDeviceActive()
         }
 
 
+}
+
+//--------------------------------------------------------------------------
+// DEV: migration
+void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
+{
+    generateAndAssociateCatalogMissingIDs();
 }

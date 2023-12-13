@@ -279,7 +279,7 @@
             ui->Filters_label_DisplayCatalog->setText(ui->Filters_label_DisplayCatalog->text());
 
             //Refresh filter tree
-            loadDeviceFileToTable();
+            collection->loadDeviceFileToTable();
             loadDeviceTableToTreeModel();
 
             //Change tab to show the result of the catalog creation

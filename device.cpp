@@ -262,14 +262,57 @@ void Device::verifyHasCatalog(){
 
 void Device::deleteDevice(){
 
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
+    verifyHasSubDevice();
+    verifyHasCatalog();
+
+    if ( hasSubDevice == false ){
+
+        if ( hasCatalog == false ){
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?"
+                                                                     "<table>"
+                                                                     "<tr><td>ID:   </td><td><b> %2 </td></tr>"
+                                                                     "<tr><td>Name: </td><td><b> %3 </td></tr>"
+                                                                     "</table>").arg(type, QString::number(ID), name));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
+            int result = msgBox.exec();
+
+            if ( result ==QMessageBox::Yes){
+
+                //Delete selected ID
+                QSqlQuery query;
+                QString querySQL = QLatin1String(R"(
                                     DELETE FROM device
                                     WHERE device_id=:device_id
                                 )");
-    query.prepare(querySQL);
-    query.bindValue(":device_id", ID);
-    query.exec();
+                query.prepare(querySQL);
+                query.bindValue(":device_id", ID);
+                query.exec();
+
+                if(type == "Storage"){
+                    storage->ID = externalID;
+                    storage->deleteStorage();
+                }
+            }
+        }
+        else{
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", "The selected device cannot be deleted as long as it has catalogs linked."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+        }
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow", "The selected device cannot be deleted as long as it has sub-devices."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
 }
 
 void Device::saveDevice()

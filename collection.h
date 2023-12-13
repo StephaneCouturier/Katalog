@@ -74,6 +74,7 @@ public:
     void generateCollectionFilesPaths();
 
     //File loading
+    void loadDeviceFileToTable();
     void loadStatisticsCatalogFileToTable();
     void loadStatisticsStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
@@ -81,6 +82,9 @@ public:
     //File saving
     void saveDeviceTableToFile();
     void saveStatiticsToFile();
+
+    //Data management
+    void insertPhysicalStorageGroup();
 
 };
 

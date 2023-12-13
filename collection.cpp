@@ -30,6 +30,7 @@
 */
 
 #include "collection.h"
+#include "device.h"
 
 void Collection::generateCollectionFilesPaths()
 {
@@ -114,6 +115,96 @@ void Collection::saveDeviceTableToFile()
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }
+    }
+}
+//----------------------------------------------------------------------
+void Collection::loadDeviceFileToTable()
+{
+    if(databaseMode=="Memory"){
+        //Clear table
+        QSqlQuery query;
+        QString querySQL;
+        querySQL = QLatin1String(R"(
+                        DELETE FROM device
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Define storage file and prepare stream
+        QFile deviceFile(deviceFilePath);
+        QTextStream textStream(&deviceFile);
+
+        //Open file or create it
+        if(!deviceFile.open(QIODevice::ReadOnly)) {
+            // Create it, if it does not exist
+            QFile newDeviceFile(deviceFilePath);
+            newDeviceFile.open(QFile::WriteOnly | QFile::Text);
+            QTextStream stream(&newDeviceFile);
+            stream << "ID"            << "\t"
+                   << "Parent ID"     << "\t"
+                   << "Name"          << "\t"
+                   << '\n';
+            newDeviceFile.close();
+        }
+
+        //Load Device device lines to table
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(2)!="ID"){//skip the first line with headers
+
+                    //Split the string with tabulation into a list
+                    QStringList fieldList = line.split('\t');
+                    QSqlQuery insertQuery;
+                    querySQL = QLatin1String(R"(
+                        INSERT INTO device (
+                                        device_id,
+                                        device_parent_id,
+                                        device_name,
+                                        device_type,
+                                        device_external_id,
+                                        device_path,
+                                        device_total_file_size,
+                                        device_total_file_count,
+                                        device_total_space,
+                                        device_free_space,
+                                        device_group_id )
+                        VALUES(
+                                        :device_id,
+                                        :device_parent_id,
+                                        :device_name,
+                                        :device_type,
+                                        :device_external_id,
+                                        :device_path,
+                                        :device_total_file_size,
+                                        :device_total_file_count,
+                                        :device_total_space,
+                                        :device_free_space,
+                                        :device_group_id )
+                    )");
+                    insertQuery.prepare(querySQL);
+                    insertQuery.bindValue(":device_id",fieldList[0].toInt());
+                    insertQuery.bindValue(":device_parent_id",fieldList[1]);
+                    insertQuery.bindValue(":device_name",fieldList[2]);
+                    if(fieldList.size()>3){//prevent issues with files created in v1.22
+                        insertQuery.bindValue(":device_type",fieldList[3]);
+                        insertQuery.bindValue(":device_external_id",fieldList[4]);
+                        insertQuery.bindValue(":device_path",fieldList[5]);
+                        insertQuery.bindValue(":device_total_file_size",fieldList[6]);
+                        insertQuery.bindValue(":device_total_file_count",fieldList[7]);
+                        insertQuery.bindValue(":device_total_space",fieldList[8]);
+                        insertQuery.bindValue(":device_free_space",fieldList[9]);
+                        insertQuery.bindValue(":device_group_id",fieldList[11]);
+                    }
+                    insertQuery.exec();
+                }
+        }
+        deviceFile.close();
+
+        insertPhysicalStorageGroup();
     }
 }
 //----------------------------------------------------------------------
@@ -415,3 +506,41 @@ void Collection::saveStatiticsToFile()
     }
 }
 //----------------------------------------------------------------------
+void Collection::insertPhysicalStorageGroup() {
+    QSqlQuery query;
+    QString querySQL;
+
+    querySQL = QLatin1String(R"(
+                            SELECT COUNT(*)
+                            FROM device
+                            WHERE device_id = 1
+                        )");
+    query.prepare(querySQL);
+    query.exec();
+    query.next();
+    int result = query.value(0).toInt();
+
+    if(result == 0){
+        Device *newDeviceItem1 = new Device();
+        newDeviceItem1->ID = 1;
+        newDeviceItem1->parentID = 0;
+        newDeviceItem1->name = QCoreApplication::translate("MainWindow", " Physical Group");
+        newDeviceItem1->type = "Virtual";
+        newDeviceItem1->externalID = 0;
+        newDeviceItem1->groupID = 0;
+        newDeviceItem1->insertDevice();
+
+        Device *newDeviceItem2 = new Device();
+        newDeviceItem2->ID = 2;
+        newDeviceItem2->parentID = 1;
+        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Default Virtual group");
+        newDeviceItem2->type = "Virtual";
+        newDeviceItem2->externalID = 0;
+        newDeviceItem2->groupID = 0;
+        newDeviceItem2->insertDevice();
+    }
+
+    saveDeviceTableToFile();
+
+}
+//--------------------------------------------------------------------------

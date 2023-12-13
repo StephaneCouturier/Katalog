@@ -740,145 +740,7 @@
         loadCatalogsTableToModel();
 
     }
-    //--------------------------------------------------------------------------
-/*
-    void MainWindow::updateCatalogFileList(Device *device)
-    {
-        if(collection->databaseMode=="Memory"){
-           //Check if the update can be done, inform the user otherwise.
-           //Deal with old versions, where necessary info may have not have been available
-            if(device->catalog->filePath == "not recorded" or device->name == "not recorded" or device->catalog->sourcePath == "not recorded"){
-                QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
-                                                             "Edit it and make sure it has the following first 2 lines:\n\n"
-                                                             "<catalogSourcePath>/folderpath\n"
-                                                             "<catalogFileCount>10000\n\n"
-                                                             "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
-                                                             "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                                             "- the catalogFileCount number does not matter as much, it can be updated.\n")
-                                         );
-                return;
-           }
-
-           //Deal with other cases where some input information is missing
-           if(device->catalog->filePath == "" or device->name == "" or device->catalog->sourcePath == ""){
-                QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
-                                                              device->catalog->filePath, device->name, device->catalog->sourcePath));
-                return;
-           }
-
-           //BackUp the file before, if the option is selected
-           if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-                backupCatalogFile(device->catalog->filePath);
-           }
-        }
-
-
-        //Capture previous FileCount and TotalFileSize to report the changes after the update
-            qint64 previousFileCount     = device->catalog->fileCount;
-            qint64 previousTotalFileSize = device->catalog->totalFileSize;
-
-        //Process if dir exists
-        QDir dir (device->catalog->sourcePath);
-        if (dir.exists()==true){
-            ///Warning and choice if the result is 0 files
-            if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
-            {
-                int result = QMessageBox::warning(this, "Katalog - Warning",
-                                    tr("The source folder does not contain any file.\n"
-                                         "This could mean that the source is empty or the device is not mounted to this folder.\n")
-                                         +tr("Do you want to save it anyway (the catalog would be empty)?\n"), QMessageBox::Yes
-                                                  | QMessageBox::Cancel);
-                if ( result == QMessageBox::Cancel){
-                    return;
-                }
-            }
-
-            //catalog the directory (iterator)
-            device->catalog->catalogDirectory(collection->databaseMode);
-
-            if(collection->databaseMode=="Memory"){
-                //save it to csv files
-                saveCatalogToNewFile(device);
-                saveFoldersToNewFile(device->name);
-            }
-
-            //Prepare to report changes to the catalog
-            qint64 deltaFileCount     = device->catalog->fileCount     - previousFileCount;
-            qint64 deltaTotalFileSize = device->catalog->totalFileSize - previousTotalFileSize;
-
-            //Inform user about the update
-            if(skipCatalogUpdateSummary !=true){
-                QMessageBox msgBox;
-                QString message;
-                if (requestSource=="update")
-                    message = QString(tr("<br/>This catalog was updated:<br/><b> %1 </b> <br/>")).arg(device->name);
-                else if (requestSource=="create")
-                    message = QString(tr("<br/>This catalog was created:<br/><b> %1 </b> <br/>")).arg(device->name);
-
-                message += QString("<table> <tr><td>Number of files: </td><td><b> %1 </b></td><td>  (added: <b> %2 </b>)</td></tr>"
-                                     "<tr><td>Total file size: </td><td><b> %3 </b>  </td><td>  (added: <b> %4 </b>)</td></tr></table>"
-                                     ).arg(QString::number(device->catalog->fileCount),
-                                           QString::number(deltaFileCount),
-                                           QLocale().formattedDataSize(device->catalog->totalFileSize),
-                                           QLocale().formattedDataSize(deltaTotalFileSize));
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            }
-
-           //Global update
-            globalUpdateTotalFiles += device->catalog->fileCount;
-            globalUpdateDeltaFiles += deltaFileCount;
-            globalUpdateTotalSize  += device->catalog->totalFileSize;
-            globalUpdateDeltaSize  += deltaTotalFileSize;
-        }
-        else {
-            QMessageBox::information(this,"Katalog",tr("The catalog %1 cannot be updated.\n"
-                                            "\n The source folder - %2 - was not found.\n"
-                                            "\n Possible reasons:\n"
-                                            "    - the device is not connected and mounted,\n"
-                                            "    - the source folder was moved or renamed.")
-                                            .arg(device->name,
-                                                   device->catalog->sourcePath)
-                                     );
-        }
-
-        //record catalog statistics if option is selected
-        if ( ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked() == true ){
-            //Save values
-            QDateTime dateTime = device->catalog->dateUpdated;
-            device->saveStatistics(dateTime);
-            //device->saveStatisticsToFile(collection->statisticsCatalogFilePath, dateTime);
-
-            selectedDevice->saveStatistics(dateTime);
-            //selectedDevice->saveStatisticsToFile(collection->statisticsDeviceFilePath, dateTime);
-        }
-
-        //Refresh data to UI
-        loadCatalogsTableToModel();
-        loadStatisticsChart();
-
-        //Update Device table
-        QSqlQuery queryUpdateDevice;
-        QString queryUpdateDeviceSQL = QLatin1String(R"(
-                                        UPDATE device
-                                        SET device_total_file_size = :device_total_file_size,
-                                            device_total_file_count  = :device_total_file_count
-                                        WHERE device_external_id = :device_external_id
-                                        AND device_type ='Catalog'
-                                        )");
-        queryUpdateDevice.prepare(queryUpdateDeviceSQL);
-        queryUpdateDevice.bindValue(":device_total_file_size",QString::number(device->catalog->totalFileSize));
-        queryUpdateDevice.bindValue(":device_total_file_count",QString::number(device->catalog->fileCount));
-        queryUpdateDevice.bindValue(":device_external_id", device->name);
-        queryUpdateDevice.exec();
-
-        collection->saveDeviceTableToFile();
-
-    }
-*/
-    //--------------------------------------------------------------------------
+    //-------------------------------------------------------------------------- 
     void MainWindow::importFromVVV()
     {
         //Select file
@@ -1062,32 +924,6 @@
 
         loadCollection();
 
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::generateCatalogMissingIDs()
-    {
-        //Get catalogs with missing ID
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    SELECT device_id, catalog_name
-                                    FROM catalog
-                                    LEFT JOIN device ON device_name = catalog_name
-                                    WHERE catalog_id IS NULL or catalog_id = ''
-                                )");
-        query.prepare(querySQL);
-        query.exec();
-
-        //Loop and generate an ID
-        while(query.next()){
-            Device *device = new Device;
-            device->ID = query.value(0).toInt();
-            device->loadDevice();
-            device->catalog->generateID();
-
-            device->externalID = device->catalog->ID;
-            device->saveDevice();
-            device->catalog->saveCatalog();
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogChanges(Catalog *catalog)
@@ -1546,5 +1382,55 @@
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
+    }
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //--- 1.x - 2.0 Migration
+    void MainWindow::generateAndAssociateCatalogMissingIDs()
+    {
+        //Get catalogs with missing ID
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT device_id, catalog_name
+                                    FROM catalog
+                                    LEFT JOIN device ON device_name = catalog_name
+
+                                )");//WHERE device_id IS NULL or catalog_id = '' or catalog_id = 0
+        query.prepare(querySQL);
+        query.exec();
+
+        //Loop and generate an ID
+        while(query.next()){
+            Device device;
+            device.ID = query.value(0).toInt();
+            device.loadDevice();
+            device.catalog->generateID();
+
+            device.externalID = device.catalog->ID;
+            device.saveDevice();
+            device.catalog->name = device.name;
+            device.catalog->saveCatalog();
+            device.catalog->updateStorageNameToFile();
+            qDebug()<<device.catalog->name<<device.catalog->ID;
+        }
+
+        querySQL = QLatin1String(R"(
+                                    UPDATE device
+                                    SET device_external_id = (SELECT catalog_id FROM catalog WHERE device_name = catalog_name)
+                                    WHERE device_type = 'Catalog'
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+
+
+        collection->saveDeviceTableToFile();
+        loadDeviceTableToTreeModel();
+        loadCatalogsTableToModel();
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("generateCatalogMissingIDs"));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
     }
     //--------------------------------------------------------------------------

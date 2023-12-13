@@ -287,7 +287,7 @@
 
         //Reset device tree
         setTreeExpandState(false);
-        loadDeviceFileToTable();
+        collection->loadDeviceFileToTable();
         loadDeviceTableToTreeModel();
 
         filterFromSelectedDevice();

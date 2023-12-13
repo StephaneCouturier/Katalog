@@ -213,7 +213,7 @@ class MainWindow : public QMainWindow
             void updateSingleCatalog(Device *device, bool updateStorage);
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
-            void generateCatalogMissingIDs();
+            void generateAndAssociateCatalogMissingIDs();
 
             qint64 globalUpdateTotalFiles;
             qint64 globalUpdateDeltaFiles;
@@ -278,8 +278,6 @@ class MainWindow : public QMainWindow
             bool optionDisplayAllExceptPhysicalGroup;
             bool optionDisplayFullTable;
 
-            void loadDeviceFileToTable();
-            void insertPhysicalStorageGroup();
             void addDeviceVirtual();
             void addDeviceStorage();
             void editDevice();
@@ -536,6 +534,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
+            void on_TEST_pushButton_GenerateMissingIDs_clicked();
 };
 
 #endif // MAINWINDOW_H

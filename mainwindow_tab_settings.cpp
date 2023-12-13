@@ -287,7 +287,7 @@
             loadSearchHistoryFileToTable();
             loadCatalogFilesToTable();
             loadStorageFileToTable();
-            loadDeviceFileToTable();
+            collection->loadDeviceFileToTable();
 
         //Check active status and synch it
             updateAllDeviceActive();

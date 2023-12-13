@@ -331,14 +331,6 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
         //catalog the directory (iterator)
         catalogDirectory(databaseMode);
 
-        /*
-        if(databaseMode=="Memory"){
-            //save it to csv files
-            saveCatalogToNewFile(catalog->name);
-            saveFoldersToNewFile(catalog->name);
-        }
-        */
-
         //Populate list to report changes
         qint64 newFileCount       = fileCount;
         qint64 deltaFileCount     = newFileCount - previousFileCount;
