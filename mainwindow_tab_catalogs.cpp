@@ -96,10 +96,11 @@
         {//Change the selected device and catalog, and go to Search tab
 
             //Make the catalog the selected device
-            selectedDevice = catalogDevice;
+            selectedDevice->ID = activeDevice->ID;
+            selectedDevice->loadDevice();
 
             //Update the displayed name
-            ui->Filters_label_DisplayCatalog->setText(selectedDevice->name);
+            displaySelectedDeviceName();
 
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);

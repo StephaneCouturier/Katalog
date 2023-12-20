@@ -701,12 +701,18 @@
                         }
                         //Otherwise search in the list of catalogs in the selectedDevice
                         else{
-                            foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
-                                if(row.type == "Catalog"){
-                                    Device *device = new Device;
-                                    device->ID = row.ID;
-                                    device->loadDevice();
-                                    searchFilesInCatalog(device);
+                            if(selectedDevice->type == "Catalog")
+                            {
+                                searchFilesInCatalog(selectedDevice);
+                            }
+                            else{
+                                foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
+                                    if(row.type == "Catalog"){
+                                        Device *device = new Device;
+                                        device->ID = row.ID;
+                                        device->loadDevice();
+                                        searchFilesInCatalog(device);
+                                    }
                                 }
                             }
                         }

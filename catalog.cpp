@@ -1146,7 +1146,7 @@ void Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         else {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Error opening output file."));
+            msgBox.setText(QCoreApplication::translate("MainWindow","Error opening output file."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }
@@ -1184,7 +1184,7 @@ void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         } else {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Error opening output file."));
+            msgBox.setText(QCoreApplication::translate("MainWindow","Error opening output file."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
             //return EXIT_FAILURE;
