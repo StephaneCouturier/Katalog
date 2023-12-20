@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2023-12-11";
+        releaseDate     = "2023-12-20";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -148,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 selectedDirectoryFullPath = selectedDevice->catalog->sourcePath + "/" + selectedDirectoryName;
                 ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
                 if (selectedDevice->catalog->filePath != ""){
-                    openCatalogToExplore(selectedDevice);
+                    openCatalogToExplore();
                 }
             }
 
@@ -283,10 +283,10 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }
         else if ( result ==QMessageBox::Save){
             //Save model data to Storage file
-            saveStorageTableToFile();
+            collection->saveStorageTableToFile();
 
             //Reload Storage file data to table
-            loadStorageFileToTable();
+            collection->loadStorageFileToTable();
 
             event->accept();
             return;
@@ -298,14 +298,18 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-//DEV Templates
+//DEV: Templates
 /*
 qDebug()<<"DEBUG value: " << value;
 
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");
 msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
-msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
+msgBox.setText(QCoreApplication::translate("MainWindow",
+                                    "Text<br/>"
+                                    "<br/> Text with first parameter<br/><b>%2</b><br/>"
+                                    "<br/> Text with first parameter<br/><b>%2</b><br/>"
+                                    ).arg( parameter1, tempText.toUtf8() ));
 msgBox.setIcon(QMessageBox::Information);
 msgBox.exec();
 

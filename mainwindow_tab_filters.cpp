@@ -129,7 +129,7 @@
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
 
-            openCatalogToExplore(selectedDevice);
+            openCatalogToExplore();
 
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
@@ -140,8 +140,7 @@
     {
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
-            skipCatalogUpdateSummary= false;
-            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode),"update");
+            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
         }
     }
     //----------------------------------------------------------------------
@@ -189,6 +188,8 @@
         filterFromSelectedDevice();
 
         refreshDifferencesCatalogSelection();
+
+        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos)

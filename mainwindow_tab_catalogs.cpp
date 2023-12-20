@@ -80,16 +80,16 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
-            //The selected catalog becomes the active catalog
-            // selectedDevice->ID = activeDevice->ID;
-            // selectedDevice->loadDevice();
+            //The activeDevice becomes the selectedDevice
+            selectedDevice->ID = activeDevice->ID;
+            selectedDevice->loadDevice();
+            displaySelectedDeviceName();
 
             //Load
-            openCatalogToExplore(activeDevice);
+            openCatalogToExplore();
 
             //Go to explore tab
             ui->tabWidget->setCurrentIndex(2);
-
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Search_clicked()
@@ -112,16 +112,13 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_ExploreCatalog_clicked()
         {
-                //Start at the root folder of the catalog
-                selectedDirectoryName     = selectedDevice->catalog->sourcePath;
-                selectedDirectoryFullPath = selectedDevice->catalog->sourcePath;
-
-                //The selected catalog becomes the active catalog
-                // selectedDevice->ID = tempDevice->ID;
-                // selectedDevice->loadDevice();
+                //The activeDevice becomes the selectedDevice
+                selectedDevice->ID = activeDevice->ID;
+                selectedDevice->loadDevice();
+                displaySelectedDeviceName();
 
                 //Load
-                openCatalogToExplore(activeDevice);
+                openCatalogToExplore();
 
                 //Go to explore tab
                 ui->tabWidget->setCurrentIndex(2);
@@ -140,7 +137,8 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {
-            reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode),"catalog single update");
+            reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder), "update");
+            loadCatalogsTableToModel();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -151,7 +149,7 @@
             globalUpdateDeltaSize  = 0;
 
             //User to choose showing or skipping summary for each catalog update
-                skipCatalogUpdateSummary = false;
+                bool showEachCatalogUpdateSummary = false;
 
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
@@ -160,8 +158,8 @@
                 msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
                 int result = msgBox.exec();
 
-                if ( result == QMessageBox::No){
-                    skipCatalogUpdateSummary= true;
+                if ( result == QMessageBox::Yes){
+                    showEachCatalogUpdateSummary = true;
                 }
                 else if ( result == QMessageBox::Cancel){
                     return;
@@ -185,19 +183,16 @@
                         loopDevice.ID = ui->Catalogs_treeView_CatalogList->model()->data(ui->Catalogs_treeView_CatalogList->model()->index(row, 15)).toInt();
                         loopDevice.loadDevice();
 
-                        QList<qint64> list = loopDevice.updateDevice("update",collection->databaseMode);
-                        qDebug()<<"loopDevice updateDevice"<<list.count();
-
-                        if ( skipCatalogUpdateSummary == false ){
-                            reportAllUpdates(&loopDevice, list, "update_single");
-
+                        QList<qint64> list = loopDevice.updateDevice("update", collection->databaseMode, false, collection->collectionFolder);
+                        if ( showEachCatalogUpdateSummary == true ){
+                            reportAllUpdates(&loopDevice, list, "update");
                         }
 
                         if(list.count()>0){
-                            globalUpdateTotalFiles += list[0];
-                            globalUpdateDeltaFiles += list[1];
-                            globalUpdateTotalSize  += list[2];
-                            globalUpdateDeltaSize  += list[3];
+                            globalUpdateTotalFiles += list[1];
+                            globalUpdateDeltaFiles += list[2];
+                            globalUpdateTotalSize  += list[3];
+                            globalUpdateDeltaSize  += list[4];
                         }
                     }
                     else
@@ -205,17 +200,21 @@
                 }
 
             QList<qint64> globalList;
+            globalList <<1;
             globalList <<globalUpdateTotalFiles;
             globalList <<globalUpdateDeltaFiles;
             globalList <<globalUpdateTotalSize;
             globalList <<globalUpdateDeltaSize;
             globalList <<updatedCatalogs;
             globalList <<skippedCatalogs;
-
-            reportAllUpdates(activeDevice, globalList,"update_list");
-
-            skipCatalogUpdateSummary= false;
-
+            globalList <<0;
+            globalList <<0;
+            globalList <<0;
+            globalList <<0;
+            globalList <<0;
+            globalList <<0;
+            globalList <<0;
+            reportAllUpdates(selectedDevice, globalList, "list");
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_EditCatalogFile_clicked()
@@ -290,7 +289,7 @@
                     queryDelete.exec("DELETE FROM catalog");
 
                     //refresh catalog lists
-                    loadCatalogFilesToTable();
+                    collection->loadCatalogFilesToTable();
                 }
 
                 loadCatalogsTableToModel();
@@ -333,7 +332,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
-            saveCatalogChanges(selectedDevice->catalog);
+            saveCatalogChanges(activeDevice->catalog);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
@@ -351,118 +350,6 @@
         ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
         ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
         ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::loadCatalogFilesToTable()
-    {
-        if(collection->databaseMode=="Memory"){
-            //Clear catalog table
-            QSqlQuery queryDelete;
-            queryDelete.prepare( "DELETE FROM catalog" );
-            queryDelete.exec();
-
-            //Iterate in the directory to create a list of files and sort it
-            QStringList catalogFileExtensions;
-            catalogFileExtensions << "*.idx";
-
-            QDirIterator iterator(collection->collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
-
-                // Iterate to the next file
-                QString path = iterator.next();
-                QFile catalogFile(path);
-
-                // Get file info
-                QFileInfo catalogFileInfo(catalogFile);
-
-                // Verify that the file can be opened
-                if(!catalogFile.open(QIODevice::ReadOnly)) {
-                          QMessageBox::information(this,"Katalog",tr("No catalog found."));
-                          return;
-                }
-
-                //Prepare a textsteam for the file
-                QTextStream textStreamCatalogs(&catalogFile);
-
-                //Read the first 10 lines and put values in a stringlist
-                QStringList catalogValues;
-                QString line;
-                QString value;
-                for (int i=0; i<11; i++) {
-                          line = textStreamCatalogs.readLine();
-                          if (line !="" and QVariant(line.at(0)).toString()=="<"){
-                       value = line.right(line.size() - line.indexOf(">") - 1);
-                       if (value =="") catalogValues << "";
-                       else catalogValues << value;
-                          }
-                }
-                if (catalogValues.count()== 7) catalogValues << "false"; //for older catalog without isFullDevice
-                if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata
-                if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion
-                if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID
-
-                if(catalogValues.length()>0){
-                    //Insert a line in the table with available data
-
-                    //Prepare insert query for filesall
-                    QSqlQuery insertCatalogQuery;
-                    QString insertCatalogQuerySQL = QLatin1String(R"(
-                                INSERT OR IGNORE INTO catalog (
-                                                catalog_id,
-                                                catalog_file_path,
-                                                catalog_name,
-                                                catalog_date_updated,
-                                                catalog_source_path,
-                                                catalog_file_count,
-                                                catalog_total_file_size,
-                                                catalog_include_hidden,
-                                                catalog_file_type,
-                                                catalog_storage,
-                                                catalog_include_symblinks,
-                                                catalog_is_full_device,
-                                                catalog_date_loaded,
-                                                catalog_include_metadata,
-                                                catalog_app_version
-                                                )
-                                VALUES(
-                                                :catalog_id,
-                                                :catalog_file_path,
-                                                :catalog_name,
-                                                :catalog_date_updated,
-                                                :catalog_source_path,
-                                                :catalog_file_count,
-                                                :catalog_total_file_size,
-                                                :catalog_include_hidden,
-                                                :catalog_file_type,
-                                                :catalog_storage,
-                                                :catalog_include_symblinks,
-                                                :catalog_is_full_device,
-                                                :catalog_date_loaded,
-                                                :catalog_include_metadata,
-                                                :catalog_app_version )
-                            )");
-
-                    insertCatalogQuery.prepare(insertCatalogQuerySQL);
-                    insertCatalogQuery.bindValue(":catalog_id",                 catalogValues[10]);
-                    insertCatalogQuery.bindValue(":catalog_file_path",          catalogFileInfo.filePath());
-                    insertCatalogQuery.bindValue(":catalog_name",               catalogFileInfo.completeBaseName());
-                    insertCatalogQuery.bindValue(":catalog_date_updated",       catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-                    insertCatalogQuery.bindValue(":catalog_source_path",        catalogValues[0]);
-                    insertCatalogQuery.bindValue(":catalog_file_count",         catalogValues[1].toInt());
-                    insertCatalogQuery.bindValue(":catalog_total_file_size",    catalogValues[2].toLongLong());
-                    insertCatalogQuery.bindValue(":catalog_include_hidden",     catalogValues[3]);
-                    insertCatalogQuery.bindValue(":catalog_file_type",          catalogValues[4]);
-                    insertCatalogQuery.bindValue(":catalog_storage",            catalogValues[5]);
-                    insertCatalogQuery.bindValue(":catalog_include_symblinks",  catalogValues[6]);
-                    insertCatalogQuery.bindValue(":catalog_is_full_device",     catalogValues[7]);
-                    insertCatalogQuery.bindValue(":catalog_date_loaded","");
-                    insertCatalogQuery.bindValue(":catalog_include_metadata",   catalogValues[8]);
-                    insertCatalogQuery.bindValue(":catalog_app_version",        catalogValues[9]);
-                    insertCatalogQuery.exec();
-                }
-                catalogFile.close();
-            }
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadCatalogsTableToModel()
@@ -692,55 +579,6 @@
         QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::updateSingleCatalog(Device *device, bool updateStorage)
-    {
-        //Update catalog file list
-        QList<qint64> list = device->updateDevice("update",collection->databaseMode);
-
-        //updateCatalogFileList(device);
-
-        //Update its storage
-        Device *parentStorageDevice = new Device;
-        parentStorageDevice->ID = device->parentID;
-        parentStorageDevice->loadDevice();
-
-        //Update storage
-        if ( parentStorageDevice->path !=""){
-            device->storage->ID = parentStorageDevice->externalID;
-                device->storage->loadStorage();
-                if(updateStorage==true){
-                    updateStorageInfo(device->storage);
-                }
-            }
-        else{//Update path as catalog's path
-            activeDevice->storage->path = device->catalog->sourcePath;
-
-            if(updateStorage==true){
-                updateStorageInfo(device->storage);
-
-                //update path
-                QSqlQuery queryTotalSpace;
-                QString queryTotalSpaceSQL = QLatin1String(R"(
-                                    UPDATE storage
-                                    SET storage_path =:storage_path
-                                    WHERE storage_id = :storage_id
-                                    )");
-                queryTotalSpace.prepare(queryTotalSpaceSQL);
-                queryTotalSpace.bindValue(":storage_path", device->storage->path);
-                queryTotalSpace.bindValue(":storage_id", device->storage->ID);
-                queryTotalSpace.exec();
-
-                saveStorageTableToFile();
-                loadStorageFileToTable();
-                loadStorageTableToModel();
-            }
-        }
-
-        //Refresh catalog lists
-        loadCatalogsTableToModel();
-
-    }
-    //-------------------------------------------------------------------------- 
     void MainWindow::importFromVVV()
     {
         //Select file
@@ -926,50 +764,58 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::saveCatalogChanges(Catalog *catalog)
+    void MainWindow::saveCatalogChanges(Catalog *previousCatalog)
     {
-            //Get new values
-            //get new name
-            QString previousCatalogName = catalog->name;
-            QString newCatalogName = ui->Catalogs_lineEdit_Name->text();
+        Catalog newCatalog;// = previousCatalog;
+        newCatalog.ID = previousCatalog->ID;
+        newCatalog.loadCatalog();
+        newCatalog.filePath = previousCatalog->filePath;
+        newCatalog.sourcePath = previousCatalog->sourcePath;
 
-            //get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
-            QString newCatalogSourcePath    = ui->Catalogs_lineEdit_SourcePath->text();
-            int     pathLength              = newCatalogSourcePath.length();
-            if (newCatalogSourcePath !="" and newCatalogSourcePath !="/" and QVariant(newCatalogSourcePath.at(pathLength-1)).toString()=="/") {
-                newCatalogSourcePath.remove(pathLength-1,1);
-            }
-            QString newCatalogStorage         = ui->Catalogs_comboBox_Storage->currentText();
-            QString newCatalogFileType        = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-            QString newCatalogIncludeHidden   = QVariant(ui->Catalogs_checkBox_IncludeHidden->isChecked()).toString();
-            QString newCatalogIncludeMetadata = QVariant(ui->Catalogs_checkBox_IncludeMetadata->isChecked()).toString();
+        //Get new values
+            //Get new name
+                newCatalog.name = ui->Catalogs_lineEdit_Name->text();
 
-            bool    isFullDevice            = ui->Catalogs_checkBox_isFullDevice->checkState();
+            //Get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
+                newCatalog.sourcePath = ui->Catalogs_lineEdit_SourcePath->text();
+                int     pathLength              = newCatalog.sourcePath.length();
+                if (newCatalog.sourcePath !="" and newCatalog.sourcePath !="/" and QVariant(newCatalog.sourcePath.at(pathLength-1)).toString()=="/") {
+                    newCatalog.sourcePath.remove(pathLength-1,1);
+                }
+
+            //Other values
+            newCatalog.storageName      = ui->Catalogs_comboBox_Storage->currentText();
+            newCatalog.fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+            newCatalog.includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
+            newCatalog.includeMetadata  = ui->Catalogs_checkBox_IncludeMetadata->isChecked();
+            newCatalog.isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
         //Confirm save changes
             QString message = tr("Save changes to the definition of the catalog?<br/>");
             message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
-            if(newCatalogName           !=catalog->name)
-                message = message + "<tr><td>" + tr("Name")         + "</td><td>" + catalog->name         + "</td><td><b>" + newCatalogName          + "</b></td></tr>";
-            if(newCatalogSourcePath     !=catalog->sourcePath)
-                message = message + "<tr><td>" + tr("Source path ") + "</td><td>" + catalog->sourcePath   + "</td><td><b>" + newCatalogSourcePath    + "</b></td></tr>";
-            if(newCatalogStorage        !=catalog->storageName)
-                message = message + "<tr><td>" + tr("Storage name") + "</td><td>" + catalog->storageName  + "</td><td><b>" + newCatalogStorage       + "</b></td></tr>";
-            if(newCatalogFileType       !=catalog->fileType)
-                message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + catalog->fileType     + "</td><td><b>" + newCatalogFileType      + "</b></td></tr>";
-            if(newCatalogIncludeHidden  !=QVariant(catalog->includeHidden).toString())
-                message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(catalog->includeHidden).toString()   + "</td><td><b>" + newCatalogIncludeHidden   + "</b></td></tr>";
-            if(newCatalogIncludeMetadata  !=QVariant(catalog->includeMetadata).toString())
-                message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(catalog->includeMetadata).toString() + "</td><td><b>" + newCatalogIncludeMetadata + "</b></td></tr>";
+            if(newCatalog.name           != previousCatalog->name)
+                message = message + "<tr><td>" + tr("Name")         + "</td><td>" + previousCatalog->name         + "</td><td><b>" + newCatalog.name          + "</b></td></tr>";
+            if(newCatalog.sourcePath     != previousCatalog->sourcePath)
+                message = message + "<tr><td>" + tr("Source path ") + "</td><td>" + previousCatalog->sourcePath   + "</td><td><b>" + newCatalog.sourcePath    + "</b></td></tr>";
+            if(newCatalog.storageName         != previousCatalog->storageName)
+                message = message + "<tr><td>" + tr("Storage name") + "</td><td>" + previousCatalog->storageName  + "</td><td><b>" + newCatalog.storageName       + "</b></td></tr>";
+            if(newCatalog.fileType       !=previousCatalog->fileType)
+                message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog->fileType     + "</td><td><b>" + newCatalog.fileType      + "</b></td></tr>";
+            if(newCatalog.includeHidden  != previousCatalog->includeHidden)
+                message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog->includeHidden).toString()   + "</td><td><b>" + QVariant(newCatalog.includeHidden).toString()   + "</b></td></tr>";
+            if(newCatalog.includeMetadata  != previousCatalog->includeMetadata)
+                message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog->includeMetadata).toString() + "</td><td><b>" + QVariant(newCatalog.includeMetadata).toString() + "</b></td></tr>";
+            if(newCatalog.isFullDevice  != previousCatalog->isFullDevice)
+                message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog->isFullDevice).toString() + "</td><td><b>" + QVariant(newCatalog.isFullDevice).toString() + "</b></td></tr>";
 
             message = message + "</table>";
 
-            if(    (newCatalogSourcePath     !=catalog->sourcePath)
-                or (newCatalogFileType       !=catalog->fileType)
-                or (newCatalogIncludeHidden  !=QVariant(catalog->includeHidden).toString())
-                or (newCatalogIncludeMetadata  !=QVariant(catalog->includeMetadata).toString())
-            ){
+            if(    (newCatalog.sourcePath       !=previousCatalog->sourcePath)
+                or (newCatalog.fileType         !=previousCatalog->fileType)
+                or (newCatalog.includeHidden    !=previousCatalog->includeHidden)
+                or (newCatalog.includeMetadata  !=previousCatalog->includeMetadata))
+            {
                     message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
             }
 
@@ -979,93 +825,14 @@
             }
 
         //Write all changes to database (except change of name)
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                    UPDATE catalog
-                                    SET catalog_source_path      =:catalog_source_path,
-                                        catalog_storage          =:catalog_storage,
-                                        catalog_file_type        =:catalog_file_type,
-                                        catalog_include_hidden   =:catalog_include_hidden,
-                                        catalog_include_metadata =:catalog_include_metadata
-                                    WHERE catalog_name =:catalog_name
-                                )");
-            //DEV: catalogIncludeSymblinks =: newIncludeSymblinks;
-
-            query.prepare(querySQL);
-            query.bindValue(":catalog_source_path",      newCatalogSourcePath);
-            query.bindValue(":catalog_storage",          newCatalogStorage);
-            query.bindValue(":catalog_file_type",        newCatalogFileType);
-            query.bindValue(":catalog_include_hidden",   newCatalogIncludeHidden);
-            query.bindValue(":catalog_include_metadata", newCatalogIncludeMetadata);
-            query.bindValue(":catalog_name",             catalog->name);
-            //DEV:query.bindValue(":catalogIncludeSymblinks", catalog->includeSymblinks);
-            query.exec();
-
-            loadCatalogsTableToModel();
+            newCatalog.saveCatalog();
 
         //Write changes to catalog file (update headers only)
-        if(collection->databaseMode=="Memory"){
-            QFile catalogFile(catalog->filePath);
-            if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
-            {
-                QString fullFileText;
-                QTextStream textStream(&catalogFile);
+            newCatalog.updateCatalogFileHeaders(collection->databaseMode);
 
-                while(!textStream.atEnd())
-                {
-                    QString line = textStream.readLine();
-                    //DEV: bool addedIsFullDevice = false;
-
-                    //add file data line
-                    if(!line.startsWith("<catalogSourcePath")
-                            and !line.startsWith("<catalogIncludeHidden")
-                            and !line.startsWith("<catalogFileType")
-                            and !line.startsWith("<catalogStorage")
-                            and !line.startsWith("<catalogIsFullDevice")
-                            and !line.startsWith("<catalogIncludeMetadata")
-                            )
-                    {
-                        fullFileText.append(line + "\n");
-                    }
-                    else{
-                        //add catalog meta-data. The ifs must be in the correct order of the meta-data lines
-                        if(line.startsWith("<catalogSourcePath>"))
-                                fullFileText.append("<catalogSourcePath>" + newCatalogSourcePath +"\n");
-
-                        if(line.startsWith("<catalogIncludeHidden>"))
-                                fullFileText.append("<catalogIncludeHidden>" + QVariant(newCatalogIncludeHidden).toString() +"\n");
-
-                        if(line.startsWith("<catalogFileType>"))
-                                fullFileText.append("<catalogFileType>" + newCatalogFileType +"\n");
-
-                        if(line.startsWith("<catalogStorage>"))
-                                fullFileText.append("<catalogStorage>" + newCatalogStorage +"\n");
-
-                        if(line.startsWith("<catalogIsFullDevice>")){
-                                fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
-                            //DEV: addedIsFullDevice = true;
-                        }
-                        if(line.startsWith("<catalogIncludeMetadata>")){
-                                fullFileText.append("<catalogIncludeMetadata>" + newCatalogIncludeMetadata +"\n");
-                            //DEV: addedIsFullDevice = true;
-                        }
-                    }
-                    //DEV: if(addedIsFullDevice ==false){
-                    //DEV:      //add missing line
-                    //DEV:      fullFileText.prepend("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
-                    //DEV: }
-                }
-                catalogFile.resize(0);
-                textStream << fullFileText;
-                catalogFile.close();
-            }
-            else {
-                QMessageBox::information(this,"Katalog",tr("Could not open file."));
-            }
-        }
 
         //Rename the catalog file
-        if (newCatalogName != previousCatalogName){
+        if (newCatalog.name != previousCatalog->name){
 
             //verfiy if name exists
             QSqlQuery query;
@@ -1075,25 +842,25 @@
                                 WHERE catalog_name=:catalog_name
                             )");
             query.prepare(querySQL);
-            query.bindValue(":catalog_name",newCatalogName);
+            query.bindValue(":catalog_name", newCatalog.name);
             query.exec();
             query.next();
             if (query.value(0).toString() !=""){
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
-                               + newCatalogName
+                               + newCatalog.name
                                + "</b><br/><br/>"+tr("Choose a different name."));
                 msgBox.setIcon(QMessageBox::Critical);
                 msgBox.exec();
                 return;
             }
 
-            catalog->renameCatalog(newCatalogName);
+            previousCatalog->renameCatalog(newCatalog.name);
 
             if(collection->databaseMode=="Memory"){
-                catalog->renameCatalogFile(newCatalogName);
-                loadCatalogFilesToTable();
+                previousCatalog->renameCatalogFile(newCatalog.name);
+                collection->loadCatalogFilesToTable();
                 loadCatalogsTableToModel();
             }
 
@@ -1112,8 +879,8 @@
                         {
                                 QString line = t.readLine();
                                 QStringList lineParts = line.split("\t");
-                                if (lineParts[1]==previousCatalogName){
-                                    lineParts[1]= newCatalogName;
+                                if (lineParts[1]==previousCatalog->name){
+                                    lineParts[1]= newCatalog.name;
                                     line = lineParts.join("\t");
                                 }
                                 s.append(line + "\n");
@@ -1131,8 +898,8 @@
                                     WHERE catalog_name =:previousCatalogName
                                 )");
                     query.prepare(querySQL);
-                    query.bindValue(":newCatalog_name", newCatalogName);
-                    query.bindValue(":previousCatalogName", previousCatalogName);
+                    query.bindValue(":newCatalog_name", newCatalog.name);
+                    query.bindValue(":previousCatalogName", previousCatalog->name);
                     query.exec();
                 }
             }
@@ -1143,25 +910,25 @@
         loadCatalogsTableToModel();
 
         //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-            if (       newCatalogSourcePath      != catalog->sourcePath
-                    or newCatalogIncludeHidden   != QVariant(catalog->includeHidden).toString()
-                    or newCatalogIncludeMetadata != QVariant(catalog->includeMetadata).toString()
-                    or newCatalogFileType        != catalog->fileType)
+            if (       newCatalog.sourcePath      != previousCatalog->sourcePath
+                    or newCatalog.includeHidden   != previousCatalog->includeHidden
+                    or newCatalog.includeMetadata != previousCatalog->includeMetadata
+                    or newCatalog.fileType        != previousCatalog->fileType)
             {
                 int updatechoice = QMessageBox::warning(this, "Katalog",
                                     tr("Update the catalog content with the new criteria?\n")
                                          , QMessageBox::Yes
                                                   | QMessageBox::No);
                 if ( updatechoice == QMessageBox::Yes){
-                    activeDevice->catalog->name = newCatalogName;
+                    activeDevice->catalog->name = newCatalog.name;
                     activeDevice->catalog->loadCatalog();
-                    reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode),"update");
+                    reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
                 }
             }
 
         //Refresh
             if(collection->databaseMode=="Memory")
-                loadCatalogFilesToTable();
+                collection->loadCatalogFilesToTable();
 
             loadCatalogsTableToModel();
             loadCatalogsTableToModel();
@@ -1312,47 +1079,28 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType){
-        //types:
-        //  create
-        //  update_single
-        //  update_list
+    void MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
+    {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
 
-        //check validity of the list
-        if(list.count()>2){
+        QMessageBox msgBox;
+        QString message;
 
-            QMessageBox msgBox;
-            QString message;
+        //Catalog updates
+        if (device->type=="Catalog" and updateType=="update"){
 
-            //Check list validity
-            if(list.count()>=4){
-                //DEV: hide "added" when source=create, replace added by +/-
-                if (updateType=="create"){
-                    message = QString(tr("<br/>Catalog created:&nbsp;<b>%1</b><br/>")).arg(device->name);
-                    message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
-                }
-                else if(updateType =="update_list"){
-                    message = QString(tr("<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
-                }
-                else{
-                    message = QString(tr("<br/>Catalog updated:&nbsp;<b>%1</b><br/>")).arg(device->name);
-                    message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
-                }
-
+            if(list[0]==1){//Catalog updated
+                message = QString(tr("<br/>Catalog updated:&nbsp;<b>%1</b><br/>")).arg(device->name);
+                message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
                 message += QString("<table>"
                                    "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
                                    "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
-                                   ).arg(QString::number(list[0]),
-                                    QString::number(list[1]),
-                                    QLocale().formattedDataSize(list[2]),
-                                    QLocale().formattedDataSize(list[3]));
+                                   ).arg(QString::number(list[1]),
+                                    QString::number(list[2]),
+                                    QLocale().formattedDataSize(list[3]),
+                                    QLocale().formattedDataSize(list[4]));
             }
 
-            if(list.count() == 6){
-                message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs (active), %2 skipped Catalogs (inactive)")).arg(QString::number(list[4]),QString::number(list[5]));
-            }
-
-            if(list.count()>=10){
+            if(list[7]==1){//Parent storage updated
                 Device parentDevice;
                 parentDevice.ID = device->parentID;
                 parentDevice.loadDevice();
@@ -1365,17 +1113,129 @@
                                "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
                                "</table>"
                                ).arg(parentDevice.name,
-                                     QLocale().formattedDataSize(list[4]),
-                                     QLocale().formattedDataSize(list[5]),
-                                     QLocale().formattedDataSize(list[6]),
-                                     QLocale().formattedDataSize(list[7]),
                                      QLocale().formattedDataSize(list[8]),
                                      QLocale().formattedDataSize(list[9]),
+                                     QLocale().formattedDataSize(list[10]),
+                                     QLocale().formattedDataSize(list[11]),
+                                     QLocale().formattedDataSize(list[12]),
+                                     QLocale().formattedDataSize(list[13]),
                                      parentDevice.path
                                      ));
             }
-            else
-                message += "</table>";
+
+            if(list[0]==1 or list[7]==1){
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(message);
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+            }
+        }
+        if (device->type=="Catalog" and updateType=="create"){
+            if(list[0]==1){//Catalog updated
+                    message = QString(tr("<br/>Catalog created:&nbsp;<b>%1</b><br/>")).arg(device->name);
+                    message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
+
+                message += QString("<table>"
+                                   "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td></tr>"
+                                   "<tr><td>Total file size: </td><td align='right'> <b> %2 </b></td><td></tr>"
+                                   ).arg(QString::number(list[1]),
+                                    QLocale().formattedDataSize(list[3])
+                                    );
+            }
+
+            if(list[7]==1){//Parent storage updated
+                Device parentDevice;
+                parentDevice.ID = device->parentID;
+                parentDevice.loadDevice();
+
+                message += (tr("<br/>"
+                               "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                               "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                               "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                               "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                               "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                               "</table>"
+                               ).arg(parentDevice.name,
+                                     QLocale().formattedDataSize(list[8]),
+                                     QLocale().formattedDataSize(list[9]),
+                                     QLocale().formattedDataSize(list[10]),
+                                     QLocale().formattedDataSize(list[11]),
+                                     QLocale().formattedDataSize(list[12]),
+                                     QLocale().formattedDataSize(list[13]),
+                                     parentDevice.path
+                                     ));
+            }
+
+            if(list[0]==1 or list[7]==1){
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(message);
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+            }
+        }
+        //Storage / Virtual updates
+        if (device->type=="Storage" and updateType=="update"){
+
+            message.clear();
+            message += (tr("<table>"
+                           "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                           "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                           "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                           "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                           "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                           "</table>"
+                               ).arg(activeDevice->name,
+                                 QLocale().formattedDataSize(list[8]),
+                                 QLocale().formattedDataSize(list[9]),
+                                 QLocale().formattedDataSize(list[10]),
+                                 QLocale().formattedDataSize(list[11]),
+                                 QLocale().formattedDataSize(list[12]),
+                                 QLocale().formattedDataSize(list[13]),
+                                 activeDevice->path
+                                 ));
+
+            //if(list[7]==1){
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(message);
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+            //}
+
+        }
+        if (device->type !="Catalog" and updateType=="list"){
+            if(list[0]==1){//Catalog updated
+                message = QString(tr("<table>"
+                                     "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
+                message += QString(
+                                   "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
+                                   "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
+                                   ).arg(QString::number(list[1]),
+                                    QString::number(list[2]),
+                                    QLocale().formattedDataSize(list[3]),
+                                    QLocale().formattedDataSize(list[4]));
+
+                message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs (active), %2 skipped Catalogs (inactive)")).arg(QString::number(list[5]),QString::number(list[6]));
+            }
+
+            if(list[7]==1){//Storage updated
+                message += (tr("<tr><td colspan=4></td></tr>"
+                               "<tr><td colspan=4></td></tr>"
+                               "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                               "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                               "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                               "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                               "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                               "</table>"
+                               ).arg(device->name,
+                                     QLocale().formattedDataSize(list[8]),
+                                     QLocale().formattedDataSize(list[9]),
+                                     QLocale().formattedDataSize(list[10]),
+                                     QLocale().formattedDataSize(list[11]),
+                                     QLocale().formattedDataSize(list[12]),
+                                     QLocale().formattedDataSize(list[13]),
+                                     device->path
+                                     ));
+            }
 
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(message);
@@ -1388,6 +1248,9 @@
     //--- 1.x - 2.0 Migration
     void MainWindow::generateAndAssociateCatalogMissingIDs()
     {
+        // Start animation while opening
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
         //Get catalogs with missing ID
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
@@ -1404,14 +1267,16 @@
             Device device;
             device.ID = query.value(0).toInt();
             device.loadDevice();
-            device.catalog->generateID();
+            if (device.catalog->ID == 0){
+                device.catalog->generateID();
+
+            }
 
             device.externalID = device.catalog->ID;
             device.saveDevice();
             device.catalog->name = device.name;
             device.catalog->saveCatalog();
-            device.catalog->updateStorageNameToFile();
-            qDebug()<<device.catalog->name<<device.catalog->ID;
+            device.catalog->updateCatalogFileHeaders(collection->databaseMode);
         }
 
         querySQL = QLatin1String(R"(
@@ -1426,6 +1291,9 @@
         collection->saveDeviceTableToFile();
         loadDeviceTableToTreeModel();
         loadCatalogsTableToModel();
+
+        //Stop animation
+        QApplication::restoreOverrideCursor();
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");

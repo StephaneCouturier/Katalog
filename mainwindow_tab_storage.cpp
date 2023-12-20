@@ -43,7 +43,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Reload_clicked()
     {
-        loadStorageFileToTable();
+        collection->loadStorageFileToTable();
         loadStorageTableToModel();
         updateStorageSelectionStatistics();
     }
@@ -65,10 +65,10 @@
         //Save data to file and reload
         if (collection->databaseMode=="Memory"){
             //Save model data to Storage file
-            saveStorageTableToFile();
+            collection->saveStorageTableToFile();
 
             //Reload Storage file data to table
-            loadStorageFileToTable();
+            collection->loadStorageFileToTable();
         }
 
         //refresh
@@ -82,9 +82,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
     {
-        selectedDevice->storage->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 0, QModelIndex()).data().toInt();
-        selectedDevice->storage->loadStorage();
-        activeDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 14, QModelIndex()).data().toInt();
+        activeDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 16, QModelIndex()).data().toInt();
         activeDevice->loadDevice();
 
         //display buttons
@@ -140,10 +138,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
-        skipCatalogUpdateSummary =false;
-        updateStorageInfo(selectedDevice->storage);
+        reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
         collection->saveDeviceTableToFile();
+        collection->saveStorageTableToFile();
+        collection->saveStatiticsToFile();
         loadDeviceTableToTreeModel();
+        loadCatalogsTableToModel();
+        loadStorageTableToModel();
         loadStorageToPanel();
     }
     //--------------------------------------------------------------------------
@@ -168,10 +169,10 @@
             //Save data to file and reload
             if (collection->databaseMode=="Memory"){
                 //Save model data to Storage file
-                saveStorageTableToFile();
+                collection->saveStorageTableToFile();
 
                 //Reload Storage file data to table
-                loadStorageFileToTable();
+                collection->loadStorageFileToTable();
             }
 
             //refresh
@@ -261,7 +262,7 @@
                     ui->Storage_pushButton_SaveAll->setEnabled(true);
 
                     //Even if empty, load it to the model
-                    loadStorageFileToTable();
+                    collection->loadStorageFileToTable();
                     loadStorageTableToModel();
                     updateStorageSelectionStatistics();
 
@@ -283,8 +284,8 @@
         loadStorageTableToModel();
 
         //Save data to file and reload
-        saveStorageTableToFile();
-        loadStorageFileToTable();
+        collection->saveStorageTableToFile();
+        collection->loadStorageFileToTable();
 
         //Refresh
         loadStorageTableToModel();
@@ -309,121 +310,6 @@
         //Reload
         loadDeviceTableToTreeModel();
         loadStorageTableToModel();
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::loadStorageFileToTable()
-    {//load Storage file data to its table
-        if (collection->databaseMode=="Memory"){
-
-            //Define storage file and prepare stream
-            QFile storageFile(collection->storageFilePath);
-            QTextStream textStream(&storageFile);
-
-            QSqlQuery queryDelete;
-            queryDelete.prepare( "DELETE FROM storage" );
-
-            //Open file or return information
-            if(!storageFile.open(QIODevice::ReadOnly)) {
-
-                queryDelete.exec();
-
-                //Disable all buttons, enable create list
-                ui->Storage_pushButton_Reload->setEnabled(false);
-                ui->Storage_pushButton_EditAll->setEnabled(false);
-                ui->Storage_pushButton_SaveAll->setEnabled(false);
-                ui->Storage_pushButton_New->setEnabled(false);
-                ui->Storage_pushButton_CreateList->setEnabled(true);
-
-                return;
-            }
-
-            //Test file validity (application breaks between v0.13 and v0.14)
-            QString line = textStream.readLine();
-            if (line.left(2)!="ID"){
-            QMessageBox::warning(this,"Katalog",
-                                 tr("A storage.csv file was found, but could not be loaded.\n"
-                                    "Likely, it was made with an older version of Katalog.\n"
-                                    "The file can be fixed manually, please visit the wiki page:\n"
-                                    "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>Storage/fixing-for-new-versions</a>")
-                                 );
-            return;
-            }
-
-            //Clear all entries of the current table
-            queryDelete.exec();
-
-            //Load storage device lines to table
-            while (true)
-            {
-
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                if (line.left(2)!="ID"){//skip the first line with headers
-
-                    //Split the string with tabulation into a list
-                    QStringList fieldList = line.split('\t');
-
-                    QString querySQL = QLatin1String(R"(
-                        INSERT INTO storage(
-                                        storage_id,
-                                        storage_name,
-                                        storage_type,
-                                        storage_location,
-                                        storage_path,
-                                        storage_label,
-                                        storage_file_system,
-                                        storage_total_space,
-                                        storage_free_space,
-                                        storage_brand_model,
-                                        storage_serial_number,
-                                        storage_build_date,
-                                        storage_content_type,
-                                        storage_container,
-                                        storage_comment)
-                                  values(
-                                        :storage_id,
-                                        :storage_name,
-                                        :storage_type,
-                                        :storage_location,
-                                        :storage_path,
-                                        :storage_label,
-                                        :storage_file_system,
-                                        :storage_total_space,
-                                        :storage_free_space,
-                                        :storage_brand_model,
-                                        :storage_serial_number,
-                                        :storage_build_date,
-                                        :storage_content_type,
-                                        :storage_container,
-                                        :storage_comment)
-                                )");
-
-                    QSqlQuery insertQuery;
-                    insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":storage_id",fieldList[0].toInt());
-                    insertQuery.bindValue(":storage_name",fieldList[1]);
-                    insertQuery.bindValue(":storage_type",fieldList[2]);
-                    insertQuery.bindValue(":storage_location",fieldList[3]);
-                    insertQuery.bindValue(":storage_path",fieldList[4]);
-                    insertQuery.bindValue(":storage_label",fieldList[5]);
-                    insertQuery.bindValue(":storage_file_system",fieldList[6]);
-                    insertQuery.bindValue(":storage_total_space",fieldList[7].toLongLong());
-                    insertQuery.bindValue(":storage_free_space",fieldList[8].toLongLong());
-                    insertQuery.bindValue(":storage_brand_model",fieldList[9]);
-                    insertQuery.bindValue(":storage_serial_number",fieldList[10]);
-                    insertQuery.bindValue(":storage_build_date",fieldList[11]);
-                    insertQuery.bindValue(":storage_content_type",fieldList[12]);
-                    insertQuery.bindValue(":storage_container",fieldList[13]);
-                    insertQuery.bindValue(":storage_comment", fieldList[14]);
-
-                    insertQuery.exec();
-
-                }
-            }
-            storageFile.close();
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageTableToModel()
@@ -510,6 +396,7 @@
         proxyStorageModel->setHeaderData(13, Qt::Horizontal, tr("Container"));
         proxyStorageModel->setHeaderData(14, Qt::Horizontal, tr("Comment"));
         proxyStorageModel->setHeaderData(15, Qt::Horizontal, tr("Last Update"));
+        proxyStorageModel->setHeaderData(16, Qt::Horizontal, tr("Device ID"));
 
         ui->Storage_treeView_StorageList->setModel(proxyStorageModel);
 
@@ -530,6 +417,9 @@
         ui->Storage_treeView_StorageList->header()->resizeSection(12,125); //Content
         ui->Storage_treeView_StorageList->header()->resizeSection(13,125); //Container
         ui->Storage_treeView_StorageList->header()->resizeSection(14, 50); //Comment
+        ui->Storage_treeView_StorageList->header()->resizeSection(15,100); //Last Update
+        ui->Storage_treeView_StorageList->header()->resizeSection(16, 50); //Device ID
+
         ui->Storage_treeView_StorageList->header()->hideSection( 3); //Location
         ui->Storage_treeView_StorageList->header()->hideSection(15); //Last Update
 
@@ -537,10 +427,7 @@
         loadStorageList();
 
         //If a storage is selected, use it for the Create screen
-        if ( selectedDevice->type == "Location" ){
-            ui->Create_comboBox_StorageSelection->setCurrentText("");
-        }
-        else if ( selectedDevice->type == "Storage" ){
+        if ( selectedDevice->type == "Storage" ){
             ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
         }
         else if ( selectedDevice->type == "Catalog" ){
@@ -560,115 +447,6 @@
         //Update Storage screen statistics
             updateStorageSelectionStatistics();
 
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::updateStorageInfo(Storage* storage)
-    {
-        //Update device information
-            QList<qint64> updates = storage->updateStorageInfo();
-
-        //Update values of parent devices
-            updateAllNumbers();
-
-        //Save statistics to file
-            if(collection->databaseMode=="Memory"){
-                QString storageStatisticsFilePath = collection->collectionFolder + "/" + "statistics_storage.csv"; //statisticsFileName;
-                storage->saveStatisticsToFile(storageStatisticsFilePath, storage->dateTimeUpdated);
-            }
-
-        //Inform user about the update
-        if(skipCatalogUpdateSummary !=true and updates.count()>0){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("<br/>The storage device <b> %1 </b> was updated:<br/> "
-                              "<table>"
-                              "<tr><td> Used Space: </td><td><b> %2 </b></td><td>  (added: <b> %3 </b>)</td></tr>"
-                              "<tr><td> Free Space: </td><td><b> %4 </b></td><td>  (added: <b> %5 </b>)</td></tr>"
-                              "<tr><td>Total Space: </td><td><b> %6 </b></td><td>  (added: <b> %7 </b>)</td></tr>"
-                              "</table>"
-                              ).arg(storage->name,
-                                    QLocale().formattedDataSize(updates[0]),
-                                    QLocale().formattedDataSize(updates[1]),
-                                    QLocale().formattedDataSize(updates[2]),
-                                    QLocale().formattedDataSize(updates[3]),
-                                    QLocale().formattedDataSize(updates[4]),
-                                    QLocale().formattedDataSize(updates[5])
-                                    )
-                           );
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-        }
-
-        //reload data to model
-        loadStorageTableToModel();
-
-        //save model data to file
-        if (collection->databaseMode=="Memory"){
-                //Save model data to Storage file
-                saveStorageTableToFile();
-
-                //Reload Storage file data to table
-                loadStorageFileToTable();
-        }
-
-        //refresh storage screen statistics
-        updateStorageSelectionStatistics();
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::saveStorageTableToFile()
-    {
-        if (collection->databaseMode=="Memory"){
-            //Prepare export file
-            QFile storageFile(collection->storageFilePath);
-            QTextStream out(&storageFile);
-
-            //Prepare header line
-            out  << "ID"            << "\t"
-                << "Name"          << "\t"
-                << "Type"          << "\t"
-                << "Location"      << "\t"
-                << "Path"          << "\t"
-                << "Label"         << "\t"
-                << "FileSystem"    << "\t"
-                << "Total"         << "\t"
-                << "Free"          << "\t"
-                << "BrandModel"    << "\t"
-                << "SerialNumber"  << "\t"
-                << "BuildDate"     << "\t"
-                << "ContentType"   << "\t"
-                << "Container"     << "\t"
-                << "Comment"       << "\t"
-                << '\n';
-
-            //Get data
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                         SELECT * FROM storage
-                                    )");
-            query.prepare(querySQL);
-            query.exec();
-
-            //Iterate the records and generate lines
-            while (query.next()) {
-                const QSqlRecord record = query.record();
-                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                    if (i>0)
-                        out << '\t';
-                    out << record.value(i).toString();
-                }
-                //-- Write the result in the file
-                out << '\n';
-
-            }
-
-            if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-                //out << textData;
-                //Close the file
-                //storageFile.close();
-            }
-            storageFile.close();
-        }
     }
     //--------------------------------------------------------------------------
     void MainWindow::updateStorageSelectionStatistics()
@@ -782,7 +560,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::displayStoragePicture()
     {//Load and display the picture of the storage device
-        QString picturePath = collection->collectionFolder + "/images/" + QString::number(selectedDevice->storage->ID) + ".jpg";
+        QString picturePath = collection->collectionFolder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";
         QPixmap pic(picturePath);
         QFile file(picturePath);
         if(file.exists()){
@@ -797,24 +575,24 @@
     //--------------------------------------------------------------------------
     void MainWindow::loadStorageToPanel()
     {//Load selected Storage device to the edition panel
-        ui->Storage_lineEdit_Panel_ID->setText(QString::number(selectedDevice->storage->ID));
-        ui->Storage_lineEdit_Panel_Name->setText(selectedDevice->storage->name);
-        ui->Storage_lineEdit_Panel_Type->setText(selectedDevice->storage->type);
-        ui->Storage_lineEdit_Panel_Path->setText(selectedDevice->storage->path);
-        ui->Storage_lineEdit_Panel_Label->setText(selectedDevice->storage->label);
-        ui->Storage_lineEdit_Panel_FileSystem->setText(selectedDevice->storage->fileSystem);
+        ui->Storage_lineEdit_Panel_ID->setText(QString::number(activeDevice->storage->ID));
+        ui->Storage_lineEdit_Panel_Name->setText(activeDevice->storage->name);
+        ui->Storage_lineEdit_Panel_Type->setText(activeDevice->storage->type);
+        ui->Storage_lineEdit_Panel_Path->setText(activeDevice->storage->path);
+        ui->Storage_lineEdit_Panel_Label->setText(activeDevice->storage->label);
+        ui->Storage_lineEdit_Panel_FileSystem->setText(activeDevice->storage->fileSystem);
 
-        ui->Storage_lineEdit_Panel_Total->setText(QString::number(selectedDevice->storage->totalSpace));
-        ui->Storage_lineEdit_Panel_Free->setText(QString::number(selectedDevice->storage->freeSpace));
-        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(selectedDevice->storage->totalSpace));
-        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(selectedDevice->storage->freeSpace));
+        ui->Storage_lineEdit_Panel_Total->setText(QString::number(activeDevice->storage->totalSpace));
+        ui->Storage_lineEdit_Panel_Free->setText(QString::number(activeDevice->storage->freeSpace));
+        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(activeDevice->storage->totalSpace));
+        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(activeDevice->storage->freeSpace));
 
-        ui->Storage_lineEdit_Panel_BrandModel->setText(selectedDevice->storage->brand_model);
-        ui->Storage_lineEdit_Panel_SerialNumber->setText(selectedDevice->storage->serialNumber);
-        ui->Storage_lineEdit_Panel_BuildDate->setText(selectedDevice->storage->buildDate);
-        ui->Storage_lineEdit_Panel_ContentType->setText(selectedDevice->storage->contentType);
-        ui->Storage_lineEdit_Panel_Container->setText(selectedDevice->storage->container);
-        ui->Storage_lineEdit_Panel_Comment->setText(selectedDevice->storage->comment);
+        ui->Storage_lineEdit_Panel_BrandModel->setText(activeDevice->storage->brand_model);
+        ui->Storage_lineEdit_Panel_SerialNumber->setText(activeDevice->storage->serialNumber);
+        ui->Storage_lineEdit_Panel_BuildDate->setText(activeDevice->storage->buildDate);
+        ui->Storage_lineEdit_Panel_ContentType->setText(activeDevice->storage->contentType);
+        ui->Storage_lineEdit_Panel_Container->setText(activeDevice->storage->container);
+        ui->Storage_lineEdit_Panel_Comment->setText(activeDevice->storage->comment);
 
         displayStoragePicture();
     }
@@ -862,16 +640,14 @@
         updateQuery.bindValue(":storage_content_type",  ui->Storage_lineEdit_Panel_ContentType->text());
         updateQuery.bindValue(":storage_container",     ui->Storage_lineEdit_Panel_Container->text());
         updateQuery.bindValue(":storage_comment",       ui->Storage_lineEdit_Panel_Comment->text());
-        updateQuery.bindValue(":storage_id",            selectedDevice->storage->ID);
+        updateQuery.bindValue(":storage_id",            activeDevice->storage->ID);
         updateQuery.exec();
 
         loadStorageTableToModel();
         updateStorageSelectionStatistics();
 
         //Save data to file
-        if (collection->databaseMode=="Memory"){
-            saveStorageTableToFile();
-        }
+        collection->saveStorageTableToFile();
 
         //Update name in statistics and catalogs
         if (currentStorageName != newStorageName){
@@ -885,7 +661,7 @@
             QSqlQuery updateNameQuery;
             updateNameQuery.prepare(updateNameQuerySQL);
             updateNameQuery.bindValue(":new_storage_name", newStorageName);
-            updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
+            updateNameQuery.bindValue(":storage_id", activeDevice->storage->ID);
             updateNameQuery.exec();
 
             if (collection->databaseMode=="Memory"){
@@ -926,12 +702,12 @@
                     tempCatalog.name = listCatalogQuery.value(0).toString();
                     tempCatalog.loadCatalog();
                     tempCatalog.storageName = newStorageName;
-                    tempCatalog.updateStorageNameToFile();
+                    tempCatalog.updateCatalogFileHeaders(collection->databaseMode);
                 }
 
                 //Refresh
                 if(collection->databaseMode=="Memory")
-                    loadCatalogFilesToTable();
+                    collection->loadCatalogFilesToTable();
 
                 loadCatalogsTableToModel();
                 loadCatalogsTableToModel();

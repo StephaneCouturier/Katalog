@@ -81,7 +81,6 @@
 #include "collection.h"
 #include "catalog.h"
 #include "search.h"
-#include "storage.h"
 #include "device.h"
 
 QT_BEGIN_NAMESPACE
@@ -197,12 +196,10 @@ class MainWindow : public QMainWindow
             QStringList catalogFileList;
             QStringList catalogSelectedList;
 
-            bool skipCatalogUpdateSummary;
             int lastCatalogsSortSection;
             int lastCatalogsSortOrder;
 
             void loadCollection();
-            void loadCatalogFilesToTable();
             void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
             void recordCollectionStats();
@@ -210,7 +207,6 @@ class MainWindow : public QMainWindow
             void convertCatalog(QString catalogSourcePath);
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
-            void updateSingleCatalog(Device *device, bool updateStorage);
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
             void generateAndAssociateCatalogMissingIDs();
@@ -225,7 +221,7 @@ class MainWindow : public QMainWindow
             QString selectedDirectoryName;
             QString selectedDirectoryFullPath;
 
-            void openCatalogToExplore(Device *device);
+            void openCatalogToExplore();
             void loadSelectedDirectoryFilesToExplore();
             void loadCatalogDirectoriesToExplore();
 
@@ -247,8 +243,6 @@ class MainWindow : public QMainWindow
             void loadFileSystem(QString newCatalogPath);
             void createCatalog();
             void loadStorageList();
-            void saveCatalogToNewFile(Device *device);
-            void saveFoldersToNewFile(QString newCatalogName);
 
         //TAB: Storage
             int     selectedStorageIndexRow;
@@ -258,10 +252,7 @@ class MainWindow : public QMainWindow
 
             void createStorageFile();
             void addStorageDevice(QString deviceName);
-            void loadStorageFileToTable();
             void loadStorageTableToModel();
-            void saveStorageTableToFile();
-            void updateStorageInfo(Storage *storage);
             void updateStorageSelectionStatistics();
             void recordAllStorageStats(QDateTime dateTime);
 
@@ -523,7 +514,7 @@ class MainWindow : public QMainWindow
             void on_Statistics_pushButton_ClearDate_clicked();
             void on_Statistics_pushButton_PickDate_clicked();
             void on_Statistics_calendarWidget_clicked(const QDate &date);
-            //void saveStatisticsToFile(Device *device);
+
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();
             void on_Tags_pushButton_TagFolder_clicked();

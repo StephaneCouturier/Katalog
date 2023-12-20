@@ -84,15 +84,19 @@ public:
 
     void generateID();
     void insertCatalog();
+    void loadCatalog();
     void deleteCatalog();
     void saveCatalog();
-    QList<qint64> updateCatalogFiles(QString databaseMode);
-    void catalogDirectory(QString databaseMode);
 
-    void loadCatalog();//from database
+    QList<qint64> updateCatalogFiles(QString databaseMode, QString collectionFolder);
+    void catalogDirectory(QString databaseMode, QString collectionFolder);
+
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
-    void updateStorageNameToFile();
+    void updateCatalogFileHeaders(QString databaseMode);
+    void saveCatalogToFile(QString databaseMode, QString collectionFolder);
+    void saveFoldersToFile(QString databaseMode, QString collectionFolder);
+
     void loadCatalogFileListToTable();
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);

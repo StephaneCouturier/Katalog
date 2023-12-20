@@ -237,13 +237,13 @@
             loadStorageList();
 
         //Launch the scan and cataloging of files
-            reportAllUpdates(newDevice, newDevice->updateDevice("create", collection->databaseMode),"create");
+            reportAllUpdates(newDevice, newDevice->updateDevice("update", collection->databaseMode,false,collection->collectionFolder), "create");
             newDevice->saveDevice();
 
             //Save data to files
             collection->saveDeviceTableToFile();
-            saveCatalogToNewFile(newDevice);
-            saveFoldersToNewFile(newDevice->name);
+            newDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->collectionFolder);
+            newDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->collectionFolder);
 
             //Check if no files where found, and let the user decide what to do
             // Get the catalog file list
@@ -265,7 +265,7 @@
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen
-            loadCatalogFilesToTable();
+            collection->loadCatalogFilesToTable();
 
             //Refresh the catalog list for the combobox of the Search screen
             refreshDifferencesCatalogSelection();
@@ -293,78 +293,6 @@
             ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
             ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
 
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::saveCatalogToNewFile(Device *device)
-    {
-        if(collection->databaseMode=="Memory"){
-
-            //Save a catalog to a new file
-
-            // Get the file list from this model
-            //QStringList filelist = fileListModel->stringList();
-            //qDebug()<<device->catalog->fileListModel->stringList();
-            QStringList filelist = device->catalog->fileListModel->stringList();
-
-            // Stream the list to the file
-            QFile fileOut( collection->collectionFolder +"/"+ device->name + ".idx" );
-
-            // write data
-
-            if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-                QTextStream stream(&fileOut);
-                for (int i = 0; i < filelist.size(); ++i)
-                  stream << filelist.at(i) << '\n';
-            }
-            else {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Error opening output file."));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-            }
-            fileOut.close();
-        }
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::saveFoldersToNewFile(QString newCatalogName)
-    {
-        //Save a catalog to a new file
-
-        // Get the folder list from database
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                SELECT
-                                    folder_catalog_name,
-                                    folder_path
-                                FROM folder
-                                WHERE folder_catalog_name=:folder_catalog_name
-                                        )");
-        query.prepare(querySQL);
-        query.bindValue(":folder_catalog_name",newCatalogName);
-        query.exec();
-
-        // Stream the list to the file
-        QFile fileOut( collection->collectionFolder +"/"+ newCatalogName + ".folders.idx" );
-
-        // write data
-
-          if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            while(query.next()){
-                stream << query.value(0).toString() << '\t';
-                stream << query.value(1).toString() << '\n';
-            }
-
-          } else {
-              QMessageBox msgBox;
-              msgBox.setWindowTitle("Katalog");
-              msgBox.setText(tr("Error opening output file."));
-              msgBox.setIcon(QMessageBox::Warning);
-              msgBox.exec();
-            //return EXIT_FAILURE;
-          }
-          fileOut.close();
     }
     //--------------------------------------------------------------------------
 //DEV --------------------------------------------------------------------------

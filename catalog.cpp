@@ -30,6 +30,7 @@
 */
 
 #include "catalog.h"
+#include "qapplication.h"
 #include "qdir.h"
 #include "qsqlerror.h"
 
@@ -260,49 +261,110 @@ void Catalog::saveCatalog()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             UPDATE catalog
-                            SET    catalog_id =:catalog_id
+                            SET     catalog_id               =:catalog_id,
+                                    catalog_source_path      =:catalog_source_path,
+                                    catalog_storage          =:catalog_storage,
+                                    catalog_file_type        =:catalog_file_type,
+                                    catalog_include_hidden   =:catalog_include_hidden,
+                                    catalog_include_metadata =:catalog_include_metadata
                             WHERE  catalog_name=:catalog_name
                                 )");
     query.prepare(querySQL);
     query.bindValue(":catalog_id", ID);
     query.bindValue(":catalog_name", name);
     query.exec();
-    qDebug()<<"saveCatalog: "<<query.lastError();
 }
 
-QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
+void Catalog::updateCatalogFileHeaders(QString databaseMode)
+{//Write changes to catalog file (update headers only)
+    if(databaseMode=="Memory"){
+        QFile catalogFile(filePath);
+        if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QString fullFileText;
+            QTextStream textStream(&catalogFile);
+
+            fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
+            fullFileText.append("<catalogFileCount>" + QVariant(fileCount).toString() +"\n");
+            fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
+            fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
+            fullFileText.append("<catalogFileType>" + fileType +"\n");
+            fullFileText.append("<catalogStorage>" + storageName +"\n");
+            fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
+            fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
+            fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+            fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
+            fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
+
+            while(!textStream.atEnd())
+            {
+                QString line = textStream.readLine();
+
+                //add file data line
+                if( !line.startsWith("<catalog") )
+                {//just pass the line if it is not a header
+                    fullFileText.append(line + "\n");
+                }
+            }
+
+            catalogFile.resize(0);//delete file content
+            textStream << fullFileText;//populate the file with the textStream
+            catalogFile.close();
+        }
+        else {
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                       "Could not open file."
+                                                       ) );
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
+    }
+}
+
+QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collectionFolder)
 {//Update the files of the catalog and return a list with update information
     QList<qint64> list;
 
-    /*
     if(databaseMode=="Memory"){
         //Check if the update can be done, inform the user otherwise.
         //Deal with old versions, where necessary info may have not have been available
-        if(device->catalog->filePath == "not recorded" or device->name == "not recorded" or device->catalog->sourcePath == "not recorded"){
-            QMessageBox::information(this,"Katalog",tr("It seems this catalog was not correctly imported or has an old format.\n"
-                                                         "Edit it and make sure it has the following first 2 lines:\n\n"
-                                                         "<catalogSourcePath>/folderpath\n"
-                                                         "<catalogFileCount>10000\n\n"
-                                                         "Copy/paste these lines at the begining of the file and modify the values after the >:\n"
-                                                         "- the catalogSourcePath is the folder to catalog the files from.\n"
-                                                         "- the catalogFileCount number does not matter as much, it can be updated.\n")
-                                     );
-            return;
+        if(filePath == "not recorded" or name == "not recorded" or sourcePath == "not recorded"){
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                "It seems this catalog was not correctly imported or has an old format.<br/>"
+                                "Edit it and make sure it has the following first 2 lines:<br/><br/>"
+                                "<catalogSourcePath>/folderpath<br/>"
+                                "<catalogFileCount>10000<br/><br/>"
+                                "Copy/paste these lines at the begining of the file and modify the values after the >:<br/>"
+                                "- the catalogSourcePath is the folder to catalog the files from.<br/>"
+                                "- the catalogFileCount number does not matter as much, it can be updated.<br/>"));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+
+            return list;
         }
 
         //Deal with other cases where some input information is missing
-        if(device->catalog->filePath == "" or device->name == "" or device->catalog->sourcePath == ""){
-            QMessageBox::information(this,"Katalog",tr("Select a catalog first (some info is missing).\n currentCatalogFilePath: %1 \n currentCatalogName: %2 \n currentCatalogSourcePath: %3").arg(
-                                                          device->catalog->filePath, device->name, device->catalog->sourcePath));
-            return;
-        }
+        if(filePath == "" or name == "" or sourcePath == ""){
 
-        //BackUp the file before, if the option is selected
-        if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
-            backupCatalogFile(device->catalog->filePath);
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+
+            msgBox.setText(QCoreApplication::translate("MainWindow", "Select a catalog first (some info is missing).<br/> "
+                                                                     "currentCatalogFilePath: %1 <br/> currentCatalogName: %2 <br/> "
+                                                                     "currentCatalogSourcePath: %3").arg(
+                                   filePath, name, sourcePath));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+
+            return list;
         }
     }
-    */
 
     //Capture previous FileCount and TotalFileSize to report the changes after the update
     qint64 previousFileCount     = fileCount;
@@ -314,11 +376,13 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
         ///Warning and choice if the result is 0 files
         if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
         {
+            QApplication::restoreOverrideCursor();
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "The source folder does not contain any file. <br/>"
-                                                                     "This could mean that the source is empty or the device is not mounted to this folder.<br/>"
-                                                                     "Do you want to save it anyway (the catalog would be empty)?."));
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                            "The source folder does not contain any file.<br/>"
+                                            "This could mean that the source is empty or the device is not mounted to this folder.<br/>"
+                                            "Do you want to save it anyway (the catalog would be empty)?."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
             int result = msgBox.exec();
@@ -326,10 +390,12 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
             if ( result == QMessageBox::Cancel){
                 return list;
             }
+            else
+                QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
         //catalog the directory (iterator)
-        catalogDirectory(databaseMode);
+        catalogDirectory(databaseMode, collectionFolder);
 
         //Populate list to report changes
         qint64 newFileCount       = fileCount;
@@ -337,24 +403,32 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode)
         qint64 newTotalFileSize   = totalFileSize;
         qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
 
+        list.append(1);//catalog updated
         list.append(newFileCount);
         list.append(deltaFileCount);
         list.append(newTotalFileSize);
         list.append(deltaTotalFileSize);
 
         return list;
-
     }
     else {
+        QApplication::restoreOverrideCursor();
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText(QCoreApplication::translate("MainWindow", "The catalog <b>%1</b> cannot be updated.<br/>"
-                                                                 "<br/> The source folder was not found.<br/><b>%2</b><br/>"
-                                                                 "<br/> Possible reasons:<br/>"
-                                                                 "    - the device is not connected and mounted,<br/>"
-                                                                 "    - the source folder was moved or renamed.").arg(name,sourcePath));
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+                                            "The catalog <b>%1</b> cannot be updated.<br/>"
+                                            "<br/> The source folder was not found.<br/><b>%2</b><br/>"
+                                            "<br/> Possible reasons:<br/>"
+                                            "    - the device is not connected and mounted,<br/>"
+                                            "    - the source folder was moved or renamed.").arg(name,sourcePath));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
+
+        list.append(0);//catalog not updated
+        list.append(0);
+        list.append(0);
+        list.append(0);
+        list.append(0);
         return list;
     }
 }
@@ -435,62 +509,6 @@ void Catalog::renameCatalogFile(QString newCatalogName)
     filePath = newCatalogFilePath;
 }
 
-void Catalog::updateStorageNameToFile()
-{//Write changes to catalog file (update headers only)
-
-        QFile catalogFile(filePath);
-        if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
-        {
-            QString fullFileText;
-            QTextStream textStream(&catalogFile);
-
-            while(!textStream.atEnd())
-            {
-                QString line = textStream.readLine();
-
-                //add file data line
-                if(!line.startsWith("<catalogSourcePath")
-                    and !line.startsWith("<catalogID")
-                    and !line.startsWith("<catalogIncludeHidden")
-                    and !line.startsWith("<catalogFileType")
-                    and !line.startsWith("<catalogStorage")
-                    and !line.startsWith("<catalogIsFullDevice")
-                    and !line.startsWith("<catalogIncludeMetadata")
-                    )
-                {
-                    fullFileText.append(line + "\n");
-                }
-                else{
-                    //add catalog meta-data. The ifs must be in the correct order of the meta-data lines
-                    if(line.startsWith("<catalogSourcePath>"))
-                        fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
-
-                    if(line.startsWith("<catalogIncludeHidden>"))
-                        fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
-
-                    if(line.startsWith("<catalogFileType>"))
-                        fullFileText.append("<catalogFileType>" + fileType +"\n");
-
-                    if(line.startsWith("<catalogStorage>"))
-                        fullFileText.append("<catalogStorage>" + storageName +"\n");
-
-                    if(line.startsWith("<catalogIsFullDevice>")){
-                        fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
-                    }
-                    if(line.startsWith("<catalogIncludeMetadata>")){
-                        fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
-                    }
-                    if(line.startsWith("<catalogID>")){
-                        fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
-                    }
-                }
-            }
-            catalogFile.resize(0);
-            textStream << fullFileText;
-            catalogFile.close();
-        }
-}
-
 void Catalog::loadCatalogFileListToTable()
 {//Load catalog files from file, if latest version is not already in memory
 
@@ -503,7 +521,6 @@ void Catalog::loadCatalogFileListToTable()
             //Set up a text stream from the file's data
             QTextStream streamCatalogFile(&catalogFile);
             QString lineCatalogFile;
-            QRegularExpression lineCatalogFileSplitExp("\t");
 
             //Prepare database and queries
                 //clear database from old version of catalog
@@ -558,7 +575,7 @@ void Catalog::loadCatalogFileListToTable()
                     if (lineCatalogFile.left(1)=="<"){continue;}
 
                     //Split the line text with tabulations into a list
-                    QStringList lineFieldList  = lineCatalogFile.split(lineCatalogFileSplitExp);
+                    QStringList lineFieldList  = lineCatalogFile.split("\t");
                     int         fieldListCount = lineFieldList.count();
 
                     //Get the file absolute path from this list
@@ -641,7 +658,6 @@ void Catalog::loadFoldersToTable()
             //Set up a text stream from the file's data
             QTextStream streamFolderFile(&folderFile);
             QString lineFolderFile;
-            QRegularExpression lineFolderFileSplitExp("\t");
 
             //Clear database from old version of catalog
             QSqlQuery deleteQuery;
@@ -823,17 +839,13 @@ void Catalog::getFileTypes()
         fileExtensions = fileType_Text;
 }
 
-void Catalog::catalogDirectory(QString databaseMode)
+void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
 {//Catalog the files of a directory and update catalog attributes
 
-    //DEV: 1 QString excludeFilePath ="DEV: TEMP no folder"; //DEV: temp
     //DEV: 2 Media File Metadata
 
     //Prepare inputs
-    //Define the extensions of files to be included
-    //getFileTypes();
-
-    QString excludeFilePath ="DEV: TEMP no folder"; //DEV: temp
+    QString excludeFilePath = collectionFolder + "/" + "exclude.csv";
     // Get directories to exclude
     QStringList excludedFolders;
     QFile excludeFile(excludeFilePath);
@@ -873,7 +885,7 @@ void Catalog::catalogDirectory(QString databaseMode)
     deleteFolderQuery.bindValue(":folder_catalog_name",name);
     deleteFolderQuery.exec();
 
-    //prepare insert query for file
+    //Prepare insert query for file
     QSqlQuery insertFileQuery;
     QString insertFileSQL = QLatin1String(R"(
                                         INSERT INTO file (
@@ -894,7 +906,7 @@ void Catalog::catalogDirectory(QString databaseMode)
                                         )");
     insertFileQuery.prepare(insertFileSQL);
 
-    //prepare insert query for folder
+    //Prepare insert query for folder
     QSqlQuery insertFolderQuery;
     QString insertFolderSQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO folder(
@@ -914,9 +926,7 @@ void Catalog::catalogDirectory(QString databaseMode)
     insertFolderQuery.exec();
 
     //Scan entries with iterator
-
     QString entryPath;
-
     //Start a transaction to save all inserts at once in the db
     QSqlQuery beginQuery;
     QString beginQuerySQL = QLatin1String(R"(
@@ -924,7 +934,6 @@ void Catalog::catalogDirectory(QString databaseMode)
                                         )");
     beginQuery.prepare(beginQuerySQL);
     beginQuery.exec();
-
 
     //Iterator
     if (includeHidden == true){
@@ -964,11 +973,9 @@ void Catalog::catalogDirectory(QString databaseMode)
 
                     //Media File Metadata
                     //DEV: includeMetadata
-                    // if(developmentMode==true){
                     //     if(includeMetadata == true){
                     //         setMediaFile(entryPath);
                     //     }
-                    // }
                 }
             }
         }
@@ -1051,7 +1058,7 @@ void Catalog::catalogDirectory(QString databaseMode)
             fileList << queryFileList.value(0).toString() + "\t" + queryFileList.value(1).toString() + "\t" + queryFileList.value(2).toString();
         };
 
-        //Prepare the catalog file data, adding first the catalog metadata at the beginning
+        //Prepare the catalog file data, adding first the catalog headers at the beginning
         fileList.prepend("<catalogID>"              + QString::number(ID));
         fileList.prepend("<catalogAppVersion>"      + appVersion);
         fileList.prepend("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString());
@@ -1067,9 +1074,35 @@ void Catalog::catalogDirectory(QString databaseMode)
         //Define and populate a model
         fileListModel = new QStringListModel(this);
         fileListModel->setStringList(fileList);
+
+        //Write to file
+
+        //Save data to files
+        saveCatalogToFile(databaseMode, collectionFolder);
+        saveFoldersToFile(databaseMode, collectionFolder);
+
+        //Check if no files where found, and let the user decide what to do
+        // Get the catalog file list
+        if (fileList.count() == 11){ //the CatalogDirectory method always adds lines for the catalog metadata, they should be ignored
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                       "The source folder does not contain any file.<br/>"
+                                                       "This could mean that the source is empty or the device is not mounted to this folder.<br/>"
+                                                       "Do you want to save it anyway (the catalog would be empty)?<br/>"
+                            ));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
+            int result = msgBox.exec();
+
+            if ( result != QMessageBox::Cancel){
+                return;
+            }
+        }
     }
 
     //Update catalog in db
+    //DEV: duplcate of saveCatalog?
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
@@ -1093,3 +1126,69 @@ void Catalog::catalogDirectory(QString databaseMode)
     setDateLoaded(emptyDateTime);
 }
 
+//--------------------------------------------------------------------------
+void Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
+{//Save a catalog's file list to a file
+    if(databaseMode=="Memory"){
+        //Get the file list from this model
+        QStringList filelist = fileListModel->stringList();
+        filePath = collectionFolder +"/"+ name + ".idx";
+
+        //Stream the list to the file
+        QFile fileOut(filePath);
+
+        //Write data
+        if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            for (int i = 0; i < filelist.size(); ++i)
+                stream << filelist.at(i) << '\n';
+        }
+        else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Error opening output file."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+        }
+        fileOut.close();
+    }
+}
+//--------------------------------------------------------------------------
+void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
+{//Save a catalog's folders to a new file
+    if(databaseMode=="Memory"){
+        //Get the folder list from database
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT
+                                        folder_catalog_name,
+                                        folder_path
+                                    FROM folder
+                                    WHERE folder_catalog_name=:folder_catalog_name
+                                            )");
+        query.prepare(querySQL);
+        query.bindValue(":folder_catalog_name", name);
+        query.exec();
+
+        //Stream the list to the file
+        QFile fileOut( collectionFolder +"/"+ name + ".folders.idx" );
+
+        //Write data
+        if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+            QTextStream stream(&fileOut);
+            while(query.next()){
+                stream << query.value(0).toString() << '\t';
+                stream << query.value(1).toString() << '\n';
+            }
+
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Error opening output file."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            //return EXIT_FAILURE;
+        }
+        fileOut.close();
+    }
+}

@@ -467,7 +467,7 @@
             selectedDirectoryName = selectedFileFolder.remove(activeDevice->catalog->sourcePath + "/");
 
             //Open the catalog into the Explore
-            openCatalogToExplore(activeDevice);
+            openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
         }
         //----------------------------------------------------------------------

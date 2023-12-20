@@ -75,12 +75,15 @@ public:
 
     //File loading
     void loadDeviceFileToTable();
+    void loadCatalogFilesToTable();
+    void loadStorageFileToTable();
     void loadStatisticsCatalogFileToTable();
     void loadStatisticsStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
 
     //File saving
     void saveDeviceTableToFile();
+    void saveStorageTableToFile();
     void saveStatiticsToFile();
 
     //Data management

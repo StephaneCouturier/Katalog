@@ -208,6 +208,246 @@ void Collection::loadDeviceFileToTable()
     }
 }
 //----------------------------------------------------------------------
+void Collection::loadCatalogFilesToTable()
+{
+    if(databaseMode=="Memory"){
+        //Clear catalog table
+        QSqlQuery queryDelete;
+        queryDelete.prepare( "DELETE FROM catalog" );
+        queryDelete.exec();
+
+        //Iterate in the directory to create a list of files and sort it
+        QStringList catalogFileExtensions;
+        catalogFileExtensions << "*.idx";
+
+        QDirIterator iterator(collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
+        while (iterator.hasNext()){
+
+            // Iterate to the next file
+            QString path = iterator.next();
+            QFile catalogFile(path);
+
+            // Get file info
+            QFileInfo catalogFileInfo(catalogFile);
+
+            // Verify that the file can be opened
+            if(!catalogFile.open(QIODevice::ReadOnly)) {
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "No catalog found."
+                                                           ));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.exec();
+                return;
+            }
+
+            //Prepare a textsteam for the file
+            QTextStream textStreamCatalogs(&catalogFile);
+
+            //Read the first 10 lines and put values in a stringlist
+            QStringList catalogValues;
+            QString line;
+            QString value;
+            for (int i=0; i<11; i++) {
+                line = textStreamCatalogs.readLine();
+                if (line !="" and QVariant(line.at(0)).toString()=="<"){
+                    value = line.right(line.size() - line.indexOf(">") - 1);
+                    if (value =="") catalogValues << "";
+                    else catalogValues << value;
+                }
+            }
+            if (catalogValues.count()== 7) catalogValues << "false"; //for older catalog without isFullDevice
+            if (catalogValues.count()== 8) catalogValues << "false"; //for older catalog without includeMetadata
+            if (catalogValues.count()== 9) catalogValues << "";      //for older catalog without appVersion
+            if (catalogValues.count()==10) catalogValues << 0;       //for older catalog without ID
+
+            if(catalogValues.length()>0){
+                //Insert a line in the table with available data
+
+                //Prepare insert query for filesall
+                QSqlQuery insertCatalogQuery;
+                QString insertCatalogQuerySQL = QLatin1String(R"(
+                                INSERT OR IGNORE INTO catalog (
+                                                catalog_id,
+                                                catalog_file_path,
+                                                catalog_name,
+                                                catalog_date_updated,
+                                                catalog_source_path,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                catalog_include_hidden,
+                                                catalog_file_type,
+                                                catalog_storage,
+                                                catalog_include_symblinks,
+                                                catalog_is_full_device,
+                                                catalog_date_loaded,
+                                                catalog_include_metadata,
+                                                catalog_app_version
+                                                )
+                                VALUES(
+                                                :catalog_id,
+                                                :catalog_file_path,
+                                                :catalog_name,
+                                                :catalog_date_updated,
+                                                :catalog_source_path,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :catalog_include_hidden,
+                                                :catalog_file_type,
+                                                :catalog_storage,
+                                                :catalog_include_symblinks,
+                                                :catalog_is_full_device,
+                                                :catalog_date_loaded,
+                                                :catalog_include_metadata,
+                                                :catalog_app_version )
+                            )");
+
+                insertCatalogQuery.prepare(insertCatalogQuerySQL);
+                insertCatalogQuery.bindValue(":catalog_id",                 catalogValues[10]);
+                insertCatalogQuery.bindValue(":catalog_file_path",          catalogFileInfo.filePath());
+                insertCatalogQuery.bindValue(":catalog_name",               catalogFileInfo.completeBaseName());
+                insertCatalogQuery.bindValue(":catalog_date_updated",       catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+                insertCatalogQuery.bindValue(":catalog_source_path",        catalogValues[0]);
+                insertCatalogQuery.bindValue(":catalog_file_count",         catalogValues[1].toInt());
+                insertCatalogQuery.bindValue(":catalog_total_file_size",    catalogValues[2].toLongLong());
+                insertCatalogQuery.bindValue(":catalog_include_hidden",     catalogValues[3]);
+                insertCatalogQuery.bindValue(":catalog_file_type",          catalogValues[4]);
+                insertCatalogQuery.bindValue(":catalog_storage",            catalogValues[5]);
+                insertCatalogQuery.bindValue(":catalog_include_symblinks",  catalogValues[6]);
+                insertCatalogQuery.bindValue(":catalog_is_full_device",     catalogValues[7]);
+                insertCatalogQuery.bindValue(":catalog_date_loaded","");
+                insertCatalogQuery.bindValue(":catalog_include_metadata",   catalogValues[8]);
+                insertCatalogQuery.bindValue(":catalog_app_version",        catalogValues[9]);
+                insertCatalogQuery.exec();
+            }
+            catalogFile.close();
+        }
+    }
+}
+//--------------------------------------------------------------------------
+void Collection::loadStorageFileToTable()
+{//load Storage file data to its table
+    if (databaseMode=="Memory"){
+
+        //Define storage file and prepare stream
+        QFile storageFile(storageFilePath);
+        QTextStream textStream(&storageFile);
+
+        QSqlQuery queryDelete;
+        queryDelete.prepare( "DELETE FROM storage" );
+
+        //Open file or return information
+        if(!storageFile.open(QIODevice::ReadOnly)) {
+
+            queryDelete.exec();
+
+            //Disable all buttons, enable create list
+            // ui->Storage_pushButton_Reload->setEnabled(false);
+            // ui->Storage_pushButton_EditAll->setEnabled(false);
+            // ui->Storage_pushButton_SaveAll->setEnabled(false);
+            // ui->Storage_pushButton_New->setEnabled(false);
+            // ui->Storage_pushButton_CreateList->setEnabled(true);
+
+            return;
+        }
+
+        //Test file validity (application breaks between v0.13 and v0.14)
+        QString line = textStream.readLine();
+        if (line.left(2)!="ID"){
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                       "A storage.csv file was found, but could not be loaded.\n"
+                                                       "Likely, it was made with an older version of Katalog.\n"
+                                                       "The file can be fixed manually, please visit the wiki page:\n"
+                                                       "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>"
+                                                       "Storage/fixing-for-new-versions</a>"
+                                                       ));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+
+            return;
+        }
+
+        //Clear all entries of the current table
+        queryDelete.exec();
+
+        //Load storage device lines to table
+        while (true)
+        {
+
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(2)!="ID"){//skip the first line with headers
+
+                    //Split the string with tabulation into a list
+                    QStringList fieldList = line.split('\t');
+
+                    QString querySQL = QLatin1String(R"(
+                        INSERT INTO storage(
+                                        storage_id,
+                                        storage_name,
+                                        storage_type,
+                                        storage_location,
+                                        storage_path,
+                                        storage_label,
+                                        storage_file_system,
+                                        storage_total_space,
+                                        storage_free_space,
+                                        storage_brand_model,
+                                        storage_serial_number,
+                                        storage_build_date,
+                                        storage_content_type,
+                                        storage_container,
+                                        storage_comment)
+                                  values(
+                                        :storage_id,
+                                        :storage_name,
+                                        :storage_type,
+                                        :storage_location,
+                                        :storage_path,
+                                        :storage_label,
+                                        :storage_file_system,
+                                        :storage_total_space,
+                                        :storage_free_space,
+                                        :storage_brand_model,
+                                        :storage_serial_number,
+                                        :storage_build_date,
+                                        :storage_content_type,
+                                        :storage_container,
+                                        :storage_comment)
+                                )");
+
+                    QSqlQuery insertQuery;
+                    insertQuery.prepare(querySQL);
+                    insertQuery.bindValue(":storage_id",fieldList[0].toInt());
+                    insertQuery.bindValue(":storage_name",fieldList[1]);
+                    insertQuery.bindValue(":storage_type",fieldList[2]);
+                    insertQuery.bindValue(":storage_location",fieldList[3]);
+                    insertQuery.bindValue(":storage_path",fieldList[4]);
+                    insertQuery.bindValue(":storage_label",fieldList[5]);
+                    insertQuery.bindValue(":storage_file_system",fieldList[6]);
+                    insertQuery.bindValue(":storage_total_space",fieldList[7].toLongLong());
+                    insertQuery.bindValue(":storage_free_space",fieldList[8].toLongLong());
+                    insertQuery.bindValue(":storage_brand_model",fieldList[9]);
+                    insertQuery.bindValue(":storage_serial_number",fieldList[10]);
+                    insertQuery.bindValue(":storage_build_date",fieldList[11]);
+                    insertQuery.bindValue(":storage_content_type",fieldList[12]);
+                    insertQuery.bindValue(":storage_container",fieldList[13]);
+                    insertQuery.bindValue(":storage_comment", fieldList[14]);
+
+                    insertQuery.exec();
+
+                }
+        }
+        storageFile.close();
+    }
+}
+//--------------------------------------------------------------------------
 void Collection::loadStatisticsCatalogFileToTable()
 {// Load the contents of the statistics file into the database
     if(databaseMode=="Memory"){
@@ -460,6 +700,62 @@ void Collection::loadStatisticsDeviceFileToTable()
                 insertQuery.exec();
             }
         }
+    }
+}
+//----------------------------------------------------------------------
+void Collection::saveStorageTableToFile()
+{
+    if (databaseMode=="Memory"){
+        //Prepare export file
+        QFile storageFile(storageFilePath);
+        QTextStream out(&storageFile);
+
+        //Prepare header line
+        out  << "ID"            << "\t"
+            << "Name"          << "\t"
+            << "Type"          << "\t"
+            << "Location"      << "\t"
+            << "Path"          << "\t"
+            << "Label"         << "\t"
+            << "FileSystem"    << "\t"
+            << "Total"         << "\t"
+            << "Free"          << "\t"
+            << "BrandModel"    << "\t"
+            << "SerialNumber"  << "\t"
+            << "BuildDate"     << "\t"
+            << "ContentType"   << "\t"
+            << "Container"     << "\t"
+            << "Comment"       << "\t"
+            << '\n';
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                         SELECT * FROM storage
+                                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Iterate the records and generate lines
+        while (query.next()) {
+            const QSqlRecord record = query.record();
+            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                if (i>0)
+                    out << '\t';
+                out << record.value(i).toString();
+            }
+            //-- Write the result in the file
+            out << '\n';
+
+        }
+
+        if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+            //out << textData;
+            //Close the file
+            //storageFile.close();
+        }
+        storageFile.close();
     }
 }
 //----------------------------------------------------------------------

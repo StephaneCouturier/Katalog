@@ -285,8 +285,8 @@
 
             //Load Files to database
             loadSearchHistoryFileToTable();
-            loadCatalogFilesToTable();
-            loadStorageFileToTable();
+            collection->loadCatalogFilesToTable();
+            collection->loadStorageFileToTable();
             collection->loadDeviceFileToTable();
 
         //Check active status and synch it

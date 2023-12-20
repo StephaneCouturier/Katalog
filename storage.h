@@ -65,7 +65,7 @@ public:
     void insertStorage();
     void deleteStorage();
     void loadStorage();
-    QList<qint64> updateStorageInfo();
+    QList<qint64> updateStorageInfo(bool reportStorageUpdate);
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
 

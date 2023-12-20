@@ -66,17 +66,15 @@ public:
 
         //States
         bool hasSubDevice;
-        bool hasCatalog;
         bool active;
 
     //Methods
         void loadDevice();
 
         void verifyHasSubDevice();
-        void verifyHasCatalog();
         void updateActive();
 
-        QList<qint64> updateDevice(QString requestSource, QString databaseMode);
+        QList<qint64> updateDevice(QString statiticsRequestSource, QString databaseMode, bool reportStorageUpdate, QString collectionFolder);
         void updateNumbersFromChildren();
         void updateParentsNumbers();
 
