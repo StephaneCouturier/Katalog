@@ -763,19 +763,23 @@ void Collection::saveStatiticsToFile()
 {
     if(databaseMode=="Memory"){
         //Prepare export file
-        QFile statisticsFile(statisticsStorageFilePath);
+        //QFile statisticsFile(statisticsStorageFilePath);
+        QFile statisticsFile(statisticsDeviceFilePath);
         QTextStream out(&statisticsFile);
 
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                     SELECT  date_time,
-                                            storage_name,
-                                            storage_free_space,
-                                            storage_total_space,
-                                            storage_id,
+                                            device_id,
+                                            device_name,
+                                            device_type,
+                                            device_file_count,
+                                            device_total_file_size,
+                                            device_free_space,
+                                            device_total_space,
                                             record_type
-                                    FROM statistics_storage
+                                    FROM statistics_device
                                 )");
         query.prepare(querySQL);
         query.exec();

@@ -139,9 +139,12 @@
     void MainWindow::on_Filter_pushButton_Update_clicked()
     {
         //reloads catalog to explore at root level
-        if (selectedDevice->type=="Catalog"){
-            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
-        }
+            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder), "update");
+            collection->saveDeviceTableToFile();
+            collection->saveStatiticsToFile();
+
+            loadDeviceTableToTreeModel();
+            loadCatalogsTableToModel();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()

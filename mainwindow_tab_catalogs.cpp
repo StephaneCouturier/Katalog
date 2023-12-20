@@ -139,6 +139,10 @@
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {
             reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder), "update");
+            collection->saveDeviceTableToFile();
+            collection->saveStatiticsToFile();
+
+            loadDeviceTableToTreeModel();
             loadCatalogsTableToModel();
         }
         //----------------------------------------------------------------------
@@ -215,7 +219,14 @@
             globalList <<0;
             globalList <<0;
             globalList <<0;
+
             reportAllUpdates(selectedDevice, globalList, "list");
+
+            collection->saveDeviceTableToFile();
+            collection->saveStatiticsToFile();
+
+            loadDeviceTableToTreeModel();
+            loadCatalogsTableToModel();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_EditCatalogFile_clicked()

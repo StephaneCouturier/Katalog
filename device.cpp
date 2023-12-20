@@ -337,6 +337,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
             //Update catalog with new values
             totalFileCount = deviceUpdatesList[1];
             totalFileSize  = deviceUpdatesList[3];
+            saveStatistics(dateTimeUpdated, statiticsRequestSource);
             deviceUpdatesList<<1;
             deviceUpdatesList<<0;
         }
@@ -350,6 +351,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
         parentDevice.ID = parentID;
         parentDevice.loadDevice();
         deviceUpdatesList << parentDevice.storage->updateStorageInfo(reportStorageUpdate);
+        parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
     }
 
     else if (type=="Storage"){
@@ -375,6 +377,11 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
                 QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder);
 
                 if(catalogUpdatesList.count()>0){
+                    //Update catalog with new values
+                    updatedDevice.totalFileCount = catalogUpdatesList[1];
+                    updatedDevice.totalFileSize  = catalogUpdatesList[3];
+                    updatedDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
+
                     globalUpdateFileCount       += catalogUpdatesList[1];
                     globalUpdateDeltaFileCount  += catalogUpdatesList[2];
                     globalUpdateTotalSize       += catalogUpdatesList[3];
@@ -406,6 +413,10 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
 
         //Update storage itself
         QList<qint64> storageUpdates = storage->updateStorageInfo(true);
+        totalSpace = storageUpdates[3];
+        freeSpace = storageUpdates[5];
+        saveStatistics(dateTimeUpdated, statiticsRequestSource);
+
         deviceUpdatesList += storageUpdates[0];
         deviceUpdatesList += storageUpdates[1];
         deviceUpdatesList += storageUpdates[2];
@@ -413,6 +424,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
         deviceUpdatesList += storageUpdates[4];
         deviceUpdatesList += storageUpdates[5];
         deviceUpdatesList += storageUpdates[6];
+
 
 
     }
@@ -427,9 +439,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
 
     //Update parent devices
     updateParentsNumbers();
-
-    //Save device values for statistics
-    saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
     if( deviceUpdatesList.count() == 0)
         deviceUpdatesList<<0;
