@@ -273,7 +273,7 @@ class MainWindow : public QMainWindow
             void addDeviceStorage();
             void editDevice();
             void saveDevice();
-            void assignCatalogToDevice(QString catalogName,int deviceID);
+            void assignCatalogToDevice(Device *catalogDevice, Device *parentDevice);
             void assignStorageToDevice(int storageID,int deviceID);
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();

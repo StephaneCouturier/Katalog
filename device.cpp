@@ -320,7 +320,10 @@ void Device::saveDevice()
     query.exec();
 }
 
-QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString databaseMode, bool reportStorageUpdate, QString collectionFolder)
+QList<qint64> Device::updateDevice(QString statiticsRequestSource,
+                                   QString databaseMode,
+                                   bool reportStorageUpdate,
+                                   QString collectionFolder)
 {//Update device and related children storage or catalog information where relevant
     QApplication::setOverrideCursor(Qt::WaitCursor);
     //Prepare
@@ -424,13 +427,10 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource, QString datab
         deviceUpdatesList += storageUpdates[4];
         deviceUpdatesList += storageUpdates[5];
         deviceUpdatesList += storageUpdates[6];
-
-
-
     }
+
     else if (type=="Virtual"){
         //Update all sub virtual devices, storage, catalogs, and this device
-
 
     }
 

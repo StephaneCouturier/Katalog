@@ -1185,7 +1185,7 @@
                 msgBox.exec();
             }
         }
-        //Storage / Virtual updates
+        //Storage updates
         if (device->type=="Storage" and updateType=="update"){
 
             message.clear();
@@ -1253,6 +1253,22 @@
             msgBox.setText(message);
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
+        }
+        //Virtual updates
+        if (device->type =="Virtual"){
+            /*
+                message = QString(tr("<table>"
+                                     "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
+                message += QString(
+                               "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
+                               "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
+                               ).arg(QString::number(list[0]));
+
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+            */
         }
     }
     //--------------------------------------------------------------------------

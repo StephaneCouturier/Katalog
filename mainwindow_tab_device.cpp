@@ -70,7 +70,7 @@ void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
 {
-    assignCatalogToDevice(selectedDevice->catalog->name, activeDevice->ID);
+    assignCatalogToDevice(selectedDevice, activeDevice);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignStorage_clicked()
@@ -218,12 +218,15 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.addSeparator();
 
-        QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
-        deviceContextMenu.addAction(menuDeviceAction3);
+        if(activeDevice->groupID !=0){
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this catalog"), this);
+            deviceContextMenu.addAction(menuDeviceAction3);
 
-        connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
-        });
+            connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+                unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
+            });
+        }
+
 /*
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this catalog"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
@@ -463,7 +466,7 @@ void MainWindow::importStorageCatalogLinks() {
         activeDevice->catalog->name = catalog_name;
         activeDevice->catalog->loadCatalog();
 
-        assignCatalogToDevice(catalog_name,device_id);
+       // assignCatalogToDevice(catalog_name,device_id);
 
         collection->saveDeviceTableToFile();
         loadDeviceTableToTreeModel();
@@ -499,9 +502,9 @@ QList<int> MainWindow::verifyStorageWithOutDevice()
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
-void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
+void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevice)
 {
-    if( deviceID!=0 and catalogName!=""){
+    if( parentDevice->ID!=0 and catalogDevice->ID !=0){
 
         //Generate new ID
         QSqlQuery queryID;
@@ -527,7 +530,10 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
                                         device_total_file_size,
                                         device_total_file_count,
                                         device_total_space,
-                                        device_free_space)
+                                        device_free_space,
+                                        device_active,
+                                        device_group_id,
+                                        device_date_updated)
                             VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -538,19 +544,25 @@ void MainWindow::assignCatalogToDevice(QString catalogName,int deviceID)
                                         :device_total_file_size,
                                         :device_total_file_count,
                                         :device_total_space,
-                                        :device_free_space)
+                                        :device_free_space,
+                                        :device_active,
+                                        :device_group_id,
+                                        :device_date_updated)
                         )");
         query.prepare(querySQL);
         query.bindValue(":device_id", newID);
-        query.bindValue(":device_parent_id", deviceID);
-        query.bindValue(":device_name", selectedDevice->catalog->name);
+        query.bindValue(":device_parent_id", parentDevice->ID);
+        query.bindValue(":device_name", catalogDevice->catalog->name);
         query.bindValue(":device_type", "Catalog");
-        query.bindValue(":device_external_id", selectedDevice->catalog->name);
-        query.bindValue(":device_path", selectedDevice->catalog->sourcePath);
-        query.bindValue(":device_total_file_size", selectedDevice->catalog->totalFileSize);
-        query.bindValue(":device_total_file_count", selectedDevice->catalog->fileCount);
+        query.bindValue(":device_external_id", catalogDevice->catalog->ID);
+        query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
+        query.bindValue(":device_total_file_size", catalogDevice->catalog->totalFileSize);
+        query.bindValue(":device_total_file_count", catalogDevice->catalog->fileCount);
         query.bindValue(":device_total_space", 0);
         query.bindValue(":device_free_space", 0);
+        query.bindValue(":device_active", catalogDevice->active);
+        query.bindValue(":device_group_id", parentDevice->groupID);
+        query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
         query.exec();
 
         //Save data to file
