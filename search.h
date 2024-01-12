@@ -102,6 +102,12 @@ public:
     QString connectedDirectory;
 
     //Results
+    QList<QString> fileNames;
+    QList<qint64>  fileSizes;
+    QList<QString> filePaths;
+    QList<QString> fileDateTimes;
+    QList<QString> fileCatalogs;
+
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;
     qint64 filesFoundAverageSize;
@@ -113,32 +119,11 @@ public:
     QStringList filesFoundList;
     QStringList deviceFoundIDList;
     QStandardItemModel *deviceFoundModel = new QStandardItemModel;
-
     QStringList searchTextList;
-
-    QList<QString>  sFileNames;
-    QList<qint64>   sFileSizes;
-    QList<QString>  sFilePaths;
-    QList<QString>  sFileDateTimes;
-    QList<QString>  sFileCatalogs;
-
 
     //Methods
     void loadSearchHistoryCriteria();
     void setMultipliers();
-
-    void populateFileData(const QList<QString> &newfileName,
-                          const QList<qint64>  &newfileSize,
-                          const QList<QString> &newfilePath,
-                          const QList<QString> &newfileDateTime,
-                          const QList<QString> &newfileCatalog);
-
-private:
-    QList<QString> fileNames;
-    QList<qint64>  fileSizes;
-    QList<QString> filePaths;
-    QList<QString> fileDateTimes;
-    QList<QString> fileCatalogs;
 };
 
 #endif // SEARCH_H

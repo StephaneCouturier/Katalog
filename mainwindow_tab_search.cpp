@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "catalog.h"
 #include "filesview.h"
+//#include "search.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
 
@@ -762,28 +763,22 @@
                     //Populate model with folders only if this option is selected
                     if ( newSearch->searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
                     {
-                        newSearch->sFilePaths.removeDuplicates();
-                        int numberOfFolders = newSearch->sFilePaths.count();
-                        newSearch->sFileNames.clear();
-                        newSearch->sFileSizes.clear();
-                        newSearch->sFileDateTimes.clear();
-                        newSearch->sFileCatalogs.clear();
+                        newSearch->filePaths.removeDuplicates();
+                        int numberOfFolders = newSearch->filePaths.count();
+                        newSearch->fileNames.clear();
+                        newSearch->fileSizes.clear();
+                        newSearch->fileDateTimes.clear();
+                        newSearch->fileCatalogs.clear();
                         for (int i=0; i<numberOfFolders; i++)
-                            newSearch->sFileNames <<"";
+                            newSearch->fileNames <<"";
                         for (int i=0; i<numberOfFolders; i++)
-                            newSearch->sFileSizes <<0;
+                            newSearch->fileSizes <<0;
                         for (int i=0; i<numberOfFolders; i++)
-                            newSearch->sFileDateTimes <<"";
+                            newSearch->fileDateTimes <<"";
                         for (int i=0; i<numberOfFolders; i++)
-                            newSearch->sFileCatalogs <<"";
+                            newSearch->fileCatalogs <<"";
 
                         // Populate model with data
-                        newSearch->populateFileData(
-                            newSearch->sFileNames,
-                            newSearch->sFileSizes,
-                            newSearch->sFilePaths,
-                            newSearch->sFileDateTimes,
-                            newSearch->sFileCatalogs);
                         fileViewModel->setSourceModel(newSearch);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
@@ -806,12 +801,6 @@
                     else
                     {
                         // Populate model with data
-                        newSearch->populateFileData(
-                            newSearch->sFileNames,
-                            newSearch->sFileSizes,
-                            newSearch->sFilePaths,
-                            newSearch->sFileDateTimes,
-                            newSearch->sFileCatalogs);
                         fileViewModel->setSourceModel(newSearch);
                         fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
                         fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
@@ -929,17 +918,17 @@
                                 duplicatesQuery.exec();
 
                                 //recapture file results for Stats
-                                newSearch->sFileNames.clear();
-                                newSearch->sFileSizes.clear();
-                                newSearch->sFilePaths.clear();
-                                newSearch->sFileDateTimes.clear();
-                                newSearch->sFileCatalogs.clear();
+                                newSearch->fileNames.clear();
+                                newSearch->fileSizes.clear();
+                                newSearch->filePaths.clear();
+                                newSearch->fileDateTimes.clear();
+                                newSearch->fileCatalogs.clear();
                                 while(duplicatesQuery.next()){
-                                        newSearch->sFileNames.append(duplicatesQuery.value(0).toString());
-                                        newSearch->sFileSizes.append(duplicatesQuery.value(1).toLongLong());
-                                        newSearch->sFileDateTimes.append(duplicatesQuery.value(2).toString());
-                                        newSearch->sFilePaths.append(duplicatesQuery.value(3).toString());
-                                        newSearch->sFileCatalogs.append(duplicatesQuery.value(4).toString());
+                                    newSearch->fileNames.append(duplicatesQuery.value(0).toString());
+                                    newSearch->fileSizes.append(duplicatesQuery.value(1).toLongLong());
+                                    newSearch->fileDateTimes.append(duplicatesQuery.value(2).toString());
+                                    newSearch->filePaths.append(duplicatesQuery.value(3).toString());
+                                    newSearch->fileCatalogs.append(duplicatesQuery.value(4).toString());
                                 }
 
                                 //Load results to model
@@ -1077,17 +1066,17 @@
                                 differencesQuery.exec();
 
                                 //recapture file results for Stats
-                                newSearch->sFileNames.clear();
-                                newSearch->sFileSizes.clear();
-                                newSearch->sFilePaths.clear();
-                                newSearch->sFileDateTimes.clear();
-                                newSearch->sFileCatalogs.clear();
+                                newSearch->fileNames.clear();
+                                newSearch->fileSizes.clear();
+                                newSearch->filePaths.clear();
+                                newSearch->fileDateTimes.clear();
+                                newSearch->fileCatalogs.clear();
                                 while(differencesQuery.next()){
-                                        newSearch->sFileNames.append(differencesQuery.value(0).toString());
-                                        newSearch->sFileSizes.append(differencesQuery.value(1).toLongLong());
-                                        newSearch->sFileDateTimes.append(differencesQuery.value(2).toString());
-                                        newSearch->sFilePaths.append(differencesQuery.value(3).toString());
-                                        newSearch->sFileCatalogs.append(differencesQuery.value(4).toString());
+                                    newSearch->fileNames.append(differencesQuery.value(0).toString());
+                                    newSearch->fileSizes.append(differencesQuery.value(1).toLongLong());
+                                    newSearch->fileDateTimes.append(differencesQuery.value(2).toString());
+                                    newSearch->filePaths.append(differencesQuery.value(3).toString());
+                                    newSearch->fileCatalogs.append(differencesQuery.value(4).toString());
                                 }
 
                                 loadCatalogQueryModel->setQuery(std::move(differencesQuery));
@@ -1131,7 +1120,7 @@
                     //Total size of files found
                     qint64 sizeItem;
                     newSearch->filesFoundTotalSize = 0;
-                    foreach (sizeItem, newSearch->sFileSizes) {
+                    foreach (sizeItem, newSearch->fileSizes) {
                                 newSearch->filesFoundTotalSize = newSearch->filesFoundTotalSize + sizeItem;
                     }
                     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(newSearch->filesFoundTotalSize));
@@ -1139,12 +1128,12 @@
                     //Other statistics, covering the case where no results are returned.
                     if (newSearch->filesFoundNumber !=0){
                                 newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
-                                QList<qint64> fileSizeList = newSearch->sFileSizes;
+                        QList<qint64> fileSizeList = newSearch->fileSizes;
                                 std::sort(fileSizeList.begin(), fileSizeList.end());
                                 newSearch->filesFoundMinSize = fileSizeList.first();
                                 newSearch->filesFoundMaxSize = fileSizeList.last();
 
-                                QList<QString> fileDateList = newSearch->sFileDateTimes;
+                                QList<QString> fileDateList = newSearch->fileDateTimes;
                                 std::sort(fileDateList.begin(), fileDateList.end());
                                 newSearch->filesFoundMinDate = fileDateList.first();
                                 newSearch->filesFoundMaxDate = fileDateList.last();
@@ -1361,11 +1350,11 @@
                                 newSearch->deviceFoundIDList.insert(0,QString::number(device->ID));
 
                                 //Populate result lists
-                                newSearch->sFileNames.append(lineFileName);
-                                newSearch->sFilePaths.append(lineFilePath);
-                                newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
-                                newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                newSearch->sFileCatalogs.append(device->name);
+                                newSearch->fileNames.append(lineFileName);
+                                newSearch->filePaths.append(lineFilePath);
+                                newSearch->fileSizes.append(getFilesQuery.value(2).toLongLong());
+                                newSearch->fileDateTimes.append(getFilesQuery.value(3).toString());
+                                newSearch->fileCatalogs.append(device->name);
                             }
                         }
                         else{
@@ -1384,11 +1373,11 @@
                                 newSearch->deviceFoundIDList.insert(0, QString::number(device->ID));
 
                                 //Populate result lists
-                                newSearch->sFileNames.append(lineFileName);
-                                newSearch->sFilePaths.append(lineFilePath);
-                                newSearch->sFileSizes.append(getFilesQuery.value(2).toLongLong());
-                                newSearch->sFileDateTimes.append(getFilesQuery.value(3).toString());
-                                newSearch->sFileCatalogs.append(device->name);
+                                newSearch->fileNames.append(lineFileName);
+                                newSearch->filePaths.append(lineFilePath);
+                                newSearch->fileSizes.append(getFilesQuery.value(2).toLongLong());
+                                newSearch->fileDateTimes.append(getFilesQuery.value(3).toString());
+                                newSearch->fileCatalogs.append(device->name);
                             }
                         }
                 }
@@ -1611,11 +1600,11 @@
                             else lineFileDatetime = "";
 
                             //Populate result lists
-                            newSearch->sFileNames.append(file.fileName());
-                            newSearch->sFilePaths.append(file.path());
-                            newSearch->sFileSizes.append(lineFileSize);
-                            newSearch->sFileDateTimes.append(lineFileDatetime);
-                            newSearch->sFileCatalogs.append(sourceDirectory);
+                            newSearch->fileNames.append(file.fileName());
+                            newSearch->filePaths.append(file.path());
+                            newSearch->fileSizes.append(lineFileSize);
+                            newSearch->fileDateTimes.append(lineFileDatetime);
+                            newSearch->fileCatalogs.append(sourceDirectory);
                         }
                     }
                     else{
@@ -1635,11 +1624,11 @@
                             else lineFileDatetime = "";
 
                             //Populate result lists
-                            newSearch->sFileNames.append(file.fileName());
-                            newSearch->sFilePaths.append(file.path());
-                            newSearch->sFileSizes.append(lineFileSize);
-                            newSearch->sFileDateTimes.append(lineFileDatetime);
-                            newSearch->sFileCatalogs.append(sourceDirectory);
+                            newSearch->fileNames.append(file.fileName());
+                            newSearch->filePaths.append(file.path());
+                            newSearch->fileSizes.append(lineFileSize);
+                            newSearch->fileDateTimes.append(lineFileDatetime);
+                            newSearch->fileCatalogs.append(sourceDirectory);
                         }
                     }
             }
@@ -1871,9 +1860,9 @@
 
             //Generate list of full file path (directory path + file name)
             QStringList resultsFilesList;
-            for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+            for (int i = 0; i < newSearch->fileNames.size(); ++i)
             {
-                QString fileFullPath = newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i];
+                QString fileFullPath = newSearch->filePaths[i] + "/" + newSearch->fileNames[i];
                 resultsFilesList << fileFullPath;
             }
 
@@ -1917,9 +1906,9 @@
                                                  +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
                                              QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
-                            for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                            for (int i = 0; i < newSearch->fileNames.size(); ++i)
                             {
-                            fileFullPath = moveFileToTrash(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
+                            fileFullPath = moveFileToTrash(newSearch->filePaths[i] + "/" + newSearch->fileNames[i]);
                             trashPath = moveFileToTrash(fileFullPath);
                             if(trashPath==""){
                          QMessageBox::information(this,"Katalog",tr("Problem moving file: ")
@@ -1954,9 +1943,9 @@
                                               +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
                                               QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
-                        for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                        for (int i = 0; i < newSearch->fileNames.size(); ++i)
                         {
-                            result = deleteFile(newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i]);
+                            result = deleteFile(newSearch->filePaths[i] + "/" + newSearch->fileNames[i]);
                             if (result!=""){
                                 deletedFiles +=1;
                             }
@@ -2025,12 +2014,12 @@
                     {
                                     stream << catalogMetadata[i] << '\n';
                     }
-                    for (int i = 0; i < newSearch->sFileNames.size(); ++i)
+                    for (int i = 0; i < newSearch->fileNames.size(); ++i)
                     {
-                                    QString line = newSearch->sFilePaths[i] + "/" + newSearch->sFileNames[i] + "\t"
-                                                   + QString::number(newSearch->sFileSizes[i]) + "\t"
-                                                   + newSearch->sFileDateTimes[i] + "\t"
-                                                   + newSearch->sFileCatalogs[i];
+                                    QString line = newSearch->filePaths[i] + "/" + newSearch->fileNames[i] + "\t"
+                                                   + QString::number(newSearch->fileSizes[i]) + "\t"
+                                                   + newSearch->fileDateTimes[i] + "\t"
+                                                   + newSearch->fileCatalogs[i];
                                     stream << line << '\n';
                     }
                 }

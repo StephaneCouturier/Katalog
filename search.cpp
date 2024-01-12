@@ -193,23 +193,3 @@ void Search::setMultipliers()
     else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 }
-
-void Search::populateFileData( const QList<QString> &newfileName,
-                               const QList<qint64>  &newfileSize,
-                               const QList<QString> &newfilePath,
-                               const QList<QString> &newfileDateTime,
-                               const QList<QString> &newfileCatalog)
-{
-    fileNames.clear();
-    fileNames = newfileName;
-    fileSizes.clear();
-    fileSizes = newfileSize;
-    filePaths.clear();
-    filePaths = newfilePath;
-    fileDateTimes.clear();
-    fileDateTimes = newfileDateTime;
-    fileCatalogs.clear();
-    fileCatalogs = newfileCatalog;
-
-    return;
-}
