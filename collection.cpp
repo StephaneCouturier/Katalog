@@ -608,11 +608,11 @@ void Collection::loadStatisticsStorageFileToTable()
 void Collection::loadStatisticsDeviceFileToTable()
 {// Load the contents of the storage statistics file into the database
     if(databaseMode=="Memory"){
-        //clear database table
+        //Clear database table
         QSqlQuery deleteQuery;
         deleteQuery.exec("DELETE FROM statistics_device");
 
-        // Get infos stored in the file
+        //Get infos stored in the file
         QFile statisticsDeviceFile(statisticsDeviceFilePath);
         if(!statisticsDeviceFile.open(QIODevice::ReadOnly)) {
             return;
@@ -620,7 +620,7 @@ void Collection::loadStatisticsDeviceFileToTable()
 
         QTextStream textStream(&statisticsDeviceFile);
 
-        //prepare query to load file info
+        //Prepare query to load file info
         QSqlQuery insertQuery;
         QString insertSQL = QLatin1String(R"(
                                     INSERT INTO statistics_device (
@@ -646,7 +646,7 @@ void Collection::loadStatisticsDeviceFileToTable()
                                                 )");
         insertQuery.prepare(insertSQL);
 
-        //set temporary values
+        //Set temporary values
         QString     line;
         QStringList fieldList;
         QString     dateTime;
@@ -663,7 +663,7 @@ void Collection::loadStatisticsDeviceFileToTable()
         //Skip titles line
         line = textStream.readLine();
 
-        //load file to database
+        //Load file to database
         while (!textStream.atEnd())
         {
             line = textStream.readLine();
@@ -698,6 +698,48 @@ void Collection::loadStatisticsDeviceFileToTable()
                 insertQuery.bindValue(":device_total_space", QString::number(deviceTotalSpace));
                 insertQuery.bindValue(":record_type", recordType);
                 insertQuery.exec();
+            }
+        }
+    }
+}
+//----------------------------------------------------------------------
+void Collection::loadExclude()
+{// Load the contents of the storage statistics file into the database
+    if(databaseMode=="Memory"){
+        //Clear database table
+        QSqlQuery deleteQuery;
+        deleteQuery.exec("DELETE FROM exclude");
+
+        //Get data stored in the file
+        QFile excludeFile(excludeFilePath);
+        if(excludeFile.open(QIODevice::ReadOnly)) {
+            QTextStream textStream(&excludeFile);
+
+            //Prepare query to load file info
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                        INSERT INTO exclude (
+                                                    exclude_path  )
+                                        VALUES(
+                                                    :exclude_path )
+                                )");
+            insertQuery.prepare(insertSQL);
+
+            //Set temporary values
+            QString     line;
+
+            //Load file to database
+            while (!textStream.atEnd())
+            {
+                line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                {
+                    //Append data to the database
+                    insertQuery.bindValue(":exclude_path", line);
+                    insertQuery.exec();
+                }
             }
         }
     }

@@ -168,6 +168,9 @@
         if (!q.exec(SQL_CREATE_TAG))
             return q.lastError();
 
+        if (!q.exec(SQL_CREATE_EXCLUDE))
+            return q.lastError();
+
         return QSqlError();
     }
     //----------------------------------------------------------------------

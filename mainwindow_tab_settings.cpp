@@ -288,6 +288,7 @@
             collection->loadCatalogFilesToTable();
             collection->loadStorageFileToTable();
             collection->loadDeviceFileToTable();
+            collection->loadExclude();
 
         //Check active status and synch it
             updateAllDeviceActive();

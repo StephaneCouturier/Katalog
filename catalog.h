@@ -51,7 +51,7 @@ public:
     Catalog(QObject *parent = nullptr);
 
     //Attributes
-    //Saved
+        //Saved
         int ID;
         QString name;
         QString filePath;
@@ -68,8 +68,11 @@ public:
         bool    includeMetadata;
         QString appVersion;
 
-    QStringListModel *fileListModel;
+        //Temporary
+        QStringList excludedFolders;
+        QStringListModel *fileListModel;
 
+    //Methods
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -88,6 +91,7 @@ public:
     void deleteCatalog();
     void saveCatalog();
 
+    void loadExcludedFolders();
     QList<qint64> updateCatalogFiles(QString databaseMode, QString collectionFolder);
     void catalogDirectory(QString databaseMode, QString collectionFolder);
 

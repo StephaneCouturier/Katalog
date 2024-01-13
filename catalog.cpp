@@ -839,29 +839,65 @@ void Catalog::getFileTypes()
         fileExtensions = fileType_Text;
 }
 
+void Catalog::loadExcludedFolders()
+{
+    //REPLACE BY DATABASE QUERY
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT *
+                                    FROM exclude
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+    qDebug()<<query.lastError();
+    while(query.next()){
+        qDebug()<<query.value(0).toString()<<query.value(1).toString();
+        excludedFolders<<query.value(0).toString();
+    }
+
+
+    // QString excludeFilePath = collectionFolder + "/" + "exclude.csv";
+    // //QStringList excludedFolders;
+    // QFile excludeFile(excludeFilePath);
+    // if(excludeFile.open(QIODevice::ReadOnly)) {
+    //     QTextStream textStream(&excludeFile);
+    //     QString line;
+    //     while (true)
+    //     {
+    //         line = textStream.readLine();
+    //         if (line.isNull())
+    //             break;
+    //         else
+    //             excludedFolders << line;
+    //     }
+    //     excludeFile.close();
+    // }
+}
+
+
 void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
 {//Catalog the files of a directory and update catalog attributes
 
     //DEV: 2 Media File Metadata
 
     //Prepare inputs
-    QString excludeFilePath = collectionFolder + "/" + "exclude.csv";
+    // QString excludeFilePath = collectionFolder + "/" + "exclude.csv";
     // Get directories to exclude
-    QStringList excludedFolders;
-    QFile excludeFile(excludeFilePath);
-    if(excludeFile.open(QIODevice::ReadOnly)) {
-        QTextStream textStream(&excludeFile);
-        QString line;
-        while (true)
-        {
-            line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                excludedFolders << line;
-        }
-        excludeFile.close();
-    }
+    // QStringList excludedFolders;
+    // QFile excludeFile(excludeFilePath);
+    // if(excludeFile.open(QIODevice::ReadOnly)) {
+    //     QTextStream textStream(&excludeFile);
+    //     QString line;
+    //     while (true)
+    //     {
+    //         line = textStream.readLine();
+    //         if (line.isNull())
+    //             break;
+    //         else
+    //             excludedFolders << line;
+    //     }
+    //     excludeFile.close();
+    // }
 
     //Prepare database and queries
 

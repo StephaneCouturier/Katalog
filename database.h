@@ -244,6 +244,13 @@
                             date_time	TEXT)
             )");
 
+        // EXCLUDE --------------------------------------------------------------
+            const auto SQL_CREATE_EXCLUDE = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS exclude(
+                            exclude_path                  TEXT)
+            )");
+
+
 //-------------------------------------------------------------------------------
 
 #endif // DATABASE_H

@@ -80,6 +80,7 @@ public:
     void loadStatisticsCatalogFileToTable();
     void loadStatisticsStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
+    void loadExclude();
 
     //File saving
     void saveDeviceTableToFile();
