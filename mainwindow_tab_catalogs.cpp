@@ -387,7 +387,7 @@
                                             d.device_active                ,
                                             c.catalog_include_hidden       ,
                                             c.catalog_include_metadata     ,
-                                            c.catalog_storage              ,
+                                            (SELECT e.device_name FROM device e WHERE e.device_id = d.device_parent_id) ,
                                             c.catalog_is_full_device       ,
                                             c.catalog_date_loaded          ,
                                             c.catalog_app_version          ,
@@ -425,8 +425,6 @@
 
             //Execute query
             loadCatalogQuery.prepare(loadCatalogQuerySQL);
-            loadCatalogQuery.bindValue(":catalog_storage",  selectedDevice->name);
-            loadCatalogQuery.bindValue(":catalog_name",     selectedDevice->name);
             loadCatalogQuery.bindValue(":device_id",        selectedDevice->ID);
             loadCatalogQuery.bindValue(":device_parent_id", selectedDevice->ID);
             loadCatalogQuery.exec();
@@ -1297,7 +1295,6 @@
             device.loadDevice();
             if (device.catalog->ID == 0){
                 device.catalog->generateID();
-
             }
 
             device.externalID = device.catalog->ID;
