@@ -32,6 +32,7 @@
 #ifndef COLLECTION_H
 #define COLLECTION_H
 
+#include "device.h"
 #include <QAbstractTableModel>
 #include <QFile>
 #include <QSqlQuery>
@@ -86,6 +87,9 @@ public:
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
     void saveStatiticsToFile();
+
+    //File deleting
+    void deleteCatalogFile(Device *device);
 
     //Data management
     void insertPhysicalStorageGroup();

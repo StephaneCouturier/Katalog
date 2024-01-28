@@ -79,7 +79,7 @@ void Device::loadDevice(){
     if(type == "Storage"){
         storage->ID = externalID;
         storage->loadStorage();
-        path = storage->path;
+        storage->path = path;
     }
 
     //Load catalog values
@@ -87,7 +87,7 @@ void Device::loadDevice(){
         catalog->ID = externalID;
         catalog->name = name; //temp
         catalog->loadCatalog();
-        path = catalog->sourcePath;
+        catalog->sourcePath = path;
     }
 
     //Load sub-device list
@@ -206,6 +206,7 @@ void Device::insertDevice()
                                         device_parent_id,
                                         device_name,
                                         device_type,
+                                        device_path,
                                         device_external_id,
                                         device_group_id)
                             VALUES(
@@ -213,6 +214,7 @@ void Device::insertDevice()
                                         :device_parent_id,
                                         :device_name,
                                         :device_type,
+                                        :device_path,
                                         :device_external_id,
                                         :device_group_id)
                                 )");
@@ -221,6 +223,7 @@ void Device::insertDevice()
     query.bindValue(":device_parent_id",parentID);
     query.bindValue(":device_name",name);
     query.bindValue(":device_type", type);
+    query.bindValue(":device_path", path);
     query.bindValue(":device_external_id", externalID);
     query.bindValue(":device_group_id", groupID);
     query.exec();
@@ -294,6 +297,17 @@ void Device::deleteDevice(){
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
     }
+
+    //Delete storage values
+    if(type == "Storage"){
+        storage->deleteStorage();
+    }
+
+    //Delete catalog values
+    if(type == "Catalog"){
+        catalog->deleteCatalog();
+    }
+
 }
 
 void Device::saveDevice()
@@ -304,6 +318,7 @@ void Device::saveDevice()
                             SET    device_name =:device_name,
                                    device_parent_id =:device_parent_id,
                                    device_external_id =:device_external_id,
+                                   device_path =:device_path,
                                    device_group_id =:device_group_id,
                                    device_total_file_size =:device_total_file_size,
                                    device_total_file_count =:device_total_file_count
@@ -314,6 +329,7 @@ void Device::saveDevice()
     query.bindValue(":device_name", name);
     query.bindValue(":device_parent_id", parentID);
     query.bindValue(":device_external_id", externalID);
+    query.bindValue(":device_path", path);
     query.bindValue(":device_group_id", groupID);
     query.bindValue(":device_total_file_size", totalFileSize);
     query.bindValue(":device_total_file_count", totalFileCount);
@@ -335,6 +351,9 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     if (type=="Catalog"){
         //Update this device/catalog (files) and its storage (space)
         deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder);
+        totalFileSize  = deviceUpdatesList[1];
+        totalFileCount = deviceUpdatesList[3];
+
         //catalog->updateCatalogFile(databaseMode);
         if( deviceUpdatesList.count() > 0 and deviceUpdatesList[0]==1){
             //Update catalog with new values

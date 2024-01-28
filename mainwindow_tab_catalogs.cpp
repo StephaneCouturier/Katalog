@@ -56,6 +56,7 @@
         {
             activeDevice->ID = ui->Catalogs_treeView_CatalogList->model()->index(index.row(), 15, QModelIndex()).data().toInt();
             activeDevice->loadDevice();
+            qDebug()<<"filePath: "<<activeDevice->catalog->filePath;
 
             // Display buttons
             ui->Catalogs_pushButton_Search->setEnabled(true);
@@ -68,10 +69,10 @@
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
-            ui->Catalogs_lineEdit_Name->setText(activeDevice->catalog->name);
+            ui->Catalogs_label_NameDisplay->setText(activeDevice->catalog->name);
             ui->Catalogs_lineEdit_SourcePath->setText(activeDevice->catalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
-            ui->Catalogs_comboBox_Storage->setCurrentText(activeDevice->catalog->storageName);
+            ui->Catalogs_label_StorageDisplay->setText(activeDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
             ui->Catalogs_checkBox_IncludeMetadata->setChecked(activeDevice->catalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
@@ -127,10 +128,10 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
         {
-            ui->Catalogs_lineEdit_Name->setText(selectedDevice->catalog->name);
+            ui->Catalogs_label_NameDisplay->setText(selectedDevice->catalog->name);
             ui->Catalogs_lineEdit_SourcePath->setText(selectedDevice->catalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedDevice->catalog->fileType);
-            ui->Catalogs_comboBox_Storage->setCurrentText(selectedDevice->catalog->storageName);
+            ui->Catalogs_label_StorageDisplay->setText(selectedDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedDevice->catalog->includeHidden);
 
             ui->Catalogs_widget_EditCatalog->hide();
@@ -144,6 +145,7 @@
 
             loadDeviceTableToTreeModel();
             loadCatalogsTableToModel();
+            loadStatisticsChart();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
@@ -282,27 +284,9 @@
 
             if ( result ==QMessageBox::Yes){
 
-                selectedDevice->catalog->deleteCatalog();
+                activeDevice->deleteDevice();
 
-
-                if(collection->databaseMode=="Memory"){
-                    //DEV: move to object
-
-                    //move file to trash
-                    if ( selectedDevice->catalog->filePath != ""){
-
-                              QFile file (selectedDevice->catalog->filePath);
-                              file.moveToTrash();
-                    }
-                    else QMessageBox::information(this,"Katalog",tr("Select a catalog above first."));
-
-                    //Clear current entires from the table
-                    QSqlQuery queryDelete;
-                    queryDelete.exec("DELETE FROM catalog");
-
-                    //refresh catalog lists
-                    collection->loadCatalogFilesToTable();
-                }
+                collection->deleteCatalogFile(activeDevice);
 
                 loadCatalogsTableToModel();
             }
@@ -378,11 +362,11 @@
             loadCatalogQuerySQL  = QLatin1String(R"(
                                         SELECT
                                             d.device_name                  ,
-                                            d.device_path                  ,
+                                            c.catalog_file_path            ,
                                             c.catalog_date_updated         ,
                                             d.device_total_file_count      ,
                                             d.device_total_file_size       ,
-                                            c.catalog_source_path          ,
+                                            d.device_path                  ,
                                             c.catalog_file_type            ,
                                             d.device_active                ,
                                             c.catalog_include_hidden       ,
@@ -479,7 +463,7 @@
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(2, 150); //Date
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(3,  80); //Files
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(4, 100); //TotalFileSize
-            ui->Catalogs_treeView_CatalogList->header()->resizeSection(5, 300); //Path
+            ui->Catalogs_treeView_CatalogList->header()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(6, 100); //FileType
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(7,  50); //Active
             ui->Catalogs_treeView_CatalogList->header()->resizeSection(8,  50); //includeHidden
@@ -783,9 +767,6 @@
         newCatalog.sourcePath = previousCatalog->sourcePath;
 
         //Get new values
-            //Get new name
-                newCatalog.name = ui->Catalogs_lineEdit_Name->text();
-
             //Get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
                 newCatalog.sourcePath = ui->Catalogs_lineEdit_SourcePath->text();
                 int     pathLength              = newCatalog.sourcePath.length();
@@ -794,7 +775,6 @@
                 }
 
             //Other values
-            newCatalog.storageName      = ui->Catalogs_comboBox_Storage->currentText();
             newCatalog.fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
             newCatalog.includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
             newCatalog.includeMetadata  = ui->Catalogs_checkBox_IncludeMetadata->isChecked();
@@ -804,12 +784,9 @@
         //Confirm save changes
             QString message = tr("Save changes to the definition of the catalog?<br/>");
             message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
-            if(newCatalog.name           != previousCatalog->name)
-                message = message + "<tr><td>" + tr("Name")         + "</td><td>" + previousCatalog->name         + "</td><td><b>" + newCatalog.name          + "</b></td></tr>";
+
             if(newCatalog.sourcePath     != previousCatalog->sourcePath)
                 message = message + "<tr><td>" + tr("Source path ") + "</td><td>" + previousCatalog->sourcePath   + "</td><td><b>" + newCatalog.sourcePath    + "</b></td></tr>";
-            if(newCatalog.storageName         != previousCatalog->storageName)
-                message = message + "<tr><td>" + tr("Storage name") + "</td><td>" + previousCatalog->storageName  + "</td><td><b>" + newCatalog.storageName       + "</b></td></tr>";
             if(newCatalog.fileType       !=previousCatalog->fileType)
                 message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog->fileType     + "</td><td><b>" + newCatalog.fileType      + "</b></td></tr>";
             if(newCatalog.includeHidden  != previousCatalog->includeHidden)
@@ -839,82 +816,6 @@
 
         //Write changes to catalog file (update headers only)
             newCatalog.updateCatalogFileHeaders(collection->databaseMode);
-
-
-        //Rename the catalog file
-        if (newCatalog.name != previousCatalog->name){
-
-            //verfiy if name exists
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                SELECT catalog_name
-                                FROM catalog
-                                WHERE catalog_name=:catalog_name
-                            )");
-            query.prepare(querySQL);
-            query.bindValue(":catalog_name", newCatalog.name);
-            query.exec();
-            query.next();
-            if (query.value(0).toString() !=""){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
-                               + newCatalog.name
-                               + "</b><br/><br/>"+tr("Choose a different name."));
-                msgBox.setIcon(QMessageBox::Critical);
-                msgBox.exec();
-                return;
-            }
-
-            previousCatalog->renameCatalog(newCatalog.name);
-
-            if(collection->databaseMode=="Memory"){
-                previousCatalog->renameCatalogFile(newCatalog.name);
-                collection->loadCatalogFilesToTable();
-                loadCatalogsTableToModel();
-            }
-
-            //Rename in statistics
-            int renameChoice = QMessageBox::warning(this, "Katalog", tr("Apply the change in the statistics file?\n")
-                                                    , QMessageBox::Yes | QMessageBox::No);
-
-            if (renameChoice == QMessageBox::Yes){
-                if(collection->databaseMode=="Memory"){
-                    QFile f(collection->statisticsCatalogFilePath);
-                    if(f.open(QIODevice::ReadWrite | QIODevice::Text))
-                    {
-                        QString s;
-                        QTextStream t(&f);
-                        while(!t.atEnd())
-                        {
-                                QString line = t.readLine();
-                                QStringList lineParts = line.split("\t");
-                                if (lineParts[1]==previousCatalog->name){
-                                    lineParts[1]= newCatalog.name;
-                                    line = lineParts.join("\t");
-                                }
-                                s.append(line + "\n");
-                        }
-                        f.resize(0);
-                        t << s;
-                        f.close();
-                    }
-                }
-                else if(collection->databaseMode=="File"){
-                    QSqlQuery query;
-                    QString querySQL = QLatin1String(R"(
-                                    UPDATE statistics
-                                    SET catalog_name =:newCatalog_name
-                                    WHERE catalog_name =:previousCatalogName
-                                )");
-                    query.prepare(querySQL);
-                    query.bindValue(":newCatalog_name", newCatalog.name);
-                    query.bindValue(":previousCatalogName", previousCatalog->name);
-                    query.exec();
-                }
-            }
-
-        }
 
         //Refresh display
         loadCatalogsTableToModel();
@@ -1268,62 +1169,5 @@
             msgBox.exec();
             */
         }
-    }
-    //--------------------------------------------------------------------------
-    //--------------------------------------------------------------------------
-    //--- 1.x - 2.0 Migration
-    void MainWindow::generateAndAssociateCatalogMissingIDs()
-    {
-        // Start animation while opening
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-
-        //Get catalogs with missing ID
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    SELECT device_id, catalog_name
-                                    FROM catalog
-                                    LEFT JOIN device ON device_name = catalog_name
-
-                                )");//WHERE device_id IS NULL or catalog_id = '' or catalog_id = 0
-        query.prepare(querySQL);
-        query.exec();
-
-        //Loop and generate an ID
-        while(query.next()){
-            Device device;
-            device.ID = query.value(0).toInt();
-            device.loadDevice();
-            if (device.catalog->ID == 0){
-                device.catalog->generateID();
-            }
-
-            device.externalID = device.catalog->ID;
-            device.saveDevice();
-            device.catalog->name = device.name;
-            device.catalog->saveCatalog();
-            device.catalog->updateCatalogFileHeaders(collection->databaseMode);
-        }
-
-        querySQL = QLatin1String(R"(
-                                    UPDATE device
-                                    SET device_external_id = (SELECT catalog_id FROM catalog WHERE device_name = catalog_name)
-                                    WHERE device_type = 'Catalog'
-                                )");
-        query.prepare(querySQL);
-        query.exec();
-
-
-        collection->saveDeviceTableToFile();
-        loadDeviceTableToTreeModel();
-        loadCatalogsTableToModel();
-
-        //Stop animation
-        QApplication::restoreOverrideCursor();
-
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("generateCatalogMissingIDs"));
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.exec();
     }
     //--------------------------------------------------------------------------

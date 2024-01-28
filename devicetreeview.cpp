@@ -45,7 +45,7 @@ DeviceTreeView::DeviceTreeView(QObject *parent)
 void DeviceTreeView::initializeLists()
 {
     filecountColumnList << 3 << 4 << 5 << 6;
-    filesizeColumnList << 7 << 8 << 9;
+    filesizeColumnList << 7 << 8 << 9 << 10;
     boldColumnList << 0;
 }
 

@@ -661,7 +661,7 @@ void Collection::loadStatisticsDeviceFileToTable()
         QRegularExpression tagExp("\t");
 
         //Skip titles line
-        line = textStream.readLine();
+        //line = textStream.readLine();
 
         //Load file to database
         while (!textStream.atEnd())
@@ -886,3 +886,34 @@ void Collection::insertPhysicalStorageGroup() {
 
 }
 //--------------------------------------------------------------------------
+
+void Collection::deleteCatalogFile(Device *device) {
+    if(databaseMode=="Memory"){
+        //DEV: move to object
+
+        //move file to trash
+        if ( device->catalog->filePath != ""){
+
+            QFile file (device->catalog->filePath);
+            file.moveToTrash();
+        }
+        else{
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                       "Select a catalog with a valid path."
+                                                       ));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
+        //Clear current entires from the table
+        QSqlQuery queryDelete;
+        queryDelete.exec("DELETE FROM catalog");
+
+        //refresh catalog lists
+        loadCatalogFilesToTable();
+    }
+
+}
+//--------------------------------------------------------------------------
+

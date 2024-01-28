@@ -202,6 +202,7 @@
             newDevice->catalog->generateID();
             newDevice->externalID = newDevice->catalog->ID; //DEV: simplify?
             newDevice->groupID = 0; //DEV: ADAPT
+            newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->insertDevice();
 
             //Get inputs and set values of the newCatalog
@@ -230,14 +231,12 @@
             //Save new catalog
             newDevice->catalog->insertCatalog();
 
-
-
             //Reload
             loadDeviceTableToTreeModel();
             loadStorageList();
 
-        //Launch the scan and cataloging of files
-            reportAllUpdates(newDevice, newDevice->updateDevice("update", collection->databaseMode,false,collection->collectionFolder), "create");
+        //Launch the scan and cataloging of files, including statistics
+            reportAllUpdates(newDevice, newDevice->updateDevice("create", collection->databaseMode,false,collection->collectionFolder), "create");
             newDevice->saveDevice();
 
             //Save data to files
@@ -262,6 +261,9 @@
             //Update the new catalog loadedversion to indicate that files are already in memory
             QDateTime emptyDateTime = *new QDateTime;
             newDevice->catalog->setDateLoaded(emptyDateTime);
+
+        //Save statistics
+            collection->saveStatiticsToFile();
 
         //Refresh data and UI
             //Refresh the catalog list for the Search screen

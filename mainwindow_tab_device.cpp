@@ -227,14 +227,17 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             });
         }
 
-/*
+
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this catalog"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
 
         connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
+
+
             deleteDeviceItem();
+
         });
-*/
+
         deviceContextMenu.exec(globalPos);
     }
     else if(activeDevice->type=="Storage"){
@@ -336,6 +339,20 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.exec(globalPos);
     }
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_SelectPath_clicked()
+{
+    //Get current selected path as default path for the dialog window
+    QString newDevicePath = ui->Devices_lineEdit_Path->text();
+
+    //Open a dialog for the user to select the directory to be cataloged. Only show directories.
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
+                                                    newDevicePath,
+                                                    QFileDialog::ShowDirsOnly
+                                                        | QFileDialog::DontResolveSymlinks);
+    //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
+    ui->Devices_lineEdit_Path->setText(dir);
 }
 //--------------------------------------------------------------------------
 
@@ -680,8 +697,11 @@ void MainWindow::deleteDeviceItem()
     //Save data to files
     collection->saveDeviceTableToFile();
     collection->saveStorageTableToFile();
+    if(activeDevice->type =="Catalog")
+        collection->deleteCatalogFile(activeDevice);
 
     //Reload data to models
+    loadCatalogsTableToModel();
     loadDeviceTableToTreeModel();
     loadStorageTableToModel();
     updateStorageSelectionStatistics();
@@ -848,18 +868,21 @@ void MainWindow::loadDeviceTableToTreeModel()
 
     //Prepare the tree model: headers
     deviceTreeModel->clear();
-    deviceTreeModel->setHorizontalHeaderLabels({tr("Name"),
-                                      tr("Device Type"),
-                                      tr("Active"),
-                                      tr("ID"),
-                                      tr("Parent ID"),
-                                      tr("External ID"),
-                                      tr("Number of files"),
-                                      tr("Total Size"),
-                                      tr("Total space"),
-                                      tr("Free space"),
-                                      tr("group ID"),
-                                      "" });
+    deviceTreeModel->setHorizontalHeaderLabels({
+                                                tr("Name"),
+                                                tr("Device Type"),
+                                                tr("Active"),
+                                                tr("ID"),
+                                                tr("Parent ID"),
+                                                tr("External ID"),
+                                                tr("Number of files"),
+                                                tr("Total Size"),
+                                                tr("Used space"),
+                                                tr("Free space"),
+                                                tr("Total space"),
+                                                tr("Path"),
+                                                tr("group ID"),
+                                                "" });
 
     //Create a map to store items by ID for easy access
     QMap<int, QStandardItem*> itemMap;
@@ -878,9 +901,9 @@ void MainWindow::loadDeviceTableToTreeModel()
         qint64 number = query.value(7).toLongLong();
         qint64 total_space = query.value(8).toLongLong();
         qint64 free_space = query.value(9).toLongLong();
+        qint64 used_space = total_space - free_space;
         bool isActive = query.value(10).toBool();
         int groupID = query.value(11).toBool();
-
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
@@ -892,10 +915,11 @@ void MainWindow::loadDeviceTableToTreeModel()
         rowItems << new QStandardItem(QString::number(externalId));
         rowItems << new QStandardItem(QString::number(number));
         rowItems << new QStandardItem(QString::number(size));
-        rowItems << new QStandardItem(QString::number(total_space));
+        rowItems << new QStandardItem(QString::number(used_space));
         rowItems << new QStandardItem(QString::number(free_space));
-        rowItems << new QStandardItem(QString::number(groupID));
+        rowItems << new QStandardItem(QString::number(total_space));
         rowItems << new QStandardItem(path);
+        rowItems << new QStandardItem(QString::number(groupID));
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -929,18 +953,19 @@ void MainWindow::loadDeviceTableToTreeModel()
         //Customize tree display
         ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(0,Qt::AscendingOrder);
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Devices_treeView_DeviceList->header()->resizeSection(0, 350); //Name
-        ui->Devices_treeView_DeviceList->header()->resizeSection(1, 100); //Type
-        ui->Devices_treeView_DeviceList->header()->resizeSection(2,  25); //Active
-        ui->Devices_treeView_DeviceList->header()->resizeSection(3,  25); //ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection(4,  25); //Parent ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection(5,  25); //External ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection(6, 100); //Number of Files
-        ui->Devices_treeView_DeviceList->header()->resizeSection(7, 100); //Total File Size
-        ui->Devices_treeView_DeviceList->header()->resizeSection(8, 100); //Total space
-        ui->Devices_treeView_DeviceList->header()->resizeSection(9, 100); //Free space
-        ui->Devices_treeView_DeviceList->header()->resizeSection(10, 25); //Group ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection(11,100); //Path
+        ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); //Name
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 1, 100); //Type
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  25); //Active
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  25); //ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  25); //Parent ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  25); //External ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 6, 100); //Number of Files
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 7, 100); //Total File Size
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 8, 100); //Used space
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 9, 100); //Free space
+        ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
+        ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(11, QHeaderView::ResizeToContents); //Path
+        ui->Devices_treeView_DeviceList->header()->resizeSection(12,  25); //Group ID
 
         if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
             ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
@@ -948,16 +973,14 @@ void MainWindow::loadDeviceTableToTreeModel()
             ui->Devices_treeView_DeviceList->header()->showSection(3); //ID
             ui->Devices_treeView_DeviceList->header()->showSection(4); //Parent ID
             ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-            ui->Devices_treeView_DeviceList->header()->showSection(10); //Group ID
-            ui->Devices_treeView_DeviceList->header()->showSection(11); //Path
+            ui->Devices_treeView_DeviceList->header()->showSection(12); //Group ID
         } else {
             ui->Devices_treeView_DeviceList->header()->hideSection(1); //Type
             ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
             ui->Devices_treeView_DeviceList->header()->hideSection(3); //ID
             ui->Devices_treeView_DeviceList->header()->hideSection(4); //Parent ID
             ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-            ui->Devices_treeView_DeviceList->header()->hideSection(10); //Group ID
-            ui->Devices_treeView_DeviceList->header()->hideSection(11); //Path
+            ui->Devices_treeView_DeviceList->header()->hideSection(12); //Group ID
         }
 
         ui->Devices_treeView_DeviceList->expandAll();
@@ -1137,10 +1160,15 @@ void MainWindow::addDeviceVirtual()
     //Reload
     loadDeviceTableToTreeModel();
     loadParentsList();
+
+    //Make it the activeDevice and edit
+    activeDevice->ID = newDevice->ID;
+    activeDevice->loadDevice();
+    editDevice();
 }
 //--------------------------------------------------------------------------
 void MainWindow::addDeviceStorage()
-{//Create a new storage device and add it to the selected Device
+{//Create a new storage device, and add it to the selected Device
 
     //Create Device and related Storage under Physical group (ID=0)
     Device *newDevice = new Device();
@@ -1168,16 +1196,16 @@ void MainWindow::addDeviceStorage()
     //Save data to file and reload
     collection->saveStorageTableToFile();
     collection->loadStorageFileToTable();
-    //
 
     //Refresh
     loadStorageTableToModel();
     updateStorageSelectionStatistics();
-
-    //Enable save button
-    //ui->Storage_pushButton_New->setEnabled(true);
-
     loadParentsList();
+
+    //Make it the activeDevice and edit
+    activeDevice->ID = newDevice->ID;
+    activeDevice->loadDevice();
+    editDevice();
 }
 //--------------------------------------------------------------------------
 void MainWindow::editDevice()
@@ -1191,6 +1219,14 @@ void MainWindow::editDevice()
     ui->Devices_lineEdit_Name->setText(activeDevice->name);
     ui->Devices_label_ItemDeviceTypeValue->setText(activeDevice->type);
     ui->Devices_label_ItemDeviceIDValue->setText(QString::number(activeDevice->ID));
+    if(activeDevice->type !="Virtual"){
+        ui->Devices_widget_EditCommon->show();
+        ui->Devices_lineEdit_Path->setText(activeDevice->path);
+        ui->Devices_pushButton_SelectPath->show();
+    }
+    else{
+        ui->Devices_widget_EditCommon->hide();
+    }
 
     //Get parent and selected it the combobox
     Device *newDeviceItem = new Device();
@@ -1207,6 +1243,7 @@ void MainWindow::saveDevice()
     activeDevice->parentID = selectedData.toInt();
 
     activeDevice->name = ui->Devices_lineEdit_Name->text();
+    activeDevice->path = ui->Devices_lineEdit_Path->text();
 
     Device *parentDevice = new Device();
     parentDevice->ID = activeDevice->parentID;
@@ -1217,12 +1254,13 @@ void MainWindow::saveDevice()
         newGroupID=1;
 
 
-    //Save name and parent ID
+    //Save name, parent ID, path
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             UPDATE  device
                             SET     device_name =:device_name,
                                     device_parent_id =:device_parent_id,
+                                    device_path =:device_path,
                                     device_group_id =:device_group_id
                             WHERE   device_id=:device_id
                                 )");
@@ -1230,6 +1268,7 @@ void MainWindow::saveDevice()
     query.bindValue(":device_id",        activeDevice->ID);
     query.bindValue(":device_name",      activeDevice->name);
     query.bindValue(":device_parent_id", activeDevice->parentID);
+    query.bindValue(":device_path",      activeDevice->path);
     query.bindValue(":device_group_id",  newGroupID);
     query.exec();
 
@@ -1509,7 +1548,123 @@ void MainWindow::updateAllDeviceActive()
 
 //--------------------------------------------------------------------------
 // DEV: migration
+//--------------------------------------------------------------------------
+//--- 1.x - 2.0 Migration
+void MainWindow::generateAndAssociateCatalogMissingIDs()
+{
+    // Start animation while opening
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    //Get catalogs with missing ID
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT device_id, catalog_name
+                                    FROM catalog
+                                    LEFT JOIN device ON device_name = catalog_name
+
+                                )");//WHERE device_id IS NULL or catalog_id = '' or catalog_id = 0
+    query.prepare(querySQL);
+    query.exec();
+
+    //Loop and generate an ID
+    while(query.next()){
+        Device device;
+        device.ID = query.value(0).toInt();
+        device.loadDevice();
+        if (device.catalog->ID == 0){
+            device.catalog->generateID();
+        }
+
+        device.externalID = device.catalog->ID;
+        device.saveDevice();
+        device.catalog->name = device.name;
+        device.catalog->saveCatalog();
+        device.catalog->updateCatalogFileHeaders(collection->databaseMode);
+    }
+
+    querySQL = QLatin1String(R"(
+                                    UPDATE device
+                                    SET device_external_id = (SELECT catalog_id FROM catalog WHERE device_name = catalog_name)
+                                    WHERE device_type = 'Catalog'
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+
+
+    collection->saveDeviceTableToFile();
+    loadDeviceTableToTreeModel();
+    loadCatalogsTableToModel();
+
+    //Stop animation
+    QApplication::restoreOverrideCursor();
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(tr("generateCatalogMissingIDs"));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+}
+//--------------------------------------------------------------------------
+
 void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
 {
     generateAndAssociateCatalogMissingIDs();
 }
+
+void MainWindow::on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked()
+{
+    importStorageCatalogPathsToDevice();
+}
+
+void MainWindow::importStorageCatalogPathsToDevice()
+{//Move Storage or Catalog Path to Device table
+
+    //Retrieve device hierarchy
+    QSqlQuery query;
+    QString querySQL;
+
+    querySQL = QLatin1String(R"(
+                    SELECT  device_id
+                    FROM  device
+                )");
+
+    query.prepare(querySQL);
+    query.exec();
+
+    //Update each device
+    while (query.next()) {
+        Device tempDevice;
+        tempDevice.ID = query.value(0).toInt();
+        tempDevice.loadDevice();
+
+        //Load storage values
+        if(tempDevice.type == "Storage"){
+            tempDevice.path = tempDevice.storage->path;
+            tempDevice.saveDevice();
+        }
+
+        //Load catalog values
+        if(tempDevice.type == "Catalog"){
+            //Get path from file
+            QFile catalogFile(tempDevice.catalog->filePath);
+            // Get file info
+            QFileInfo catalogFileInfo(catalogFile);
+
+            // Verify that the file can be opened
+            if(catalogFile.open(QIODevice::ReadOnly)) {
+                QTextStream textStreamCatalogs(&catalogFile);
+                QString line = textStreamCatalogs.readLine();
+                tempDevice.path = line.right(line.size() - line.indexOf(">") - 1);;
+                tempDevice.saveDevice();
+            }
+        }
+    }
+
+    //save new data
+    collection->saveDeviceTableToFile();
+
+    //reLoad
+    loadDeviceTableToTreeModel();
+
+}
+

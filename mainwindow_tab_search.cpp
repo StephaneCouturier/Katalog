@@ -1981,22 +1981,6 @@
 
             if ( result !=QMessageBox::Cancel){
 
-                if ( result ==QMessageBox::Yes){
-                    fileExtension="idx";
-
-                    catalogMetadata.prepend("<catalogIsFullDevice>");
-                    catalogMetadata.prepend("<catalogIncludeSymblinks>");
-                    catalogMetadata.prepend("<catalogStorage>EXPORT");
-                    catalogMetadata.prepend("<catalogFileType>EXPORT");
-                    catalogMetadata.prepend("<catalogIncludeHidden>false");
-                    catalogMetadata.prepend("<catalogTotalFileSize>0");
-                    catalogMetadata.prepend("<catalogFileCount>0");
-                    catalogMetadata.prepend("<catalogSourcePath>EXPORT");
-                }
-                else if( result ==QMessageBox::No){
-                    fileExtension="csv";
-                }
-
                 //Prepare export file name
                 QDateTime now = QDateTime::currentDateTime();
                 QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
@@ -2004,6 +1988,58 @@
                 QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
                 fullFileName = collection->collectionFolder+"/"+fileNameWithExtension;
                 QFile exportFile(fullFileName);
+
+                //Create a new device and link catalog
+
+                    //Add Device entry
+                    Device *newDevice = new Device();
+                    newDevice->generateDeviceID();
+                    newDevice->type = "Catalog";
+                    newDevice->name = fileNameWithoutExtension;
+                    newDevice->catalog->name = fileNameWithoutExtension;
+
+                    //Continue populating values
+                    newDevice->parentID = 1;
+                    newDevice->catalog->generateID();
+                    newDevice->externalID = newDevice->catalog->ID;
+                    newDevice->groupID = 0; //DEV: ADAPT
+                    newDevice->path = newSearch->searchDateTime;
+                    newDevice->insertDevice();
+
+                    //Get inputs and set values of the newCatalog
+                    //newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->catalog->name + ".idx";
+                    newDevice->catalog->sourcePath = newSearch->searchDateTime;
+                    //newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
+                    //newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //DEV: REMOVE
+                    //newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
+                    //newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
+                    //newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
+                    newDevice->catalog->appVersion = currentVersion;
+
+                    //Save new catalog
+                    newDevice->catalog->insertCatalog();
+                    collection->saveDeviceTableToFile();
+
+                    if ( result ==QMessageBox::Yes){
+                        fileExtension="idx";
+
+                        catalogMetadata.prepend("<catalogID>" + QString::number(newDevice->catalog->ID));
+                        catalogMetadata.prepend("<catalogAppVersion>");
+                        catalogMetadata.prepend("<catalogIncludeMetadata>");
+                        catalogMetadata.prepend("<catalogIsFullDevice>");
+                        catalogMetadata.prepend("<catalogIncludeSymblinks>");
+                        catalogMetadata.prepend("<catalogStorage>EXPORT");
+                        catalogMetadata.prepend("<catalogFileType>EXPORT");
+                        catalogMetadata.prepend("<catalogIncludeHidden>false");
+                        catalogMetadata.prepend("<catalogTotalFileSize>0");
+                        catalogMetadata.prepend("<catalogFileCount>0");
+                        catalogMetadata.prepend("<catalogSourcePath>EXPORT");
+                    }
+                    else if( result ==QMessageBox::No){
+                        fileExtension="csv";
+                    }
+
+
 
                 //Export search results to file
                 if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
@@ -2027,6 +2063,7 @@
 
                 //Refresh catalogs
                 loadCollection();
+                loadStorageList();
 
                 //Select new catalog with results
                 ui->Filters_label_DisplayCatalog->setText(fileNameWithoutExtension);

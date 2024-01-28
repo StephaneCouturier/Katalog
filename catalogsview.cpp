@@ -104,6 +104,9 @@ QVariant CatalogsView::data(const QModelIndex &index, int role) const
                if ( filesizeColumnList.contains(index.column()) )
                    return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
+               if( index.column() == 6 )
+                   return QVariant ( Qt::AlignVCenter | Qt::AlignCenter );
+
                break;
             }
 

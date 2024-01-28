@@ -287,6 +287,7 @@ class MainWindow : public QMainWindow
             void recordAllDeviceStats(QDateTime dateTime);
             QList<int> verifyStorageWithOutDevice();
             void updateAllDeviceActive();
+            void importStorageCatalogPathsToDevice();
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -502,10 +503,12 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_TreeExpandCollapse_clicked();
             void on_Devices_pushButton_EditList_clicked();
             void on_Devices_pushButton_verifStorage_clicked();
+            void on_Devices_pushButton_SelectPath_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
             void on_Statistics_pushButton_EditStorageStatisticsFile_clicked();
+            void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectSource_currentTextChanged();
             void on_StatisticsComboBoxSelectCatalogCurrentIndexChanged(const QString &selectedCatalog);
@@ -526,6 +529,7 @@ class MainWindow : public QMainWindow
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
             void on_TEST_pushButton_GenerateMissingIDs_clicked();
+            void on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -261,17 +261,23 @@ void Catalog::saveCatalog()
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                             UPDATE catalog
-                            SET     catalog_id               =:catalog_id,
+                            SET     catalog_name             =:catalog_name,
                                     catalog_source_path      =:catalog_source_path,
                                     catalog_storage          =:catalog_storage,
                                     catalog_file_type        =:catalog_file_type,
                                     catalog_include_hidden   =:catalog_include_hidden,
+                                    catalog_include_metadata =:catalog_include_metadata,
                                     catalog_include_metadata =:catalog_include_metadata
-                            WHERE  catalog_name=:catalog_name
+                            WHERE  catalog_id=:catalog_id
                                 )");
     query.prepare(querySQL);
     query.bindValue(":catalog_id", ID);
     query.bindValue(":catalog_name", name);
+    query.bindValue(":catalog_source_path", sourcePath);
+    query.bindValue(":catalog_storage", storageName);
+    query.bindValue(":catalog_file_type", fileType);
+    query.bindValue(":catalog_include_hidden", includeHidden);
+    query.bindValue(":catalog_include_symblinks", includeSymblinks);
     query.exec();
 }
 
