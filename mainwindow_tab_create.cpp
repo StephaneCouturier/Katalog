@@ -178,7 +178,7 @@
 
         //Create a new device and catalog
 
-            //Add Device entry
+            //Initiate Device entry
             Device *newDevice = new Device();
             newDevice->generateDeviceID();
             newDevice->type = "Catalog";
@@ -197,7 +197,7 @@
                 return;
             }
 
-            //Continue populating values
+            //Continue populating values and add device
             newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
             newDevice->catalog->generateID();
             newDevice->externalID = newDevice->catalog->ID; //DEV: simplify?
@@ -230,6 +230,17 @@
 
             //Save new catalog
             newDevice->catalog->insertCatalog();
+
+            //Add path to parent Storage device if empty
+            Device parentStorageDevice;
+            parentStorageDevice.ID = newDevice->parentID;
+            parentStorageDevice.loadDevice();
+            if(parentStorageDevice.path == ""){
+                parentStorageDevice.path = newDevice->path;
+                parentStorageDevice.saveDevice();
+                collection->saveStorageTableToFile();
+                loadStorageTableToModel();
+            }
 
             //Reload
             loadDeviceTableToTreeModel();
