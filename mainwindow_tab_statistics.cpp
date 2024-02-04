@@ -232,23 +232,15 @@
 
                 //Add Catalog data
                 QSqlQuery queryTotalSnapshots;
-                /*
-                QString querySQL = QLatin1String(R"(
-                                    SELECT date_time, SUM(sc.catalog_file_count), SUM(sc.catalog_total_file_size)
-                                    FROM statistics_catalog sc
-                                    LEFT JOIN catalog c ON c.catalog_name    = sc.catalog_name
-                                    LEFT JOIN storage s ON c.catalog_storage = s.storage_name
-                                )");
-                */
                 QString querySQL = QLatin1String(R"(
                                     SELECT date_time, SUM(device_file_count), SUM(device_total_file_size)
                                     FROM statistics_device
-
-                                )");// WHERE device_type ='Catalog'
+                                    WHERE record_type = 'snapshot'
+                                )");
 
                 if ( selectedDevice->name != tr("All") and selectedDevice->type=="Storage" ){
-                    querySQL += " WHERE record_type = 'snapshot' ";
-                    //querySQL += " AND c.catalog_storage = '" + selectedDevice->name + "' ";
+                    querySQL += " AND device_type = 'Storage' ";
+                    querySQL += " AND device_id =:device_id ";
                 }
                 else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Catalog" ){
                     querySQL += " WHERE record_type = 'snapshot' ";
@@ -407,24 +399,25 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                            SELECT date_time, SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
-                                            FROM statistics_device sa
+                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
+                                            FROM statistics_device
                                             WHERE device_id =:device_id
                                             AND device_type =:device_type
-                                    )"); //AND record_type != 'Storage'
+                                            AND (record_type = 'update' OR record_type = 'create')
+                                    )");
 
                 if ( !graphicStartDate.isNull() ){
                      querySQL += " AND date_time > :graphStartDate ";
                 }
 
-                else if (selectedDevice->type == "Storage" or selectedDevice->type == "Virtual"){
+                if (selectedDevice->type == "Storage" or selectedDevice->type == "Virtual"){
                      invalidCombinaison = true;
                      invalidCase = tr("A Catalog should be selected for that report.");
                 }
                 else if (selectedDevice->type == "Catalog"){
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->type);
+                    queryTotalSnapshots.bindValue(":device_type", selectedDevice->type);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                     queryTotalSnapshots.exec();
 
@@ -479,21 +472,18 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                            SELECT date_time, SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
-                                            FROM statistics_device sa
+                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
+                                            FROM statistics_device
                                             WHERE device_id =:device_id
-                                            AND device_type =:device_type
-                                    )"); //AND record_type = 'update' or record_type = 'create'
-
+                                            AND (record_type = 'update' OR record_type = 'create')
+                                    )");
                 if ( !graphicStartDate.isNull() ){
                     querySQL += " AND date_time > :graphStartDate ";
                 }
 
                 if (selectedDevice->type == "Storage"){
-                    querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
                     queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                    queryTotalSnapshots.bindValue(":device_type", selectedDevice->type);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
                 else if (selectedDevice->type == "Virtual"){
@@ -501,21 +491,17 @@
                     invalidCase = tr("A Storage or Catalog should be selected for that report.");
                 }
                 else if (selectedDevice->type == "Catalog"){
-                    querySQL += " AND storage_name = :selectedStorageforStats ";
-                    querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedDevice->catalog->storageName);
+                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->parentID);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
 
                 queryTotalSnapshots.exec();
-                qDebug()<<queryTotalSnapshots.lastError();
 
                 while (queryTotalSnapshots.next()){
 
                        QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-
-                       freeSpace = queryTotalSnapshots.value(2).toLongLong();
+                       freeSpace = queryTotalSnapshots.value(3).toLongLong();
                        if ( freeSpace > 2000000000 ){
                            freeSpace = freeSpace/1024/1024/1024;
                            displayUnit = " ("+tr("GiB")+")";
@@ -528,7 +514,7 @@
                            maxValueGraphRange = freeSpace;
 
 
-                       totalSpace = queryTotalSnapshots.value(3).toLongLong();
+                       totalSpace = queryTotalSnapshots.value(4).toLongLong();
                        if ( totalSpace > 2000000000 ){
                            totalSpace = totalSpace/1024/1024/1024;
                            displayUnit = " ("+tr("GiB")+")";
@@ -541,7 +527,9 @@
                        if ( totalSpace > maxValueGraphRange )
                            maxValueGraphRange = totalSpace;
 
-                       series1->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
+                       qint64 usedSpace = totalSpace-freeSpace;                      
+
+                       series1->append(datetime.toMSecsSinceEpoch(), usedSpace);
                        series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
                 }
 
@@ -567,32 +555,27 @@
 
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                                    SELECT date_time, SUM(device_free_space), SUM(device_total_space)
-                                                    FROM statistics_device sa
-                                                    WHERE record_type = 'update'
-                                                )");
+                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
+                                            FROM statistics_device
+                                            WHERE device_id =:device_id
+                                            AND (record_type = 'update' OR record_type = 'create')
+                                    )");
 
                 if ( !graphicStartDate.isNull() ){
                     querySQL += " AND date_time > :graphStartDate ";
                 }
 
                 if (selectedDevice->type == "Storage"){
-                    querySQL += " GROUP BY date_time ";
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedDevice->storage->name);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+                    invalidCombinaison = true;
+                    invalidCase = tr("A Virtual device should be selected for that report.");
                 }
                 else if (selectedDevice->type == "Catalog"){
-                    querySQL += " AND storage_name = :selectedStorageforStats ";
-                    querySQL += " GROUP BY date_time ";
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedDevice->catalog->storageName);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+                    invalidCombinaison = true;
+                    invalidCase = tr("A Virtual device should be selected for that report.");
                 }
                 else if (selectedDevice->type == "Virtual"){
-                    querySQL += " GROUP BY date_time ";
                     queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":selectedStorageforStats", selectedDevice->catalog->storageName);
+                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
                     queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 }
 
@@ -602,7 +585,7 @@
 
                     QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
 
-                    freeSpace = queryTotalSnapshots.value(1).toLongLong();
+                    freeSpace = queryTotalSnapshots.value(3).toLongLong();
                     if ( freeSpace > 2000000000 ){
                         freeSpace = freeSpace/1024/1024/1024;
                         displayUnit = " ("+tr("GiB")+")";
@@ -615,7 +598,7 @@
                         maxValueGraphRange = freeSpace;
 
 
-                    totalSpace = queryTotalSnapshots.value(2).toLongLong();
+                    totalSpace = queryTotalSnapshots.value(4).toLongLong();
                     if ( totalSpace > 2000000000 ){
                         totalSpace = totalSpace/1024/1024/1024;
                         displayUnit = " ("+tr("GiB")+")";

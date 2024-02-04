@@ -435,8 +435,8 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
         //Update storage itself
         QList<qint64> storageUpdates = storage->updateStorageInfo(true);
-        totalSpace = storageUpdates[3];
-        freeSpace = storageUpdates[5];
+        freeSpace  = storageUpdates[3];
+        totalSpace = storageUpdates[5];
         saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         deviceUpdatesList += storageUpdates[0];
@@ -450,7 +450,10 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     else if (type=="Virtual"){
         //Update all sub virtual devices, storage, catalogs, and this device
-
+        //DEV: update all children devices
+        qDebug()<<"Updating a list of devices from a virtual one is not avaialable yet.";
+        saveStatistics(dateTimeUpdated, statiticsRequestSource);
+        //DEV: also save statistics of all parents
     }
 
     //Save changes
