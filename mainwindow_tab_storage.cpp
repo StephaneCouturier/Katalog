@@ -492,46 +492,6 @@
         else ui->Storage_label_PercentFree->setText("");
     }
     //--------------------------------------------------------------------------
-    void MainWindow::recordAllStorageStats(QDateTime dateTime)
-    {// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
-
-        //Get the list of storage devices
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                        SELECT
-                                            storage_id,
-                                            storage_name,
-                                            storage_free_space,
-                                            storage_total_space
-                                        FROM storage
-                                        )");
-        query.prepare(querySQL);
-        query.exec();
-
-        //Save values for each storage device
-        Storage *tempStorage = new Storage;
-        while(query.next()){
-            tempStorage->ID = query.value(0).toInt();
-            tempStorage->loadStorage();
-            tempStorage->saveStatistics(dateTime);
-
-            if(collection->databaseMode=="Memory")
-            {
-                QString filePath = collection->collectionFolder + "/" + "statistics_storage.csv";
-                tempStorage->saveStatisticsToFile(filePath, dateTime);
-            }
-        }
-
-        //Refresh
-        if(collection->databaseMode=="Memory"){
-            collection->loadStatisticsCatalogFileToTable();
-            collection->loadStatisticsStorageFileToTable();
-        }
-
-        loadStatisticsChart();
-
-    }
-    //--------------------------------------------------------------------------
     void MainWindow::displayStoragePicture()
     {//Load and display the picture of the storage device
         QString picturePath = collection->collectionFolder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";

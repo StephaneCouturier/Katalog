@@ -233,50 +233,20 @@
                 //Add Catalog data
                 QSqlQuery queryTotalSnapshots;
                 QString querySQL = QLatin1String(R"(
-                                    SELECT date_time, SUM(device_file_count), SUM(device_total_file_size)
+                                    SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
                                     FROM statistics_device
-                                    WHERE record_type = 'snapshot'
+                                    WHERE device_id =:device_id
+                                    AND record_type = 'snapshot'
                                 )");
 
-                if ( selectedDevice->name != tr("All") and selectedDevice->type=="Storage" ){
-                    querySQL += " AND device_type = 'Storage' ";
-                    querySQL += " AND device_id =:device_id ";
-                }
-                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Catalog" ){
-                    querySQL += " WHERE record_type = 'snapshot' ";
-                    //querySQL += " AND device_id = " + QString::number(selectedDevice->ID) + "' ";
-                }
-                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Virtual" ){
-                    querySQL += " INNER JOIN device_catalog vsc ON c.catalog_name = vsc.catalog_name ";
-                    querySQL += " INNER JOIN device         vs  ON vs.device_id = vsc.device_id ";
-                    querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND vsc.device_id IN ( "
-                                " WITH RECURSIVE hierarchy_cte AS ( "
-                                "       SELECT device_id, device_parent_id, device_name "
-                                "       FROM device "
-                                "       WHERE device_id = :device_id "
-                                "       UNION ALL "
-                                "       SELECT t.device_id, t.device_parent_id, t.device_name "
-                                "       FROM device t "
-                                "       JOIN hierarchy_cte cte ON t.device_parent_id = cte.device_id "
-                                "  ) "
-                                "  SELECT device_id "
-                                "  FROM hierarchy_cte) ";
-                }
-                else{
-                    querySQL += " WHERE sc.record_type = 'snapshot' ";
-                    querySQL += " AND s.storage_location !=''";
-                }
 
                 if ( !graphicStartDate.isNull() ){
                     querySQL = querySQL + " AND date_time > :graphStartDate ";
                 }
 
-                querySQL = querySQL + " GROUP BY date_time ";
-
                 queryTotalSnapshots.prepare(querySQL);
-                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
                 queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
+                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
 
                 queryTotalSnapshots.exec();
 
@@ -307,56 +277,9 @@
                     }
 
                     series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
-                }
 
-                series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
-                if ( selectedTypeOfData == tr("Number of Files") )
-                    series1->setPen(penCatalogNumberFiles);
-                else
-                    series1->setPen(penCatalogTotalSize);
-
-                //Add Storage data
-                QSqlQuery queryStorageSnapshots;
-                QString queryStorageSnapshotsSQL = QLatin1String(R"(
-                                                        SELECT  date_time,
-                                                                SUM(statistics_storage.storage_free_space),
-                                                                SUM(statistics_storage.storage_total_space)
-                                                        FROM statistics_storage
-                                                        LEFT JOIN storage ON storage.storage_name = statistics_storage.storage_name
-                                                    )");
-
-                if ( selectedDevice->name != tr("All") and selectedDevice->type=="Location" ){
-                    queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                    queryStorageSnapshotsSQL += "   AND storage.storage_location = '" + selectedDevice->name + "' ";
-                }
-                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Storage" ){
-                    queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                    queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDevice->name + "' ";
-                }
-                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Catalog" ){
-                    queryStorageSnapshotsSQL += "   LEFT JOIN catalog ON catalog.catalog_storage = storage.storage_name ";
-                    queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                    queryStorageSnapshotsSQL += "   AND catalog.catalog_name = '" + selectedDevice->name + "' ";
-                }
-                else if ( selectedDevice->name != tr("All") and selectedDevice->type=="Virtual" ){
-                    queryStorageSnapshotsSQL += "   WHERE record_type = 'no_value' ";
-                    //queryStorageSnapshotsSQL += "   WHERE record_type = 'snapshot' ";
-                    //queryStorageSnapshotsSQL += "   AND storage.storage_name = '" + selectedDeviceName + "' ";
-                }
-                if ( !graphicStartDate.isNull() ){
-                    queryStorageSnapshotsSQL += "    AND date_time > :graphStartDate ";
-                }
-
-                queryStorageSnapshotsSQL += "           GROUP BY date_time ";
-
-                queryStorageSnapshots.prepare(queryStorageSnapshotsSQL);
-                queryStorageSnapshots.bindValue(":graphStartDate",graphicStartDate);
-                queryStorageSnapshots.exec();
-
-                while (queryStorageSnapshots.next()){
-                    QDateTime datetime = QDateTime::fromString(queryStorageSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-                    freeSpace  = queryStorageSnapshots.value(1).toLongLong();
-                    totalSpace = queryStorageSnapshots.value(2).toLongLong();
+                    freeSpace  = queryTotalSnapshots.value(3).toLongLong();
+                    totalSpace = queryTotalSnapshots.value(4).toLongLong();
                     if ( selectedTypeOfData == tr("Number of Files") )
                     {
                         //Number of files does not apply to Storage
@@ -382,14 +305,23 @@
                         series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
                         series3->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
                     }
+
                 }
+
+                series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
+                if ( selectedTypeOfData == tr("Number of Files") )
+                    series1->setPen(penCatalogNumberFiles);
+                else
+                    series1->setPen(penCatalogTotalSize);
 
                 //case: no catalog for the storage (display of the graph will fail if no point are in series1)
                 if(series1->count()==0){
                     series1->append(0,0);
                 }
+
                 series2->setName(tr("Storage") + " / " + tr("Total space"));
                 series3->setName(tr("Storage") + " / " + tr("Used space"));
+
             }
 
             //Get catalog updates data
@@ -679,15 +611,18 @@
                 series1->attachAxis(axisX);
                 series1->attachAxis(axisY);
             }
-            if (loadSeries2==true){
-                chart->addSeries(series2);
-                series2->attachAxis(axisX);
-                series2->attachAxis(axisY);
-            }
-            if (loadSeries3==true){
-                chart->addSeries(series3);
-                series3->attachAxis(axisX);
-                series3->attachAxis(axisY);
+            if(selectedDevice->type != "Catalog"){
+                //Load storage series unless the device is a catalog
+                if (loadSeries2==true){
+                    chart->addSeries(series2);
+                    series2->attachAxis(axisX);
+                    series2->attachAxis(axisY);
+                }
+                if (loadSeries3==true){
+                    chart->addSeries(series3);
+                    series3->attachAxis(axisX);
+                    series3->attachAxis(axisY);
+                }
             }
 
         //Set the Legend

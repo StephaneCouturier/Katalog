@@ -203,13 +203,11 @@ class MainWindow : public QMainWindow
             void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
             void recordCollectionStats();
-            void recordAllCatalogStats(QDateTime dateTime);
             void convertCatalog(QString catalogSourcePath);
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
             void saveCatalogChanges(Catalog *catalog);
             void importFromVVV();
-            void generateAndAssociateCatalogMissingIDs();
 
             qint64 globalUpdateTotalFiles;
             qint64 globalUpdateDeltaFiles;
@@ -254,7 +252,6 @@ class MainWindow : public QMainWindow
             void addStorageDevice(QString deviceName);
             void loadStorageTableToModel();
             void updateStorageSelectionStatistics();
-            void recordAllStorageStats(QDateTime dateTime);
 
             void displayStoragePicture();
             void loadStorageToPanel();
@@ -287,7 +284,11 @@ class MainWindow : public QMainWindow
             void recordAllDeviceStats(QDateTime dateTime);
             QList<int> verifyStorageWithOutDevice();
             void updateAllDeviceActive();
+
+            //Migration 1.22 to 2.0
+            void generateAndAssociateCatalogMissingIDs();
             void importStorageCatalogPathsToDevice();
+            void importStatistics();
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -504,6 +505,7 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_EditList_clicked();
             void on_Devices_pushButton_verifStorage_clicked();
             void on_Devices_pushButton_SelectPath_clicked();
+            void on_Devices_pushButton_Snapshot_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
@@ -530,6 +532,7 @@ class MainWindow : public QMainWindow
             void on_TEST_pushButton_TestMedia_clicked();
             void on_TEST_pushButton_GenerateMissingIDs_clicked();
             void on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked();
+            void on_TEST_pushButton_ImporStatistics_clicked();
 };
 
 #endif // MAINWINDOW_H

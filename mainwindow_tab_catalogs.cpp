@@ -335,6 +335,7 @@
         {
             recordCollectionStats();
         }
+        //----------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::hideCatalogButtons()
@@ -854,70 +855,72 @@
         //Get the current total values
         QSqlQuery queryLastCatalog;
         QString queryLastCatalogSQL = QLatin1String(R"(
-                                    SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
-                                    FROM statistics_catalog
+                                    SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
+                                    FROM statistics_device
                                     WHERE date_time = (SELECT MAX(date_time)
-                                                        FROM statistics_catalog
-                                                        WHERE record_type="snapshot")
+                                                        FROM statistics_device
+                                                        WHERE record_type = "snapshot")
+                                    AND device_type ="Catalog"
                                     GROUP BY date_time
                                 )");
         queryLastCatalog.prepare(queryLastCatalogSQL);
         queryLastCatalog.exec();
         queryLastCatalog.next();
-        qint64 lastCatalogTotalFileSize   = queryLastCatalog.value(0).toLongLong();
-        qint64 lastCatalogTotalFileNumber = queryLastCatalog.value(1).toLongLong();
+        qint64 lastCatalogTotalFileNumber = queryLastCatalog.value(0).toLongLong();
+        qint64 lastCatalogTotalFileSize   = queryLastCatalog.value(1).toLongLong();
 
         QSqlQuery queryLastStorage;
         QString queryLastStorageSQL = QLatin1String(R"(
-                                    SELECT SUM(storage_free_space), SUM(storage_total_space)
-                                    FROM statistics_storage
+                                    SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
+                                    FROM statistics_device
                                     WHERE date_time = (SELECT MAX(date_time)
-                                                        FROM statistics_storage
-                                                        WHERE record_type="snapshot")
+                                                        FROM statistics_device
+                                                        WHERE record_type = "snapshot")
+                                    AND device_type ="Storage"
                                     GROUP BY date_time
                                 )");
         queryLastStorage.prepare(queryLastStorageSQL);
         queryLastStorage.exec();
         queryLastStorage.next();
-        qint64 lastStorageFreeSpace  = queryLastStorage.value(0).toLongLong();
-        qint64 lastStorageTotalSpace = queryLastStorage.value(1).toLongLong();
+        qint64 lastStorageFreeSpace  = queryLastStorage.value(2).toLongLong();
+        qint64 lastStorageTotalSpace = queryLastStorage.value(3).toLongLong();
 
         //Record current catalogs and storage devices values
         QDateTime nowDateTime = QDateTime::currentDateTime();
-        recordAllCatalogStats(nowDateTime);
-        recordAllStorageStats(nowDateTime);
         recordAllDeviceStats(nowDateTime);
 
         //Get the new total values
         QSqlQuery queryNew;
         QString queryNewSQL = QLatin1String(R"(
-                                SELECT SUM(catalog_total_file_size), SUM(catalog_file_count)
-                                FROM statistics_catalog
-                                WHERE date_time = (SELECT MAX(date_time)
-                                                   FROM statistics_catalog
-                                                   WHERE record_type="snapshot")
-                                GROUP BY date_time
+                                    SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
+                                    FROM statistics_device
+                                    WHERE date_time = (SELECT MAX(date_time)
+                                                        FROM statistics_device
+                                                        WHERE record_type = "snapshot")
+                                    AND device_type ="Catalog"
+                                    GROUP BY date_time
                             )");
         queryNew.prepare(queryNewSQL);
         queryNew.exec();
         queryNew.next();
-        qint64 newTotalFileSize   = queryNew.value(0).toLongLong();
-        qint64 newTotalFileCount  = queryNew.value(1).toLongLong();
+        qint64 newTotalFileCount  = queryNew.value(0).toLongLong();
+        qint64 newTotalFileSize   = queryNew.value(1).toLongLong();
 
         QSqlQuery queryNewStorage;
         QString queryNewStorageSQL = QLatin1String(R"(
-                                    SELECT SUM(storage_free_space), SUM(storage_total_space)
-                                    FROM statistics_storage
+                                    SELECT SUM(device_file_count), SUM(device_total_file_size), SUM(device_free_space), SUM(device_total_space)
+                                    FROM statistics_device
                                     WHERE date_time = (SELECT MAX(date_time)
-                                                       FROM statistics_storage
-                                                       WHERE record_type="snapshot")
+                                                        FROM statistics_device
+                                                        WHERE record_type = "snapshot")
+                                    AND device_type ="Storage"
                                     GROUP BY date_time
                                 )");
         queryNewStorage.prepare(queryNewStorageSQL);
         queryNewStorage.exec();
         queryNewStorage.next();
-        qint64 newStorageFreeSpace  = queryNewStorage.value(0).toLongLong();
-        qint64 newStorageTotalSpace = queryNewStorage.value(1).toLongLong();
+        qint64 newStorageFreeSpace  = queryNewStorage.value(2).toLongLong();
+        qint64 newStorageTotalSpace = queryNewStorage.value(3).toLongLong();
 
         //Calculate and inform
         qint64 deltaCatalogTotalFileSize   = newTotalFileSize  - lastCatalogTotalFileSize;
@@ -947,46 +950,6 @@
                                 ));
         msgBox.setIcon(QMessageBox::Information);
         msgBox.exec();
-
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::recordAllCatalogStats(QDateTime dateTime)
-    {// Save the values (size and number of files) of all catalogs to the statistics file, creating a snapshop of the collection.
-
-        //Get the list of catalogs and data
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                        SELECT
-                                            catalog_name,
-                                            catalog_file_count,
-                                            catalog_total_file_size
-                                        FROM catalog
-                                        WHERE catalog_file_type !='EXPORT'
-                                        )");
-            query.prepare(querySQL);
-            query.exec();
-
-            QDateTime currentDateTime = QDateTime::currentDateTime();
-           //Save history for each catalog
-            Device loopDevice;
-            while (query.next()){
-                loopDevice.ID = query.value(0).toInt();
-                loopDevice.loadDevice();
-                loopDevice.saveStatistics(currentDateTime,"snapshot");
-
-                if(collection->databaseMode=="Memory")
-                {
-                    loopDevice.catalog->saveStatisticsToFile(collection->statisticsCatalogFilePath, dateTime);
-                }
-            }
-
-            //Refresh
-            if(collection->databaseMode=="Memory"){
-                collection->loadStatisticsCatalogFileToTable();
-                collection->loadStatisticsStorageFileToTable();
-            }
-
-            loadStatisticsChart();
 
     }
     //--------------------------------------------------------------------------
@@ -1086,7 +1049,6 @@
         }
         //Storage updates
         if (device->type=="Storage" and updateType=="update"){
-
             message.clear();
             message += (tr("<table>"
                            "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
@@ -1104,14 +1066,10 @@
                                  QLocale().formattedDataSize(list[13]),
                                  activeDevice->path
                                  ));
-
-            //if(list[7]==1){
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            //}
-
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
         }
         if (device->type !="Catalog" and updateType=="list"){
             if(list[0]==1){//Catalog updated

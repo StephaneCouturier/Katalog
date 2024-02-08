@@ -6712,6 +6712,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="Devices_pushButton_Snapshot">
+                <property name="toolTip">
+                 <string>Record the values of all devices for statistics on the full collection.</string>
+                </property>
+                <property name="text">
+                 <string>Snapshot</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-save"/>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="Devices_horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -6735,6 +6748,38 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item>
              <layout class="QGridLayout" name="Devices_gridLayout_5">
+              <item row="5" column="3">
+               <widget class="QLabel" name="Devices_label_SelectedStorageDisplay">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="Devices_label_CatalogAssociation_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>MIGRATE FROM Katalog V1.x</string>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="4">
                <widget class="QPushButton" name="TEST_pushButton_GenerateMissingIDs">
                 <property name="text">
@@ -6742,43 +6787,31 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="3">
-               <widget class="QPushButton" name="Devices_pushButton_AssignCatalog">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
+              <item row="3" column="3">
+               <widget class="QLabel" name="Devices_label_SelectedCatalogLabel">
+                <property name="toolTip">
+                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
                 </property>
                 <property name="text">
-                 <string>Assign</string>
+                 <string>Selected Catalog</string>
                 </property>
-                <property name="icon">
-                 <iconset theme="document-new"/>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="1" column="6">
-               <spacer name="horizontalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="3" column="2">
+               <widget class="QLabel" name="Devices_label_SelectedStorageLabel">
+                <property name="toolTip">
+                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
+                <property name="text">
+                 <string>Selected Storage</string>
                 </property>
-               </spacer>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
               </item>
               <item row="5" column="4">
                <widget class="QLabel" name="Devices_label_SelectedCatalogDisplay">
@@ -6799,22 +6832,29 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="Devices_label_CatalogAssociation_2">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
+              <item row="5" column="1">
+               <widget class="QLabel" name="Devices_label_SelectedDeviceVirtual">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
                 </property>
                 <property name="toolTip">
                  <string extracomment="Select a Virtual Storage device from the tree here below"/>
                 </property>
                 <property name="text">
-                 <string>Selected Virtual Device</string>
+                 <string/>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="5">
+               <widget class="QPushButton" name="TEST_pushButton_importStorageCatalogPathsToDevice">
+                <property name="text">
+                 <string>importStorageCatalogPathsToDevice</string>
                 </property>
                </widget>
               </item>
@@ -6843,16 +6883,67 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="Devices_label_CatalogAssociation_3">
+              <item row="6" column="3">
+               <widget class="QPushButton" name="Devices_pushButton_AssignCatalog">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>250</width>
+                  <width>120</width>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>MIGRATE FROM Katalog V1.x</string>
+                 <string>Assign</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new"/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="Devices_pushButton_ImportS">
+                <property name="text">
+                 <string>Import v1.22</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="7">
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="Devices_label_CatalogAssociation_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
+                </property>
+                <property name="text">
+                 <string>Selected Virtual Device</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -6869,21 +6960,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="5">
-               <widget class="QPushButton" name="TEST_pushButton_importStorageCatalogPathsToDevice">
+              <item row="1" column="3">
+               <widget class="QPushButton" name="Devices_pushButton_verifStorage">
                 <property name="text">
-                 <string>importStorageCatalogPathsToDevice</string>
+                 <string>verif stor</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QPushButton" name="Devices_pushButton_ImportS">
+              <item row="1" column="6">
+               <widget class="QPushButton" name="TEST_pushButton_ImporStatistics">
                 <property name="text">
-                 <string>Import v1.22</string>
+                 <string>Import Statistics</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="5">
+              <item row="5" column="6">
                <spacer name="horizontalSpacer">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -6895,77 +6986,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item row="3" column="3">
-               <widget class="QLabel" name="Devices_label_SelectedCatalogLabel">
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
-                </property>
-                <property name="text">
-                 <string>Selected Catalog</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="QLabel" name="Devices_label_SelectedDeviceVirtual">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLabel" name="Devices_label_SelectedStorageLabel">
-                <property name="toolTip">
-                 <string extracomment="Select a Catalog from the Filters panel or the Catalogs screen"/>
-                </property>
-                <property name="text">
-                 <string>Selected Storage</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QPushButton" name="Devices_pushButton_verifStorage">
-                <property name="text">
-                 <string>verif stor</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="3">
-               <widget class="QLabel" name="Devices_label_SelectedStorageDisplay">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string extracomment="Select a Virtual Storage device from the tree here below"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
               </item>
              </layout>
             </item>

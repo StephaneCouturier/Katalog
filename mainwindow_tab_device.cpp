@@ -93,6 +93,11 @@ void MainWindow::on_Devices_pushButton_EditList_clicked()
     QDesktopServices::openUrl(QUrl::fromLocalFile(collection->deviceFilePath));
 }
 //--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_Snapshot_clicked()
+{
+    recordCollectionStats();
+}
+//--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_Save_clicked()
 {
     saveDevice();
@@ -1549,7 +1554,26 @@ void MainWindow::updateAllDeviceActive()
 //--------------------------------------------------------------------------
 // DEV: migration
 //--------------------------------------------------------------------------
-//--- 1.x - 2.0 Migration
+//--- Migration 1.22 to 2.0
+//-------------- UI ------------------------------------------------------------
+
+void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
+{
+    generateAndAssociateCatalogMissingIDs();
+}
+
+void MainWindow::on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked()
+{
+    importStorageCatalogPathsToDevice();
+}
+
+void MainWindow::on_TEST_pushButton_ImporStatistics_clicked()
+{
+    importStatistics();
+}
+
+//-------------- Methods -----------------------------------------------------------
+
 void MainWindow::generateAndAssociateCatalogMissingIDs()
 {
     // Start animation while opening
@@ -1604,17 +1628,6 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
 }
-//--------------------------------------------------------------------------
-
-void MainWindow::on_TEST_pushButton_GenerateMissingIDs_clicked()
-{
-    generateAndAssociateCatalogMissingIDs();
-}
-
-void MainWindow::on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked()
-{
-    importStorageCatalogPathsToDevice();
-}
 
 void MainWindow::importStorageCatalogPathsToDevice()
 {//Move Storage or Catalog Path to Device table
@@ -1668,3 +1681,8 @@ void MainWindow::importStorageCatalogPathsToDevice()
 
 }
 
+void MainWindow::importStatistics()
+{
+    qDebug()<<"importStatistics()";
+}
+//----------------------------------------------------------------------
