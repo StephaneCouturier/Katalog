@@ -575,8 +575,7 @@ void Device::updateParentsNumbers()
 }
 
 void Device::updateActive()
-{
-    // Verify that the path is active (= the related drive is mounted)
+{//Update the Active value: verify that the path is active = the related drive is mounted
     if(path !=""){
         QDir dir(path);
         active = dir.exists();

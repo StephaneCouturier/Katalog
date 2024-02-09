@@ -332,8 +332,6 @@
             updateStorageSelectionStatistics();
 
             //Statistics
-            collection->loadStatisticsCatalogFileToTable();
-            collection->loadStatisticsStorageFileToTable();
             loadStatisticsChart();
     }
     //----------------------------------------------------------------------

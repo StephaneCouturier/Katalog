@@ -202,7 +202,6 @@ class MainWindow : public QMainWindow
             void loadCollection();
             void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
-            void recordCollectionStats();
             void convertCatalog(QString catalogSourcePath);
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
@@ -284,6 +283,7 @@ class MainWindow : public QMainWindow
             void recordAllDeviceStats(QDateTime dateTime);
             QList<int> verifyStorageWithOutDevice();
             void updateAllDeviceActive();
+            void recordDevicesSnapshot();
 
             //Migration 1.22 to 2.0
             void generateAndAssociateCatalogMissingIDs();

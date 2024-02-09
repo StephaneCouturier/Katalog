@@ -447,163 +447,6 @@ void Collection::loadStorageFileToTable()
         storageFile.close();
     }
 }
-//--------------------------------------------------------------------------
-void Collection::loadStatisticsCatalogFileToTable()
-{// Load the contents of the statistics file into the database
-    if(databaseMode=="Memory"){
-
-        //clear database table
-        QSqlQuery deleteQuery;
-        deleteQuery.exec("DELETE FROM statistics_catalog");
-
-        // Get infos stored in the file
-        QFile statisticsCatalogFile(statisticsCatalogFilePath);
-        if(!statisticsCatalogFile.open(QIODevice::ReadOnly)) {
-            return;
-        }
-
-        QTextStream textStream(&statisticsCatalogFile);
-
-        //prepare query to load file info
-        QSqlQuery insertQuery;
-        QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO statistics_catalog (
-                                                    date_time,
-                                                    catalog_name,
-                                                    catalog_file_count,
-                                                    catalog_total_file_size,
-                                                    record_type )
-                                    VALUES(
-                                                    :date_time,
-                                                    :catalog_name,
-                                                    :catalog_file_count,
-                                                    :catalog_total_file_size,
-                                                    :record_type )
-                                                )");
-        insertQuery.prepare(insertSQL);
-
-        //set temporary values
-        QString     line;
-        QStringList fieldList;
-
-        QString     dateTime;
-        QString     catalogName;
-        qint64      catalogFileCount;
-        qint64      catalogTotalFileSize;
-        QString     recordType;
-        QRegularExpression tagExp("\t");
-
-        //Skip titles line
-        line = textStream.readLine();
-
-        //load file to database
-        while (!textStream.atEnd())
-        {
-            line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-            {
-                //Split the string with \t (tabulation) into a list
-                fieldList.clear();
-                fieldList = line.split(tagExp);
-                dateTime                = fieldList[0];
-                catalogName             = fieldList[1];
-                catalogFileCount        = fieldList[2].toLongLong();
-                catalogTotalFileSize    = fieldList[3].toLongLong();
-                recordType              = fieldList[4];
-
-                //Append data to the database
-                insertQuery.bindValue(":date_time", dateTime);
-                insertQuery.bindValue(":catalog_name", catalogName);
-                insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
-                insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
-                insertQuery.bindValue(":record_type", recordType);
-                insertQuery.exec();
-            }
-        }
-    }
-}
-//----------------------------------------------------------------------
-void Collection::loadStatisticsStorageFileToTable()
-{// Load the contents of the storage statistics file into the database
-    if(databaseMode=="Memory"){
-        //clear database table
-        QSqlQuery deleteQuery;
-        deleteQuery.exec("DELETE FROM statistics_storage");
-
-        // Get infos stored in the file
-        QFile statisticsStorageFile(statisticsStorageFilePath);
-        if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
-            return;
-        }
-
-        QTextStream textStream(&statisticsStorageFile);
-
-        //prepare query to load file info
-        QSqlQuery insertQuery;
-        QString insertSQL = QLatin1String(R"(
-                                    INSERT INTO statistics_storage (
-                                                    date_time,
-                                                    storage_id,
-                                                    storage_name,
-                                                    storage_free_space,
-                                                    storage_total_space,
-                                                    record_type )
-                                    VALUES(
-                                                    :date_time,
-                                                    :storage_id,
-                                                    :storage_name,
-                                                    :storage_free_space,
-                                                    :storage_total_space,
-                                                    :record_type )
-                                                )");
-        insertQuery.prepare(insertSQL);
-
-        //set temporary values
-        QString     line;
-        QStringList fieldList;
-        QString     dateTime;
-        int         storageID;
-        QString     storageName;
-        qint64      storageFreeSpace;
-        qint64      storageTotalSpace;
-        QString     recordType;
-        QRegularExpression tagExp("\t");
-
-        //Skip titles line
-        line = textStream.readLine();
-
-        //load file to database
-        while (!textStream.atEnd())
-        {
-            line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-            {
-                //Split the string with \t (tabulation) into a list
-                fieldList.clear();
-                fieldList = line.split(tagExp);
-                dateTime            = fieldList[0];
-                storageName         = fieldList[1];
-                storageFreeSpace    = fieldList[2].toLongLong();
-                storageTotalSpace   = fieldList[3].toLongLong();
-                storageID           = fieldList[4].toInt();
-                recordType          = fieldList[5];
-
-                //Append data to the database
-                insertQuery.bindValue(":date_time", dateTime);
-                insertQuery.bindValue(":storage_id", storageID);
-                insertQuery.bindValue(":storage_name", storageName);
-                insertQuery.bindValue(":storage_free_space", QString::number(storageFreeSpace));
-                insertQuery.bindValue(":storage_total_space", QString::number(storageTotalSpace));
-                insertQuery.bindValue(":record_type", recordType);
-                insertQuery.exec();
-            }
-        }
-    }
-}
 //----------------------------------------------------------------------
 void Collection::loadStatisticsDeviceFileToTable()
 {// Load the contents of the storage statistics file into the database
@@ -805,7 +648,6 @@ void Collection::saveStatiticsToFile()
 {
     if(databaseMode=="Memory"){
         //Prepare export file
-        //QFile statisticsFile(statisticsStorageFilePath);
         QFile statisticsFile(statisticsDeviceFilePath);
         QTextStream out(&statisticsFile);
 
@@ -826,22 +668,19 @@ void Collection::saveStatiticsToFile()
         query.prepare(querySQL);
         query.exec();
 
-        //Iterate the records and generate lines
-        while (query.next()) {
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                if (i>0)
-                    out << '\t';
-                out << record.value(i).toString();
-            }
-            //-- Write the result in the file
-            out << '\n';
-        }
-
         if(statisticsFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            //out << textData;
-            //Close the file
-            //storageFile.close();
+
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //Write the result to the file
+                out << '\n';
+            }
         }
 
         statisticsFile.close();

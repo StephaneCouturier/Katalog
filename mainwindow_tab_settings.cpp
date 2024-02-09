@@ -317,8 +317,6 @@
 
         //Load Statistics
         loadStatisticsDataTypes();
-        collection->loadStatisticsCatalogFileToTable();
-        collection->loadStatisticsStorageFileToTable();
         collection->loadStatisticsDeviceFileToTable();
         loadStatisticsChart();
 

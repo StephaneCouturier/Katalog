@@ -78,8 +78,6 @@ public:
     void loadDeviceFileToTable();
     void loadCatalogFilesToTable();
     void loadStorageFileToTable();
-    void loadStatisticsCatalogFileToTable();
-    void loadStatisticsStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
     void loadExclude();
 
