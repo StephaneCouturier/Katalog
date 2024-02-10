@@ -7344,32 +7344,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_EditCatalogStatisticsFile">
-                  <property name="toolTip">
-                   <string>Edit the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>catalogs</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="document-edit-sign"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Statistics_pushButton_EditStorageStatisticsFile">
-                  <property name="toolTip">
-                   <string>Edit the file storing all records</string>
-                  </property>
-                  <property name="text">
-                   <string>storage</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="document-edit-sign"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="Statistics_pushButton_EditDeviceStatisticsFile">
                   <property name="toolTip">
                    <string>Edit the file storing all records</string>
@@ -7431,22 +7405,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>collection snapshots</string>
+                    <string>all records</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>catalog updates</string>
+                    <string>updates only</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>storage updates</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>virtual device updates</string>
+                    <string>snapshots only</string>
                    </property>
                   </item>
                  </widget>

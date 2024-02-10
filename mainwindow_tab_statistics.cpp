@@ -35,25 +35,11 @@
 //UI------------------------------------------------------------------------
     void MainWindow::on_Statistics_comboBox_SelectSource_currentTextChanged()
     {
-        QString selectedSource = ui->Statistics_comboBox_SelectSource->itemData(ui->Statistics_comboBox_SelectSource->currentIndex(),Qt::UserRole).toString();
+        QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
 
         //Save selection in settings file;
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Statistics/SelectedSource", selectedSource);
-
-        //Display selection combo boxes depending on data source
-        if (selectedSource ==tr("collection snapshots")){
-            ui->Statistics_label_DataType->show();
-            ui->Statistics_comboBox_TypeOfData->show();
-        }
-        else if(selectedSource ==tr("catalog updates")){
-            ui->Statistics_label_DataType->show();
-            ui->Statistics_comboBox_TypeOfData->show();
-        }
-        else if(selectedSource ==tr("storage updates")){
-            ui->Statistics_label_DataType->hide();
-            ui->Statistics_comboBox_TypeOfData->hide();
-        }
 
         //Load the graph
         loadStatisticsChart();
@@ -82,16 +68,6 @@
     }
 
     //----------------------------------------------------------------------
-    void MainWindow::on_Statistics_pushButton_EditCatalogStatisticsFile_clicked()
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->statisticsCatalogFilePath));
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Statistics_pushButton_EditStorageStatisticsFile_clicked()
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->statisticsStorageFilePath));
-    }
-    //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_EditDeviceStatisticsFile_clicked()
     {
         QDesktopServices::openUrl(QUrl::fromLocalFile(collection->statisticsDeviceFilePath));
@@ -99,19 +75,16 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_Reload_clicked()
     {
-        if(collection->databaseMode=="Memory"){
-            collection->loadStatisticsCatalogFileToTable();
-            collection->loadStatisticsStorageFileToTable();
-        }
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_lineEdit_GraphicStartDate_returnPressed()
     {
-        graphicStartDate = QDateTime::fromString(ui->Statistics_lineEdit_GraphicStartDate->text(),"yyyy-mm-dd");
+        graphicStartDate.setDate(QDate::fromString(ui->Statistics_lineEdit_GraphicStartDate->text(),"yyyy-MM-dd"));
+        graphicStartDate.setTime(QTime::fromString("00:00:00"));
 
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Statistics/graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
+        settings.setValue("Statistics/graphStartDate", graphicStartDate.toString("yyyy-MM-dd"));
 
         //Load the graph
         loadStatisticsChart();
@@ -162,11 +135,6 @@
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             QString lastSelectedSourceValue = settings.value("Statistics/SelectedSource").toString();
 
-            //Generate list of values
-            ui->Statistics_comboBox_SelectSource->setItemData(0, "catalog updates", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(1, "storage updates", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(2, "collection snapshots", Qt::UserRole);
-
             //Restore last selection value or default
             if (lastSelectedSourceValue !=""){
                 ui->Statistics_comboBox_SelectSource->setCurrentText(tr(lastSelectedSourceValue.toUtf8()));
@@ -194,10 +162,10 @@
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
             qint64  maxValueGraphRange = 0.0;
-            QString displayUnit;
-            QLineSeries *series1 = new QLineSeries();
-            QLineSeries *series2 = new QLineSeries();
-            QLineSeries *series3 = new QLineSeries();
+            QString displayUnitText = "B";
+            QLineSeries *series1 = new QLineSeries(); //Catalog data
+            QLineSeries *series2 = new QLineSeries(); //Storage used space
+            QLineSeries *series3 = new QLineSeries(); //Storage total space
             bool    loadSeries1 = true;
             bool    loadSeries2 = true;
             bool    loadSeries3 = true;
@@ -209,45 +177,84 @@
             qint64  freeSpace  = 0;
             qint64  totalSpace = 0;
 
-            //Line formatting
+        //Prepare series formatting
             QRgb colorCatalogTotalSize = qRgb(32, 159, 223);
             QPen penCatalogTotalSize(colorCatalogTotalSize);
             penCatalogTotalSize.setWidth(2);
             QRgb colorCatalogNumberFiles = qRgb(146, 110, 228);
             QPen penCatalogNumberFiles(colorCatalogNumberFiles);
             penCatalogNumberFiles.setWidth(2);
-            QRgb colorStorageTotalSpace = qRgb(153, 202, 83);
-            QPen penStorageTotalSpace(colorStorageTotalSpace);
-            penStorageTotalSpace.setWidth(2);
             QRgb colorStorageUsedSpace = qRgb(246, 166, 37);
             QPen penStorageUsedSpace(colorStorageUsedSpace);
             penStorageUsedSpace.setWidth(2);
+            QRgb colorStorageTotalSpace = qRgb(153, 202, 83);
+            QPen penStorageTotalSpace(colorStorageTotalSpace);
+            penStorageTotalSpace.setWidth(2);
 
-        //Get the data depending on the type of source
-            //Get collection snapshots data
-            if(selectedSource == tr("collection snapshots")){
-
-                reportName = tr("Collection snapshots");
-                reportTypeOfData = selectedTypeOfData;
-
-                //Add Catalog data
-                QSqlQuery queryTotalSnapshots;
-                QString querySQL = QLatin1String(R"(
-                                    SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
+        //Scale and unit setting
+            qint64 sizeDivider = 1;
+            QSqlQuery queryMaxValue;
+            QString queryMaxValueSQL = QLatin1String(R"(
+                                    SELECT MAX(device_total_file_size), MAX(device_total_space)
                                     FROM statistics_device
                                     WHERE device_id =:device_id
-                                    AND record_type = 'snapshot'
                                 )");
+            queryMaxValue.prepare(queryMaxValueSQL);
+            queryMaxValue.bindValue(":device_id", selectedDevice->ID);
+            queryMaxValue.exec();
+            queryMaxValue.next();
+            qint64 maxTotalFileSize = queryMaxValue.value(0).toLongLong();
+            qint64 maxTotalSpace    = queryMaxValue.value(1).toLongLong();
+            qint64 maxValue = qMax(maxTotalFileSize, maxTotalSpace)*2;
 
+            if (maxValue >= qint64(1024) * 1024 * 1024 * 1024) {
+                sizeDivider = qint64(1024) * 1024 * 1024 * 1024;
+                displayUnitText = " ("+tr("TiB")+")";
+            }
+            else if (maxValue >= qint64(1024) * 1024 * 1024) {
+                sizeDivider = qint64(1024) * 1024 * 1024;
+                displayUnitText = " ("+tr("GiB")+")";
+            }
+            else if (maxValue >= qint64(1024) * 1024) {
+                sizeDivider = qint64(1024) * 1024;
+                displayUnitText = " ("+tr("MiB")+")";
+            }
+            else if (maxValue >= qint64(1024)) {
+                sizeDivider = qint64(1024);
+                displayUnitText = " ("+tr("KiB")+")";
+            }
 
-                if ( !graphicStartDate.isNull() ){
-                    querySQL = querySQL + " AND date_time > :graphStartDate ";
-                }
+        //Get the data depending on the type of source
 
-                queryTotalSnapshots.prepare(querySQL);
+            //Get virtual device data
+            //else if(selectedSource ==tr("all records")){
+                reportName = tr("All device records");
+                reportTypeOfData = tr("Total File Size");
+
+                QSqlQuery queryTotalSnapshots;
+                QString queryTotalSnapshotsSQL = QLatin1String(R"(
+                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
+                                            FROM statistics_device
+                                            WHERE device_id =:device_id
+                                    )");
+
+                // Add conditions
+                    //graph start date
+                    if (!graphicStartDate.isNull()) {
+                        queryTotalSnapshotsSQL += " AND date_time > :graphStartDate ";
+                    }
+
+                    //data source
+                    if(selectedSource ==tr("snapshots only")){
+                        queryTotalSnapshotsSQL += " AND record_type = 'snapshot' ";
+                    }
+                    else if(selectedSource ==tr("updates only")){
+                        queryTotalSnapshotsSQL += " AND (record_type = 'update' OR record_type = 'create') ";
+                    }
+
+                queryTotalSnapshots.prepare(queryTotalSnapshotsSQL);
                 queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-
+                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.toString("yyyy-MM-dd") + " 00:00:00");
                 queryTotalSnapshots.exec();
 
                 while (queryTotalSnapshots.next()){
@@ -257,310 +264,48 @@
                     if ( selectedTypeOfData == tr("Number of Files") )
                     {
                         numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
+                        loadSeries2 = false;
+                        loadSeries3 = false;
                         if ( numberOrSizeTotal > maxValueGraphRange )
                             maxValueGraphRange = numberOrSizeTotal;
                     }
                     else if ( selectedTypeOfData == tr("Total File Size") )
                     {
-                        numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
-                        if ( numberOrSizeTotal > 2000000000 ){
-                            numberOrSizeTotal = numberOrSizeTotal/1024/1024/1024;
-                            displayUnit = " ("+tr("GiB")+")";
-                        }
-                        else {
-                            numberOrSizeTotal = numberOrSizeTotal/1024/1024;
-                            displayUnit = " ("+tr("MiB")+")";
-                        }
-
+                        numberOrSizeTotal = qint64(queryTotalSnapshots.value(2).toLongLong()) / sizeDivider;
                         if ( numberOrSizeTotal > maxValueGraphRange )
                             maxValueGraphRange = numberOrSizeTotal;
                     }
 
                     series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
 
-                    freeSpace  = queryTotalSnapshots.value(3).toLongLong();
-                    totalSpace = queryTotalSnapshots.value(4).toLongLong();
-                    if ( selectedTypeOfData == tr("Number of Files") )
-                    {
-                        //Number of files does not apply to Storage
-                        loadSeries2 = false;
-                        loadSeries3 = false;
-                    }
-                    else if ( selectedTypeOfData == tr("Total File Size") )
-                    {
-                        if ( totalSpace > 2000000000 ){
-                            freeSpace    = freeSpace/1024/1024/1024;
-                            totalSpace   = totalSpace/1024/1024/1024;
-                            displayUnit = " ("+tr("GiB")+")";
-                        }
-                        else {
-                            freeSpace    = freeSpace/1024/1024;
-                            totalSpace   = totalSpace/1024/1024;
-                            displayUnit = " ("+tr("MiB")+")";
-                        }
+                    freeSpace = qint64(queryTotalSnapshots.value(3).toLongLong()) / sizeDivider;
+                    if ( freeSpace > maxValueGraphRange )
+                        maxValueGraphRange = freeSpace;
 
-                        if ( totalSpace > maxValueGraphRange )
-                            maxValueGraphRange = totalSpace;
+                    totalSpace = qint64(queryTotalSnapshots.value(4).toLongLong()) / sizeDivider;
+                    if ( totalSpace > maxValueGraphRange )
+                        maxValueGraphRange = totalSpace;
 
-                        series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
-                        series3->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
-                    }
-
+                    series2->append(datetime.toMSecsSinceEpoch(), totalSpace - freeSpace );
+                    series3->append(datetime.toMSecsSinceEpoch(), totalSpace);
                 }
 
+                //Series name and color               
                 series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
                 if ( selectedTypeOfData == tr("Number of Files") )
                     series1->setPen(penCatalogNumberFiles);
                 else
                     series1->setPen(penCatalogTotalSize);
 
-                //case: no catalog for the storage (display of the graph will fail if no point are in series1)
-                if(series1->count()==0){
-                    series1->append(0,0);
-                }
-
-                series2->setName(tr("Storage") + " / " + tr("Total space"));
-                series3->setName(tr("Storage") + " / " + tr("Used space"));
-
-            }
-
-            //Get catalog updates data
-            else if(selectedSource ==tr("catalog updates")){
-                reportName = tr("Catalog updates");
-                reportTypeOfData = selectedTypeOfData;
-
-                QSqlQuery queryTotalSnapshots;
-                QString querySQL = QLatin1String(R"(
-                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
-                                            FROM statistics_device
-                                            WHERE device_id =:device_id
-                                            AND device_type =:device_type
-                                            AND (record_type = 'update' OR record_type = 'create')
-                                    )");
-
-                if ( !graphicStartDate.isNull() ){
-                     querySQL += " AND date_time > :graphStartDate ";
-                }
-
-                if (selectedDevice->type == "Storage" or selectedDevice->type == "Virtual"){
-                     invalidCombinaison = true;
-                     invalidCase = tr("A Catalog should be selected for that report.");
-                }
-                else if (selectedDevice->type == "Catalog"){
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                    queryTotalSnapshots.bindValue(":device_type", selectedDevice->type);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                    queryTotalSnapshots.exec();
-
-                    while (queryTotalSnapshots.next()){
-
-                        QDateTime datetime = queryTotalSnapshots.value(0).toDateTime();
-
-                        if ( selectedTypeOfData == tr("Number of Files") )
-                       {
-                           numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
-
-                           if ( numberOrSizeTotal > maxValueGraphRange )
-                               maxValueGraphRange = numberOrSizeTotal;
-                       }
-                        else if ( selectedTypeOfData == tr("Total File Size") )
-                       {
-                           numberOrSizeTotal = queryTotalSnapshots.value(2).toLongLong();
-
-                           if ( freeSpace > 2000000000 ){
-                               freeSpace = freeSpace/1024/1024/1024;
-                               displayUnit = " ("+tr("GiB")+")";
-                           }
-                           else {
-                               numberOrSizeTotal = numberOrSizeTotal/1024/1024;
-                               displayUnit = " ("+tr("MiB")+")";
-                           }
-
-                           if ( numberOrSizeTotal > maxValueGraphRange )
-                               maxValueGraphRange = numberOrSizeTotal;
-                       }
-
-                        series1->setName(selectedTypeOfData);
-                        series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
-                    }
-
-                    loadSeries1 = true;
+                if (selectedDevice->type == "Catalog"){
                     loadSeries2 = false;
                     loadSeries3 = false;
-
-                    penStorageUsedSpace.setWidth(2);
-                    if ( selectedTypeOfData == tr("Number of Files") )
-                           series1->setPen(penCatalogNumberFiles);
-                    else
-                           series1->setPen(penCatalogTotalSize);
-                }
-            }
-
-            //Get storage updates data
-            else if(selectedSource ==tr("storage updates")){
-                reportName = tr("Storage updates");
-                reportTypeOfData = tr("Total File Size");
-
-                QSqlQuery queryTotalSnapshots;
-                QString querySQL = QLatin1String(R"(
-                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
-                                            FROM statistics_device
-                                            WHERE device_id =:device_id
-                                            AND (record_type = 'update' OR record_type = 'create')
-                                    )");
-                if ( !graphicStartDate.isNull() ){
-                    querySQL += " AND date_time > :graphStartDate ";
                 }
 
-                if (selectedDevice->type == "Storage"){
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                }
-                else if (selectedDevice->type == "Virtual"){
-                    invalidCombinaison = true;
-                    invalidCase = tr("A Storage or Catalog should be selected for that report.");
-                }
-                else if (selectedDevice->type == "Catalog"){
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->parentID);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                }
-
-                queryTotalSnapshots.exec();
-
-                while (queryTotalSnapshots.next()){
-
-                       QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-                       freeSpace = queryTotalSnapshots.value(3).toLongLong();
-                       if ( freeSpace > 2000000000 ){
-                           freeSpace = freeSpace/1024/1024/1024;
-                           displayUnit = " ("+tr("GiB")+")";
-                       }
-                       else {
-                           freeSpace = freeSpace/1024/1024;
-                           displayUnit = " ("+tr("MiB")+")";
-                       }
-                       if ( freeSpace > maxValueGraphRange )
-                           maxValueGraphRange = freeSpace;
-
-
-                       totalSpace = queryTotalSnapshots.value(4).toLongLong();
-                       if ( totalSpace > 2000000000 ){
-                           totalSpace = totalSpace/1024/1024/1024;
-                           displayUnit = " ("+tr("GiB")+")";
-                       }
-                       else {
-                           totalSpace = totalSpace/1024/1024;
-                           displayUnit = " ("+tr("MiB")+")";
-                       }
-
-                       if ( totalSpace > maxValueGraphRange )
-                           maxValueGraphRange = totalSpace;
-
-                       qint64 usedSpace = totalSpace-freeSpace;                      
-
-                       series1->append(datetime.toMSecsSinceEpoch(), usedSpace);
-                       series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
-                }
-
-                series1->setName("Used Space");
-                series1->setPen(penStorageUsedSpace);
-                series2->setName("Total Space");
-                series2->setPen(penStorageTotalSpace);
-
-                //case: no catalog for the storage
-                if(series1->count()==0){
-                       series1->append(0,0);
-                }
-
-                loadSeries1 = true;
-                loadSeries2 = true;
-                loadSeries3 = false;
-            }
-
-            //Get virtual device data
-            else if(selectedSource ==tr("virtual device updates")){
-                reportName = tr("Virtual device updates");
-                reportTypeOfData = tr("Total File Size");
-
-                QSqlQuery queryTotalSnapshots;
-                QString querySQL = QLatin1String(R"(
-                                            SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
-                                            FROM statistics_device
-                                            WHERE device_id =:device_id
-                                            AND (record_type = 'update' OR record_type = 'create')
-                                    )");
-
-                if ( !graphicStartDate.isNull() ){
-                    querySQL += " AND date_time > :graphStartDate ";
-                }
-
-                if (selectedDevice->type == "Storage"){
-                    invalidCombinaison = true;
-                    invalidCase = tr("A Virtual device should be selected for that report.");
-                }
-                else if (selectedDevice->type == "Catalog"){
-                    invalidCombinaison = true;
-                    invalidCase = tr("A Virtual device should be selected for that report.");
-                }
-                else if (selectedDevice->type == "Virtual"){
-                    queryTotalSnapshots.prepare(querySQL);
-                    queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                    queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.date().toString("yyyy-MM-dd"));
-                }
-
-                queryTotalSnapshots.exec();
-
-                while (queryTotalSnapshots.next()){
-
-                    QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-
-                    freeSpace = queryTotalSnapshots.value(3).toLongLong();
-                    if ( freeSpace > 2000000000 ){
-                        freeSpace = freeSpace/1024/1024/1024;
-                        displayUnit = " ("+tr("GiB")+")";
-                    }
-                    else {
-                        freeSpace = freeSpace/1024/1024;
-                        displayUnit = " ("+tr("MiB")+")";
-                    }
-                    if ( freeSpace > maxValueGraphRange )
-                        maxValueGraphRange = freeSpace;
-
-
-                    totalSpace = queryTotalSnapshots.value(4).toLongLong();
-                    if ( totalSpace > 2000000000 ){
-                        totalSpace = totalSpace/1024/1024/1024;
-                        displayUnit = " ("+tr("GiB")+")";
-                    }
-                    else {
-                        totalSpace = totalSpace/1024/1024;
-                        displayUnit = " ("+tr("MiB")+")";
-                    }
-
-                    if ( totalSpace > maxValueGraphRange )
-                        maxValueGraphRange = totalSpace;
-
-                    series1->append(datetime.toMSecsSinceEpoch(), totalSpace-freeSpace);
-                    series2->append(datetime.toMSecsSinceEpoch(), totalSpace);
-                }
-
-                series1->setName("Used Space");
-                series1->setPen(penStorageUsedSpace);
-                series2->setName("Total Space");
-                series2->setPen(penStorageTotalSpace);
-
-                //case: no catalog for the storage
-                if(series1->count()==0){
-                    series1->append(0,0);
-                }
-
-                loadSeries1 = true;
-                loadSeries2 = true;
-                loadSeries3 = false;
-            }
+                series2->setName(tr("Storage") + " / " + tr("Used space"));
+                series2->setPen(penStorageUsedSpace);
+                series3->setName(tr("Storage") + " / " + tr("Total space"));
+                series3->setPen(penStorageTotalSpace);
 
         //Prepare the chart
             //Create new chart and prepare formating
@@ -572,7 +317,7 @@
                             "<span style=\"font-weight: bold; font-size: 14px; font-color: #AAA,\">"
                             + selectedTypeOfData + " "
                             +" " + tr("of") + " <span style=\"font-style: italic; color: #000,\">"
-                            + selectedDevice->name +"</span>"+ displayUnit+"</span>");
+                            + selectedDevice->name +"</span>"+ displayUnitText +"</span>");
 
             //Format axis
             chart->setLocalizeNumbers(true);
@@ -611,18 +356,15 @@
                 series1->attachAxis(axisX);
                 series1->attachAxis(axisY);
             }
-            if(selectedDevice->type != "Catalog"){
-                //Load storage series unless the device is a catalog
-                if (loadSeries2==true){
-                    chart->addSeries(series2);
-                    series2->attachAxis(axisX);
-                    series2->attachAxis(axisY);
-                }
-                if (loadSeries3==true){
-                    chart->addSeries(series3);
-                    series3->attachAxis(axisX);
-                    series3->attachAxis(axisY);
-                }
+            if (loadSeries2==true){
+                chart->addSeries(series2);
+                series2->attachAxis(axisX);
+                series2->attachAxis(axisY);
+            }
+            if (loadSeries3==true){
+                chart->addSeries(series3);
+                series3->attachAxis(axisX);
+                series3->attachAxis(axisY);
             }
 
         //Set the Legend

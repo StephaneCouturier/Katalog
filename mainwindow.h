@@ -141,9 +141,9 @@ class MainWindow : public QMainWindow
 
             //Objects
             Collection *collection = new Collection();
-            Device *selectedDevice = new Device();   //selected device from selection panel, used for operations on any screen
-            Device *activeDevice     = new Device(); //active device from any screen, used for operations on that screen
-            Device *catalogDevice  = new Device();   //selected catalog/device from Catalog screen
+            Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
+            Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
+            Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
@@ -508,8 +508,6 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_Snapshot_clicked();
 
         //Statistics
-            void on_Statistics_pushButton_EditCatalogStatisticsFile_clicked();
-            void on_Statistics_pushButton_EditStorageStatisticsFile_clicked();
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();
             void on_Statistics_pushButton_Reload_clicked();
             void on_Statistics_comboBox_SelectSource_currentTextChanged();

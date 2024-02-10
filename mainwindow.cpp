@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-01-28";
+        releaseDate     = "2024-02-10";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -110,8 +110,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->Storage_pushButton_Edit->hide();
                 ui->Storage_pushButton_Reload->hide();
                 ui->Statistics_label_EditRecords->hide();
-                ui->Statistics_pushButton_EditStorageStatisticsFile->hide();
-                ui->Statistics_pushButton_EditCatalogStatisticsFile->hide();
+                ui->Statistics_pushButton_EditDeviceStatisticsFile->hide();
                 ui->Statistics_pushButton_Reload->hide();
             }
 
@@ -229,12 +228,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Restore last Search values
             filterFromSelectedDevice();
-
-        //Setup tab: Statistics
-            ui->Statistics_comboBox_SelectSource->setItemData(0, "collection snapshots", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(1, "catalog updates", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(2, "storage updates", Qt::UserRole);
-            ui->Statistics_comboBox_SelectSource->setItemData(3, "virtual device updates", Qt::UserRole);
 
     //Context menu and other slots and signals
             setupFileContextMenus();
