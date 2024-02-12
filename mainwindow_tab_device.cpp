@@ -60,12 +60,32 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddVirtual_clicked()
 {
-    addDeviceVirtual();
+    if(activeDevice->type =="Virtual")
+        addDeviceVirtual();
+    else{
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                   "A Virtual device can only be added to another virtual device.<br/>"
+                                                   ));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 {
-    addDeviceStorage();
+    if(activeDevice->type =="Virtual")
+        addDeviceStorage();
+    else{
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                   "A Storage device can only be added to a virtual device.<br/>"
+                                                   ));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
