@@ -81,7 +81,7 @@ public:
         void getCatalogStorageID();
         void generateDeviceID();
         void insertDevice();
-        void deleteDevice();
+        void deleteDevice(bool askConfirmation);
         void saveDevice();
         void saveStatistics(QDateTime dateTime, QString requestSource);
 

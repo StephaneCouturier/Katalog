@@ -283,7 +283,7 @@
 
             if ( result ==QMessageBox::Yes){
 
-                activeDevice->deleteDevice();
+                activeDevice->deleteDevice(true);
 
                 collection->deleteCatalogFile(activeDevice);
 
@@ -490,38 +490,23 @@
     void MainWindow::updateCatalogsScreenStatistics()
     {
         QSqlQuery querySumCatalogValues;
-        QString querySumCatalogValuesSQL = QLatin1String(R"(
-                                SELECT  COUNT(agg.catalog_name),
-                                        SUM(agg.catalog_total_file_size),
-                                        SUM(agg.catalog_file_count)
-                                FROM (
-                                    SELECT  c.catalog_name,
-                                            c.catalog_total_file_size,
-                                            c.catalog_file_count
-                                    FROM catalog c
-                                    LEFT JOIN device d ON d.device_name = c.catalog_name
 
-                            )"); //LEFT JOIN storage s ON c.catalog_storage = s.storage_name
+        //Prepare the query
+        QString querySumCatalogValuesSQL  = QLatin1String(R"(
+                                        SELECT  COUNT(device_id),
+                                                SUM(device_total_file_size),
+                                                SUM(device_total_file_count)
+                                        FROM device d
+                                    )");
 
         if (      selectedDevice->type == "Storage" ){
-            QString prepareSQL2 = QLatin1String(R"(
-                                    WHERE c.catalog_storage =:catalog_storage
-                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
-                                ) agg
-                                                    )");
-            querySumCatalogValuesSQL += prepareSQL2;
+            querySumCatalogValuesSQL += " WHERE device_parent_id =:device_parent_id ";
         }
         else if ( selectedDevice->type == "Catalog" ){
-            QString prepareSQL2 = QLatin1String(R"(
-                                    WHERE catalog_name =:catalog_name
-                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
-                                ) agg
-                                                    )");
-            querySumCatalogValuesSQL += prepareSQL2;
+            querySumCatalogValuesSQL += " WHERE device_id =:device_id ";
         }
         else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL2 = QLatin1String(R"(
-
+            QString prepareSQL = QLatin1String(R"(
                                         WHERE d.device_id IN (
                                         WITH RECURSIVE hierarchy AS (
                                              SELECT device_id, device_parent_id, device_name
@@ -534,23 +519,16 @@
                                         )
                                         SELECT device_id
                                         FROM hierarchy)
-                                        GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
-                                ) agg
-                                                    )");
-            querySumCatalogValuesSQL += prepareSQL2;
-        }
-        else{
-            QString prepareSQL2 = QLatin1String(R"(
-                                    GROUP BY c.catalog_name, c.catalog_total_file_size, c.catalog_file_count
-                                ) agg
-                                                    )");
-            querySumCatalogValuesSQL += prepareSQL2;
-        }
+                                    )");
+            querySumCatalogValuesSQL += prepareSQL;
 
+        }
+        querySumCatalogValuesSQL += " AND device_type = 'Catalog' ";
+
+        //Execute and use results
         querySumCatalogValues.prepare(querySumCatalogValuesSQL);
-        querySumCatalogValues.bindValue(":catalog_storage", selectedDevice->name);
-        querySumCatalogValues.bindValue(":catalog_name", selectedDevice->name);
         querySumCatalogValues.bindValue(":device_id", selectedDevice->ID);
+        querySumCatalogValues.bindValue(":device_parent_id", selectedDevice->ID);
         querySumCatalogValues.exec();
         querySumCatalogValues.next();
 
@@ -849,8 +827,13 @@
 
     }
     //--------------------------------------------------------------------------
-    void MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
+    bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
     {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
+
+        if(list[0]==0)
+            return false;
+        else{
+
 
         QMessageBox msgBox;
         QString message;
@@ -1022,6 +1005,11 @@
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
             */
+        }
+
+
+            return true;
+
         }
     }
     //--------------------------------------------------------------------------

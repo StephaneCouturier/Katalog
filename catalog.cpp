@@ -394,6 +394,11 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
             int result = msgBox.exec();
 
             if ( result == QMessageBox::Cancel){
+                list.append(0);//catalog not updated
+                list.append(0);
+                list.append(0);
+                list.append(0);
+                list.append(0);
                 return list;
             }
             else

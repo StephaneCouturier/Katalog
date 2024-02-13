@@ -212,7 +212,7 @@ class MainWindow : public QMainWindow
             qint64 globalUpdateDeltaFiles;
             qint64 globalUpdateTotalSize;
             qint64 globalUpdateDeltaSize;
-            void reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
+            bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
         //TAB: Explore
             QString selectedDirectoryName;

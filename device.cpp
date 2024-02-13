@@ -249,7 +249,7 @@ void Device::verifyHasSubDevice(){
         hasSubDevice = false;
 }
 
-void Device::deleteDevice(){
+void Device::deleteDevice(bool askConfirmation){
 
     verifyHasSubDevice();
 
@@ -258,21 +258,28 @@ void Device::deleteDevice(){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             QString impactMessage;
-            if(type=="Storage"){
-                impactMessage = QCoreApplication::translate("MainWindow","This will remove the device and the storage details."); //DEV: and all statistics history
-            }
-            msgBox.setText(QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?"
-                                                                     "<table>"
-                                                                     "<tr><td>ID:   </td><td><b> %2 </td></tr>"
-                                                                     "<tr><td>Name: </td><td><b> %3 </td></tr>"
-                                                                     "<tr><td></td></tr>"
-                                                                     "<tr><td></td><td>%4</td></tr>"
-                                                                     "</table>").arg(type, QString::number(ID), name,impactMessage));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
-            int result = msgBox.exec();
+            int result;
 
-            if ( result ==QMessageBox::Yes){
+            if (askConfirmation==true){
+
+                if(type=="Storage"){
+                    impactMessage = QCoreApplication::translate("MainWindow","This will remove the device and the storage details."); //DEV: and all statistics history
+                }
+                msgBox.setText(QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?"
+                                                                         "<table>"
+                                                                         "<tr><td>ID:   </td><td><b> %2 </td></tr>"
+                                                                         "<tr><td>Name: </td><td><b> %3 </td></tr>"
+                                                                         "<tr><td></td></tr>"
+                                                                         "<tr><td></td><td>%4</td></tr>"
+                                                                         "</table>").arg(type, QString::number(ID), name,impactMessage));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
+                result = msgBox.exec();
+            }
+            else
+                result = QMessageBox::Yes;
+
+            if ( result == QMessageBox::Yes){
 
                 //Delete selected ID
                 QSqlQuery query;
@@ -351,6 +358,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     if (type=="Catalog"){
         //Update this device/catalog (files) and its storage (space)
         deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder);
+
         totalFileSize  = deviceUpdatesList[1];
         totalFileCount = deviceUpdatesList[3];
 
@@ -466,6 +474,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         deviceUpdatesList<<0;
 
     QApplication::restoreOverrideCursor();
+
     return deviceUpdatesList;
 }
 

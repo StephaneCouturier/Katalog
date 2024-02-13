@@ -161,7 +161,7 @@
         //Get inputs
             selectedTypeOfData = ui->Statistics_comboBox_TypeOfData->currentText();
             QString selectedSource = ui->Statistics_comboBox_SelectSource->currentText();
-            qint64  maxValueGraphRange = 0.0;
+            qint64  maxValueGraphRange = 0;
             QString displayUnitText = "B";
             QLineSeries *series1 = new QLineSeries(); //Catalog data
             QLineSeries *series2 = new QLineSeries(); //Storage used space
@@ -173,9 +173,9 @@
             QString invalidCase;
             QString reportName;
             QString reportTypeOfData;
-            qint64  numberOrSizeTotal = 0;
-            qint64  freeSpace  = 0;
-            qint64  totalSpace = 0;
+            qreal   numberOrSizeTotal = 0;
+            qreal   freeSpace  = 0;
+            qreal   totalSpace = 0;
 
         //Prepare series formatting
             QRgb colorCatalogTotalSize = qRgb(32, 159, 223);
@@ -205,7 +205,7 @@
             queryMaxValue.next();
             qint64 maxTotalFileSize = queryMaxValue.value(0).toLongLong();
             qint64 maxTotalSpace    = queryMaxValue.value(1).toLongLong();
-            qint64 maxValue = qMax(maxTotalFileSize, maxTotalSpace)*2;
+            qint64 maxValue = qMax(maxTotalFileSize, maxTotalSpace);
 
             if (maxValue >= qint64(1024) * 1024 * 1024 * 1024) {
                 sizeDivider = qint64(1024) * 1024 * 1024 * 1024;
@@ -231,8 +231,8 @@
                 reportName = tr("All device records");
                 reportTypeOfData = tr("Total File Size");
 
-                QSqlQuery queryTotalSnapshots;
-                QString queryTotalSnapshotsSQL = QLatin1String(R"(
+                QSqlQuery queryStatistics;
+                QString queryStatisticsSQL = QLatin1String(R"(
                                             SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
                                             FROM statistics_device
                                             WHERE device_id =:device_id
@@ -241,53 +241,57 @@
                 // Add conditions
                     //graph start date
                     if (!graphicStartDate.isNull()) {
-                        queryTotalSnapshotsSQL += " AND date_time > :graphStartDate ";
+                        queryStatisticsSQL += " AND date_time > :graphStartDate ";
                     }
 
                     //data source
                     if(selectedSource ==tr("snapshots only")){
-                        queryTotalSnapshotsSQL += " AND record_type = 'snapshot' ";
+                        queryStatisticsSQL += " AND record_type = 'snapshot' ";
                     }
                     else if(selectedSource ==tr("updates only")){
-                        queryTotalSnapshotsSQL += " AND (record_type = 'update' OR record_type = 'create') ";
+                        queryStatisticsSQL += " AND (record_type = 'update' OR record_type = 'create') ";
                     }
 
-                queryTotalSnapshots.prepare(queryTotalSnapshotsSQL);
-                queryTotalSnapshots.bindValue(":device_id", selectedDevice->ID);
-                queryTotalSnapshots.bindValue(":graphStartDate", graphicStartDate.toString("yyyy-MM-dd") + " 00:00:00");
-                queryTotalSnapshots.exec();
+                queryStatistics.prepare(queryStatisticsSQL);
+                queryStatistics.bindValue(":device_id", selectedDevice->ID);
+                queryStatistics.bindValue(":graphStartDate", graphicStartDate.toString("yyyy-MM-dd") + " 00:00:00");
+                queryStatistics.exec();
 
-                while (queryTotalSnapshots.next()){
+                while (queryStatistics.next()){
 
-                    QDateTime datetime = QDateTime::fromString(queryTotalSnapshots.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
+                    QDateTime datetime = QDateTime::fromString(queryStatistics.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
 
                     if ( selectedTypeOfData == tr("Number of Files") )
                     {
-                        numberOrSizeTotal = queryTotalSnapshots.value(1).toLongLong();
+                        numberOrSizeTotal = queryStatistics.value(1).toLongLong();
                         loadSeries2 = false;
                         loadSeries3 = false;
-                        if ( numberOrSizeTotal > maxValueGraphRange )
-                            maxValueGraphRange = numberOrSizeTotal;
+
                     }
                     else if ( selectedTypeOfData == tr("Total File Size") )
                     {
-                        numberOrSizeTotal = qint64(queryTotalSnapshots.value(2).toLongLong()) / sizeDivider;
+                        numberOrSizeTotal = static_cast<qreal>(queryStatistics.value(2).toLongLong()) / sizeDivider;
                         if ( numberOrSizeTotal > maxValueGraphRange )
                             maxValueGraphRange = numberOrSizeTotal;
                     }
 
                     series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
 
-                    freeSpace = qint64(queryTotalSnapshots.value(3).toLongLong()) / sizeDivider;
-                    if ( freeSpace > maxValueGraphRange )
-                        maxValueGraphRange = freeSpace;
+                    freeSpace = static_cast<qreal>(queryStatistics.value(3).toLongLong()) / sizeDivider;
 
-                    totalSpace = qint64(queryTotalSnapshots.value(4).toLongLong()) / sizeDivider;
-                    if ( totalSpace > maxValueGraphRange )
-                        maxValueGraphRange = totalSpace;
+                    totalSpace = static_cast<qreal>(queryStatistics.value(4).toLongLong()) / sizeDivider;
 
                     series2->append(datetime.toMSecsSinceEpoch(), totalSpace - freeSpace );
                     series3->append(datetime.toMSecsSinceEpoch(), totalSpace);
+
+                    if ( numberOrSizeTotal > maxValueGraphRange )
+                        maxValueGraphRange = numberOrSizeTotal;
+
+                    if ( freeSpace > maxValueGraphRange )
+                        maxValueGraphRange = freeSpace;
+
+                    if ( totalSpace > maxValueGraphRange )
+                        maxValueGraphRange = totalSpace;
                 }
 
                 //Series name and color               
@@ -323,18 +327,17 @@
             chart->setLocalizeNumbers(true);
 
             QDateTimeAxis *axisX = new QDateTimeAxis;
-            //axisX->setTickCount(10);
             axisX->setFormat("yyyy-MM-dd");
             axisX->setTitleText(tr("Date"));
             chart->addAxis(axisX, Qt::AlignBottom);
 
             QValueAxis *axisY = new QValueAxis;
-            axisY->setLabelFormat("%.0f");
             axisY->setTitleText(tr("Total"));
 
-            //Calculate axisY max range value
+            //Calculate axisY max range value and format it
                 // Example: 848 365  >  get 6 digits, get the 8 and add one,
                 // and mutliply this by 10 power of 6-1 > so max range is 900 000
+
                 //Get the number of digits
                 int maxValueGraphRangeLength = QString::number((maxValueGraphRange)).length();
 
@@ -342,12 +345,22 @@
                 QString maxValueGraphRangeFirst = QString::number((maxValueGraphRange)).left(1);
 
                 //Calculate the max range value
-                maxValueGraphRange = (maxValueGraphRangeFirst.toLongLong()+1) * qPow(10, maxValueGraphRangeLength-1);
+                maxValueGraphRange = static_cast<qreal>(maxValueGraphRangeFirst.toLongLong()+1) * qPow(10, maxValueGraphRangeLength-1);
 
-                //Increase max value from the statistics, so the highest value is not completely at the top
-                //maxValueGraphRange = maxValueGraphRange*1.1;
+                // Calculate the step size for the scale
+                qreal stepSize = static_cast<qreal>(maxValueGraphRange) / 10.0;
 
-            axisY->setRange(0 , maxValueGraphRange);
+                // Set the step size for the axis
+                axisY->setTickCount(10); // Number of divisions on the axis
+                axisY->setRange(0, maxValueGraphRange + stepSize); // Set the maximum value slightly larger to include the last division
+
+                // Set the label format to display decimals when numbers are small
+                if (maxValueGraphRange < 10.0){
+                    axisY->setLabelFormat("%.1f");
+                }
+                else
+                    axisY->setLabelFormat("%.0f");
+
             chart->addAxis(axisY, Qt::AlignLeft);
 
         //Load series to chart

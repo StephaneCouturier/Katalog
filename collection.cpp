@@ -493,26 +493,26 @@ void Collection::loadStatisticsDeviceFileToTable()
         QString     line;
         QStringList fieldList;
         QString     dateTime;
-        int         deviceID;
+        int         deviceID = 0;
         QString     deviceName;
         QString     deviceType;
-        qint64      deviceFileCount;
-        qint64      deviceTotalFileSize;
-        qint64      deviceFreeSpace;
-        qint64      deviceTotalSpace;
+        qint64      deviceFileCount = 0;
+        qint64      deviceTotalFileSize = 0;
+        qint64      deviceFreeSpace = 0;
+        qint64      deviceTotalSpace = 0;
         QString     recordType;
         QRegularExpression tagExp("\t");
 
-        //Skip titles line
-        //line = textStream.readLine();
+        //Skip first header line
+        line = textStream.readLine();
 
         //Load file to database
         while (!textStream.atEnd())
         {
             line = textStream.readLine();
-            if (line.isNull())
+            if (line.isNull()) //stop when line is null
                 break;
-            else
+            else //parse the line and load to db
             {
                 //Split the string with \t (tabulation) into a list
                 fieldList.clear();
@@ -650,6 +650,18 @@ void Collection::saveStatiticsToFile()
         //Prepare export file
         QFile statisticsFile(statisticsDeviceFilePath);
         QTextStream out(&statisticsFile);
+
+        //Prepare header line
+        out << "date_time"              << "\t"
+            << "device_id"              << "\t"
+            << "device_name"            << "\t"
+            << "device_type"            << "\t"
+            << "device_file_count"      << "\t"
+            << "device_total_file_size" << "\t"
+            << "device_free_space"      << "\t"
+            << "device_total_space"     << "\t"
+            << "record_type"            << "\t"
+            << '\n';
 
         //Get data
         QSqlQuery query;

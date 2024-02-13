@@ -717,7 +717,7 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 //--------------------------------------------------------------------------
 void MainWindow::deleteDeviceItem()
 {
-    activeDevice->deleteDevice();
+    activeDevice->deleteDevice(true);
 
     //Save data to files
     collection->saveDeviceTableToFile();
