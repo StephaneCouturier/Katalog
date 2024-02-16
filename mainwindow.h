@@ -268,7 +268,7 @@ class MainWindow : public QMainWindow
             void addDeviceVirtual();
             void addDeviceStorage();
             void editDevice();
-            void saveDevice();
+            void saveDeviceForm();
             void assignCatalogToDevice(Device *catalogDevice, Device *parentDevice);
             void assignStorageToDevice(int storageID,int deviceID);
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);

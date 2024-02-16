@@ -229,6 +229,28 @@ void Device::insertDevice()
     query.exec();
 }
 
+bool Device::verifyDeviceNameExists()
+{
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT COUNT(*)
+                                    FROM   device
+                                    WHERE  device_name = :device_name
+                                )");
+
+    query.prepare(querySQL);
+    query.bindValue(":device_name", name);
+
+    if (!query.exec()) {
+        // Handle SQL error
+        qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
+        return false;
+    }
+
+    query.next();
+    return query.value(0).toInt() > 0;
+}
+
 void Device::verifyHasSubDevice(){
 
     QSqlQuery queryVerifyChildren;
@@ -321,15 +343,16 @@ void Device::saveDevice()
 {//Update database with device values
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET    device_name =:device_name,
-                                   device_parent_id =:device_parent_id,
-                                   device_external_id =:device_external_id,
-                                   device_path =:device_path,
-                                   device_group_id =:device_group_id,
-                                   device_total_file_size =:device_total_file_size,
-                                   device_total_file_count =:device_total_file_count
-                            WHERE  device_id=:device_id
+                            UPDATE  device
+                            SET     device_name =:device_name,
+                                    device_parent_id =:device_parent_id,
+                                    device_external_id =:device_external_id,
+                                    device_path =:device_path,
+                                    device_group_id =:device_group_id,
+                                    device_total_file_size =:device_total_file_size,
+                                    device_total_file_count =:device_total_file_count,
+                                    device_group_id =:device_group_id
+                            WHERE   device_id=:device_id
                         )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
@@ -340,6 +363,7 @@ void Device::saveDevice()
     query.bindValue(":device_group_id", groupID);
     query.bindValue(":device_total_file_size", totalFileSize);
     query.bindValue(":device_total_file_count", totalFileCount);
+    query.bindValue(":device_group_id",  groupID);
     query.exec();
 }
 

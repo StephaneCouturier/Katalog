@@ -41,19 +41,19 @@ class Device
 {
 
 public:
-    //Attributes
+    //Attributes  
         //Saved
-        int ID;
-        int parentID;
+        int ID = 0;
+        int parentID = 0;
         QString name;
         QString type;
-        int externalID;
+        int externalID = 0;
         QString path;
         qint64 totalFileSize;
         qint64 totalFileCount;
-        qint64 totalSpace;
-        qint64 freeSpace;
-        int groupID;
+        qint64 totalSpace = 0;
+        qint64 freeSpace = 0;
+        int groupID = 0;
         QDateTime dateTimeUpdated;
 
         //Contents
@@ -72,6 +72,7 @@ public:
         void loadDevice();
 
         void verifyHasSubDevice();
+        bool verifyDeviceNameExists();
         void updateActive();
 
         QList<qint64> updateDevice(QString statiticsRequestSource, QString databaseMode, bool reportStorageUpdate, QString collectionFolder);

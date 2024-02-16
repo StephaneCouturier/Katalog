@@ -120,7 +120,7 @@ void MainWindow::on_Devices_pushButton_Snapshot_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_Save_clicked()
 {
-    saveDevice();
+    saveDeviceForm();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_Cancel_clicked()
@@ -1363,7 +1363,7 @@ void MainWindow::editDevice()
     ui->Devices_comboBox_Parent->setCurrentText(newDeviceItem->name+" ("+QString::number(newDeviceItem->ID)+")");
 }
 //--------------------------------------------------------------------------
-void MainWindow::saveDevice()
+void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
 //DEV: move to object
     //Get the ID of the selected parent
@@ -1381,24 +1381,8 @@ void MainWindow::saveDevice()
     if(parentDevice->ID == 0) //If the new parent is root, the group_id should be 1 (0 is reserved for the Physical group)
         newGroupID=1;
 
-
-    //Save name, parent ID, path
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                            UPDATE  device
-                            SET     device_name =:device_name,
-                                    device_parent_id =:device_parent_id,
-                                    device_path =:device_path,
-                                    device_group_id =:device_group_id
-                            WHERE   device_id=:device_id
-                                )");
-    query.prepare(querySQL);
-    query.bindValue(":device_id",        activeDevice->ID);
-    query.bindValue(":device_name",      activeDevice->name);
-    query.bindValue(":device_parent_id", activeDevice->parentID);
-    query.bindValue(":device_path",      activeDevice->path);
-    query.bindValue(":device_group_id",  newGroupID);
-    query.exec();
+    //Save device
+    activeDevice->saveDevice();
 
     //Also change the group_id of sub-devices
     Device *loopDevice = new Device();
@@ -1411,11 +1395,11 @@ void MainWindow::saveDevice()
         }
     }
 
-    //If device = Physical Storage
+    //If device is a catalog, rename in catalog table
     if(activeDevice->type == "Catalog"){
 
         //Update Catalog name
-        querySQL = QLatin1String(R"(
+        QString querySQL = QLatin1String(R"(
                                     UPDATE catalog
                                     SET catalog_name =:catalog_name
                                     WHERE catalog_id =:catalog_id
@@ -1437,91 +1421,23 @@ void MainWindow::saveDevice()
         }
 
         activeDevice->catalog->renameCatalogFile(activeDevice->name);
-
-        /*
-        //Update name in statistics and catalogs
-        if (currentCatalogName != newCatalogName){
-            //Update statistics
-            QString updateNameQuerySQL = QLatin1String(R"(
-                                    UPDATE statistics_catalog
-                                    SET catalog_name = :new_catalog_name
-                                    WHERE catalog_id =:catalog_id
-                                )");
-
-            QSqlQuery updateNameQuery;
-            updateNameQuery.prepare(updateNameQuerySQL);
-            updateNameQuery.bindValue(":new_catalog_name", newCatalogName);
-            updateNameQuery.bindValue(":catalog_id", activeDevice->catalog->ID);
-            updateNameQuery.exec();
-
-            if (collection->databaseMode=="Memory"){
-                collection->saveStatiticsToFile();
-            }
-
-            //Update catalogs (database mode)
-            QString updateCatalogQuerySQL = QLatin1String(R"(
-                                    UPDATE catalog
-                                    SET catalog_storage = :new_storage_name
-                                    WHERE catalog_storage =:current_storage_name
-                                )");
-
-            QSqlQuery updateCatalogQuery;
-            updateCatalogQuery.prepare(updateCatalogQuerySQL);
-            updateCatalogQuery.bindValue(":current_storage_name", currentCatalogName);
-            updateCatalogQuery.bindValue(":new_storage_name", newCatalogName);
-            updateCatalogQuery.exec();
-
-            //Update catalogs (memory mode)
-            if (collection->databaseMode=="Memory"){
-
-                //List catalogs
-                QString listCatalogQuerySQL = QLatin1String(R"(
-                                    SELECT catalog_name
-                                    FROM catalog
-                                    WHERE catalog_storage =:new_storage_name
-                                )");
-
-                QSqlQuery listCatalogQuery;
-                listCatalogQuery.prepare(listCatalogQuerySQL);
-                listCatalogQuery.bindValue(":new_storage_name", newCatalogName);
-                listCatalogQuery.exec();
-
-                //Edit and save each one
-                Device loopCatalog;
-                while (listCatalogQuery.next()){
-                    loopCatalog.catalog = new Catalog;
-                    loopCatalog.catalog->name = listCatalogQuery.value(0).toString();
-                    loopCatalog.catalog->loadCatalog();
-                    loopCatalog.catalog->storageName = newCatalogName;
-                    loopCatalog.catalog->updateCatalogFile();
-                }
-
-                //Refresh
-                if(collection->databaseMode=="Memory")
-                    collection->loadCatalogFilesToTable();
-
-                loadCatalogsTableToModel();
-                loadCatalogsTableToModel();
-            }
-        }
-       */
     }
 
-    //If device = Physical Storage
+    //If device is Storage, rename in storage table
     if(activeDevice->type == "Storage"){
 
-        QString currentStorageName = activeDevice->name; //selectedStorage->name;
+        QString currentStorageName = activeDevice->name;
         QString newStorageName     = ui->Devices_lineEdit_Name->text();
 
         //Update Storage name
-        querySQL = QLatin1String(R"(
+        QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
                                     SET storage_name =:storage_name
                                     WHERE storage_id =:storage_id
                                 )");
 
         QSqlQuery updateQuery;
-        updateQuery.prepare(querySQL);
+        updateQuery.prepare(queryUpdateStorageSQL);
         updateQuery.bindValue(":storage_name", activeDevice->name);
         updateQuery.bindValue(":storage_id",   activeDevice->externalID);
         updateQuery.exec();
@@ -1609,7 +1525,6 @@ void MainWindow::saveDevice()
 
     //Reload
     loadDeviceTableToTreeModel();
-
     ui->Devices_pushButton_Edit->setEnabled(false);
 }
 //--------------------------------------------------------------------------
