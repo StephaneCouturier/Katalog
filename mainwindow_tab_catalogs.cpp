@@ -555,18 +555,18 @@
     {
         //Select file
 
-            //Get user home path
-            QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-            QString homePath = standardsPaths[0];
-
             //Get path of the file to import
-            QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"),homePath);
+            QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"), collection->collectionFolder);
 
             //Stop if no path is selected
             if ( sourceFilePath=="" ) return;
 
             //Define file
             QFile sourceFile(sourceFilePath);
+
+            //Prepare a dateTime to add to device or catalog anmes and avoid duplicates
+            QString dateTimeForCatalogName = "_" + QDateTime::currentDateTime().toString("yy-MM-ss hh-mm-ss");
+
 
         //Open the source file and load all data into the database
 
@@ -630,26 +630,28 @@
                 }
 
             //load all files to the database
+
+
                     while (true)
                     {
-                        //Read the newt line
+                        //Read the new line
                         line = textStream.readLine();
 
                         if (line !=""){
                             QStringList fieldList = line.split("\t");
                             if ( fieldList.count()==7 ){
 
-                                //Append file data to the database
-                                insertQuery.bindValue(":file_name", fieldList[2].replace("\"",""));
-                                insertQuery.bindValue(":file_folder_path", fieldList[1].replace("\"",""));
+                                //Append file data to the database  ( removing "characters)
+                                insertQuery.bindValue(":file_name", fieldList[2].remove("\""));//.replace("\"",""));
+                                insertQuery.bindValue(":file_folder_path", fieldList[1].remove("\""));
                                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
-                                insertQuery.bindValue(":file_catalog", fieldList[0].replace("\"",""));
+                                insertQuery.bindValue(":file_catalog", fieldList[0].remove("\"") + dateTimeForCatalogName);
                                 insertQuery.exec();
 
                                 //Append folder data to the database
-                                insertFolderQuery.bindValue(":folder_catalog_name", fieldList[0].replace("\"",""));
-                                insertFolderQuery.bindValue(":folder_path",         fieldList[1].replace("\"",""));
+                                insertFolderQuery.bindValue(":folder_catalog_name", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
+                                insertFolderQuery.bindValue(":folder_path",         fieldList[1].remove("\""));
                                 insertFolderQuery.exec();
                             }
                         }
@@ -681,7 +683,7 @@
                 Device importVirtualDevice;
                 importVirtualDevice.generateDeviceID();
                 importVirtualDevice.type ="Virtual";
-                importVirtualDevice.name = "imports from VVV " + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                importVirtualDevice.name = "imports from VVV " + dateTimeForCatalogName;
                 importVirtualDevice.parentID = 0;
                 importVirtualDevice.groupID = 1;
                 importVirtualDevice.path = virtualCatalogFolder;
@@ -689,7 +691,7 @@
                 importVirtualDevice.insertDevice();
                 collection->saveDeviceTableToFile();
 
-            //Iterate in the list to generate a catalog file for each catalog
+            //Iterate each catalog to generate related files
                 while (listCatalogQuery.next()){
 
                     //Create Device
@@ -788,7 +790,6 @@
 
                     //Write the results in the file
                     while (listFilesQuery.next()) {
-
                         out << virtualCatalogFolder + listFilesQuery.value(0).toString() + "/" + listFilesQuery.value(1).toString();
                         out << '\t';
                         out << listFilesQuery.value(2).toString();
@@ -836,7 +837,6 @@
 
                     fileFolderOut.close();
             }
-
 
             //Stop animation
             QApplication::restoreOverrideCursor();
