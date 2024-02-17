@@ -206,7 +206,9 @@ class MainWindow : public QMainWindow
             void backupCatalogFile(QString catalogSourcePath);
             void hideCatalogButtons();
             void saveCatalogChanges(Catalog *catalog);
+
             void importFromVVV();
+            void createMissingParentDirectories();
 
             qint64 globalUpdateTotalFiles;
             qint64 globalUpdateDeltaFiles;
