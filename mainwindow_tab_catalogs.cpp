@@ -646,7 +646,7 @@
                                 insertQuery.bindValue(":file_folder_path", fieldList[1].remove("\""));
                                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
-                                insertQuery.bindValue(":file_catalog", fieldList[0].remove("\"") + dateTimeForCatalogName);
+                                insertQuery.bindValue(":file_catalog", fieldList[0].remove("\"").replace("/","_") + dateTimeForCatalogName);
                                 insertQuery.exec();
 
                                 //Append folder data to the database
