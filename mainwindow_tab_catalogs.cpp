@@ -641,8 +641,8 @@
                             QStringList fieldList = line.split("\t");
                             if ( fieldList.count()==7 ){
 
-                                //Append file data to the database  ( removing "characters)
-                                insertQuery.bindValue(":file_name", fieldList[2].remove("\""));//.replace("\"",""));
+                                //Append file data to the database  ( removing " characters)
+                                insertQuery.bindValue(":file_name", fieldList[2].remove("\""));
                                 insertQuery.bindValue(":file_folder_path", fieldList[1].remove("\""));
                                 insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
                                 insertQuery.bindValue(":file_date_updated", fieldList[5]);
@@ -697,28 +697,15 @@
                     //Create Device
                     Device importedDevice;
                     importedDevice.generateDeviceID();
+                    importedDevice.name = listCatalogQuery.value(0).toString();
                     importedDevice.type ="Catalog";
                     importedDevice.parentID = importVirtualDevice.ID;
-                    importedDevice.groupID = 0;
+                    importedDevice.groupID = 1;
                     importedDevice.path = virtualCatalogFolder;
                     importedDevice.catalog->generateID();
                     importedDevice.externalID = importedDevice.catalog->ID;
                     importedDevice.dateTimeUpdated = QDateTime::currentDateTime();
-
-                    //Generate a name for the file itself, without specical characters
-                        QString formerCatalogName = listCatalogQuery.value(0).toString();
-                        QString importedDeviceName = formerCatalogName;
-                        importedDeviceName.replace("/","_");
-                        importedDeviceName.replace("\\","_");
-
-                        importedDevice.name = importedDeviceName;
-
-                        //Modify the catalog name (so potentially the csv file name) if it already exists
-                        if (importedDevice.verifyDeviceNameExists()){
-                            importedDevice.name += "_" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss");
-                        }
-
-                        importedDevice.insertDevice();
+                    importedDevice.insertDevice();
 
                     //Get info for the new catalog
                         importedDevice.catalog->name = importedDevice.name;
@@ -733,19 +720,20 @@
 
                 //Update total number and size of the files
                     QString listCatalogSQL = QLatin1String(R"(
-                                        SELECT COUNT(*), SUM(fileSize)
-                                        FROM file
-                                        WHERE file_catalog =:file_catalog
-                                                    )");
+                                                    SELECT COUNT(*), SUM(file_size)
+                                                    FROM file
+                                                    WHERE file_catalog =:file_catalog
+                                            )");
                     QSqlQuery listCatalogQuery;
                     listCatalogQuery.prepare(listCatalogSQL);
-                    listCatalogQuery.bindValue(":file_catalog",formerCatalogName);
+                    listCatalogQuery.bindValue(":file_catalog", importedDevice.name);
                     listCatalogQuery.exec();
                     listCatalogQuery.next();
 
                     importedDevice.totalFileCount = listCatalogQuery.value(0).toLongLong();
                     importedDevice.totalFileSize  = listCatalogQuery.value(1).toLongLong();
                     importedDevice.saveDevice();
+                    collection->saveDeviceTableToFile();
 
                     //Save device
                     collection->saveDeviceTableToFile();
@@ -785,7 +773,7 @@
                                             )");
                     QSqlQuery listFilesQuery;
                     listFilesQuery.prepare(listFilesSQL);
-                    listFilesQuery.bindValue(":file_catalog", formerCatalogName);
+                    listFilesQuery.bindValue(":file_catalog", importedDevice.name);
                     listFilesQuery.exec();
 
                     //Write the results in the file
@@ -837,6 +825,10 @@
 
                     fileFolderOut.close();
             }
+
+            //update virtual device
+            importVirtualDevice.updateNumbersFromChildren();
+            collection->saveDeviceTableToFile();
 
             //Stop animation
             QApplication::restoreOverrideCursor();
