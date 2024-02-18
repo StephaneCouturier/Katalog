@@ -513,10 +513,23 @@ void Catalog::renameCatalog(QString newCatalogName)
 
 void Catalog::renameCatalogFile(QString newCatalogName)
 {
-    //rename file
     QFileInfo catalogFileInfo(filePath);
+
+    //Rename folders file
+    QString currentFolderFilePath = filePath;
+
+    if (currentFolderFilePath.right(4)==".idx"){
+        currentFolderFilePath = currentFolderFilePath.chopped(4); //remove the .idx extension
+        currentFolderFilePath +=".folders.idx"; //add the .folder.idx one for the folders file
+        QString newFoldersFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".folders.idx";
+        QFile::rename(currentFolderFilePath, newFoldersFilePath);
+    }
+
+    //Rename catalog file
     QString newCatalogFilePath = catalogFileInfo.absolutePath() + "/" + newCatalogName + ".idx";
     QFile::rename(filePath, newCatalogFilePath);
+
+    //Update the file path of the catalog with new value
     filePath = newCatalogFilePath;
 }
 
