@@ -138,7 +138,13 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Storage_pushButton_Update_clicked()
     {
-        reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
+        reportAllUpdates(activeDevice,
+                         activeDevice->updateDevice("update",
+                                                    collection->databaseMode,
+                                                    true,
+                                                    collection->collectionFolder,
+                                                    true),
+                         "update");
         collection->saveDeviceTableToFile();
         collection->saveStorageTableToFile();
         collection->saveStatiticsToFile();

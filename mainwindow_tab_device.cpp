@@ -227,7 +227,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             //BackUp the file before, if the option is selected
             if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){ backupCatalogFile(activeDevice->catalog->filePath); }
-            reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder),"update");
+            reportAllUpdates(activeDevice,
+                             activeDevice->updateDevice("update",
+                                                        collection->databaseMode,
+                                                        false,
+                                                        collection->collectionFolder,
+                                                        true),
+                             "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
             loadDeviceTableToTreeModel();
@@ -275,7 +281,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            reportAllUpdates(activeDevice, activeDevice->updateDevice("update", collection->databaseMode, true,collection->collectionFolder), "list");
+            reportAllUpdates(activeDevice,
+                             activeDevice->updateDevice("update",
+                                                        collection->databaseMode,
+                                                        true,
+                                                        collection->collectionFolder,
+                                                        true),
+                             "list");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
 
@@ -346,7 +358,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction3);
 
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
+            reportAllUpdates(activeDevice,
+                             activeDevice->updateDevice("update",
+                                                        collection->databaseMode,
+                                                        true,
+                                                        collection->collectionFolder,
+                                                        true),
+                             "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
             loadDeviceTableToTreeModel();
@@ -718,6 +736,18 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 void MainWindow::deleteDeviceItem()
 {
     activeDevice->deleteDevice(true);
+
+    activeDevice->updateDevice("delete",
+                               collection->databaseMode,
+                               false,
+                               collection->collectionFolder,
+                               false);
+
+    Device parentDevice;
+    parentDevice.ID = activeDevice->parentID;
+    parentDevice.loadDevice();
+    parentDevice.updateNumbersFromChildren();
+    parentDevice.updateParentsNumbers();
 
     //Save data to files
     collection->saveDeviceTableToFile();
@@ -1439,7 +1469,13 @@ void MainWindow::saveDeviceForm()
                                                     , QMessageBox::Yes
                                                         | QMessageBox::No);
             if ( updatechoice == QMessageBox::Yes){
-                reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
+                reportAllUpdates(activeDevice,
+                                 activeDevice->updateDevice("update",
+                                                            collection->databaseMode,
+                                                            true,
+                                                            collection->collectionFolder,
+                                                            true),
+                                 "update");
             }
         }
     }

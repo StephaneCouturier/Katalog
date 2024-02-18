@@ -255,7 +255,13 @@
             loadStorageList();
 
         //Launch the scan and cataloging of files, including statistics
-            bool updateResult = reportAllUpdates(newDevice, newDevice->updateDevice("create", collection->databaseMode,false,collection->collectionFolder), "create");
+            bool updateResult = reportAllUpdates(newDevice,
+                                                 newDevice->updateDevice("create",
+                                                                         collection->databaseMode,
+                                                                         false,
+                                                                         collection->collectionFolder,
+                                                                         true),
+                                                 "create");
 
             if (updateResult==true){
                 newDevice->saveDevice();

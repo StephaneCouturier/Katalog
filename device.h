@@ -75,7 +75,11 @@ public:
         bool verifyDeviceNameExists();
         void updateActive();
 
-        QList<qint64> updateDevice(QString statiticsRequestSource, QString databaseMode, bool reportStorageUpdate, QString collectionFolder);
+        QList<qint64> updateDevice(QString statiticsRequestSource,
+                                   QString databaseMode,
+                                   bool reportStorageUpdate,
+                                   QString collectionFolder,
+                                   bool includeSubDevices);
         void updateNumbersFromChildren();
         void updateParentsNumbers();
 

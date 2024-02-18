@@ -144,7 +144,13 @@
     void MainWindow::on_Filter_pushButton_Update_clicked()
     {
         //reloads catalog to explore at root level
-            reportAllUpdates(selectedDevice, selectedDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder), "update");
+            reportAllUpdates(selectedDevice,
+                         selectedDevice->updateDevice("update",
+                                                      collection->databaseMode,
+                                                      false,
+                                                      collection->collectionFolder,
+                                                      true),
+                         "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
 

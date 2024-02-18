@@ -137,7 +137,13 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
         {
-            reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,false,collection->collectionFolder), "update");
+            reportAllUpdates(activeDevice,
+                             activeDevice->updateDevice("update",
+                                                        collection->databaseMode,
+                                                        false,
+                                                        collection->collectionFolder,
+                                                        true),
+                             "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
 
@@ -188,7 +194,11 @@
                         loopDevice.ID = ui->Catalogs_treeView_CatalogList->model()->data(ui->Catalogs_treeView_CatalogList->model()->index(row, 15)).toInt();
                         loopDevice.loadDevice();
 
-                        QList<qint64> list = loopDevice.updateDevice("update", collection->databaseMode, false, collection->collectionFolder);
+                        QList<qint64> list = loopDevice.updateDevice("update",
+                                                                     collection->databaseMode,
+                                                                     false,
+                                                                     collection->collectionFolder,
+                                                                     true);
                         if ( showEachCatalogUpdateSummary == true ){
                             reportAllUpdates(&loopDevice, list, "update");
                         }
@@ -820,7 +830,7 @@
     //--------------------------------------------------------------------------
     void MainWindow::saveCatalogChanges(Catalog *previousCatalog)
     {
-        Catalog newCatalog;// = previousCatalog;
+        Catalog newCatalog;
         newCatalog.ID = previousCatalog->ID;
         newCatalog.loadCatalog();
         newCatalog.filePath = previousCatalog->filePath;
@@ -886,7 +896,13 @@
                 if ( updatechoice == QMessageBox::Yes){
                     activeDevice->catalog->name = newCatalog.name;
                     activeDevice->catalog->loadCatalog();
-                    reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
+                    reportAllUpdates(activeDevice,
+                                     activeDevice->updateDevice("update",
+                                                                collection->databaseMode,
+                                                                true,
+                                                                collection->collectionFolder,
+                                                                true),
+                                     "update");
                 }
             }
 
