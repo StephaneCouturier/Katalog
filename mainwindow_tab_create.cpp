@@ -175,6 +175,14 @@
             msgBox.exec();
             return;
         }
+        if (ui->Create_comboBox_StorageSelection->currentText() == ""){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Select a Storage for this new catalog. (Selection panel on the left)<br/>"));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
 
         //Create a new device and catalog
 
