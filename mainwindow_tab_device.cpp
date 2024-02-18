@@ -1365,13 +1365,22 @@ void MainWindow::editDevice()
 //--------------------------------------------------------------------------
 void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
-//DEV: move to object
+
+    //Keep previous path value
+    QString previousPath = activeDevice->path;
+
     //Get the ID of the selected parent
     QVariant selectedData = ui->Devices_comboBox_Parent->currentData();
     activeDevice->parentID = selectedData.toInt();
-
     activeDevice->name = ui->Devices_lineEdit_Name->text();
+
+    //Get new device path: remove the / at the end if any, except for / alone (root directory in linux)
     activeDevice->path = ui->Devices_lineEdit_Path->text();
+    int pathLength = activeDevice->path.length();
+    if (activeDevice->path !="" and activeDevice->path !="/" and QVariant(activeDevice->path.at(pathLength-1)).toString()=="/") {
+         activeDevice->path.remove(pathLength-1,1);
+    }
+    activeDevice->catalog->sourcePath = activeDevice->path;
 
     Device *parentDevice = new Device();
     parentDevice->ID = activeDevice->parentID;
@@ -1421,6 +1430,18 @@ void MainWindow::saveDeviceForm()
         }
 
         activeDevice->catalog->renameCatalogFile(activeDevice->name);
+
+        //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
+        if (activeDevice->path != previousPath)
+        {
+            int updatechoice = QMessageBox::warning(this, "Katalog",
+                                                    tr("Update the catalog contents based on the new path?\n")
+                                                    , QMessageBox::Yes
+                                                        | QMessageBox::No);
+            if ( updatechoice == QMessageBox::Yes){
+                reportAllUpdates(activeDevice, activeDevice->updateDevice("update",collection->databaseMode,true,collection->collectionFolder), "update");
+            }
+        }
     }
 
     //If device is Storage, rename in storage table

@@ -69,7 +69,7 @@
 
             //Load catalog values to the Edit area
             ui->Catalogs_label_NameDisplay->setText(activeDevice->catalog->name);
-            ui->Catalogs_lineEdit_SourcePath->setText(activeDevice->catalog->sourcePath);
+            ui->Catalogs_label_Path->setText(activeDevice->catalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
             ui->Catalogs_label_StorageDisplay->setText(activeDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
@@ -128,7 +128,6 @@
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
         {
             ui->Catalogs_label_NameDisplay->setText(selectedDevice->catalog->name);
-            ui->Catalogs_lineEdit_SourcePath->setText(selectedDevice->catalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedDevice->catalog->fileType);
             ui->Catalogs_label_StorageDisplay->setText(selectedDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedDevice->catalog->includeHidden);
@@ -306,23 +305,6 @@
             }
             else
                 QDesktopServices::openUrl(QUrl::fromLocalFile(selectedDevice->catalog->filePath));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Catalogs_pushButton_SelectPath_clicked()
-        {
-            //Get current selected path as default path for the dialog window
-            QString newCatalogPath = ui->Catalogs_lineEdit_SourcePath->text();
-
-            //Open a dialog for the user to select the directory to be cataloged. Only show directories.
-            QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory to be cataloged in this new catalog"),
-                                                            newCatalogPath,
-                                                            QFileDialog::ShowDirsOnly
-                                                            | QFileDialog::DontResolveSymlinks);
-            //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
-            ui->Catalogs_lineEdit_SourcePath->setText(dir);
-
-            //Select this directory in the treeview.
-            loadFileSystem(newCatalogPath);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
@@ -845,13 +827,6 @@
         newCatalog.sourcePath = previousCatalog->sourcePath;
 
         //Get new values
-            //Get new catalog sourcePath: remove the / at the end if any, except for / alone (root directory in linux)
-                newCatalog.sourcePath = ui->Catalogs_lineEdit_SourcePath->text();
-                int     pathLength              = newCatalog.sourcePath.length();
-                if (newCatalog.sourcePath !="" and newCatalog.sourcePath !="/" and QVariant(newCatalog.sourcePath.at(pathLength-1)).toString()=="/") {
-                    newCatalog.sourcePath.remove(pathLength-1,1);
-                }
-
             //Other values
             newCatalog.fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
             newCatalog.includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();

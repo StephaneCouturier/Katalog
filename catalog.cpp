@@ -431,7 +431,8 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                                             "<br/> The source folder was not found.<br/><b>%2</b><br/>"
                                             "<br/> Possible reasons:<br/>"
                                             "    - the device is not connected and mounted,<br/>"
-                                            "    - the source folder was moved or renamed.").arg(name,sourcePath));
+                                            "    - the source folder was moved or renamed.,<br/>"
+                                            "    - the source folder entered is incorrect.").arg(name,sourcePath));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
 

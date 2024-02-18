@@ -426,7 +426,6 @@ class MainWindow : public QMainWindow
 
             void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
-            void on_Catalogs_pushButton_SelectPath_clicked();
             void on_Catalogs_pushButton_Snapshot_clicked();
 
         //Create
