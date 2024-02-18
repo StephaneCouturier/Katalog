@@ -461,13 +461,33 @@
         {
             //Get values from selection
             QModelIndex index = ui->Search_treeView_FilesFound->currentIndex();
-            QString selectedFileFolder  = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
-            QString selectedFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
+            exploreSelectedFolderFullPath  = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
+            QString selectedResultFileCatalog = ui->Search_treeView_FilesFound->model()->index(index.row(), 4, QModelIndex()).data().toString();
 
-            //Prepare inputs for the Explore
-            selectedDirectoryName = selectedFileFolder.remove(activeDevice->catalog->sourcePath + "/");
+            //Prepare inputs for the Explore tab
 
-            //Open the catalog into the Explore
+            //Get catalog id
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                    SELECT device_id
+                                    FROM device
+                                    WHERE device_name =:device_name
+                                    AND device_type = 'Catalog'
+                                )");
+            query.prepare(querySQL);
+            query.bindValue(":device_name", selectedResultFileCatalog);
+            query.exec();
+            query.next();
+
+            //load device to be used in explore
+            exploreDevice->ID = query.value(0).toInt();
+            exploreDevice->loadDevice();
+
+            //Pass selected directory name
+            exploreSelectedDirectoryName = exploreSelectedFolderFullPath;
+            exploreSelectedDirectoryName.remove(exploreDevice->path + "/");
+
+            //Open the catalog into the Explore tab and display selected directory contents
             openCatalogToExplore();
             ui->tabWidget->setCurrentIndex(2);
         }

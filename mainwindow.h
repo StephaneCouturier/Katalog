@@ -144,6 +144,7 @@ class MainWindow : public QMainWindow
             Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
+            Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
@@ -191,7 +192,6 @@ class MainWindow : public QMainWindow
             QString deleteFile(QString fileFullPath);
 
         //TAB: Catalogs
-
             QStringListModel catalogListModel;
             QStringList catalogFileList;
             QStringList catalogSelectedList;
@@ -217,8 +217,8 @@ class MainWindow : public QMainWindow
             bool reportAllUpdates(Device *device, QList<qint64> list, QString updateType);
 
         //TAB: Explore
-            QString selectedDirectoryName;
-            QString selectedDirectoryFullPath;
+            QString exploreSelectedFolderFullPath;
+            QString exploreSelectedDirectoryName;
 
             void openCatalogToExplore();
             void loadSelectedDirectoryFilesToExplore();

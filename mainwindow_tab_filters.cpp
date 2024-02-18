@@ -128,6 +128,11 @@
     {
         //reloads catalog to explore at root level
         if (selectedDevice->type=="Catalog"){
+            exploreDevice->ID = selectedDevice->ID;
+            exploreDevice->loadDevice();
+
+            exploreSelectedFolderFullPath = exploreDevice->path;
+            exploreSelectedDirectoryName  = exploreDevice->path;
 
             openCatalogToExplore();
 

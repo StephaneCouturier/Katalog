@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-02-10";
+        releaseDate     = "2024-02-18";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -144,9 +144,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
                 selectedDevice->catalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
                 selectedDevice->catalog->loadCatalog();
-                selectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-                selectedDirectoryFullPath = selectedDevice->catalog->sourcePath + "/" + selectedDirectoryName;
-                ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+                exploreSelectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
+                exploreSelectedFolderFullPath = selectedDevice->catalog->sourcePath + "/" + exploreSelectedDirectoryName;
+                ui->Explore_label_CatalogDirectoryDisplay->setText(exploreSelectedDirectoryName);
                 if (selectedDevice->catalog->filePath != ""){
                     openCatalogToExplore();
                 }

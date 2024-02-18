@@ -41,16 +41,16 @@
     void MainWindow::on_Explore_treeview_Directories_clicked(const QModelIndex &index)
     {
         //Get selected directory name
-        QString fullPath    = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
-        selectedDirectoryFullPath = fullPath;
-        selectedDirectoryName = fullPath.remove(selectedDevice->catalog->sourcePath + "/");
+        QString fullPath = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent() ).data().toString();
+        exploreSelectedFolderFullPath = fullPath;
+        exploreSelectedDirectoryName  = fullPath.remove(exploreDevice->path + "/");
 
         //Display selected directory name
-        ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+        ui->Explore_label_CatalogDirectoryDisplay->setText(exploreSelectedDirectoryName);
 
         //Remember selected directory name
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+        settings.setValue("Explore/lastSelectedDirectory", exploreSelectedDirectoryName);
 
         //Load directory files
         loadSelectedDirectoryFilesToExplore();
@@ -70,12 +70,12 @@
         }
         else{
             //openDirectory
-            selectedDirectoryFullPath = selectedFileFolder;
-            selectedDirectoryName     = selectedFileFolder.remove(selectedDevice->path + "/");
+            exploreSelectedFolderFullPath = selectedFileFolder;
+            exploreSelectedDirectoryName = selectedFileFolder.remove(exploreDevice->path + "/");
 
             //Remember selected directory name
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/lastSelectedDirectory", selectedDirectoryName);
+            settings.setValue("Explore/lastSelectedDirectory", exploreSelectedDirectoryName);
 
             //Reload
             loadSelectedDirectoryFilesToExplore();
@@ -448,21 +448,18 @@
         // Start animation while opening
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
-        //Start at the root folder of the catalog
-        selectedDirectoryName     = selectedDevice->path;
-        selectedDirectoryFullPath = selectedDevice->path;
-
         //Check catalog's number of files and confirm load if too big
         if( collection->databaseMode == "Memory"
-            and (selectedDevice->catalog->dateLoaded < selectedDevice->catalog->dateUpdated)){
+            and (exploreDevice->catalog->dateLoaded < exploreDevice->catalog->dateUpdated)){
             QSqlQuery query;
             QString querySQL = QLatin1String(R"(
-                                SELECT catalog_file_count
-                                FROM catalog
-                                WHERE catalog_name=:catalog_name
-                                            )");
+                                    SELECT device_total_file_count
+                                    FROM device
+                                    WHERE device_name=:device_name
+                                    AND device_type ='Catalog'
+                                )");
             query.prepare(querySQL);
-            query.bindValue(":catalog_name",selectedDevice->catalog->name);
+            query.bindValue(":device_name",exploreDevice->name);
             query.exec();
             query.next();
             int selectedcatalogFileCount = query.value(0).toInt();
@@ -482,13 +479,13 @@
 
         //Load folders of the Selected Catalog
             if( collection->databaseMode == "Memory")
-                selectedDevice->catalog->loadFoldersToTable();
+                exploreDevice->catalog->loadFoldersToTable();
 
             loadCatalogDirectoriesToExplore();
 
         //Load the files of the Selected Catalog
             if( collection->databaseMode == "Memory")
-                selectedDevice->catalog->loadCatalogFileListToTable();
+                exploreDevice->catalog->loadCatalogFileListToTable();
 
             loadSelectedDirectoryFilesToExplore();
 
@@ -496,15 +493,15 @@
             loadCatalogsTableToModel();
 
         //Go to the Explorer tab
-        ui->Explore_label_CatalogNameDisplay->setText(selectedDevice->catalog->name);
-        ui->Explore_label_CatalogPathDisplay->setText(selectedDevice->path);
+        ui->Explore_label_CatalogNameDisplay->setText(exploreDevice->name);
+        ui->Explore_label_CatalogPathDisplay->setText(exploreDevice->path);
 
         //Remember last opened catalog
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedCatalogFile", selectedDevice->catalog->filePath);
-        settings.setValue("Explore/lastSelectedCatalogName", selectedDevice->catalog->name);
-        settings.setValue("Explore/lastSelectedCatalogPath", selectedDevice->path);
-        settings.setValue("Explore/lastSelectedDirectory",   selectedDevice->path);
+        settings.setValue("Explore/lastSelectedCatalogFile", exploreDevice->path);
+        settings.setValue("Explore/lastSelectedCatalogName", exploreDevice->name);
+        settings.setValue("Explore/lastSelectedCatalogPath", exploreDevice->path);
+        settings.setValue("Explore/lastSelectedDirectory",   exploreDevice->path);
 
         //Stop animation
         QApplication::restoreOverrideCursor();
@@ -516,7 +513,7 @@
 
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
-            exploreTreeModel->setCatalog(selectedDevice->name, selectedDevice->path);
+            exploreTreeModel->setCatalog(exploreDevice->name, exploreDevice->path);
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);
@@ -540,14 +537,14 @@
                                )");
             QSqlQuery countQuery;
             countQuery.prepare(countSQL);
-            countQuery.bindValue(":folder_catalog_name", selectedDevice->name);
+            countQuery.bindValue(":folder_catalog_name", exploreDevice->name);
             countQuery.exec();
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSelectedDirectoryFilesToExplore()
-    {//Load the files of the selected directory into the file view
+    {//Load the files of the exploreDevice and selected directory into the file view
 
         //Load all files and create model
         QString selectSQL;
@@ -603,30 +600,29 @@
                                     ORDER BY order_value ASC
                                 )");
 
-
-        if( selectedDevice->path == "EXPORT" ){
-            selectedDirectoryFullPath.remove("EXPORT");
+        if( exploreDevice->path == "EXPORT" ){
+            exploreSelectedFolderFullPath.remove("EXPORT");
         }
 
         QSqlQuery loadCatalogQuery;
         loadCatalogQuery.prepare(selectSQL);
-        loadCatalogQuery.bindValue(":folder_catalog_name", selectedDevice->catalog->name);
+        loadCatalogQuery.bindValue(":folder_catalog_name", exploreDevice->name);
 
         // fill lists depending on directory selection source
-        loadCatalogQuery.bindValue(":file_catalog", selectedDevice->catalog->name);
+        loadCatalogQuery.bindValue(":file_catalog", exploreDevice->name);
 
-        if(selectedDevice->path == selectedDirectoryName){
-            loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryName);
-            loadCatalogQuery.bindValue(":selectedCatalogPath", selectedDirectoryName);
+        if(exploreDevice->path == exploreSelectedDirectoryName){
+            loadCatalogQuery.bindValue(":file_folder_path",exploreSelectedDirectoryName);
+            loadCatalogQuery.bindValue(":selectedCatalogPath", exploreSelectedDirectoryName);
             //loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
         }
         else{
-            loadCatalogQuery.bindValue(":file_folder_path",selectedDirectoryFullPath);
-            loadCatalogQuery.bindValue(":selectedCatalogPath", selectedDirectoryFullPath);
+            loadCatalogQuery.bindValue(":file_folder_path", exploreSelectedFolderFullPath);
+            loadCatalogQuery.bindValue(":selectedCatalogPath", exploreSelectedFolderFullPath);
             //loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
         }
 
-        loadCatalogQuery.bindValue(":selected_directory_full_path",selectedDirectoryFullPath);
+        loadCatalogQuery.bindValue(":selected_directory_full_path", exploreSelectedFolderFullPath);
         loadCatalogQuery.exec();
 
         QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
@@ -650,6 +646,7 @@
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
         else
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(6,Qt::AscendingOrder);
+
         ui->Explore_treeView_FileList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Explore_treeView_FileList->header()->resizeSection(0, 600); //Name
         ui->Explore_treeView_FileList->header()->resizeSection(1, 110); //Size
@@ -668,19 +665,19 @@
                                 WHERE   file_catalog =:file_catalog
                            )");
 
-        if (selectedDirectoryName!=""){
+        if (exploreSelectedDirectoryName!=""){
             countSQL = countSQL + " AND file_folder_path =:file_folder_path";
         }
 
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":file_catalog", selectedDevice->catalog->name);
+        countQuery.bindValue(":file_catalog", exploreDevice->name);
 
-        if(selectedDevice->path == selectedDirectoryName){
-            countQuery.bindValue(":file_folder_path",selectedDirectoryName);
+        if(exploreDevice->path == exploreSelectedDirectoryName){
+            countQuery.bindValue(":file_folder_path",exploreSelectedDirectoryName);
         }
         else{
-            countQuery.bindValue(":file_folder_path",selectedDirectoryFullPath);
+            countQuery.bindValue(":file_folder_path", exploreSelectedFolderFullPath);
         }
 
         countQuery.exec();
@@ -688,6 +685,6 @@
 
         ui->Explore_label_FilesNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
         ui->Explore_label_TotalSizeLabelDisplay->setText(QLocale().formattedDataSize(countQuery.value(1).toLongLong()));
-        ui->Explore_label_CatalogDirectoryDisplay->setText(selectedDirectoryName);
+        ui->Explore_label_CatalogDirectoryDisplay->setText(exploreSelectedDirectoryName);
     }
     //----------------------------------------------------------------------
