@@ -80,10 +80,21 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
         {
-            //The activeDevice becomes the selectedDevice
+            //The activeDevice becomes the selectedDevice and exploreDevice
+            displaySelectedDeviceName();
             selectedDevice->ID = activeDevice->ID;
             selectedDevice->loadDevice();
-            displaySelectedDeviceName();
+            exploreDevice->ID = activeDevice->ID;
+            exploreDevice->loadDevice();
+
+            exploreSelectedFolderFullPath = exploreDevice->path;
+            exploreSelectedDirectoryName  = exploreDevice->path;
+
+            openCatalogToExplore();
+
+            //Go to explore tab
+            ui->tabWidget->setCurrentIndex(2);
+
 
             //Load
             openCatalogToExplore();
