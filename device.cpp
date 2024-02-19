@@ -406,6 +406,37 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         parentDevice.loadDevice();
         deviceUpdatesList << parentDevice.storage->updateStorageInfo(reportStorageUpdate);
         parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
+
+        //Update other catalog devices using the same catalog
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT device_id
+                                    FROM device
+                                    WHERE device_external_id =:device_external_id
+                                    AND device_type = 'Catalog'
+                                    AND device_id !=:device_id
+                                )");
+        query.prepare(querySQL);
+        query.bindValue(":device_external_id", externalID);
+        query.bindValue(":device_id",ID);
+        query.exec();
+        //qDebug()<<query.lastError();
+        while(query.next()){
+            //qDebug()<<<<query.value(1).toString();
+            Device relatedDevice;
+            relatedDevice.ID = query.value(0).toInt();
+            qDebug()<<"relatedDevice.ID: "<<relatedDevice.ID;
+
+            relatedDevice.loadDevice();
+            relatedDevice.totalFileCount = totalFileCount;
+            relatedDevice.totalFileSize  = totalFileSize;
+            relatedDevice.saveDevice();
+            parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
+        }
+
+
+
+
     }
 
     else if (type=="Storage"){
