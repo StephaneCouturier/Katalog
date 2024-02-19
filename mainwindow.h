@@ -203,7 +203,7 @@ class MainWindow : public QMainWindow
             void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
             void convertCatalog(QString catalogSourcePath);
-            void backupCatalogFile(QString catalogSourcePath);
+            void backupFile(QString filePath);
             void hideCatalogButtons();
             void saveCatalogChanges(Catalog *catalog);
 

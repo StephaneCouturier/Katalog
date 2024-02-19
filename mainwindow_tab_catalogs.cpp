@@ -529,18 +529,18 @@
         ui->Catalogs_label_TotalNumber->setText(QLocale().toString(querySumCatalogValues.value(2).toInt()));
     }
     //--------------------------------------------------------------------------
-    void MainWindow::backupCatalogFile(QString catalogSourcePath)
-    {
-        QString catalogBackUpSourcePath = catalogSourcePath + ".bak";
+    void MainWindow::backupFile(QString filePath)
+    {//Copy the file to the same location, adding .bak for the new file name.
+        QString targetFilePath = filePath + ".bak";
 
         //Verify if a bak up file already exist and remove it.
-        if (QFile::exists(catalogBackUpSourcePath))
+        if (QFile::exists(targetFilePath))
         {
-            QFile::remove(catalogBackUpSourcePath);
+            QFile::remove(targetFilePath);
         }
 
-        //Copy the file to the same location, adding .bak for the new file name.
-        QFile::copy(catalogSourcePath, catalogBackUpSourcePath);
+        //Copy
+        QFile::copy(filePath, targetFilePath);
     }
     //--------------------------------------------------------------------------
     void MainWindow::importFromVVV()

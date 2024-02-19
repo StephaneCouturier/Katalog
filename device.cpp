@@ -425,18 +425,12 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //qDebug()<<<<query.value(1).toString();
             Device relatedDevice;
             relatedDevice.ID = query.value(0).toInt();
-            qDebug()<<"relatedDevice.ID: "<<relatedDevice.ID;
-
             relatedDevice.loadDevice();
             relatedDevice.totalFileCount = totalFileCount;
             relatedDevice.totalFileSize  = totalFileSize;
             relatedDevice.saveDevice();
             parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
         }
-
-
-
-
     }
 
     else if (type=="Storage"){

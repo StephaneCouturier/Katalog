@@ -226,7 +226,10 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             //BackUp the file before, if the option is selected
-            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){ backupCatalogFile(activeDevice->catalog->filePath); }
+            if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
+                backupFile(activeDevice->catalog->filePath);
+            }
+            //Update and report
             reportAllUpdates(activeDevice,
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
@@ -234,6 +237,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                                                         collection->collectionFolder,
                                                         true),
                              "update");
+            //Refresh
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
             loadDeviceTableToTreeModel();
