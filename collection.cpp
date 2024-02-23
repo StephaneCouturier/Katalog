@@ -740,13 +740,17 @@ void Collection::insertPhysicalStorageGroup() {
 
 void Collection::deleteCatalogFile(Device *device) {
     if(databaseMode=="Memory"){
-        //DEV: move to object
-
-        //move file to trash
+        //Move file to trash
         if ( device->catalog->filePath != ""){
 
             QFile file (device->catalog->filePath);
             file.moveToTrash();
+
+            QString foldersFilePath = device->catalog->filePath;
+            foldersFilePath.chop(4);
+            foldersFilePath +=".folders.idx";
+            QFile foldersFile (foldersFilePath);
+            foldersFile.moveToTrash();
         }
         else{
             QMessageBox msgBox;

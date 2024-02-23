@@ -122,7 +122,7 @@ private:
     QList<QString> fileDateTimes;
     QList<QString> fileCatalogs;
 
-    void getFileTypes();
+    void getFileExtensions();
 
 };
 

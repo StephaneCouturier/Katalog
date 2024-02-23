@@ -330,7 +330,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Save_clicked()
         {
-            saveCatalogChanges(activeDevice->catalog);
+            saveCatalogChanges();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Snapshot_clicked()
@@ -839,43 +839,39 @@
         loadCollection();
     }
     //--------------------------------------------------------------------------
-    void MainWindow::saveCatalogChanges(Catalog *previousCatalog)
+    void MainWindow::saveCatalogChanges()
     {
-        Catalog newCatalog;
-        newCatalog.ID = previousCatalog->ID;
-        newCatalog.loadCatalog();
-        newCatalog.filePath = previousCatalog->filePath;
-        newCatalog.sourcePath = previousCatalog->sourcePath;
+        Device previousCatalog;
+        previousCatalog.ID = activeDevice->ID;
+        previousCatalog.loadDevice();
 
         //Get new values
             //Other values
-            newCatalog.fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-            newCatalog.includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
-            newCatalog.includeMetadata  = ui->Catalogs_checkBox_IncludeMetadata->isChecked();
-            newCatalog.isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
+            activeDevice->catalog->fileType         = ui->Catalogs_comboBox_FileType->itemData(ui->Catalogs_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+            activeDevice->catalog->includeHidden    = ui->Catalogs_checkBox_IncludeHidden->isChecked();
+            activeDevice->catalog->includeMetadata  = ui->Catalogs_checkBox_IncludeMetadata->isChecked();
+            activeDevice->catalog->isFullDevice     = ui->Catalogs_checkBox_isFullDevice->checkState();
             //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
         //Confirm save changes
             QString message = tr("Save changes to the definition of the catalog?<br/>");
             message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
 
-            if(newCatalog.sourcePath     != previousCatalog->sourcePath)
-                message = message + "<tr><td>" + tr("Source path ") + "</td><td>" + previousCatalog->sourcePath   + "</td><td><b>" + newCatalog.sourcePath    + "</b></td></tr>";
-            if(newCatalog.fileType       !=previousCatalog->fileType)
-                message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog->fileType     + "</td><td><b>" + newCatalog.fileType      + "</b></td></tr>";
-            if(newCatalog.includeHidden  != previousCatalog->includeHidden)
-                message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog->includeHidden).toString()   + "</td><td><b>" + QVariant(newCatalog.includeHidden).toString()   + "</b></td></tr>";
-            if(newCatalog.includeMetadata  != previousCatalog->includeMetadata)
-                message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog->includeMetadata).toString() + "</td><td><b>" + QVariant(newCatalog.includeMetadata).toString() + "</b></td></tr>";
-            if(newCatalog.isFullDevice  != previousCatalog->isFullDevice)
-                message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog->isFullDevice).toString() + "</td><td><b>" + QVariant(newCatalog.isFullDevice).toString() + "</b></td></tr>";
+           if(activeDevice->catalog->fileType       !=previousCatalog.catalog->fileType)
+                message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog.catalog->fileType     + "</td><td><b>" + activeDevice->catalog->fileType      + "</b></td></tr>";
+            if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden)
+                message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog.catalog->includeHidden).toString()   + "</td><td><b>" + QVariant(activeDevice->catalog->includeHidden).toString()   + "</b></td></tr>";
+            if(activeDevice->catalog->includeMetadata  != previousCatalog.catalog->includeMetadata)
+                message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog.catalog->includeMetadata).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->includeMetadata).toString() + "</b></td></tr>";
+            if(activeDevice->catalog->isFullDevice  != previousCatalog.catalog->isFullDevice)
+                message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog.catalog->isFullDevice).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->isFullDevice).toString() + "</b></td></tr>";
 
             message = message + "</table>";
 
-            if(    (newCatalog.sourcePath       !=previousCatalog->sourcePath)
-                or (newCatalog.fileType         !=previousCatalog->fileType)
-                or (newCatalog.includeHidden    !=previousCatalog->includeHidden)
-                or (newCatalog.includeMetadata  !=previousCatalog->includeMetadata))
+            if(    (activeDevice->catalog->sourcePath       !=previousCatalog.catalog->sourcePath)
+                or (activeDevice->catalog->fileType         !=previousCatalog.catalog->fileType)
+                or (activeDevice->catalog->includeHidden    !=previousCatalog.catalog->includeHidden)
+                or (activeDevice->catalog->includeMetadata  !=previousCatalog.catalog->includeMetadata))
             {
                     message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
             }
@@ -886,26 +882,25 @@
             }
 
         //Write all changes to database (except change of name)
-            newCatalog.saveCatalog();
+            activeDevice->catalog->saveCatalog();
 
         //Write changes to catalog file (update headers only)
-            newCatalog.updateCatalogFileHeaders(collection->databaseMode);
+            activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
 
         //Refresh display
         loadCatalogsTableToModel();
 
         //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-            if (       newCatalog.sourcePath      != previousCatalog->sourcePath
-                    or newCatalog.includeHidden   != previousCatalog->includeHidden
-                    or newCatalog.includeMetadata != previousCatalog->includeMetadata
-                    or newCatalog.fileType        != previousCatalog->fileType)
+            if (       activeDevice->catalog->sourcePath      != previousCatalog.catalog->sourcePath
+                    or activeDevice->catalog->includeHidden   != previousCatalog.catalog->includeHidden
+                    or activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata
+                    or activeDevice->catalog->fileType        != previousCatalog.catalog->fileType)
             {
                 int updatechoice = QMessageBox::warning(this, "Katalog",
                                     tr("Update the catalog content with the new criteria?\n")
                                          , QMessageBox::Yes
                                                   | QMessageBox::No);
                 if ( updatechoice == QMessageBox::Yes){
-                    activeDevice->catalog->name = newCatalog.name;
                     activeDevice->catalog->loadCatalog();
                     reportAllUpdates(activeDevice,
                                      activeDevice->updateDevice("update",

@@ -261,17 +261,17 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
             });
         }
+        else{
+            QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this catalog"), this);
+            deviceContextMenu.addAction(menuDeviceAction4);
+
+            connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
 
 
-        QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this catalog"), this);
-        deviceContextMenu.addAction(menuDeviceAction4);
+                deleteDeviceItem();
 
-        connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
-
-
-            deleteDeviceItem();
-
-        });
+            });
+        }
 
         deviceContextMenu.exec(globalPos);
     }
@@ -740,12 +740,6 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 void MainWindow::deleteDeviceItem()
 {
     activeDevice->deleteDevice(true);
-
-    activeDevice->updateDevice("delete",
-                               collection->databaseMode,
-                               false,
-                               collection->collectionFolder,
-                               false);
 
     Device parentDevice;
     parentDevice.ID = activeDevice->parentID;
@@ -1424,8 +1418,7 @@ void MainWindow::saveDeviceForm()
     if(parentDevice->ID == 0) //If the new parent is root, the group_id should be 1 (0 is reserved for the Physical group)
         newGroupID=1;
 
-    //Save device
-    activeDevice->saveDevice();
+
 
     //Also change the group_id of sub-devices
     Device *loopDevice = new Device();
@@ -1437,6 +1430,10 @@ void MainWindow::saveDeviceForm()
             loopDevice->saveDevice();
         }
     }
+
+    //Save device
+    activeDevice->groupID = newGroupID;
+    activeDevice->saveDevice();
 
     //If device is a catalog, rename in catalog table
     if(activeDevice->type == "Catalog"){
