@@ -1,0 +1,31 @@
+QTabWidget            { padding: 0px; margin: 0px; background-color: #095676; }
+QTabWidget::tab-bar   { left: 0px; height: 38px; }
+
+QTabBar               { background:  url(:images/Appname_Logo.png) no-repeat right; background-color: #0D79A6;
+                        border-top-left-radius:   3px;
+                        border-top-right-radius: 3px; border-bottom: 0px solid #C2C7CB;
+                      }
+QTabBar::pane         { border-bottom: 0px solid #C2C7CB; }
+
+QTabBar:tab:first     { margin-left:  6px; }
+QTabBar::tab          { background-color: #0D79A6; color: #FFF;    
+                        padding-top: 3px; padding-bottom: 6px; padding-left:  6px; padding-right: 10px;
+                        margin-top: 6px; margin-bottom: 0px; 
+                        border-top-left-radius:   3px;
+                        border-top-right-radius: 3px;
+}
+
+QTabBar::tab::hover   { background-color: #095676; color: #FFF; }
+
+QTabBar::tab:selected { background-color: #eff0f1; color: #000;}
+
+QTabBar::tab:!selected{  }
+
+QLabel                { color: #095676; }
+
+QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;}
+QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}
+QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}
+
+QComboBox             { padding: 0px 0px; margin: 0px; }
+QComboBox             { padding-left: 6px; }

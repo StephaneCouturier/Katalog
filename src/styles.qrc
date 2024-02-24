@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>styles/tabwidget_dev.css</file>
+        <file>styles/tabwidget_blue.css</file>
+    </qresource>
+</RCC>

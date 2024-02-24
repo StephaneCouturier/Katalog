@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/Appname_Logo.png</file>
+        <file>images/Katalog_logo_64.ico</file>
+        <file>images/link-h.png</file>
+        <file>images/link-tree-end.png</file>
+        <file>images/link-tree-mid.png</file>
+        <file>images/link-v.png</file>
+        <file>images/link_blue/link-h.png</file>
+        <file>images/link_blue/link-tree-end.png</file>
+        <file>images/link_blue/link-tree-mid.png</file>
+        <file>images/link_blue/link-v.png</file>
+        <file>images/flags/fr.png</file>
+        <file>images/flags/us.png</file>
+        <file>images/flags/cz.png</file>
+        <file>images/flags/de.png</file>
+        <file>images/Banner.png</file>
+        <file>images/drive_blue.png</file>
+        <file>images/drive_green.png</file>
+        <file>images/drive_orange.png</file>
+        <file>images/drive_gray.png</file>
+        <file>images/screenshots/Virtual_screen.png</file>
+        <file>images/screenshots/Filters_catalogs_storage.png</file>
+        <file>images/screenshots/Filters_catalogs_virtual.png</file>
+        <file>images/screenshots/Filters_connecteddrives.png</file>
+    </qresource>
+</RCC>
