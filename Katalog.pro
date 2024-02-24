@@ -85,6 +85,36 @@ SOURCES += \
     mainwindow_tab_storage.cpp \
     mainwindow_tab_tags.cpp \
     search.cpp \
+    src/catalog.cpp \
+    src/catalogsview.cpp \
+    src/collection.cpp \
+    src/device.cpp \
+    src/devicetreeview.cpp \
+    src/directorytreeitem.cpp \
+    src/directorytreemodel.cpp \
+    src/exploretreeitem.cpp \
+    src/exploretreemodel.cpp \
+    src/exploretreeview.cpp \
+    src/filesview.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/mainwindow_setup.cpp \
+    src/mainwindow_tab_catalogs.cpp \
+    src/mainwindow_tab_create.cpp \
+    src/mainwindow_tab_device.cpp \
+    src/mainwindow_tab_explore.cpp \
+    src/mainwindow_tab_filters.cpp \
+    src/mainwindow_tab_search.cpp \
+    src/mainwindow_tab_settings.cpp \
+    src/mainwindow_tab_statistics.cpp \
+    src/mainwindow_tab_storage.cpp \
+    src/mainwindow_tab_tags.cpp \
+    src/search.cpp \
+    src/storage.cpp \
+    src/storagetreeitem.cpp \
+    src/storagetreemodel.cpp \
+    src/storageview.cpp \
+    src/tag.cpp \
     storage.cpp \
     storagetreeitem.cpp \
     storagetreemodel.cpp \
@@ -106,6 +136,25 @@ HEADERS += \
     filesview.h \
     mainwindow.h \
     search.h \
+    src/catalog.h \
+    src/catalogsview.h \
+    src/collection.h \
+    src/database.h \
+    src/device.h \
+    src/devicetreeview.h \
+    src/directorytreeitem.h \
+    src/directorytreemodel.h \
+    src/exploretreeitem.h \
+    src/exploretreemodel.h \
+    src/exploretreeview.h \
+    src/filesview.h \
+    src/mainwindow.h \
+    src/search.h \
+    src/storage.h \
+    src/storagetreeitem.h \
+    src/storagetreemodel.h \
+    src/storageview.h \
+    src/tag.h \
     storage.h \
     storagetreeitem.h \
     storagetreemodel.h \
@@ -113,9 +162,14 @@ HEADERS += \
     tag.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    src/mainwindow.ui
 
 TRANSLATIONS += \
+    src/translations/Katalog_cz_CZ.ts \
+    src/translations/Katalog_de_DE.ts \
+    src/translations/Katalog_en_US.ts \
+    src/translations/Katalog_fr_FR.ts \
     translations/Katalog_de_DE.ts \
     translations/Katalog_en_US.ts \
     translations/Katalog_fr_FR.ts \
@@ -131,10 +185,104 @@ TRANSLATIONS += \
 RESOURCES += \
     icons.qrc \
     images.qrc \
+    src/Resources.qrc \
+    src/icons.qrc \
+    src/images.qrc \
+    src/styles.qrc \
+    src/translations.qrc \
     styles.qrc \
     translations.qrc
 
-DISTFILES +=
+DISTFILES += \
+    docs/github_pages/README.md \
+    docs/github_pages/background.jpg \
+    docs/github_pages/index.html \
+    docs/github_pages/logo.jpg \
+    docs/github_pages/script.js \
+    docs/github_pages/style.css \
+    docs/images/Appname_Logo.png \
+    docs/images/Banner.png \
+    docs/images/Katalog_logo_64.ico \
+    docs/images/drive_blue.png \
+    docs/images/drive_gray.png \
+    docs/images/drive_green.png \
+    docs/images/drive_orange.png \
+    docs/images/flags/cz.png \
+    docs/images/flags/de.png \
+    docs/images/flags/fr.png \
+    docs/images/flags/us.png \
+    docs/images/link-h.png \
+    docs/images/link-tree-end.png \
+    docs/images/link-tree-mid.png \
+    docs/images/link-v.png \
+    docs/images/link_blue/link-h.png \
+    docs/images/link_blue/link-tree-end.png \
+    docs/images/link_blue/link-tree-mid.png \
+    docs/images/link_blue/link-v.png \
+    docs/images/screenshots/Filters_catalogs_storage.png \
+    docs/images/screenshots/Filters_catalogs_virtual.png \
+    docs/images/screenshots/Filters_connecteddrives.png \
+    docs/images/screenshots/Virtual_screen.png \
+    src/LICENSE.md \
+    src/README.md \
+    src/fallback-icons/address-book-new.png \
+    src/fallback-icons/application-x-zerosize.png \
+    src/fallback-icons/audio-x-mpeg.png \
+    src/fallback-icons/collapse-all.png \
+    src/fallback-icons/configure.png \
+    src/fallback-icons/dialog-ok-apply.png \
+    src/fallback-icons/document-edit-sign.png \
+    src/fallback-icons/document-edit.png \
+    src/fallback-icons/document-export.png \
+    src/fallback-icons/document-new.png \
+    src/fallback-icons/document-open.png \
+    src/fallback-icons/document-preview-archive.png \
+    src/fallback-icons/document-save.png \
+    src/fallback-icons/drive-harddisk-root.png \
+    src/fallback-icons/drive-harddisk.png \
+    src/fallback-icons/drive-multidisk.png \
+    src/fallback-icons/edit-clear-history.png \
+    src/fallback-icons/edit-copy.png \
+    src/fallback-icons/edit-delete.png \
+    src/fallback-icons/edit-download.png \
+    src/fallback-icons/edit-find.png \
+    src/fallback-icons/edit-paste-in-place.png \
+    src/fallback-icons/edit-paste.png \
+    src/fallback-icons/edit-select.png \
+    src/fallback-icons/expand-all.png \
+    src/fallback-icons/folder-new.png \
+    src/fallback-icons/folder.png \
+    src/fallback-icons/format-convert-to-path.png \
+    src/fallback-icons/go-down.png \
+    src/fallback-icons/go-next.png \
+    src/fallback-icons/go-previous.png \
+    src/fallback-icons/go-up.png \
+    src/fallback-icons/gparted.png \
+    src/fallback-icons/image-jpeg.png \
+    src/fallback-icons/internet-web-browser.png \
+    src/fallback-icons/journal-new.png \
+    src/fallback-icons/kontact-import-wizard.png \
+    src/fallback-icons/media-optical-blu-ray.png \
+    src/fallback-icons/media-optical.png \
+    src/fallback-icons/media-playlist-repeat.png \
+    src/fallback-icons/office-chart-line.png \
+    src/fallback-icons/tag.png \
+    src/fallback-icons/tools-wizard.png \
+    src/fallback-icons/user-trash.png \
+    src/fallback-icons/video-mp4.png \
+    src/fallback-icons/view-filter.png \
+    src/fallback-icons/view-list-text.png \
+    src/fallback-icons/view-list-tree.png \
+    src/fallback-icons/view-media-playlist.png \
+    src/fallback-icons/view-refresh.png \
+    src/fallback-icons/view-statistics.png \
+    src/fallback-icons/xml-node-duplicate.png \
+    src/styles/tabwidget_blue.css \
+    src/styles/tabwidget_dev.css \
+    src/translations/Katalog_cz_CZ.qm \
+    src/translations/Katalog_de_DE.qm \
+    src/translations/Katalog_en_US.qm \
+    src/translations/Katalog_fr_FR.qm
 
 #For executable icon under Windows
 RC_ICONS = images/Katalog_logo_64.ico
