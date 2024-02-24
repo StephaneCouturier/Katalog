@@ -60,31 +60,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    catalog.cpp \
-    catalogsview.cpp \
-    collection.cpp \
-    device.cpp \
-    devicetreeview.cpp \
-    directorytreeitem.cpp \
-    directorytreemodel.cpp \
-    exploretreeitem.cpp \
-    exploretreemodel.cpp \
-    exploretreeview.cpp \
-    filesview.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    mainwindow_setup.cpp \
-    mainwindow_tab_catalogs.cpp \
-    mainwindow_tab_create.cpp \
-    mainwindow_tab_device.cpp \
-    mainwindow_tab_explore.cpp \
-    mainwindow_tab_filters.cpp \
-    mainwindow_tab_search.cpp \
-    mainwindow_tab_settings.cpp \
-    mainwindow_tab_statistics.cpp \
-    mainwindow_tab_storage.cpp \
-    mainwindow_tab_tags.cpp \
-    search.cpp \
     src/catalog.cpp \
     src/catalogsview.cpp \
     src/collection.cpp \
@@ -114,28 +89,9 @@ SOURCES += \
     src/storagetreeitem.cpp \
     src/storagetreemodel.cpp \
     src/storageview.cpp \
-    src/tag.cpp \
-    storage.cpp \
-    storagetreeitem.cpp \
-    storagetreemodel.cpp \
-    storageview.cpp \
-    tag.cpp
+    src/tag.cpp
 
 HEADERS += \
-    catalog.h \
-    catalogsview.h \
-    collection.h \
-    database.h \
-    device.h \
-    devicetreeview.h \
-    directorytreeitem.h \
-    directorytreemodel.h \
-    exploretreeitem.h \
-    exploretreemodel.h \
-    exploretreeview.h \
-    filesview.h \
-    mainwindow.h \
-    search.h \
     src/catalog.h \
     src/catalogsview.h \
     src/collection.h \
@@ -155,25 +111,16 @@ HEADERS += \
     src/storagetreemodel.h \
     src/storageview.h \
     src/tag.h \
-    storage.h \
-    storagetreeitem.h \
-    storagetreemodel.h \
-    storageview.h \
-    tag.h
+    src/tag.h
 
 FORMS += \
-    mainwindow.ui \
     src/mainwindow.ui
 
 TRANSLATIONS += \
-    src/translations/Katalog_cz_CZ.ts \
     src/translations/Katalog_de_DE.ts \
     src/translations/Katalog_en_US.ts \
     src/translations/Katalog_fr_FR.ts \
-    translations/Katalog_de_DE.ts \
-    translations/Katalog_en_US.ts \
-    translations/Katalog_fr_FR.ts \
-    translations/Katalog_cz_CZ.ts
+    src/translations/Katalog_cz_CZ.ts
 
 # Default rules for deployment.
 #qnx: target.path = /tmp/$${TARGET}/bin
@@ -183,15 +130,11 @@ TRANSLATIONS += \
 #TARGET = Katalog.bin
 
 RESOURCES += \
-    icons.qrc \
-    images.qrc \
-    src/Resources.qrc \
     src/icons.qrc \
     src/images.qrc \
+    src/Resources.qrc \
     src/styles.qrc \
-    src/translations.qrc \
-    styles.qrc \
-    translations.qrc
+    src/translations.qrc
 
 DISTFILES += \
     docs/github_pages/README.md \
@@ -200,29 +143,29 @@ DISTFILES += \
     docs/github_pages/logo.jpg \
     docs/github_pages/script.js \
     docs/github_pages/style.css \
-    docs/images/Appname_Logo.png \
-    docs/images/Banner.png \
-    docs/images/Katalog_logo_64.ico \
-    docs/images/drive_blue.png \
-    docs/images/drive_gray.png \
-    docs/images/drive_green.png \
-    docs/images/drive_orange.png \
-    docs/images/flags/cz.png \
-    docs/images/flags/de.png \
-    docs/images/flags/fr.png \
-    docs/images/flags/us.png \
-    docs/images/link-h.png \
-    docs/images/link-tree-end.png \
-    docs/images/link-tree-mid.png \
-    docs/images/link-v.png \
-    docs/images/link_blue/link-h.png \
-    docs/images/link_blue/link-tree-end.png \
-    docs/images/link_blue/link-tree-mid.png \
-    docs/images/link_blue/link-v.png \
-    docs/images/screenshots/Filters_catalogs_storage.png \
-    docs/images/screenshots/Filters_catalogs_virtual.png \
-    docs/images/screenshots/Filters_connecteddrives.png \
-    docs/images/screenshots/Virtual_screen.png \
+    src/images/Appname_Logo.png \
+    src/images/Banner.png \
+    src/images/Katalog_logo_64.ico \
+    src/images/drive_blue.png \
+    src/images/drive_gray.png \
+    src/images/drive_green.png \
+    src/images/drive_orange.png \
+    src/images/flags/cz.png \
+    src/images/flags/de.png \
+    src/images/flags/fr.png \
+    src/images/flags/us.png \
+    src/images/link-h.png \
+    src/images/link-tree-end.png \
+    src/images/link-tree-mid.png \
+    src/images/link-v.png \
+    src/images/link_blue/link-h.png \
+    src/images/link_blue/link-tree-end.png \
+    src/images/link_blue/link-tree-mid.png \
+    src/images/link_blue/link-v.png \
+    src/images/screenshots/Filters_catalogs_storage.png \
+    src/images/screenshots/Filters_catalogs_virtual.png \
+    src/images/screenshots/Filters_connecteddrives.png \
+    src/images/screenshots/Virtual_screen.png \
     src/LICENSE.md \
     src/README.md \
     src/fallback-icons/address-book-new.png \
@@ -285,5 +228,5 @@ DISTFILES += \
     src/translations/Katalog_fr_FR.qm
 
 #For executable icon under Windows
-RC_ICONS = images/Katalog_logo_64.ico
-ICON = images/Katalog_logo_64.ico
+RC_ICONS = src/images/Katalog_logo_64.ico
+ICON = src/images/Katalog_logo_64.ico
