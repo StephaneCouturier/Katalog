@@ -137,12 +137,12 @@ RESOURCES += \
     src/translations.qrc
 
 DISTFILES += \
-    docs/github_pages/README.md \
-    docs/github_pages/background.jpg \
-    docs/github_pages/index.html \
-    docs/github_pages/logo.jpg \
-    docs/github_pages/script.js \
-    docs/github_pages/style.css \
+    docs/README.md \
+    docs/background.jpg \
+    docs/index.html \
+    docs/logo.jpg \
+    docs/script.js \
+    docs/style.css \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
