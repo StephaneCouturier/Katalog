@@ -322,9 +322,6 @@ class MainWindow : public QMainWindow
             void on_Filters_checkBox_SearchInCatalogs_toggled(bool checked);
             void on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked);
 
-            void on_Filter_pushButton_Search_clicked();
-            void on_Filter_pushButton_Explore_clicked();
-            void on_Filter_pushButton_Update_clicked();
             void on_Filters_pushButton_TreeExpandCollapse_clicked();
             void on_Filters_treeView_Devices_clicked(const QModelIndex &index);
             void on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos);

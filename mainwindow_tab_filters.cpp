@@ -118,46 +118,6 @@
 //FILTERS / Device tree ----------------------------------------------------
 
     // Top buttons ---------------------------------------------------------
-    void MainWindow::on_Filter_pushButton_Search_clicked()
-    {
-        //Go to search tab
-        ui->tabWidget->setCurrentIndex(0);
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filter_pushButton_Explore_clicked()
-    {
-        //reloads catalog to explore at root level
-        if (selectedDevice->type=="Catalog"){
-            exploreDevice->ID = selectedDevice->ID;
-            exploreDevice->loadDevice();
-
-            exploreSelectedFolderFullPath = exploreDevice->path;
-            exploreSelectedDirectoryName  = exploreDevice->path;
-
-            openCatalogToExplore();
-
-            //Go to explore tab
-            ui->tabWidget->setCurrentIndex(2);
-        }
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::on_Filter_pushButton_Update_clicked()
-    {
-        //reloads catalog to explore at root level
-            reportAllUpdates(selectedDevice,
-                         selectedDevice->updateDevice("update",
-                                                      collection->databaseMode,
-                                                      false,
-                                                      collection->collectionFolder,
-                                                      true),
-                         "update");
-            collection->saveDeviceTableToFile();
-            collection->saveStatiticsToFile();
-
-            loadDeviceTableToTreeModel();
-            loadCatalogsTableToModel();
-    }
-    //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_TreeExpandCollapse_clicked()
     {
         setTreeExpandState(true);
@@ -213,6 +173,8 @@
         selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
         selectedDevice->loadDevice();
 
+        on_Filters_treeView_Devices_clicked(index);
+
         if (selectedDevice->type=="Storage"){
             //Empty
         }
@@ -220,30 +182,57 @@
             //Empty
         }
         else if (selectedDevice->type=="Catalog"){
-            /*
             QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
             QMenu deviceContextMenu;
 
-            QString deviceName = selectedDeviceName;
+            QString deviceName = selectedDevice->name;
 
-            QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Assign this catalog to a Virtual Storage device"), this);
-            deviceContextMenu.addAction(menuDeviceAction1);
+            if(ui->tabWidget->currentIndex() != 0){
+                QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-find"), tr("Search"), this);
+                deviceContextMenu.addAction(menuDeviceAction1);
 
-            connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName, index]() {
-                on_Filters_treeView_Devices_clicked(index);
+                connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+                    ui->tabWidget->setCurrentIndex(0);
+                });
+            }
+
+            QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
+            deviceContextMenu.addAction(menuDeviceAction2);
+
+            connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
+                exploreDevice->ID = selectedDevice->ID;
+                exploreDevice->loadDevice();
+
+                exploreSelectedFolderFullPath = exploreDevice->path;
+                exploreSelectedDirectoryName  = exploreDevice->path;
+
+                openCatalogToExplore();
+
+                //Go to explore tab
+                ui->tabWidget->setCurrentIndex(2);
+            });
+
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            deviceContextMenu.addAction(menuDeviceAction3);
+
+            connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+                //reloads catalog to explore at root level
+                reportAllUpdates(selectedDevice,
+                                 selectedDevice->updateDevice("update",
+                                                              collection->databaseMode,
+                                                              false,
+                                                              collection->collectionFolder,
+                                                              true),
+                                 "update");
+                collection->saveDeviceTableToFile();
+                collection->saveStatiticsToFile();
+
+                loadDeviceTableToTreeModel();
+                loadCatalogsTableToModel();
             });
 
             deviceContextMenu.exec(globalPos);
-            ui->tabWidget->setCurrentIndex(5);
-            */
         }
-
-
-        //Set actions for catalogs
-        if(selectedDevice->type=="Catalog"){
-
-        }
-
     }
     //----------------------------------------------------------------------
 
@@ -293,8 +282,6 @@
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
         ui->Filters_label_DisplayDevice->setText(tr("All"));
-        ui->Filter_pushButton_Explore->setEnabled(false);
-        ui->Filter_pushButton_Update->setEnabled(false);
         ui->Devices_label_SelectedCatalogDisplay->setText("");
 
         //Reload data
@@ -316,20 +303,6 @@
     //----------------------------------------------------------------------
     void MainWindow::filterFromSelectedDevice()
     {
-        //Enable/Disable panel's buttons
-        if (selectedDevice->type=="Storage"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-        }
-        else if (selectedDevice->type=="Catalog"){
-            ui->Filter_pushButton_Explore->setEnabled(true);
-            ui->Filter_pushButton_Update->setEnabled(true);
-        }
-        else if (selectedDevice->type=="Virtual"){
-            ui->Filter_pushButton_Explore->setEnabled(false);
-            ui->Filter_pushButton_Update->setEnabled(false);
-        }
-
         //Display selection values
         displaySelectedDeviceName();
 
