@@ -171,8 +171,8 @@
             bool    loadSeries3 = true;
             bool    invalidCombinaison = false;
             QString invalidCase;
-            QString reportName;
-            QString reportTypeOfData;
+            QString reportName = tr("All device records");
+            QString reportTypeOfData = tr("Total File Size");;
             qreal   numberOrSizeTotal = 0;
             qreal   freeSpace  = 0;
             qreal   totalSpace = 0;
@@ -227,10 +227,6 @@
         //Get the data depending on the type of source
 
             //Get virtual device data
-            //else if(selectedSource ==tr("all records")){
-                reportName = tr("All device records");
-                reportTypeOfData = tr("Total File Size");
-
                 QSqlQuery queryStatistics;
                 QString queryStatisticsSQL = QLatin1String(R"(
                                             SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
@@ -247,9 +243,11 @@
                     //data source
                     if(selectedSource ==tr("snapshots only")){
                         queryStatisticsSQL += " AND record_type = 'snapshot' ";
+                        reportName = "Snapshots only";
                     }
                     else if(selectedSource ==tr("updates only")){
                         queryStatisticsSQL += " AND (record_type = 'update' OR record_type = 'create') ";
+                        reportName = "Updates only";
                     }
 
                 queryStatistics.prepare(queryStatisticsSQL);
@@ -266,7 +264,7 @@
                         numberOrSizeTotal = queryStatistics.value(1).toLongLong();
                         loadSeries2 = false;
                         loadSeries3 = false;
-
+                        displayUnitText ="";
                     }
                     else if ( selectedTypeOfData == tr("Total File Size") )
                     {
@@ -296,8 +294,10 @@
 
                 //Series name and color               
                 series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
-                if ( selectedTypeOfData == tr("Number of Files") )
+                if ( selectedTypeOfData == tr("Number of Files") ){
                     series1->setPen(penCatalogNumberFiles);
+                    displayUnitText ="";
+                }
                 else
                     series1->setPen(penCatalogTotalSize);
 
