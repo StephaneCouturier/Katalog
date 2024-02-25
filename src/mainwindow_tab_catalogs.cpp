@@ -68,14 +68,14 @@
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
 
             //Load catalog values to the Edit area
-            ui->Catalogs_label_NameDisplay->setText(activeDevice->catalog->name);
+            ui->Catalogs_label_NameDisplay->setText(activeDevice->name);
             ui->Catalogs_label_Path->setText(activeDevice->catalog->sourcePath);
             ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
             ui->Catalogs_label_StorageDisplay->setText(activeDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
             ui->Catalogs_checkBox_IncludeMetadata->setChecked(activeDevice->catalog->includeMetadata);
             //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
-            ui->Devices_label_SelectedCatalogDisplay->setText(activeDevice->catalog->name);
+            ui->Devices_label_SelectedCatalogDisplay->setText(activeDevice->name);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_treeView_CatalogList_doubleClicked()
@@ -138,7 +138,7 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Catalogs_pushButton_Cancel_clicked()
         {
-            ui->Catalogs_label_NameDisplay->setText(selectedDevice->catalog->name);
+            ui->Catalogs_label_NameDisplay->setText(selectedDevice->name);
             ui->Catalogs_comboBox_FileType->setCurrentText(selectedDevice->catalog->fileType);
             ui->Catalogs_label_StorageDisplay->setText(selectedDevice->catalog->storageName);
             ui->Catalogs_checkBox_IncludeHidden->setChecked(selectedDevice->catalog->includeHidden);
@@ -299,7 +299,7 @@
         void MainWindow::on_Catalogs_pushButton_DeleteCatalog_clicked()
         {
             int result = QMessageBox::warning(this,"Katalog",
-                                                  tr("Do you want to delete this catalog?")+"\n"+ selectedDevice->catalog->name,QMessageBox::Yes|QMessageBox::Cancel);
+                                                  tr("Do you want to delete this catalog?")+"\n"+ selectedDevice->name,QMessageBox::Yes|QMessageBox::Cancel);
 
             if ( result ==QMessageBox::Yes){
 

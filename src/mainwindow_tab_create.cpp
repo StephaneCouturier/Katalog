@@ -191,14 +191,13 @@
             newDevice->generateDeviceID();
             newDevice->type = "Catalog";
             newDevice->name = ui->Create_lineEdit_NewCatalogName->text();
-            newDevice->catalog->name = ui->Create_lineEdit_NewCatalogName->text();
 
             //Check if the catalog name (so the csv file name) already exists
-            if (newDevice->catalog->catalogNameExists()){
+            if (newDevice->verifyDeviceNameExists()){
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
-                               + newDevice->catalog->name
+                               + newDevice->name
                                + "</b><br/><br/>"+tr("Choose a different name and try again."));
                 msgBox.setIcon(QMessageBox::Critical);
                 msgBox.exec();
@@ -214,8 +213,7 @@
             newDevice->insertDevice();
 
             //Get inputs and set values of the newCatalog
-            newDevice->catalog->name = newDevice->name; //DEV: REMOVE
-            newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->catalog->name + ".idx";
+            newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->name + ".idx";
             newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
             newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //DEV: REMOVE

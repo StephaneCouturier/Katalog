@@ -2017,7 +2017,6 @@
                     newDevice->generateDeviceID();
                     newDevice->type = "Catalog";
                     newDevice->name = fileNameWithoutExtension;
-                    newDevice->catalog->name = fileNameWithoutExtension;
 
                     //Continue populating values
                     newDevice->parentID = 1;
@@ -2028,13 +2027,7 @@
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the newCatalog
-                    //newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->catalog->name + ".idx";
                     newDevice->catalog->sourcePath = newSearch->searchDateTime;
-                    //newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-                    //newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //DEV: REMOVE
-                    //newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
-                    //newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
-                    //newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();
                     newDevice->catalog->appVersion = currentVersion;
 
                     //Save new catalog

@@ -357,13 +357,14 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
         }
 
         //Deal with other cases where some input information is missing
-        if(filePath == "" or name == "" or sourcePath == ""){
+        if(filePath == "" or sourcePath == ""){
 
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
 
             msgBox.setText(QCoreApplication::translate("MainWindow", "Select a catalog first (some info is missing).<br/> "
-                                                                     "currentCatalogFilePath: %1 <br/> currentCatalogName: %2 <br/> "
+                                                                     "currentCatalogFilePath: %1 <br/>"
+                                                                     "currentCatalogName: %2 <br/> "
                                                                      "currentCatalogSourcePath: %3").arg(
                                    filePath, name, sourcePath));
             msgBox.setIcon(QMessageBox::Information);
@@ -468,11 +469,12 @@ void Catalog::loadCatalog()
                                 catalog_app_version
                             FROM catalog
                             LEFT JOIN storage ON catalog_storage = storage_name
-                            WHERE catalog_name=:catalog_name
+                            WHERE catalog_id=:catalog_id
                         )");
     query.prepare(querySQL);
-    query.bindValue(":catalog_name",name);
+    query.bindValue(":catalog_id",ID);
     query.exec();
+
     if (query.next()){
         ID                 = query.value(0).toInt();
         filePath           = query.value(1).toString();

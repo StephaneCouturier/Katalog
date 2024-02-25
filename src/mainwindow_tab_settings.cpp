@@ -331,7 +331,7 @@
     {
         foreach(QString sourceCatalog,catalogSelectedList)
         {
-                    selectedDevice->catalog->name = sourceCatalog;
+                    selectedDevice->name = sourceCatalog;
                     selectedDevice->catalog->loadCatalog();
                     selectedDevice->catalog->loadCatalogFileListToTable();
         }

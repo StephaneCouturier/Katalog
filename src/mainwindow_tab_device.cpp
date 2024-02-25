@@ -189,7 +189,7 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
 
     if(activeDevice->type=="Virtual"){
         ui->Devices_pushButton_Edit->setEnabled(true);
-        if(activeDevice->catalog->name!=""){
+        if(activeDevice->name!=""){
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
         }
         ui->Devices_pushButton_DeleteItem->setEnabled(true);
@@ -527,7 +527,7 @@ void MainWindow::importStorageCatalogLinks() {
         QString storage_id   = query.value(2).toString();
         int device_id   = query.value(3).toInt();
 
-        activeDevice->catalog->name = catalog_name;
+        activeDevice->name = catalog_name;
         activeDevice->catalog->loadCatalog();
 
        // assignCatalogToDevice(catalog_name,device_id);
@@ -616,7 +616,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
         query.prepare(querySQL);
         query.bindValue(":device_id", newID);
         query.bindValue(":device_parent_id", parentDevice->ID);
-        query.bindValue(":device_name", catalogDevice->catalog->name);
+        query.bindValue(":device_name", catalogDevice->name);
         query.bindValue(":device_type", "Catalog");
         query.bindValue(":device_external_id", catalogDevice->catalog->ID);
         query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
@@ -1559,7 +1559,7 @@ void MainWindow::saveDeviceForm()
                 Device loopCatalog;
                 while (listCatalogQuery.next()){
                     loopCatalog.catalog = new Catalog;
-                    loopCatalog.catalog->name = listCatalogQuery.value(0).toString();
+                    loopCatalog.name = listCatalogQuery.value(0).toString();
                     loopCatalog.catalog->loadCatalog();
                     loopCatalog.catalog->storageName = newStorageName;
                     loopCatalog.catalog->updateCatalogFileHeaders(collection->databaseMode);
@@ -1694,7 +1694,6 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
 
         device.externalID = device.catalog->ID;
         device.saveDevice();
-        device.catalog->name = device.name;
         device.catalog->saveCatalog();
         device.catalog->updateCatalogFileHeaders(collection->databaseMode);
     }

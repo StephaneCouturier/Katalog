@@ -50,7 +50,8 @@
 
         //Remember selected directory name
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedDirectory", exploreSelectedDirectoryName);
+        settings.setValue("Explore/lastExploreSelectedFolderFullPath", exploreSelectedFolderFullPath);
+        settings.setValue("Explore/lastExploreSelectedDirectoryName", exploreSelectedDirectoryName);
 
         //Load directory files
         loadSelectedDirectoryFilesToExplore();
@@ -75,7 +76,8 @@
 
             //Remember selected directory name
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("Explore/lastSelectedDirectory", exploreSelectedDirectoryName);
+            settings.setValue("Explore/lastExploreSelectedFolderFullPath", exploreSelectedFolderFullPath);
+            settings.setValue("Explore/lastExploreSelectedDirectoryName", exploreSelectedDirectoryName);
 
             //Reload
             loadSelectedDirectoryFilesToExplore();
@@ -498,10 +500,9 @@
 
         //Remember last opened catalog
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Explore/lastSelectedCatalogFile", exploreDevice->path);
-        settings.setValue("Explore/lastSelectedCatalogName", exploreDevice->name);
-        settings.setValue("Explore/lastSelectedCatalogPath", exploreDevice->path);
-        settings.setValue("Explore/lastSelectedDirectory",   exploreDevice->path);
+        settings.setValue("Explore/lastExploreDeviceID",    exploreDevice->ID);
+        settings.setValue("Explore/lastExploreSelectedFolderFullPath", exploreSelectedFolderFullPath);
+        settings.setValue("Explore/lastExploreSelectedDirectoryName",  exploreSelectedDirectoryName);
 
         //Stop animation
         QApplication::restoreOverrideCursor();

@@ -85,7 +85,6 @@ void Device::loadDevice(){
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
-        catalog->name = name; //temp
         catalog->loadCatalog();
         catalog->sourcePath = path;
     }
@@ -381,9 +380,13 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     //Update device and children depending on type
     if (type=="Catalog"){
+
+        //Pass device values for messages
+        catalog->name = name;
+        catalog->sourcePath = path;
+
         //Update this device/catalog (files) and its storage (space)
         deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder);
-
         totalFileSize  = deviceUpdatesList[1];
         totalFileCount = deviceUpdatesList[3];
 

@@ -142,14 +142,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
-                selectedDevice->catalog->name = settings.value("Explore/lastSelectedCatalogName").toString();
-                selectedDevice->catalog->loadCatalog();
-                exploreSelectedDirectoryName = settings.value("Explore/lastSelectedDirectory").toString();
-                exploreSelectedFolderFullPath = selectedDevice->catalog->sourcePath + "/" + exploreSelectedDirectoryName;
-                ui->Explore_label_CatalogDirectoryDisplay->setText(exploreSelectedDirectoryName);
-                if (selectedDevice->catalog->filePath != ""){
-                    openCatalogToExplore();
-                }
+                exploreDevice->ID = settings.value("Explore/lastExploreDeviceID").toInt();
+                exploreDevice->loadDevice();
+                exploreSelectedFolderFullPath = settings.value("Explore/lastExploreSelectedFolderFullPath").toString();
+                exploreSelectedDirectoryName  = settings.value("Explore/lastExploreSelectedDirectoryName").toString();
+
+                openCatalogToExplore();
             }
 
         //Preload last selected catalogs contents to memory
@@ -255,7 +253,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
-            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->catalog->name);
+            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
 
 }
 
