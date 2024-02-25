@@ -207,8 +207,8 @@
             //Continue populating values and add device
             newDevice->parentID = ui->Create_comboBox_StorageSelection->currentData().toInt();
             newDevice->catalog->generateID();
-            newDevice->externalID = newDevice->catalog->ID; //DEV: simplify?
-            newDevice->groupID = 0; //DEV: ADAPT
+            newDevice->externalID = newDevice->catalog->ID;
+            newDevice->groupID = 0;
             newDevice->path = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->insertDevice();
 
@@ -216,7 +216,7 @@
             newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->name + ".idx";
             newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
-            newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText(); //DEV: REMOVE
+            newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
             newDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
             newDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
             newDevice->catalog->includeMetadata = ui->Create_checkBox_IncludeMetadata->isChecked();

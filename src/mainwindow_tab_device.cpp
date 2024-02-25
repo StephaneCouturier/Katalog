@@ -1398,8 +1398,7 @@ void MainWindow::saveDeviceForm()
     QString previousPath = activeDevice->path;
 
     //Get the ID of the selected parent
-    QVariant selectedData = ui->Devices_comboBox_Parent->currentData();
-    activeDevice->parentID = selectedData.toInt();
+    activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
     activeDevice->name = ui->Devices_lineEdit_Name->text();
 
     //Get new device path: remove the / at the end if any, except for / alone (root directory in linux)
@@ -1456,6 +1455,7 @@ void MainWindow::saveDeviceForm()
 
         //Save data to file
         if (collection->databaseMode=="Memory"){
+            activeDevice->catalog->storageName = parentDevice->name;
             activeDevice->catalog->saveCatalog();
             activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
         }
@@ -1621,15 +1621,14 @@ void MainWindow::recordAllDeviceStats(QDateTime dateTime)
 void MainWindow::updateAllDeviceActive()
 {//Update the value Active for all Devices
 
-    //Storage and Catalog devices
+    //For Storage and Catalog devices
         //Get the list of devices
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
                                             SELECT device_id
                                             FROM   device
+                                            WHERE  device_type = 'Storage' OR device_type = 'Catalog'
                                     )");
-        //WHERE  device_type = 'Storage' OR device_type = 'Catalog'
-        //WHERE device_type IN ('Storage','Catalog')
         query.prepare(querySQL);
         query.exec();
 
@@ -1640,8 +1639,6 @@ void MainWindow::updateAllDeviceActive()
             loopDevice.loadDevice();
             loopDevice.updateActive();
         }
-
-
 }
 
 //--------------------------------------------------------------------------
