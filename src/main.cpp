@@ -58,9 +58,9 @@ int main(int argc, char *argv[])
         if ( userLanguage == "" ){
 
             //Get the language of the user's system
-            userLanguage = QLocale::system().name();           
+            userLanguage = QLocale::system().name();
 
-            //If this language is not supported yet, default to Engish US.
+            //If this language is not supported yet, default to English US.
             QStringList availableUserLanguages;
             availableUserLanguages  << "de_DE"
                                     << "cz_CZ"

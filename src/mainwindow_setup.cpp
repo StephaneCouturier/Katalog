@@ -78,10 +78,12 @@
         collection->databaseUserName = settings.value("Settings/databaseUserName").toString();
         collection->databasePassword = settings.value("Settings/databasePassword").toString();
 
+        //Set defaults if values are not provided
         if(collection->databaseMode=="")
             collection->databaseMode="Memory";
 
-        else if(collection->databaseMode=="Memory"){
+        //Prepare database based on selected mode
+        if(collection->databaseMode=="Memory"){
 
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -127,7 +129,7 @@
             }
         }
 
-        //Create tables
+        //Create tables if they do not exist
         QSqlQuery q;
         if (!q.exec(SQL_CREATE_CATALOG))
             return q.lastError();
