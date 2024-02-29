@@ -376,6 +376,9 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     //Prepare
     QList<qint64> deviceUpdatesList;
     dateTimeUpdated = QDateTime::currentDateTime();
+    Device parentDevice;
+    parentDevice.ID = parentID;
+    parentDevice.loadDevice();
     updateActive();
 
     //Update device and children depending on type
@@ -404,30 +407,30 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         }
 
         //Update the parent Storage and add the update values to the list
-        Device parentDevice;
-        parentDevice.ID = parentID;
-        parentDevice.loadDevice();
+        deviceUpdatesList << parentDevice.updateDevice("update",
+                                   databaseMode,
+                                   true,
+                                   collectionFolder,
+                                   true),
         deviceUpdatesList << parentDevice.storage->updateStorageInfo(reportStorageUpdate);
         parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
-        //Update other catalog devices using the same catalog
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
+        //Update related devices (other catalog devices using the same catalog ID)
+        QSqlQuery queryRelatedDevice;
+        QString queryRelatedDeviceSQL = QLatin1String(R"(
                                     SELECT device_id
                                     FROM device
                                     WHERE device_external_id =:device_external_id
                                     AND device_type = 'Catalog'
                                     AND device_id !=:device_id
                                 )");
-        query.prepare(querySQL);
-        query.bindValue(":device_external_id", externalID);
-        query.bindValue(":device_id",ID);
-        query.exec();
-        //qDebug()<<query.lastError();
-        while(query.next()){
-            //qDebug()<<<<query.value(1).toString();
+        queryRelatedDevice.prepare(queryRelatedDeviceSQL);
+        queryRelatedDevice.bindValue(":device_external_id", externalID);
+        queryRelatedDevice.bindValue(":device_id",ID);
+        queryRelatedDevice.exec();
+        while(queryRelatedDevice.next()){
             Device relatedDevice;
-            relatedDevice.ID = query.value(0).toInt();
+            relatedDevice.ID = queryRelatedDevice.value(0).toInt();
             relatedDevice.loadDevice();
             relatedDevice.totalFileCount = totalFileCount;
             relatedDevice.totalFileSize  = totalFileSize;
@@ -635,10 +638,10 @@ void Device::updateParentsNumbers()
     while (query.next()) {
         int tempID = query.value(0).toInt();
 
-        Device *tempCurrentDevice = new Device;
-        tempCurrentDevice->ID = tempID;
-        tempCurrentDevice->loadDevice();
-        tempCurrentDevice->updateNumbersFromChildren();
+        Device tempCurrentDevice;
+        tempCurrentDevice.ID = tempID;
+        tempCurrentDevice.loadDevice();
+        tempCurrentDevice.updateNumbersFromChildren();
     }
 }
 

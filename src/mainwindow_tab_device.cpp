@@ -1394,14 +1394,17 @@ void MainWindow::editDevice()
 void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
 
-    //Keep previous path value
+    //Keep previous values
     QString previousPath = activeDevice->path;
+    Device previousParentDevice;
+    previousParentDevice.ID = activeDevice->parentID;
+    previousParentDevice.loadDevice();
 
-    //Get the ID of the selected parent
+    //Get new name and parentID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
     activeDevice->name = ui->Devices_lineEdit_Name->text();
 
-    //Get new device path: remove the / at the end if any, except for / alone (root directory in linux)
+    //Get new path: remove the / at the end if any, except for / alone (root directory in Linux)
     activeDevice->path = ui->Devices_lineEdit_Path->text();
     int pathLength = activeDevice->path.length();
     if (activeDevice->path !="" and activeDevice->path !="/" and QVariant(activeDevice->path.at(pathLength-1)).toString()=="/") {
@@ -1409,26 +1412,26 @@ void MainWindow::saveDeviceForm()
     }
     activeDevice->catalog->sourcePath = activeDevice->path;
 
-    Device *parentDevice = new Device();
-    parentDevice->ID = activeDevice->parentID;
-    parentDevice->loadDevice();
+    Device newParentDevice;
+    newParentDevice.ID = activeDevice->parentID;
+    newParentDevice.loadDevice();
 
-    int newGroupID = parentDevice->groupID;
-    if(parentDevice->ID == 0) //If the new parent is root, the group_id should be 1 (0 is reserved for the Physical group)
-        newGroupID=1;
+    //Update groupIDs
+        //From the new parent device
+        int newGroupID = newParentDevice.groupID;
+        if(newParentDevice.ID == 0) //If the new parent is root, the group_id should be 1 (0 is reserved for the Physical group)
+            newGroupID=1;
 
-
-
-    //Also change the group_id of sub-devices
-    Device *loopDevice = new Device();
-    if(activeDevice->groupID != newGroupID){
-        for(int i=0; i<activeDevice->deviceIDList.count(); i++) {
-            loopDevice->ID = activeDevice->deviceIDList[i];
-            loopDevice->loadDevice();
-            loopDevice->groupID = newGroupID;
-            loopDevice->saveDevice();
+        //Also change the group_id of sub-devices
+        Device loopDevice;
+        if(activeDevice->groupID != newGroupID){
+            for(int i=0; i<activeDevice->deviceIDList.count(); i++) {
+                loopDevice.ID = activeDevice->deviceIDList[i];
+                loopDevice.loadDevice();
+                loopDevice.groupID = newGroupID;
+                loopDevice.saveDevice();
+            }
         }
-    }
 
     //Save device
     activeDevice->groupID = newGroupID;
@@ -1455,7 +1458,7 @@ void MainWindow::saveDeviceForm()
 
         //Save data to file
         if (collection->databaseMode=="Memory"){
-            activeDevice->catalog->storageName = parentDevice->name;
+            activeDevice->catalog->storageName = newParentDevice.name;
             activeDevice->catalog->saveCatalog();
             activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
         }
@@ -1574,6 +1577,12 @@ void MainWindow::saveDeviceForm()
             }
         }
     }
+
+    //Update previous and new parent device values
+    previousParentDevice.updateNumbersFromChildren();
+    previousParentDevice.updateParentsNumbers();
+    newParentDevice.updateNumbersFromChildren();
+    newParentDevice.updateParentsNumbers();
 
     //Finalize
     ui->Devices_widget_Edit->hide();

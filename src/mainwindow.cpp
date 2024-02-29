@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-02-18";
+        releaseDate     = "2024-02-29";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -103,6 +103,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Storage_widget_Panel->hide();
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
+
+            //DEV: to be removed permanently
+            ui->Catalogs_pushButton_Search->hide();
+            ui->Catalogs_pushButton_ExploreCatalog->hide();
+            ui->Catalogs_pushButton_ViewCatalogStats->hide();
+            ui->Catalogs_pushButton_DeleteCatalog->hide();
 
             if( collection->databaseMode != "Memory"){
                 //Hide file edtion items
