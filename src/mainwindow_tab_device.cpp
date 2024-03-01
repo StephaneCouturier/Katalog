@@ -233,7 +233,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             reportAllUpdates(activeDevice,
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
-                                                        false,
+                                                        true,
                                                         collection->collectionFolder,
                                                         true),
                              "update");

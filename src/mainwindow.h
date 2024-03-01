@@ -299,8 +299,6 @@ class MainWindow : public QMainWindow
             QDateTime graphicStartDate;
             void loadStatisticsDataTypes();
             void loadStatisticsChart();
-            void convertStatistics();
-
 
         //TAB: Tags
             void reloadTagsData();

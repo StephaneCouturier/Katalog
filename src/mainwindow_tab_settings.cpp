@@ -278,7 +278,6 @@
         //Load data from files to database
             //Create a Storage list (if none exists) + conversions
             createStorageFile();
-            convertStatistics();
 
             //Clear database
             clearDatabaseData();

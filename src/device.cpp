@@ -407,12 +407,12 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         }
 
         //Update the parent Storage and add the update values to the list
-        deviceUpdatesList << parentDevice.updateDevice("update",
-                                   databaseMode,
-                                   true,
-                                   collectionFolder,
-                                   true),
-        deviceUpdatesList << parentDevice.storage->updateStorageInfo(reportStorageUpdate);
+        QList<qint64> storageUpdatesList = parentDevice.updateDevice("update",
+                                                           databaseMode,
+                                                           reportStorageUpdate,
+                                                           collectionFolder,
+                                      false);
+        deviceUpdatesList.append(storageUpdatesList);
         parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         //Update related devices (other catalog devices using the same catalog ID)
@@ -500,7 +500,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             }
         }
         //Update storage itself
-        QList<qint64> storageUpdates = storage->updateStorageInfo(true);
+        QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
         freeSpace  = storageUpdates[3];
         totalSpace = storageUpdates[5];
         saveStatistics(dateTimeUpdated, statiticsRequestSource);

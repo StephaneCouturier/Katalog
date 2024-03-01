@@ -37,14 +37,17 @@ void Collection::generateCollectionFilesPaths()
     searchHistoryFilePath       = collectionFolder + "/" + "search_history.csv";
     storageFilePath             = collectionFolder + "/" + "storage.csv";
     deviceFilePath              = collectionFolder + "/" + "device.csv";
+    statisticsDeviceFileName    = "statistics.csv";
+    statisticsDeviceFilePath    = collectionFolder + "/" + statisticsDeviceFileName;
+    excludeFilePath             = collectionFolder + "/" + "exclude.csv";
+
+    //v1.22 files
     deviceCatalogFilePath       = collectionFolder + "/" + "device_catalog.csv";
     statisticsCatalogFileName   = "statistics_catalog.csv";
     statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
     statisticsStorageFileName   = "statistics_storage.csv";
     statisticsStorageFilePath   = collectionFolder + "/" + statisticsStorageFileName;
-    statisticsDeviceFileName    = "statistics_device.csv";
-    statisticsDeviceFilePath    = collectionFolder + "/" + statisticsDeviceFileName;
-    excludeFilePath             = collectionFolder + "/" + "exclude.csv";
+
 }
 //----------------------------------------------------------------------
 void Collection::saveDeviceTableToFile()
