@@ -308,13 +308,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.addSeparator();
 
-        QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this storage"), this);
-        deviceContextMenu.addAction(menuDeviceAction3);
+        if(activeDevice->groupID !=0){
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("edit-cut"), tr("Unassign this storage"), this);
+            deviceContextMenu.addAction(menuDeviceAction3);
 
-        connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
-            unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
-        });
-
+            connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+                unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
+            });
+        }
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this storage"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
 

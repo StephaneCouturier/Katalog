@@ -191,9 +191,11 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                    "The source folder '%1' does not contain any file.<br/><br/>"
-                                                    "This could mean that the source is empty or the device is not mounted to this folder.<br/><br/>"
-                                                    "Force trying to get values anyhow?").arg(path)
+                                                   "Storage: <b>'%1'</b><br/><br/>"
+                                                   "The source folder does not contain any file:<br/><b>'%2'</b><br/><br/>"
+                                                   "This could mean that the device is not mounted to this folder,<br/>"
+                                                   "or the folder is simply empty.<br/><br/>"
+                                                   "Force trying to get values anyhow?").arg(name, path)
                        );
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
