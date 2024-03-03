@@ -79,7 +79,6 @@
 
 //Katalog object classes
 #include "collection.h"
-#include "catalog.h"
 #include "search.h"
 #include "device.h"
 

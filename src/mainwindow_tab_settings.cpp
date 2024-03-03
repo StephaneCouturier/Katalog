@@ -299,7 +299,6 @@
             loadDeviceTableToTreeModel();
             filterFromSelectedDevice();
 
-
         //Add a default storage device, to force any new catalog to have one
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
@@ -311,7 +310,7 @@
         queryStorage.next();
 
         if (queryStorage.value(0).toInt() == 0){
-            addStorageDevice("Default Storage");
+            addStorageDevice(tr("Default Storage"));
         }
 
         //Load Statistics

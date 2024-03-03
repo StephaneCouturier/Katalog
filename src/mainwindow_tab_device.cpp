@@ -1262,8 +1262,6 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
 void MainWindow::loadParentsList()
 {//Load valid list of parents to the panel comboBox. It enables a selection to change the parent of a device
 
-
-
     //Get data
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
@@ -1283,7 +1281,6 @@ void MainWindow::loadParentsList()
         querySQL += QLatin1String(R"(AND device_type NOT IN ("Catalog","Storage"))");
     }
 
-    //querySQL += " ORDER BY device_name ";
     query.prepare(querySQL);
     query.bindValue(":selected_device_id", activeDevice->ID);
     query.exec();
@@ -1396,6 +1393,7 @@ void MainWindow::saveDeviceForm()
 
     //Keep previous values
     QString previousPath = activeDevice->path;
+    QString previousName = activeDevice->name;
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice();
@@ -1403,6 +1401,16 @@ void MainWindow::saveDeviceForm()
     //Get new name and parentID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
     activeDevice->name = ui->Devices_lineEdit_Name->text();
+    if (previousName != activeDevice->name and activeDevice->verifyDeviceNameExists() and activeDevice->type=="Catalog"){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText( tr("There is already a Catalog with this name:<br/><b>").arg(activeDevice->type)
+                       + activeDevice->name
+                       + "</b><br/><br/>"+tr("Choose a different name and try again."));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+        return;
+    }
 
     //Get new path: remove the / at the end if any, except for / alone (root directory in Linux)
     activeDevice->path = ui->Devices_lineEdit_Path->text();
