@@ -6925,7 +6925,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset theme="expand-all"/>
+                 <iconset theme="collapse-all"/>
                 </property>
                </widget>
               </item>

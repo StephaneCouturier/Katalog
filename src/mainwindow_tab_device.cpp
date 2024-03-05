@@ -1044,9 +1044,9 @@ void MainWindow::loadDeviceTableToTreeModel()
                                                 tr("Used space"),
                                                 tr("Free space"),
                                                 tr("Total space"),
+                                                tr("Date updated"),
                                                 tr("Path"),
-                                                tr("group ID"),
-                                                tr("date updated"),
+                                                tr("Group ID"),
                                                 "" });
 
     //Create a map to store items by ID for easy access
@@ -1084,9 +1084,9 @@ void MainWindow::loadDeviceTableToTreeModel()
         rowItems << new QStandardItem(QString::number(used_space));
         rowItems << new QStandardItem(QString::number(free_space));
         rowItems << new QStandardItem(QString::number(total_space));
+        rowItems << new QStandardItem(dateTimeUpdated);
         rowItems << new QStandardItem(path);
         rowItems << new QStandardItem(QString::number(groupID));
-        rowItems << new QStandardItem(dateTimeUpdated);
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -1131,9 +1131,9 @@ void MainWindow::loadDeviceTableToTreeModel()
         ui->Devices_treeView_DeviceList->header()->resizeSection( 8, 100); //Used space
         ui->Devices_treeView_DeviceList->header()->resizeSection( 9, 100); //Free space
         ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
-        ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(11, QHeaderView::ResizeToContents); //Path
-        ui->Devices_treeView_DeviceList->header()->resizeSection(12,  25); //Group ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection(13, 150); //date updated
+        ui->Devices_treeView_DeviceList->header()->resizeSection(11, 150); //date updated
+        ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
+        ui->Devices_treeView_DeviceList->header()->resizeSection(13,  25); //Group ID
 
         if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
             ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
@@ -1141,14 +1141,14 @@ void MainWindow::loadDeviceTableToTreeModel()
             ui->Devices_treeView_DeviceList->header()->showSection(3); //ID
             ui->Devices_treeView_DeviceList->header()->showSection(4); //Parent ID
             ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-            ui->Devices_treeView_DeviceList->header()->showSection(12); //Group ID
+            ui->Devices_treeView_DeviceList->header()->showSection(13); //Group ID
         } else {
             ui->Devices_treeView_DeviceList->header()->hideSection(1); //Type
             ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
             ui->Devices_treeView_DeviceList->header()->hideSection(3); //ID
             ui->Devices_treeView_DeviceList->header()->hideSection(4); //Parent ID
             ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-            ui->Devices_treeView_DeviceList->header()->hideSection(12); //Group ID
+            ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
         }
 
         ui->Devices_treeView_DeviceList->expandAll();
@@ -1196,49 +1196,66 @@ void MainWindow::updateAllNumbers()
 //--------------------------------------------------------------------------
 void MainWindow::setDeviceTreeExpandState(bool toggle)
 {
-    //optionDeviceTreeExpandState values:  collapseAll or 2 =collapse / 0=exp.level0 / 1=exp.level1
-    QString iconName = ui->Filters_pushButton_TreeExpandCollapse->icon().name();
+    //Count the number of tree level from root
+    QMap<int, QList<int>> deviceTree;
+    QSqlQuery query("SELECT device_id, device_parent_id FROM device");
+    while (query.next()) {
+        int deviceId = query.value(0).toInt();
+        int parentId = query.value(1).toInt();
+        deviceTree[parentId].append(deviceId);
+    }
+    int treeLevels = countTreeLevels(deviceTree, 0);
+
+    //optionDeviceTreeExpandState values:  collapseAll / 0 / 2 to x levels / x+1 last level
+    QString iconName = ui->Devices_pushButton_TreeExpandCollapse->icon().name();
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
     if (toggle==true){
 
-        if ( optionDeviceTreeExpandState == 2 ){
+        if ( iconName=="collapse-all"/*deviceTreeExpandState == 2*/ ){
             //collapsed > expand first level
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            optionDeviceTreeExpandState = 0;
-            ui->Devices_treeView_DeviceList->expandToDepth(0);
-            settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
-        }
-        else if ( optionDeviceTreeExpandState == 0 ){
-            //expanded first level > expand to second level
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            optionDeviceTreeExpandState = 1;
-            ui->Devices_treeView_DeviceList->expandToDepth(1);
-            settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
-        }
-        else if ( optionDeviceTreeExpandState == 1 ){
-            //expanded second level > collapse
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            optionDeviceTreeExpandState = 2;
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("go-down"));
+            deviceTreeExpandState =-1;
             ui->Devices_treeView_DeviceList->collapseAll();
-            settings.setValue("Virtual/optionDeviceTreeExpandState", optionDeviceTreeExpandState);
+            settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+        }
+        else if ( iconName=="go-down" /*deviceTreeExpandState == 0 */){
+            //expanded first level > expand to second level
+            if(deviceTreeExpandState == treeLevels-3){
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                deviceTreeExpandState +=1;
+                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+            }
+            else{
+                deviceTreeExpandState +=1;
+                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+            }
+
+        }
+        else if ( iconName=="expand-all" /* deviceTreeExpandState == 1 */){
+            //expanded second level > collapse
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            ui->Devices_treeView_DeviceList->expandToDepth(treeLevels);
+            settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
         }
     }
     else
     {
-        if ( optionDeviceTreeExpandState == 0 ){
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->collapseAll();
-            ui->Filters_treeView_Devices->expandToDepth(optionDeviceTreeExpandState);
+        if ( deviceTreeExpandState == 0 ){
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Devices_treeView_DeviceList->collapseAll();
+            ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
         }
-        else if ( optionDeviceTreeExpandState == 1 ){
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            ui->Filters_treeView_Devices->collapseAll();
-            ui->Filters_treeView_Devices->expandToDepth(optionDeviceTreeExpandState);
+        else if ( deviceTreeExpandState == 1 ){
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            ui->Devices_treeView_DeviceList->collapseAll();
+            ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
         }
         else{
-            ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Filters_treeView_Devices->collapseAll();
+            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            ui->Devices_treeView_DeviceList->collapseAll();
         }
     }
 }
@@ -1811,6 +1828,19 @@ void MainWindow::importStorageCatalogPathsToDevice()
 
 void MainWindow::importStatistics()
 {
-    qDebug()<<"importStatistics()";
+    qDebug()<<"importStatistics() empty";
 }
 //----------------------------------------------------------------------
+int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
+    if (!deviceTree.contains(parentId)) {
+        return 0;
+    }
+    int maxLevel = 0;
+    for (int childId : deviceTree[parentId]) {
+        int level = countTreeLevels(deviceTree, childId);
+        if (level > maxLevel) {
+            maxLevel = level;
+        }
+    }
+    return maxLevel + 1;
+}

@@ -147,7 +147,7 @@ class MainWindow : public QMainWindow
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
 
         //Filters panel
-            int  deviceTreeExpandState;
+            int  filtersTreeExpandState;
             QString selectedConnectedDrivePath;
 
             void setTreeExpandState(bool toggle);
@@ -265,6 +265,7 @@ class MainWindow : public QMainWindow
             bool optionDisplayPhysicalGroupOnly;
             bool optionDisplayAllExceptPhysicalGroup;
             bool optionDisplayFullTable;
+            int  deviceTreeExpandState;
 
             void addDeviceVirtual();
             void addDeviceStorage();
@@ -285,6 +286,7 @@ class MainWindow : public QMainWindow
             QList<int> verifyStorageWithOutDevice();
             void updateAllDeviceActive();
             void recordDevicesSnapshot();
+            int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
             //Migration 1.22 to 2.0
             void generateAndAssociateCatalogMissingIDs();

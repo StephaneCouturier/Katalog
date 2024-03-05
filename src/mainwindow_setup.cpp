@@ -323,7 +323,8 @@
             }
 
             //Expand/Collapse device selection tree
-            deviceTreeExpandState = settings.value("Settings/deviceTreeExpandState").toInt();
+            filtersTreeExpandState = settings.value("Selection/filtersTreeExpandState").toInt();
+            deviceTreeExpandState = settings.value("Devices/deviceTreeExpandState").toInt();
 
             //General settings
             ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());

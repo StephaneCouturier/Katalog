@@ -325,39 +325,39 @@
 
         if (toggle==true){
 
-            if ( deviceTreeExpandState == 2 ){
+            if ( filtersTreeExpandState == 2 ){
                 //collapsed > expand first level
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                deviceTreeExpandState = 0;
+                filtersTreeExpandState = 0;
                 ui->Filters_treeView_Devices->expandToDepth(0);
-                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+                settings.setValue("Selection/filtersTreeExpandState", filtersTreeExpandState);
             }
-            else if ( deviceTreeExpandState == 0 ){
+            else if ( filtersTreeExpandState == 0 ){
                 //expanded first level > expand to second level
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-                deviceTreeExpandState = 1;
+                filtersTreeExpandState = 1;
                 ui->Filters_treeView_Devices->expandToDepth(1);
-                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+                settings.setValue("Selection/filtersTreeExpandState", filtersTreeExpandState);
             }
-            else if ( deviceTreeExpandState == 1 ){
+            else if ( filtersTreeExpandState == 1 ){
                 //expanded second level > collapse
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-                deviceTreeExpandState = 2;
+                filtersTreeExpandState = 2;
                 ui->Filters_treeView_Devices->collapseAll();
-                settings.setValue("Settings/deviceTreeExpandState", deviceTreeExpandState);
+                settings.setValue("Selection/filtersTreeExpandState", filtersTreeExpandState);
             }
         }
         else
         {
-            if ( deviceTreeExpandState == 0 ){
+            if ( filtersTreeExpandState == 0 ){
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
                 ui->Filters_treeView_Devices->collapseAll();
-                ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+                ui->Filters_treeView_Devices->expandToDepth(filtersTreeExpandState);
             }
-            else if ( deviceTreeExpandState == 1 ){
+            else if ( filtersTreeExpandState == 1 ){
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
                 ui->Filters_treeView_Devices->collapseAll();
-                ui->Filters_treeView_Devices->expandToDepth(deviceTreeExpandState);
+                ui->Filters_treeView_Devices->expandToDepth(filtersTreeExpandState);
             }
             else{
                 ui->Filters_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
