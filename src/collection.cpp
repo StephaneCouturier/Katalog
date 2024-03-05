@@ -174,7 +174,8 @@ void Collection::loadDeviceFileToTable()
                                         device_total_file_count,
                                         device_total_space,
                                         device_free_space,
-                                        device_group_id )
+                                        device_group_id,
+                                        device_date_updated )
                         VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -186,7 +187,8 @@ void Collection::loadDeviceFileToTable()
                                         :device_total_file_count,
                                         :device_total_space,
                                         :device_free_space,
-                                        :device_group_id )
+                                        :device_group_id,
+                                        :device_date_updated )
                     )");
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":device_id",fieldList[0].toInt());
@@ -201,6 +203,7 @@ void Collection::loadDeviceFileToTable()
                         insertQuery.bindValue(":device_total_space",fieldList[8]);
                         insertQuery.bindValue(":device_free_space",fieldList[9]);
                         insertQuery.bindValue(":device_group_id",fieldList[11]);
+                        insertQuery.bindValue(":device_date_updated",fieldList[12]);
                     }
                     insertQuery.exec();
                 }

@@ -350,7 +350,8 @@ void Device::saveDevice()
                                     device_group_id =:device_group_id,
                                     device_total_file_size =:device_total_file_size,
                                     device_total_file_count =:device_total_file_count,
-                                    device_group_id =:device_group_id
+                                    device_group_id =:device_group_id,
+                                    device_date_updated =:device_date_updated
                             WHERE   device_id=:device_id
                         )");
     query.prepare(querySQL);
@@ -363,6 +364,7 @@ void Device::saveDevice()
     query.bindValue(":device_total_file_size", totalFileSize);
     query.bindValue(":device_total_file_count", totalFileCount);
     query.bindValue(":device_group_id",  groupID);
+    query.bindValue(":device_date_updated",  dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss"));
     query.exec();
 }
 
@@ -468,6 +470,8 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                         //Update catalog with new values
                         updatedDevice.totalFileCount = catalogUpdatesList[1];
                         updatedDevice.totalFileSize  = catalogUpdatesList[3];
+                        updatedDevice.dateTimeUpdated = dateTimeUpdated;
+                        updatedDevice.saveDevice();
                         updatedDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
                         globalUpdateFileCount       += catalogUpdatesList[1];

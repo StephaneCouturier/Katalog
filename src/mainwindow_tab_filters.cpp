@@ -134,8 +134,6 @@
 
         //Adapt UI based on device type
         if (selectedDevice->type=="Storage"){
-            selectedDevice->storage->ID = selectedDevice->externalID;
-            selectedDevice->storage->loadStorage();
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
             ui->Devices_pushButton_AssignStorage->setEnabled(true);
             ui->Devices_label_SelectedCatalogDisplay->setText("");

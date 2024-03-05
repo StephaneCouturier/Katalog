@@ -1876,7 +1876,6 @@
 
             //user process choice
             QString selectedProcess = ui->Search_comboBox_SelectProcess->currentText();
-            QString result;
 
             //Generate list of full file path (directory path + file name)
             QStringList resultsFilesList;
@@ -1957,6 +1956,8 @@
 
                 if(newSearch->showFoldersOnly==false){
                     qint64 deletedFiles = 0;
+                    QString result;
+
                     if (QMessageBox::critical(this,
                                               tr("Confirmation"),
                                               "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
@@ -2005,6 +2006,7 @@
                 QDateTime now = QDateTime::currentDateTime();
                 QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
                 QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
+                Device *newDevice = new Device();
 
                 if ( result ==QMessageBox::Yes){
 
@@ -2013,7 +2015,6 @@
                     //Create a new device and link catalog
 
                     //Add Device entry
-                    Device *newDevice = new Device();
                     newDevice->generateDeviceID();
                     newDevice->type = "Catalog";
                     newDevice->name = fileNameWithoutExtension;
@@ -2045,6 +2046,12 @@
                     catalogMetadata.prepend("<catalogTotalFileSize>0");
                     catalogMetadata.prepend("<catalogFileCount>0");
                     catalogMetadata.prepend("<catalogSourcePath>EXPORT");
+
+                    selectedDevice->ID = newDevice->ID;
+                    selectedDevice->loadDevice();
+                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+                    settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
+                    filterFromSelectedDevice();
                 }
                 else if( result ==QMessageBox::No){
                     fileExtension="csv";
@@ -2053,6 +2060,8 @@
                 //Complete file name
                     QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
                     fullFileName = collection->collectionFolder + "/" + fileNameWithExtension;
+                    selectedDevice->catalog->filePath = fullFileName;
+                    selectedDevice->catalog->name = selectedDevice->name;
                     QFile exportFile(fullFileName);
 
                 //Export search results to file
@@ -2075,6 +2084,12 @@
                 }
                 exportFile.close();
 
+                //Load files
+                QDateTime emptyDateTime = *new QDateTime;
+                selectedDevice->catalog->setDateLoaded(emptyDateTime);
+                selectedDevice->catalog->setDateUpdated(QDateTime::currentDateTime().addMSecs(100));
+                selectedDevice->catalog->loadCatalogFileListToTable();
+
                 //Refresh catalogs
                 loadCollection();
                 loadStorageList();
@@ -2082,6 +2097,7 @@
                 //Select new catalog with results
                 ui->Filters_label_DisplayCatalog->setText(fileNameWithoutExtension);
             }
+
             return fullFileName;
         }
         //----------------------------------------------------------------------

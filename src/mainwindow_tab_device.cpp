@@ -888,7 +888,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                             device_total_space,
                             device_free_space,
                             device_active,
-                            device_group_id
+                            device_group_id,
+                            device_date_updated
                     FROM  device
                 )");
 
@@ -908,7 +909,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         device_total_space,
                         device_free_space,
                         device_active,
-                        device_group_id
+                        device_group_id,
+                        device_date_updated
                       FROM device
                       WHERE device_id = 1
 
@@ -926,7 +928,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         child.device_total_space,
                         child.device_free_space,
                         child.device_active,
-                        child.device_group_id
+                        child.device_group_id,
+                        child.device_date_updated
                       FROM device_tree parent
                       JOIN device child ON child.device_parent_id = parent.device_id
                     )
@@ -942,7 +945,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         device_total_space,
                         device_free_space,
                         device_active,
-                        device_group_id
+                        device_group_id,
+                        device_date_updated
                     FROM device_tree
                 )");
     }
@@ -961,7 +965,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         device_total_space,
                         device_free_space,
                         device_active,
-                        device_group_id
+                        device_group_id,
+                        device_date_updated
                       FROM device
                       WHERE device_id <> 1
 
@@ -979,7 +984,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         child.device_total_space,
                         child.device_free_space,
                         child.device_active,
-                        child.device_group_id
+                        child.device_group_id,
+                        child.device_date_updated
                       FROM device_tree parent
                       JOIN device child ON child.device_parent_id = parent.device_id
                       WHERE parent.device_id <> 1
@@ -996,7 +1002,8 @@ void MainWindow::loadDeviceTableToTreeModel()
                         device_total_space,
                         device_free_space,
                         device_active,
-                        device_group_id
+                        device_group_id,
+                        device_date_updated
                     FROM device_tree
                 )");
     }
@@ -1039,6 +1046,7 @@ void MainWindow::loadDeviceTableToTreeModel()
                                                 tr("Total space"),
                                                 tr("Path"),
                                                 tr("group ID"),
+                                                tr("date updated"),
                                                 "" });
 
     //Create a map to store items by ID for easy access
@@ -1061,6 +1069,7 @@ void MainWindow::loadDeviceTableToTreeModel()
         qint64 used_space = total_space - free_space;
         bool isActive = query.value(10).toBool();
         int groupID = query.value(11).toBool();
+        QString dateTimeUpdated = query.value(12).toString();
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
@@ -1077,6 +1086,7 @@ void MainWindow::loadDeviceTableToTreeModel()
         rowItems << new QStandardItem(QString::number(total_space));
         rowItems << new QStandardItem(path);
         rowItems << new QStandardItem(QString::number(groupID));
+        rowItems << new QStandardItem(dateTimeUpdated);
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -1123,6 +1133,7 @@ void MainWindow::loadDeviceTableToTreeModel()
         ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(11, QHeaderView::ResizeToContents); //Path
         ui->Devices_treeView_DeviceList->header()->resizeSection(12,  25); //Group ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection(13, 150); //date updated
 
         if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
             ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
@@ -1424,6 +1435,16 @@ void MainWindow::saveDeviceForm()
     Device newParentDevice;
     newParentDevice.ID = activeDevice->parentID;
     newParentDevice.loadDevice();
+    if (activeDevice->groupID == 0 and newParentDevice.type !="Storage"){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText( tr("A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.<br/><br/>"
+                          "To use this catalog under a device in a virtual group, use the Assign command.<b>")
+                       );
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+        return;
+    }
 
     //Update groupIDs
         //From the new parent device
