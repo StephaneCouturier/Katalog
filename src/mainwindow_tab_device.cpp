@@ -1173,6 +1173,7 @@ void MainWindow::loadDeviceTableToTreeModel()
 
         //Restore Expand or Collapse Device Tree
         setTreeExpandState(false);
+        setDeviceTreeExpandState(false);
         deviceTreeViewForSelectionPanel->boldColumnList.clear();
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->expandAll();
@@ -1196,66 +1197,85 @@ void MainWindow::updateAllNumbers()
 //--------------------------------------------------------------------------
 void MainWindow::setDeviceTreeExpandState(bool toggle)
 {
-    //Count the number of tree level from root
-    QMap<int, QList<int>> deviceTree;
-    QSqlQuery query("SELECT device_id, device_parent_id FROM device");
-    while (query.next()) {
-        int deviceId = query.value(0).toInt();
-        int parentId = query.value(1).toInt();
-        deviceTree[parentId].append(deviceId);
-    }
-    int treeLevels = countTreeLevels(deviceTree, 0);
-
-    //optionDeviceTreeExpandState values:  collapseAll / 0 / 2 to x levels / x+1 last level
-    QString iconName = ui->Devices_pushButton_TreeExpandCollapse->icon().name();
-    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-
-    if (toggle==true){
-
-        if ( iconName=="collapse-all"/*deviceTreeExpandState == 2*/ ){
-            //collapsed > expand first level
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("go-down"));
-            deviceTreeExpandState =-1;
-            ui->Devices_treeView_DeviceList->collapseAll();
-            settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+    //DEV:
+    if (developmentMode==false)
+        deviceTreeExpandState = 0;
+    else{
+        //Count the number of tree level from root
+        QMap<int, QList<int>> deviceTree;
+        QSqlQuery query("SELECT device_id, device_parent_id FROM device");
+        while (query.next()) {
+            int deviceId = query.value(0).toInt();
+            int parentId = query.value(1).toInt();
+            deviceTree[parentId].append(deviceId);
         }
-        else if ( iconName=="go-down" /*deviceTreeExpandState == 0 */){
-            //expanded first level > expand to second level
-            if(deviceTreeExpandState == treeLevels-3){
-                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-                deviceTreeExpandState +=1;
-                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+        int treeLevels = countTreeLevels(deviceTree, 0);
+
+        //optionDeviceTreeExpandState values:  collapseAll / 0 / 2 to x levels / x+1 last level
+        QString iconName = ui->Devices_pushButton_TreeExpandCollapse->icon().name();
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+
+        if (toggle==true){
+
+            if ( iconName=="collapse-all"/*deviceTreeExpandState == 2*/ ){
+                //collapsed > expand first level
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                deviceTreeExpandState =-1;
+                ui->Devices_treeView_DeviceList->collapseAll();
                 settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+            }
+            else if ( iconName=="expand-all" /*deviceTreeExpandState == 0 */){
+                //expanded first level > expand to second level
+                if(deviceTreeExpandState == treeLevels-3){
+                    ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                    deviceTreeExpandState +=1;
+                    ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+                    settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+                }
+                else{
+                    deviceTreeExpandState +=1;
+                    ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+                    settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+                }
+
+            }
+            else if ( iconName=="expand-all" /* deviceTreeExpandState == 1 */){
+                //expanded second level > collapse
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                ui->Devices_treeView_DeviceList->expandToDepth(treeLevels);
+                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+            }
+        }
+        else
+        {
+            if ( deviceTreeExpandState == 0 ){
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                ui->Devices_treeView_DeviceList->collapseAll();
+                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+            }
+            // else if ( deviceTreeExpandState == 1 ){
+            //     ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+            //     ui->Devices_treeView_DeviceList->collapseAll();
+            //     ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
+            // }
+            // else{
+            //     ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+            //     ui->Devices_treeView_DeviceList->collapseAll();
+            // }
+            else if ( deviceTreeExpandState != treeLevels-3 ){
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
+                ui->Devices_treeView_DeviceList->collapseAll();
+                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
             }
             else{
-                deviceTreeExpandState +=1;
-                ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-                settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
+                ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
+                ui->Devices_treeView_DeviceList->collapseAll();
             }
 
-        }
-        else if ( iconName=="expand-all" /* deviceTreeExpandState == 1 */){
-            //expanded second level > collapse
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            ui->Devices_treeView_DeviceList->expandToDepth(treeLevels);
-            settings.setValue("Devices/deviceTreeExpandState", deviceTreeExpandState);
-        }
-    }
-    else
-    {
-        if ( deviceTreeExpandState == 0 ){
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Devices_treeView_DeviceList->collapseAll();
-            ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-        }
-        else if ( deviceTreeExpandState == 1 ){
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            ui->Devices_treeView_DeviceList->collapseAll();
-            ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-        }
-        else{
-            ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            ui->Devices_treeView_DeviceList->collapseAll();
+    //deviceTreeExpandState == treeLevels-3
+
+
+            //deviceTreeExpandState == treeLevels-3
         }
     }
 }
@@ -1419,6 +1439,7 @@ void MainWindow::editDevice()
 //--------------------------------------------------------------------------
 void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
+    qDebug()<<activeDevice->type;
 
     //Keep previous values
     QString previousPath = activeDevice->path;
@@ -1426,6 +1447,7 @@ void MainWindow::saveDeviceForm()
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice();
+    qDebug()<<previousParentDevice.type;
 
     //Get new name and parentID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
@@ -1452,7 +1474,8 @@ void MainWindow::saveDeviceForm()
     Device newParentDevice;
     newParentDevice.ID = activeDevice->parentID;
     newParentDevice.loadDevice();
-    if (activeDevice->groupID == 0 and newParentDevice.type !="Storage"){
+    qDebug()<<newParentDevice.type;
+    if (activeDevice->type == "Catalog" and activeDevice->groupID == 0 and newParentDevice.type !="Storage"){
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText( tr("A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.<br/><br/>"

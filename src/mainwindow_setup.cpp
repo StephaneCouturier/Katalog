@@ -402,6 +402,9 @@
 
         //Filter
 
+        //Devices
+            ui->Devices_pushButton_TreeExpandCollapse->hide();
+
         //Search
             //hide Krename if not linux
             #ifndef Q_OS_LINUX
