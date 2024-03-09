@@ -46,7 +46,7 @@ void DeviceTreeView::initializeLists()
 {
     filecountColumnList << 3 << 4 << 5 << 6;
     filesizeColumnList << 7 << 8 << 9 << 10;
-    boldColumnList << 0;
+    boldColumnList << 0 << 6 << 7 << 8 << 9 << 10;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
@@ -82,9 +82,19 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
             case Qt::FontRole:
             {
                 if( boldColumnList.contains(index.column()) ){
-                    QFont boldFont;
-                    boldFont.setBold(true);
-                    return boldFont;
+                    QModelIndex idx = index.sibling(index.row(), 1);
+                    QString type = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
+                    if( type =="Virtual" ){
+                        QFont boldItalicFont;
+                        boldItalicFont.setBold(true);
+                        boldItalicFont.setItalic(true);
+                        return boldItalicFont;
+                    }
+                    else if( type =="Storage" ){
+                        QFont boldFont;
+                        boldFont.setBold(true);
+                        return boldFont;
+                    }
                 }
                 break;
             }
@@ -108,14 +118,11 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     QModelIndex idx = index.sibling(index.row(), 1);
                     QString type = QSortFilterProxyModel::data(idx, Qt::DisplayRole).toString();
 
-                    if(     type=="Location" ){
+                    if( type=="Virtual" ){
                         return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                     else if( type=="Storage" ){
                         return QIcon(QIcon::fromTheme("drive-harddisk"));
-                    }
-                    else if( type=="Virtual" ){
-                        return QIcon(QIcon::fromTheme("drive-multidisk"));
                     }
                     else if( type=="Catalog" ){
                         QModelIndex idx = index.sibling(index.row(), 2);

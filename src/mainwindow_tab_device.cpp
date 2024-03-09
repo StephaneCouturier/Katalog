@@ -43,7 +43,7 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
     Device *newDevice = new Device();
     newDevice->generateDeviceID();
     newDevice->type = "Virtual";
-    newDevice->name = tr("Virtual Top Item") + "_" + QString::number(newDevice->ID);
+    newDevice->name = tr("Virtual Group") + "_" + QString::number(newDevice->ID);
     newDevice->parentID = 0;
     newDevice->externalID = 0;
     newDevice->groupID = 1; //only DeviceID 1 can be a top item in group 0 (Pyhsical group)
@@ -244,12 +244,22 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             loadCatalogsTableToModel();
         });
 
+
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
         deviceContextMenu.addAction(menuDeviceAction2);
 
         connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
             editDevice();
         });
+
+        if(activeDevice->active==true){
+            QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("view-statistics"), tr("Filelight"), this);
+            deviceContextMenu.addAction(menuDeviceAction4);
+
+            connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
+                QProcess::startDetached("filelight", QStringList() << activeDevice->path);
+            });
+        }
 
         deviceContextMenu.addSeparator();
 
@@ -266,8 +276,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             deviceContextMenu.addAction(menuDeviceAction4);
 
             connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
-
-
                 deleteDeviceItem();
 
             });
@@ -306,6 +314,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             editDevice();
         });
 
+        if(activeDevice->active==true){
+            QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("gparted"), tr("Filelight"), this);
+            deviceContextMenu.addAction(menuDeviceAction5);
+
+            connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
+                QProcess::startDetached("filelight", QStringList() << activeDevice->path);
+            });
+        }
         deviceContextMenu.addSeparator();
 
         if(activeDevice->groupID !=0){
@@ -331,27 +347,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QString deviceName = activeDevice->name;
 
-        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add Virtual device"), this);
-        deviceContextMenu.addAction(menuDeviceAction1);
-
-        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
-            addDeviceVirtual();
-        });
-
-        QAction *menuDeviceAction6 = new QAction(QIcon::fromTheme("document-new"), tr("Add Storage device"), this);
-        deviceContextMenu.addAction(menuDeviceAction6);
-
-        connect(menuDeviceAction6, &QAction::triggered, this, [this, deviceName]() {
-            addDeviceStorage();
-        });
-
-        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
-        deviceContextMenu.addAction(menuDeviceAction5);
-
-        connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-            assignStorageToDevice(selectedDevice->storage->ID, activeDevice->ID);
-        });
-
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
         deviceContextMenu.addAction(menuDeviceAction2);
 
@@ -374,6 +369,29 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             collection->saveStatiticsToFile();
             loadDeviceTableToTreeModel();
             loadCatalogsTableToModel();
+        });
+
+        deviceContextMenu.addSeparator();
+
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add Virtual device"), this);
+        deviceContextMenu.addAction(menuDeviceAction1);
+
+        connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+            addDeviceVirtual();
+        });
+
+        QAction *menuDeviceAction6 = new QAction(QIcon::fromTheme("document-new"), tr("Add Storage device"), this);
+        deviceContextMenu.addAction(menuDeviceAction6);
+
+        connect(menuDeviceAction6, &QAction::triggered, this, [this, deviceName]() {
+            addDeviceStorage();
+        });
+
+        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
+        deviceContextMenu.addAction(menuDeviceAction5);
+
+        connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
+            assignStorageToDevice(selectedDevice->storage->ID, activeDevice->ID);
         });
 
         deviceContextMenu.addSeparator();
@@ -1155,11 +1173,11 @@ void MainWindow::loadDeviceTableToTreeModel()
 
     //Load Model to treeview (Filters/Device tree)
         DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
-
-        ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         deviceTreeViewForSelectionPanel->setSourceModel(deviceTreeModel);
-        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
+
         ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
+        ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
         ui->Filters_treeView_Devices->hideColumn(1);
         ui->Filters_treeView_Devices->hideColumn(2);
         ui->Filters_treeView_Devices->hideColumn(3);
@@ -1174,7 +1192,6 @@ void MainWindow::loadDeviceTableToTreeModel()
         //Restore Expand or Collapse Device Tree
         setTreeExpandState(false);
         setDeviceTreeExpandState(false);
-        deviceTreeViewForSelectionPanel->boldColumnList.clear();
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->expandAll();
 }

@@ -135,9 +135,7 @@
         //Adapt UI based on device type
         if (selectedDevice->type=="Storage"){
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
-            ui->Devices_pushButton_AssignStorage->setEnabled(true);
             ui->Devices_label_SelectedCatalogDisplay->setText("");
-            ui->Devices_label_SelectedStorageDisplay->setText(selectedDevice->name);
         }
         else if (selectedDevice->type=="Virtual"){
             ui->Devices_pushButton_AssignCatalog->setEnabled(false);
@@ -145,8 +143,6 @@
         }
         else if (selectedDevice->type=="Catalog"){
             ui->Devices_pushButton_AssignCatalog->setEnabled(true);
-            ui->Devices_pushButton_AssignStorage->setEnabled(false);
-            ui->Devices_label_SelectedStorageDisplay->setText("");
             ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
             if(selectedDevice->name!=""){
                 ui->Devices_pushButton_AssignCatalog->setEnabled(true);
@@ -174,7 +170,40 @@
         on_Filters_treeView_Devices_clicked(index);
 
         if (selectedDevice->type=="Storage"){
-            //Empty
+            QPoint globalPos = ui->Filters_treeView_Devices->mapToGlobal(pos);
+            QMenu deviceContextMenu;
+
+            QString deviceName = selectedDevice->name;
+
+            if(ui->tabWidget->currentIndex() != 0){
+                QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-find"), tr("Search"), this);
+                deviceContextMenu.addAction(menuDeviceAction1);
+
+                connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
+                    ui->tabWidget->setCurrentIndex(0);
+                });
+            }
+
+            QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
+            deviceContextMenu.addAction(menuDeviceAction3);
+
+            connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
+                //reloads catalog to explore at root level
+                reportAllUpdates(selectedDevice,
+                                 selectedDevice->updateDevice("update",
+                                                              collection->databaseMode,
+                                                              false,
+                                                              collection->collectionFolder,
+                                                              true),
+                                 "update");
+                collection->saveDeviceTableToFile();
+                collection->saveStatiticsToFile();
+
+                loadDeviceTableToTreeModel();
+                loadCatalogsTableToModel();
+            });
+
+            deviceContextMenu.exec(globalPos);
         }
         else if (selectedDevice->type=="Virtual"){
             //Empty
@@ -194,22 +223,6 @@
                 });
             }
 
-            QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
-            deviceContextMenu.addAction(menuDeviceAction2);
-
-            connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
-                exploreDevice->ID = selectedDevice->ID;
-                exploreDevice->loadDevice();
-
-                exploreSelectedFolderFullPath = exploreDevice->path;
-                exploreSelectedDirectoryName  = exploreDevice->path;
-
-                openCatalogToExplore();
-
-                //Go to explore tab
-                ui->tabWidget->setCurrentIndex(2);
-            });
-
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
 
@@ -227,6 +240,22 @@
 
                 loadDeviceTableToTreeModel();
                 loadCatalogsTableToModel();
+            });
+
+            QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
+            deviceContextMenu.addAction(menuDeviceAction2);
+
+            connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
+                exploreDevice->ID = selectedDevice->ID;
+                exploreDevice->loadDevice();
+
+                exploreSelectedFolderFullPath = exploreDevice->path;
+                exploreSelectedDirectoryName  = exploreDevice->path;
+
+                openCatalogToExplore();
+
+                //Go to explore tab
+                ui->tabWidget->setCurrentIndex(2);
             });
 
             deviceContextMenu.exec(globalPos);

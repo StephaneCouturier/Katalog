@@ -437,6 +437,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             relatedDevice.totalFileCount = totalFileCount;
             relatedDevice.totalFileSize  = totalFileSize;
             relatedDevice.saveDevice();
+            relatedDevice.updateParentsNumbers();
             parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
         }
     }
