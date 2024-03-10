@@ -262,8 +262,8 @@ class MainWindow : public QMainWindow
             int  optionDeviceTreeExpandState;
             bool optionDisplayCatalogs;
             bool optionDisplayStorage;
-            bool optionDisplayPhysicalGroupOnly;
-            bool optionDisplayAllExceptPhysicalGroup;
+            bool optionDisplayPhysicalGroup;
+            bool optionDisplayVirtualGroups;
             bool optionDisplayFullTable;
             int  deviceTreeExpandState;
 
@@ -492,8 +492,8 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_AssignStorage_clicked();
             void on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayStorage_stateChanged(int arg1);
-            void on_Devices_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1);
-            void on_Devices_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1);
+            void on_Devices_checkBox_DisplayVirtualGroups_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1);
             void on_Devices_treeView_DeviceList_clicked(const QModelIndex &index);
             void on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos);

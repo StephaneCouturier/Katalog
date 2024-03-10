@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-09";
+        releaseDate     = "2024-03-10";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -117,6 +117,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Storage_pushButton_SaveAll->hide();
             ui->Storage_pushButton_CreateList->hide();
             ui->Storage_pushButton_Reload->hide();
+            ui->Devices_pushButton_Edit->hide();
+            ui->Devices_pushButton_DeleteItem->hide();
 
 
             if( collection->databaseMode != "Memory"){
@@ -209,8 +211,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Setup tab: Devices
             ui->Devices_checkBox_DisplayCatalogs->setChecked(optionDisplayCatalogs);
             ui->Devices_checkBox_DisplayStorage->setChecked(optionDisplayStorage);
-            ui->Devices_checkBox_DisplayPhysicalGroupOnly->setChecked(optionDisplayPhysicalGroupOnly);
-            ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->setChecked(optionDisplayAllExceptPhysicalGroup);
+            ui->Devices_checkBox_DisplayPhysicalGroup->setChecked(optionDisplayPhysicalGroup);
+            ui->Devices_checkBox_DisplayVirtualGroups->setChecked(optionDisplayVirtualGroups);
             ui->Devices_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
             loadParentsList();
 

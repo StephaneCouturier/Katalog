@@ -6537,7 +6537,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QPushButton" name="Devices_pushButton_InsertRootLevel">
                 <property name="text">
-                 <string>Insert top level</string>
+                 <string>Insert Virtual Group</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-new"/>
@@ -6812,9 +6812,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Devices_checkBox_DisplayPhysicalGroupOnly">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayPhysicalGroup">
                 <property name="text">
-                 <string>Physical group only</string>
+                 <string>Physical Group</string>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
@@ -6822,9 +6822,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="Devices_checkBox_DisplayAllExceptPhysicalGroup">
+               <widget class="QCheckBox" name="Devices_checkBox_DisplayVirtualGroups">
                 <property name="text">
-                 <string>All except Physical group</string>
+                 <string>Virtual Groups</string>
                 </property>
                 <property name="checked">
                  <bool>false</bool>

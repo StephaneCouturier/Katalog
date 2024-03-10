@@ -147,21 +147,21 @@ void MainWindow::on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1)
     loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Devices_checkBox_DisplayPhysicalGroupOnly_stateChanged(int arg1)
+void MainWindow::on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Devices/DisplayPhysicalGroupOnly", arg1);
-    if(arg1>0)
-        ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->setChecked(false);
+    settings.setValue("Devices/DisplayPhysicalGroup", arg1);
+    if(arg1==0)
+        ui->Devices_checkBox_DisplayVirtualGroups->setChecked(true);
     loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Devices_checkBox_DisplayAllExceptPhysicalGroup_stateChanged(int arg1)
+void MainWindow::on_Devices_checkBox_DisplayVirtualGroups_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Devices/DisplayAllExceptPhysicalGroup", arg1);
-    if(arg1>0)
-        ui->Devices_checkBox_DisplayPhysicalGroupOnly->setChecked(false);
+    settings.setValue("Devices/DisplayVirtualGroups", arg1);
+    if(arg1==0)
+        ui->Devices_checkBox_DisplayPhysicalGroup->setChecked(true);
     loadDeviceTableToTreeModel();
 }
 //--------------------------------------------------------------------------
@@ -911,7 +911,9 @@ void MainWindow::loadDeviceTableToTreeModel()
                     FROM  device
                 )");
 
-    if (ui->Devices_checkBox_DisplayPhysicalGroupOnly->isChecked() == true) {
+    if (ui->Devices_checkBox_DisplayPhysicalGroup->isChecked() == true and
+        ui->Devices_checkBox_DisplayVirtualGroups->isChecked() == false) {
+
         querySQL = QLatin1String(R"(
 
                     WITH RECURSIVE device_tree AS (
@@ -968,7 +970,9 @@ void MainWindow::loadDeviceTableToTreeModel()
                     FROM device_tree
                 )");
     }
-    else if (ui->Devices_checkBox_DisplayAllExceptPhysicalGroup->isChecked() == true) {
+    else if (ui->Devices_checkBox_DisplayPhysicalGroup->isChecked() == false and
+               ui->Devices_checkBox_DisplayVirtualGroups->isChecked() == true) {
+
         querySQL = QLatin1String(R"(
                     WITH RECURSIVE device_tree AS (
                       SELECT

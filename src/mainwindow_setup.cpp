@@ -370,8 +370,8 @@
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
             optionDisplayCatalogs         = settings.value("Devices/DisplayCatalogs").toBool();
             optionDisplayStorage          = settings.value("Devices/DisplayStorage").toBool();
-            optionDisplayPhysicalGroupOnly= settings.value("Devices/DisplayPhysicalGroupOnly").toBool();
-            optionDisplayAllExceptPhysicalGroup= settings.value("Devices/DisplayAllExceptPhysicalGroup").toBool();
+            optionDisplayPhysicalGroup    = settings.value("Devices/DisplayPhysicalGroup").toBool();
+            optionDisplayVirtualGroups    = settings.value("Devices/DisplayVirtualGroups").toBool();
             optionDisplayFullTable        = settings.value("Devices/DisplayFullTable").toBool();
 
             //Restore DEV Settings
