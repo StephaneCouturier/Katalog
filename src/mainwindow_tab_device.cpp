@@ -254,6 +254,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 backupFile(activeDevice->catalog->filePath);
             }
             //Update and report
+            activeDevice->catalog->appVersion = currentVersion;
             reportAllUpdates(activeDevice,
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
@@ -1185,10 +1186,10 @@ void MainWindow::editDevice()
         ui->Storage_lineEdit_Panel_Label->setText(activeDevice->storage->label);
         ui->Storage_lineEdit_Panel_FileSystem->setText(activeDevice->storage->fileSystem);
 
-        ui->Storage_lineEdit_Panel_Total->setText(QString::number(activeDevice->storage->totalSpace));
-        ui->Storage_lineEdit_Panel_Free->setText(QString::number(activeDevice->storage->freeSpace));
-        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(activeDevice->storage->totalSpace));
-        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(activeDevice->storage->freeSpace));
+        ui->Storage_lineEdit_Panel_Total->setText(QString::number(activeDevice->totalSpace));
+        ui->Storage_lineEdit_Panel_Free->setText(QString::number(activeDevice->freeSpace));
+        ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(activeDevice->totalSpace));
+        ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(activeDevice->freeSpace));
 
         ui->Storage_lineEdit_Panel_BrandModel->setText(activeDevice->storage->brand_model);
         ui->Storage_lineEdit_Panel_SerialNumber->setText(activeDevice->storage->serialNumber);
@@ -1229,7 +1230,6 @@ void MainWindow::saveDeviceForm()
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice();
-    qDebug()<<previousParentDevice.type;
 
     //Get new name and parentID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
@@ -1287,7 +1287,10 @@ void MainWindow::saveDeviceForm()
 
     //Save device
     activeDevice->groupID = newGroupID;
+    activeDevice->totalSpace = ui->Storage_lineEdit_Panel_Total->text().toLongLong();
+    activeDevice->freeSpace  = ui->Storage_lineEdit_Panel_Free->text().toLongLong();
     activeDevice->saveDevice();
+    collection->saveDeviceTableToFile();
 
     //If device is a catalog, rename in catalog table
     if(activeDevice->type == "Catalog"){
@@ -1426,9 +1429,6 @@ void MainWindow::saveDeviceForm()
                 //Refresh
                 if(collection->databaseMode=="Memory")
                     collection->loadCatalogFilesToTable();
-
-                //loadCatalogsTableToModel();
-                //loadCatalogsTableToModel();
             }
         }
 
@@ -1459,8 +1459,6 @@ void MainWindow::saveDeviceForm()
         queryStorage.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
         queryStorage.bindValue(":storage_label",         ui->Storage_lineEdit_Panel_Label->text());
         queryStorage.bindValue(":storage_file_system",   ui->Storage_lineEdit_Panel_FileSystem->text());
-        queryStorage.bindValue(":storage_total_space",   ui->Storage_lineEdit_Panel_Total->text());
-        queryStorage.bindValue(":storage_free_space",    ui->Storage_lineEdit_Panel_Free->text());
         queryStorage.bindValue(":storage_brand_model",   ui->Storage_lineEdit_Panel_BrandModel->text());
         queryStorage.bindValue(":storage_serial_number", ui->Storage_lineEdit_Panel_SerialNumber->text());
         queryStorage.bindValue(":storage_build_date",    ui->Storage_lineEdit_Panel_BuildDate->text());
@@ -1557,18 +1555,21 @@ void MainWindow::loadDevicesView(){
         ui->Devices_widget_TreeOptions->hide();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->show();
+        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
     else if(ui->Devices_radioButton_CatalogList->isChecked()==true){
         loadDevicesCatalogToModel();
         ui->Devices_widget_TreeOptions->hide();
         ui->Devices_widget_CatalogStats->show();
         ui->Devices_widget_StorageStats->hide();
+        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
     else{
         loadDevicesTreeToModel(true);
         ui->Devices_widget_TreeOptions->show();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->hide();
+        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
 }
 //--------------------------------------------------------------------------
@@ -1963,7 +1964,7 @@ void MainWindow::loadDevicesStorageToModel(){
                                                  tr("Active"),
                                                  tr("ID"),
                                                  tr("Parent ID"),
-                                                 tr("External ID"),
+                                                 tr("Storage ID"),
                                                  tr("Number of files"),
                                                  tr("Total Size"),
                                                  tr("Used space"),
@@ -2096,17 +2097,11 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
-        //ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
-        // ui->Devices_treeView_DeviceList->header()->showSection(3); //ID
-        // ui->Devices_treeView_DeviceList->header()->showSection(4); //Parent ID
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->showSection(13); //Group ID
     } else {
-        //ui->Devices_treeView_DeviceList->header()->hideSection(1); //Type
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
-        // ui->Devices_treeView_DeviceList->header()->hideSection(3); //ID
-        // ui->Devices_treeView_DeviceList->header()->hideSection(4); //Parent ID
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
     }
@@ -2190,7 +2185,7 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("Active"),
                                                  tr("ID"),
                                                  tr("Parent ID"),
-                                                 tr("External ID"),
+                                                 tr("Catalog ID"),
                                                  tr("Number of files"),
                                                  tr("Total Size"),
                                                  tr("Used space"),
@@ -2199,15 +2194,15 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("Date updated"),
                                                  tr("Path"),
                                                  tr("Group ID"),
-                                                 tr("catalog_file_path"),
-                                                 tr("catalog_date_updated"),
-                                                 tr("catalog_file_type"),
-                                                 tr("catalog_include_hidden"),
-                                                 tr("catalog_include_metadata"),
+                                                 tr("Date Updated"),
+                                                 tr("File Type"),
+                                                 tr("include hidden"),
+                                                 tr("include metadata"),
                                                  tr("Parent storage"),
-                                                 tr("catalog_is_full_device"),
-                                                 tr("catalog_date_loaded"),
-                                                 tr("catalog_app_version"),
+                                                 tr("Fulldevice"),
+                                                 tr("Date Loaded"),
+                                                 tr("app version"),
+                                                 tr("File path"),
                                                  "" });
 
     //Create a map to store items by ID for easy access
@@ -2257,7 +2252,6 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(dateTimeUpdated);
         rowItems << new QStandardItem(path);
         rowItems << new QStandardItem(QString::number(groupID));
-        rowItems << new QStandardItem(catalog_file_path);
         rowItems << new QStandardItem(catalog_date_updated);
         rowItems << new QStandardItem(catalog_file_type);
         rowItems << new QStandardItem(catalog_include_hidden);
@@ -2266,6 +2260,7 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(catalog_is_full_device);
         rowItems << new QStandardItem(catalog_date_loaded);
         rowItems << new QStandardItem(catalog_app_version);
+        rowItems << new QStandardItem(catalog_file_path);
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -2322,19 +2317,17 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection(10); //Total space
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
-        //ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
-        // ui->Devices_treeView_DeviceList->header()->showSection(3); //ID
-        // ui->Devices_treeView_DeviceList->header()->showSection(4); //Parent ID
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->showSection(13); //Group ID
     } else {
-        //ui->Devices_treeView_DeviceList->header()->hideSection(1); //Type
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
-        // ui->Devices_treeView_DeviceList->header()->hideSection(3); //ID
-        // ui->Devices_treeView_DeviceList->header()->hideSection(4); //Parent ID
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+    }
+
+    if (collection->databaseMode !="Memory") {
+        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Active
     }
 
     ui->Devices_treeView_DeviceList->expandAll();
@@ -3042,7 +3035,6 @@ bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString up
             msgBox.exec();
         }
         if (updateType=="list"){
-            qDebug()<<"test";
             if(list[0]==1){//Catalog updated
                 message = QString(tr("<table>"
                                      "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
@@ -3195,7 +3187,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     Device loopDevice;
     for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
         // Get the index for the "Active" field in the current row
-        QModelIndex activeIndex = ui->Devices_treeView_DeviceList->model()->index(row, 7);
+        QModelIndex activeIndex = ui->Devices_treeView_DeviceList->model()->index(row, 2);
 
         // Retrieve the data for the "Active" field (assuming it contains an icon)
         QIcon activeIcon = qvariant_cast<QIcon>(ui->Devices_treeView_DeviceList->model()->data(activeIndex, Qt::DecorationRole));
@@ -3203,8 +3195,9 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
         // Check if the icon is set to "dialog-ok-apply"
         if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
             updatedCatalogs +=1;
-            loopDevice.ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 15)).toInt();
+            loopDevice.ID = ui->Devices_treeView_DeviceList->model()->data(ui->Devices_treeView_DeviceList->model()->index(row, 3)).toInt();
             loopDevice.loadDevice();
+            loopDevice.catalog->appVersion = currentVersion;
 
             QList<qint64> list = loopDevice.updateDevice("update",
                                                          collection->databaseMode,
@@ -3252,6 +3245,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
 {
+    activeDevice->catalog->appVersion = currentVersion;
     reportAllUpdates(activeDevice,
                      activeDevice->updateDevice("update",
                                                 collection->databaseMode,

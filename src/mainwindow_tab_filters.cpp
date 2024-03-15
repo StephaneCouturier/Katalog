@@ -226,6 +226,7 @@
             deviceContextMenu.addAction(menuDeviceAction3);
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 //reloads catalog to explore at root level
+                selectedDevice->catalog->appVersion = currentVersion;
                 reportAllUpdates(selectedDevice,
                                  selectedDevice->updateDevice("update",
                                                               collection->databaseMode,

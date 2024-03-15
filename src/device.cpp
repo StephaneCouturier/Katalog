@@ -350,6 +350,8 @@ void Device::saveDevice()
                                     device_group_id =:device_group_id,
                                     device_total_file_size =:device_total_file_size,
                                     device_total_file_count =:device_total_file_count,
+                                    device_total_space =:device_total_space,
+                                    device_free_space =:device_free_space,
                                     device_group_id =:device_group_id,
                                     device_date_updated =:device_date_updated
                             WHERE   device_id=:device_id
@@ -363,6 +365,8 @@ void Device::saveDevice()
     query.bindValue(":device_group_id", groupID);
     query.bindValue(":device_total_file_size", totalFileSize);
     query.bindValue(":device_total_file_count", totalFileCount);
+    query.bindValue(":device_total_space", totalSpace);
+    query.bindValue(":device_free_space", freeSpace);
     query.bindValue(":device_group_id",  groupID);
     query.bindValue(":device_date_updated",  dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss"));
     query.exec();

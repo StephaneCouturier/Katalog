@@ -47,6 +47,7 @@ void DeviceTreeView::initializeLists()
     filecountColumnList << 3 << 4 << 5 << 6;
     filesizeColumnList << 7 << 8 << 9 << 10;
     boldColumnList << 0 << 6 << 7 << 8 << 9 << 10;
+    booleanColumnList   <<2;//<<17 <<18 <<20;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
@@ -72,6 +73,10 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     else if( percentColumnList.contains(index.column()) && QSortFilterProxyModel::data(index, role).toDouble() >= 0)
                         return QVariant("+" + QLocale().toString(QSortFilterProxyModel::data(index, role).toDouble(), 'f', 2) + " %");
 
+                }
+                //BooleanColumnList columns (display tick icon or nothing)
+                else if( booleanColumnList.contains(index.column()) ){
+                    return QVariant("");
                 }
 
                 else QSortFilterProxyModel::data(index, role) ;
@@ -134,6 +139,12 @@ QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
                     }
                     else if( type=="" ){
                         return QIcon(QIcon::fromTheme("drive-multidisk"));
+                    }
+                }
+                //Icon for boolean items
+                else if ( booleanColumnList.contains(index.column()) ){
+                    if( QSortFilterProxyModel::data(index, Qt::DisplayRole).toBool() == true ){
+                        return QIcon(QIcon::fromTheme("dialog-ok-apply"));
                     }
                 }
                 break;

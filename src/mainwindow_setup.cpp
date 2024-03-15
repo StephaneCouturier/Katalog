@@ -398,7 +398,7 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Tabs
-            ui->tabWidget->removeTab(9);
+            ui->tabWidget->removeTab(7);
 
         //Filter
 

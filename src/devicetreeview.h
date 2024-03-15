@@ -41,7 +41,7 @@ class DeviceTreeView  : public QSortFilterProxyModel
 public:
     DeviceTreeView(QObject *parent = nullptr);
 
-    QList<int> filesizeColumnList, filecountColumnList, percentColumnList, boldColumnList;
+    QList<int> filesizeColumnList, filecountColumnList, percentColumnList, boldColumnList, booleanColumnList;
 
     QString m_selectedDeviceName;
     QString m_selectedDeviceType;
