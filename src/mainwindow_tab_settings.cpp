@@ -311,14 +311,17 @@
             //Create Device and related Storage under Physical group (ID=0)
             Device *newDevice = new Device();
             newDevice->generateDeviceID();
+
             newDevice->parentID = 2;
+            if(newDevice->verifyParentDeviceExistsInPhysicalGroup()==false)
+                newDevice->parentID = 1;
+
             newDevice->name = tr("Default Storage");
             newDevice->type = "Storage";
             newDevice->storage->generateID();
             newDevice->externalID = newDevice->storage->ID;
             newDevice->groupID = 0;
             newDevice->insertDevice();
-            //newDevice->storage->name = newDevice->name; //REMOVE
             newDevice->storage->insertStorage();
 
             //Save data to file

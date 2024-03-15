@@ -73,6 +73,7 @@ public:
 
         void verifyHasSubDevice();
         bool verifyDeviceNameExists();
+        bool verifyParentDeviceExistsInPhysicalGroup();
         void updateActive();
 
         QList<qint64> updateDevice(QString statiticsRequestSource,

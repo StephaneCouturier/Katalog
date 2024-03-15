@@ -250,6 +250,29 @@ bool Device::verifyDeviceNameExists()
     return query.value(0).toInt() > 0;
 }
 
+bool Device::verifyParentDeviceExistsInPhysicalGroup()
+{
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT COUNT(*)
+                                    FROM   device
+                                    WHERE  device_id = :device_id
+                                    AND group_id = 0
+                                )");
+
+    query.prepare(querySQL);
+    query.bindValue(":device_id", parentID);
+
+    if (!query.exec()) {
+        // Handle SQL error
+        qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
+        return false;
+    }
+
+    query.next();
+    return query.value(0).toInt() > 0;
+}
+
 void Device::verifyHasSubDevice(){
 
     QSqlQuery queryVerifyChildren;

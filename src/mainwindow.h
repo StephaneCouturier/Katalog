@@ -261,7 +261,7 @@ class MainWindow : public QMainWindow
             int  deviceTreeExpandState;
 
             void addDeviceVirtual();
-            void addDeviceStorage();
+            void addDeviceStorage(int parentID);
             void editDevice();
             void saveDeviceForm();
             void assignCatalogToDevice(Device *catalogDevice, Device *parentDevice);

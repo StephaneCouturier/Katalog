@@ -98,17 +98,15 @@ void MainWindow::on_Devices_pushButton_AddVirtual_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 {
-    if(activeDevice->type =="Virtual")
-        addDeviceStorage();
-    else{
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                   "A Storage device can only be added to a virtual device.<br/>"
-                                                   ));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-    }
+    //Define parent ID
+    int parentID;
+    if(selectedDevice->type =="Virtual")
+        parentID = selectedDevice->ID;
+    else
+        parentID = 1;
+
+    //add Storage device
+    addDeviceStorage(parentID);
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
@@ -381,14 +379,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
         deviceContextMenu.addAction(menuDeviceAction2);
-
         connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
             editDevice();
         });
 
         QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction3);
-
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
             reportAllUpdates(activeDevice,
                              activeDevice->updateDevice("update",
@@ -406,7 +402,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("document-new"), tr("Add Virtual device"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
-
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             addDeviceVirtual();
         });
@@ -415,13 +410,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             QAction *menuDeviceAction6 = new QAction(QIcon::fromTheme("document-new"), tr("Add Storage device"), this);
             deviceContextMenu.addAction(menuDeviceAction6);
             connect(menuDeviceAction6, &QAction::triggered, this, [this, deviceName]() {
-                addDeviceStorage();
+                addDeviceStorage(activeDevice->ID);
             });
         }
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
         deviceContextMenu.addAction(menuDeviceAction5);
-
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
             assignStorageToDevice(selectedDevice->storage->ID, activeDevice->ID);
         });
@@ -430,9 +424,19 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
-
         connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
-            deleteDeviceItem();
+            if(activeDevice->ID !=1)
+                deleteDeviceItem();
+            else{
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "This Group is necessary to host Storage and Catalogs.<br/>"
+                                                           "It cannot be deleted."
+                                                           ) );
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
+            }
         });
 
         deviceContextMenu.exec(globalPos);
@@ -1111,18 +1115,18 @@ void MainWindow::addDeviceVirtual()
     editDevice();
 }
 //--------------------------------------------------------------------------
-void MainWindow::addDeviceStorage()
+void MainWindow::addDeviceStorage(int parentID)
 {//Create a new storage device, and add it to the selected Device
 
     //Create Device and related Storage under Physical group (ID=0)
     Device *newDevice = new Device();
     newDevice->generateDeviceID();
-    newDevice->parentID = activeDevice->ID;
+    newDevice->parentID = parentID;
     newDevice->name = tr("Storage") + "_" + QString::number(newDevice->ID);
     newDevice->type = "Storage";
     newDevice->storage->generateID();
     newDevice->externalID = newDevice->storage->ID;
-    newDevice->groupID = activeDevice->groupID;
+    newDevice->groupID = 0;
     newDevice->insertDevice();
     newDevice->storage->name = newDevice->name; //REMOVE
     newDevice->storage->insertStorage();
@@ -1148,6 +1152,7 @@ void MainWindow::addDeviceStorage()
     //Make it the activeDevice and edit
     activeDevice->ID = newDevice->ID;
     activeDevice->loadDevice();
+    loadDevicesTreeToModel(false);
     editDevice();
 }
 //--------------------------------------------------------------------------
