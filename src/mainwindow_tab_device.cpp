@@ -1040,18 +1040,18 @@ void MainWindow::shiftIDsInDeviceTable(int shiftAmount)
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadParentsList()
-{//Load valid list of parents to the panel comboBox. It enables a selection to change the parent of a device
+{//Load valid list of parents to the panel comboBox. It enables a selection to change the parent of a device.
 
     //Get data
+    //A device can only be moved within its group (0= Physical, 1= Virtual)
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                SELECT v.device_name, v.device_id
-                                FROM device v
-
+                                SELECT device_name, device_id
+                                FROM device
                                 WHERE device_id !=0
                                 AND device_id !=:selected_device_id
-                            )"); //                                AND device_type NOT IN ("Catalog","Storage")
-
+                                AND device_group_id =:device_group_id
+                            )");
 
     if(activeDevice->type == "Catalog"){
         querySQL += QLatin1String(R"(AND device_type NOT IN ("Catalog"))");
@@ -1063,11 +1063,12 @@ void MainWindow::loadParentsList()
 
     query.prepare(querySQL);
     query.bindValue(":selected_device_id", activeDevice->ID);
+    query.bindValue(":device_group_id", activeDevice->groupID);
     query.exec();
 
     //Load to comboboxes
     ui->Devices_comboBox_Parent->clear();
-    ui->Devices_comboBox_Parent->addItem("Top level",query.value(1).toInt());
+    ui->Devices_comboBox_Parent->addItem("Top level", query.value(1).toInt());
 
     while(query.next())
     {
