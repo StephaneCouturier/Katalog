@@ -145,9 +145,6 @@ class MainWindow : public QMainWindow
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
-            QStandardItemModel *deviceTreeModel = new QStandardItemModel();
-            QStandardItemModel *storageTreeModel = new QStandardItemModel();
-            QStandardItemModel *catalogTreeModel = new QStandardItemModel();
 
         //Filters panel
             int  filtersTreeExpandState;
@@ -270,7 +267,7 @@ class MainWindow : public QMainWindow
             void deleteDeviceItem();
 
             void loadDevicesView();
-            void loadDevicesTreeToModel(bool loadToDevicesTree);
+            void loadDevicesTreeToModel(QString targetTreeModel);
             void loadDevicesStorageToModel();
             void loadDevicesCatalogToModel();
 
@@ -454,12 +451,9 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_InsertRootLevel_clicked();
             void on_Devices_pushButton_AddVirtual_clicked();
             void on_Devices_pushButton_AddStorage_clicked();
-            void on_Devices_pushButton_DeleteItem_clicked();
-            void on_Devices_pushButton_Edit_clicked();
             void on_Devices_pushButton_Save_clicked();
             void on_Devices_pushButton_Cancel_clicked();
             void on_Devices_pushButton_AssignCatalog_clicked();
-            void on_Devices_pushButton_AssignStorage_clicked();
             void on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayStorage_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1);

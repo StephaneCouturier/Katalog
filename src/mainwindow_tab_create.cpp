@@ -291,6 +291,7 @@
 
                 //Refresh filter tree
                 collection->loadDeviceFileToTable();
+                loadDevicesTreeToModel("Filters");
                 loadDevicesView();
 
                 //Change tab to show the result of the catalog creation

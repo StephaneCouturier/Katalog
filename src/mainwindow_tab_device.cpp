@@ -77,6 +77,7 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
     collection->saveDeviceTableToFile();
 
     //Reload
+    loadDevicesTreeToModel("Filters");
     loadDevicesView();
     loadParentsList();
 }
@@ -112,21 +113,6 @@ void MainWindow::on_Devices_pushButton_AddStorage_clicked()
 void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
 {
     assignCatalogToDevice(selectedDevice, activeDevice);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_AssignStorage_clicked()
-{
-    assignStorageToDevice(selectedDevice->storage->ID, selectedDevice->ID);
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_DeleteItem_clicked()
-{
-    deleteDeviceItem();
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_Edit_clicked()
-{
-    editDevice();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_EditList_clicked()
@@ -339,7 +325,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
         deviceContextMenu.addAction(menuDeviceAction2);
-
         connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
             editDevice();
         });
@@ -364,7 +349,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         }
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this storage"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
-
         connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
             deleteDeviceItem();
         });
@@ -822,6 +806,7 @@ void MainWindow::deleteDeviceItem()
 
     //Reload data to models
     updateStorageSelectionStatistics();
+    loadDevicesTreeToModel("Filters");
     loadDevicesView();
 }
 //--------------------------------------------------------------------------
@@ -1106,6 +1091,7 @@ void MainWindow::addDeviceVirtual()
     collection->saveDeviceTableToFile();
 
     //Reload
+    loadDevicesTreeToModel("Filters");
     loadDevicesView();
     loadParentsList();
 
@@ -1135,6 +1121,7 @@ void MainWindow::addDeviceStorage(int parentID)
     collection->saveDeviceTableToFile();
 
     //Reload
+    loadDevicesTreeToModel("Filters");
     loadDevicesView();
     loadParentsList();
 
@@ -1152,7 +1139,8 @@ void MainWindow::addDeviceStorage(int parentID)
     //Make it the activeDevice and edit
     activeDevice->ID = newDevice->ID;
     activeDevice->loadDevice();
-    loadDevicesTreeToModel(false);
+    loadDevicesTreeToModel("Filters");
+    loadDevicesView();
     editDevice();
 }
 //--------------------------------------------------------------------------
@@ -1570,7 +1558,7 @@ void MainWindow::loadDevicesView(){
         //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
     else{
-        loadDevicesTreeToModel(true);
+        loadDevicesTreeToModel("Devices");
         ui->Devices_widget_TreeOptions->show();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->hide();
@@ -1578,7 +1566,7 @@ void MainWindow::loadDevicesView(){
     }
 }
 //--------------------------------------------------------------------------
-void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
+void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 {
     //Refresh active state
     updateAllDeviceActive();
@@ -1746,8 +1734,9 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
     query.exec();
 
     //Prepare the tree model: headers
-    deviceTreeModel->clear();
-    deviceTreeModel->setHorizontalHeaderLabels({
+    QStandardItemModel *devicesTreeModel = new QStandardItemModel();
+
+    devicesTreeModel->setHorizontalHeaderLabels({
                                                 tr("Name"),
                                                 tr("Device Type"),
                                                 tr("Active"),
@@ -1809,7 +1798,7 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
 
         //Add top-level items directly to the model
         if (parentId == 0) {
-            deviceTreeModel->appendRow(rowItems);
+            devicesTreeModel->appendRow(rowItems);
         }
         //else append the row to the parent item
         else{
@@ -1827,10 +1816,10 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
         itemMap.insert(id, item);
     }
 
-    if(loadToDevicesTree==true){
+    if(targetTreeModel=="Devices" or targetTreeModel=="All"){
         //Load Model to treeview (Devices tab)
         DeviceTreeView *deviceTreeViewForDeviceTab = new DeviceTreeView(this);
-        deviceTreeViewForDeviceTab->setSourceModel(deviceTreeModel);
+        deviceTreeViewForDeviceTab->setSourceModel(devicesTreeModel);
         ui->Devices_treeView_DeviceList->setModel(deviceTreeViewForDeviceTab);
 
         //Customize tree display
@@ -1869,10 +1858,12 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
 
         ui->Devices_treeView_DeviceList->expandAll();
     }
-    //else {
+    if(targetTreeModel=="Filters" or targetTreeModel=="All"){
+        QStandardItemModel *filtersTreeModel = new QStandardItemModel();
+        filtersTreeModel = devicesTreeModel;
         //Load Model to treeview (Filters/Device tree)
         DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
-        deviceTreeViewForSelectionPanel->setSourceModel(deviceTreeModel);
+        deviceTreeViewForSelectionPanel->setSourceModel(filtersTreeModel);
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->sortByColumn(0,Qt::AscendingOrder);
         ui->Filters_treeView_Devices->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -1883,6 +1874,7 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
         ui->Filters_treeView_Devices->collapseAll();
         ui->Filters_treeView_Devices->header()->hide();
 
+        //Hide all columns but the first
         for (int var = 1; var < deviceTreeViewForSelectionPanel->columnCount(); ++var) {
             ui->Filters_treeView_Devices->header()->hideSection(var);
         }
@@ -1892,7 +1884,7 @@ void MainWindow::loadDevicesTreeToModel(bool loadToDevicesTree)
         setDeviceTreeExpandState(false);
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->expandAll();
-    //}
+    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadDevicesStorageToModel(){
@@ -1962,7 +1954,7 @@ void MainWindow::loadDevicesStorageToModel(){
     loadStorageQuery.exec();
 
     //Prepare the tree model: headers
-    storageTreeModel->clear();
+    QStandardItemModel *storageTreeModel = new QStandardItemModel();
     storageTreeModel->setHorizontalHeaderLabels({
                                                  tr("Name"),
                                                  tr("Device Type"),
@@ -2183,7 +2175,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     loadCatalogQuery.exec();
 
     //Prepare the tree model: headers
-    catalogTreeModel->clear();
+    QStandardItemModel *catalogTreeModel = new QStandardItemModel();
     catalogTreeModel->setHorizontalHeaderLabels({
                                                  tr("Name"),
                                                  tr("Device Type"),

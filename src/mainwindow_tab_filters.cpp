@@ -308,13 +308,10 @@
         ui->Filters_label_DisplayDevice->setText(tr("All"));
         ui->Devices_label_SelectedCatalogDisplay->setText("");
 
-        //Reload data
-        //loadCatalogsTableToModel();
-
         //Reset device tree
         setTreeExpandState(false);
         collection->loadDeviceFileToTable();
-        loadDevicesView();
+        loadDevicesTreeToModel("Filters");
 
         filterFromSelectedDevice();
 
@@ -327,17 +324,16 @@
     //----------------------------------------------------------------------
     void MainWindow::filterFromSelectedDevice()
     {
-        //Display selection values
+        //Display selected values
         displaySelectedDeviceName();
 
         //Load matching Catalogs, Storage, and Statistics
-            //Devices
-            loadDevicesView();
-            updateCatalogsScreenStatistics();
-            updateStorageSelectionStatistics();
+        loadDevicesView();
+        updateCatalogsScreenStatistics();
+        updateStorageSelectionStatistics();
 
-            //Statistics
-            loadStatisticsChart();
+        //Statistics
+        loadStatisticsChart();
     }
     //----------------------------------------------------------------------
     void MainWindow::setTreeExpandState(bool toggle)

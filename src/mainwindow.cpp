@@ -235,8 +235,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Context menu and other slots and signals
             setupFileContextMenus();
 
-
-
             //Header Order change
             connect(ui->Devices_treeView_DeviceList->header(), &QHeaderView::sortIndicatorChanged,
                     this, &::MainWindow::on_DevicesTreeViewDeviceListHeaderSortOrderChanged);
@@ -256,7 +254,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));
             ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
-
 }
 
 MainWindow::~MainWindow()

@@ -273,7 +273,7 @@
         //Generate collection files paths and statistics parameters
         collection->generateCollectionFilesPaths();
 
-        //Load data from files to database
+        //Load data from files to database ("Memory" database mode
             //Create a Storage list (if none exists) + conversions
             collection->createStorageFile();
 
@@ -291,9 +291,8 @@
             updateAllDeviceActive();
 
         //Load data from tables to models and update display
-            loadDevicesTreeToModel(false);
+            loadDevicesTreeToModel("Filters");
             loadSearchHistoryTableToModel();
-            loadDevicesView();
             filterFromSelectedDevice();
 
         //Add a default storage device, to force any new catalog to have one
