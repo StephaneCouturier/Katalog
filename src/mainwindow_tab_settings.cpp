@@ -342,12 +342,7 @@
     //----------------------------------------------------------------------
     void MainWindow::preloadCatalogs()
     {
-        foreach(QString sourceCatalog,catalogSelectedList)
-        {
-                    selectedDevice->name = sourceCatalog;
-                    selectedDevice->catalog->loadCatalog();
-                    selectedDevice->catalog->loadCatalogFileListToTable();
-        }
+        collection->loadAllCatalogFiles();
     }
     //----------------------------------------------------------------------
     void MainWindow::selectDatabaseFilePath()

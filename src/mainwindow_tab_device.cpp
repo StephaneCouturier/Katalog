@@ -231,7 +231,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction1);
-
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             //BackUp the file before, if the option is selected
             if ( ui->Settings_checkBox_KeepOneBackUp->isChecked() == true){
@@ -255,7 +254,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
         deviceContextMenu.addAction(menuDeviceAction5);
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-            exploreDevice->ID = selectedDevice->ID;
+            exploreDevice->ID = activeDevice->ID;
             exploreDevice->loadDevice();
 
             exploreSelectedFolderFullPath = exploreDevice->path;

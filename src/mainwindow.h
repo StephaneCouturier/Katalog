@@ -193,7 +193,6 @@ class MainWindow : public QMainWindow
         //TAB: Catalogs
             QStringListModel catalogListModel;
             QStringList catalogFileList;
-            QStringList catalogSelectedList;
 
             void loadCollection();
             void updateCatalogsScreenStatistics();

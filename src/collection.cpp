@@ -50,6 +50,25 @@ void Collection::generateCollectionFilesPaths()
 
 }
 //----------------------------------------------------------------------
+void Collection::loadAllCatalogFiles()
+{//Load all catalog files to memory
+    if(databaseMode=="Memory"){
+        QSqlQuery queryLoadAllCatalogFiles;
+        QString queryLoadAllCatalogFilesSQL = QLatin1String(R"(
+                                        SELECT device_id
+                                        FROM device
+                                        WHERE device_type ='Catalog'
+                                    )");
+        queryLoadAllCatalogFiles.prepare(queryLoadAllCatalogFilesSQL);
+        queryLoadAllCatalogFiles.exec();
+        while(queryLoadAllCatalogFiles.next()){
+            Device tempDevice;
+            tempDevice.ID = queryLoadAllCatalogFiles.value(0).toInt();          
+            tempDevice.loadDevice();
+            tempDevice.catalog->loadCatalogFileListToTable();
+        }
+    }
+}
 void Collection::saveDeviceTableToFile()
 {
     if (databaseMode == "Memory"){

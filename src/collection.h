@@ -75,6 +75,7 @@ public:
     void generateCollectionFilesPaths();
 
     //File loading
+    void loadAllCatalogFiles();
     void loadDeviceFileToTable();
     void loadCatalogFilesToTable();
     void loadStorageFileToTable();
