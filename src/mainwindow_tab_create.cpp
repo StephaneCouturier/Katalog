@@ -245,11 +245,10 @@
                 parentStorageDevice.path = newDevice->path;
                 parentStorageDevice.saveDevice();
                 collection->saveStorageTableToFile();
-                loadStorageTableToModel();
             }
 
             //Reload
-            loadDeviceTableToTreeModel();
+            loadDevicesView();
             loadStorageList();
 
         //Launch the scan and cataloging of files, including statistics
@@ -285,30 +284,24 @@
 
                 //Refresh Catalogs list
                 updateAllDeviceActive();
-                loadCatalogsTableToModel();
-                loadDeviceTableToTreeModel();
+                loadDevicesView();
 
                 //Restore selected catalog
                 ui->Filters_label_DisplayCatalog->setText(ui->Filters_label_DisplayCatalog->text());
 
                 //Refresh filter tree
                 collection->loadDeviceFileToTable();
-                loadDeviceTableToTreeModel();
+                loadDevicesView();
 
                 //Change tab to show the result of the catalog creation
                 ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
 
-                //Disable buttons to force user to select a catalog
-                ui->Catalogs_pushButton_Search->setEnabled(false);
-                ui->Catalogs_pushButton_ExploreCatalog->setEnabled(false);
-                ui->Catalogs_pushButton_EditCatalogFile->setEnabled(false);
+                //Disable buttons
                 ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-                ui->Catalogs_pushButton_ViewCatalogStats->setEnabled(false);
-                ui->Catalogs_pushButton_DeleteCatalog->setEnabled(false);
             }
             else{
                 newDevice->deleteDevice(false);
-                loadDeviceTableToTreeModel();
+                loadDevicesView();
             }
     }
     //--------------------------------------------------------------------------

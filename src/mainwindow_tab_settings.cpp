@@ -131,7 +131,7 @@
                     QMessageBox::warning(this,"Katalog","Database was not changed.");
                 }
 
-            createStorageFile();
+            collection->createStorageFile();
             collection->generateCollectionFilesPaths();
             loadCollection();
         }
@@ -241,11 +241,9 @@
         ui->Filters_treeView_Devices->setIconSize(size);
         ui->Filters_treeView_Directory->setIconSize(size);
         ui->Search_treeView_FilesFound->setIconSize(size);
-        ui->Catalogs_treeView_CatalogList->setIconSize(size);
         ui->Explore_treeview_Directories->setIconSize(size);
         ui->Explore_treeView_FileList->setIconSize(size);
         ui->Create_treeView_Explorer->setIconSize(size);
-        ui->Storage_treeView_StorageList->setIconSize(size);
         ui->Devices_treeView_DeviceList->setIconSize(size);
         ui->Tags_treeview_Explorer->setIconSize(size);
     }
@@ -277,7 +275,7 @@
 
         //Load data from files to database
             //Create a Storage list (if none exists) + conversions
-            createStorageFile();
+            collection->createStorageFile();
 
             //Clear database
             clearDatabaseData();
@@ -293,24 +291,42 @@
             updateAllDeviceActive();
 
         //Load data from tables to models and update display
+            loadDevicesTreeToModel(false);
             loadSearchHistoryTableToModel();
-            loadCatalogsTableToModel();
-            loadStorageTableToModel();
-            loadDeviceTableToTreeModel();
+            loadDevicesView();
             filterFromSelectedDevice();
 
         //Add a default storage device, to force any new catalog to have one
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
                                     SELECT COUNT(*)
-                                    FROM storage
+                                    FROM device
+                                    WHERE device_type='Storage'
                                 )");
         queryStorage.prepare(queryStorageSQL);
         queryStorage.exec();
         queryStorage.next();
 
         if (queryStorage.value(0).toInt() == 0){
-            addStorageDevice(tr("Default Storage"));
+            //Create Device and related Storage under Physical group (ID=0)
+            Device *newDevice = new Device();
+            newDevice->generateDeviceID();
+            newDevice->parentID = 2;
+            newDevice->name = tr("Default Storage");
+            newDevice->type = "Storage";
+            newDevice->storage->generateID();
+            newDevice->externalID = newDevice->storage->ID;
+            newDevice->groupID = 0;
+            newDevice->insertDevice();
+            //newDevice->storage->name = newDevice->name; //REMOVE
+            newDevice->storage->insertStorage();
+
+            //Save data to file
+            collection->saveDeviceTableToFile();
+
+            //Reload
+            loadDevicesView();
+            loadParentsList();
         }
 
         //Load Statistics
@@ -320,9 +336,6 @@
 
         //Load Tags
         reloadTagsData();
-
-        //Hide buttons to force user to select a catalog before allowing any action.
-        hideCatalogButtons();
     }
     //----------------------------------------------------------------------
     void MainWindow::preloadCatalogs()
@@ -353,7 +366,7 @@
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-                    createStorageFile();
+                    collection->createStorageFile();
                     collection->generateCollectionFilesPaths();
 
                     loadCollection();
@@ -397,7 +410,7 @@
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-                    createStorageFile();
+                    collection->createStorageFile();
                     collection->generateCollectionFilesPaths();
                     loadCollection();
         }

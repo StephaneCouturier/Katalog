@@ -777,4 +777,50 @@ void Collection::deleteCatalogFile(Device *device) {
 
 }
 //--------------------------------------------------------------------------
+void Collection::createStorageFile()
+{
+    if(databaseMode=="Memory"){
+        // Create it, if it does not exist
+        QFile newStorageFile(storageFilePath);
+        if(!newStorageFile.open(QIODevice::ReadOnly)) {
 
+            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                QTextStream stream(&newStorageFile);
+
+                stream << "ID"            << "\t"
+                       << "Name"          << "\t"
+                       << "Type"          << "\t"
+                       << "Location"      << "\t"
+                       << "Path"          << "\t"
+                       << "Label"         << "\t"
+                       << "FileSystem"    << "\t"
+                       << "Total"         << "\t"
+                       << "Free"          << "\t"
+                       << "BrandModel"    << "\t"
+                       << "SerialNumber"  << "\t"
+                       << "BuildDate"     << "\t"
+                       << "ContentType"   << "\t"
+                       << "Container"     << "\t"
+                       << "Comment"       << "\t"
+                       << '\n';
+
+                newStorageFile.close();
+
+                //Enable,Disable buttons
+                //ui->Storage_pushButton_Reload->setEnabled(true);
+                //ui->Storage_pushButton_EditAll->setEnabled(true);
+
+                //ui->Storage_pushButton_CreateList->setEnabled(false);
+                //ui->Storage_pushButton_SaveAll->setEnabled(true);
+
+                //Even if empty, load it to the model
+                loadStorageFileToTable();
+                //loadStorageTableToModel();
+                //updateStorageSelectionStatistics();
+
+                return;
+            }
+        }
+    }
+}

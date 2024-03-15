@@ -40,6 +40,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QButtonGroup>
 //QtCore
 #include <QFile>
 #include <QFileInfo>
@@ -145,6 +146,8 @@ class MainWindow : public QMainWindow
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
             QStandardItemModel *deviceTreeModel = new QStandardItemModel();
+            QStandardItemModel *storageTreeModel = new QStandardItemModel();
+            QStandardItemModel *catalogTreeModel = new QStandardItemModel();
 
         //Filters panel
             int  filtersTreeExpandState;
@@ -195,15 +198,10 @@ class MainWindow : public QMainWindow
             QStringList catalogFileList;
             QStringList catalogSelectedList;
 
-            int lastCatalogsSortSection;
-            int lastCatalogsSortOrder;
-
             void loadCollection();
-            void loadCatalogsTableToModel();
             void updateCatalogsScreenStatistics();
             void convertCatalog(QString catalogSourcePath);
             void backupFile(QString filePath);
-            void hideCatalogButtons();
             void saveCatalogChanges();
 
             void importFromVVV();
@@ -247,17 +245,12 @@ class MainWindow : public QMainWindow
             QStringListModel *storageListModel;
             int lastStorageSortSection;
             int lastStorageSortOrder;
-
-            void createStorageFile();
-            void addStorageDevice(QString deviceName);
-            void loadStorageTableToModel();
             void updateStorageSelectionStatistics();
-
             void displayStoragePicture();
-            void loadStorageToPanel();
-            void saveStorageFromPanel();
 
         //TAB: Devices
+            int lastDevicesSortSection;
+            int lastDevicesSortOrder;
             void setDeviceTreeExpandState(bool toggle);
             int  optionDeviceTreeExpandState;
             bool optionDisplayCatalogs;
@@ -275,7 +268,12 @@ class MainWindow : public QMainWindow
             void assignStorageToDevice(int storageID,int deviceID);
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();
-            void loadDeviceTableToTreeModel();
+
+            void loadDevicesView();
+            void loadDevicesTreeToModel(bool loadToDevicesTree);
+            void loadDevicesStorageToModel();
+            void loadDevicesCatalogToModel();
+
             void updateNumbers();
             void updateAllNumbers();
             void convertDeviceCatalogFile();
@@ -406,23 +404,10 @@ class MainWindow : public QMainWindow
             void searchContextDeleteFile();
 
         //Catalogs
-            void on_Catalogs_pushButton_Search_clicked();
-            void on_Catalogs_pushButton_ExploreCatalog_clicked();
-            void on_Catalogs_pushButton_Cancel_clicked();
-            void on_Catalogs_pushButton_UpdateCatalog_clicked();
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
-            void on_Catalogs_pushButton_EditCatalogFile_clicked();
-            void on_Catalogs_pushButton_ViewCatalogStats_clicked();
-            void on_Catalogs_pushButton_Import_clicked();
-            void on_Catalogs_pushButton_DeleteCatalog_clicked();
-
-            void on_Catalogs_treeView_CatalogList_clicked(const QModelIndex &index);
-            void on_Catalogs_treeView_CatalogList_doubleClicked();
-            void on_CatalogsTreeViewCatalogListHeaderSortOrderChanged();
-
-            void on_Catalogs_pushButton_Save_clicked();
             void on_Catalogs_pushButton_Open_clicked();
-            void on_Catalogs_pushButton_Snapshot_clicked();
+            void on_Catalogs_pushButton_UpdateCatalog_clicked();
+            void on_Catalogs_pushButton_Import_clicked();
 
         //Create
             void setMediaFile(QString filePath);
@@ -462,25 +447,10 @@ class MainWindow : public QMainWindow
             void exploreContextMoveFileToTrash();
             void exploreContextDeleteFile();
 
-        //Storage
-            void on_Storage_pushButton_CreateList_clicked();
-            void on_Storage_pushButton_Reload_clicked();
-            void on_Storage_pushButton_EditAll_clicked();
-            void on_Storage_pushButton_SaveAll_clicked();
-            void on_Storage_pushButton_New_clicked();
-            void on_Storage_pushButton_OpenFilelight_clicked();
-            void on_Storage_pushButton_Update_clicked();
-            void on_Storage_pushButton_Delete_clicked();
-            void on_Storage_pushButton_SearchStorage_clicked();
-            void on_Storage_pushButton_CreateCatalog_clicked();
-            void on_Storage_treeView_StorageList_clicked(const QModelIndex &index);
-            void on_Storage_treeView_StorageList_doubleClicked();
-            void on_StorageTreeViewStorageListHeaderSortOrderChanged();
-            void on_Storage_pushButton_PanelSave_clicked();
-            void on_Storage_pushButton_Edit_clicked();
-            void on_Storage_pushButton_PanelCancel_clicked();
-
         //Devices
+            void on_Devices_radioButton_DeviceTree_clicked();
+            void on_Devices_radioButton_StorageList_clicked();
+            void on_Devices_radioButton_CatalogList_clicked();
             void on_Devices_pushButton_InsertRootLevel_clicked();
             void on_Devices_pushButton_AddVirtual_clicked();
             void on_Devices_pushButton_AddStorage_clicked();
@@ -497,6 +467,7 @@ class MainWindow : public QMainWindow
             void on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1);
             void on_Devices_treeView_DeviceList_clicked(const QModelIndex &index);
             void on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos);
+            void on_DevicesTreeViewDeviceListHeaderSortOrderChanged();
             void on_Devices_pushButton_ImportS_clicked();
             void on_Devices_pushButton_TreeExpandCollapse_clicked();
             void on_Devices_pushButton_EditList_clicked();

@@ -356,8 +356,8 @@
             ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.toString("yyyy-mm-dd"));
 
             //Restore last sort order for the catalogs and storage
-            lastCatalogsSortSection       = settings.value("Catalogs/lastCatlogsSortSection").toInt();
-            lastCatalogsSortOrder         = settings.value("Catalogs/lastCatlogsSortOrder").toInt();
+            lastDevicesSortSection       = settings.value("Devices/lastDevicesSortSection").toInt();
+            lastDevicesSortOrder         = settings.value("Devices/lastDevicesSortOrder").toInt();
             lastStorageSortSection        = settings.value("Storage/lastStorageSortSection").toInt();
             lastStorageSortOrder          = settings.value("Storage/lastStorageSortOrder").toInt();
             lastExploreSortSection        = settings.value("Explore/lastExploreSortSection").toInt();
@@ -404,6 +404,7 @@
 
         //Devices
             ui->Devices_pushButton_TreeExpandCollapse->hide();
+            ui->Devices_widget_Import->hide();
 
         //Search
             //hide Krename if not linux
@@ -507,18 +508,6 @@
                 "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
               );
-        ui->Storage_pushButton_Update->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_Save->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
                 "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
@@ -529,8 +518,6 @@
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
-        ui->Catalogs_line_SeparateSummary_02->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
-        ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
         //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
@@ -620,18 +607,6 @@
                 "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
               );
-        ui->Storage_pushButton_Update->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
-        ui->Catalogs_pushButton_Save->setStyleSheet(
-                "QPushButton           { background-color: #ff8000; } "
-                "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
-                "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
-              );
         ui->Create_pushButton_CreateCatalog->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; padding-right: 20px; } "
                 "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
@@ -642,8 +617,6 @@
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
         ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
         ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
-        ui->Catalogs_line_SeparateSummary_02->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
-        ui->Storage_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
 
         //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");

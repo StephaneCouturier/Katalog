@@ -59,7 +59,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ReloadCollection_clicked()
     {
-        createStorageFile();
+        collection->createStorageFile();
         loadCollection();
     }
     //----------------------------------------------------------------------
@@ -199,8 +199,7 @@
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsToFile();
 
-                loadDeviceTableToTreeModel();
-                loadCatalogsTableToModel();
+                loadDevicesView();
             });
 
             deviceContextMenu.exec(globalPos);
@@ -225,7 +224,6 @@
 
             QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
             deviceContextMenu.addAction(menuDeviceAction3);
-
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 //reloads catalog to explore at root level
                 reportAllUpdates(selectedDevice,
@@ -238,13 +236,11 @@
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsToFile();
 
-                loadDeviceTableToTreeModel();
-                loadCatalogsTableToModel();
+                loadDevicesView();
             });
 
             QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
             deviceContextMenu.addAction(menuDeviceAction2);
-
             connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
                 exploreDevice->ID = selectedDevice->ID;
                 exploreDevice->loadDevice();
@@ -312,12 +308,12 @@
         ui->Devices_label_SelectedCatalogDisplay->setText("");
 
         //Reload data
-        loadCatalogsTableToModel();
+        //loadCatalogsTableToModel();
 
         //Reset device tree
         setTreeExpandState(false);
         collection->loadDeviceFileToTable();
-        loadDeviceTableToTreeModel();
+        loadDevicesView();
 
         filterFromSelectedDevice();
 
@@ -334,11 +330,8 @@
         displaySelectedDeviceName();
 
         //Load matching Catalogs, Storage, and Statistics
-            //Catalogs
-            loadCatalogsTableToModel();
-
-            //Storage
-            loadStorageTableToModel();
+            //Devices
+            loadDevicesView();
             updateCatalogsScreenStatistics();
             updateStorageSelectionStatistics();
 

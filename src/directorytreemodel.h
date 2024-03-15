@@ -75,8 +75,8 @@ public:
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex()) override;
 
-    QString modelCatalogName;// = "Maxtor_2Tb";
-    QString modelCatalogPath;// = "/run/media/stephane/Maxtor_2Tb";
+    QString modelCatalogName;
+    QString modelCatalogPath;
     void setModelCatlog(QString newModelCatalogName, QString newModelCatalogPath);
     void setupModelData(DirectoryTreeItem *parent);
 

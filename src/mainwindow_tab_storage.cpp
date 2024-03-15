@@ -36,221 +36,176 @@
 
 //UI----------------------------------------------------------------------------
     //Full list ----------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_CreateList_clicked()
-    {
-        createStorageFile();
-    }
+    // void MainWindow::on_Storage_pushButton_CreateList_clicked()
+    // {
+    //     createStorageFile();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_Reload_clicked()
-    {
-        collection->loadStorageFileToTable();
-        loadStorageTableToModel();
-        updateStorageSelectionStatistics();
-    }
+    // void MainWindow::on_Storage_pushButton_Reload_clicked()
+    // {
+    //     collection->loadStorageFileToTable();
+    //     loadStorageTableToModel();
+    //     updateStorageSelectionStatistics();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_Edit_clicked()
-    {
-        ui->Storage_widget_Panel->show();
-        ui->Storage_widget_PanelForm->setEnabled(true);
-        loadStorageToPanel();
-    }
+    // void MainWindow::on_Storage_pushButton_Edit_clicked()
+    // {
+    //     //ui->Storage_widget_Panel->show();
+    //     //ui->Storage_widget_PanelForm->setEnabled(true);
+    //     loadStorageToPanel();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_EditAll_clicked()
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->storageFilePath));
-    }
+    // void MainWindow::on_Storage_pushButton_EditAll_clicked()
+    // {
+    //     QDesktopServices::openUrl(QUrl::fromLocalFile(collection->storageFilePath));
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_SaveAll_clicked()
-    {
-        //Save data to file and reload
-        if (collection->databaseMode=="Memory"){
-            //Save model data to Storage file
-            collection->saveStorageTableToFile();
+    // void MainWindow::on_Storage_pushButton_SaveAll_clicked()
+    // {
+    //     //Save data to file and reload
+    //     if (collection->databaseMode=="Memory"){
+    //         //Save model data to Storage file
+    //         collection->saveStorageTableToFile();
 
-            //Reload Storage file data to table
-            collection->loadStorageFileToTable();
-        }
+    //         //Reload Storage file data to table
+    //         collection->loadStorageFileToTable();
+    //     }
 
-        //refresh
-        loadStorageTableToModel();
-        updateStorageSelectionStatistics();
-        unsavedChanges = false;
-        ui->Storage_pushButton_SaveAll->setStyleSheet("color: black");
+    //     //refresh
+    //     loadStorageTableToModel();
+    //     updateStorageSelectionStatistics();
+    //     unsavedChanges = false;
+    //     ui->Storage_pushButton_SaveAll->setStyleSheet("color: black");
 
-        loadStorageToPanel();
-    }
+    //     loadStorageToPanel();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
-    {
-        activeDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 16, QModelIndex()).data().toInt();
-        activeDevice->loadDevice();
+    // void MainWindow::on_Storage_treeView_StorageList_clicked(const QModelIndex &index)
+    // {
+    //     activeDevice->ID = ui->Storage_treeView_StorageList->model()->index(index.row(), 16, QModelIndex()).data().toInt();
+    //     activeDevice->loadDevice();
 
-        //display buttons
-        ui->Storage_pushButton_Edit->setEnabled(true);
-        ui->Storage_pushButton_SearchStorage->setEnabled(true);
-        ui->Storage_pushButton_SearchLocation->setEnabled(true);
-        ui->Storage_pushButton_CreateCatalog->setEnabled(true);
-        ui->Storage_pushButton_Update->setEnabled(true);
-        ui->Storage_pushButton_Delete->setEnabled(true);
-        ui->Storage_pushButton_OpenFilelight->setEnabled(true);
+    //     //display buttons
+    //     // ui->Storage_pushButton_Edit->setEnabled(true);
+    //     // ui->Storage_pushButton_SearchStorage->setEnabled(true);
+    //     // ui->Storage_pushButton_SearchLocation->setEnabled(true);
+    //     // ui->Storage_pushButton_CreateCatalog->setEnabled(true);
+    //     // ui->Storage_pushButton_Update->setEnabled(true);
+    //     // ui->Storage_pushButton_Delete->setEnabled(true);
+    //     // ui->Storage_pushButton_OpenFilelight->setEnabled(true);
 
-        selectedStorageIndexRow = index.row();
+    //     selectedStorageIndexRow = index.row();
 
-        loadStorageToPanel();
-    }
+    //     loadStorageToPanel();
+    // }
     //--------------------------------------------------------------------------
 
     //With seleted storage -----------------------------------------------------
-    void MainWindow::on_Storage_pushButton_New_clicked()
-    {
-        addStorageDevice(tr("Storage"));
-    }
+    // void MainWindow::on_Storage_pushButton_New_clicked()
+    // {
+    //     addStorageDevice(tr("Storage"));
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
-    {
-        //Change tab to show the Search screen
-        ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
+    // void MainWindow::on_Storage_pushButton_SearchStorage_clicked()
+    // {
+    //     //Change tab to show the Search screen
+    //     ui->tabWidget->setCurrentIndex(0); // tab 0 is the Search tab
 
-        ui->Filters_label_DisplayStorage->setText(selectedDevice->storage->name);
-    }
+    //     ui->Filters_label_DisplayStorage->setText(selectedDevice->storage->name);
+    // }
     //--------------------------------------------------------------------------
 
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
-    {
-        //Send selection to Create screen
-        ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->storage->path);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->storage->name);
-        ui->Create_lineEdit_NewCatalogName->setText(selectedDevice->storage->name);
+    // void MainWindow::on_Storage_pushButton_CreateCatalog_clicked()
+    // {
+    //     //Send selection to Create screen
+    //     ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->storage->path);
+    //     ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->storage->name);
+    //     ui->Create_lineEdit_NewCatalogName->setText(selectedDevice->storage->name);
 
-        //Select this directory in the treeview.
-        loadFileSystem(selectedDevice->storage->path);
+    //     //Select this directory in the treeview.
+    //     loadFileSystem(selectedDevice->storage->path);
 
-        //Change tab to show the result of the catalog creation
-        ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create catalog tab
+    //     //Change tab to show the result of the catalog creation
+    //     ui->tabWidget->setCurrentIndex(3); // tab 3 is the Create catalog tab
 
-    }
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
-    {
-        QProcess::startDetached("filelight", QStringList() << selectedDevice->storage->path);
-    }
+    // void MainWindow::on_Storage_pushButton_OpenFilelight_clicked()
+    // {
+    //     QProcess::startDetached("filelight", QStringList() << selectedDevice->storage->path);
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_Update_clicked()
-    {
-        reportAllUpdates(activeDevice,
-                         activeDevice->updateDevice("update",
-                                                    collection->databaseMode,
-                                                    true,
-                                                    collection->collectionFolder,
-                                                    true),
-                         "update");
-        collection->saveDeviceTableToFile();
-        collection->saveStorageTableToFile();
-        collection->saveStatiticsToFile();
-        loadDeviceTableToTreeModel();
-        loadCatalogsTableToModel();
-        loadStorageTableToModel();
-        loadStorageToPanel();
-        loadStatisticsChart();
-    }
+    // void MainWindow::on_Storage_pushButton_Update_clicked()
+    // {
+    //     reportAllUpdates(activeDevice,
+    //                      activeDevice->updateDevice("update",
+    //                                                 collection->databaseMode,
+    //                                                 true,
+    //                                                 collection->collectionFolder,
+    //                                                 true),
+    //                      "update");
+    //     collection->saveDeviceTableToFile();
+    //     collection->saveStorageTableToFile();
+    //     collection->saveStatiticsToFile();
+    //     loadDevicesView();
+    //     loadCatalogsTableToModel();
+    //     loadStorageTableToModel();
+    //     loadStorageToPanel();
+    //     loadStatisticsChart();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_Delete_clicked()
-    {
-            deleteDeviceItem();
+    // void MainWindow::on_Storage_pushButton_Delete_clicked()
+    // {
+    //         deleteDeviceItem();
 
-            //Disable buttons to force new selection
-            ui->Storage_pushButton_SearchLocation->setEnabled(false);
-            ui->Storage_pushButton_SearchStorage->setEnabled(false);
-            ui->Storage_pushButton_CreateCatalog->setEnabled(false);
-            ui->Storage_pushButton_OpenFilelight->setEnabled(false);
-            ui->Storage_pushButton_Delete->setEnabled(false);
+    //         //Disable buttons to force new selection
+    //         // ui->Storage_pushButton_SearchLocation->setEnabled(false);
+    //         // ui->Storage_pushButton_SearchStorage->setEnabled(false);
+    //         // ui->Storage_pushButton_CreateCatalog->setEnabled(false);
+    //         // ui->Storage_pushButton_OpenFilelight->setEnabled(false);
+    //         // ui->Storage_pushButton_Delete->setEnabled(false);
 
-            //Refresh storage screen statistics
-            updateStorageSelectionStatistics();
-    }
+    //         //Refresh storage screen statistics
+    //         updateStorageSelectionStatistics();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged(){
+    // void MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged(){
 
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        QHeaderView *storageTreeHeader = ui->Storage_treeView_StorageList->header();
+    //     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+    //     QHeaderView *storageTreeHeader = ui->Storage_treeView_StorageList->header();
 
-        lastStorageSortSection = storageTreeHeader->sortIndicatorSection();
-        lastStorageSortOrder   = storageTreeHeader->sortIndicatorOrder();
+    //     lastStorageSortSection = storageTreeHeader->sortIndicatorSection();
+    //     lastStorageSortOrder   = storageTreeHeader->sortIndicatorOrder();
 
-        settings.setValue("Storage/lastStorageSortSection", lastStorageSortSection);
-        settings.setValue("Storage/lastStorageSortOrder",   lastStorageSortOrder);
-    }
+    //     settings.setValue("Storage/lastStorageSortSection", lastStorageSortSection);
+    //     settings.setValue("Storage/lastStorageSortOrder",   lastStorageSortOrder);
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_treeView_StorageList_doubleClicked()
-    {
-        unsavedChanges = true;
-        ui->Storage_pushButton_SaveAll->setStyleSheet("color: orange");
-    }
+    // void MainWindow::on_Storage_treeView_StorageList_doubleClicked()
+    // {
+    //     unsavedChanges = true;
+    //     ui->Storage_pushButton_SaveAll->setStyleSheet("color: orange");
+    // }
     //--------------------------------------------------------------------------
 
     //Panel --------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_PanelSave_clicked()
-    {
-        saveStorageFromPanel();
-    }
+    // void MainWindow::on_Storage_pushButton_PanelSave_clicked()
+    // {
+    //     saveStorageFromPanel();
+    // }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Storage_pushButton_PanelCancel_clicked()
-    {
-        loadStorageToPanel();
-        ui->Storage_widget_Panel->hide();
-    }
+    // void MainWindow::on_Storage_pushButton_PanelCancel_clicked()
+    // {
+    //     loadStorageToPanel();
+    //     //ui->Storage_widget_Panel->hide();
+    // }
     //--------------------------------------------------------------------------
 
 //Methods-----------------------------------------------------------------------
-    void MainWindow::createStorageFile()
-    {
-        if(collection->databaseMode=="Memory"){
-            // Create it, if it does not exist
-            QFile newStorageFile(collection->storageFilePath);
-            if(!newStorageFile.open(QIODevice::ReadOnly)) {
 
-                if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
-
-                    QTextStream stream(&newStorageFile);
-
-                    stream << "ID"            << "\t"
-                           << "Name"          << "\t"
-                           << "Type"          << "\t"
-                           << "Location"      << "\t"
-                           << "Path"          << "\t"
-                           << "Label"         << "\t"
-                           << "FileSystem"    << "\t"
-                           << "Total"         << "\t"
-                           << "Free"          << "\t"
-                           << "BrandModel"    << "\t"
-                           << "SerialNumber"  << "\t"
-                           << "BuildDate"     << "\t"
-                           << "ContentType"   << "\t"
-                           << "Container"     << "\t"
-                           << "Comment"       << "\t"
-                           << '\n';
-
-                    newStorageFile.close();
-
-                    //Enable,Disable buttons
-                    ui->Storage_pushButton_Reload->setEnabled(true);
-                    ui->Storage_pushButton_EditAll->setEnabled(true);
-
-                    ui->Storage_pushButton_CreateList->setEnabled(false);
-                    ui->Storage_pushButton_SaveAll->setEnabled(true);
-
-                    //Even if empty, load it to the model
-                    collection->loadStorageFileToTable();
-                    loadStorageTableToModel();
-                    updateStorageSelectionStatistics();
-
-                    return;
-                }
-            }
-        }
-   }
     //--------------------------------------------------------------------------
+/*
     void MainWindow::addStorageDevice(QString deviceName)
     {
         //Create Storage entry
@@ -260,18 +215,18 @@
             tempStorage->insertStorage();
 
         //Load table to model
-        loadStorageTableToModel();
+        //loadStorageTableToModel();
 
         //Save data to file and reload
         collection->saveStorageTableToFile();
         collection->loadStorageFileToTable();
 
         //Refresh
-        loadStorageTableToModel();
+        //loadStorageTableToModel();
         updateStorageSelectionStatistics();
 
         //Enable save button
-        ui->Storage_pushButton_New->setEnabled(true);
+        // ui->Storage_pushButton_New->setEnabled(true);
 
         //Create virtual storage under Physical group (ID=0) / Default device (ID=2)
         Device *newDeviceItem = new Device();
@@ -287,10 +242,12 @@
         collection->saveDeviceTableToFile();
 
         //Reload
-        loadDeviceTableToTreeModel();
-        loadStorageTableToModel();
+        loadDevicesView();
+        //loadStorageTableToModel();
     }
+*/
     //--------------------------------------------------------------------------
+    /*
     void MainWindow::loadStorageTableToModel()
     {
         //Generate SQL query from filters
@@ -415,103 +372,26 @@
         }
 
         //Enable buttons
-            ui->Storage_pushButton_Reload->setEnabled(true);
+            //ui->Storage_pushButton_Reload->setEnabled(true);
             ui->Storage_pushButton_EditAll->setEnabled(true);
             //ui->Storage_pushButton_SaveAll->setEnabled(true);
-            ui->Storage_pushButton_New->setEnabled(true);
+            // ui->Storage_pushButton_New->setEnabled(true);
 
             //Disable create button so it cannot be overwritten
-            ui->Storage_pushButton_CreateList->setEnabled(false);
+            //ui->Storage_pushButton_CreateList->setEnabled(false);
 
         //Update Storage screen statistics
             updateStorageSelectionStatistics();
 
     }
+*/
+
+
+
+
+
     //--------------------------------------------------------------------------
-    void MainWindow::updateStorageSelectionStatistics()
-    {
-        //Get storage statistics
-        QSqlQuery query;
-
-        //Prepare the main part of the query
-        QString querySQL = QLatin1String(R"(
-                                        SELECT
-                                            COUNT (device_id),
-                                            SUM(device_free_space),
-                                            SUM(device_total_space)
-                                        FROM device
-                                        WHERE device_type = 'Storage'
-                            )");
-        if (    selectedDevice->type  == tr("All") )
-        {
-            //No filtering
-        }
-        else if ( selectedDevice->type == "Storage" ){
-            querySQL += " AND device_id =:device_id ";
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-           querySQL += " AND device_id =:device_parent_id";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                    AND  device_id IN (
-                                    WITH RECURSIVE hierarchy AS (
-                                         SELECT device_id, device_parent_id, device_name
-                                         FROM device
-                                         WHERE device_id = :device_id
-                                         UNION ALL
-                                         SELECT t.device_id, t.device_parent_id, t.device_name
-                                         FROM device t
-                                         JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                    )
-                                    SELECT device_id
-                                    FROM hierarchy)
-                                                    )");
-            querySQL += prepareSQL;
-        }
-
-        //Execute query
-        query.prepare(querySQL);
-        query.bindValue(":device_id", selectedDevice->ID);
-        query.bindValue(":device_parent_id", selectedDevice->parentID);
-        query.exec();
-        query.next();
-
-        //Get the number of devices
-        int deviceNumber = query.value(0).toInt();
-        ui->Storage_label_CountValue->setText(QString::number(deviceNumber));
-        //Get the sum of free space
-        qint64 freeSpaceTotal = query.value(1).toLongLong();
-        ui->Storage_label_SpaceFreeValue->setText(QLocale().formattedDataSize(freeSpaceTotal));
-        //Get the sum of total space
-        qint64 totalSpace = query.value(2).toLongLong();
-        ui->Storage_label_SpaceTotalValue->setText(QLocale().formattedDataSize(totalSpace));
-        //Calculate used space
-        qint64 usedSpace = totalSpace - freeSpaceTotal;
-        ui->Storage_label_SpaceUsedValue->setText(QLocale().formattedDataSize(usedSpace));
-
-        //Get the percent of free space
-        if ( totalSpace !=0){
-        float freepercent = (float)freeSpaceTotal / (float)totalSpace * 100;
-        ui->Storage_label_PercentFree->setText(QString::number(round(freepercent))+"%");}
-        else ui->Storage_label_PercentFree->setText("");
-    }
-    //--------------------------------------------------------------------------
-    void MainWindow::displayStoragePicture()
-    {//Load and display the picture of the storage device
-        QString picturePath = collection->collectionFolder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";
-        QPixmap pic(picturePath);
-        QFile file(picturePath);
-        if(file.exists()){
-            ui->Storage_label_Picture->setScaledContents(true);
-            ui->Storage_label_Picture->setPixmap(pic.scaled(350, 300, Qt::KeepAspectRatio));
-        }
-        else{
-            QPixmap empty("");
-            ui->Storage_label_Picture->setPixmap(empty);
-        }
-    }
-    //--------------------------------------------------------------------------
+    /*
     void MainWindow::loadStorageToPanel()
     {//Load selected Storage device to the edition panel
         ui->Storage_lineEdit_Panel_ID->setText(QString::number(activeDevice->storage->ID));
@@ -535,8 +415,9 @@
 
         displayStoragePicture();
     }
+*/
     //--------------------------------------------------------------------------
-    void MainWindow::saveStorageFromPanel()
+/*    void MainWindow::saveStorageFromPanel()
     {//Save changes to selected Storage device from the edition panel
 
         //Update
@@ -575,79 +456,11 @@
         updateQuery.bindValue(":storage_id",            activeDevice->storage->ID);
         updateQuery.exec();
 
-        loadStorageTableToModel();
+        //loadStorageTableToModel();
         updateStorageSelectionStatistics();
 
         //Save data to file
         collection->saveStorageTableToFile();
     }
     //--------------------------------------------------------------------------
-    void MainWindow::loadStorageList()
-    {//Load Storage selection to comboBoxes
-
-        //Get data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                SELECT device_id, device_name
-                                FROM   device
-                                WHERE  device_type = 'Storage'
-
-                            )");//AND    device_group_id = 0
-
-        if ( selectedDevice->type == "Storage" ){
-            querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
-            ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name); //replace by ID
-        }
-        else if ( selectedDevice->type == "Catalog" ){
-            querySQL += " AND device_id =:device_parent_id";
-        }
-        else if ( selectedDevice->type == "Virtual" ){
-            QString prepareSQL = QLatin1String(R"(
-                                AND device_id IN (
-                                WITH RECURSIVE hierarchy AS (
-                                     SELECT device_id, device_parent_id, device_name
-                                     FROM device
-                                     WHERE device_id = :device_id
-                                     UNION ALL
-                                     SELECT t.device_id, t.device_parent_id, t.device_name
-                                     FROM device t
-                                     JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                )
-                                SELECT device_id
-                                FROM hierarchy)
-            )");
-            querySQL += prepareSQL;
-        }
-
-        querySQL += " ORDER BY device_name ";
-        query.prepare(querySQL);
-        query.bindValue(":device_id", selectedDevice->ID);
-        query.bindValue(":device_parent_id", selectedDevice->parentID);
-        query.exec();
-
-        //Clear comboboxes and load selected Storage device list
-        ui->Create_comboBox_StorageSelection->clear();
-        while(query.next())
-        {
-            ui->Create_comboBox_StorageSelection->addItem(query.value(1).toString(),query.value(0).toInt());
-        }
-    }
-    //--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-    void MainWindow::on_TEST_pushButton_TestMedia_clicked()
-    {
-        QStringList filePaths;
-        filePaths << "/home/stephane/Vidéos/COPY/test6.mp4";
-//        filePaths << "/home/stephane/Vidéos/COPY/test2.mkv";
-//        filePaths << "/home/stephane/Vidéos/COPY/test3.mp3";
-//        filePaths << "/home/stephane/Vidéos/COPY/test5.mkv";
-
-        for(int i = 0; i<filePaths.length(); i++){
-            setMediaFile(filePaths[i]);
-        }
-
-        QString filePath = "/home/stephane/Vidéos/COPY/test8.mkv";
-        setMediaFile(filePath);
-    }
+*/

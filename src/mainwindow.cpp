@@ -32,7 +32,6 @@
 #include "ui_mainwindow.h"
 
 #include "mainwindow_setup.cpp"
-#include "mainwindow_tab_catalogs.cpp"
 #include "mainwindow_tab_create.cpp"
 #include "mainwindow_tab_search.cpp"
 #include "mainwindow_tab_storage.cpp"
@@ -42,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-10";
+        releaseDate     = "2024-03-15";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -77,6 +76,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 hideDevelopmentUIItems();
             }
 
+            QButtonGroup buttonGroup;
+            buttonGroup.addButton(ui->Devices_radioButton_DeviceTree);
+            buttonGroup.addButton(ui->Devices_radioButton_StorageList);
+            buttonGroup.addButton(ui->Devices_radioButton_CatalogList);
+
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
@@ -99,34 +103,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Settings_comboBox_Language->setCurrentText(userLanguage);
 
         //Hide some widgets by default
-            ui->Catalogs_widget_EditCatalog->hide();
-            ui->Storage_widget_Panel->hide();
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
 
-            //DEV: to be removed permanently
-            ui->Catalogs_pushButton_Search->hide();
-            ui->Catalogs_pushButton_ExploreCatalog->hide();
-            ui->Catalogs_pushButton_ViewCatalogStats->hide();
-            ui->Catalogs_pushButton_DeleteCatalog->hide();
-            ui->Storage_pushButton_New->hide();
-            ui->Storage_pushButton_OpenFilelight->hide();
-            ui->Storage_pushButton_Delete->hide();
-            ui->Storage_pushButton_SearchLocation->hide();
-            ui->Storage_pushButton_SearchStorage->hide();
-            ui->Storage_pushButton_SaveAll->hide();
-            ui->Storage_pushButton_CreateList->hide();
-            ui->Storage_pushButton_Reload->hide();
-            ui->Devices_pushButton_Edit->hide();
-            ui->Devices_pushButton_DeleteItem->hide();
-
-
+        //Hide file edtion items
             if( collection->databaseMode != "Memory"){
-                //Hide file edtion items
-                ui->Devices_pushButton_Edit->hide();
-                ui->Catalogs_pushButton_EditCatalogFile->hide();
-                ui->Storage_pushButton_Edit->hide();
-                ui->Storage_pushButton_Reload->hide();
                 ui->Statistics_label_EditRecords->hide();
                 ui->Statistics_pushButton_EditDeviceStatisticsFile->hide();
                 ui->Statistics_pushButton_Reload->hide();
@@ -151,7 +132,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             }
 
     //Load Collection data
-
         //Load Collection
             loadCollection();
             selectedDevice->loadDevice();
@@ -216,6 +196,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Devices_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
             loadParentsList();
 
+            QString displayContents = settings.value("Devices/DisplayContents").toString();
+            if(displayContents=="Tree")
+                ui->Devices_radioButton_DeviceTree->setChecked(true);
+            if(displayContents=="Storage")
+                ui->Devices_radioButton_StorageList->setChecked(true);
+            if(displayContents=="Catalogs")
+                ui->Devices_radioButton_CatalogList->setChecked(true);
+
         //Setup tab: Search
             //Default values
             initiateSearchFields();
@@ -237,7 +225,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             query.exec();
             query.next();
 
-            //Search *lastSearch = new Search;
             lastSearch->searchDateTime = query.value(0).toString();
             lastSearch->loadSearchHistoryCriteria();
             loadSearchCriteria(lastSearch);
@@ -248,12 +235,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Context menu and other slots and signals
             setupFileContextMenus();
 
-            //Header Order change
-            connect(ui->Catalogs_treeView_CatalogList->header(), &QHeaderView::sortIndicatorChanged,
-                    this, &::MainWindow::on_CatalogsTreeViewCatalogListHeaderSortOrderChanged);
 
-            connect(ui->Storage_treeView_StorageList->header(), &QHeaderView::sortIndicatorChanged,
-                    this, &::MainWindow::on_StorageTreeViewStorageListHeaderSortOrderChanged);
+
+            //Header Order change
+            connect(ui->Devices_treeView_DeviceList->header(), &QHeaderView::sortIndicatorChanged,
+                    this, &::MainWindow::on_DevicesTreeViewDeviceListHeaderSortOrderChanged);
 
             connect(ui->Explore_treeView_FileList->header(), &QHeaderView::sortIndicatorChanged,
                     this, &::MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged);
@@ -265,8 +251,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     this, &::MainWindow::on_SearchTreeViewHistoryHeaderSortOrderChanged);
 
     //Restore sorting of views
-            ui->Catalogs_treeView_CatalogList->QTreeView::sortByColumn(lastCatalogsSortSection,Qt::SortOrder(lastCatalogsSortOrder));
-            ui->Storage_treeView_StorageList->QTreeView::sortByColumn(lastStorageSortSection,Qt::SortOrder(lastStorageSortOrder));
+            ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
             ui->Explore_treeView_FileList->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
             ui->Search_treeView_FilesFound->QTreeView::sortByColumn(lastSearchSortSection,Qt::SortOrder(lastSearchSortOrder));
             ui->Search_treeView_History->QTreeView::sortByColumn(lastSearchHistorySortSection,Qt::SortOrder(lastSearchHistorySortOrder));

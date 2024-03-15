@@ -85,6 +85,7 @@ public:
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
     void saveStatiticsToFile();
+    void createStorageFile();
 
     //File deleting
     void deleteCatalogFile(Device *device);
