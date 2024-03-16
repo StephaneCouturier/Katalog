@@ -87,7 +87,7 @@ void Catalog::setSourcePath(QString selectedSourcePath)
 {
     sourcePath = selectedSourcePath;
 
-    //if provided, remove the / at the end if any, except for root path (unix)
+    //Remove the / at the end if any, except for root path (Linux)
     if(sourcePath!=""){
         int pathLength   = sourcePath.length();
         QString lastChar = sourcePath.at(pathLength-1);

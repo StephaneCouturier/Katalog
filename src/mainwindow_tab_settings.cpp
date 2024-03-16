@@ -210,7 +210,8 @@
     void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/AutoSaveRecordWhenUpdate", ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked());       
+        saveStatisticsEnabled = ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked();
+        settings.setValue("Settings/AutoSaveRecordWhenUpdate", saveStatisticsEnabled);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)

@@ -327,7 +327,8 @@
             deviceTreeExpandState = settings.value("Devices/deviceTreeExpandState").toInt();
 
             //General settings
-            ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool());
+            saveStatisticsEnabled = settings.value("Settings/AutoSaveRecordWhenUpdate", true).toBool();
+            ui->Settings_checkBox_SaveRecordWhenUpdate->setChecked(saveStatisticsEnabled);
             QString themeText = settings.value("Settings/Theme").toString();
             if (themeText==""){
                 //fallback on default theme

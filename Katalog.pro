@@ -61,7 +61,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/catalog.cpp \
-    src/catalogsview.cpp \
     src/collection.cpp \
     src/device.cpp \
     src/devicetreeview.cpp \
@@ -74,7 +73,6 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mainwindow_setup.cpp \
-    src/mainwindow_tab_catalogs.cpp \
     src/mainwindow_tab_create.cpp \
     src/mainwindow_tab_device.cpp \
     src/mainwindow_tab_explore.cpp \
@@ -82,18 +80,13 @@ SOURCES += \
     src/mainwindow_tab_search.cpp \
     src/mainwindow_tab_settings.cpp \
     src/mainwindow_tab_statistics.cpp \
-    src/mainwindow_tab_storage.cpp \
     src/mainwindow_tab_tags.cpp \
     src/search.cpp \
     src/storage.cpp \
-    src/storagetreeitem.cpp \
-    src/storagetreemodel.cpp \
-    src/storageview.cpp \
     src/tag.cpp
 
 HEADERS += \
     src/catalog.h \
-    src/catalogsview.h \
     src/collection.h \
     src/database.h \
     src/device.h \
@@ -107,9 +100,6 @@ HEADERS += \
     src/mainwindow.h \
     src/search.h \
     src/storage.h \
-    src/storagetreeitem.h \
-    src/storagetreemodel.h \
-    src/storageview.h \
     src/tag.h \
     src/tag.h
 
@@ -122,12 +112,6 @@ TRANSLATIONS += \
     src/translations/Katalog_fr_FR.ts \
     src/translations/Katalog_cz_CZ.ts
 
-# Default rules for deployment.
-#qnx: target.path = /tmp/$${TARGET}/bin
-#else: unix:!android: target.path = /opt/$${TARGET}/bin
-#!isEmpty(target.path): INSTALLS += target
-
-#TARGET = Katalog.bin
 
 RESOURCES += \
     src/icons.qrc \

@@ -34,14 +34,13 @@
 #include "mainwindow_setup.cpp"
 #include "mainwindow_tab_create.cpp"
 #include "mainwindow_tab_search.cpp"
-#include "mainwindow_tab_storage.cpp"
 #include "mainwindow_tab_tags.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-15";
+        releaseDate     = "2024-03-16";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version

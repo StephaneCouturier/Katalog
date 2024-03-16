@@ -119,6 +119,7 @@ class MainWindow : public QMainWindow
 
             //Parameters
             int selectedTab;
+            bool saveStatisticsEnabled;
 
             //FileTypes
             QStringList fileType_Image;
