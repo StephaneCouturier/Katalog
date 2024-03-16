@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Hide some widgets by default
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
+            ui->Devices_widget_ReplaceCatalogsOption->hide();
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){

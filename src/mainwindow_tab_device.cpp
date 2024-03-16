@@ -144,9 +144,14 @@ void MainWindow::on_Devices_checkBox_DisplayStorage_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayStorage", arg1);
-
-    if(arg1==1)
+    if(arg1==0){
+        ui->Devices_checkBox_DisplayCatalogs->hide();
+        ui->Devices_widget_ReplaceCatalogsOption->show();
+    }
+    else{
+        ui->Devices_widget_ReplaceCatalogsOption->hide();
         ui->Devices_checkBox_DisplayCatalogs->show();
+    }
 
     loadDevicesView();
 }
