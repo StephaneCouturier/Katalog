@@ -1248,21 +1248,34 @@ void MainWindow::saveDeviceForm()
 {//Save the device values from the edit panel
 
     //Keep previous values
+    activeDevice->loadDevice();
+    int previousExternalID = activeDevice->externalID;
     QString previousPath = activeDevice->path;
     QString previousName = activeDevice->name;
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice();
 
-    //Get new name and parentID
+    //Get new value: name, parentID, externalID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
     activeDevice->name = ui->Devices_lineEdit_Name->text();
+    activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
     if (previousName != activeDevice->name and activeDevice->verifyDeviceNameExists() and activeDevice->type=="Catalog"){
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText( tr("There is already a Catalog with this name:<br/><b>").arg(activeDevice->type)
                        + activeDevice->name
                        + "</b><br/><br/>"+tr("Choose a different name and try again."));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+        return;
+    }
+
+    if (previousExternalID != activeDevice->externalID and activeDevice->verifyStorageExternalIDExists()){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText( tr("There is already a Storage with this ID.<b>")
+                       + "<br/><br/>"+tr("Choose a different ID and try again."));
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.exec();
         return;
@@ -1374,23 +1387,23 @@ void MainWindow::saveDeviceForm()
         //Update Storage name
         QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_name =:storage_name
+                                    SET storage_name =:storage_name,
+                                        storage_id   =:new_storage_id
                                     WHERE storage_id =:storage_id
                                 )");
 
         QSqlQuery updateQuery;
         updateQuery.prepare(queryUpdateStorageSQL);
         updateQuery.bindValue(":storage_name", activeDevice->name);
-        updateQuery.bindValue(":storage_id",   activeDevice->externalID);
+        updateQuery.bindValue(":new_storage_id", previousExternalID);
+        updateQuery.bindValue(":storage_id", activeDevice->externalID);
         updateQuery.exec();
 
         //loadStorageTableToModel();
         updateStorageSelectionStatistics();
 
         //Save data to file
-        if (collection->databaseMode=="Memory"){
-            collection->saveStorageTableToFile();
-        }
+        collection->saveStorageTableToFile();
 
         //Update name in statistics and catalogs
         if (currentStorageName != newStorageName){
@@ -2127,15 +2140,14 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
     ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
     ui->Devices_treeView_DeviceList->header()->hideSection( 4); //Parent ID
+    ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
     ui->Devices_treeView_DeviceList->header()->showSection( 8); //Used space
     ui->Devices_treeView_DeviceList->header()->showSection( 9); //Free space
     ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
     ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
-
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
-        ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
         ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
         ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_build_date
@@ -2144,7 +2156,6 @@ void MainWindow::loadDevicesStorageToModel(){
         ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 3
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
-        ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
         ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
         ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
         ui->Devices_treeView_DeviceList->header()->hideSection(19); //storage_build_date

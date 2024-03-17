@@ -277,8 +277,8 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
     return query.value(0).toInt() > 0;
 }
 
-void Device::verifyHasSubDevice(){
-
+void Device::verifyHasSubDevice()
+{
     QSqlQuery queryVerifyChildren;
     QString queryVerifyChildrenSQL = QLatin1String(R"(
                                 SELECT COUNT(*)
@@ -297,8 +297,23 @@ void Device::verifyHasSubDevice(){
         hasSubDevice = false;
 }
 
-void Device::deleteDevice(bool askConfirmation){
+bool Device::verifyStorageExternalIDExists()
+{
+    QSqlQuery queryExternalID;
+    QString queryExternalIDSQL = QLatin1String(R"(
+                                SELECT COUNT(device_external_id)
+                                FROM device
+                                WHERE device_external_id=:device_external_id
+                            )");
+    queryExternalID.prepare(queryExternalIDSQL);
+    queryExternalID.bindValue(":device_external_id", externalID);
+    queryExternalID.exec();
+    queryExternalID.next();
+    return queryExternalID.value(0).toInt() > 0;
+}
 
+void Device::deleteDevice(bool askConfirmation)
+{
     verifyHasSubDevice();
 
     if ( hasSubDevice == false ){
@@ -362,7 +377,6 @@ void Device::deleteDevice(bool askConfirmation){
     if(type == "Catalog"){
         catalog->deleteCatalog();
     }
-
 }
 
 void Device::saveDevice()
