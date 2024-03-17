@@ -80,6 +80,8 @@ void Device::loadDevice(){
         storage->ID = externalID;
         storage->loadStorage();
         storage->path = path;
+        storage->totalSpace = totalSpace;
+        storage->freeSpace  = freeSpace;
     }
 
     //Load catalog values
@@ -87,6 +89,8 @@ void Device::loadDevice(){
         catalog->ID = externalID;
         catalog->loadCatalog();
         catalog->sourcePath = path;
+        catalog->fileCount = totalFileCount;
+        catalog->totalFileSize = totalFileSize;
     }
 
     //Load sub-device list
@@ -412,13 +416,13 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     //Update device and children depending on type
     if (type=="Catalog"){
-
+        qDebug()<<"Updating Catalog: "<<type<<name;
         //Pass device values for messages
         catalog->name = name;
         catalog->sourcePath = path;
 
         //Update this device/catalog (files) and its storage (space)
-        deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder);
+        deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder, true);
         totalFileSize  = deviceUpdatesList[1];
         totalFileCount = deviceUpdatesList[3];
 
@@ -471,7 +475,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     else if (type=="Storage"){
         //Update device/storage and all its catalogs
-
         //Update catalogs
         if(includeSubDevices==true){
             //Get list of catalogs
@@ -492,9 +495,9 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                     updatedDevice.ID = deviceIDList[deviceID];
                     updatedDevice.loadDevice();
 
-                    QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder);
+                    QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
 
-                    if(catalogUpdatesList.count()>0){
+                    if(catalogUpdatesList[0]==1){
                         //Update catalog with new values
                         updatedDevice.totalFileCount = catalogUpdatesList[1];
                         updatedDevice.totalFileSize  = catalogUpdatesList[3];
@@ -531,6 +534,17 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                 deviceUpdatesList<<0;
             }
         }
+        else {
+            //Add 0 for catalog
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+            deviceUpdatesList<<0;
+        }
+
         //Update storage itself
         QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
         freeSpace  = storageUpdates[3];

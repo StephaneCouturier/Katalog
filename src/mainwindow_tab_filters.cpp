@@ -132,24 +132,6 @@
         selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();;
         selectedDevice->loadDevice();
 
-        //Adapt UI based on device type
-        if (selectedDevice->type=="Storage"){
-            ui->Devices_pushButton_AssignCatalog->setEnabled(false);
-            ui->Devices_label_SelectedCatalogDisplay->setText("");
-        }
-        else if (selectedDevice->type=="Virtual"){
-            ui->Devices_pushButton_AssignCatalog->setEnabled(false);
-            ui->Devices_label_SelectedCatalogDisplay->setText("");
-        }
-        else if (selectedDevice->type=="Catalog"){
-            ui->Devices_pushButton_AssignCatalog->setEnabled(true);
-            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
-            if(selectedDevice->name!=""){
-                ui->Devices_pushButton_AssignCatalog->setEnabled(true);
-            }
-            ui->Devices_label_SelectedCatalogDisplay->setText(selectedDevice->name);
-        }
-
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
 
@@ -306,7 +288,6 @@
         ui->Filters_label_DisplayStorage->setText(tr("All"));
         ui->Filters_label_DisplayCatalog->setText(tr("All"));
         ui->Filters_label_DisplayDevice->setText(tr("All"));
-        ui->Devices_label_SelectedCatalogDisplay->setText("");
 
         //Reset device tree
         setTreeExpandState(false);

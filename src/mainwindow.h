@@ -453,7 +453,6 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_AddStorage_clicked();
             void on_Devices_pushButton_Save_clicked();
             void on_Devices_pushButton_Cancel_clicked();
-            void on_Devices_pushButton_AssignCatalog_clicked();
             void on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayStorage_stateChanged(int arg1);
             void on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1);
@@ -493,6 +492,7 @@ class MainWindow : public QMainWindow
             void on_TEST_pushButton_GenerateMissingIDs_clicked();
             void on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked();
             void on_TEST_pushButton_ImporStatistics_clicked();
+            void on_Storage_pushButton_UpdateStorage_clicked();
 };
 
 #endif // MAINWINDOW_H

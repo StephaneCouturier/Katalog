@@ -170,8 +170,9 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "No Path was provided for Storage: <b>%1</b>. <br/>"
-                                                       "Modify the device to provide one and try again.").arg(name));
+                                                       "No Path was provided for the Storage:<br/>"
+                                                       "<b>%1</b>. <br/>"
+                                                       "Edit the device to provide one and try again.").arg(name));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }

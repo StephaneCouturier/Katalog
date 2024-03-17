@@ -110,11 +110,6 @@ void MainWindow::on_Devices_pushButton_AddStorage_clicked()
     addDeviceStorage(parentID);
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_AssignCatalog_clicked()
-{
-    assignCatalogToDevice(selectedDevice, activeDevice);
-}
-//--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_EditList_clicked()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(collection->deviceFilePath));
@@ -198,22 +193,6 @@ void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index
     //Get selection data
     activeDevice->ID = ui->Devices_treeView_DeviceList->model()->index(index.row(), 3, index.parent() ).data().toInt();
     activeDevice->loadDevice();
-
-    if(activeDevice->type=="Virtual"){
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-        if(activeDevice->name!=""){
-            ui->Devices_pushButton_AssignCatalog->setEnabled(true);
-        }
-        ui->Devices_label_SelectedDeviceVirtual->setText(activeDevice->name);
-    }
-    else if(activeDevice->type=="Catalog"){
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(true);
-        ui->Devices_pushButton_AssignCatalog->setEnabled(false);
-        ui->Devices_label_SelectedDeviceVirtual->setText("");
-    }
-    else{
-        ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
-    }
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos)
@@ -323,7 +302,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              "list");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsToFile();
-
             loadDevicesView();
         });
 
@@ -336,7 +314,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         if(activeDevice->active==true){
             QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("gparted"), tr("Filelight"), this);
             deviceContextMenu.addAction(menuDeviceAction5);
-
             connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
                 QProcess::startDetached("filelight", QStringList() << activeDevice->path);
             });
@@ -351,6 +328,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                 unassignPhysicalFromDevice(activeDevice->ID, activeDevice->parentID);
             });
         }
+
         QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this storage"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
         connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
@@ -402,11 +380,15 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             });
         }
 
-        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected storage"), this);
+        QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected catalog"), this);
         deviceContextMenu.addAction(menuDeviceAction5);
         connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-            assignStorageToDevice(selectedDevice->storage->ID, activeDevice->ID);
+            assignCatalogToDevice(selectedDevice, activeDevice);
         });
+
+        if (selectedDevice->type != "Catalog") {
+            menuDeviceAction5->setEnabled(false);
+        }
 
         deviceContextMenu.addSeparator();
 
@@ -456,6 +438,21 @@ void MainWindow::on_Devices_pushButton_SelectPath_clicked()
                                                         | QFileDialog::DontResolveSymlinks);
     //Send the selected directory to LE_NewCatalogPath (input line for the New Catalog Path)
     ui->Devices_lineEdit_Path->setText(dir);
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
+{
+    reportAllUpdates(activeDevice,
+                     activeDevice->updateDevice("update",
+                                                collection->databaseMode,
+                                                true,
+                                                collection->collectionFolder,
+                                                false),
+                     "update");
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsToFile();
+    loadDevicesView();
+    editDevice();
 }
 //--------------------------------------------------------------------------
 
@@ -626,73 +623,101 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
 {
     if( parentDevice->ID!=0 and catalogDevice->ID !=0){
 
-        //Generate new ID
-        QSqlQuery queryID;
-        QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(device_id)
+        //Verif if catalog is not already assigned.
+        QSqlQuery queryCurrentCatalogsExternalID;
+        QString queryCurrentCatalogsExternalIDSQL = QLatin1String(R"(
+                            SELECT COUNT(*)
                             FROM device
+                            WHERE device_parent_id =:device_parent_id
+                            AND device_external_id =:device_external_id
                         )");
-        queryID.prepare(queryIDSQL);
-        queryID.exec();
-        queryID.next();
-        int newID = queryID.value(0).toInt()+1;
+        //AND device_external_id :=device_external_id
+        queryCurrentCatalogsExternalID.prepare(queryCurrentCatalogsExternalIDSQL);
+        queryCurrentCatalogsExternalID.bindValue(":device_parent_id", parentDevice->ID);
+        queryCurrentCatalogsExternalID.bindValue(":device_external_id", catalogDevice->externalID);
+        queryCurrentCatalogsExternalID.exec();
+        queryCurrentCatalogsExternalID.next();
+        bool catalogAlreadyAssigned = queryCurrentCatalogsExternalID.value(0).toInt() > 0;
 
-        //Insert catalog
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                            INSERT INTO device(
-                                        device_id,
-                                        device_parent_id,
-                                        device_name,
-                                        device_type,
-                                        device_external_id,
-                                        device_path,
-                                        device_total_file_size,
-                                        device_total_file_count,
-                                        device_total_space,
-                                        device_free_space,
-                                        device_active,
-                                        device_group_id,
-                                        device_date_updated)
-                            VALUES(
-                                        :device_id,
-                                        :device_parent_id,
-                                        :device_name,
-                                        :device_type,
-                                        :device_external_id,
-                                        :device_path,
-                                        :device_total_file_size,
-                                        :device_total_file_count,
-                                        :device_total_space,
-                                        :device_free_space,
-                                        :device_active,
-                                        :device_group_id,
-                                        :device_date_updated)
-                        )");
-        query.prepare(querySQL);
-        query.bindValue(":device_id", newID);
-        query.bindValue(":device_parent_id", parentDevice->ID);
-        query.bindValue(":device_name", catalogDevice->name);
-        query.bindValue(":device_type", "Catalog");
-        query.bindValue(":device_external_id", catalogDevice->catalog->ID);
-        query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
-        query.bindValue(":device_total_file_size", catalogDevice->catalog->totalFileSize);
-        query.bindValue(":device_total_file_count", catalogDevice->catalog->fileCount);
-        query.bindValue(":device_total_space", 0);
-        query.bindValue(":device_free_space", 0);
-        query.bindValue(":device_active", catalogDevice->active);
-        query.bindValue(":device_group_id", parentDevice->groupID);
-        query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
-        query.exec();
-
-        //Save data to file
-        if (collection->databaseMode == "Memory"){
-            //Save file
-            collection->saveDeviceTableToFile();
+        if(catalogAlreadyAssigned==true){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                       "The catalog is already assigned to this Virtual device."
+                                                       ));
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+            return;
         }
+        else{
+            //Generate new ID
+            QSqlQuery queryID;
+            QString queryIDSQL = QLatin1String(R"(
+                                SELECT MAX(device_id)
+                                FROM device
+                            )");
+            queryID.prepare(queryIDSQL);
+            queryID.exec();
+            queryID.next();
+            int newID = queryID.value(0).toInt()+1;
 
-        //Reload
-        loadDevicesView();
+            //Insert catalog
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                INSERT INTO device(
+                                            device_id,
+                                            device_parent_id,
+                                            device_name,
+                                            device_type,
+                                            device_external_id,
+                                            device_path,
+                                            device_total_file_size,
+                                            device_total_file_count,
+                                            device_total_space,
+                                            device_free_space,
+                                            device_active,
+                                            device_group_id,
+                                            device_date_updated)
+                                VALUES(
+                                            :device_id,
+                                            :device_parent_id,
+                                            :device_name,
+                                            :device_type,
+                                            :device_external_id,
+                                            :device_path,
+                                            :device_total_file_size,
+                                            :device_total_file_count,
+                                            :device_total_space,
+                                            :device_free_space,
+                                            :device_active,
+                                            :device_group_id,
+                                            :device_date_updated)
+                            )");
+            query.prepare(querySQL);
+            query.bindValue(":device_id", newID);
+            query.bindValue(":device_parent_id", parentDevice->ID);
+            query.bindValue(":device_name", catalogDevice->name);
+            query.bindValue(":device_type", "Catalog");
+            query.bindValue(":device_external_id", catalogDevice->catalog->ID);
+            query.bindValue(":device_path", catalogDevice->catalog->sourcePath);
+            query.bindValue(":device_total_file_size", catalogDevice->catalog->totalFileSize);
+            query.bindValue(":device_total_file_count", catalogDevice->catalog->fileCount);
+            query.bindValue(":device_total_space", 0);
+            query.bindValue(":device_free_space", 0);
+            query.bindValue(":device_active", catalogDevice->active);
+            query.bindValue(":device_group_id", parentDevice->groupID);
+            query.bindValue(":device_date_updated", catalogDevice->dateTimeUpdated);
+            query.exec();
+
+            //Save data to file
+            if (collection->databaseMode == "Memory"){
+                //Save file
+                collection->saveDeviceTableToFile();
+            }
+
+            //Reload
+            loadDevicesView();
+        }
     }
 }
 //--------------------------------------------------------------------------
@@ -1471,7 +1496,6 @@ void MainWindow::saveDeviceForm()
 
         //Save data to file
         collection->saveStorageTableToFile();
-
     }
 
     //Update previous and new parent device values
@@ -1479,6 +1503,10 @@ void MainWindow::saveDeviceForm()
     previousParentDevice.updateParentsNumbers();
     newParentDevice.updateNumbersFromChildren();
     newParentDevice.updateParentsNumbers();
+
+    //Refresh Filters tree if device name changed
+    if(previousName != activeDevice->name)
+        loadDevicesTreeToModel("Filters");
 
     //Finalize
     ui->Devices_widget_Edit->hide();
@@ -1845,6 +1873,10 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
         ui->Devices_treeView_DeviceList->header()->resizeSection(13,  25); //Group ID
 
+        ui->Devices_treeView_DeviceList->header()->showSection( 8); //Used space
+        ui->Devices_treeView_DeviceList->header()->showSection( 9); //Free space
+        ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
+
         if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
             ui->Devices_treeView_DeviceList->header()->showSection(1); //Type
             ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
@@ -1861,6 +1893,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
             ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
         }
 
+        ui->Devices_treeView_DeviceList->setRootIsDecorated(true);
         ui->Devices_treeView_DeviceList->expandAll();
     }
     if(targetTreeModel=="Filters" or targetTreeModel=="All"){
@@ -2135,7 +2168,6 @@ void MainWindow::loadDevicesCatalogToModel(){
                             device_group_id,
                             device_date_updated,
                             c.catalog_file_path            ,
-                            c.catalog_date_updated         ,
                             c.catalog_file_type            ,
                             c.catalog_include_hidden       ,
                             c.catalog_include_metadata     ,
@@ -2196,15 +2228,14 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("Date updated"),
                                                  tr("Path"),
                                                  tr("Group ID"),
-                                                 tr("Date Updated"),
                                                  tr("File Type"),
                                                  tr("include hidden"),
                                                  tr("include metadata"),
                                                  tr("Parent storage"),
                                                  tr("Fulldevice"),
                                                  tr("Date Loaded"),
-                                                 tr("app version"),
-                                                 tr("File path"),
+                                                 tr("App Version"),
+                                                 tr("File Path"),
                                                  "" });
 
     //Create a map to store items by ID for easy access
@@ -2229,14 +2260,13 @@ void MainWindow::loadDevicesCatalogToModel(){
         int groupID = loadCatalogQuery.value(11).toBool();
         QString dateTimeUpdated = loadCatalogQuery.value(12).toString();
         QString catalog_file_path = loadCatalogQuery.value(13).toString();
-        QString catalog_date_updated = loadCatalogQuery.value(14).toString();
-        QString catalog_file_type = loadCatalogQuery.value(15).toString();
-        QString catalog_include_hidden = loadCatalogQuery.value(16).toString();
-        QString catalog_include_metadata = loadCatalogQuery.value(17).toString();
-        QString parent_storage = loadCatalogQuery.value(18).toString();
-        QString catalog_is_full_device = loadCatalogQuery.value(19).toString();
-        QString catalog_date_loaded = loadCatalogQuery.value(20).toString();
-        QString catalog_app_version = loadCatalogQuery.value(21).toString();
+        QString catalog_file_type = loadCatalogQuery.value(14).toString();
+        QString catalog_include_hidden = loadCatalogQuery.value(15).toString();
+        QString catalog_include_metadata = loadCatalogQuery.value(16).toString();
+        QString parent_storage = loadCatalogQuery.value(17).toString();
+        QString catalog_is_full_device = loadCatalogQuery.value(18).toString();
+        QString catalog_date_loaded = loadCatalogQuery.value(19).toString();
+        QString catalog_app_version = loadCatalogQuery.value(20).toString();
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
@@ -2254,7 +2284,6 @@ void MainWindow::loadDevicesCatalogToModel(){
         rowItems << new QStandardItem(dateTimeUpdated);
         rowItems << new QStandardItem(path);
         rowItems << new QStandardItem(QString::number(groupID));
-        rowItems << new QStandardItem(catalog_date_updated);
         rowItems << new QStandardItem(catalog_file_type);
         rowItems << new QStandardItem(catalog_include_hidden);
         rowItems << new QStandardItem(catalog_include_metadata);
@@ -2916,185 +2945,182 @@ void MainWindow::importFromVVV()
 //--------------------------------------------------------------------------
 bool MainWindow::reportAllUpdates(Device *device, QList<qint64> list, QString updateType)
 {//Provide a report for any combinaison of updates (updateType = create, single, or list) and devices
+    QMessageBox msgBox;
+    QString message;
+    bool reportAvailable;
 
-    if(list[0]==0)
-        return false;
-    else{
+    //Catalog updates
+    if (device->type=="Catalog" and updateType=="update"){
 
-        QMessageBox msgBox;
-        QString message;
+        if(list[0]==1){//Catalog updated
+            qDebug()<<"reportAllUpdates / catalogs / update / catalog updated";
 
-        //Catalog updates
-        if (device->type=="Catalog" and updateType=="update"){
-
-            if(list[0]==1){//Catalog updated
-                message = QString(tr("<br/>Catalog updated:&nbsp;<b>%1</b><br/>")).arg(device->name);
-                message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
-                message += QString("<table>"
-                                   "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
-                                   "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
-                                   ).arg(QString::number(list[1]),
-                                    QString::number(list[2]),
-                                    QLocale().formattedDataSize(list[3]),
-                                    QLocale().formattedDataSize(list[4]));
-            }
-
-            if(list[7]==1){//Parent storage updated
-                Device parentDevice;
-                parentDevice.ID = device->parentID;
-                parentDevice.loadDevice();
-
-                message += (tr("<br/>"
-                               "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
-                               "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
-                               "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
-                               "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
-                               "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
-                               "</table>"
-                               ).arg(parentDevice.name,
-                                     QLocale().formattedDataSize(list[8]),
-                                     QLocale().formattedDataSize(list[9]),
-                                     QLocale().formattedDataSize(list[10]),
-                                     QLocale().formattedDataSize(list[11]),
-                                     QLocale().formattedDataSize(list[12]),
-                                     QLocale().formattedDataSize(list[13]),
-                                     parentDevice.path
-                                     ));
-            }
-
-            if(list[0]==1 or list[7]==1){
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            }
+            message = QString(tr("<br/>Catalog updated:&nbsp;<b>%1</b><br/>")).arg(device->name);
+            message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
+            message += QString("<table>"
+                               "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
+                               "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
+                               ).arg(QString::number(list[1]),
+                                QString::number(list[2]),
+                                QLocale().formattedDataSize(list[3]),
+                                QLocale().formattedDataSize(list[4]));
+            reportAvailable = true;
         }
-        if (device->type=="Catalog" and updateType=="create"){
-            if(list[0]==1){//Catalog updated
-                message = QString(tr("<br/>Catalog created:&nbsp;<b>%1</b><br/>")).arg(device->name);
-                message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
 
-                message += QString("<table>"
-                                   "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td></tr>"
-                                   "<tr><td>Total file size: </td><td align='right'> <b> %2 </b></td><td></tr>"
-                                   ).arg(QString::number(list[1]),
-                                    QLocale().formattedDataSize(list[3])
-                                    );
-            }
+        if(list[7]==1){//Parent storage updated
+            qDebug()<<"reportAllUpdates / catalogs / update / storage updated";
+            Device parentDevice;
+            parentDevice.ID = device->parentID;
+            parentDevice.loadDevice();
 
-            if(list[7]==1){//Parent storage updated
-                Device parentDevice;
-                parentDevice.ID = device->parentID;
-                parentDevice.loadDevice();
-
-                message += (tr("<br/>"
-                               "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
-                               "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
-                               "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
-                               "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
-                               "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
-                               "</table>"
-                               ).arg(parentDevice.name,
-                                     QLocale().formattedDataSize(list[8]),
-                                     QLocale().formattedDataSize(list[9]),
-                                     QLocale().formattedDataSize(list[10]),
-                                     QLocale().formattedDataSize(list[11]),
-                                     QLocale().formattedDataSize(list[12]),
-                                     QLocale().formattedDataSize(list[13]),
-                                     parentDevice.path
-                                     ));
-            }
-
-            if(list[0]==1 or list[7]==1){
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            }
-        }
-        //Storage updates
-        if (device->type=="Storage" and updateType=="update"){
-            message.clear();
-            message += (tr("<table>"
+            message += (tr("<br/>"
                            "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
                            "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
                            "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
                            "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
                            "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
                            "</table>"
-                           ).arg(activeDevice->name,
+                           ).arg(parentDevice.name,
                                  QLocale().formattedDataSize(list[8]),
                                  QLocale().formattedDataSize(list[9]),
                                  QLocale().formattedDataSize(list[10]),
                                  QLocale().formattedDataSize(list[11]),
                                  QLocale().formattedDataSize(list[12]),
                                  QLocale().formattedDataSize(list[13]),
-                                 activeDevice->path
+                                 parentDevice.path
                                  ));
+            reportAvailable = true;
+        }
+
+        if(list[0]==1 or list[7]==1){
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(message);
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
-        if (updateType=="list"){
-            if(list[0]==1){//Catalog updated
-                message = QString(tr("<table>"
-                                     "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
-                message += QString(
-                               "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
-                               "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
-                               ).arg(QString::number(list[1]),
-                                    QString::number(list[2]),
-                                    QLocale().formattedDataSize(list[3]),
-                                    QLocale().formattedDataSize(list[4]));
-
-                message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs (active), %2 skipped Catalogs (inactive)")).arg(QString::number(list[5]),QString::number(list[6]));
-            }
-
-            if(list[7]==1){//Storage updated
-                message += (tr("<tr><td colspan=4></td></tr>"
-                               "<tr><td colspan=4></td></tr>"
-                               "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
-                               "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
-                               "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
-                               "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
-                               "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
-                               "</table>"
-                               ).arg(device->name,
-                                     QLocale().formattedDataSize(list[8]),
-                                     QLocale().formattedDataSize(list[9]),
-                                     QLocale().formattedDataSize(list[10]),
-                                     QLocale().formattedDataSize(list[11]),
-                                     QLocale().formattedDataSize(list[12]),
-                                     QLocale().formattedDataSize(list[13]),
-                                     device->path
-                                     ));
-            }
-
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(message);
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-        }
-        //Virtual updates
-        if (device->type =="Virtual"){
-            /*
-                    message = QString(tr("<table>"
-                                         "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
-                    message += QString(
-                                   "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
-                                   "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
-                                   ).arg(QString::number(list[0]));
-
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(message);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-                */
-        }
-
-        return true;
     }
+    if (device->type=="Catalog" and updateType=="create"){
+        if(list[0]==1){//Catalog updated
+            message = QString(tr("<br/>Catalog created:&nbsp;<b>%1</b><br/>")).arg(device->name);
+            message += QString(tr("path:&nbsp;<b>%1</b><br/>")).arg(device->path);
+
+            message += QString("<table>"
+                               "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td></tr>"
+                               "<tr><td>Total file size: </td><td align='right'> <b> %2 </b></td><td></tr>"
+                               ).arg(QString::number(list[1]),
+                                QLocale().formattedDataSize(list[3])
+                                );
+            reportAvailable = true;
+        }
+
+        if(list[7]==1){//Parent storage updated
+            Device parentDevice;
+            parentDevice.ID = device->parentID;
+            parentDevice.loadDevice();
+
+            message += (tr("<br/>"
+                           "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                           "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                           "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                           "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                           "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                           "</table>"
+                           ).arg(parentDevice.name,
+                                 QLocale().formattedDataSize(list[8]),
+                                 QLocale().formattedDataSize(list[9]),
+                                 QLocale().formattedDataSize(list[10]),
+                                 QLocale().formattedDataSize(list[11]),
+                                 QLocale().formattedDataSize(list[12]),
+                                 QLocale().formattedDataSize(list[13]),
+                                 parentDevice.path
+                                 ));
+            reportAvailable = true;
+        }
+
+        if(list[0]==1 or list[7]==1){
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
+    }
+
+    //Storage updates
+    if (device->type=="Storage" and updateType=="update"){
+        message.clear();
+        message += (tr("<table>"
+                       "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                       "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                       "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                       "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                       "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                       "</table>"
+                       ).arg(activeDevice->name,
+                             QLocale().formattedDataSize(list[8]),
+                             QLocale().formattedDataSize(list[9]),
+                             QLocale().formattedDataSize(list[10]),
+                             QLocale().formattedDataSize(list[11]),
+                             QLocale().formattedDataSize(list[12]),
+                             QLocale().formattedDataSize(list[13]),
+                             activeDevice->path
+                             ));
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(message);
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+        reportAvailable = true;
+    }
+    if (updateType=="list"){
+        if(list[0]==1){//Catalog updated
+            message = QString(tr("<table>"
+                                 "<br/>Selected active catalogs from <b>%1</b> are updated.&nbsp;<br/>")).arg(device->name);
+            message += QString(
+                           "<tr><td>Number of files: </td><td align='center'><b> %1 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %2 </b>)&nbsp; &nbsp; </td></tr>"
+                           "<tr><td>Total file size: </td><td align='right'> <b> %3 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %4 </b>)&nbsp; &nbsp; </td></tr>"
+                           ).arg(QString::number(list[1]),
+                                QString::number(list[2]),
+                                QLocale().formattedDataSize(list[3]),
+                                QLocale().formattedDataSize(list[4]));
+
+            message += "</table>" + QString(tr("<br/><br/> %1 updated Catalogs (active), %2 skipped Catalogs (inactive)")).arg(QString::number(list[5]),QString::number(list[6]));
+            reportAvailable = true;
+        }
+
+        if(list[7]==1){//Storage updated
+            message += (tr("<tr><td colspan=4></td></tr>"
+                           "<tr><td colspan=4></td></tr>"
+                           "<tr><td colspan=4>Storage updated:&nbsp; <b>%1</b></td></tr>"
+                           "<tr><td colspan=4>path:&nbsp; <b> %8 </b> <br/></td></tr>"
+                           "<tr><td> Used Space: </td><td align='right'><b> %2 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %3 </b>)</td></tr>"
+                           "<tr><td> Free Space: </td><td align='right'><b> %4 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %5 </b>)</td></tr>"
+                           "<tr><td>Total Space: </td><td align='right'><b> %6 </b></td><td>&nbsp; &nbsp; (added: </td><td align='right'><b> %7 </b>)</td></tr>"
+                           "</table>"
+                           ).arg(device->name,
+                                 QLocale().formattedDataSize(list[8]),
+                                 QLocale().formattedDataSize(list[9]),
+                                 QLocale().formattedDataSize(list[10]),
+                                 QLocale().formattedDataSize(list[11]),
+                                 QLocale().formattedDataSize(list[12]),
+                                 QLocale().formattedDataSize(list[13]),
+                                 device->path
+                                 ));
+            reportAvailable = true;
+        }
+
+        if(list[0]==1 or list[7]==1){
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
+    }
+
+    //Virtual updates
+    if (device->type =="Virtual"){
+        reportAvailable = false;
+    }
+
+    return reportAvailable;
 }
 //--------------------------------------------------------------------------
 void MainWindow::createMissingParentDirectories() {

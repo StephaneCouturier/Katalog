@@ -330,7 +330,7 @@ void Catalog::updateCatalogFileHeaders(QString databaseMode)
     }
 }
 
-QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collectionFolder)
+QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collectionFolder, bool reportCannotUpdate)
 {//Update the files of the catalog and return a list with update information
     QList<qint64> list;
     getFileExtensions(); //Update the list of file extensions to scan, based on the catalog's file type
@@ -352,8 +352,6 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                                 "- the catalogFileCount number does not matter as much, it can be updated.<br/>"));
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
-
-            return list;
         }
 
         //Deal with other cases where some input information is missing
@@ -369,8 +367,6 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                                    filePath, name, sourcePath));
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
-
-            return list;
         }
     }
 
@@ -401,7 +397,6 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                 list.append(0);
                 list.append(0);
                 list.append(0);
-                return list;
             }
             else
                 QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -415,36 +410,42 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
         qint64 deltaFileCount     = newFileCount - previousFileCount;
         qint64 newTotalFileSize   = totalFileSize;
         qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
-
         list.append(1);//catalog updated
         list.append(newFileCount);
         list.append(deltaFileCount);
         list.append(newTotalFileSize);
         list.append(deltaTotalFileSize);
-
-        return list;
     }
     else {
-        QApplication::restoreOverrideCursor();
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(QCoreApplication::translate("MainWindow",
-                                            "The catalog <b>%1</b> cannot be updated.<br/>"
-                                            "<br/> The source folder was not found.<br/><b>%2</b><br/>"
-                                            "<br/> Possible reasons:<br/>"
-                                            "    - the device is not connected and mounted,<br/>"
-                                            "    - the source folder was moved or renamed.,<br/>"
-                                            "    - the source folder entered is incorrect.").arg(name,sourcePath));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
+        if(reportCannotUpdate==true){
+            QApplication::restoreOverrideCursor();
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                "The catalog <b>%1</b> cannot be updated.<br/>"
+                                                "<br/> The source folder was not found.<br/><b>%2</b><br/>"
+                                                "<br/> Possible reasons:<br/>"
+                                                "    - the device is not connected and mounted,<br/>"
+                                                "    - the source folder was moved or renamed.,<br/>"
+                                                "    - the source folder entered is incorrect.").arg(name,sourcePath));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            list.append(0);//catalog not updated
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+        }
+        else{
+            list.append(0);//catalog not updated
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
 
-        list.append(0);//catalog not updated
-        list.append(0);
-        list.append(0);
-        list.append(0);
-        list.append(0);
-        return list;
+        }
     }
+    return list;
 }
 
 void Catalog::loadCatalog()
