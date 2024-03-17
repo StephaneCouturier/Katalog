@@ -1810,20 +1810,20 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
-        rowItems << new QStandardItem(name);
-        rowItems << new QStandardItem(type);
-        rowItems << new QStandardItem(QString::number(isActive));
-        rowItems << new QStandardItem(QString::number(id));
-        rowItems << new QStandardItem(QString::number(parentId));
-        rowItems << new QStandardItem(QString::number(externalId));
-        rowItems << new QStandardItem(QString::number(number));
-        rowItems << new QStandardItem(QString::number(size));
-        rowItems << new QStandardItem(QString::number(used_space));
-        rowItems << new QStandardItem(QString::number(free_space));
-        rowItems << new QStandardItem(QString::number(total_space));
-        rowItems << new QStandardItem(dateTimeUpdated);
-        rowItems << new QStandardItem(path);
-        rowItems << new QStandardItem(QString::number(groupID));
+        rowItems << new QStandardItem(name);                        //0
+        rowItems << new QStandardItem(type);                        //1
+        rowItems << new QStandardItem(QString::number(isActive));   //2
+        rowItems << new QStandardItem(QString::number(id));         //3
+        rowItems << new QStandardItem(QString::number(parentId));   //4
+        rowItems << new QStandardItem(QString::number(externalId)); //5
+        rowItems << new QStandardItem(QString::number(number));     //6
+        rowItems << new QStandardItem(QString::number(size));       //7
+        rowItems << new QStandardItem(QString::number(used_space)); //8
+        rowItems << new QStandardItem(QString::number(free_space)); //9
+        rowItems << new QStandardItem(QString::number(total_space));//10
+        rowItems << new QStandardItem(dateTimeUpdated);             //11
+        rowItems << new QStandardItem(path);                        //12
+        rowItems << new QStandardItem(QString::number(groupID));    //13
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -2013,9 +2013,9 @@ void MainWindow::loadDevicesStorageToModel(){
                                                  tr("Brand/Model"),
                                                  tr("Serial Number"),
                                                  tr("Build Date"),
-                                                 tr("Content Type"),
-                                                 tr("Container"),
-                                                 tr("Comment"),
+                                                 tr("Comment 1"),
+                                                 tr("Comment 2"),
+                                                 tr("Comment 3"),
                                                  "" });
 
     //Create a map to store items by ID for easy access
@@ -2052,29 +2052,30 @@ void MainWindow::loadDevicesStorageToModel(){
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
-        rowItems << new QStandardItem(name);
-        rowItems << new QStandardItem(type);
-        rowItems << new QStandardItem(QString::number(isActive));
-        rowItems << new QStandardItem(QString::number(id));
-        rowItems << new QStandardItem(QString::number(parentId));
-        rowItems << new QStandardItem(QString::number(externalId));
-        rowItems << new QStandardItem(QString::number(number));
-        rowItems << new QStandardItem(QString::number(size));
-        rowItems << new QStandardItem(QString::number(used_space));
-        rowItems << new QStandardItem(QString::number(free_space));
-        rowItems << new QStandardItem(QString::number(total_space));
-        rowItems << new QStandardItem(dateTimeUpdated);
-        rowItems << new QStandardItem(path);
-        rowItems << new QStandardItem(QString::number(groupID));
-        rowItems << new QStandardItem(storage_type);
-        rowItems << new QStandardItem(storage_label);
-        rowItems << new QStandardItem(storage_file_system);
-        rowItems << new QStandardItem(storage_brand_model);
-        rowItems << new QStandardItem(storage_serial_number);
-        rowItems << new QStandardItem(storage_build_date);
-        rowItems << new QStandardItem(storage_content_type);
-        rowItems << new QStandardItem(storage_container);
-        rowItems << new QStandardItem(storage_comment);
+        rowItems << new QStandardItem(name);                        //0
+        rowItems << new QStandardItem(type);                        //1
+        rowItems << new QStandardItem(QString::number(isActive));   //2
+        rowItems << new QStandardItem(QString::number(id));         //3
+        rowItems << new QStandardItem(QString::number(parentId));   //4
+        rowItems << new QStandardItem(QString::number(externalId)); //5
+        rowItems << new QStandardItem(QString::number(number));     //6
+        rowItems << new QStandardItem(QString::number(size));       //7
+        rowItems << new QStandardItem(QString::number(used_space)); //8
+        rowItems << new QStandardItem(QString::number(free_space)); //9
+        rowItems << new QStandardItem(QString::number(total_space));//10
+        rowItems << new QStandardItem(dateTimeUpdated);             //11
+        rowItems << new QStandardItem(path);                        //12
+        rowItems << new QStandardItem(QString::number(groupID));    //13
+
+        rowItems << new QStandardItem(storage_type);                //14
+        rowItems << new QStandardItem(storage_label);               //15
+        rowItems << new QStandardItem(storage_file_system);         //16
+        rowItems << new QStandardItem(storage_brand_model);         //17
+        rowItems << new QStandardItem(storage_serial_number);       //18
+        rowItems << new QStandardItem(storage_build_date);          //19
+        rowItems << new QStandardItem(storage_content_type);        //20
+        rowItems << new QStandardItem(storage_container);           //21
+        rowItems << new QStandardItem(storage_comment);             //22
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -2129,15 +2130,27 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->showSection( 8); //Used space
     ui->Devices_treeView_DeviceList->header()->showSection( 9); //Free space
     ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
+    ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->showSection(13); //Group ID
+        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
+        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
+        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_build_date
+        ui->Devices_treeView_DeviceList->header()->showSection(20); //Comment 1
+        ui->Devices_treeView_DeviceList->header()->showSection(21); //Comment 2
+        ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 3
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
+        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
+        ui->Devices_treeView_DeviceList->header()->hideSection(19); //storage_build_date
+        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Comment 1
+        ui->Devices_treeView_DeviceList->header()->hideSection(21); //Comment 2
+        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Comment 3
     }
 
     ui->Devices_treeView_DeviceList->expandAll();
@@ -2269,28 +2282,29 @@ void MainWindow::loadDevicesCatalogToModel(){
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
-        rowItems << new QStandardItem(name);
-        rowItems << new QStandardItem(type);
-        rowItems << new QStandardItem(QString::number(isActive));
-        rowItems << new QStandardItem(QString::number(id));
-        rowItems << new QStandardItem(QString::number(parentId));
-        rowItems << new QStandardItem(QString::number(externalId));
-        rowItems << new QStandardItem(QString::number(number));
-        rowItems << new QStandardItem(QString::number(size));
-        rowItems << new QStandardItem(QString::number(used_space));
-        rowItems << new QStandardItem(QString::number(free_space));
-        rowItems << new QStandardItem(QString::number(total_space));
-        rowItems << new QStandardItem(dateTimeUpdated);
-        rowItems << new QStandardItem(path);
-        rowItems << new QStandardItem(QString::number(groupID));
-        rowItems << new QStandardItem(catalog_file_type);
-        rowItems << new QStandardItem(catalog_include_hidden);
-        rowItems << new QStandardItem(catalog_include_metadata);
-        rowItems << new QStandardItem(parent_storage);
-        rowItems << new QStandardItem(catalog_is_full_device);
-        rowItems << new QStandardItem(catalog_date_loaded);
-        rowItems << new QStandardItem(catalog_app_version);
-        rowItems << new QStandardItem(catalog_file_path);
+        rowItems << new QStandardItem(name);                        //0
+        rowItems << new QStandardItem(type);                        //1
+        rowItems << new QStandardItem(QString::number(isActive));   //2
+        rowItems << new QStandardItem(QString::number(id));         //3
+        rowItems << new QStandardItem(QString::number(parentId));   //4
+        rowItems << new QStandardItem(QString::number(externalId)); //5
+        rowItems << new QStandardItem(QString::number(number));     //6
+        rowItems << new QStandardItem(QString::number(size));       //7
+        rowItems << new QStandardItem(QString::number(used_space)); //8
+        rowItems << new QStandardItem(QString::number(free_space)); //9
+        rowItems << new QStandardItem(QString::number(total_space));//10
+        rowItems << new QStandardItem(dateTimeUpdated);             //11
+        rowItems << new QStandardItem(path);                        //12
+        rowItems << new QStandardItem(QString::number(groupID));    //13
+
+        rowItems << new QStandardItem(catalog_file_type);           //14
+        rowItems << new QStandardItem(catalog_include_hidden);      //15
+        rowItems << new QStandardItem(catalog_include_metadata);    //16
+        rowItems << new QStandardItem(parent_storage);              //17
+        rowItems << new QStandardItem(catalog_is_full_device);      //18
+        rowItems << new QStandardItem(catalog_date_loaded);         //19
+        rowItems << new QStandardItem(catalog_app_version);         //20
+        rowItems << new QStandardItem(catalog_file_path);           //21
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -2338,6 +2352,8 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->resizeSection(11, 150); //date updated
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
     ui->Devices_treeView_DeviceList->header()->resizeSection(13,  25); //Group ID
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(17, QHeaderView::ResizeToContents); //Path
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(21, QHeaderView::ResizeToContents); //Path
 
     ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
     ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
@@ -2345,19 +2361,35 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection( 8); //Used space
     ui->Devices_treeView_DeviceList->header()->hideSection( 9); //Free space
     ui->Devices_treeView_DeviceList->header()->hideSection(10); //Total space
+    ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+
+    if(developmentMode==true){
+        ui->Devices_treeView_DeviceList->header()->showSection(16); //catalog_include_metadata
+        ui->Devices_treeView_DeviceList->header()->showSection(18); //catalog_is_full_device
+    }
+    else{
+        ui->Devices_treeView_DeviceList->header()->hideSection(16); //catalog_include_metadata
+        ui->Devices_treeView_DeviceList->header()->hideSection(18); //catalog_is_full_device
+    }
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->showSection(13); //Group ID
+        ui->Devices_treeView_DeviceList->header()->showSection(19); //app version
+        ui->Devices_treeView_DeviceList->header()->showSection(20); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->showSection(21); //File path
+
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+        ui->Devices_treeView_DeviceList->header()->hideSection(19); //app version
+        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(21); //File path
     }
 
     if (collection->databaseMode !="Memory") {
-        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Active
+        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Datae loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(22); //File path
     }
 
     ui->Devices_treeView_DeviceList->expandAll();

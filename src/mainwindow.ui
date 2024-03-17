@@ -4617,7 +4617,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="text">
-                         <string>Content Type</string>
+                         <string>Comment 1</string>
                         </property>
                        </widget>
                       </item>
@@ -4633,7 +4633,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="text">
-                         <string>Container</string>
+                         <string>Comment 2</string>
                         </property>
                        </widget>
                       </item>
@@ -4649,7 +4649,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="text">
-                         <string>Comment</string>
+                         <string>Comment 3</string>
                         </property>
                        </widget>
                       </item>
