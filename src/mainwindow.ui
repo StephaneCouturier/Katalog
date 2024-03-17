@@ -6746,28 +6746,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="Statistics_label_EditRecords">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Edit records:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="Statistics_pushButton_EditDeviceStatisticsFile">
                   <property name="toolTip">
                    <string>Edit the file storing all records</string>
                   </property>
                   <property name="text">
-                   <string>device</string>
+                   <string>Edit Statistics</string>
                   </property>
                   <property name="icon">
                    <iconset theme="document-edit-sign"/>
@@ -6905,6 +6889,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="Statistics_checkBox_DisplayEachValue">
+                  <property name="text">
+                   <string>Display each value</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>

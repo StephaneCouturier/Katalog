@@ -108,7 +108,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
-                ui->Statistics_label_EditRecords->hide();
                 ui->Statistics_pushButton_EditDeviceStatisticsFile->hide();
                 ui->Statistics_pushButton_Reload->hide();
             }

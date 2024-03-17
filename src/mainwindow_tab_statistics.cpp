@@ -124,6 +124,16 @@
         ui->Statistics_calendarWidget->setHidden(false);
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Statistics_checkBox_DisplayEachValue_clicked()
+    {
+        //Save selection in settings file;
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Statistics/DisplayEachValue", ui->Statistics_checkBox_DisplayEachValue->isChecked());
+
+        //Load the graph
+        loadStatisticsChart();
+    }
+    //----------------------------------------------------------------------
 
 //Methods-------------------------------------------------------------------
     void MainWindow::loadStatisticsDataTypes()
@@ -164,15 +174,17 @@
             qint64  maxValueGraphRange = 0;
             QString displayUnitText = "B";
             QLineSeries *series1 = new QLineSeries(); //Catalog data
+            QScatterSeries *series1s = new QScatterSeries(); //Catalog data
             QLineSeries *series2 = new QLineSeries(); //Storage used space
+            QScatterSeries *series2s = new QScatterSeries(); //Storage used space
             QLineSeries *series3 = new QLineSeries(); //Storage total space
+            QScatterSeries *series3s = new QScatterSeries(); //Storage total space
             bool    loadSeries1 = true;
             bool    loadSeries2 = true;
             bool    loadSeries3 = true;
             bool    invalidCombinaison = false;
             QString invalidCase;
             QString reportName = tr("All device records");
-            QString reportTypeOfData = tr("Total File Size");;
             qreal   numberOrSizeTotal = 0;
             qreal   freeSpace  = 0;
             qreal   totalSpace = 0;
@@ -190,6 +202,27 @@
             QRgb colorStorageTotalSpace = qRgb(153, 202, 83);
             QPen penStorageTotalSpace(colorStorageTotalSpace);
             penStorageTotalSpace.setWidth(2);
+
+            //Customize the appearance of scatter series (data points)
+            if ( selectedTypeOfData == tr("Number of Files") )
+            {
+                series1s->setMarkerSize(10);
+                series1s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+                series1s->setColor(colorCatalogNumberFiles);
+            }
+            else{
+                series1s->setMarkerSize(10);
+                series1s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+                series1s->setColor(colorCatalogTotalSize);
+            }
+
+            series2s->setMarkerSize(10);
+            series2s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+            series2s->setColor(colorStorageUsedSpace);
+
+            series3s->setMarkerSize(10);
+            series3s->setMarkerShape(QScatterSeries::MarkerShapeRotatedRectangle);
+            series3s->setColor(colorStorageTotalSpace);
 
         //Scale and unit setting
             qint64 sizeDivider = 1;
@@ -274,13 +307,16 @@
                     }
 
                     series1->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
+                    series1s->append(datetime.toMSecsSinceEpoch(), numberOrSizeTotal);
 
                     freeSpace = static_cast<qreal>(queryStatistics.value(3).toLongLong()) / sizeDivider;
 
                     totalSpace = static_cast<qreal>(queryStatistics.value(4).toLongLong()) / sizeDivider;
 
                     series2->append(datetime.toMSecsSinceEpoch(), totalSpace - freeSpace );
+                    series2s->append(datetime.toMSecsSinceEpoch(), totalSpace - freeSpace );
                     series3->append(datetime.toMSecsSinceEpoch(), totalSpace);
+                    series3s->append(datetime.toMSecsSinceEpoch(), totalSpace);
 
                     if ( numberOrSizeTotal > maxValueGraphRange )
                         maxValueGraphRange = numberOrSizeTotal;
@@ -292,14 +328,15 @@
                         maxValueGraphRange = totalSpace;
                 }
 
-                //Series name and color               
+                //Series name and color
                 series1->setName(tr("Catalogs") + " / "  + selectedTypeOfData);
                 if ( selectedTypeOfData == tr("Number of Files") ){
                     series1->setPen(penCatalogNumberFiles);
                     displayUnitText ="";
                 }
-                else
+                else{
                     series1->setPen(penCatalogTotalSize);
+                }
 
                 if (selectedDevice->type == "Catalog"){
                     loadSeries2 = false;
@@ -368,16 +405,31 @@
                 chart->addSeries(series1);
                 series1->attachAxis(axisX);
                 series1->attachAxis(axisY);
+                if(ui->Statistics_checkBox_DisplayEachValue->isChecked()==true){
+                    chart->addSeries(series1s);
+                    series1s->attachAxis(axisX);
+                    series1s->attachAxis(axisY);
+                }
             }
             if (loadSeries2==true){
                 chart->addSeries(series2);
                 series2->attachAxis(axisX);
                 series2->attachAxis(axisY);
+                if(ui->Statistics_checkBox_DisplayEachValue->isChecked()==true){
+                    chart->addSeries(series2s);
+                    series2s->attachAxis(axisX);
+                    series2s->attachAxis(axisY);
+                }
             }
             if (loadSeries3==true){
                 chart->addSeries(series3);
                 series3->attachAxis(axisX);
                 series3->attachAxis(axisY);
+                if(ui->Statistics_checkBox_DisplayEachValue->isChecked()==true){
+                    chart->addSeries(series3s);
+                    series3s->attachAxis(axisX);
+                    series3s->attachAxis(axisY);
+                }
             }
 
         //Set the Legend
@@ -404,6 +456,22 @@
             }
 
             ui->Statistics_chartview_Graph1->setChart(chart);
+
+            //Remove duplicate legend if DisplayEachValue
+            if(ui->Statistics_checkBox_DisplayEachValue->isChecked()==true){
+
+                //Get the list of legend markers
+                QList<QLegendMarker*> markers = ui->Statistics_chartview_Graph1->chart()->legend()->markers();
+
+                //Remove the legend marker you want to hide
+                markers.at(1)->setVisible(false);
+                markers.at(3)->setVisible(false);
+                markers.at(5)->setVisible(false);
+
+                //Set the modified list of markers back to the legend
+                ui->Statistics_chartview_Graph1->chart()->legend()->markers() = markers;
+            }
+
             ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
     }
     //----------------------------------------------------------------------

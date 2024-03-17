@@ -348,6 +348,7 @@
             //Restore last statistics values
             ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());
             ui->Statistics_comboBox_TypeOfData->setCurrentText(settings.value("Statistics/TypeOfData").toString());
+            ui->Statistics_checkBox_DisplayEachValue->setChecked(settings.value("Statistics/DisplayEachValue").toBool());
 
             //last tab selected
             selectedTab = settings.value("Settings/selectedTab").toInt();

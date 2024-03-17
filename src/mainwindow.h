@@ -77,7 +77,8 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
-
+#include <QScatterSeries>
+#include <QtCharts/QLegendMarker>
 //Katalog object classes
 #include "collection.h"
 #include "search.h"
@@ -400,11 +401,7 @@ class MainWindow : public QMainWindow
             void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
 
-        //Catalogs
-            void on_Catalogs_pushButton_UpdateAllActive_clicked();
-            void on_Catalogs_pushButton_Open_clicked();
-            void on_Catalogs_pushButton_UpdateCatalog_clicked();
-            void on_Catalogs_pushButton_Import_clicked();
+
 
         //Create
             void setMediaFile(QString filePath);
@@ -467,6 +464,13 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_verifStorage_clicked();
             void on_Devices_pushButton_SelectPath_clicked();
             void on_Devices_pushButton_Snapshot_clicked();
+            //Catalogs
+            void on_Catalogs_pushButton_UpdateAllActive_clicked();
+            void on_Catalogs_pushButton_Open_clicked();
+            void on_Catalogs_pushButton_UpdateCatalog_clicked();
+            void on_Catalogs_pushButton_Import_clicked();
+            //Storage
+            void on_Storage_pushButton_UpdateStorage_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();
@@ -478,6 +482,7 @@ class MainWindow : public QMainWindow
             void on_Statistics_pushButton_ClearDate_clicked();
             void on_Statistics_pushButton_PickDate_clicked();
             void on_Statistics_calendarWidget_clicked(const QDate &date);
+            void on_Statistics_checkBox_DisplayEachValue_clicked();
 
         //Tags
             void on_Tags_pushButton_PickFolder_clicked();
@@ -492,7 +497,7 @@ class MainWindow : public QMainWindow
             void on_TEST_pushButton_GenerateMissingIDs_clicked();
             void on_TEST_pushButton_importStorageCatalogPathsToDevice_clicked();
             void on_TEST_pushButton_ImporStatistics_clicked();
-            void on_Storage_pushButton_UpdateStorage_clicked();
+
 };
 
 #endif // MAINWINDOW_H
