@@ -465,8 +465,10 @@
 
                 //Remove the legend marker you want to hide
                 markers.at(1)->setVisible(false);
-                markers.at(3)->setVisible(false);
-                markers.at(5)->setVisible(false);
+                if(selectedDevice->type !="Catalog"){
+                    markers.at(3)->setVisible(false);
+                    markers.at(5)->setVisible(false);
+                }
 
                 //Set the modified list of markers back to the legend
                 ui->Statistics_chartview_Graph1->chart()->legend()->markers() = markers;
