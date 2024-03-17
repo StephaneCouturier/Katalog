@@ -416,7 +416,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     //Update device and children depending on type
     if (type=="Catalog"){
-        qDebug()<<"Updating Catalog: "<<type<<name;
         //Pass device values for messages
         catalog->name = name;
         catalog->sourcePath = path;

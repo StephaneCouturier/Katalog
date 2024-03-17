@@ -1893,7 +1893,6 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
             ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
         }
 
-        ui->Devices_treeView_DeviceList->setRootIsDecorated(true);
         ui->Devices_treeView_DeviceList->expandAll();
     }
     if(targetTreeModel=="Filters" or targetTreeModel=="All"){
