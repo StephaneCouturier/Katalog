@@ -297,6 +297,8 @@
             filterFromSelectedDevice();
 
         //Add a default storage device, to force any new catalog to have one
+        collection->insertPhysicalStorageGroup();
+
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
                                     SELECT COUNT(*)
@@ -311,9 +313,8 @@
             //Create Device and related Storage under Physical group (ID=0)
             Device *newDevice = new Device();
             newDevice->generateDeviceID();
-
             newDevice->parentID = 2;
-            if(newDevice->verifyParentDeviceExistsInPhysicalGroup()==false)
+            if(newDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
                 newDevice->parentID = 1;
 
             newDevice->name = tr("Default Storage");
@@ -325,12 +326,13 @@
             newDevice->storage->insertStorage();
 
             //Save data to file
-            collection->saveDeviceTableToFile();
-
-            //Reload
-            loadDevicesView();
-            loadParentsList();
+            collection->saveDeviceTableToFile();          
         }
+
+        //Reload models
+        loadDevicesTreeToModel("Filters");
+        loadDevicesView();
+        loadParentsList();
 
         //Load Statistics
         loadStatisticsDataTypes();

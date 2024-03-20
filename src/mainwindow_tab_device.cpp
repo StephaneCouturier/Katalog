@@ -381,11 +381,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         }
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected catalog"), this);
-        deviceContextMenu.addAction(menuDeviceAction5);
-        connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-            assignCatalogToDevice(selectedDevice, activeDevice);
-        });
-
+        if (selectedDevice->groupID != 0) {
+            deviceContextMenu.addAction(menuDeviceAction5);
+            connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
+                assignCatalogToDevice(selectedDevice, activeDevice);
+            });
+        }
         if (selectedDevice->type != "Catalog") {
             menuDeviceAction5->setEnabled(false);
         }

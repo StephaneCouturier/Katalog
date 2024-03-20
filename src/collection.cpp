@@ -228,8 +228,6 @@ void Collection::loadDeviceFileToTable()
                 }
         }
         deviceFile.close();
-
-        insertPhysicalStorageGroup();
     }
 }
 //----------------------------------------------------------------------
@@ -366,13 +364,6 @@ void Collection::loadStorageFileToTable()
         if(!storageFile.open(QIODevice::ReadOnly)) {
 
             queryDelete.exec();
-
-            //Disable all buttons, enable create list
-            // ui->Storage_pushButton_Reload->setEnabled(false);
-            // ui->Storage_pushButton_EditAll->setEnabled(false);
-            // ui->Storage_pushButton_SaveAll->setEnabled(false);
-            // ui->Storage_pushButton_New->setEnabled(false);
-            // ui->Storage_pushButton_CreateList->setEnabled(true);
 
             return;
         }
@@ -660,7 +651,6 @@ void Collection::saveStorageTableToFile()
         }
 
         if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
             //out << textData;
             //Close the file
             //storageFile.close();
@@ -826,17 +816,8 @@ void Collection::createStorageFile()
 
                 newStorageFile.close();
 
-                //Enable,Disable buttons
-                //ui->Storage_pushButton_Reload->setEnabled(true);
-                //ui->Storage_pushButton_EditAll->setEnabled(true);
-
-                //ui->Storage_pushButton_CreateList->setEnabled(false);
-                //ui->Storage_pushButton_SaveAll->setEnabled(true);
-
                 //Even if empty, load it to the model
                 loadStorageFileToTable();
-                //loadStorageTableToModel();
-                //updateStorageSelectionStatistics();
 
                 return;
             }
