@@ -838,6 +838,7 @@ void MainWindow::deleteDeviceItem()
     updateStorageSelectionStatistics();
     loadDevicesTreeToModel("Filters");
     loadDevicesView();
+    filterFromSelectedDevice();
 }
 //--------------------------------------------------------------------------
 void MainWindow::recordDevicesSnapshot()
@@ -1124,6 +1125,7 @@ void MainWindow::addDeviceVirtual()
     //Reload
     loadDevicesTreeToModel("Filters");
     loadDevicesView();
+    filterFromSelectedDevice();
     loadParentsList();
 
     //Make it the activeDevice and edit
@@ -1154,6 +1156,7 @@ void MainWindow::addDeviceStorage(int parentID)
     //Reload
     loadDevicesTreeToModel("Filters");
     loadDevicesView();
+    filterFromSelectedDevice();
     loadParentsList();
 
     //Load table to model
@@ -1257,27 +1260,35 @@ void MainWindow::saveDeviceForm()
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice();
 
-    //Get new value: name, parentID, externalID
+    //Get new values: name, parentID, externalID
     activeDevice->parentID = ui->Devices_comboBox_Parent->currentData().toInt();
     activeDevice->name = ui->Devices_lineEdit_Name->text();
-    activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
-    if (previousName != activeDevice->name and activeDevice->verifyDeviceNameExists() and activeDevice->type=="Catalog"){
+
+    if (activeDevice->type == "Storage")
+        activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
+
+    if (previousName != activeDevice->name
+        and activeDevice->verifyDeviceNameExists()
+        and activeDevice->type=="Catalog"){
+        //Duplicate catalog names are not allowed
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText( tr("There is already a Catalog with this name:<br/><b>").arg(activeDevice->type)
                        + activeDevice->name
                        + "</b><br/><br/>"+tr("Choose a different name and try again."));
-        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
         return;
     }
-
-    if (previousExternalID != activeDevice->externalID and activeDevice->verifyStorageExternalIDExists()){
+    if (previousExternalID != activeDevice->externalID
+        and activeDevice->verifyStorageExternalIDExists()
+        and activeDevice->type=="Storage"){
+        //Duplicate storage IDs (device external ID) are not allowed
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText( tr("There is already a Storage with this ID.<b>")
                        + "<br/><br/>"+tr("Choose a different ID and try again."));
-        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
         return;
     }
@@ -1329,54 +1340,12 @@ void MainWindow::saveDeviceForm()
     activeDevice->saveDevice();
     collection->saveDeviceTableToFile();
 
-    //If device is a catalog, rename in catalog table
+    //If device is a catalog, save catalog changes
     if(activeDevice->type == "Catalog"){
-
-        //Update Catalog name
-        QString querySQL = QLatin1String(R"(
-                                    UPDATE catalog
-                                    SET catalog_name =:catalog_name
-                                    WHERE catalog_id =:catalog_id
-                                )");
-
-        QSqlQuery updateQuery;
-        updateQuery.prepare(querySQL);
-        updateQuery.bindValue(":catalog_name", activeDevice->name);
-        updateQuery.bindValue(":catalog_id",   activeDevice->externalID);
-        updateQuery.exec();
-
-        //loadCatalogsTableToModel();
-        updateCatalogsScreenStatistics();
-
-        //Save data to file
-        if (collection->databaseMode=="Memory"){
-            activeDevice->catalog->storageName = newParentDevice.name;
-            activeDevice->catalog->saveCatalog();
-            activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
-        }
-
-        activeDevice->catalog->renameCatalogFile(activeDevice->name);
-
-        //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-        if (activeDevice->path != previousPath)
-        {
-            int updatechoice = QMessageBox::warning(this, "Katalog",
-                                                    tr("Update the catalog contents based on the new path?\n")
-                                                    , QMessageBox::Yes
-                                                        | QMessageBox::No);
-            if ( updatechoice == QMessageBox::Yes){
-                reportAllUpdates(activeDevice,
-                                 activeDevice->updateDevice("update",
-                                                            collection->databaseMode,
-                                                            true,
-                                                            collection->collectionFolder,
-                                                            true),
-                                 "update");
-            }
-        }
-
+        activeDevice->catalog->storageName = newParentDevice.name;
         saveCatalogChanges();
-
+        updateCatalogsScreenStatistics();
+        loadDevicesTreeToModel("Filters");
     }
 
     //If device is Storage, rename in storage table
@@ -2424,7 +2393,7 @@ void MainWindow::loadStorageList()
 
     if ( selectedDevice->type == "Storage" ){
         querySQL += QLatin1String(R"( AND device_name ='%1' )").arg(selectedDevice->name);
-        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name); //replace by ID
+        ui->Create_comboBox_StorageSelection->setCurrentText(selectedDevice->name);
     }
     else if ( selectedDevice->type == "Catalog" ){
         querySQL += " AND device_id =:device_parent_id";
@@ -2569,18 +2538,26 @@ void MainWindow::saveCatalogChanges()
     //DEV:QString newIncludeSymblinks  = ui->Catalogs_checkBox_IncludeSymblinks->currentText();
 
     //Confirm save changes
+    bool changesMade = false;
     QString message = tr("Save changes to the definition of the catalog?<br/>");
     message = message + "<table> <tr><td width=155><i>" + tr("field") + "</i></td><td width=125><i>" + tr("previous value") + "</i></td><td width=200><i>" + tr("new value") + "</i></td>";
 
-    if(activeDevice->catalog->fileType       !=previousCatalog.catalog->fileType)
+    if(activeDevice->catalog->fileType       !=previousCatalog.catalog->fileType){
         message = message + "<tr><td>" + tr("File Type")    + "</td><td>" + previousCatalog.catalog->fileType     + "</td><td><b>" + activeDevice->catalog->fileType      + "</b></td></tr>";
-    if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden)
+        changesMade = true;
+    }
+    if(activeDevice->catalog->includeHidden  != previousCatalog.catalog->includeHidden){
         message = message + "<tr><td>" + tr("Include Hidden")   + "</td><td>" + QVariant(previousCatalog.catalog->includeHidden).toString()   + "</td><td><b>" + QVariant(activeDevice->catalog->includeHidden).toString()   + "</b></td></tr>";
-    if(activeDevice->catalog->includeMetadata  != previousCatalog.catalog->includeMetadata)
+        changesMade = true;
+    }
+    if(activeDevice->catalog->includeMetadata  != previousCatalog.catalog->includeMetadata){
         message = message + "<tr><td>" + tr("Include Metadata") + "</td><td>" + QVariant(previousCatalog.catalog->includeMetadata).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->includeMetadata).toString() + "</b></td></tr>";
-    if(activeDevice->catalog->isFullDevice  != previousCatalog.catalog->isFullDevice)
+        changesMade = true;
+    }
+    if(activeDevice->catalog->isFullDevice  != previousCatalog.catalog->isFullDevice){
         message = message + "<tr><td>" + tr("Is Full Device") + "</td><td>" + QVariant(previousCatalog.catalog->isFullDevice).toString() + "</td><td><b>" + QVariant(activeDevice->catalog->isFullDevice).toString() + "</b></td></tr>";
-
+        changesMade = true;
+    }
     message = message + "</table>";
 
     if(    (activeDevice->catalog->sourcePath       !=previousCatalog.catalog->sourcePath)
@@ -2591,19 +2568,22 @@ void MainWindow::saveCatalogChanges()
         message = message + + "<br/><br/>" + tr("(The catalog must be updated to reflect these changes)");
     }
 
-    int result = QMessageBox::warning(this, "Katalog", message, QMessageBox::Yes | QMessageBox::Cancel);
-    if ( result == QMessageBox::Cancel){
-        return;
+    if(  changesMade ){
+        int result = QMessageBox::warning(this, "Katalog", message, QMessageBox::Yes | QMessageBox::Cancel);
+        if ( result == QMessageBox::Cancel){
+            return;
+        }
     }
+
+    activeDevice->catalog->saveCatalog();
+    activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
+    activeDevice->catalog->renameCatalogFile(activeDevice->name);
 
     //Write all changes to database (except change of name)
     activeDevice->catalog->saveCatalog();
 
     //Write changes to catalog file (update headers only)
     activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
-
-    //Refresh display
-    //loadCatalogsTableToModel();
 
     //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
     if (       activeDevice->catalog->sourcePath      != previousCatalog.catalog->sourcePath
@@ -2630,12 +2610,6 @@ void MainWindow::saveCatalogChanges()
     //Refresh
     if(collection->databaseMode=="Memory")
         collection->loadCatalogFilesToTable();
-
-    //loadCatalogsTableToModel();
-
-    //Hide edition section
-    //ui->Catalogs_widget_EditCatalog->hide();
-
 }
 //--------------------------------------------------------------------------
 void MainWindow::updateCatalogsScreenStatistics()

@@ -304,6 +304,7 @@ bool Device::verifyStorageExternalIDExists()
                                 SELECT COUNT(device_external_id)
                                 FROM device
                                 WHERE device_external_id=:device_external_id
+                                AND device_type ='Storage'
                             )");
     queryExternalID.prepare(queryExternalIDSQL);
     queryExternalID.bindValue(":device_external_id", externalID);

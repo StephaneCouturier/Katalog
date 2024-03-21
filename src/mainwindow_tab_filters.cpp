@@ -312,6 +312,7 @@
         loadDevicesView();
         updateCatalogsScreenStatistics();
         updateStorageSelectionStatistics();
+        loadStorageList();
 
         //Statistics
         loadStatisticsChart();

@@ -178,7 +178,7 @@
         if (ui->Create_comboBox_StorageSelection->currentText() == ""){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Select a Storage for this new catalog. (Selection panel on the left)<br/>"));
+            msgBox.setText(tr("Select a Storage for this new catalog.<br/>(Selection panel on the left and dropdown list)"));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
             return;
@@ -199,7 +199,7 @@
                 msgBox.setText( tr("There is already a catalog with this name:<br/><b>")
                                + newDevice->name
                                + "</b><br/><br/>"+tr("Choose a different name and try again."));
-                msgBox.setIcon(QMessageBox::Critical);
+                msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
                 return;
             }
