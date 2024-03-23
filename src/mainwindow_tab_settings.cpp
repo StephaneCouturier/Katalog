@@ -57,21 +57,22 @@
 //SETTINGS / Data management
     void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
-        QString newDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
+        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseMode", newDatabaseMode);
+        settings.setValue("Settings/databaseMode", collection->databaseMode);
 
-        if(newDatabaseMode=="Memory"){
+        if(collection->databaseMode=="Memory"){
             ui->Settings_widget_DataMode_CSVFiles->show();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
             ui->Settings_widget_DataMode_Hosted->hide();
+            loadCollection();
         }
-        else if(newDatabaseMode=="File"){
+        else if(collection->databaseMode=="File"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->show();
             ui->Settings_widget_DataMode_Hosted->hide();
         }
-        else if(newDatabaseMode=="Hosted"){
+        else if(collection->databaseMode=="Hosted"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
             ui->Settings_widget_DataMode_Hosted->show();

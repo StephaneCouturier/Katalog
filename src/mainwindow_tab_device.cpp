@@ -349,12 +349,6 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         QString deviceName = activeDevice->name;
 
-        QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
-        deviceContextMenu.addAction(menuDeviceAction2);
-        connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
-            editDevice();
-        });
-
         QAction *menuDeviceAction3 = new QAction(QIcon::fromTheme("media-playlist-repeat"), tr("Update"), this);
         deviceContextMenu.addAction(menuDeviceAction3);
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
@@ -369,6 +363,13 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             collection->saveStatiticsToFile();
             loadDevicesView();
         });
+
+        QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
+        deviceContextMenu.addAction(menuDeviceAction2);
+        connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
+            editDevice();
+        });
+
 
         deviceContextMenu.addSeparator();
 

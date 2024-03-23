@@ -102,10 +102,10 @@ void Catalog::updateFileCount()
     QString querySQL = QLatin1String(R"(
                             SELECT COUNT(file_name)
                             FROM file
-                            WHERE file_catalog =:file_catalog
+                            WHERE file_catalog_id =:file_catalog_id
                         )");
     query.prepare(querySQL);
-    query.bindValue(":file_catalog",name);
+    query.bindValue(":file_catalog_id", ID);
     query.exec();
     query.next();
     fileCount = query.value(0).toLongLong();
@@ -116,10 +116,10 @@ void Catalog::updateTotalFileSize()
     QString querySQL = QLatin1String(R"(
                             SELECT SUM(file_size)
                             FROM file
-                            WHERE file_catalog =:file_catalog
+                            WHERE file_catalog_id =:file_catalog_id
                     )");
     query.prepare(querySQL);
-    query.bindValue(":file_catalog",name);
+    query.bindValue(":file_catalog_id",ID);
     query.exec();
     query.next();
     totalFileSize = query.value(0).toLongLong();
@@ -930,29 +930,30 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     //Prepare database, queries, and inputs
 
         //Remove any former files from db for older catalog with same name
-        //DEV: replace by ID
+        //DEV: replace by Catalog ID
         QSqlQuery deleteFileQuery;
         QString deleteFileQuerySQL = QLatin1String(R"(
                                                 DELETE FROM file
-                                                WHERE file_catalog=:file_catalog
+                                                WHERE file_catalog_id=:file_catalog_id
                                             )");
         deleteFileQuery.prepare(deleteFileQuerySQL);
-        deleteFileQuery.bindValue(":file_catalog", name);
+        deleteFileQuery.bindValue(":file_catalog_id", ID);
         deleteFileQuery.exec();
 
         QSqlQuery deleteFolderQuery;
         QString deleteFolderQuerySQL = QLatin1String(R"(
                                                 DELETE FROM folder
-                                                WHERE folder_catalog_name=:folder_catalog_name
+                                                WHERE folder_catalog_id=:folder_catalog_id
                                             )");
         deleteFolderQuery.prepare(deleteFolderQuerySQL);
-        deleteFolderQuery.bindValue(":folder_catalog_name",name);
+        deleteFolderQuery.bindValue(":folder_catalog_id", ID);
         deleteFolderQuery.exec();
 
         //Prepare insert query for file
         QSqlQuery insertFileQuery;
         QString insertFileSQL = QLatin1String(R"(
                                             INSERT INTO file (
+                                                            file_catalog_id,
                                                             file_name,
                                                             file_folder_path,
                                                             file_size,
@@ -961,6 +962,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
                                                             file_full_path
                                                             )
                                             VALUES(
+                                                            :file_catalog_id,
                                                             :file_name,
                                                             :file_folder_path,
                                                             :file_size,
@@ -974,19 +976,19 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
         QSqlQuery insertFolderQuery;
         QString insertFolderSQL = QLatin1String(R"(
                                             INSERT OR IGNORE INTO folder(
-                                                folder_catalog_name,
+                                                folder_catalog_id,
                                                 folder_path
                                              )
                                             VALUES(
-                                                :folder_catalog_name,
+                                                :folder_catalog_id,
                                                 :folder_path)
                                             )");
         insertFolderQuery.prepare(insertFolderSQL);
 
         //Insert root folder (so that it is displayed even when there are no sub-folders)
         insertFolderQuery.prepare(insertFolderSQL);
-        insertFolderQuery.bindValue(":folder_catalog_name", name);
-        insertFolderQuery.bindValue(":folder_path",         sourcePath);
+        insertFolderQuery.bindValue(":folder_catalog_id", ID);
+        insertFolderQuery.bindValue(":folder_path", sourcePath);
         insertFolderQuery.exec();
 
     //Scan entries with iterator
@@ -1018,8 +1020,8 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
                 //Insert dirs
                 if (entry.isDir()) {
                     insertFolderQuery.prepare(insertFolderSQL);
-                    insertFolderQuery.bindValue(":folder_catalog_name", name);
-                    insertFolderQuery.bindValue(":folder_path",         entryPath);
+                    insertFolderQuery.bindValue(":folder_catalog_id", ID);
+                    insertFolderQuery.bindValue(":folder_path", entryPath);
                     insertFolderQuery.exec();
                 }
 
@@ -1027,6 +1029,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
                 else if (entry.isFile()) {
 
                     QFile file(entryPath);
+                    insertFileQuery.bindValue(":file_catalog_id",   ID);
                     insertFileQuery.bindValue(":file_name",         entry.fileName());
                     insertFileQuery.bindValue(":file_size",         file.size());
                     insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
@@ -1062,8 +1065,8 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
 
                 //Insert dirs
                 if (entry.isDir()) {
-                    insertFolderQuery.bindValue(":folder_catalog_name", name);
-                    insertFolderQuery.bindValue(":folder_path",         entryPath);
+                    insertFolderQuery.bindValue(":folder_catalog_id", ID);
+                    insertFolderQuery.bindValue(":folder_path", entryPath);
                     insertFolderQuery.exec();
                 }
 
@@ -1071,6 +1074,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
                 else if (entry.isFile()) {
 
                     QFile file(entryPath);
+                    insertFileQuery.bindValue(":file_catalog_id",   ID);
                     insertFileQuery.bindValue(":file_name",         entry.fileName());
                     insertFileQuery.bindValue(":file_size",         file.size());
                     insertFileQuery.bindValue(":file_folder_path",  entry.absolutePath());
@@ -1147,7 +1151,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     }
 
     //Update catalog in db
-    //DEV: duplcate of saveCatalog?
+    //DEV: duplicate of saveCatalog?
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog

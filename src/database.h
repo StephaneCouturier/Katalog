@@ -112,37 +112,36 @@
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS file(
-                            id_file           INTEGER,
+                            file_catalog_id   INTEGER,
                             file_name         TEXT,
                             file_folder_path  TEXT,
                             file_size         NUMERIC,
                             file_date_updated TEXT,
                             file_catalog      TEXT,
-                            file_full_path    TEXT,
-                            PRIMARY KEY("id_file" AUTOINCREMENT))
+                            file_full_path    TEXT)
+
             )");
 
         // FILETEMP (one-off requests) ------------------------------------------
 
             const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  filetemp(
-                            id_file              INTEGER,
-                            file_name            TEXT,
-                            file_folder_path     TEXT,
-                            file_size            NUMERIC,
-                            file_date_updated    TEXT,
-                            file_catalog         TEXT,
-                            file_full_path       TEXT,
-                            PRIMARY KEY("id_file" AUTOINCREMENT))
+                            file_catalog_id   INTEGER,
+                            file_name         TEXT,
+                            file_folder_path  TEXT,
+                            file_size         NUMERIC,
+                            file_date_updated TEXT,
+                            file_catalog      TEXT,
+                            file_full_path    TEXT)
             )");
 
         // FOLDER ---------------------------------------------------------------
 
             const auto SQL_CREATE_FOLDER = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  folder(
-                            folder_catalog_name  TEXT,
-                            folder_path          TEXT,
-                            PRIMARY KEY(folder_catalog_name,folder_path))
+                            folder_catalog_id  TEXT,
+                            folder_path        TEXT,
+                            PRIMARY KEY(folder_catalog_id,folder_path))
             )");
 
         // METADATA -------------------------------------------------------------
