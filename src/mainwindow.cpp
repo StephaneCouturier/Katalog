@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-16";
-        developmentMode = false;
+        releaseDate     = "2024-03-23";
+        developmentMode = true;
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path

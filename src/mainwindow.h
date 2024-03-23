@@ -464,6 +464,8 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_verifStorage_clicked();
             void on_Devices_pushButton_SelectPath_clicked();
             void on_Devices_pushButton_Snapshot_clicked();
+            void on_Devices_pushButton_ApplyToSelection_clicked();
+
             //Catalogs
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
             void on_Catalogs_pushButton_Open_clicked();
@@ -494,7 +496,6 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-
 };
 
 #endif // MAINWINDOW_H

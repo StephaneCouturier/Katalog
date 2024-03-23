@@ -387,13 +387,14 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         }
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Assign selected catalog"), this);
-        if (selectedDevice->groupID != 0) {
-            deviceContextMenu.addAction(menuDeviceAction5);
-            connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
-                assignCatalogToDevice(selectedDevice, activeDevice);
-            });
+        deviceContextMenu.addAction(menuDeviceAction5);
+        connect(menuDeviceAction5, &QAction::triggered, this, [this, deviceName]() {
+            assignCatalogToDevice(selectedDevice, activeDevice);
+        });
+        if (activeDevice->groupID == 0) {
+            deviceContextMenu.removeAction(menuDeviceAction5);
         }
-        if (selectedDevice->type != "Catalog") {
+        if (activeDevice->groupID != 0 and selectedDevice->type != "Catalog") {
             menuDeviceAction5->setEnabled(false);
         }
 
@@ -460,6 +461,11 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
     collection->saveStatiticsToFile();
     loadDevicesView();
     editDevice();
+}
+//--------------------------------------------------------------------------
+void MainWindow::on_Devices_pushButton_ApplyToSelection_clicked()
+{
+    loadDevicesTreeToModel("Filters");
 }
 //--------------------------------------------------------------------------
 
@@ -1750,7 +1756,6 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 
         //Restore Expand or Collapse Device Tree
         setTreeExpandState(false);
-        setDeviceTreeExpandState(false);
         ui->Filters_treeView_Devices->setModel(deviceTreeViewForSelectionPanel);
         ui->Filters_treeView_Devices->expandAll();
     }

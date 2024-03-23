@@ -4030,7 +4030,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QLabel" name="Storage_label_CountLabel">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>120</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -5070,7 +5070,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QLabel" name="Catalogs_label_CatalogsLabel">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>120</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -5284,10 +5284,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item>
                 <layout class="QHBoxLayout" name="Devices_horizontalLayout_17">
                  <item>
+                  <widget class="QPushButton" name="Devices_pushButton_ApplyToSelection">
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply options to the Selection device tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string>&lt;&lt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QLabel" name="Devices_label_ItemEdition_2">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>120</width>
                      <height>0</height>
                     </size>
                    </property>
