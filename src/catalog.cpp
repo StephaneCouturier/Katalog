@@ -424,7 +424,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
             msgBox.setText(QCoreApplication::translate("MainWindow",
                                                 "The catalog <b>%1</b> cannot be updated.<br/>"
                                                 "<br/> The source folder was not found.<br/><b>%2</b><br/>"
-                                                "<br/> Possible reasons:<br/>"
+                                                "<br/><br/> Possible reasons:<br/>"
                                                 "    - the device is not connected and mounted,<br/>"
                                                 "    - the source folder was moved or renamed.,<br/>"
                                                 "    - the source folder entered is incorrect.").arg(name,sourcePath));

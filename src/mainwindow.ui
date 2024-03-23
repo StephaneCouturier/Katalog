@@ -7846,6 +7846,55 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QWidget" name="Devices_widget_Import" native="true">
+                    <layout class="QHBoxLayout" name="horizontalLayout_17">
+                     <item>
+                      <layout class="QGridLayout" name="gridLayout_9">
+                       <item row="1" column="0">
+                        <widget class="QLabel" name="Devices_label_ItemEditionPath_2">
+                         <property name="minimumSize">
+                          <size>
+                           <width>100</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>100</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>IMPORT</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="Devices_pushButton_ImportV1">
+                         <property name="text">
+                          <string>Import collection from v1.22</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <spacer name="Settings_horizontalSpacer_18">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
                  </layout>
                 </widget>
                </item>
@@ -8237,70 +8286,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <property name="text">
                   <string>Data management</string>
                  </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QWidget" name="Devices_widget_Import" native="true">
-                 <layout class="QHBoxLayout" name="horizontalLayout_17">
-                  <item>
-                   <layout class="QGridLayout" name="gridLayout_9">
-                    <item row="0" column="4">
-                     <widget class="QPushButton" name="TEST_pushButton_importStorageCatalogPathsToDevice">
-                      <property name="text">
-                       <string>importStorageCatalogPathsToDevice</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QPushButton" name="Devices_pushButton_ImportS">
-                      <property name="text">
-                       <string>Import v1.22</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <widget class="QPushButton" name="Devices_pushButton_verifStorage">
-                      <property name="text">
-                       <string>verif stor</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="5">
-                     <widget class="QPushButton" name="TEST_pushButton_ImporStatistics">
-                      <property name="text">
-                       <string>Import Statistics</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="Devices_label_ItemEditionPath_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>100</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>100</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>IMPORT</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="3">
-                     <widget class="QPushButton" name="TEST_pushButton_GenerateMissingIDs">
-                      <property name="text">
-                       <string>GenerateMissingIDs</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
                 </widget>
                </item>
               </layout>
