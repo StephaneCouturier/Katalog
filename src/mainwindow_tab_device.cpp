@@ -1404,27 +1404,31 @@ void MainWindow::updateAllDeviceActive()
 //--------------------------------------------------------------------------
 //--- View -----------------------------------------------------------------
 void MainWindow::loadDevicesView(){
+    int tempLastDevicesSortSection = lastDevicesSortSection;
+    int tempLastDevicesSortOrder   = lastDevicesSortOrder;
+
     if(ui->Devices_radioButton_StorageList->isChecked()==true){
         loadDevicesStorageToModel();
         ui->Devices_widget_TreeOptions->hide();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->show();
-        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
     else if(ui->Devices_radioButton_CatalogList->isChecked()==true){
         loadDevicesCatalogToModel();
         ui->Devices_widget_TreeOptions->hide();
         ui->Devices_widget_CatalogStats->show();
         ui->Devices_widget_StorageStats->hide();
-        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
     else{
         loadDevicesTreeToModel("Devices");
         ui->Devices_widget_TreeOptions->show();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->hide();
-        //ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
     }
+
+    lastDevicesSortSection = tempLastDevicesSortSection;
+    lastDevicesSortOrder   = tempLastDevicesSortOrder;
+    ui->Devices_treeView_DeviceList->QTreeView::sortByColumn(lastDevicesSortSection,Qt::SortOrder(lastDevicesSortOrder));
 }
 //--------------------------------------------------------------------------
 void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
