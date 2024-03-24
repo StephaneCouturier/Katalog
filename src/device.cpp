@@ -88,6 +88,7 @@ void Device::loadDevice(){
     if(type == "Catalog"){
         catalog->ID = externalID;
         catalog->loadCatalog();
+        catalog->name = name;
         catalog->sourcePath = path;
         catalog->fileCount = totalFileCount;
         catalog->totalFileSize = totalFileSize;
@@ -508,8 +509,11 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                     Device updatedDevice;
                     updatedDevice.ID = deviceIDList[deviceID];
                     updatedDevice.loadDevice();
+                    // updatedDevice.catalog->name = name;
+                    // updatedDevice.catalog->sourcePath = path;
 
                     QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
+             //                   deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder, true);
 
                     if(catalogUpdatesList[0]==1){
                         //Update catalog with new values

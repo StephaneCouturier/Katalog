@@ -142,9 +142,9 @@ int ExploreTreeModel::findNode(unsigned int& hash, const QList<ExploreTreeItem*>
     return -1;
 }
 
-void ExploreTreeModel::setCatalog(QString newCatalogName, QString newCatalogSourcePath)
+void ExploreTreeModel::setCatalog(int newCatalogID, QString newCatalogSourcePath)
 {
-    catalogName = newCatalogName;
+    catalogID = newCatalogID;
 
     catalogSourcePath = newCatalogSourcePath;
 
@@ -165,11 +165,11 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                                 SELECT DISTINCT (REPLACE(folder_path, :catalogSourcePathRoot, '')) AS file_path,
                                        folder_path AS full_path
                                 FROM  folder
-                                WHERE folder_catalog_name=:folder_catalog_name
+                                WHERE folder_catalog_id=:folder_catalog_id
                                 ORDER BY folder_path ASC
                             )");
         query.prepare(querySQL);
-        query.bindValue(":folder_catalog_name", catalogName);
+        query.bindValue(":folder_catalog_id", catalogID);
         query.bindValue(":catalogSourcePathRoot", catalogSourcePathRoot);
         query.exec();
 

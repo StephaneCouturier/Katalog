@@ -511,7 +511,7 @@
 
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
-            exploreTreeModel->setCatalog(exploreDevice->name, exploreDevice->path);
+            exploreTreeModel->setCatalog(exploreDevice->externalID, exploreDevice->path);
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);
@@ -531,11 +531,11 @@
             QString countSQL = QLatin1String(R"(
                                 SELECT COUNT (DISTINCT (folder_path))
                                 FROM folder
-                                WHERE folder_catalog_name =:folder_catalog_name
+                                WHERE folder_catalog_id =:folder_catalog_id
                                )");
             QSqlQuery countQuery;
             countQuery.prepare(countSQL);
-            countQuery.bindValue(":folder_catalog_name", exploreDevice->name);
+            countQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
             countQuery.exec();
             countQuery.next();
             ui->Explore_label_DirectoryNumberDisplay->setText(QLocale().toString(countQuery.value(0).toLongLong()));
@@ -555,12 +555,12 @@
                                                 NULL                  AS file_size,
                                                 ""                    AS file_date_updated,
                                                 folder_path           AS file_folder_path,
-                                                folder_catalog_name   AS file_catalog,
+                                                folder_catalog_id     AS file_catalog,
                                                 "folder"              AS entry_type,
                                                 "1"||folder_path      AS order_value,
                                                 folder_path
                                     FROM  folder
-                                    WHERE folder_catalog_name=:folder_catalog_name
+                                    WHERE folder_catalog_id=:folder_catalog_id
                             )");
 
             if(optionDisplaySubFolders != true){
@@ -604,7 +604,7 @@
 
         QSqlQuery loadCatalogQuery;
         loadCatalogQuery.prepare(selectSQL);
-        loadCatalogQuery.bindValue(":folder_catalog_name", exploreDevice->name);
+        loadCatalogQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
 
         // fill lists depending on directory selection source
         loadCatalogQuery.bindValue(":file_catalog", exploreDevice->name);
@@ -660,7 +660,7 @@
         QString countSQL = QLatin1String(R"(
                                 SELECT  count (*), sum(file_size)
                                 FROM    file
-                                WHERE   file_catalog =:file_catalog
+                                WHERE   file_catalog_id =:file_catalog_id
                            )");
 
         if (exploreSelectedDirectoryName!=""){
@@ -669,7 +669,7 @@
 
         QSqlQuery countQuery;
         countQuery.prepare(countSQL);
-        countQuery.bindValue(":file_catalog", exploreDevice->name);
+        countQuery.bindValue(":file_catalog_id", exploreDevice->externalID);
 
         if(exploreDevice->path == exploreSelectedDirectoryName){
             countQuery.bindValue(":file_folder_path",exploreSelectedDirectoryName);

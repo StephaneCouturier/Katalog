@@ -863,12 +863,14 @@
                                     QSqlQuery insertQuery;
                                     QString insertSQL = QLatin1String(R"(
                                                         INSERT INTO filetemp (
+                                                                        file_catalog_id,
                                                                         file_name,
                                                                         file_folder_path,
                                                                         file_size,
                                                                         file_date_updated,
                                                                         file_catalog )
                                                         VALUES(
+                                                                        :file_catalog_id,
                                                                         :file_name,
                                                                         :file_folder_path,
                                                                         :file_size,
@@ -884,6 +886,7 @@
                                     for (int i=0; i<rows; i++) {
 
                                             //Append data to the database
+                                            insertQuery.bindValue(":file_catalog_id",   newSearch->index(i,0).data().toString());
                                             insertQuery.bindValue(":file_name",         newSearch->index(i,0).data().toString());
                                             insertQuery.bindValue(":file_size",         newSearch->index(i,1).data().toString());
                                             insertQuery.bindValue(":file_folder_path",  newSearch->index(i,3).data().toString());

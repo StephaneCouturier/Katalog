@@ -283,6 +283,8 @@
                         reportName = "Updates only";
                     }
 
+                    queryStatisticsSQL += " ORDER BY date_time ";
+
                 queryStatistics.prepare(queryStatisticsSQL);
                 queryStatistics.bindValue(":device_id", selectedDevice->ID);
                 queryStatistics.bindValue(":graphStartDate", graphicStartDate.toString("yyyy-MM-dd") + " 00:00:00");

@@ -55,11 +55,11 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    QString catalogName;
+    int catalogID;
     QString catalogSourcePath;
     QString catalogSourcePathRoot;
 
-    void setCatalog(QString newCatalogName, QString newCatalogSourcePath);
+    void setCatalog(int newCatalogID, QString newCatalogSourcePath);
 
 private:
     void setupModelData(ExploreTreeItem *parent);

@@ -81,7 +81,7 @@
 
             const auto SQL_CREATE_STORAGE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS storage(
-                            storage_id            INTEGER  primary key default 0,
+                            storage_id            NUMERIC  primary key default 0,
                             storage_name          TEXT,
                             storage_type          TEXT,
                             storage_location      TEXT,
@@ -103,16 +103,16 @@
 
             const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS device_catalog(
-                            device_id      NUMERIC,
-                            catalog_name            TEXT,
-                            directory_path          TEXT)
+                            device_id           NUMERIC,
+                            catalog_name        TEXT,
+                            directory_path      TEXT)
             )");
 
         // FILE (storing all catalogs files)-------------------------------------
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS file(
-                            file_catalog_id   INTEGER,
+                            file_catalog_id   NUMERIC,
                             file_name         TEXT,
                             file_folder_path  TEXT,
                             file_size         NUMERIC,
@@ -126,7 +126,7 @@
 
             const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  filetemp(
-                            file_catalog_id   INTEGER,
+                            file_catalog_id   NUMERIC,
                             file_name         TEXT,
                             file_folder_path  TEXT,
                             file_size         NUMERIC,
@@ -139,7 +139,7 @@
 
             const auto SQL_CREATE_FOLDER = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  folder(
-                            folder_catalog_id  TEXT,
+                            folder_catalog_id  NUMERIC,
                             folder_path        TEXT,
                             PRIMARY KEY(folder_catalog_id,folder_path))
             )");
@@ -195,42 +195,42 @@
             const auto SQL_CREATE_SEARCH = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  search(
                             date_time                 TEXT,
-                            text_checked              INTEGER,
+                            text_checked              NUMERIC,
                             text_phrase               TEXT,
                             text_criteria             TEXT,
                             text_search_in            TEXT,
-                            file_criteria_checked     INTEGER,
-                            file_type_checked         INTEGER,
+                            file_criteria_checked     NUMERIC,
+                            file_type_checked         NUMERIC,
                             file_type                 TEXT,
-                            file_size_checked         INTEGER,
-                            file_size_min             INTEGER,
-                            file_size_min_unit        INTEGER,
-                            file_size_max             INTEGER,
-                            file_size_max_unit        INTEGER,
-                            date_modified_checked     INTEGER,
+                            file_size_checked         NUMERIC,
+                            file_size_min             NUMERIC,
+                            file_size_min_unit        NUMERIC,
+                            file_size_max             NUMERIC,
+                            file_size_max_unit        NUMERIC,
+                            date_modified_checked     NUMERIC,
                             date_modified_min         TEXT,
                             date_modified_max         TEXT,
-                            duplicates_checked        INTEGER,
-                            duplicates_name           INTEGER,
-                            duplicates_size           INTEGER,
-                            duplicates_date_modified  INTEGER,
-                            differences_checked       INTEGER,
-                            differences_name          INTEGER,
-                            differences_size          INTEGER,
-                            differences_date_modified INTEGER,
+                            duplicates_checked        NUMERIC,
+                            duplicates_name           NUMERIC,
+                            duplicates_size           NUMERIC,
+                            duplicates_date_modified  NUMERIC,
+                            differences_checked       NUMERIC,
+                            differences_name          NUMERIC,
+                            differences_size          NUMERIC,
+                            differences_date_modified NUMERIC,
                             differences_catalogs      TEXT,
-                            folder_criteria_checked   INTEGER,
-                            show_folders              INTEGER,
-                            tag_checked               INTEGER,
+                            folder_criteria_checked   NUMERIC,
+                            show_folders              NUMERIC,
+                            tag_checked               NUMERIC,
                             tag                       TEXT,
                             search_location           TEXT,
                             search_storage            TEXT,
                             search_catalog            TEXT,
-                            search_catalog_checked    INTEGER,
-                            search_directory_checked  INTEGER,
+                            search_catalog_checked    NUMERIC,
+                            search_directory_checked  NUMERIC,
                             selected_directory        TEXT,
                             text_exclude              TEXT,
-                            case_sensitive            INTEGER)
+                            case_sensitive            NUMERIC)
             )");
 
         // TAG ------------------------------------------------------------------
