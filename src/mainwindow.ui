@@ -3954,7 +3954,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="3">
                <widget class="QRadioButton" name="Devices_radioButton_CatalogList">
                 <property name="text">
-                 <string>Catalog list</string>
+                 <string>Catalogs list</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
