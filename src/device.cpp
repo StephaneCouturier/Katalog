@@ -461,7 +461,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                                                                      collectionFolder,
                                                                      false);
         deviceUpdatesList.append(storageUpdatesList);
-        parentDevice.saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         //Update related devices (other catalog devices using the same catalog ID)
         QSqlQuery queryRelatedDevice;
