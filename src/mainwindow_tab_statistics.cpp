@@ -400,6 +400,13 @@
                 else
                     axisY->setLabelFormat("%.0f");
 
+                //Adapt timeline if there is only 1 value in the series
+                if (series1s->count() == 1) {
+                    QDateTime minDateTime = QDateTime::fromMSecsSinceEpoch(series1->at(0).x()).addSecs(-1);
+                    QDateTime maxDateTime = minDateTime.addSecs(2);
+                    axisX->setRange(minDateTime, maxDateTime);
+                }
+
             chart->addAxis(axisY, Qt::AlignLeft);
 
         //Load series to chart
@@ -475,7 +482,6 @@
                 //Set the modified list of markers back to the legend
                 ui->Statistics_chartview_Graph1->chart()->legend()->markers() = markers;
             }
-
             ui->Statistics_chartview_Graph1->setRubberBand(QChartView::RectangleRubberBand);
     }
     //----------------------------------------------------------------------
