@@ -58,7 +58,7 @@
         if (err.type() != QSqlError::NoError) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText("The database could not be initialized:<br/>" + err.databaseText());
+            msgBox.setText(tr("The database could not be initialized:<br/>") + err.databaseText());
             msgBox.setIcon(QMessageBox::Critical);
             msgBox.exec();
             return;
@@ -96,16 +96,17 @@
             if (!databaseFile.exists()){
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("The Database file cannot be found:<br/>") + collection->databaseFilePath);
-                msgBox.setIcon(QMessageBox::Information);
+                msgBox.setText(tr("The database file could not be found:<br/>") + collection->databaseFilePath);
+                msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
                 selectDatabaseFilePath();
             }
-
-            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-            db.setDatabaseName(collection->databaseFilePath);
-            if (!db.open())
-                return db.lastError();
+            else{
+                QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                db.setDatabaseName(collection->databaseFilePath);
+                if (!db.open())
+                    return db.lastError();
+            }
         }
         else if(collection->databaseMode=="Hosted"){
 
@@ -119,12 +120,14 @@
             if (!db.open()){
                 QSqlError error = db.lastError();
                 QMessageBox msgBox;
-                msgBox.setText("could not open db:<br/>" + error.databaseText());
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("The database could not be opened:<br/>") + error.databaseText());
                 msgBox.exec();
             }
             else {
                 QMessageBox msgBox;
-                msgBox.setText("Hosted db connected!");
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.setText(tr("Connected to Hosted database."));
                 msgBox.exec();
             }
         }
@@ -425,10 +428,7 @@
             ui->Create_checkBox_IncludeMetadata->hide();
 
         //Settings
-            //DEV: option to switch database mode between memory and file
-            ui->Settings_widget_DataModeSelection->hide();
-            ui->Settings_widget_DataMode_LocalSQLite->hide();
-            ui->Settings_widget_DataMode_Hosted->hide();
+            ui->Settings_comboBox_DatabaseMode->removeItem(2);
 
         //TESTS
             //ui->Storage_pushButton_TestMedia->hide();
@@ -515,6 +515,12 @@
                 "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
                 "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
               );
+        ui->Settings_pushButton_DatabaseModeApplyAndRestart->setStyleSheet(
+            "QPushButton           { background-color: #ff8000; } "
+            "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::pressed  { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
+            "QPushButton::disabled { background-color: #BBB; border: 1px solid #AAA; border-radius: 5px;	padding: 5px;}"
+            );
 
         //Lines
         ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");

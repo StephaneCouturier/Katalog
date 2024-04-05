@@ -3134,6 +3134,19 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
     loadStatisticsChart();
 }
 //--------------------------------------------------------------------------
+int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
+    if (!deviceTree.contains(parentId)) {
+        return 0;
+    }
+    int maxLevel = 0;
+    for (int childId : deviceTree[parentId]) {
+        int level = countTreeLevels(deviceTree, childId);
+        if (level > maxLevel) {
+            maxLevel = level;
+        }
+    }
+    return maxLevel + 1;
+}
 
 //--------------------------------------------------------------------------
 //--- Migration 1.22 to 2.0
@@ -3256,20 +3269,6 @@ void MainWindow::importStorageCatalogPathsToDevice()
 void MainWindow::importStatistics()
 {
     qDebug()<<"importStatistics() empty";
-}
-
-int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId) {
-    if (!deviceTree.contains(parentId)) {
-        return 0;
-    }
-    int maxLevel = 0;
-    for (int childId : deviceTree[parentId]) {
-        int level = countTreeLevels(deviceTree, childId);
-        if (level > maxLevel) {
-            maxLevel = level;
-        }
-    }
-    return maxLevel + 1;
 }
 
 void MainWindow::convertDeviceCatalogFile() {

@@ -43,7 +43,6 @@
 
         settings.setValue("Settings/SplitterWidget1Size", widget1Size);
         settings.setValue("Settings/SplitterWidget2Size", widget2Size);
-
     }
     //----------------------------------------------------------------------
     void MainWindow::on_tabWidget_currentChanged(int index)
@@ -57,36 +56,107 @@
 //SETTINGS / Data management
     void MainWindow::on_Settings_comboBox_DatabaseMode_currentTextChanged()
     {
-        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseMode", collection->databaseMode);
+        applyDatabaseModeToUI();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::applyDatabaseModeToUI()
+    {
+        QString newDatabaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
 
-        if(collection->databaseMode=="Memory"){
+        if(newDatabaseMode=="Memory"){
             ui->Settings_widget_DataMode_CSVFiles->show();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
             ui->Settings_widget_DataMode_Hosted->hide();
-            loadCollection();
         }
-        else if(collection->databaseMode=="File"){
+        else if(newDatabaseMode=="File"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->show();
             ui->Settings_widget_DataMode_Hosted->hide();
         }
-        else if(collection->databaseMode=="Hosted"){
+        else if(newDatabaseMode=="Hosted"){
             ui->Settings_widget_DataMode_CSVFiles->hide();
             ui->Settings_widget_DataMode_LocalSQLite->hide();
             ui->Settings_widget_DataMode_Hosted->show();
         }
+
+        if(newDatabaseMode != collection->databaseMode)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+        else
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_DatabaseModeApplyAndRestart_clicked()
+    {
+        //Save choice of mode
+        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/databaseMode", collection->databaseMode);
 
-    //Memory ---------------------------------------------------------------
-    void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
+        //Save folder
+        if(collection->databaseMode=="Memory"){
+            settings.setValue("LastCollectionFolder", collection->collectionFolder);
+        }
+        //Save sqlite file path
+        else if(collection->databaseMode=="File"){
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+        }
+        //Save host parameters
+        else if(collection->databaseMode=="Hosted"){
+            settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
+            settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
+            settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
+            settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
+            settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Hosted_Password->text());
+        }
+        //Enable and highlight restart button
+        QProcess::startDetached(QApplication::applicationFilePath(), QApplication::arguments());
+        QApplication::exit();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::changeCollectionFolder()
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         settings.setValue("LastCollectionFolder", collection->collectionFolder);
 
+        //Set the new path in Settings tab
+        ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
+
+        //Redefine the path of the Storage file
+        collection->storageFilePath = collection->collectionFolder + "/" + "storage.csv";
+
+        //Load the collection from this new folder;
+        //Clear database if mode is Memory
+        if(collection->databaseMode=="Memory"){
+            //Clear current entires from the tables
+            QSqlQuery queryDelete;
+            queryDelete.exec("DELETE FROM catalog");
+            queryDelete.exec("DELETE FROM storage");
+            queryDelete.exec("DELETE FROM file");
+            queryDelete.exec("DELETE FROM filetemp");
+            queryDelete.exec("DELETE FROM folder");
+            queryDelete.exec("DELETE FROM statistics");
+            queryDelete.exec("DELETE FROM search");
+            queryDelete.exec("DELETE FROM tag");
+        }
+
+        collection->createStorageFile();
+        collection->generateCollectionFilesPaths();
         loadCollection();
+    }
+
+    //Memory ---------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
+    {
+        QString dir = ui->Settings_lineEdit_CollectionFolder->text();
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( dir !=""){
+            collection->collectionFolder = dir;
+            changeCollectionFolder();
+        }
+
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_SelectFolder_clicked()
@@ -99,41 +169,8 @@
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( dir !=""){
-
             collection->collectionFolder = dir;
-
-            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-            settings.setValue("LastCollectionFolder", collection->collectionFolder);
-
-            //Set the new path in Settings tab
-            ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
-
-            //Redefine the path of the Storage file
-            collection->storageFilePath = collection->collectionFolder + "/" + "storage.csv";
-
-            //Load the collection from this new folder;
-                //Clear database if mode is Memory
-                if(collection->databaseMode=="Memory"){
-                    //Clear current entires from the tables
-                        QSqlQuery queryDelete;
-                        queryDelete.exec("DELETE FROM catalog");
-                        queryDelete.exec("DELETE FROM storage");
-                        queryDelete.exec("DELETE FROM file");
-                        queryDelete.exec("DELETE FROM filetemp");
-                        queryDelete.exec("DELETE FROM folder");
-                        queryDelete.exec("DELETE FROM statistics");
-                        queryDelete.exec("DELETE FROM search");
-                        queryDelete.exec("DELETE FROM tag");
-                }
-                if(collection->databaseMode=="File"){
-                    //Open database file
-                    //DEV
-                    QMessageBox::warning(this,"Katalog","Database was not changed.");
-                }
-
-            collection->createStorageFile();
-            collection->generateCollectionFilesPaths();
-            loadCollection();
+            changeCollectionFolder();
         }
 
         //Reset selected values (to avoid actions on the last selected ones)
@@ -176,23 +213,38 @@
         selectNewDatabaseFolderPath();
     }
     //----------------------------------------------------------------------
-
-    //Hosted ---------------------------------------------------------------
-    void MainWindow::on_Settings_pushButton_SaveHostedParameters_clicked()
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_returnPressed()
     {
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/databaseHostName", ui->Settings_lineEdit_DataMode_Hosted_HostName->text());
-        settings.setValue("Settings/databaseName",     ui->Settings_lineEdit_DataMode_Hosted_DatabaseName->text());
-        settings.setValue("Settings/databasePort",     ui->Settings_lineEdit_DataMode_Hosted_Port->text());
-        settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
-        settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Hosted_Password->text());
+        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
 
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(tr("Save Database OnlineSettings.<br/>Please restart the app."));
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.exec();
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDatabaseFile !=""){
+            collection->databaseFilePath = newDatabaseFile;
+            changeDatabaseFilePath();
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+        }
+        else
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
+
+        //Reset selected values (to avoid actions on the last selected ones)
+        resetSelection();
     }
+    //----------------------------------------------------------------------
+    void MainWindow::changeDatabaseFilePath()
+    {
+        //Save Settings for the new collection folder value;
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+        //Set the new path in Settings tab
+        ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+        collection->createStorageFile();
+        collection->generateCollectionFilesPaths();
+    }
+    //Hosted ---------------------------------------------------------------
+
+    //----------------------------------------------------------------------
 
 //SETTINGS / Language & Theme ----------------------------------------------
     void MainWindow::on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage)
@@ -278,7 +330,7 @@
             //Create a Storage list (if none exists) + conversions
             collection->createStorageFile();
 
-            //Clear database
+            //Clear database (when in memory)
             clearDatabaseData();
 
             //Load Files to database
@@ -293,8 +345,13 @@
 
         //Load data from tables to models and update display
             loadDevicesTreeToModel("Filters");
+            qDebug()<<"loadDevicesTreeToModel data"<<collection->databaseFilePath;
             loadSearchHistoryTableToModel();
+            qDebug()<<"loadSearchHistoryTableToModel data"<<collection->databaseFilePath;
+
             filterFromSelectedDevice();
+            qDebug()<<"filterFromSelectedDevice data"<<collection->databaseFilePath;
+
 
         //Add a default storage device, to force any new catalog to have one
         collection->insertPhysicalStorageGroup();
@@ -352,28 +409,41 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getOpenFileName(this, tr("Select the database to open:"),
-                                                                   collection->collectionFolder,"*.db");
+                                                                   collection->databaseFilePath,"*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
 
-                    collection->databaseFilePath = newDatabaseFilePath;
+            collection->databaseFilePath = newDatabaseFilePath;
+            qDebug()<<"collection->databaseFilePath"<<collection->databaseFilePath;
+            //Save Settings for the new collection folder value;
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
 
-                    //Save Settings for the new collection folder value;
-                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+            qDebug()<<"settings"<<collection->databaseFilePath;
 
-                    //Set the new path in Settings tab
-                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-                    collection->createStorageFile();
-                    collection->generateCollectionFilesPaths();
+            //Set the new path in Settings tab
+        //    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-                    loadCollection();
+            //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+            qDebug()<<"ui->Settings_lineEdit_DatabaseFilePath"<<collection->databaseFilePath;
+
+            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+            qDebug()<<"QSqlDatabase::addDatabase"<<collection->databaseFilePath;
+            db.setDatabaseName(collection->databaseFilePath);
+            qDebug()<<"db.setDatabaseName"<<collection->databaseFilePath;
+            if (!db.open())
+                qDebug()<< db.lastError();
+
+
+            qDebug()<<"db.!db.open"<<collection->databaseFilePath;
+
+            loadCollection();
         }
+        // else
+        //     ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
 
-        //Reset selected values (to avoid actions on the last selected ones)
-        resetSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::selectNewDatabaseFolderPath()
@@ -413,8 +483,44 @@
                     collection->createStorageFile();
                     collection->generateCollectionFilesPaths();
                     loadCollection();
+
+                    //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
         }
 
         //Reset selected values (to avoid actions on the last selected ones)
         resetSelection();
+    }
+
+
+
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseHostName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+
+
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1)
+    {
+        int newPort = arg1.toInt();
+        if(newPort !=collection->databasePort)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_UserName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseUserName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Password_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databasePassword)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
     }

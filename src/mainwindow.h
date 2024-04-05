@@ -136,10 +136,11 @@ class MainWindow : public QMainWindow
 
             //Database
             QSqlError initializeDatabase();
-            void    startDatabase();
-            void    selectDatabaseFilePath();
-            void    selectNewDatabaseFolderPath();
-            void    clearDatabaseData();
+            void startDatabase();
+            void selectDatabaseFilePath();
+            void selectNewDatabaseFolderPath();
+            void clearDatabaseData();
+            void applyDatabaseModeToUI();
 
             //Objects
             Collection *collection = new Collection();
@@ -307,6 +308,10 @@ class MainWindow : public QMainWindow
             QString selectedTagListName;
             QString newTagFolderPath;
 
+        //TAB: Settings
+            void changeCollectionFolder();
+            void changeDatabaseFilePath();
+
    private slots:
 
         //Filters
@@ -329,6 +334,7 @@ class MainWindow : public QMainWindow
             void on_splitter_splitterMoved();
 
             void on_Settings_comboBox_DatabaseMode_currentTextChanged();
+            void on_Settings_pushButton_DatabaseModeApplyAndRestart_clicked();
 
             void on_Settings_pushButton_SelectFolder_clicked();
             void on_Settings_pushButton_OpenFolder_clicked();
@@ -340,7 +346,12 @@ class MainWindow : public QMainWindow
             void on_Settings_pushButton_EditDatabaseFile_clicked();
             void on_Settings_pushButton_NewDatabaseFile_clicked();
 
-            void on_Settings_pushButton_SaveHostedParameters_clicked();
+            void on_Settings_lineEdit_DatabaseFilePath_returnPressed();
+            void on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_DataMode_Hosted_UserName_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_DataMode_Hosted_Password_textChanged(const QString &arg1);
 
             void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
             void on_Settings_comboBox_Theme_currentIndexChanged(int index);
@@ -400,8 +411,6 @@ class MainWindow : public QMainWindow
             void searchContextMoveFileToFolder();
             void searchContextMoveFileToTrash();
             void searchContextDeleteFile();
-
-
 
         //Create
             void setMediaFile(QString filePath);
@@ -496,6 +505,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
+
 };
 
 #endif // MAINWINDOW_H

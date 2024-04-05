@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-23";
-        developmentMode = true;
+        releaseDate     = "2024-03-31";
+        developmentMode = false;
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
@@ -173,6 +173,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         //Setup tab: Settings
             //Load path of last collection used
             ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
+
+            //Apply databaseMode in Settings tab
+            QMap<QString, QString> databaseModeTranslations = {
+                                                               {"Memory", tr("Memory")},
+                                                               {"File",   tr("File")},
+                                                               {"Hosted", tr("Hosted")},
+                                                               };
+            QString trMode = databaseModeTranslations.value(collection->databaseMode, collection->databaseMode);
+            ui->Settings_comboBox_DatabaseMode->setCurrentText(trMode);
+            applyDatabaseModeToUI();
 
             //Set file types
             setFileTypes();
