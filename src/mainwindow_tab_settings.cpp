@@ -345,13 +345,8 @@
 
         //Load data from tables to models and update display
             loadDevicesTreeToModel("Filters");
-            qDebug()<<"loadDevicesTreeToModel data"<<collection->databaseFilePath;
             loadSearchHistoryTableToModel();
-            qDebug()<<"loadSearchHistoryTableToModel data"<<collection->databaseFilePath;
-
             filterFromSelectedDevice();
-            qDebug()<<"filterFromSelectedDevice data"<<collection->databaseFilePath;
-
 
         //Add a default storage device, to force any new catalog to have one
         collection->insertPhysicalStorageGroup();
@@ -415,29 +410,18 @@
         if ( newDatabaseFilePath !=""){
 
             collection->databaseFilePath = newDatabaseFilePath;
-            qDebug()<<"collection->databaseFilePath"<<collection->databaseFilePath;
             //Save Settings for the new collection folder value;
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
             settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
 
-            qDebug()<<"settings"<<collection->databaseFilePath;
-
-
             //Set the new path in Settings tab
-        //    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
             //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-            qDebug()<<"ui->Settings_lineEdit_DatabaseFilePath"<<collection->databaseFilePath;
-
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-            qDebug()<<"QSqlDatabase::addDatabase"<<collection->databaseFilePath;
             db.setDatabaseName(collection->databaseFilePath);
-            qDebug()<<"db.setDatabaseName"<<collection->databaseFilePath;
             if (!db.open())
                 qDebug()<< db.lastError();
-
-
-            qDebug()<<"db.!db.open"<<collection->databaseFilePath;
 
             loadCollection();
         }
