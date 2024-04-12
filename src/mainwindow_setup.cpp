@@ -58,8 +58,8 @@
         if (err.type() != QSqlError::NoError) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("The database could not be initialized:<br/>") + err.databaseText());
-            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.setText(tr("The database could not be initialized.<br/>Create a new database or select an existing one."));
+            msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
             return;
         }
@@ -99,7 +99,6 @@
                 msgBox.setText(tr("The database file could not be found:<br/>") + collection->databaseFilePath);
                 msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
-                selectDatabaseFilePath();
             }
             else{
                 QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");

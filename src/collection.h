@@ -36,6 +36,7 @@
 #include <QAbstractTableModel>
 #include <QFile>
 #include <QSqlQuery>
+#include <QSqlError>>
 #include <QSqlRecord>
 #include <QMessageBox>
 #include <QCoreApplication>

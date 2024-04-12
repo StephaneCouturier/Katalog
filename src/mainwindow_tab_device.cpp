@@ -183,11 +183,6 @@ void MainWindow::on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1)
     loadDevicesView();
 }
 //--------------------------------------------------------------------------
-void MainWindow::on_Devices_pushButton_verifStorage_clicked()
-{
-    verifyStorageWithOutDevice();
-}
-//--------------------------------------------------------------------------
 void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index)
 {
     //Get selection data
@@ -3154,14 +3149,156 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
 //--- UI -----------------------------------------------
 void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 {
-    // convertDeviceCatalogFile();
-    // importStorageCatalogLinks();
-    // generateAndAssociateCatalogMissingIDs();
-    // importStorageCatalogPathsToDevice();
-    // importStatistics();
+    //Verify version (Memory mode only)
+    // detect the version	collection.csv file ?
+    // new way to detect 2.0 ?  (so if not 2.x, > 1.x)	do nothing
+    // detect 1.22 for sure	Import script
+    // Detect 1.xx not 1.22	The collection was created with a version older than 1.22 > it is necessary to use 1.22 first to update the collection before using 2.0
+
+    //Devices
+    if(1==1){
+        //Import Virtual
+        importVirtualToDevices();
+        //Create from storage
+        importStorageToDevices();
+        //Create from catalog
+        importCatalogsToDevices();
+        //Create Catalog IDs
+        generateAndAssociateCatalogMissingIDs();
+    }
+
+    //Statistics
+        // importStatistics();
+
+    //Misc
+        // convertDeviceCatalogFile();
+        // importStorageCatalogLinks();
+        // verifyStorageWithOutDevice();
+        // importStorageCatalogPathsToDevice();
+
+    //Close procedure
+    loadDevicesView();
+    loadDevicesTreeToModel("Filters");
+    QApplication::restoreOverrideCursor();
+    ui->tabWidget->setCurrentIndex(1);
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(tr("Imported collection from v1.22."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+
 }
 //--------------------------------------------------------------------------
 //--- Methods --------------------------------------------------------------
+void MainWindow::importVirtualToDevices()
+{
+    //create from locations
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT DISTINCT storage_location
+                                    FROM storage
+                                    ORDER BY storage_location ASC
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+
+    while(query.next()){
+        Device newDevice;
+        newDevice.generateDeviceID();
+        newDevice.parentID = 1;
+        newDevice.name = query.value(0).toString();
+        newDevice.type = "Virtual";
+        newDevice.insertDevice();
+    }
+    collection->saveDeviceTableToFile();
+}
+
+void MainWindow::importStorageToDevices()
+{
+    //create from storage
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT storage_id, storage_name, storage_path, storage_location, storage_total_space, storage_free_space
+                                    FROM storage
+                                    ORDER BY storage_id ASC
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+
+    while(query.next()){
+        Device newDevice;
+        newDevice.generateDeviceID();
+        newDevice.externalID = query.value(0).toInt();
+        newDevice.name = query.value(1).toString();
+        newDevice.path = query.value(2).toString();
+        newDevice.totalSpace = query.value(4).toLongLong();
+        newDevice.freeSpace = query.value(5).toLongLong();
+        newDevice.type = "Storage";
+        newDevice.groupID = 0;
+
+        //Find parent id
+            QSqlQuery queryParent;
+            QString queryParentSQL = QLatin1String(R"(
+                                        SELECT device_id
+                                        FROM device
+                                        WHERE device_name =:device_name
+                                        AND device_type = 'Virtual'
+                                    )");
+            queryParent.prepare(queryParentSQL);
+            queryParent.bindValue(":device_name", query.value(3).toString());
+            queryParent.exec();
+            queryParent.next();
+            newDevice.parentID = queryParent.value(0).toInt();
+
+        newDevice.insertDevice();
+        newDevice.updateParentsNumbers();
+    }
+    collection->saveDeviceTableToFile();
+}
+
+void MainWindow::importCatalogsToDevices()
+{
+    //Create from catalogs
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                    SELECT catalog_id, catalog_name, catalog_storage, catalog_source_path, catalog_file_count, catalog_total_file_size
+                                    FROM catalog
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+
+    while(query.next()){
+        Device newDevice;
+        newDevice.generateDeviceID();
+        newDevice.name = query.value(1).toString();
+        newDevice.path = query.value(3).toString();
+        newDevice.totalFileCount = query.value(4).toLongLong();
+        newDevice.totalFileSize = query.value(5).toLongLong();
+        newDevice.type = "Catalog";
+        newDevice.groupID = 0;
+
+        //Find parent id
+        QSqlQuery queryParent;
+        QString queryParentSQL = QLatin1String(R"(
+                                        SELECT device_id
+                                        FROM device
+                                        WHERE device_name =:device_name
+                                        AND device_type = 'Storage'
+                                    )");
+        queryParent.prepare(queryParentSQL);
+        queryParent.bindValue(":device_name", query.value(2).toString());
+        queryParent.exec();
+        queryParent.next();
+        newDevice.parentID = queryParent.value(0).toInt();
+
+        newDevice.insertDevice();
+        newDevice.updateParentsNumbers();
+    }
+
+    collection->saveDeviceTableToFile();
+}
+
 void MainWindow::generateAndAssociateCatalogMissingIDs()
 {
     // Start animation while opening
@@ -3170,11 +3307,10 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
     //Get catalogs with missing ID
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                    SELECT device_id, catalog_name
-                                    FROM catalog
-                                    LEFT JOIN device ON device_name = catalog_name
-
-                                )");//WHERE device_id IS NULL or catalog_id = '' or catalog_id = 0
+                                    SELECT device_id
+                                    FROM device
+                                    WHERE device_type = 'Catalog'
+                                )");
     query.prepare(querySQL);
     query.exec();
 
@@ -3183,16 +3319,29 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
         Device device;
         device.ID = query.value(0).toInt();
         device.loadDevice();
+
         if (device.catalog->ID == 0){
             device.catalog->generateID();
+
+            //Update database with catalog values
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                    UPDATE catalog
+                                    SET    catalog_id =:catalog_id
+                                    WHERE  catalog_name=:catalog_name
+                                )");
+            query.prepare(querySQL);
+            query.bindValue(":catalog_id", device.catalog->ID);
+            query.bindValue(":catalog_name", device.name);
+            query.exec();
         }
 
         device.externalID = device.catalog->ID;
         device.saveDevice();
-        device.catalog->saveCatalog();
-        device.catalog->updateCatalogFileHeaders(collection->databaseMode);
+        device.loadDevice();
     }
 
+    //Update all catalog devices external id
     querySQL = QLatin1String(R"(
                                     UPDATE device
                                     SET device_external_id = (SELECT catalog_id FROM catalog WHERE device_name = catalog_name)
@@ -3202,18 +3351,31 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
     query.exec();
 
     collection->saveDeviceTableToFile();
-    loadDevicesView();
 
-    //Stop animation
-    QApplication::restoreOverrideCursor();
 
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("generated Catalog Missing IDs"));
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
+    //Update all catalog files with their new ID
+    QSqlQuery queryUpdateFiles;
+    QString queryUpdateFilesSQL = QLatin1String(R"(
+                                    SELECT device_id, device_name
+                                    FROM device
+                                    WHERE device_type ='Catalog'
+                                )");
+    queryUpdateFiles.prepare(queryUpdateFilesSQL);
+    queryUpdateFiles.exec();
+
+    while(queryUpdateFiles.next()){
+        Device tempDevice;
+        tempDevice.ID = queryUpdateFiles.value(0).toInt();
+        tempDevice.loadDevice();
+        tempDevice.catalog->updateCatalogFileHeaders(collection->databaseMode);
+    }
 }
 
+void MainWindow::importStatistics()
+{
+    qDebug()<<"importStatistics() empty";
+}
+//--------------------------------------------------------------------------
 void MainWindow::importStorageCatalogPathsToDevice()
 {//Move Storage or Catalog Path to Device table
 
@@ -3266,22 +3428,17 @@ void MainWindow::importStorageCatalogPathsToDevice()
 
 }
 
-void MainWindow::importStatistics()
-{
-    qDebug()<<"importStatistics() empty";
-}
-
 void MainWindow::convertDeviceCatalogFile() {
 
     QSqlQuery query;
     QString querySQL;
 
     //Update Device type
-    //save table to update columns and reload
+    //Save table to update columns and reload
     collection->saveDeviceTableToFile();
     collection->loadDeviceFileToTable();
 
-    //update type
+    //Update type
     querySQL = QLatin1String(R"(
                             UPDATE device
                             SET device_type="Virtual"

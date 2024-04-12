@@ -286,9 +286,13 @@ class MainWindow : public QMainWindow
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
             //Migration 1.22 to 2.0
+            void importVirtualToDevices();
+            void importStorageToDevices();
+            void importCatalogsToDevices();
             void generateAndAssociateCatalogMissingIDs();
-            void importStorageCatalogPathsToDevice();
             void importStatistics();
+
+            void importStorageCatalogPathsToDevice();
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -470,7 +474,6 @@ class MainWindow : public QMainWindow
             void on_Devices_pushButton_ImportV1_clicked();
             void on_Devices_pushButton_TreeExpandCollapse_clicked();
             void on_Devices_pushButton_EditList_clicked();
-            void on_Devices_pushButton_verifStorage_clicked();
             void on_Devices_pushButton_SelectPath_clicked();
             void on_Devices_pushButton_Snapshot_clicked();
             void on_Devices_pushButton_ApplyToSelection_clicked();

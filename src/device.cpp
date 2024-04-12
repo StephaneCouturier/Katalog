@@ -212,6 +212,10 @@ void Device::insertDevice()
                                         device_type,
                                         device_path,
                                         device_external_id,
+                                        device_total_file_size,
+                                        device_total_file_count,
+                                        device_total_space,
+                                        device_free_space,
                                         device_group_id)
                             VALUES(
                                         :device_id,
@@ -220,6 +224,10 @@ void Device::insertDevice()
                                         :device_type,
                                         :device_path,
                                         :device_external_id,
+                                        :device_total_file_size,
+                                        :device_total_file_count,
+                                        :device_total_space,
+                                        :device_free_space,
                                         :device_group_id)
                                 )");
     query.prepare(querySQL);
@@ -229,6 +237,10 @@ void Device::insertDevice()
     query.bindValue(":device_type", type);
     query.bindValue(":device_path", path);
     query.bindValue(":device_external_id", externalID);
+    query.bindValue(":device_total_file_size", totalFileSize);
+    query.bindValue(":device_total_file_count", totalFileCount);
+    query.bindValue(":device_total_space", totalSpace);
+    query.bindValue(":device_free_space", freeSpace);
     query.bindValue(":device_group_id", groupID);
     query.exec();
 }

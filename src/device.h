@@ -49,8 +49,8 @@ public:
         QString type;
         int externalID = 0;
         QString path;
-        qint64 totalFileSize;
-        qint64 totalFileCount;
+        qint64 totalFileSize = 0;
+        qint64 totalFileCount = 0;
         qint64 totalSpace = 0;
         qint64 freeSpace = 0;
         int groupID = 0;

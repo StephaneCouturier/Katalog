@@ -288,62 +288,25 @@ void Collection::loadCatalogFilesToTable()
             if(catalogValues.length()>0){
                 //Insert a line in the table with available data
 
-                //Prepare insert query for filesall
-                QSqlQuery insertCatalogQuery;
-                QString insertCatalogQuerySQL = QLatin1String(R"(
-                                INSERT OR IGNORE INTO catalog (
-                                                catalog_id,
-                                                catalog_file_path,
-                                                catalog_name,
-                                                catalog_date_updated,
-                                                catalog_source_path,
-                                                catalog_file_count,
-                                                catalog_total_file_size,
-                                                catalog_include_hidden,
-                                                catalog_file_type,
-                                                catalog_storage,
-                                                catalog_include_symblinks,
-                                                catalog_is_full_device,
-                                                catalog_date_loaded,
-                                                catalog_include_metadata,
-                                                catalog_app_version
-                                                )
-                                VALUES(
-                                                :catalog_id,
-                                                :catalog_file_path,
-                                                :catalog_name,
-                                                :catalog_date_updated,
-                                                :catalog_source_path,
-                                                :catalog_file_count,
-                                                :catalog_total_file_size,
-                                                :catalog_include_hidden,
-                                                :catalog_file_type,
-                                                :catalog_storage,
-                                                :catalog_include_symblinks,
-                                                :catalog_is_full_device,
-                                                :catalog_date_loaded,
-                                                :catalog_include_metadata,
-                                                :catalog_app_version )
-                            )");
+                Catalog newCatalog;
+                newCatalog.ID               = catalogValues[10].toInt(); //catalog_id
+                newCatalog.filePath         = path; //catalog_file_path
+                newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
+                newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
+                newCatalog.sourcePath       = catalogValues[0]; //catalog_source_path
+                newCatalog.fileCount        = catalogValues[1].toLongLong(); //catalog_file_count
+                newCatalog.totalFileSize    = catalogValues[2].toLongLong(); //catalog_total_file_size
+                newCatalog.includeHidden    = catalogValues[3].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_hidden
+                newCatalog.fileType         = catalogValues[4]; //catalog_file_type
+                newCatalog.storageName      = catalogValues[5]; //catalog_storage
+                newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
+                newCatalog.isFullDevice     = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
+                newCatalog.includeMetadata  = catalogValues[8].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_metadata
+                newCatalog.appVersion       = catalogValues[9]; //catalog_app_version
 
-                insertCatalogQuery.prepare(insertCatalogQuerySQL);
-                insertCatalogQuery.bindValue(":catalog_id",                 catalogValues[10]);
-                insertCatalogQuery.bindValue(":catalog_file_path",          catalogFileInfo.filePath());
-                insertCatalogQuery.bindValue(":catalog_name",               catalogFileInfo.completeBaseName());
-                insertCatalogQuery.bindValue(":catalog_date_updated",       catalogFileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-                insertCatalogQuery.bindValue(":catalog_source_path",        catalogValues[0]);
-                insertCatalogQuery.bindValue(":catalog_file_count",         catalogValues[1].toInt());
-                insertCatalogQuery.bindValue(":catalog_total_file_size",    catalogValues[2].toLongLong());
-                insertCatalogQuery.bindValue(":catalog_include_hidden",     catalogValues[3]);
-                insertCatalogQuery.bindValue(":catalog_file_type",          catalogValues[4]);
-                insertCatalogQuery.bindValue(":catalog_storage",            catalogValues[5]);
-                insertCatalogQuery.bindValue(":catalog_include_symblinks",  catalogValues[6]);
-                insertCatalogQuery.bindValue(":catalog_is_full_device",     catalogValues[7]);
-                insertCatalogQuery.bindValue(":catalog_date_loaded","");
-                insertCatalogQuery.bindValue(":catalog_include_metadata",   catalogValues[8]);
-                insertCatalogQuery.bindValue(":catalog_app_version",        catalogValues[9]);
-                insertCatalogQuery.exec();
+                newCatalog.insertCatalog();
             }
+
             catalogFile.close();
         }
     }

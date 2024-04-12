@@ -166,6 +166,7 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 //catalog files data operation
 void Catalog::generateID()
 {//Generate ID
+    int maxID = 0;
     QSqlQuery queryCatalogID;
     QString queryCatalogIDSQL = QLatin1String(R"(
                                     SELECT MAX (catalog_id)
@@ -173,9 +174,10 @@ void Catalog::generateID()
                                 )");
     queryCatalogID.prepare(queryCatalogIDSQL);
     queryCatalogID.exec();
-    queryCatalogID.next();
-    int maxID = queryCatalogID.value(0).toInt();
-    ID = maxID + 1;
+    if(queryCatalogID.next()){
+        maxID = queryCatalogID.value(0).toInt();
+        ID = maxID + 1;
+    }
 }
 
 void Catalog::insertCatalog()
@@ -219,19 +221,19 @@ void Catalog::insertCatalog()
     insertCatalogQuery.prepare(insertCatalogQuerySQL);
     insertCatalogQuery.bindValue(":catalog_id", ID);
     insertCatalogQuery.bindValue(":catalog_file_path", filePath);
-    insertCatalogQuery.bindValue(":catalog_name",name);
-    insertCatalogQuery.bindValue(":catalog_date_updated",dateUpdated);
-    insertCatalogQuery.bindValue(":catalog_source_path",sourcePath);
-    insertCatalogQuery.bindValue(":catalog_file_count",fileCount);
-    insertCatalogQuery.bindValue(":catalog_total_file_size",totalFileSize);
-    insertCatalogQuery.bindValue(":catalog_include_hidden",includeHidden);
-    insertCatalogQuery.bindValue(":catalog_file_type",fileType);
-    insertCatalogQuery.bindValue(":catalog_storage",storageName);
-    insertCatalogQuery.bindValue(":catalog_include_symblinks",includeSymblinks);
-    insertCatalogQuery.bindValue(":catalog_is_full_device",isFullDevice);
-    insertCatalogQuery.bindValue(":catalog_date_loaded",dateLoaded);
-    insertCatalogQuery.bindValue(":catalog_include_metadata",includeMetadata);
-    insertCatalogQuery.bindValue(":catalog_app_version",appVersion);
+    insertCatalogQuery.bindValue(":catalog_name", name);
+    insertCatalogQuery.bindValue(":catalog_date_updated", dateUpdated);
+    insertCatalogQuery.bindValue(":catalog_source_path", sourcePath);
+    insertCatalogQuery.bindValue(":catalog_file_count", fileCount);
+    insertCatalogQuery.bindValue(":catalog_total_file_size", totalFileSize);
+    insertCatalogQuery.bindValue(":catalog_include_hidden", includeHidden);
+    insertCatalogQuery.bindValue(":catalog_file_type", fileType);
+    insertCatalogQuery.bindValue(":catalog_storage", storageName);
+    insertCatalogQuery.bindValue(":catalog_include_symblinks", includeSymblinks);
+    insertCatalogQuery.bindValue(":catalog_is_full_device", isFullDevice);
+    insertCatalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
+    insertCatalogQuery.bindValue(":catalog_include_metadata", includeMetadata);
+    insertCatalogQuery.bindValue(":catalog_app_version", appVersion);
     insertCatalogQuery.exec();
 }
 
@@ -470,9 +472,9 @@ void Catalog::loadCatalog()
                                 catalog_include_metadata     ,
                                 catalog_app_version
                             FROM catalog
-                            LEFT JOIN storage ON catalog_storage = storage_name
                             WHERE catalog_id=:catalog_id
                         )");
+
     query.prepare(querySQL);
     query.bindValue(":catalog_id",ID);
     query.exec();
