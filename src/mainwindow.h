@@ -293,6 +293,9 @@ class MainWindow : public QMainWindow
             void importStatistics();
             void loadStatisticsCatalogFileToTable();
             void loadStatisticsStorageFileToTable();
+            void loadVirtualStorageFileToTable();
+            void loadVirtualStorageCatalogFileToTable();
+            void importVirtualAssignmentsToDevices();
 
             void importStorageCatalogPathsToDevice();
 

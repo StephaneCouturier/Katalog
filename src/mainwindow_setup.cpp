@@ -160,12 +160,6 @@
         if (!q.exec(SQL_CREATE_STATISTICS_DEVICE))
             return q.lastError();
 
-        if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
-            return q.lastError();
-
         if (!q.exec(SQL_CREATE_SEARCH))
             return q.lastError();
 
@@ -173,6 +167,19 @@
             return q.lastError();
 
         if (!q.exec(SQL_CREATE_EXCLUDE))
+            return q.lastError();
+
+        //Migration
+        if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
+            return q.lastError();
+
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG))
             return q.lastError();
 
         return QSqlError();

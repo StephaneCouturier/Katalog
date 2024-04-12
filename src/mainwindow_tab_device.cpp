@@ -3157,23 +3157,28 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 
     if(1==1){//for testability
 
-    //Devices
+        //Devices
 
-        //Import Virtual
-        importVirtualToDevices();
+            //Import Virtual
+            importVirtualToDevices();
 
-        //Create from storage
-        importStorageToDevices();
+            //Create from storage
+            importStorageToDevices();
 
-        //Create from catalog
-        importCatalogsToDevices();
+            //Create from catalog
+            importCatalogsToDevices();
 
-        //Create Catalog IDs
-        generateAndAssociateCatalogMissingIDs();
+            //Create Catalog IDs
+            generateAndAssociateCatalogMissingIDs();
 
-    //Statistics
-        importStatistics();
+        //Statistics
+            importStatistics();
+
+        //Assignments
+            importVirtualAssignmentsToDevices();
     }
+
+    //qDebug()<<query.lastError();
 
     //Misc
         // importStorageCatalogPathsToDevice();
@@ -3197,7 +3202,7 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 //--- Methods --------------------------------------------------------------
 void MainWindow::importVirtualToDevices()
 {
-    //create from locations
+    //Create Virtual device in Physical group from locations
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                     SELECT DISTINCT storage_location
@@ -3373,6 +3378,173 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
         tempDevice.loadDevice();
         tempDevice.catalog->updateCatalogFileHeaders(collection->databaseMode);
     }
+}
+
+void MainWindow::importVirtualAssignmentsToDevices()
+{   
+    //Load data
+    loadVirtualStorageFileToTable();
+    loadVirtualStorageCatalogFileToTable();
+
+    //Virtual storage
+        QSqlQuery query;
+        QString querySQL;
+
+        //Create a temporary table
+        querySQL = QLatin1String(R"(
+                        CREATE TEMPORARY TABLE IF NOT EXISTS temp_device (
+                            device_id NUMERIC,
+                            device_parent_id NUMERIC,
+                            device_name TEXT,
+                            device_type TEXT,
+                            device_external_id NUMERIC,
+                            device_path TEXT,
+                            device_total_file_size NUMERIC DEFAULT 0,
+                            device_total_file_count NUMERIC DEFAULT 0,
+                            device_total_space NUMERIC DEFAULT 0,
+                            device_free_space NUMERIC DEFAULT 0,
+                            device_active NUMERIC,
+                            device_group_id NUMERIC,
+                            device_date_updated TEXT
+                        )
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Insert data from virtual_storage into the temporary table
+        querySQL = QLatin1String(R"(
+                        INSERT INTO temp_device (
+                            device_id,
+                            device_parent_id,
+                            device_name,
+                            device_type,
+                            device_group_id
+                        )
+                        SELECT
+                            virtual_storage_id,
+                            virtual_storage_parent_id,
+                            virtual_storage_name,
+                            'Virtual',
+                            1
+                        FROM
+                            virtual_storage
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Get max ID to set a shift amount for new IDs to avoid duplicates
+        int shiftAmount = 1;
+        query.exec("SELECT MAX(device_id) FROM device");
+        query.next();
+        shiftAmount = query.value(0).toInt();
+
+        //Shift ID in temp table
+
+            // First, update the rows with parentID = 0 to keep them unchanged
+            QString sql = "UPDATE temp_device SET device_id = device_id + :shiftAmount "
+                          "WHERE device_parent_id = 0";
+            query.prepare(sql);
+            query.bindValue(":shiftAmount", shiftAmount);
+            if (!query.exec()) {
+                qDebug() << "shiftIDsInDeviceTable - Error updating device table:" << query.lastError().text();
+                return;
+            }
+
+            // Next, update the rows with parentID != 0 to shift their IDs
+            sql = "UPDATE temp_device SET device_id = device_id + :shiftAmount, "
+                  "device_parent_id = device_parent_id + :shiftAmount "
+                  "WHERE device_parent_id != 0";
+            query.prepare(sql);
+            query.bindValue(":shiftAmount", shiftAmount);
+            if (!query.exec()) {
+                qDebug() << "Error updating device table:" << query.lastError().text();
+                return;
+            }
+
+        //Insert new devices
+        querySQL = QLatin1String(R"(
+                        INSERT OR IGNORE INTO device (
+                            device_id,
+                            device_parent_id,
+                            device_name,
+                            device_type,
+                            device_group_id
+                        )
+                        SELECT
+                            device_id,
+                            device_parent_id,
+                            device_name,
+                            device_type,
+                            device_group_id
+                        FROM
+                            temp_device
+                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+
+    //Catalog Assignements
+        //Create new devices for catalogs assigned to virtual devices
+        querySQL = QLatin1String(R"(
+                                    SELECT *
+                                    FROM virtual_storage_catalog
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+        qDebug()<<query.lastError();
+
+        while(query.next()){
+            Device newCatalog;
+            newCatalog.generateDeviceID();
+            newCatalog.parentID = query.value(0).toInt() + shiftAmount;
+            newCatalog.name = query.value(1).toString();
+            newCatalog.type = "Catalog";
+            newCatalog.groupID = 1;
+            newCatalog.insertDevice();
+            newCatalog.updateParentsNumbers();
+        }
+
+        //Update values from catalog with same name
+        querySQL = QLatin1String(R"(
+                UPDATE device AS d1
+                SET
+                    device_external_id = d2.device_external_id,
+                    device_total_file_size = d2.device_total_file_size,
+                    device_total_file_count = d2.device_total_file_count,
+                    device_path = d2.device_path
+                FROM
+                    device AS d2
+                WHERE
+                    d1.device_id > :shiftAmount
+                    AND d2.device_id <= :shiftAmount
+                    AND d1.device_name = d2.device_name
+                    AND d2.device_external_id IS NOT NULL
+               )");
+
+        query.prepare(querySQL);
+        query.bindValue(":shiftAmount", shiftAmount);
+        query.exec();
+
+        //Update parents numbers
+        querySQL = QLatin1String(R"(
+                                    SELECT device_id
+                                    FROM device
+                                    WHERE device_type = 'Catalog'
+                                    AND device_group_id = 1
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+        qDebug()<<query.lastError();
+
+        while(query.next()){
+            Device tempCatalog;
+            tempCatalog.ID = query.value(0).toInt();
+            tempCatalog.loadDevice();
+            tempCatalog.updateParentsNumbers();
+        }
+
+    //Save results
+    collection->saveDeviceTableToFile();
 }
 
 void MainWindow::importStatistics()
@@ -3650,6 +3822,149 @@ void MainWindow::loadStatisticsStorageFileToTable()
     }
 }
 
+void MainWindow::loadVirtualStorageFileToTable()
+{
+    QString virtualStorageFilePath;
+    virtualStorageFilePath = collection->collectionFolder + "/virtual_storage.csv";
+
+    QSqlQuery query;
+    QString querySQL;
+    querySQL = QLatin1String(R"(
+                        DELETE FROM virtual_storage
+                    )");
+    query.prepare(querySQL);
+    query.exec();
+
+    querySQL = QLatin1String(R"(
+                        INSERT INTO virtual_storage (
+                                        virtual_storage_id,
+                                        virtual_storage_parent_id,
+                                        virtual_storage_name )
+                        VALUES(         :virtual_storage_id,
+                                        :virtual_storage_parent_id,
+                                        :virtual_storage_name )
+                    )");
+    query.prepare(querySQL);
+
+    //Define storage file and prepare stream
+    QFile virtualStorageFile(virtualStorageFilePath);
+    QTextStream textStream(&virtualStorageFile);
+
+    //Open file or return information
+    if(!virtualStorageFile.open(QIODevice::ReadOnly)) {
+        // Create it, if it does not exist
+        QFile newVirtualStorageFile(virtualStorageFilePath);
+        newVirtualStorageFile.open(QFile::WriteOnly | QFile::Text);
+        QTextStream stream(&newVirtualStorageFile);
+        stream << "ID"            << "\t"
+               << "Parent ID"     << "\t"
+               << "Name"          << "\t"
+               << '\n';
+        newVirtualStorageFile.close();
+    }
+
+    //Test file validity (application breaks between v0.13 and v0.14)
+    QString line = textStream.readLine();
+
+    //Load virtualStorage device lines to table
+    while (true)
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+            if (line.left(2)!="ID"){//skip the first line with headers
+
+                //Split the string with tabulation into a list
+                QStringList fieldList = line.split('\t');
+
+                QString querySQL = QLatin1String(R"(
+                                INSERT INTO virtual_storage(
+                                        virtual_storage_id,
+                                        virtual_storage_parent_id,
+                                        virtual_storage_name )
+                                VALUES(
+                                        :virtual_storage_id,
+                                        :virtual_storage_parent_id,
+                                        :virtual_storage_name )
+                                )");
+
+                QSqlQuery insertQuery;
+                insertQuery.prepare(querySQL);
+                insertQuery.bindValue(":virtual_storage_id",fieldList[0].toInt());
+                insertQuery.bindValue(":virtual_storage_parent_id",fieldList[1]);
+                insertQuery.bindValue(":virtual_storage_name",fieldList[2]);
+                insertQuery.exec();
+            }
+    }
+    virtualStorageFile.close();
+}
+
+void MainWindow::loadVirtualStorageCatalogFileToTable()
+{
+    QString virtualStorageCatalogFilePath;
+    virtualStorageCatalogFilePath = collection->collectionFolder + "/virtual_storage_catalog.csv";
+
+    QSqlQuery query;
+    QString querySQL;
+    querySQL = QLatin1String(R"(
+                        DELETE FROM virtual_storage_catalog
+                    )");
+    query.prepare(querySQL);
+    query.exec();
+
+    querySQL = QLatin1String(R"(
+                        INSERT INTO virtual_storage_catalog (
+                                        virtual_storage_id,
+                                        catalog_name,
+                                        directory_path )
+                        VALUES(         :virtual_storage_id,
+                                        :catalog_name,
+                                        :directory_path )
+                    )");
+    query.prepare(querySQL);
+
+    //Define storage file and prepare stream
+    QFile virtualStorageCatalogFile(virtualStorageCatalogFilePath);
+    QTextStream textStream(&virtualStorageCatalogFile);
+
+    //Open file or return information
+    if(!virtualStorageCatalogFile.open(QIODevice::ReadOnly)) {
+        // Create it, if it does not exist
+        QFile newVirtualStorageCatalogFile(virtualStorageCatalogFilePath);
+        if(!newVirtualStorageCatalogFile.open(QIODevice::ReadOnly)) {
+            if (newVirtualStorageCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
+                QTextStream stream(&newVirtualStorageCatalogFile);
+                stream << "ID"            << "\t"
+                       << "Catalog Name"          << "\t"
+                       << "Directory Path"          << "\t"
+                       << '\n';
+                newVirtualStorageCatalogFile.close();
+            }
+        }
+    }
+
+    //Test file validity (application breaks between v0.13 and v0.14)
+    QString line = textStream.readLine();
+
+    //Load virtualStorage device lines to table
+    while (true)
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else if (line.left(2)!="ID"){//skip the first line with headers
+
+            //Split the string with tabulation into a list
+            QStringList fieldList = line.split('\t');
+            query.bindValue(":virtual_storage_id",fieldList[0].toInt());
+            query.bindValue(":catalog_name",fieldList[1]);
+            query.bindValue(":directory_path",fieldList[2]);
+            query.exec();
+        }
+    }
+    virtualStorageCatalogFile.close();
+}
 //--------------------------------------------------------------------------
 void MainWindow::importStorageCatalogPathsToDevice()
 {//Move Storage or Catalog Path to Device table
