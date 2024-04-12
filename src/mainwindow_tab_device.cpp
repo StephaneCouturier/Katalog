@@ -3155,26 +3155,31 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
     // detect 1.22 for sure	Import script
     // Detect 1.xx not 1.22	The collection was created with a version older than 1.22 > it is necessary to use 1.22 first to update the collection before using 2.0
 
+    if(1==1){//for testability
+
     //Devices
-    if(1==1){
+
         //Import Virtual
         importVirtualToDevices();
+
         //Create from storage
         importStorageToDevices();
+
         //Create from catalog
         importCatalogsToDevices();
+
         //Create Catalog IDs
         generateAndAssociateCatalogMissingIDs();
-    }
 
     //Statistics
-        // importStatistics();
+        importStatistics();
+    }
 
     //Misc
+        // importStorageCatalogPathsToDevice();
         // convertDeviceCatalogFile();
         // importStorageCatalogLinks();
         // verifyStorageWithOutDevice();
-        // importStorageCatalogPathsToDevice();
 
     //Close procedure
     loadDevicesView();
@@ -3187,7 +3192,6 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
     msgBox.setText(tr("Imported collection from v1.22."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
-
 }
 //--------------------------------------------------------------------------
 //--- Methods --------------------------------------------------------------
@@ -3373,8 +3377,248 @@ void MainWindow::generateAndAssociateCatalogMissingIDs()
 
 void MainWindow::importStatistics()
 {
-    qDebug()<<"importStatistics() empty";
+    QSqlQuery query;
+    QString querySQL;
+
+    //Load data from statistics_storage file
+    loadStatisticsStorageFileToTable();
+
+    //Insert data from statistics_storage
+    querySQL = QLatin1String(R"(
+                    INSERT INTO statistics_device (
+                        date_time,
+                        device_id,
+                        device_name,
+                        device_type,
+                        device_file_count,
+                        device_total_file_size,
+                        device_free_space,
+                        device_total_space,
+                        record_type
+                    )
+                    SELECT
+                        statistics_storage.date_time,
+                        device.device_id,
+                        device.device_name,
+                        'Storage',
+                        NULL,
+                        NULL,
+                        statistics_storage.storage_free_space,
+                        statistics_storage.storage_total_space,
+                        statistics_storage.record_type
+                    FROM
+                        statistics_storage
+                    JOIN
+                        storage ON statistics_storage.storage_id = storage.storage_id
+                    JOIN
+                        device ON storage.storage_id = device.device_external_id
+                    WHERE
+                        device.device_type = 'Storage';
+                )");
+    query.prepare(querySQL);
+    query.exec();
+
+    //Load data from statistics_catalog file
+    loadStatisticsCatalogFileToTable();
+
+    //Insert data from statistics_catalog
+    querySQL = QLatin1String(R"(
+                    INSERT INTO statistics_device (
+                        date_time,
+                        device_id,
+                        device_name,
+                        device_type,
+                        device_file_count,
+                        device_total_file_size,
+                        device_free_space,
+                        device_total_space,
+                        record_type
+                    )
+                    SELECT
+                        statistics_catalog.date_time,
+                        device.device_id,
+                        device.device_name,
+                        'Catalog',
+                        statistics_catalog.catalog_file_count,
+                        statistics_catalog.catalog_total_file_size,
+                        NULL,
+                        NULL,
+                        statistics_catalog.record_type
+                    FROM
+                        statistics_catalog
+                    JOIN
+                        catalog ON statistics_catalog.catalog_name = catalog.catalog_name
+                    JOIN
+                        device ON catalog.catalog_id = device.device_external_id
+                    WHERE
+                        device.device_type = 'Catalog';
+                )");
+    query.prepare(querySQL);
+    query.exec();
+
+    collection->saveStatiticsToFile();
 }
+
+void MainWindow::loadStatisticsCatalogFileToTable()
+{// Load the contents of the statistics file into the database
+
+    QString statisticsCatalogFilePath;
+    statisticsCatalogFilePath = collection->collectionFolder + "/statistics_catalog.csv";
+
+    //clear database table
+    QSqlQuery deleteQuery;
+    deleteQuery.exec("DELETE FROM statistics_catalog");
+
+    // Get infos stored in the file
+    QFile statisticsCatalogFile(statisticsCatalogFilePath);
+    if(!statisticsCatalogFile.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QTextStream textStream(&statisticsCatalogFile);
+
+    //prepare query to load file info
+    QSqlQuery insertQuery;
+    QString insertSQL = QLatin1String(R"(
+                                INSERT INTO statistics_catalog (
+                                                date_time,
+                                                catalog_name,
+                                                catalog_file_count,
+                                                catalog_total_file_size,
+                                                record_type )
+                                VALUES(
+                                                :date_time,
+                                                :catalog_name,
+                                                :catalog_file_count,
+                                                :catalog_total_file_size,
+                                                :record_type )
+                                            )");
+    insertQuery.prepare(insertSQL);
+
+    //set temporary values
+    QString     line;
+    QStringList fieldList;
+
+    QString     dateTime;
+    QString     catalogName;
+    qint64      catalogFileCount;
+    qint64      catalogTotalFileSize;
+    QString     recordType;
+    QRegularExpression tagExp("\t");
+
+    //Skip titles line
+    //line = textStream.readLine();
+
+    //load file to database
+    while (!textStream.atEnd())
+    {
+        line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+        {
+            //Split the string with \t (tabulation) into a list
+            fieldList.clear();
+            fieldList = line.split(tagExp);
+            dateTime                = fieldList[0];
+            catalogName             = fieldList[1];
+            catalogFileCount        = fieldList[2].toLongLong();
+            catalogTotalFileSize    = fieldList[3].toLongLong();
+            recordType              = fieldList[4];
+
+            //Append data to the database
+            insertQuery.bindValue(":date_time", dateTime);
+            insertQuery.bindValue(":catalog_name", catalogName);
+            insertQuery.bindValue(":catalog_file_count", QString::number(catalogFileCount));
+            insertQuery.bindValue(":catalog_total_file_size", QString::number(catalogTotalFileSize));
+            insertQuery.bindValue(":record_type", recordType);
+            insertQuery.exec();
+        }
+    }
+}
+
+void MainWindow::loadStatisticsStorageFileToTable()
+{// Load the contents of the storage statistics file into the database
+
+    QString statisticsStorageFilePath;
+    statisticsStorageFilePath = collection->collectionFolder + "/statistics_storage.csv";
+
+    //clear database table
+    QSqlQuery deleteQuery;
+    deleteQuery.exec("DELETE FROM statistics_storage");
+
+    // Get infos stored in the file
+    QFile statisticsStorageFile(statisticsStorageFilePath);
+    if(!statisticsStorageFile.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QTextStream textStream(&statisticsStorageFile);
+
+    //prepare query to load file info
+    QSqlQuery insertQuery;
+    QString insertSQL = QLatin1String(R"(
+                                INSERT INTO statistics_storage (
+                                                date_time,
+                                                storage_id,
+                                                storage_name,
+                                                storage_free_space,
+                                                storage_total_space,
+                                                record_type )
+                                VALUES(
+                                                :date_time,
+                                                :storage_id,
+                                                :storage_name,
+                                                :storage_free_space,
+                                                :storage_total_space,
+                                                :record_type )
+                                            )");
+    insertQuery.prepare(insertSQL);
+
+    //set temporary values
+    QString     line;
+    QStringList fieldList;
+    QString     dateTime;
+    int         storageID;
+    QString     storageName;
+    qint64      storageFreeSpace;
+    qint64      storageTotalSpace;
+    QString     recordType;
+    QRegularExpression tagExp("\t");
+
+    //Skip titles line
+    //line = textStream.readLine();
+
+    //load file to database
+    while (!textStream.atEnd())
+    {
+        line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+        {
+            //Split the string with \t (tabulation) into a list
+            fieldList.clear();
+            fieldList = line.split(tagExp);
+            dateTime            = fieldList[0];
+            storageName         = fieldList[1];
+            storageFreeSpace    = fieldList[2].toLongLong();
+            storageTotalSpace   = fieldList[3].toLongLong();
+            storageID           = fieldList[4].toInt();
+            recordType          = fieldList[5];
+
+            //Append data to the database
+            insertQuery.bindValue(":date_time", dateTime);
+            insertQuery.bindValue(":storage_id", storageID);
+            insertQuery.bindValue(":storage_name", storageName);
+            insertQuery.bindValue(":storage_free_space", QString::number(storageFreeSpace));
+            insertQuery.bindValue(":storage_total_space", QString::number(storageTotalSpace));
+            insertQuery.bindValue(":record_type", recordType);
+            insertQuery.exec();
+        }
+    }
+}
+
 //--------------------------------------------------------------------------
 void MainWindow::importStorageCatalogPathsToDevice()
 {//Move Storage or Catalog Path to Device table

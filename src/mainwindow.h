@@ -291,6 +291,8 @@ class MainWindow : public QMainWindow
             void importCatalogsToDevices();
             void generateAndAssociateCatalogMissingIDs();
             void importStatistics();
+            void loadStatisticsCatalogFileToTable();
+            void loadStatisticsStorageFileToTable();
 
             void importStorageCatalogPathsToDevice();
 
