@@ -243,7 +243,36 @@
         collection->generateCollectionFilesPaths();
     }
     //Hosted ---------------------------------------------------------------
-
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseHostName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1)
+    {
+        int newPort = arg1.toInt();
+        if(newPort !=collection->databasePort)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_UserName_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databaseUserName)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Password_textChanged(const QString &arg1)
+    {
+        if(arg1 !=collection->databasePassword)
+            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+    }
     //----------------------------------------------------------------------
 
 //SETTINGS / Language & Theme ----------------------------------------------
@@ -318,7 +347,6 @@
         settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
     }
     //----------------------------------------------------------------------
-
 
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
@@ -477,34 +505,3 @@
 
 
 
-    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1)
-    {
-        if(arg1 !=collection->databaseHostName)
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-    }
-
-
-    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1)
-    {
-        if(arg1 !=collection->databaseName)
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-    }
-
-    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1)
-    {
-        int newPort = arg1.toInt();
-        if(newPort !=collection->databasePort)
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-    }
-
-    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_UserName_textChanged(const QString &arg1)
-    {
-        if(arg1 !=collection->databaseUserName)
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-    }
-
-    void MainWindow::on_Settings_lineEdit_DataMode_Hosted_Password_textChanged(const QString &arg1)
-    {
-        if(arg1 !=collection->databasePassword)
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-    }
