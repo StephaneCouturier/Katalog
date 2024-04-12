@@ -3456,6 +3456,37 @@ void MainWindow::importStatistics()
     query.prepare(querySQL);
     query.exec();
 
+    //Update Storage file stats from Catalogs when snapshots
+    querySQL = QLatin1String(R"(
+                    UPDATE statistics_device AS sd_storage
+                    SET
+                        device_file_count = (
+                            SELECT SUM(sd_catalog.device_file_count)
+                            FROM statistics_device AS sd_catalog
+                            JOIN device AS d_catalog ON sd_catalog.device_id = d_catalog.device_id
+                            WHERE
+                                sd_catalog.date_time = sd_storage.date_time AND
+                                sd_catalog.record_type = 'snapshot' AND
+                                d_catalog.device_type = 'Catalog' AND
+                                d_catalog.device_parent_id = sd_storage.device_id
+                        ),
+                        device_total_file_size = (
+                            SELECT SUM(sd_catalog.device_total_file_size)
+                            FROM statistics_device AS sd_catalog
+                            JOIN device AS d_catalog ON sd_catalog.device_id = d_catalog.device_id
+                            WHERE
+                                sd_catalog.date_time = sd_storage.date_time AND
+                                sd_catalog.record_type = 'snapshot' AND
+                                d_catalog.device_type = 'Catalog' AND
+                                d_catalog.device_parent_id = sd_storage.device_id
+                        )
+                    WHERE
+                        sd_storage.record_type = 'snapshot' AND
+                        sd_storage.device_type = 'Storage';
+                )");
+    query.prepare(querySQL);
+    query.exec();
+
     collection->saveStatiticsToFile();
 }
 
