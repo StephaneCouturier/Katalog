@@ -36,7 +36,6 @@ ExploreTreeModel::ExploreTreeModel(QObject *parent)
     QList<QVariant> rootData;
     rootData << tr("Folder") << tr("No of items") << tr("Full path");
     rootItem = new ExploreTreeItem(rootData);
-    setupModelData(rootItem);
 }
 
 ExploreTreeModel::~ExploreTreeModel()
@@ -150,8 +149,6 @@ void ExploreTreeModel::setCatalog(int newCatalogID, QString newCatalogSourcePath
 
     int pos = newCatalogSourcePath.lastIndexOf(QChar('/'));
     catalogSourcePathRoot = newCatalogSourcePath.left(pos);
-
-    setupModelData(rootItem);
 }
 
 void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
@@ -160,19 +157,16 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         parents << parent;
 
         QSqlQuery query;
-
         QString querySQL = QLatin1String(R"(
-                                SELECT DISTINCT (REPLACE(folder_path, :catalogSourcePathRoot, '')) AS file_path,
-                                       folder_path AS full_path
+                                SELECT DISTINCT (REPLACE(folder_path, :catalogSourcePathRoot, '')) AS file_path, folder_path AS full_path
                                 FROM  folder
                                 WHERE folder_catalog_id=:folder_catalog_id
-                                ORDER BY folder_path ASC
+                                ORDER BY full_path ASC
                             )");
         query.prepare(querySQL);
         query.bindValue(":folder_catalog_id", catalogID);
         query.bindValue(":catalogSourcePathRoot", catalogSourcePathRoot);
         query.exec();
-
 
         int idPath = query.record().indexOf("file_path");
         int idIdx  = query.record().indexOf("full_path");

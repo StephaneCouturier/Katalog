@@ -677,11 +677,11 @@ void Catalog::loadFoldersToTable()
         QSqlQuery insertFolderQuery;
         QString insertFolderSQL = QLatin1String(R"(
                                         INSERT INTO folder(
-                                                folder_catalog_name,
+                                                folder_catalog_id,
                                                 folder_path
                                                             )
                                         VALUES(
-                                                :folder_catalog_name,
+                                                :folder_catalog_id,
                                                 :folder_path)
                                         )");
 
@@ -697,10 +697,10 @@ void Catalog::loadFoldersToTable()
             QSqlQuery deleteQuery;
             QString deleteQuerySQL = QLatin1String(R"(
                                 DELETE FROM folder
-                                WHERE folder_catalog_name=:folder_catalog_name
+                                WHERE folder_catalog_id=:folder_catalog_id
                                             )");
             deleteQuery.prepare(deleteQuerySQL);
-            deleteQuery.bindValue(":folder_catalog_name",name);
+            deleteQuery.bindValue(":folder_catalog_id", ID);
             deleteQuery.exec();
 
             //Process each line of the file
@@ -717,8 +717,8 @@ void Catalog::loadFoldersToTable()
 
                 //Load folder into the database
                     insertFolderQuery.prepare(insertFolderSQL);
-                    insertFolderQuery.bindValue(":folder_catalog_name",lineFieldList[0]);
-                    insertFolderQuery.bindValue(":folder_path",        lineFieldList[1]);
+                    insertFolderQuery.bindValue(":folder_catalog_id", lineFieldList[0]);
+                    insertFolderQuery.bindValue(":folder_path",       lineFieldList[1]);
                     insertFolderQuery.exec();
             }
 

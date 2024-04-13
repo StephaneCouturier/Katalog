@@ -59,13 +59,13 @@ public:
     QString catalogSourcePath;
     QString catalogSourcePathRoot;
 
+    ExploreTreeItem *rootItem;
+
     void setCatalog(int newCatalogID, QString newCatalogSourcePath);
+    void setupModelData(ExploreTreeItem *parent);
 
 private:
-    void setupModelData(ExploreTreeItem *parent);
     int findNode(unsigned int& hash, const QList<ExploreTreeItem*>& tList);
-
-    ExploreTreeItem *rootItem;
 
 };
 #endif // EXPLORETREEMODEL_H

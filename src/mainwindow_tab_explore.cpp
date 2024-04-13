@@ -512,6 +512,7 @@
         //Prepare model
             ExploreTreeModel *exploreTreeModel = new ExploreTreeModel();
             exploreTreeModel->setCatalog(exploreDevice->externalID, exploreDevice->path);
+            exploreTreeModel->setupModelData(exploreTreeModel->rootItem);
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);

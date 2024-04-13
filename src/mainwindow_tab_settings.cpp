@@ -426,7 +426,6 @@
         //Verify Collection version and trigger migration to v2.0
         QFile statitsticsFile(collection->statisticsDeviceFilePath);
         if (statitsticsFile.exists()){
-            qDebug()<<"DEBUG statitsticsFile: " << &statitsticsFile;
             collection->version = "2.0";
         }
         else{
