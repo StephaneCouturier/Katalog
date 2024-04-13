@@ -3176,6 +3176,9 @@ void MainWindow::migrateCollection()
     //Assignments of catalogs to virutal devices
         importVirtualAssignmentsToDevices();
 
+    //Convert .folders.idx Files
+        convertFoldersIdxFiles();
+
     //Close procedure
     loadDevicesView();
     loadDevicesTreeToModel("Filters");
@@ -3951,6 +3954,63 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
         }
     }
     virtualStorageCatalogFile.close();
+}
+
+void MainWindow::convertFoldersIdxFiles()
+{//Convert catalog folder.idx files
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                            SELECT device_id, device_external_id
+                            FROM device
+                            WHERE device_id IN (
+                                SELECT MIN(device_id)
+                                FROM device
+                                WHERE device_type = 'Catalog'
+                                GROUP BY device_external_id
+                            )
+                            ORDER BY device_external_id;
+                        )");
+    query.prepare(querySQL);
+    query.exec();
+
+    while(query.next()){
+        Device tempDevice;
+        tempDevice.ID = query.value(0).toInt();
+        tempDevice.loadDevice();
+
+        QFileInfo fileInfo(tempDevice.catalog->filePath);
+        QString fileNameWithOutExtension = fileInfo.baseName();
+        QString fileFolder = fileInfo.absolutePath();
+        QString folderIdxFilePath = fileFolder + "/" + fileNameWithOutExtension + ".folders.idx";
+        QFile folderIdxFile(folderIdxFilePath);
+
+        if (folderIdxFile.exists()){
+
+            QFile file(folderIdxFilePath);
+
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QTextStream in(&file);
+                QStringList lines = in.readAll().split('\n');
+                file.close();
+
+                if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+                    QTextStream out(&file);
+
+                    foreach (const QString &line, lines) {
+                        if (!line.isEmpty()) {
+                            QStringList lineParts = line.split('\t');
+                            if (lineParts.size() >= 2) {
+                                QString secondValue = lineParts[1];
+                                out << tempDevice.externalID << "\t" << secondValue << "\n";
+                            }
+                        }
+                    }
+
+                    file.close();
+                }
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------------------

@@ -294,6 +294,7 @@ class MainWindow : public QMainWindow
             void loadVirtualStorageFileToTable();
             void loadVirtualStorageCatalogFileToTable();
             void importVirtualAssignmentsToDevices();
+            void convertFoldersIdxFiles();
 
         //TAB: Statistics
             QStringList typeOfData;
