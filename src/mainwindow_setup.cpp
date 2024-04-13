@@ -421,7 +421,7 @@
 
         //Devices
             ui->Devices_pushButton_TreeExpandCollapse->hide();
-            ui->Devices_widget_Import->hide();
+            ui->Settings_widget_Import->hide();
 
             //Catalogs
                 //DEV: preparing catalog-device relation

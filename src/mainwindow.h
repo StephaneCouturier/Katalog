@@ -275,12 +275,9 @@ class MainWindow : public QMainWindow
 
             void updateNumbers();
             void updateAllNumbers();
-            void convertDeviceCatalogFile();
-            void importStorageCatalogLinks();
             void shiftIDsInDeviceTable(int shiftAmount);
             void loadParentsList();
             void recordAllDeviceStats(QDateTime dateTime);
-            QList<int> verifyStorageWithOutDevice();
             void updateAllDeviceActive();
             void recordDevicesSnapshot();
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
@@ -297,8 +294,6 @@ class MainWindow : public QMainWindow
             void loadVirtualStorageFileToTable();
             void loadVirtualStorageCatalogFileToTable();
             void importVirtualAssignmentsToDevices();
-
-            void importStorageCatalogPathsToDevice();
 
         //TAB: Statistics
             QStringList typeOfData;

@@ -3154,6 +3154,9 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 
 void MainWindow::migrateCollection()
 {
+    // Start animation while opening
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     //Devices
         //Import Virtual devices in Physical group from locations
         importVirtualToDevices();
@@ -3170,14 +3173,8 @@ void MainWindow::migrateCollection()
     //Statistics
         importStatistics();
 
-    //Assignments
+    //Assignments of catalogs to virutal devices
         importVirtualAssignmentsToDevices();
-
-    //Misc
-        // importStorageCatalogPathsToDevice();
-        // convertDeviceCatalogFile();
-        // importStorageCatalogLinks();
-        // verifyStorageWithOutDevice();
 
     //Close procedure
     loadDevicesView();
@@ -3303,9 +3300,6 @@ void MainWindow::importCatalogsToDevices()
 
 void MainWindow::generateAndAssociateCatalogMissingIDs()
 {
-    // Start animation while opening
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
     //Get catalogs with missing ID
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
@@ -3957,211 +3951,6 @@ void MainWindow::loadVirtualStorageCatalogFileToTable()
         }
     }
     virtualStorageCatalogFile.close();
-}
-//--------------------------------------------------------------------------
-void MainWindow::importStorageCatalogPathsToDevice()
-{//Move Storage or Catalog Path to Device table
-
-    //Retrieve device hierarchy
-    QSqlQuery query;
-    QString querySQL;
-
-    querySQL = QLatin1String(R"(
-                    SELECT  device_id
-                    FROM  device
-                )");
-
-    query.prepare(querySQL);
-    query.exec();
-
-    //Update each device
-    while (query.next()) {
-        Device tempDevice;
-        tempDevice.ID = query.value(0).toInt();
-        tempDevice.loadDevice();
-
-        //Load storage values
-        if(tempDevice.type == "Storage"){
-            tempDevice.path = tempDevice.storage->path;
-            tempDevice.saveDevice();
-        }
-
-        //Load catalog values
-        if(tempDevice.type == "Catalog"){
-            //Get path from file
-            QFile catalogFile(tempDevice.catalog->filePath);
-            // Get file info
-            QFileInfo catalogFileInfo(catalogFile);
-
-            // Verify that the file can be opened
-            if(catalogFile.open(QIODevice::ReadOnly)) {
-                QTextStream textStreamCatalogs(&catalogFile);
-                QString line = textStreamCatalogs.readLine();
-                tempDevice.path = line.right(line.size() - line.indexOf(">") - 1);;
-                tempDevice.saveDevice();
-            }
-        }
-    }
-
-    //save new data
-    collection->saveDeviceTableToFile();
-
-    //reLoad
-    loadDevicesView();
-
-}
-
-void MainWindow::convertDeviceCatalogFile() {
-
-    QSqlQuery query;
-    QString querySQL;
-
-    //Update Device type
-    //Save table to update columns and reload
-    collection->saveDeviceTableToFile();
-    collection->loadDeviceFileToTable();
-
-    //Update type
-    querySQL = QLatin1String(R"(
-                            UPDATE device
-                            SET device_type="Virtual"
-                            WHERE device_type=""
-                        )");
-    query.prepare(querySQL);
-    query.exec();
-
-    collection->saveDeviceTableToFile();
-    collection->loadDeviceFileToTable();
-    loadDevicesView();
-
-    //Insert Catalog assignments from device_catalog
-    querySQL = QLatin1String(R"(
-                        INSERT INTO device(
-                                        device_id,
-                                        device_parent_id,
-                                        device_name,
-                                        device_type,
-                                        device_external_id )
-                        VALUES(         :device_id,
-                                        :device_parent_id,
-                                        :device_name,
-                                        :device_type,
-                                        :device_external_id )
-                    )");
-    query.prepare(querySQL);
-
-    //Define storage file and prepare stream
-    QFile deviceCatalogFile(collection->deviceCatalogFilePath);
-    QTextStream textStream(&deviceCatalogFile);
-
-    //Open file or return information
-    if(!deviceCatalogFile.open(QIODevice::ReadOnly)) {
-        // Create it, if it does not exist
-        QFile newDeviceCatalogFile(collection->deviceCatalogFilePath);
-        if(!newDeviceCatalogFile.open(QIODevice::ReadOnly)) {
-            if (newDeviceCatalogFile.open(QFile::WriteOnly | QFile::Text)) {
-                QTextStream stream(&newDeviceCatalogFile);
-                stream << "ID"            << "\t"
-                       << "Catalog Name"          << "\t"
-                       << "Directory Path"          << "\t"
-                       << '\n';
-                newDeviceCatalogFile.close();
-            }
-        }
-    }
-    //Load Device device lines to table
-    while (true)
-    {
-        QString line = textStream.readLine();
-        if (line.isNull())
-            break;
-        else if (line.left(2)!="ID"){//skip the first line with headers
-
-            //Generate new ID
-            QSqlQuery queryID;
-            QString queryIDSQL = QLatin1String(R"(
-                            SELECT MAX(device_id)
-                            FROM device
-                        )");
-            queryID.prepare(queryIDSQL);
-            queryID.exec();
-            queryID.next();
-            int newID=queryID.value(0).toInt()+1;
-
-            //Split the string with tabulation into a list
-            QStringList fieldList = line.split('\t');
-
-            query.bindValue(":device_id",newID);
-            query.bindValue(":device_parent_id",fieldList[0]);
-            query.bindValue(":device_name",fieldList[1]);
-            query.bindValue(":device_type","Catalog");
-            query.bindValue(":device_external_id",fieldList[1]);
-            query.exec();
-        }
-    }
-    deviceCatalogFile.close();
-    //Save file
-    collection->saveDeviceTableToFile();
-    loadDevicesView();
-
-}
-
-void MainWindow::importStorageCatalogLinks() {
-
-    QSqlQuery query;
-    QString querySQL;
-    querySQL = QLatin1String(R"(
-                            SELECT catalog_storage,
-                                    catalog_name,
-                                    storage.storage_id,
-                                    device.device_id
-                            FROM catalog
-                            JOIN storage ON storage.storage_name = catalog.catalog_storage
-                            JOIN device ON storage.storage_id = device.device_external_id
-                         )");
-    query.prepare(querySQL);
-    query.exec();
-
-    while (query.next()) {
-        QString storage_name = query.value(0).toString();
-        QString catalog_name = query.value(1).toString();
-        QString storage_id   = query.value(2).toString();
-        int device_id   = query.value(3).toInt();
-
-        activeDevice->name = catalog_name;
-        activeDevice->catalog->loadCatalog();
-
-        // assignCatalogToDevice(catalog_name,device_id);
-
-        collection->saveDeviceTableToFile();
-        loadDevicesView();
-    }
-}
-
-QList<int> MainWindow::verifyStorageWithOutDevice()
-{
-    QList<int> gaps;
-    QSqlQuery query;
-    QString querySQL;
-    querySQL = QLatin1String(R"(
-                            SELECT storage_id
-                            FROM storage
-                            WHERE storage_id NOT IN(
-                                SELECT device_external_id
-                                FROM device
-                                WHERE device_type = 'Storage'
-                            )
-                         )");
-
-    query.prepare(querySQL);
-    query.exec();
-
-    while (query.next()) {
-        gaps << query.value(0).toInt();
-        qDebug()<< "verifyStorageWithOutDevice - gap:" << query.value(0).toInt();
-    }
-
-    return gaps;
 }
 
 //--------------------------------------------------------------------------

@@ -19,6 +19,12 @@
     <height>0</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Katalog</string>
   </property>
@@ -172,7 +178,7 @@
                <number>0</number>
               </property>
               <item>
-               <layout class="QGridLayout" name="gridLayout_2">
+               <layout class="QGridLayout" name="Filters_gridLayout_2">
                 <item row="0" column="0">
                  <widget class="QLabel" name="Filters_label_Catalog_2">
                   <property name="minimumSize">
@@ -306,7 +312,7 @@
                <number>0</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_12">
+               <layout class="QHBoxLayout" name="Filters_horizontalLayout_12">
                 <item>
                  <widget class="QLabel" name="Filters_label_DeviceTree">
                   <property name="minimumSize">
@@ -324,7 +330,7 @@
                  </widget>
                 </item>
                 <item>
-                 <spacer name="fihorizontalSpacer_9">
+                 <spacer name="Filters_horizontalSpacer_9">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -392,12 +398,12 @@
             </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_3">
+            <layout class="QVBoxLayout" name="Filters_verticalLayout_Separate_3">
              <property name="topMargin">
               <number>6</number>
              </property>
              <item>
-              <widget class="Line" name="Search_line_SeparateResults_3">
+              <widget class="Line" name="Filters_line_SeparateResults_3">
                <property name="lineWidth">
                 <number>1</number>
                </property>
@@ -431,12 +437,12 @@
             </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="Search_verticalLayout_Separate_2">
+            <layout class="QVBoxLayout" name="Filters_verticalLayout_Separate_2">
              <property name="topMargin">
               <number>6</number>
              </property>
              <item>
-              <widget class="Line" name="Search_line_SeparateResults_2">
+              <widget class="Line" name="Filters_line_SeparateResults_2">
                <property name="lineWidth">
                 <number>1</number>
                </property>
@@ -482,7 +488,7 @@
                <number>0</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="Create_horizontalLayout_Input_2">
+               <layout class="QHBoxLayout" name="Filters_horizontalLayout_Input_2">
                 <item>
                  <widget class="QLineEdit" name="Filters_lineEdit_SeletedDirectory">
                   <property name="enabled">
@@ -568,7 +574,7 @@
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <layout class="QHBoxLayout" name="Filters_horizontalLayout_11">
              <item>
               <widget class="QLabel" name="Filters_label_Selection">
                <property name="font">
@@ -583,7 +589,7 @@
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_3">
+              <spacer name="Filters_horizontalSpacer_3">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1135,9 +1141,6 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <layout class="QFormLayout" name="formLayout_3"/>
-                 </item>
-                 <item>
                   <widget class="QWidget" name="Search_widget_FileNameCriteria" native="true">
                    <layout class="QVBoxLayout" name="Search_verticalLayout_FileNameCriteriaMain">
                     <property name="spacing">
@@ -1679,7 +1682,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_8">
+                    <spacer name="Search_horizontalSpacer_24">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -3410,7 +3413,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <layout class="QHBoxLayout" name="Search_horizontalLayout_FileResults">
                   <item>
-                   <spacer name="horizontalSpacer_7">
+                   <spacer name="Search_horizontalSpacer_25">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
@@ -3878,7 +3881,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_16">
             <item row="4" column="0">
-             <layout class="QGridLayout" name="gridLayout_15">
+             <layout class="QGridLayout" name="Devices_gridLayout_15">
               <item row="0" column="6">
                <widget class="Line" name="Devices_line_separateButtons">
                 <property name="orientation">
@@ -3910,7 +3913,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item row="0" column="4">
-               <spacer name="horizontalSpacer_10">
+               <spacer name="Devices_horizontalSpacer_10">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -3965,7 +3968,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item row="0" column="9">
-               <spacer name="horizontalSpacer_9">
+               <spacer name="Devices_horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -4247,7 +4250,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <layout class="QHBoxLayout" name="Devices_horizontalLayout_16">
                  <item>
                   <widget class="QLabel" name="Devices_label_ItemEdition">
                    <property name="text">
@@ -4256,7 +4259,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
-                  <spacer name="horizontalSpacer_13">
+                  <spacer name="Devices_horizontalSpacer_13">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -4368,7 +4371,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QGridLayout" name="gridLayout_5">
+                   <layout class="QGridLayout" name="Devices_gridLayout_5">
                     <item row="0" column="1">
                      <widget class="QLineEdit" name="Devices_lineEdit_Path"/>
                     </item>
@@ -4410,7 +4413,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item row="1" column="0">
-                   <layout class="QGridLayout" name="gridLayout_18">
+                   <layout class="QGridLayout" name="Devices_gridLayout_18">
                     <item row="0" column="0">
                      <widget class="QLabel" name="Catalogs_label_FileType">
                       <property name="minimumSize">
@@ -4473,7 +4476,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item row="0" column="2">
-                     <spacer name="horizontalSpacer_14">
+                     <spacer name="Devices_horizontalSpacer_14">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -4546,11 +4549,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item row="2" column="0">
-                   <layout class="QGridLayout" name="gridLayout_21">
+                   <layout class="QGridLayout" name="Devices_gridLayout_21">
                     <item row="0" column="0">
-                     <layout class="QFormLayout" name="formLayout">
+                     <layout class="QFormLayout" name="Devices_formLayout">
                       <item row="0" column="0">
-                       <widget class="QLabel" name="label_3">
+                       <widget class="QLabel" name="Devices_label_ID">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4566,7 +4569,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_ID"/>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label">
+                       <widget class="QLabel" name="Devices_label_Name">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4586,7 +4589,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item row="2" column="0">
-                       <widget class="QLabel" name="label_5">
+                       <widget class="QLabel" name="Devices_label_Path">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4606,7 +4609,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item row="9" column="0">
-                       <widget class="QLabel" name="label_14">
+                       <widget class="QLabel" name="Devices_label_Comment1">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4622,7 +4625,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_ContentType"/>
                       </item>
                       <item row="10" column="0">
-                       <widget class="QLabel" name="label_15">
+                       <widget class="QLabel" name="Devices_label_Comment2">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4638,7 +4641,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Container"/>
                       </item>
                       <item row="11" column="0">
-                       <widget class="QLabel" name="label_16">
+                       <widget class="QLabel" name="Devices_label_Comment3">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4654,7 +4657,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment"/>
                       </item>
                       <item row="12" column="0">
-                       <spacer name="horizontalSpacer_2">
+                       <spacer name="Devices_horizontalSpacer_3">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -4667,12 +4670,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </spacer>
                       </item>
                       <item row="13" column="1">
-                       <layout class="QHBoxLayout" name="horizontalLayout_13"/>
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_13"/>
                       </item>
                      </layout>
                     </item>
                     <item row="0" column="1">
-                     <spacer name="horizontalSpacer_6">
+                     <spacer name="Devices_horizontalSpacer_6">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -4688,9 +4691,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </spacer>
                     </item>
                     <item row="0" column="2">
-                     <layout class="QFormLayout" name="formLayout_2">
+                     <layout class="QFormLayout" name="Devices_formLayout_2">
                       <item row="0" column="0">
-                       <widget class="QLabel" name="label_2">
+                       <widget class="QLabel" name="Devices_label_Type">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4712,7 +4715,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Type"/>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label_10">
+                       <widget class="QLabel" name="Devices_label_10">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4734,7 +4737,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_BrandModel"/>
                       </item>
                       <item row="2" column="0">
-                       <widget class="QLabel" name="label_12">
+                       <widget class="QLabel" name="Devices_label_12">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4756,7 +4759,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_SerialNumber"/>
                       </item>
                       <item row="3" column="0">
-                       <widget class="QLabel" name="label_13">
+                       <widget class="QLabel" name="Devices_label_BuildDate">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4778,7 +4781,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_BuildDate"/>
                       </item>
                       <item row="4" column="0">
-                       <widget class="QLabel" name="label_6">
+                       <widget class="QLabel" name="Devices_label_Label">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4800,7 +4803,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Label"/>
                       </item>
                       <item row="5" column="0">
-                       <widget class="QLabel" name="label_7">
+                       <widget class="QLabel" name="Devices_label_FileSystem">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4822,7 +4825,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_FileSystem"/>
                       </item>
                       <item row="6" column="0">
-                       <spacer name="verticalSpacer_3">
+                       <spacer name="Devices_verticalSpacer_3">
                         <property name="orientation">
                          <enum>Qt::Vertical</enum>
                         </property>
@@ -4838,14 +4841,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </spacer>
                       </item>
                       <item row="7" column="0">
-                       <widget class="QLabel" name="label_8">
+                       <widget class="QLabel" name="Devices_label_TotalSpace">
                         <property name="text">
                          <string>Total Space</string>
                         </property>
                        </widget>
                       </item>
                       <item row="7" column="1">
-                       <layout class="QHBoxLayout" name="horizontalLayout_9">
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_9">
                         <item>
                          <widget class="QLineEdit" name="Storage_lineEdit_Panel_Total">
                           <property name="maximumSize">
@@ -4878,14 +4881,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </layout>
                       </item>
                       <item row="8" column="0">
-                       <widget class="QLabel" name="label_9">
+                       <widget class="QLabel" name="Devices_label_9">
                         <property name="text">
                          <string>Free Space</string>
                         </property>
                        </widget>
                       </item>
                       <item row="8" column="1">
-                       <layout class="QHBoxLayout" name="horizontalLayout_10">
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_10">
                         <item>
                          <widget class="QLineEdit" name="Storage_lineEdit_Panel_Free">
                           <property name="maximumSize">
@@ -4920,7 +4923,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </layout>
                     </item>
                     <item row="0" column="4">
-                     <layout class="QVBoxLayout" name="verticalLayout_27">
+                     <layout class="QVBoxLayout" name="Devices_verticalLayout_27">
                       <item>
                        <widget class="QWidget" name="Storage_widget_Picture_2" native="true">
                         <property name="enabled">
@@ -4940,7 +4943,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </layout>
                     </item>
                     <item row="0" column="3">
-                     <spacer name="horizontalSpacer_12">
+                     <spacer name="Devices_horizontalSpacer_12">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -4958,7 +4961,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item row="1" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_18">
+                   <layout class="QHBoxLayout" name="Devices_horizontalLayout_18">
                     <item>
                      <widget class="QLabel" name="Devices_label_ItemEditionPath_6">
                       <property name="minimumSize">
@@ -5395,7 +5398,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <layout class="QVBoxLayout" name="Devices_verticalLayout_5">
                    <item>
                     <widget class="QCheckBox" name="Devices_checkBox_DisplayCatalogs">
                      <property name="minimumSize">
@@ -7034,7 +7037,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QListView" name="Tags_listView_ExistingTags"/>
               </item>
               <item row="8" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout">
+               <layout class="QHBoxLayout" name="Tags_horizontalLayout">
                 <item>
                  <widget class="QPushButton" name="Tags_pushButton_OpenTagsFile">
                   <property name="maximumSize">
@@ -7654,7 +7657,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </layout>
                </item>
                <item row="2" column="0">
-                <spacer name="verticalSpacer">
+                <spacer name="Settings_verticalSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -7679,7 +7682,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                   <layout class="QVBoxLayout" name="Settings_verticalLayout_18">
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_4">
                       <property name="font">
@@ -7708,7 +7711,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </font>
                       </property>
                       <property name="text">
-                       <string>The collection data is saved to .idx or .csv files locally on the computer. The database is in Memory only (RAM).</string>
+                       <string>The collection data is saved to .idx or .csv files locally on the computer.</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="Settings_label_CurrentFolder_6">
+                      <property name="minimumSize">
+                       <size>
+                        <width>125</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>The database is in Memory only (RAM).</string>
                       </property>
                      </widget>
                     </item>
@@ -7815,13 +7837,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QWidget" name="Devices_widget_Import" native="true">
+                   <widget class="QWidget" name="Settings_widget_Import" native="true">
                     <layout class="QHBoxLayout" name="horizontalLayout_17">
                      <property name="leftMargin">
                       <number>10</number>
                      </property>
                      <item>
-                      <layout class="QGridLayout" name="gridLayout_9">
+                      <layout class="QGridLayout" name="Settings_gridLayout_9">
                        <item row="4" column="1">
                         <widget class="QCheckBox" name="Settings_checkBox_LoadLastCatalog">
                          <property name="enabled">
@@ -7863,45 +7885,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                           <string>Settings</string>
                          </property>
                         </widget>
-                       </item>
-                       <item row="5" column="1">
-                        <widget class="QPushButton" name="Devices_pushButton_ImportV1">
-                         <property name="text">
-                          <string>Import collection from v1.22</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="5" column="0">
-                        <widget class="QLabel" name="Devices_label_ItemEditionPath_2">
-                         <property name="minimumSize">
-                          <size>
-                           <width>100</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>100</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
-                         <property name="text">
-                          <string>Import</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="5" column="2">
-                        <spacer name="Settings_horizontalSpacer_18">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>40</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
                        </item>
                        <item row="3" column="1">
                         <widget class="QCheckBox" name="Settings_checkBox_PreloadCatalogs">
@@ -7945,6 +7928,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </property>
                         </widget>
                        </item>
+                       <item row="4" column="2">
+                        <spacer name="Settings_horizontalSpacer_18">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
                       </layout>
                      </item>
                     </layout>
@@ -7963,7 +7959,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_9">
                       <property name="font">
@@ -8031,7 +8027,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_3">
                     <item>
                      <spacer name="Settings_horizontalSpacer_16">
                       <property name="orientation">
@@ -8130,7 +8126,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_21">
                     <item>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_13">
                       <property name="minimumSize">
@@ -8356,7 +8352,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>150</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
