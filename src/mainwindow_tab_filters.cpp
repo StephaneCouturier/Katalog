@@ -175,7 +175,7 @@
                                  selectedDevice->updateDevice("update",
                                                               collection->databaseMode,
                                                               false,
-                                                              collection->collectionFolder,
+                                                              collection->folder,
                                                               true),
                                  "update");
                 collection->saveDeviceTableToFile();
@@ -213,7 +213,7 @@
                                  selectedDevice->updateDevice("update",
                                                               collection->databaseMode,
                                                               false,
-                                                              collection->collectionFolder,
+                                                              collection->folder,
                                                               true),
                                  "update");
                 collection->saveDeviceTableToFile();

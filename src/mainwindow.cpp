@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
-        releaseDate     = "2024-03-31";
+        releaseDate     = "2024-04-13";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -146,10 +146,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 openCatalogToExplore();
             }
 
-        //Preload last selected catalogs contents to memory
-            if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
-                preloadCatalogs();
-            }
+    //Preload last selected catalogs contents to memory
+        if(ui->Settings_checkBox_PreloadCatalogs->isChecked()==true){
+            preloadCatalogs();
+        }
 
     //Setup tabs
 
@@ -172,7 +172,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Setup tab: Settings
             //Load path of last collection used
-            ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
             //Apply databaseMode in Settings tab
             QMap<QString, QString> databaseModeTranslations = {
@@ -307,7 +307,7 @@ msgBox.setWindowTitle("Katalog");
 msgBox.setText(tr("anyVariable")+": <br/>" + QVariant(anyVariable).toString());
 msgBox.setText(QCoreApplication::translate("MainWindow",
                                     "Text<br/>"
-                                    "<br/> Text with first parameter<br/><b>%2</b><br/>"
+                                    "<br/> Text with first parameter<br/><b>%1</b><br/>"
                                     "<br/> Text with first parameter<br/><b>%2</b><br/>"
                                     ).arg( parameter1, tempText.toUtf8() ));
 msgBox.setIcon(QMessageBox::Information);

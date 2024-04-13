@@ -227,7 +227,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
                                                         true,
-                                                        collection->collectionFolder,
+                                                        collection->folder,
                                                         true),
                              "update");
             //Refresh
@@ -298,7 +298,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
                                                         true,
-                                                        collection->collectionFolder,
+                                                        collection->folder,
                                                         true),
                              "list");
             collection->saveDeviceTableToFile();
@@ -351,7 +351,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
                                                         true,
-                                                        collection->collectionFolder,
+                                                        collection->folder,
                                                         true),
                              "update");
             collection->saveDeviceTableToFile();
@@ -450,7 +450,7 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
                      activeDevice->updateDevice("update",
                                                 collection->databaseMode,
                                                 true,
-                                                collection->collectionFolder,
+                                                collection->folder,
                                                 false),
                      "update");
     collection->saveDeviceTableToFile();
@@ -2282,7 +2282,7 @@ void MainWindow::loadStorageList()
 //--------------------------------------------------------------------------
 void MainWindow::displayStoragePicture()
 {//Load and display the picture of the storage device
-    QString picturePath = collection->collectionFolder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";
+    QString picturePath = collection->folder + "/images/" + QString::number(activeDevice->storage->ID) + ".jpg";
     QPixmap pic(picturePath);
     QFile file(picturePath);
     if(file.exists()){
@@ -2451,7 +2451,7 @@ void MainWindow::saveCatalogChanges()
                              activeDevice->updateDevice("update",
                                                         collection->databaseMode,
                                                         true,
-                                                        collection->collectionFolder,
+                                                        collection->folder,
                                                         true),
                              "update");
         }
@@ -2530,7 +2530,7 @@ void MainWindow::importFromVVV()
     //Select file
 
     //Get path of the file to import
-    QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"), collection->collectionFolder);
+    QString sourceFilePath = QFileDialog::getOpenFileName(this, tr("Select the csv file to be imported"), collection->folder);
 
     //Stop if no path is selected
     if ( sourceFilePath=="" ) return;
@@ -2683,7 +2683,7 @@ void MainWindow::importFromVVV()
 
         //Get info for the new catalog
         importedDevice.catalog->name = importedDevice.name;
-        importedDevice.catalog->filePath = collection->collectionFolder + "/" + importedDevice.name + ".idx";
+        importedDevice.catalog->filePath = collection->folder + "/" + importedDevice.name + ".idx";
         importedDevice.catalog->sourcePath = virtualCatalogFolder;
         importedDevice.catalog->includeHidden = 1;
         importedDevice.catalog->includeSymblinks = 0;
@@ -2769,7 +2769,7 @@ void MainWindow::importFromVVV()
         //Export the folder file
 
         //Prepare the fodlers file path
-        QFile fileFolderOut(collection->collectionFolder + "/" + importedDevice.name + ".folders.idx");
+        QFile fileFolderOut(collection->folder + "/" + importedDevice.name + ".folders.idx");
 
         //Prepare the stream and file headers
         QTextStream folderOut(&fileFolderOut);
@@ -3071,7 +3071,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
             QList<qint64> list = loopDevice.updateDevice("update",
                                                          collection->databaseMode,
                                                          false,
-                                                         collection->collectionFolder,
+                                                         collection->folder,
                                                          true);
             if ( showEachCatalogUpdateSummary == true ){
                 reportAllUpdates(&loopDevice, list, "update");
@@ -3119,7 +3119,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
                      activeDevice->updateDevice("update",
                                                 collection->databaseMode,
                                                 false,
-                                                collection->collectionFolder,
+                                                collection->folder,
                                                 true),
                      "update");
     collection->saveDeviceTableToFile();
@@ -3149,36 +3149,29 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
 //--- UI -----------------------------------------------
 void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 {
-    //Verify version (Memory mode only)
-    // detect the version	collection.csv file ?
-    // new way to detect 2.0 ?  (so if not 2.x, > 1.x)	do nothing
-    // detect 1.22 for sure	Import script
-    // Detect 1.xx not 1.22	The collection was created with a version older than 1.22 > it is necessary to use 1.22 first to update the collection before using 2.0
+    migrateCollection();
+}
 
-    if(1==1){//for testability
+void MainWindow::migrateCollection()
+{
+    //Devices
+        //Import Virtual devices in Physical group from locations
+        importVirtualToDevices();
 
-        //Devices
+        //Create from storage
+        importStorageToDevices();
 
-            //Import Virtual
-            importVirtualToDevices();
+        //Create from catalog
+        importCatalogsToDevices();
 
-            //Create from storage
-            importStorageToDevices();
+        //Create Catalog IDs
+        generateAndAssociateCatalogMissingIDs();
 
-            //Create from catalog
-            importCatalogsToDevices();
+    //Statistics
+        importStatistics();
 
-            //Create Catalog IDs
-            generateAndAssociateCatalogMissingIDs();
-
-        //Statistics
-            importStatistics();
-
-        //Assignments
-            importVirtualAssignmentsToDevices();
-    }
-
-    //qDebug()<<query.lastError();
+    //Assignments
+        importVirtualAssignmentsToDevices();
 
     //Misc
         // importStorageCatalogPathsToDevice();
@@ -3194,7 +3187,7 @@ void MainWindow::on_Devices_pushButton_ImportV1_clicked()
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("Imported collection from v1.22."));
+    msgBox.setText(tr("Upgraded collection to v2.0."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
 }
@@ -3225,7 +3218,7 @@ void MainWindow::importVirtualToDevices()
 
 void MainWindow::importStorageToDevices()
 {
-    //create from storage
+    //Create from storage
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
                                     SELECT storage_id, storage_name, storage_path, storage_location, storage_total_space, storage_free_space
@@ -3666,7 +3659,7 @@ void MainWindow::loadStatisticsCatalogFileToTable()
 {// Load the contents of the statistics file into the database
 
     QString statisticsCatalogFilePath;
-    statisticsCatalogFilePath = collection->collectionFolder + "/statistics_catalog.csv";
+    statisticsCatalogFilePath = collection->folder + "/statistics_catalog.csv";
 
     //clear database table
     QSqlQuery deleteQuery;
@@ -3744,7 +3737,7 @@ void MainWindow::loadStatisticsStorageFileToTable()
 {// Load the contents of the storage statistics file into the database
 
     QString statisticsStorageFilePath;
-    statisticsStorageFilePath = collection->collectionFolder + "/statistics_storage.csv";
+    statisticsStorageFilePath = collection->folder + "/statistics_storage.csv";
 
     //clear database table
     QSqlQuery deleteQuery;
@@ -3825,7 +3818,7 @@ void MainWindow::loadStatisticsStorageFileToTable()
 void MainWindow::loadVirtualStorageFileToTable()
 {
     QString virtualStorageFilePath;
-    virtualStorageFilePath = collection->collectionFolder + "/virtual_storage.csv";
+    virtualStorageFilePath = collection->folder + "/virtual_storage.csv";
 
     QSqlQuery query;
     QString querySQL;
@@ -3903,7 +3896,7 @@ void MainWindow::loadVirtualStorageFileToTable()
 void MainWindow::loadVirtualStorageCatalogFileToTable()
 {
     QString virtualStorageCatalogFilePath;
-    virtualStorageCatalogFilePath = collection->collectionFolder + "/virtual_storage_catalog.csv";
+    virtualStorageCatalogFilePath = collection->folder + "/virtual_storage_catalog.csv";
 
     QSqlQuery query;
     QString querySQL;

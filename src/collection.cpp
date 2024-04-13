@@ -34,21 +34,47 @@
 
 void Collection::generateCollectionFilesPaths()
 {
-    searchHistoryFilePath       = collectionFolder + "/" + "search_history.csv";
-    storageFilePath             = collectionFolder + "/" + "storage.csv";
-    deviceFilePath              = collectionFolder + "/" + "device.csv";
+    searchHistoryFilePath       = folder + "/" + "search_history.csv";
+    storageFilePath             = folder + "/" + "storage.csv";
+    deviceFilePath              = folder + "/" + "device.csv";
     statisticsDeviceFileName    = "statistics.csv";
-    statisticsDeviceFilePath    = collectionFolder + "/" + statisticsDeviceFileName;
-    excludeFilePath             = collectionFolder + "/" + "exclude.csv";
+    statisticsDeviceFilePath    = folder + "/" + statisticsDeviceFileName;
+    excludeFilePath             = folder + "/" + "exclude.csv";
 
     //v1.22 files
-    deviceCatalogFilePath       = collectionFolder + "/" + "device_catalog.csv";
+    deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
     statisticsCatalogFileName   = "statistics_catalog.csv";
-    statisticsCatalogFilePath   = collectionFolder + "/" + statisticsCatalogFileName;
+    statisticsCatalogFilePath   = folder + "/" + statisticsCatalogFileName;
     statisticsStorageFileName   = "statistics_storage.csv";
-    statisticsStorageFilePath   = collectionFolder + "/" + statisticsStorageFileName;
+    statisticsStorageFilePath   = folder + "/" + statisticsStorageFileName;
 
 }
+
+void Collection::generateCollectionFiles()
+{
+    if(databaseMode=="Memory"){
+        QFile deviceFile(deviceFilePath);
+        if (!deviceFile.exists()) {
+            // Create the necessary directories
+            //QFileInfo fileInfo(deviceFile);
+            //QString path = fileInfo.absolutePath();
+            //QDir dir;
+            //if (!dir.mkpath(path)) {
+            //    qDebug() << "DEBUG Failed to create directories:";
+            //}
+        //}
+        //else {
+                //Create an empty CSV file
+                if (deviceFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                    //File opened successfully, no need to write anything
+                    deviceFile.close(); // Close the file after creating it
+                } else {
+                    qDebug() << "DEBUG Failed to create file:" << deviceFile.errorString();
+                }
+        }
+    }
+}
+
 //----------------------------------------------------------------------
 void Collection::loadAllCatalogFiles()
 {//Load all catalog files to memory
@@ -243,7 +269,7 @@ void Collection::loadCatalogFilesToTable()
         QStringList catalogFileExtensions;
         catalogFileExtensions << "*.idx";
 
-        QDirIterator iterator(collectionFolder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
+        QDirIterator iterator(folder, catalogFileExtensions, QDir::Files, QDirIterator::Subdirectories);
         while (iterator.hasNext()){
 
             // Iterate to the next file

@@ -222,9 +222,9 @@
             if (!settingsFile.exists())
                 firstRun =true;
 
-            collection->collectionFolder = settings.value("LastCollectionFolder").toString();
+            collection->folder = settings.value("LastCollectionFolder").toString();
 
-            if (collection->collectionFolder == "")
+            if (collection->folder == "")
                 firstRun =true;
 
             if (firstRun == true){
@@ -252,17 +252,17 @@
 
                 //Collection folder choice
                     //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-                    collection->collectionFolder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                                collection->collectionFolder,
+                    collection->folder = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+                                                                collection->folder,
                                                                 QFileDialog::ShowDirsOnly
                                                                 | QFileDialog::DontResolveSymlinks);
 
                     //set the location of the application as a default value if a folder was not provided
-                    if (collection->collectionFolder =="")
-                        collection->collectionFolder = QApplication::applicationDirPath();
+                    if (collection->folder =="")
+                        collection->folder = QApplication::applicationDirPath();
 
                     //save setting
-                    settings.setValue("LastCollectionFolder", collection->collectionFolder);
+                    settings.setValue("LastCollectionFolder", collection->folder);
 
                 //Go to Create screen
                 QMessageBox msgBox2;
@@ -279,7 +279,7 @@
 
             //Collection folder
             if (firstRun != true){
-                collection->collectionFolder = settings.value("LastCollectionFolder").toString();
+                collection->folder = settings.value("LastCollectionFolder").toString();
             }
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
@@ -413,19 +413,19 @@
 
         //Filter
 
+            //Search
+            //hide Krename if not linux
+            #ifndef Q_OS_LINUX
+                ui->Search_comboBox_SelectProcess->removeItem(2);
+            #endif
+
         //Devices
             ui->Devices_pushButton_TreeExpandCollapse->hide();
             ui->Devices_widget_Import->hide();
 
-        //Search
-            //hide Krename if not linux
-            #ifndef Q_OS_LINUX
-            ui->Search_comboBox_SelectProcess->removeItem(2);
-            #endif
-
-        //Catalogs
-            //DEV: preparing catalog-device relation
-            ui->Catalogs_checkBox_isFullDevice->hide();
+            //Catalogs
+                //DEV: preparing catalog-device relation
+                ui->Catalogs_checkBox_isFullDevice->hide();
 
         //Create
             //DEV: the option to include symblinks is not working yet

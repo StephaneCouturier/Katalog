@@ -36,7 +36,7 @@
 #include <QAbstractTableModel>
 #include <QFile>
 #include <QSqlQuery>
-#include <QSqlError>>
+#include <QSqlError>
 #include <QSqlRecord>
 #include <QMessageBox>
 #include <QCoreApplication>
@@ -48,7 +48,8 @@ class Collection
 public:
 
     //Main attributes
-    QString collectionFolder;
+    QString version;
+    QString folder;
     QString settingsFilePath;
 
     //Database management
@@ -74,6 +75,7 @@ public:
     QString excludeFilePath;
     QString tagsFilePath;
     void generateCollectionFilesPaths();
+    void generateCollectionFiles();
 
     //File loading
     void loadAllCatalogFiles();

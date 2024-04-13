@@ -286,6 +286,7 @@ class MainWindow : public QMainWindow
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
             //Migration 1.22 to 2.0
+            void migrateCollection();
             void importVirtualToDevices();
             void importStorageToDevices();
             void importCatalogsToDevices();

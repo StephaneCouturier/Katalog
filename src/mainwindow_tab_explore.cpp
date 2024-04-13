@@ -351,7 +351,7 @@
             if (file.exists()) {
                 //Open a dialog for the user to select the target folder
                 QString dir = QFileDialog::getExistingDirectory(this, tr("Select the folder to move this file"),
-                                                                collection->collectionFolder,
+                                                                collection->folder,
                                                                 QFileDialog::ShowDirsOnly
                                                                 | QFileDialog::DontResolveSymlinks);
 

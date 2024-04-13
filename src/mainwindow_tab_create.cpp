@@ -213,7 +213,7 @@
             newDevice->insertDevice();
 
             //Get inputs and set values of the newCatalog
-            newDevice->catalog->filePath = collection->collectionFolder + "/" + newDevice->name + ".idx";
+            newDevice->catalog->filePath = collection->folder + "/" + newDevice->name + ".idx";
             newDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
             newDevice->catalog->includeHidden = ui->Create_checkBox_IncludeHidden->isChecked();
             newDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
@@ -256,7 +256,7 @@
                                                  newDevice->updateDevice("create",
                                                                          collection->databaseMode,
                                                                          false,
-                                                                         collection->collectionFolder,
+                                                                         collection->folder,
                                                                          true),
                                                  "create");
 
@@ -265,8 +265,8 @@
 
                 //Save data to files
                 collection->saveDeviceTableToFile();
-                newDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->collectionFolder);
-                newDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->collectionFolder);
+                newDevice->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
+                newDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
 
                 //Update the new catalog loadedversion to indicate that files are already in memory
                 QDateTime emptyDateTime = *new QDateTime;

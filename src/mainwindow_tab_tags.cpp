@@ -63,7 +63,7 @@
         }
 
         //file
-        QString tagsFilePath = collection->collectionFolder + "/" + "tags.csv";
+        QString tagsFilePath = collection->folder + "/" + "tags.csv";
 
         QString tagLine = selectedTagFolder + '\t' + selectedTagName;
 
@@ -89,7 +89,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_OpenTagsFile_clicked()
     {
-        collection->tagsFilePath = collection->collectionFolder + "/" + "tags.csv";
+        collection->tagsFilePath = collection->folder + "/" + "tags.csv";
         QDesktopServices::openUrl(QUrl::fromLocalFile(collection->tagsFilePath));
     }
     //----------------------------------------------------------------------
@@ -164,7 +164,7 @@
         queryDelete.exec();
 
         //Prepare for using the csv file storing tag data
-        collection->tagsFilePath = collection->collectionFolder + "/" + "tags.csv";
+        collection->tagsFilePath = collection->folder + "/" + "tags.csv";
 
         QFile tagFile(collection->tagsFilePath);
         if(!tagFile.open(QIODevice::ReadOnly)) {

@@ -94,7 +94,7 @@
 
         //Save folder
         if(collection->databaseMode=="Memory"){
-            settings.setValue("LastCollectionFolder", collection->collectionFolder);
+            settings.setValue("LastCollectionFolder", collection->folder);
         }
         //Save sqlite file path
         else if(collection->databaseMode=="File"){
@@ -116,13 +116,13 @@
     void MainWindow::changeCollectionFolder()
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastCollectionFolder", collection->collectionFolder);
+        settings.setValue("LastCollectionFolder", collection->folder);
 
         //Set the new path in Settings tab
-        ui->Settings_lineEdit_CollectionFolder->setText(collection->collectionFolder);
+        ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
         //Redefine the path of the Storage file
-        collection->storageFilePath = collection->collectionFolder + "/" + "storage.csv";
+        collection->storageFilePath = collection->folder + "/" + "storage.csv";
 
         //Load the collection from this new folder;
         //Clear database if mode is Memory
@@ -151,7 +151,7 @@
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( dir !=""){
-            collection->collectionFolder = dir;
+            collection->folder = dir;
             changeCollectionFolder();
         }
 
@@ -163,13 +163,13 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
-                                                        collection->collectionFolder,
+                                                        collection->folder,
                                                         QFileDialog::ShowDirsOnly
-                                                        | QFileDialog::DontResolveSymlinks);
+                                                            | QFileDialog::DontResolveSymlinks);
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( dir !=""){
-            collection->collectionFolder = dir;
+            collection->folder = dir;
             changeCollectionFolder();
         }
 
@@ -180,7 +180,7 @@
     void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
     {
         //Open the selected collection folder
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->collectionFolder));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->folder));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_KeepOneBackUp_stateChanged()
@@ -353,6 +353,7 @@
     {
         //Generate collection files paths and statistics parameters
         collection->generateCollectionFilesPaths();
+        collection->generateCollectionFiles();
 
         //Load data from files to database ("Memory" database mode
             //Create a Storage list (if none exists) + conversions
@@ -421,6 +422,59 @@
 
         //Load Tags
         reloadTagsData();
+
+        //Verify Collection version and trigger migration to v2.0
+        QFile statitsticsFile(collection->statisticsDeviceFilePath);
+        if (statitsticsFile.exists()){
+            qDebug()<<"DEBUG statitsticsFile: " << &statitsticsFile;
+            collection->version = "2.0";
+        }
+        else{
+            collection->version = "1.x";
+
+            QMessageBox msgBox;
+            QString message;
+            message += "<br/>";
+            message += "<b>" + tr("Collection Upgrade Required") + "</b>";
+            message += "<br/><br/>";
+            message += tr("Katalog has detected that the selected collection was created with an earlier version.");
+            message += "<br/>";
+            message += tr("<br/>Current collection folder: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->folder);
+            message += "<br/>";
+            message += tr("<br/>Current collection version: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->version);
+            message += "<br/><br/><br/>";
+            message += tr("To utilize this collection with Katalog 2.0, it needs to be upgraded.");
+            message += "<br/><br/>";
+            message += tr("The upgrade process can be performed automatically, but it is strongly advised to <b>back up the collection folder/files before proceeding</b>.");
+            message += "<br/><br/>";
+            message += tr("What would you like to do?");
+            message += "<br/><br/>";
+
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(message);
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+            msgBox.setButtonText(QMessageBox::Yes, "Upgrade Now");
+            msgBox.setButtonText(QMessageBox::No, "Choose a Different Folder");
+            msgBox.setButtonText(QMessageBox::Cancel, "Exit Application");
+
+            int result = msgBox.exec();
+
+            if (result == QMessageBox::Yes) {
+                // Trigger migration
+                migrateCollection();
+
+            } else if (result == QMessageBox::No) {
+                // Select other folder
+                on_Settings_pushButton_SelectFolder_clicked();
+                return;
+
+            } else if (result == QMessageBox::Cancel) {
+                // Quit app
+                qApp->deleteLater();
+                return;
+            }
+        }
     }
     //----------------------------------------------------------------------
     void MainWindow::preloadCatalogs()
@@ -462,7 +516,7 @@
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
         QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to open:"),
-                                                                   collection->collectionFolder+"/newKatalogFile.db","*.db");
+                                                                   collection->folder+"/newKatalogFile.db","*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
