@@ -55,22 +55,13 @@ void Collection::generateCollectionFiles()
     if(databaseMode=="Memory"){
         QFile deviceFile(deviceFilePath);
         if (!deviceFile.exists()) {
-            // Create the necessary directories
-            //QFileInfo fileInfo(deviceFile);
-            //QString path = fileInfo.absolutePath();
-            //QDir dir;
-            //if (!dir.mkpath(path)) {
-            //    qDebug() << "DEBUG Failed to create directories:";
-            //}
-        //}
-        //else {
-                //Create an empty CSV file
-                if (deviceFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                    //File opened successfully, no need to write anything
-                    deviceFile.close(); // Close the file after creating it
-                } else {
-                    qDebug() << "DEBUG Failed to create file:" << deviceFile.errorString();
-                }
+            //Create an empty CSV file
+            if (deviceFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                //File opened successfully, no need to write anything
+                deviceFile.close(); // Close the file after creating it
+            } else {
+                qDebug() << "DEBUG Failed to create file:" << deviceFile.errorString();
+            }
         }
     }
 }

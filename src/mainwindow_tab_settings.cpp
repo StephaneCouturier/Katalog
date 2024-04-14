@@ -423,55 +423,57 @@
         //Load Tags
         reloadTagsData();
 
-        //Verify Collection version and trigger migration to v2.0
-        QFile statitsticsFile(collection->statisticsDeviceFilePath);
-        if (statitsticsFile.exists()){
-            collection->version = "2.0";
-        }
-        else{
-            collection->version = "1.x";
+        //Verify Collection version and trigger migration
+        if(collection->databaseMode=="Memory"){
+            QFile statitsticsFile(collection->statisticsDeviceFilePath);
+            if (statitsticsFile.exists()){
+                collection->version = "2.0";
+            }
+            else{
+                collection->version = "1.x";
 
-            QMessageBox msgBox;
-            QString message;
-            message += "<br/>";
-            message += "<b>" + tr("Collection Upgrade Required") + "</b>";
-            message += "<br/><br/>";
-            message += tr("Katalog has detected that the selected collection was created with an earlier version.");
-            message += "<br/>";
-            message += tr("<br/>Current collection folder: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->folder);
-            message += "<br/>";
-            message += tr("<br/>Current collection version: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->version);
-            message += "<br/><br/><br/>";
-            message += tr("To utilize this collection with Katalog 2.0, it needs to be upgraded.");
-            message += "<br/><br/>";
-            message += tr("The upgrade process can be performed automatically, but it is strongly advised to <b>back up the collection folder/files before proceeding</b>.");
-            message += "<br/><br/>";
-            message += tr("What would you like to do?");
-            message += "<br/><br/>";
+                QMessageBox msgBox;
+                QString message;
+                message += "<br/>";
+                message += "<b>" + tr("Collection Upgrade Required") + "</b>";
+                message += "<br/><br/>";
+                message += tr("Katalog has detected that the selected collection was created with an earlier version.");
+                message += "<br/>";
+                message += tr("<br/>Current collection folder: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->folder);
+                message += "<br/>";
+                message += tr("<br/>Current collection version: ") + QString::fromUtf8("<br/><b>%1</b>").arg(collection->version);
+                message += "<br/><br/><br/>";
+                message += tr("To utilize this collection with Katalog 2.0, it needs to be upgraded.");
+                message += "<br/><br/>";
+                message += tr("The upgrade process can be performed automatically, but it is strongly advised to <b>back up the collection folder/files before proceeding</b>.");
+                message += "<br/><br/>";
+                message += tr("What would you like to do?");
+                message += "<br/><br/>";
 
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(message);
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-            msgBox.setButtonText(QMessageBox::Yes, "Upgrade Now");
-            msgBox.setButtonText(QMessageBox::No, "Choose a Different Folder");
-            msgBox.setButtonText(QMessageBox::Cancel, "Exit Application");
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(message);
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+                msgBox.setButtonText(QMessageBox::Yes, "Upgrade Now");
+                msgBox.setButtonText(QMessageBox::No, "Choose a Different Folder");
+                msgBox.setButtonText(QMessageBox::Cancel, "Exit Application");
 
-            int result = msgBox.exec();
+                int result = msgBox.exec();
 
-            if (result == QMessageBox::Yes) {
-                // Trigger migration
-                migrateCollection();
+                if (result == QMessageBox::Yes) {
+                    // Trigger migration
+                    migrateCollection();
 
-            } else if (result == QMessageBox::No) {
-                // Select other folder
-                on_Settings_pushButton_SelectFolder_clicked();
-                return;
+                } else if (result == QMessageBox::No) {
+                    // Select other folder
+                    on_Settings_pushButton_SelectFolder_clicked();
+                    return;
 
-            } else if (result == QMessageBox::Cancel) {
-                // Quit app
-                qApp->deleteLater();
-                return;
+                } else if (result == QMessageBox::Cancel) {
+                    // Quit app
+                    qApp->deleteLater();
+                    return;
+                }
             }
         }
     }
@@ -555,6 +557,3 @@
         //Reset selected values (to avoid actions on the last selected ones)
         resetSelection();
     }
-
-
-
