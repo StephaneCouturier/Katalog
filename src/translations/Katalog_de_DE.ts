@@ -2603,72 +2603,72 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="409"/>
-        <source>Default Storage</source>
-        <translation>Standardspeicher</translation>
+        <source>Local disk</source>
+        <translation>Lokale Festplatte</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
         <source>Collection Upgrade Required</source>
         <translation>Sammlungs-Upgrade erforderlich</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="448"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation>Diese Anwendung von „Katalog“ ist in der Version: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="450"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
         <source>Current collection version: </source>
         <translation>Aktuelle Kollektionsversion: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="465"/>
         <source>Collection folder: </source>
         <translation>Sammlungsordner: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="467"/>
         <source>This upgrade process can be performed automatically.</source>
         <translation>Dieser Upgrade-Prozess kann automatisch durchgeführt werden.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="469"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
         <translation>Informieren Sie sich über die wichtigsten Änderungen und die Migration in dieser &lt;a href=&apos;%1&apos;&gt;Hauptversion 2.0&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
         <translation>Die übliche Liste der neuen Funktionen finden Sie in den &lt;a href=&apos;%1&apos;&gt;Versionshinweisen&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="473"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
         <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Sichern Sie den Sammlungsordner/die Sammlungsdateien vor dem Upgrade!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="475"/>
         <source>What should be done now?</source>
         <translation>Was ist jetzt zu tun?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="481"/>
         <source>Upgrade Now</source>
         <translation>Jetzt upgraden</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="482"/>
         <source>Choose a Different Folder</source>
         <translation>Wählen Sie einen anderen Ordner</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="483"/>
         <source>Exit Application</source>
         <translation>Anwendung verlassen</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="513"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="543"/>
         <source>Select the database to open:</source>
         <translation>Wählen Sie die zu öffnende Datenbank aus:</translation>
     </message>
@@ -2688,17 +2688,17 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
         <translation>Fehler beim Öffnen der Ausgabedatei:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="849"/>
+        <location filename="../collection.cpp" line="848"/>
         <source> Physical Group</source>
         <translation> Physische Gruppe</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="858"/>
+        <location filename="../collection.cpp" line="857"/>
         <source>Default Virtual group</source>
         <translation>Virtuelle Standardgruppe</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="887"/>
+        <location filename="../collection.cpp" line="886"/>
         <source>Select a catalog with a valid path.</source>
         <translation>Wählen Sie einen Katalog mit einem gültigen Pfad aus.</translation>
     </message>

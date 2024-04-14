@@ -2604,51 +2604,51 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="409"/>
-        <source>Default Storage</source>
-        <translation>Stockage par défaut</translation>
+        <source>Local disk</source>
+        <translation>Disque local</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
         <source>Collection Upgrade Required</source>
         <translation>Mise à niveau de la collection requise</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="448"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation>Cette application de &apos;Katalog&apos; est en version : </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="450"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
         <source>Current collection version: </source>
         <translation>Version actuelle de la collection&#xa0;: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="465"/>
         <source>Collection folder: </source>
         <translation>Dossier de la collection&#xa0;: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="467"/>
         <source>This upgrade process can be performed automatically.</source>
         <translation>Ce processus de mise à niveau peut être effectué automatiquement.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="469"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
         <translation>Découvrez les principaux changements et la migration dans cette &lt;a href=&apos;%1&apos;&gt;Version majeure 2.0&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
         <translation>Retrouvez la liste habituelle des nouvelles fonctionnalités dans les &lt;a href=&apos;%1&apos;&gt;Notes de version&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="473"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
         <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Sauvegardez le dossier/les fichiers de la collection avant la mise à niveau&#xa0;!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="475"/>
         <source>What should be done now?</source>
         <translation>Que faut-il faire maintenant ?</translation>
     </message>
@@ -2657,23 +2657,23 @@ to the trash?</source>
         <translation type="obsolete">Choisissez quoi faire ensuite&#xa0;:</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="481"/>
         <source>Upgrade Now</source>
         <translation>Mettre à jour maintenant</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="482"/>
         <source>Choose a Different Folder</source>
         <translation>Choisissez un autre dossier</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="483"/>
         <source>Exit Application</source>
         <translation>Quitter l&apos;application</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="513"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="543"/>
         <source>Select the database to open:</source>
         <translation>Sélectionner la base de données à ouvrir&#xa0;:</translation>
     </message>
@@ -2693,17 +2693,17 @@ to the trash?</source>
         <translation>Erreur lors de l&apos;ouverture du fichier de sortie&#xa0;:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="849"/>
+        <location filename="../collection.cpp" line="848"/>
         <source> Physical Group</source>
         <translation> Groupe physique</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="858"/>
+        <location filename="../collection.cpp" line="857"/>
         <source>Default Virtual group</source>
         <translation>Group Virtuel par défaut</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="887"/>
+        <location filename="../collection.cpp" line="886"/>
         <source>Select a catalog with a valid path.</source>
         <translation>Sélectionnez un catalogue avec un chemin valide.</translation>
     </message>

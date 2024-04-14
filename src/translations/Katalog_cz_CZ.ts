@@ -2603,72 +2603,72 @@ Soubor lze opravit ručně, navštivte stránku wiki:
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="409"/>
-        <source>Default Storage</source>
-        <translation>Výchozí úložiště</translation>
+        <source>Local disk</source>
+        <translation>Locální disk</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
         <source>Collection Upgrade Required</source>
         <translation>Je vyžadován upgrade sbírky</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="448"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation>Tato aplikace &apos;Katalog&apos; je ve verzi: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="450"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
         <source>Current collection version: </source>
         <translation>Aktuální verze kolekce: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="465"/>
         <source>Collection folder: </source>
         <translation>Složka sbírky: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="467"/>
         <source>This upgrade process can be performed automatically.</source>
         <translation>Tento proces aktualizace lze provést automaticky.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="469"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
         <translation>Zjistěte o hlavních změnách a migraci v této &lt;a href=&apos;%1&apos;&gt;hlavní verzi 2.0&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
         <translation>Obvyklý seznam nových funkcí naleznete v &lt;a href=&apos;%1&apos;&gt;Poznámkách k vydání&lt;/a&gt; (en).</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="473"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
         <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Před upgradem zálohujte složku/soubory sbírky!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="475"/>
         <source>What should be done now?</source>
         <translation>Co by se teď mělo udělat?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="481"/>
         <source>Upgrade Now</source>
         <translation>Vylepšit nyní</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="482"/>
         <source>Choose a Different Folder</source>
         <translation>Vyberte jinou složku</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="483"/>
         <source>Exit Application</source>
         <translation>Ukončete aplikaci</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="513"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="543"/>
         <source>Select the database to open:</source>
         <translation>Vyberte databázi, kterou chcete otevřít:</translation>
     </message>
@@ -2688,17 +2688,17 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Chyba při otevírání výstupního souboru:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="849"/>
+        <location filename="../collection.cpp" line="848"/>
         <source> Physical Group</source>
         <translation> Fyzická skupina</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="858"/>
+        <location filename="../collection.cpp" line="857"/>
         <source>Default Virtual group</source>
         <translation>Výchozí virtuální skupina</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="887"/>
+        <location filename="../collection.cpp" line="886"/>
         <source>Select a catalog with a valid path.</source>
         <translation>Vyberte katalog s platnou cestou.</translation>
     </message>

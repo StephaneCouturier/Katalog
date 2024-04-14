@@ -406,7 +406,7 @@
             if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
                 newStorageDevice->parentID = 1;
 
-            newStorageDevice->name = tr("Local drive");
+            newStorageDevice->name = tr("Local disk");
             newStorageDevice->type = "Storage";
             newStorageDevice->path = "/";
             #ifdef Q_OS_WINDOWS

@@ -2594,72 +2594,72 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="409"/>
-        <source>Default Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
-        <source>Collection Upgrade Required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="448"/>
-        <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="450"/>
-        <source>Current collection version: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
-        <source>Collection folder: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
-        <source>This upgrade process can be performed automatically.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
-        <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
+        <source>Local disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="459"/>
-        <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
+        <source>Collection Upgrade Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="461"/>
-        <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
+        <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="463"/>
-        <source>What should be done now?</source>
+        <source>Current collection version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
-        <source>Upgrade Now</source>
+        <location filename="../mainwindow_tab_settings.cpp" line="465"/>
+        <source>Collection folder: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="467"/>
+        <source>This upgrade process can be performed automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="469"/>
+        <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="473"/>
+        <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="475"/>
+        <source>What should be done now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="481"/>
+        <source>Upgrade Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="482"/>
         <source>Choose a Different Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="483"/>
         <source>Exit Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="513"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="543"/>
         <source>Select the database to open:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2679,17 +2679,17 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="849"/>
+        <location filename="../collection.cpp" line="848"/>
         <source> Physical Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="858"/>
+        <location filename="../collection.cpp" line="857"/>
         <source>Default Virtual group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="887"/>
+        <location filename="../collection.cpp" line="886"/>
         <source>Select a catalog with a valid path.</source>
         <translation type="unfinished"></translation>
     </message>
