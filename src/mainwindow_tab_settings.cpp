@@ -351,7 +351,7 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
-        //Check if new collection (new folder is empty)
+        //Check if new collection (The folder is empty)
         QDir dir(collection->folder);
         dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
         if(dir.entryList().isEmpty()){
@@ -400,22 +400,35 @@
 
         if (queryStorage.value(0).toInt() == 0){
             //Create Device and related Storage under Physical group (ID=0)
-            Device *newDevice = new Device();
-            newDevice->generateDeviceID();
-            newDevice->parentID = 2;
-            if(newDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
-                newDevice->parentID = 1;
+            Device *newStorageDevice = new Device();
+            newStorageDevice->generateDeviceID();
+            newStorageDevice->parentID = 2;
+            if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
+                newStorageDevice->parentID = 1;
 
-            newDevice->name = tr("Default Storage");
-            newDevice->type = "Storage";
-            newDevice->storage->generateID();
-            newDevice->externalID = newDevice->storage->ID;
-            newDevice->groupID = 0;
-            newDevice->insertDevice();
-            newDevice->storage->insertStorage();
+            newStorageDevice->name = tr("Local drive");
+            newStorageDevice->type = "Storage";
+            newStorageDevice->path = "/";
+            #ifdef Q_OS_WINDOWS
+            newStorageDevice->path = "C:";
+            #endif
+            newStorageDevice->storage->path = newStorageDevice->path;
+            newStorageDevice->storage->generateID();
+            newStorageDevice->externalID = newStorageDevice->storage->ID;
+            newStorageDevice->groupID = 0;
+            newStorageDevice->insertDevice();
+            newStorageDevice->storage->name = newStorageDevice->name;
+            newStorageDevice->storage->insertStorage();
+            newStorageDevice->saveDevice();
+            newStorageDevice->updateDevice("create",
+                                           collection->databaseMode,
+                                           false,
+                                           collection->folder,
+                                           false);
 
             //Save data to file
-            collection->saveDeviceTableToFile();          
+            collection->saveDeviceTableToFile();
+            collection->saveStorageTableToFile();
         }
 
         //Reload models

@@ -215,114 +215,114 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
         }
     }
 
-        //Get current values for comparison later
-        qint64 previousStorageFreeSpace  = freeSpace;
-        qint64 previousStorageTotalSpace = totalSpace;
-        qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-        QDateTime lastUpdate  = dateTimeUpdated;
+    //Get current values for comparison later
+    qint64 previousStorageFreeSpace  = freeSpace;
+    qint64 previousStorageTotalSpace = totalSpace;
+    qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
+    QDateTime lastUpdate  = dateTimeUpdated;
 
-        //Get device information
-            QStorageInfo storageInfo;
-            storageInfo.setPath(path);
+    //Get device information
+        QStorageInfo storageInfo;
+        storageInfo.setPath(path);
 
-            label        = storageInfo.name();
-            fileSystem   = storageInfo.fileSystemType();
-            totalSpace   = storageInfo.bytesTotal();
-            freeSpace    = storageInfo.bytesAvailable();
+        label        = storageInfo.name();
+        fileSystem   = storageInfo.fileSystemType();
+        totalSpace   = storageInfo.bytesTotal();
+        freeSpace    = storageInfo.bytesAvailable();
 
-        //Get confirmation for the update
-            qint64 bytesTotal = storageInfo.bytesTotal();
-            if (bytesTotal == -1  and reportStorageUpdate == true){
-                // Get the original text
-                QString tempText = QString("Katalog could not get values. <br/><br/>"
-                                        "Check that the source folder ( %1 ) is correct,<br/>"
-                                        "or that the device is mounted to the source folder.").arg(path);
+    //Get confirmation for the update
+        qint64 bytesTotal = storageInfo.bytesTotal();
+        if (bytesTotal == -1  and reportStorageUpdate == true){
+            // Get the original text
+            QString tempText = QString("Katalog could not get values. <br/><br/>"
+                                    "Check that the source folder ( %1 ) is correct,<br/>"
+                                    "or that the device is mounted to the source folder.").arg(path);
 
-                // Translate the text using the MainWindow context
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
+            // Translate the text using the MainWindow context
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", tempText.toUtf8()));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
 
-                list.append(0);//not updated
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                return list;
-            }
-
-            dateTimeUpdated = QDateTime::currentDateTime();
-
-        //Save to Storage table
-            QSqlQuery queryTotalSpace;
-            QString queryTotalSpaceSQL = QLatin1String(R"(
-                                            UPDATE storage
-                                            SET storage_total_space = :storage_total_space,
-                                                storage_free_space  = :storage_free_space,
-                                                storage_label       = :storage_label,
-                                                storage_file_system = :storage_file_system
-                                            WHERE storage_id = :storage_id
-                                            )");
-            queryTotalSpace.prepare(queryTotalSpaceSQL);
-            queryTotalSpace.bindValue(":storage_total_space",QString::number(totalSpace));
-            queryTotalSpace.bindValue(":storage_free_space",QString::number(freeSpace));
-            queryTotalSpace.bindValue(":storage_label",label);
-            queryTotalSpace.bindValue(":storage_file_system",fileSystem);
-            queryTotalSpace.bindValue(":storage_id", ID);
-            queryTotalSpace.exec();
-
-        //Save to VirtualStorage table
-            queryTotalSpaceSQL = QLatin1String(R"(
-                                            UPDATE device
-                                            SET device_total_space = :device_total_space,
-                                                device_free_space  = :device_free_space
-                                            WHERE device_external_id = :device_external_id
-                                            AND device_type ='Storage'
-                                            )");
-            queryTotalSpace.prepare(queryTotalSpaceSQL);
-            queryTotalSpace.bindValue(":device_total_space",QString::number(totalSpace));
-            queryTotalSpace.bindValue(":device_free_space",QString::number(freeSpace));
-            queryTotalSpace.bindValue(":device_external_id", ID);
-            queryTotalSpace.exec();
-
-        //Stop if the update was not done (lastUpdate time did not change)
-            if (lastUpdate == dateTimeUpdated){
-                list.append(0);//not updated
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                return list;
-            }
-
-        //Prepare to report changes to the storage
-            qint64 newStorageFreeSpace    = freeSpace;
-            qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
-            qint64 newStorageTotalSpace   = totalSpace;
-            qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
-            qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
-            qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
-
-            list.append(1);//updated
-            list.append(newStorageUsedSpace);
-            list.append(deltaStorageUsedSpace);
-            list.append(newStorageFreeSpace);
-            list.append(deltaStorageFreeSpace);
-            list.append(newStorageTotalSpace);
-            list.append(deltaStorageTotalSpace);
-
-        //Save statistics
-            dateTimeUpdated = QDateTime::currentDateTime();
-            saveStatistics(dateTimeUpdated);
-
-        //Return the list of update information
+            list.append(0);//not updated
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
             return list;
+        }
+
+        dateTimeUpdated = QDateTime::currentDateTime();
+
+    //Save to Storage table
+        QSqlQuery queryTotalSpace;
+        QString queryTotalSpaceSQL = QLatin1String(R"(
+                                        UPDATE storage
+                                        SET storage_total_space = :storage_total_space,
+                                            storage_free_space  = :storage_free_space,
+                                            storage_label       = :storage_label,
+                                            storage_file_system = :storage_file_system
+                                        WHERE storage_id = :storage_id
+                                        )");
+        queryTotalSpace.prepare(queryTotalSpaceSQL);
+        queryTotalSpace.bindValue(":storage_total_space",QString::number(totalSpace));
+        queryTotalSpace.bindValue(":storage_free_space",QString::number(freeSpace));
+        queryTotalSpace.bindValue(":storage_label",label);
+        queryTotalSpace.bindValue(":storage_file_system",fileSystem);
+        queryTotalSpace.bindValue(":storage_id", ID);
+        queryTotalSpace.exec();
+
+    //Save to VirtualStorage table
+        queryTotalSpaceSQL = QLatin1String(R"(
+                                        UPDATE device
+                                        SET device_total_space = :device_total_space,
+                                            device_free_space  = :device_free_space
+                                        WHERE device_external_id = :device_external_id
+                                        AND device_type ='Storage'
+                                        )");
+        queryTotalSpace.prepare(queryTotalSpaceSQL);
+        queryTotalSpace.bindValue(":device_total_space",QString::number(totalSpace));
+        queryTotalSpace.bindValue(":device_free_space",QString::number(freeSpace));
+        queryTotalSpace.bindValue(":device_external_id", ID);
+        queryTotalSpace.exec();
+
+    //Stop if the update was not done (lastUpdate time did not change)
+        if (lastUpdate == dateTimeUpdated){
+            list.append(0);//not updated
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            return list;
+        }
+
+    //Prepare to report changes to the storage
+        qint64 newStorageFreeSpace    = freeSpace;
+        qint64 deltaStorageFreeSpace  = newStorageFreeSpace - previousStorageFreeSpace;
+        qint64 newStorageTotalSpace   = totalSpace;
+        qint64 deltaStorageTotalSpace = newStorageTotalSpace - previousStorageTotalSpace;
+        qint64 newStorageUsedSpace    = newStorageTotalSpace - newStorageFreeSpace;
+        qint64 deltaStorageUsedSpace  = newStorageUsedSpace - previousStorageUsedSpace;
+
+        list.append(1);//updated
+        list.append(newStorageUsedSpace);
+        list.append(deltaStorageUsedSpace);
+        list.append(newStorageFreeSpace);
+        list.append(deltaStorageFreeSpace);
+        list.append(newStorageTotalSpace);
+        list.append(deltaStorageTotalSpace);
+
+    //Save statistics
+        dateTimeUpdated = QDateTime::currentDateTime();
+        saveStatistics(dateTimeUpdated);
+
+    //Return the list of update information
+        return list;
 }
 
 void Storage::saveStatistics(QDateTime dateTime)
