@@ -69,9 +69,9 @@
     {//Edit Exclusion list
 
         //Verify if a folder exclusion list exists
-        QFile excludeFile(collection->excludeFilePath);
+        QFile excludeFile(collection->parameterFilePath);
         if ( excludeFile.exists()){
-            QDesktopServices::openUrl(QUrl::fromLocalFile(collection->excludeFilePath));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(collection->parameterFilePath));
         }
         else{
             //if not, propose to create it
@@ -95,7 +95,7 @@
                           excludeFile.close();
 
                           //and open it for edition
-                          QDesktopServices::openUrl(QUrl::fromLocalFile(collection->excludeFilePath));
+                          QDesktopServices::openUrl(QUrl::fromLocalFile(collection->parameterFilePath));
                     }
                 }
             }

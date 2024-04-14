@@ -39,7 +39,7 @@ void Collection::generateCollectionFilesPaths()
     deviceFilePath              = folder + "/" + "device.csv";
     statisticsDeviceFileName    = "statistics.csv";
     statisticsDeviceFilePath    = folder + "/" + statisticsDeviceFileName;
-    excludeFilePath             = folder + "/" + "exclude.csv";
+    parameterFilePath          = folder + "/" + "parameters.csv";
 
     //v1.22 files
     deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
@@ -47,12 +47,12 @@ void Collection::generateCollectionFilesPaths()
     statisticsCatalogFilePath   = folder + "/" + statisticsCatalogFileName;
     statisticsStorageFileName   = "statistics_storage.csv";
     statisticsStorageFilePath   = folder + "/" + statisticsStorageFileName;
-
 }
 
 void Collection::generateCollectionFiles()
 {
     if(databaseMode=="Memory"){
+        //Device.csv
         QFile deviceFile(deviceFilePath);
         if (!deviceFile.exists()) {
             //Create an empty CSV file
@@ -60,8 +60,42 @@ void Collection::generateCollectionFiles()
                 //File opened successfully, no need to write anything
                 deviceFile.close(); // Close the file after creating it
             } else {
-                qDebug() << "DEBUG Failed to create file:" << deviceFile.errorString();
+                qDebug() << "DEBUG: Failed to create Device file:" << deviceFile.errorString();
             }
+        }
+
+        //Parameters.csv
+        QFile parametersFile(parameterFilePath);
+        if (!parametersFile.exists()) {
+            //Create an empty CSV file
+            if (parametersFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                //File opened successfully, no need to write anything
+                parametersFile.close(); // Close the file after creating it
+            } else {
+                qDebug() << "DEBUG: Failed to create Parameters file:" << parametersFile.errorString();
+            }
+
+            //Add the current version
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                        INSERT INTO parameter (
+                                                    parameter_name,
+                                                    parameter_type,
+                                                    parameter_value1)
+                                        VALUES(
+                                                    :parameter_name,
+                                                    :parameter_type,
+                                                    :parameter_value1)
+                                )");
+            insertQuery.prepare(insertSQL);
+            insertQuery.bindValue(":parameter_name", "version");
+            insertQuery.bindValue(":parameter_type", "application");
+            insertQuery.bindValue(":parameter_value1", appVersion);
+            insertQuery.exec();
+            qDebug() << "DEBUG: insertQuery:" << insertQuery.lastError();
+
+            //Save
+            saveParametersToFile();
         }
     }
 }
@@ -542,25 +576,27 @@ void Collection::loadStatisticsDeviceFileToTable()
     }
 }
 //----------------------------------------------------------------------
-void Collection::loadExclude()
+void Collection::loadParameters()
 {// Load the contents of the storage statistics file into the database
     if(databaseMode=="Memory"){
         //Clear database table
         QSqlQuery deleteQuery;
-        deleteQuery.exec("DELETE FROM exclude");
+        deleteQuery.exec("DELETE FROM parameters");
 
         //Get data stored in the file
-        QFile excludeFile(excludeFilePath);
-        if(excludeFile.open(QIODevice::ReadOnly)) {
-            QTextStream textStream(&excludeFile);
+        QFile parametersFile(parameterFilePath);
+        if(parametersFile.open(QIODevice::ReadOnly)) {
+            QTextStream textStream(&parametersFile);
 
             //Prepare query to load file info
             QSqlQuery insertQuery;
             QString insertSQL = QLatin1String(R"(
-                                        INSERT INTO exclude (
-                                                    exclude_path  )
+                                        INSERT INTO parameter (
+                                                    parameter_type,
+                                                    parameter_value2)
                                         VALUES(
-                                                    :exclude_path )
+                                                    :parameter_type,
+                                                    :parameter_value2)
                                 )");
             insertQuery.prepare(insertSQL);
 
@@ -576,10 +612,14 @@ void Collection::loadExclude()
                 else
                 {
                     //Append data to the database
-                    insertQuery.bindValue(":exclude_path", line);
+                    insertQuery.bindValue(":parameter_type", line);
+                    insertQuery.bindValue(":parameter_value2", line);
                     insertQuery.exec();
                 }
             }
+        }
+        else{
+            qDebug() << "DEBUG: Could not open parameters.csv:" << parametersFile.errorString();
         }
     }
 }
@@ -694,6 +734,52 @@ void Collection::saveStatiticsToFile()
     }
 }
 //----------------------------------------------------------------------
+void Collection::saveParametersToFile()
+{
+    if(databaseMode=="Memory"){
+        //Prepare export file
+        QFile parameterFile(parameterFilePath);
+        QTextStream out(&parameterFile);
+
+        //Prepare header line
+        out << "name"       << "\t"
+            << "type"       << "\t"
+            << "value1"     << "\t"
+            << "value2"     << "\t"
+            << '\n';
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT  parameter_name,
+                                            parameter_type,
+                                            parameter_value1,
+                                            parameter_value2
+                                    FROM parameter
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if(parameterFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //Write the result to the file
+                out << '\n';
+            }
+        }
+
+        parameterFile.close();
+    }
+}
+//----------------------------------------------------------------------
+
 void Collection::insertPhysicalStorageGroup() {
     QSqlQuery query;
     QString querySQL;

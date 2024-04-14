@@ -48,6 +48,7 @@ class Collection
 public:
 
     //Main attributes
+    QString appVersion;
     QString version;
     QString folder;
     QString settingsFilePath;
@@ -72,7 +73,7 @@ public:
     QString statisticsStorageFilePath;
     QString statisticsDeviceFileName;
     QString statisticsDeviceFilePath;
-    QString excludeFilePath;
+    QString parameterFilePath;
     QString tagsFilePath;
     void generateCollectionFilesPaths();
     void generateCollectionFiles();
@@ -83,13 +84,14 @@ public:
     void loadCatalogFilesToTable();
     void loadStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
-    void loadExclude();
+    void loadParameters();
 
     //File saving
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
     void saveStatiticsToFile();
     void createStorageFile();
+    void saveParametersToFile();
 
     //File deleting
     void deleteCatalogFile(Device *device);

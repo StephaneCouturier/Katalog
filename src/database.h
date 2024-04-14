@@ -225,8 +225,11 @@
 
         // EXCLUDE --------------------------------------------------------------
             const auto SQL_CREATE_EXCLUDE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS exclude(
-                            exclude_path                  TEXT)
+                        CREATE TABLE IF NOT EXISTS parameter(
+                                parameter_name      TEXT,
+                                parameter_type      TEXT,
+                                parameter_value1    TEXT,
+                                parameter_value2    TEXT)
             )");
 
         // MIGRATION 1.22 to 2.0 ------------------------------------------------
