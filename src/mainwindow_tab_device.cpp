@@ -3146,12 +3146,7 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
 //--------------------------------------------------------------------------
 //--- Migration 1.22 to 2.0
 //--------------------------------------------------------------------------
-//--- UI -----------------------------------------------
-void MainWindow::on_Devices_pushButton_ImportV1_clicked()
-{
-    migrateCollection();
-}
-
+//------ Global method -----------------------------------------------
 void MainWindow::migrateCollection()
 {
     // Start animation while opening
@@ -3179,6 +3174,9 @@ void MainWindow::migrateCollection()
     //Convert .folders.idx Files
         convertFoldersIdxFiles();
 
+    //Convert exclude.csv file into parameter.csv
+        importExcludeIntoParameter();
+
     //Close procedure
     loadDevicesView();
     loadDevicesTreeToModel("Filters");
@@ -3191,8 +3189,7 @@ void MainWindow::migrateCollection()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
 }
-//--------------------------------------------------------------------------
-//--- Methods --------------------------------------------------------------
+//------ Method per object --------------------------------------------------------------
 void MainWindow::importVirtualToDevices()
 {
     //Create Virtual device in Physical group from locations
@@ -4011,6 +4008,65 @@ void MainWindow::convertFoldersIdxFiles()
             }
         }
     }
+}
+
+void MainWindow::importExcludeIntoParameter()
+{//Import exclude.csv entries into parameter.csv
+
+    QString excludeFilePath;
+    excludeFilePath = collection->folder + "/exclude.csv";
+
+    QSqlQuery query;
+    QString querySQL;
+    querySQL = QLatin1String(R"(
+                        INSERT INTO parameter (
+                                        parameter_name,
+                                        parameter_type,
+                                        parameter_value1,
+                                        parameter_value2 )
+                        VALUES(         :parameter_name,
+                                        :parameter_type,
+                                        :parameter_value1,
+                                        :parameter_value2 )
+                    )");
+    query.prepare(querySQL);
+
+    //Define exclude file and prepare stream
+    QFile excludeFile(excludeFilePath);
+    QTextStream textStream(&excludeFile);
+
+    //Open file or return information
+    if(excludeFile.open(QIODevice::ReadOnly)) {
+
+        //Test file validity (application breaks between v0.13 and v0.14)
+        QString line = textStream.readLine();
+
+        //Load virtualStorage device lines to table
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else{
+                QSqlQuery insertQuery;
+                insertQuery.prepare(querySQL);
+                insertQuery.bindValue(":parameter_name", "");
+                insertQuery.bindValue(":parameter_type", "exclude_directory");
+                insertQuery.bindValue(":parameter_value1", "All catalogs");
+                insertQuery.bindValue(":parameter_value2", line);
+                insertQuery.exec();
+                qDebug()<<"DEBUG: importExcludeIntoParameter query: "<<insertQuery.lastError();
+            }
+        }
+        excludeFile.close();
+    }
+    else
+        qDebug()<<"failed to open exclude file: "<<excludeFilePath;
+
+    //Update collection version and save
+    collection->version = currentVersion;
+    collection->updateCollectionVersion();
+    collection->saveParametersToFile();
 }
 
 //--------------------------------------------------------------------------

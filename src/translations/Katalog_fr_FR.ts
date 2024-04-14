@@ -56,7 +56,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="829"/>
         <location filename="../mainwindow_tab_search.cpp" line="966"/>
         <location filename="../mainwindow_tab_search.cpp" line="1113"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="636"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="637"/>
         <source>Catalog</source>
         <translation>Catalogue</translation>
     </message>
@@ -230,7 +230,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="964"/>
         <location filename="../mainwindow_tab_search.cpp" line="1111"/>
         <location filename="../mainwindow_tab_search.cpp" line="2522"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="634"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="635"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="370"/>
         <source>Date</source>
         <translation>Date</translation>
@@ -261,7 +261,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7624"/>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -279,7 +279,7 @@
         <location filename="../mainwindow.ui" line="2115"/>
         <location filename="../mainwindow.ui" line="4710"/>
         <location filename="../mainwindow_tab_device.cpp" line="1843"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="638"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -294,7 +294,7 @@
         <location filename="../mainwindow_tab_device.cpp" line="1619"/>
         <location filename="../mainwindow_tab_device.cpp" line="1841"/>
         <location filename="../mainwindow_tab_device.cpp" line="2072"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="639"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="640"/>
         <source>Path</source>
         <translation>Chemin</translation>
     </message>
@@ -306,7 +306,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="826"/>
         <location filename="../mainwindow_tab_search.cpp" line="963"/>
         <location filename="../mainwindow_tab_search.cpp" line="1110"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="633"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="634"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
@@ -321,7 +321,7 @@
         <location filename="../mainwindow_tab_device.cpp" line="1607"/>
         <location filename="../mainwindow_tab_device.cpp" line="1829"/>
         <location filename="../mainwindow_tab_device.cpp" line="2060"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="632"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="633"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -380,7 +380,7 @@
     <message>
         <location filename="../mainwindow.ui" line="7991"/>
         <source>The collection data is saved to an SQLite .db file.</source>
-        <translation>Les données de collecte sont enregistrées dans un fichier SQLite .db.</translation>
+        <translation>Les données de la collection sont enregistrées dans un fichier SQLite .db.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8053"/>
@@ -776,7 +776,7 @@
         <translation>Catalogue créé&#xa0;: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="3187"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3188"/>
         <source>Upgraded collection to v2.0.</source>
         <translation>Collection mise à niveau vers la v2.0.</translation>
     </message>
@@ -1134,7 +1134,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7629"/>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="182"/>
         <source>Hosted</source>
         <translation>Hébergé</translation>
     </message>
@@ -1299,7 +1299,7 @@
     <message>
         <location filename="../mainwindow.ui" line="8174"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
-        <translation>Les données de collecte sont sauvegardées dans une base de données hébergée sur un serveur local ou distant.</translation>
+        <translation>Les données de la collection sont sauvegardées dans une base de données hébergée sur un serveur local ou distant.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8363"/>
@@ -1320,7 +1320,7 @@
     <message>
         <location filename="../mainwindow.ui" line="8429"/>
         <location filename="../mainwindow_setup.cpp" line="238"/>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation>Katalog Colors (thème clair)</translation>
@@ -1559,7 +1559,7 @@
         <translation>Octets</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="286"/>
+        <location filename="../collection.cpp" line="327"/>
         <location filename="../mainwindow_tab_device.cpp" line="2589"/>
         <source>No catalog found.</source>
         <translation>Aucun catalogue trouvé.</translation>
@@ -1653,7 +1653,7 @@
         <translation>Vous êtes sur le point d&apos;éditer le ficher de catalogue directement.&lt;br/&gt;&lt;br/&gt;Il est généralement recommandé de Créer un nouveau catalogue avec les bonnes valeurs initiales (chemin source, type de fichier, inclure les fichiers cachés, stockage), plutôt que de modifier le fichier de catalogue directement. &lt;br/&gt;&lt;br/&gt;Vérifier la page du Wiki &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit&apos;&gt;Catalogs/Edit&lt;/a&gt; pour comprendre l&apos;impact d&apos;un changement directement dans ce ficher.&lt;br/&gt;&lt;br/&gt;Voulez-vous continuer tout de même ?</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="366"/>
+        <location filename="../collection.cpp" line="407"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -1893,7 +1893,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5918"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="635"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="636"/>
         <source>Directory</source>
         <translation>Répertoire</translation>
     </message>
@@ -2497,7 +2497,7 @@ to the trash?</source>
         <translation>Déplacer le dossier vers la corbeille</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="638"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="639"/>
         <source>orderValue</source>
         <translation>orderValue</translation>
     </message>
@@ -2524,7 +2524,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7619"/>
-        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="180"/>
         <source>Memory</source>
         <translation>Mémoire</translation>
     </message>
@@ -2572,7 +2572,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8434"/>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="130"/>
         <source>Katalog Colors (dark)</source>
         <translation>Katalog Colors (sombre)</translation>
     </message>
@@ -2603,53 +2603,82 @@ to the trash?</source>
         <translation>TEST MEDIA</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="401"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="409"/>
         <source>Default Storage</source>
         <translation>Stockage par défaut</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="438"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
         <source>Collection Upgrade Required</source>
         <translation>Mise à niveau de la collection requise</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="440"/>
-        <source>Katalog has detected that the selected collection was created with an earlier version.</source>
-        <translation>Katalog a détecté que la collection sélectionnée a été créée avec une version antérieure.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="442"/>
-        <source>&lt;br/&gt;Current collection folder: </source>
-        <translation>&lt;br/&gt;Dossier de collecte actuel&#xa0;: </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="444"/>
-        <source>&lt;br/&gt;Current collection version: </source>
-        <translation>&lt;br/&gt;Version actuelle de la collection&#xa0;: </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
-        <source>To utilize this collection with Katalog 2.0, it needs to be upgraded.</source>
-        <translation>Pour utiliser cette collection avec Katalog 2.0, elle doit être mise à niveau.</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="448"/>
-        <source>The upgrade process can be performed automatically, but it is strongly advised to &lt;b&gt;back up the collection folder/files before proceeding&lt;/b&gt;.</source>
-        <translation>Le processus de mise à niveau peut être effectué automatiquement, mais il est fortement conseillé de &lt;b&gt;sauvegarder le dossier/les fichiers de collection avant de continuer&lt;/b&gt;.</translation>
+        <source>This application of &apos;Katalog&apos; is in version: </source>
+        <translation>Cette application de &apos;Katalog&apos; est en version : </translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="450"/>
-        <source>What would you like to do?</source>
-        <translation>Qu&apos;est-ce que tu aimerais faire?</translation>
+        <source>Current collection version: </source>
+        <translation>Version actuelle de la collection&#xa0;: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="488"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="518"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
+        <source>Collection folder: </source>
+        <translation>Dossier de la collection&#xa0;: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <source>This upgrade process can be performed automatically.</source>
+        <translation>Ce processus de mise à niveau peut être effectué automatiquement.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
+        <translation>Découvrez les principaux changements et la migration dans cette &lt;a href=&apos;%1&apos;&gt;Version majeure 2.0&lt;/a&gt; (en).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
+        <translation>Retrouvez la liste habituelle des nouvelles fonctionnalités dans les &lt;a href=&apos;%1&apos;&gt;Notes de version&lt;/a&gt; (en).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
+        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Sauvegardez le dossier/les fichiers de la collection avant la mise à niveau&#xa0;!&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
+        <source>What should be done now?</source>
+        <translation>Que faut-il faire maintenant ?</translation>
+    </message>
+    <message>
+        <source>Choose what to do next:</source>
+        <translation type="obsolete">Choisissez quoi faire ensuite&#xa0;:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
+        <source>Upgrade Now</source>
+        <translation>Mettre à jour maintenant</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <source>Choose a Different Folder</source>
+        <translation>Choisissez un autre dossier</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <source>Exit Application</source>
+        <translation>Quitter l&apos;application</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
         <source>Select the database to open:</source>
         <translation>Sélectionner la base de données à ouvrir&#xa0;:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="277"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Certaines modifications apportées à la liste des périphériques de stockage n&apos;ont pas été enregistrées.&lt;br/&gt;Enregistrer et quitter, supprimer et quitter ou annuler la sortie ?</translation>
     </message>
@@ -2659,22 +2688,22 @@ to the trash?</source>
         <translation>Désattribuer ce catalogue</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="162"/>
+        <location filename="../collection.cpp" line="203"/>
         <source>Error opening output file:&lt;br/&gt;%1</source>
         <translation>Erreur lors de l&apos;ouverture du fichier de sortie&#xa0;:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="724"/>
+        <location filename="../collection.cpp" line="849"/>
         <source> Physical Group</source>
         <translation> Groupe physique</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="733"/>
+        <location filename="../collection.cpp" line="858"/>
         <source>Default Virtual group</source>
         <translation>Group Virtuel par défaut</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="762"/>
+        <location filename="../collection.cpp" line="887"/>
         <source>Select a catalog with a valid path.</source>
         <translation>Sélectionnez un catalogue avec un chemin valide.</translation>
     </message>

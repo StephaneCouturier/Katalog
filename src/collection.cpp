@@ -32,6 +32,23 @@
 #include "collection.h"
 #include "device.h"
 
+void Collection::updateCollectionVersion()
+{
+    QSqlQuery queryUpdateVersion;
+    QString queryUpdateVersionSQL = QLatin1String(R"(
+                                    UPDATE parameter
+                                    SET parameter_value1 = :parameter_value1
+                                    WHERE parameter_type =:parameter_type
+                                    AND parameter_name =:parameter_name
+                                )");
+    queryUpdateVersion.prepare(queryUpdateVersionSQL);
+    queryUpdateVersion.bindValue(":parameter_name", "version");
+    queryUpdateVersion.bindValue(":parameter_type", "collection");
+    queryUpdateVersion.bindValue(":parameter_value1", version);
+    queryUpdateVersion.exec();
+    qDebug()<<"DEBUG: queryUpdateVersion: "<<queryUpdateVersion.lastError();
+}
+
 void Collection::generateCollectionFilesPaths()
 {
     searchHistoryFilePath       = folder + "/" + "search_history.csv";
@@ -89,10 +106,9 @@ void Collection::generateCollectionFiles()
                                 )");
             insertQuery.prepare(insertSQL);
             insertQuery.bindValue(":parameter_name", "version");
-            insertQuery.bindValue(":parameter_type", "application");
-            insertQuery.bindValue(":parameter_value1", appVersion);
+            insertQuery.bindValue(":parameter_type", "collection");
+            insertQuery.bindValue(":parameter_value1", version);
             insertQuery.exec();
-            qDebug() << "DEBUG: insertQuery:" << insertQuery.lastError();
 
             //Save
             saveParametersToFile();
@@ -592,10 +608,14 @@ void Collection::loadParameters()
             QSqlQuery insertQuery;
             QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
+                                                    parameter_name,
                                                     parameter_type,
+                                                    parameter_value1,
                                                     parameter_value2)
                                         VALUES(
+                                                    :parameter_name,
                                                     :parameter_type,
+                                                    :parameter_value1,
                                                     :parameter_value2)
                                 )");
             insertQuery.prepare(insertSQL);
@@ -603,17 +623,27 @@ void Collection::loadParameters()
             //Set temporary values
             QString     line;
 
+            //Skip headers line
+            textStream.readLine();
+
             //Load file to database
             while (!textStream.atEnd())
             {
                 line = textStream.readLine();
+                //qDebug() << "DEBUG: line:" << line;
+
+                //Split the string with tabulation into a list
+                QStringList fieldList = line.split('\t');
+
                 if (line.isNull())
                     break;
                 else
                 {
                     //Append data to the database
-                    insertQuery.bindValue(":parameter_type", line);
-                    insertQuery.bindValue(":parameter_value2", line);
+                    insertQuery.bindValue(":parameter_name", fieldList[0]);
+                    insertQuery.bindValue(":parameter_type", fieldList[1]);
+                    insertQuery.bindValue(":parameter_value1", fieldList[2]);
+                    insertQuery.bindValue(":parameter_value2", fieldList[3]);
                     insertQuery.exec();
                 }
             }
@@ -621,6 +651,23 @@ void Collection::loadParameters()
         else{
             qDebug() << "DEBUG: Could not open parameters.csv:" << parametersFile.errorString();
         }
+    }
+
+    //Get collection version
+    QSqlQuery queryVersion;
+    QString queryVersionSQL = QLatin1String(R"(
+                                    SELECT parameter_value1
+                                    FROM parameter
+                                    WHERE parameter_type =:parameter_type
+                                    AND parameter_name =:parameter_name
+                                )");
+    queryVersion.prepare(queryVersionSQL);
+    queryVersion.bindValue(":parameter_type", "collection");
+    queryVersion.bindValue(":parameter_name", "version");
+    queryVersion.exec();
+
+    while(queryVersion.next()){
+        version = queryVersion.value(0).toString();
     }
 }
 //----------------------------------------------------------------------
@@ -760,7 +807,7 @@ void Collection::saveParametersToFile()
         query.prepare(querySQL);
         query.exec();
 
-        if(parameterFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        if(parameterFile.open(QFile::WriteOnly | QFile::Text)) {
 
             //Iterate the records and generate lines
             while (query.next()) {

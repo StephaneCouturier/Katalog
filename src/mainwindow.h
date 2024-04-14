@@ -295,6 +295,7 @@ class MainWindow : public QMainWindow
             void loadVirtualStorageCatalogFileToTable();
             void importVirtualAssignmentsToDevices();
             void convertFoldersIdxFiles();
+            void importExcludeIntoParameter();
 
         //TAB: Statistics
             QStringList typeOfData;
@@ -473,7 +474,6 @@ class MainWindow : public QMainWindow
             void on_Devices_treeView_DeviceList_clicked(const QModelIndex &index);
             void on_Devices_treeView_DeviceList_customContextMenuRequested(const QPoint &pos);
             void on_DevicesTreeViewDeviceListHeaderSortOrderChanged();
-            void on_Devices_pushButton_ImportV1_clicked();
             void on_Devices_pushButton_TreeExpandCollapse_clicked();
             void on_Devices_pushButton_EditList_clicked();
             void on_Devices_pushButton_SelectPath_clicked();

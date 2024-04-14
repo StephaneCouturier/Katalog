@@ -52,6 +52,7 @@ public:
     QString version;
     QString folder;
     QString settingsFilePath;
+    void updateCollectionVersion();
 
     //Database management
     QString databaseMode;

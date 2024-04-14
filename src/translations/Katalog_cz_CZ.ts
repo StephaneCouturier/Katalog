@@ -202,7 +202,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8434"/>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="130"/>
         <source>Katalog Colors (dark)</source>
         <translation>Katalogové barvy (tmavé)</translation>
     </message>
@@ -266,13 +266,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7624"/>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7619"/>
-        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="180"/>
         <source>Memory</source>
         <translation>Paměť</translation>
     </message>
@@ -302,7 +302,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="826"/>
         <location filename="../mainwindow_tab_search.cpp" line="963"/>
         <location filename="../mainwindow_tab_search.cpp" line="1110"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="633"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="634"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -332,7 +332,7 @@
         <location filename="../mainwindow.ui" line="2115"/>
         <location filename="../mainwindow.ui" line="4710"/>
         <location filename="../mainwindow_tab_device.cpp" line="1843"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="637"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="638"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -601,7 +601,7 @@
         <location filename="../mainwindow_tab_device.cpp" line="1607"/>
         <location filename="../mainwindow_tab_device.cpp" line="1829"/>
         <location filename="../mainwindow_tab_device.cpp" line="2060"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="632"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="633"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -631,7 +631,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="829"/>
         <location filename="../mainwindow_tab_search.cpp" line="966"/>
         <location filename="../mainwindow_tab_search.cpp" line="1113"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="636"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="637"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -748,7 +748,7 @@
         <location filename="../mainwindow_tab_device.cpp" line="1619"/>
         <location filename="../mainwindow_tab_device.cpp" line="1841"/>
         <location filename="../mainwindow_tab_device.cpp" line="2072"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="639"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="640"/>
         <source>Path</source>
         <translation>Cesta</translation>
     </message>
@@ -1088,7 +1088,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7629"/>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="182"/>
         <source>Hosted</source>
         <translation>Hostováno</translation>
     </message>
@@ -1329,7 +1329,7 @@
         <location filename="../mainwindow_tab_search.cpp" line="964"/>
         <location filename="../mainwindow_tab_search.cpp" line="1111"/>
         <location filename="../mainwindow_tab_search.cpp" line="2522"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="634"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="635"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="370"/>
         <source>Date</source>
         <translation>Datum</translation>
@@ -1409,7 +1409,7 @@
     <message>
         <location filename="../mainwindow.ui" line="8429"/>
         <location filename="../mainwindow_setup.cpp" line="238"/>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation>Katalogové barvy (světlé)</translation>
@@ -2355,12 +2355,12 @@ do koše?</translation>
         <translation>&lt;br/&gt;&lt;br/&gt; %1 aktualisierte Kataloge (aktiv), %2 übersprungene Kataloge (inaktiv)</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="3187"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3188"/>
         <source>Upgraded collection to v2.0.</source>
         <translation>Upgradovaná kolekce na v2.0.</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="286"/>
+        <location filename="../collection.cpp" line="327"/>
         <location filename="../mainwindow_tab_device.cpp" line="2589"/>
         <source>No catalog found.</source>
         <translation>Nebyl nalezen žádný katalog.</translation>
@@ -2391,7 +2391,7 @@ do koše?</translation>
         <translation>Uložit změny v definici katalogu?&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="366"/>
+        <location filename="../collection.cpp" line="407"/>
         <source>A storage.csv file was found, but could not be loaded.
 Likely, it was made with an older version of Katalog.
 The file can be fixed manually, please visit the wiki page:
@@ -2541,7 +2541,7 @@ Soubor lze opravit ručně, navštivte stránku wiki:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5918"/>
-        <location filename="../mainwindow_tab_explore.cpp" line="635"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="636"/>
         <source>Directory</source>
         <translation>Složku</translation>
     </message>
@@ -2576,7 +2576,7 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Vybraný katalog obsahuje více než %1 souborů.&lt;br/&gt;Otevření může trvat několik minut.&lt;br/&gt;Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_explore.cpp" line="638"/>
+        <location filename="../mainwindow_tab_explore.cpp" line="639"/>
         <source>orderValue</source>
         <translation>orderValue</translation>
     </message>
@@ -2602,53 +2602,78 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>ID rodiče</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="401"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="409"/>
         <source>Default Storage</source>
         <translation>Výchozí úložiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="438"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
         <source>Collection Upgrade Required</source>
         <translation>Je vyžadován upgrade sbírky</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="440"/>
-        <source>Katalog has detected that the selected collection was created with an earlier version.</source>
-        <translation>Katalog zjistil, že vybraná kolekce byla vytvořena s dřívější verzí.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="442"/>
-        <source>&lt;br/&gt;Current collection folder: </source>
-        <translation>&lt;br/&gt;Aktuální složka sbírky: </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="444"/>
-        <source>&lt;br/&gt;Current collection version: </source>
-        <translation>&lt;br/&gt;Aktuální verze kolekce: </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="446"/>
-        <source>To utilize this collection with Katalog 2.0, it needs to be upgraded.</source>
-        <translation>Chcete-li tuto sbírku používat s Katalogem 2.0, je třeba ji upgradovat.</translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="448"/>
-        <source>The upgrade process can be performed automatically, but it is strongly advised to &lt;b&gt;back up the collection folder/files before proceeding&lt;/b&gt;.</source>
-        <translation>Proces upgradu lze provést automaticky, ale důrazně se doporučuje &lt;b&gt;před pokračováním zálohovat složku/soubory kolekce&lt;/b&gt;.</translation>
+        <source>This application of &apos;Katalog&apos; is in version: </source>
+        <translation>Tato aplikace &apos;Katalog&apos; je ve verzi: </translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_settings.cpp" line="450"/>
-        <source>What would you like to do?</source>
-        <translation>Co bys rád dělal?</translation>
+        <source>Current collection version: </source>
+        <translation>Aktuální verze kolekce: </translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="488"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="518"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="452"/>
+        <source>Collection folder: </source>
+        <translation>Složka sbírky: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <source>This upgrade process can be performed automatically.</source>
+        <translation>Tento proces aktualizace lze provést automaticky.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
+        <translation>Zjistěte o hlavních změnách a migraci v této &lt;a href=&apos;%1&apos;&gt;hlavní verzi 2.0&lt;/a&gt; (en).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
+        <translation>Obvyklý seznam nových funkcí naleznete v &lt;a href=&apos;%1&apos;&gt;Poznámkách k vydání&lt;/a&gt; (en).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
+        <translation>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Před upgradem zálohujte složku/soubory sbírky!&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="463"/>
+        <source>What should be done now?</source>
+        <translation>Co by se teď mělo udělat?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="470"/>
+        <source>Upgrade Now</source>
+        <translation>Vylepšit nyní</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="471"/>
+        <source>Choose a Different Folder</source>
+        <translation>Vyberte jinou složku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="472"/>
+        <source>Exit Application</source>
+        <translation>Ukončete aplikaci</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="505"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="535"/>
         <source>Select the database to open:</source>
         <translation>Vyberte databázi, kterou chcete otevřít:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="277"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Některé změny v seznamu úložných zařízení nebyly uloženy.&lt;br/&gt;Uložit a ukončit, zahodit a ukončit nebo zrušit ukončení?</translation>
     </message>
@@ -2658,22 +2683,22 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <translation>Zrušit přiřazení tohoto katalogu</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="162"/>
+        <location filename="../collection.cpp" line="203"/>
         <source>Error opening output file:&lt;br/&gt;%1</source>
         <translation>Chyba při otevírání výstupního souboru:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="724"/>
+        <location filename="../collection.cpp" line="849"/>
         <source> Physical Group</source>
         <translation> Fyzická skupina</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="733"/>
+        <location filename="../collection.cpp" line="858"/>
         <source>Default Virtual group</source>
         <translation>Výchozí virtuální skupina</translation>
     </message>
     <message>
-        <location filename="../collection.cpp" line="762"/>
+        <location filename="../collection.cpp" line="887"/>
         <source>Select a catalog with a valid path.</source>
         <translation>Vyberte katalog s platnou cestou.</translation>
     </message>

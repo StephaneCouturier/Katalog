@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-04-13";
+        releaseDate     = "2024-04-14";
         developmentMode = false;
 
     //Prepare paths, user setting file, check version
@@ -322,7 +322,7 @@ msgBox.exec();
                                 )");
         query.prepare(querySQL);
         query.exec();
-        qDebug()<<query.lastError();
+        qDebug()<<"DEBUG: query: "<<query.lastError();
         while(query.next()){
             qDebug()<<query.value(0).toString()<<query.value(1).toString();
         }
