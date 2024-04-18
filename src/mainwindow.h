@@ -426,10 +426,11 @@ class MainWindow : public QMainWindow
 
             void on_Create_pushButton_PickPath_clicked();
             void on_Create_treeView_Explorer_clicked(const QModelIndex &index);
-            void on_Create_pushButton_EditExcludeList_clicked();
+            void on_Create_pushButton_AddDirectoryToExclude_clicked();
             void on_Create_pushButton_AddStorage_clicked();
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();
+            void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
 
         //Explore
             void on_Explore_splitter_splitterMoved();

@@ -65,40 +65,57 @@
         loadFileSystem(newSelectedPath);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Create_pushButton_EditExcludeList_clicked()
-    {//Edit Exclusion list
-
-        //Verify if a folder exclusion list exists
-        QFile excludeFile(collection->parameterFilePath);
-        if ( excludeFile.exists()){
-            QDesktopServices::openUrl(QUrl::fromLocalFile(collection->parameterFilePath));
+    void MainWindow::on_Create_pushButton_AddDirectoryToExclude_clicked()
+    {//Add fodler to the exclusion list
+        QString newFolderToExclude = ui->Create_lineEdit_FolderToExclude->text();
+        int pathLength = newFolderToExclude.length();
+        if (newFolderToExclude !="" and newFolderToExclude !="/" and QVariant(newFolderToExclude.at(pathLength-1)).toString()=="/") {
+            newFolderToExclude.remove(pathLength-1,1);
         }
-        else{
-            //if not, propose to create it
-            int result = QMessageBox::warning(this,tr("Update"),tr("No list found, create one?"),
-                                              QMessageBox::Yes | QMessageBox::Cancel);
 
-            if ( result == QMessageBox::Cancel){
+        if(newFolderToExclude!=""){
+            //Insert new entry
+            QSqlQuery insertQuery;
+            QString insertSQL = QLatin1String(R"(
+                                        INSERT INTO parameter (
+                                                    parameter_name,
+                                                    parameter_type,
+                                                    parameter_value2)
+                                        VALUES(
+                                                    :parameter_name,
+                                                    :parameter_type,
+                                                    :parameter_value2)
+                                )");
+            insertQuery.prepare(insertSQL);
+            insertQuery.bindValue(":parameter_name", "");
+            insertQuery.bindValue(":parameter_type", "exclude_directory");
+            insertQuery.bindValue(":parameter_value2", newFolderToExclude);
+            insertQuery.exec();
+            qDebug()<<"DEBUG: query: "<<insertQuery.lastError();
+
+            //Save
+            collection->saveParametersToFile();
+
+            //Reload to list view
+            QSqlQuery queryLoad;
+            QString queryLoadSQL = QLatin1String(R"(
+                                        SELECT DISTINCT parameter_value2
+                                        FROM parameter
+                                        WHERE parameter_type ='exclude_directory'
+                                        ORDER BY parameter_value2
+                                )");
+            if (!queryLoad.exec(queryLoadSQL)) {
+                qDebug() << "Failed to execute query";
                 return;
             }
-            else{
-                // Create it, if it does not exist
-                if(!excludeFile.open(QIODevice::ReadOnly)) {
 
-                    if (excludeFile.open(QFile::WriteOnly | QFile::Text)) {
+            QSqlQueryModel *model = new QSqlQueryModel;
+            model->setQuery(std::move(queryLoad));
 
-                          QTextStream stream(&excludeFile);
-
-                          //insert one line as an example
-                          stream << tr("folder/path/without/slash_at_the_end");
-
-                          excludeFile.close();
-
-                          //and open it for edition
-                          QDesktopServices::openUrl(QUrl::fromLocalFile(collection->parameterFilePath));
-                    }
-                }
-            }
+            QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+            proxyModel->setSourceModel(model);
+            proxyModel->setDynamicSortFilter(true);
+            ui->Create_treeView_Excluded->setModel(proxyModel);
         }
     }
     //--------------------------------------------------------------------------
@@ -120,6 +137,55 @@
     void MainWindow::on_Create_pushButton_CreateCatalog_clicked()
     {
         createCatalog();
+    }
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos)
+    {
+        //Get selection data
+        QModelIndex index=ui->Create_treeView_Excluded->currentIndex();
+        QString selectedDirectory = ui->Create_treeView_Excluded->model()->index(index.row(), 0, index.parent() ).data().toString();
+
+        //Set actions
+        QPoint globalPos = ui->Create_treeView_Excluded->mapToGlobal(pos);
+        QMenu excludeContextMenu;
+
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this directory"), this);
+        excludeContextMenu.addAction(menuDeviceAction1);
+        connect(menuDeviceAction1, &QAction::triggered, this, [ selectedDirectory, this]() {
+            //Delete
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                    DELETE FROM parameter
+                                    WHERE parameter_type ='exclude_directory'
+                                    AND parameter_value2=:parameter_value2
+                                )");
+            query.prepare(querySQL);
+            query.bindValue(":parameter_value2", selectedDirectory);
+            query.exec();
+
+            //Reload
+            QSqlQuery queryLoad;
+            QString queryLoadSQL = QLatin1String(R"(
+                                        SELECT DISTINCT parameter_value2
+                                        FROM parameter
+                                        WHERE parameter_type ='exclude_directory'
+                                        ORDER BY parameter_value2
+                                )");
+            if (!queryLoad.exec(queryLoadSQL)) {
+                qDebug() << "Failed to execute query";
+                return;
+            }
+
+            QSqlQueryModel *model = new QSqlQueryModel;
+            model->setQuery(std::move(queryLoad));
+
+            QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+            proxyModel->setSourceModel(model);
+            proxyModel->setDynamicSortFilter(true);
+            ui->Create_treeView_Excluded->setModel(proxyModel);
+        });
+
+        excludeContextMenu.exec(globalPos);
     }
     //--------------------------------------------------------------------------
 

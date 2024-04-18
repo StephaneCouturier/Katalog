@@ -207,6 +207,7 @@
         ui->Explore_treeview_Directories->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Devices_treeView_DeviceList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Create_treeView_Excluded->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()
@@ -529,9 +530,19 @@
             );
 
         //Lines
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
-        ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
-        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
+        ui->Filters_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Filters_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Devices_line_separateButtons->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Explore_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;");
+        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_02->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_03->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Settings_line_1->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5; } ");
+        ui->Settings_line_2->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
+        ui->Create_hline_01->setStyleSheet("QFrame { color: #39b2e5; border-top: 1px solid #39b2e5;} ");
 
         //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");
@@ -557,6 +568,9 @@
         ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+
+        //Treeviews
+        //ui->Devices_treeView_DeviceList->setStyleSheet()
 
     }
     //----------------------------------------------------------------------
@@ -628,9 +642,9 @@
               );
 
         //Lines
-        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676; } ");
-        ui->Explore_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
-        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; border-top: 1px solid 095676;} ");
+        ui->Search_line_SeparateResults->setStyleSheet("QFrame { color: #095676; } ");
+        ui->Devices_line_SeparateTop->setStyleSheet("QFrame { color: #095676; } "); // border-top: 1px solid #095676;
+        ui->Statistics_line_Separate->setStyleSheet("QFrame { color: #095676; } ");
 
         //Doted lines on Search screen
         ui->Search_label_LinkImage01->setStyleSheet("QLabel { background: url(:/images/link_blue/link-tree-mid.png) repeat-y left; } ");

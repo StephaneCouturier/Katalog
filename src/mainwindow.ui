@@ -25,6 +25,11 @@
     <height>16777215</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Noto Sans</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Katalog</string>
   </property>
@@ -205,6 +210,7 @@
                  <widget class="QLabel" name="Filters_label_DisplayDevice">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -217,6 +223,7 @@
                  <widget class="QLabel" name="Filters_label_DisplayStorage">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -273,6 +280,7 @@
                  <widget class="QLabel" name="Filters_label_DisplayCatalog">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -403,7 +411,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="Line" name="Filters_line_SeparateResults_3">
+              <widget class="Line" name="Filters_line_1">
                <property name="lineWidth">
                 <number>1</number>
                </property>
@@ -442,7 +450,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="Line" name="Filters_line_SeparateResults_2">
+              <widget class="Line" name="Filters_line_2">
                <property name="lineWidth">
                 <number>1</number>
                </property>
@@ -579,6 +587,7 @@
               <widget class="QLabel" name="Filters_label_Selection">
                <property name="font">
                 <font>
+                 <family>Noto Sans</family>
                  <pointsize>10</pointsize>
                  <bold>true</bold>
                 </font>
@@ -707,6 +716,7 @@
           </property>
           <property name="font">
            <font>
+            <family>Noto Sans</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -844,6 +854,7 @@
                      </property>
                      <property name="font">
                       <font>
+                       <family>Sans Serif</family>
                        <pointsize>10</pointsize>
                       </font>
                      </property>
@@ -978,6 +989,7 @@
                      </property>
                      <property name="font">
                       <font>
+                       <family>Noto Sans</family>
                        <pointsize>11</pointsize>
                       </font>
                      </property>
@@ -1097,6 +1109,7 @@
                      </property>
                      <property name="font">
                       <font>
+                       <family>Noto Sans</family>
                        <pointsize>10</pointsize>
                       </font>
                      </property>
@@ -1140,6 +1153,9 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
+                 <item>
+                  <layout class="QFormLayout" name="formLayout"/>
+                 </item>
                  <item>
                   <widget class="QWidget" name="Search_widget_FileNameCriteria" native="true">
                    <layout class="QVBoxLayout" name="Search_verticalLayout_FileNameCriteriaMain">
@@ -1253,6 +1269,7 @@
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -1373,6 +1390,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -1592,6 +1610,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -1616,6 +1635,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>11</pointsize>
                          </font>
                         </property>
@@ -1901,6 +1921,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>13</pointsize>
                          </font>
                         </property>
@@ -1956,6 +1977,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>9</pointsize>
                          </font>
                         </property>
@@ -1996,6 +2018,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>12</pointsize>
                          </font>
                         </property>
@@ -2048,6 +2071,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>9</pointsize>
                          </font>
                         </property>
@@ -2144,6 +2168,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -2309,6 +2334,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>13</pointsize>
                          </font>
                         </property>
@@ -2381,6 +2407,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Noto Sans</family>
                           <pointsize>12</pointsize>
                          </font>
                         </property>
@@ -2885,6 +2912,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                              </property>
                              <property name="font">
                               <font>
+                               <family>Noto Sans</family>
                                <pointsize>10</pointsize>
                               </font>
                              </property>
@@ -2943,6 +2971,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                              </property>
                              <property name="font">
                               <font>
+                               <family>Noto Sans</family>
                                <pointsize>10</pointsize>
                               </font>
                              </property>
@@ -3336,11 +3365,8 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <item>
                  <widget class="Line" name="Search_line_SeparateResults">
-                  <property name="lineWidth">
-                   <number>1</number>
-                  </property>
-                  <property name="midLineWidth">
-                   <number>0</number>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -3391,6 +3417,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="font">
                      <font>
+                      <family>Sans Serif</family>
                       <pointsize>10</pointsize>
                      </font>
                     </property>
@@ -3472,6 +3499,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="font">
                      <font>
+                      <family>Noto Sans</family>
                       <pointsize>10</pointsize>
                      </font>
                     </property>
@@ -3496,6 +3524,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="font">
                      <font>
+                      <family>Noto Sans</family>
                       <pointsize>10</pointsize>
                       <bold>true</bold>
                      </font>
@@ -3524,6 +3553,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="font">
                      <font>
+                      <family>Noto Sans</family>
                       <pointsize>10</pointsize>
                      </font>
                     </property>
@@ -3548,6 +3578,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </property>
                     <property name="font">
                      <font>
+                      <family>Noto Sans</family>
                       <pointsize>10</pointsize>
                       <bold>true</bold>
                      </font>
@@ -3564,6 +3595,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <spacer name="Search_horizontalSpacer_08">
                     <property name="font">
                      <font>
+                      <family>Noto Sans</family>
                       <pointsize>10</pointsize>
                      </font>
                     </property>
@@ -3715,6 +3747,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                        </font>
                       </property>
@@ -3807,6 +3840,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Sans Serif</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -3828,6 +3862,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <spacer name="Search_horizontalSpacer_9">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -3854,6 +3889,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>8</pointsize>
                  </font>
                 </property>
@@ -3884,6 +3920,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <layout class="QGridLayout" name="Devices_gridLayout_15">
               <item row="0" column="6">
                <widget class="Line" name="Devices_line_separateButtons">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -3948,7 +3987,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>50</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -4055,6 +4094,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -4094,6 +4134,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -4121,6 +4162,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QLabel" name="Storage_label_SpaceUsedValue">
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -4148,6 +4190,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QLabel" name="Storage_label_SpaceFreeValue">
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -5095,6 +5138,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -5118,6 +5162,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QLabel" name="Catalogs_label_TotalSizeLabel">
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                     </font>
                    </property>
@@ -5136,6 +5181,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -5172,6 +5218,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -5522,7 +5569,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item row="5" column="0">
-             <widget class="Line" name="Devices_line_5">
+             <widget class="Line" name="Devices_line_SeparateTop">
+              <property name="font">
+               <font>
+                <family>Noto Sans</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -5605,6 +5664,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -5690,6 +5750,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -5741,6 +5802,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -5804,105 +5866,32 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QWidget" name="Explore_widget_Information" native="true">
+             <widget class="QWidget" name="widget" native="true">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>80</height>
+                <height>100</height>
                </size>
               </property>
-              <layout class="QGridLayout" name="gridLayout_8">
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item row="0" column="2">
-                <spacer name="Explore_horizontalSpacer_01">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="4">
-                <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="Explore_label_CatalogPathLabel">
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Source Path</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="4">
-                <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="9">
-                <spacer name="Explore_horizontalSpacer_02">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>655</width>
-                   <height>19</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="Explore_label_CatalogNameLabel">
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Catalog</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="10">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="3">
                 <widget class="QCheckBox" name="Explore_checkBox_DisplayFolders">
                  <property name="text">
                   <string>Display folders</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="Explore_label_CatalogNameDisplay">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -5919,20 +5908,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="4">
-                <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="10">
+               <item row="2" column="3">
                 <widget class="QPushButton" name="Explore_pushButton_OrderFoldersFirst">
                  <property name="enabled">
                   <bool>false</bool>
@@ -5945,7 +5921,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="10">
+               <item row="1" column="3">
                 <widget class="QCheckBox" name="Explore_checkBox_DisplaySubFolders">
                  <property name="enabled">
                   <bool>false</bool>
@@ -5955,11 +5931,115 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </property>
                 </widget>
                </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="Explore_label_CatalogNameLabel">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Catalog</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="Explore_label_CatalogPathLabel">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Source Path</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QWidget" name="Explore_widget_Information" native="true">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>80</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_8">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="2">
+                   <spacer name="Explore_horizontalSpacer_01">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>10</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="Explore_label_CatalogPathDisplay">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <spacer name="Explore_horizontalSpacer_02">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>655</width>
+                   <height>19</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="Explore_label_CatalogDirectoryDisplay">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans</family>
+                   <pointsize>10</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="Line" name="Explore_line_Separate">
+             <widget class="Line" name="Explore_line_1">
+              <property name="styleSheet">
+               <string notr="true">color: #39b2e5; border-top: 1px solid #39b2e5;</string>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -6010,6 +6090,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6025,6 +6106,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Create_label_SelectContent">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6059,6 +6141,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6082,6 +6170,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Create_label_includeFileType">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <kerning>true</kerning>
                    </font>
@@ -6194,6 +6283,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Create_label_OtherOptions">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <kerning>true</kerning>
                    </font>
@@ -6233,31 +6323,61 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </layout>
               </item>
               <item>
+               <spacer name="Create_verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="Create_label_OtherOptions_2">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Directories to exclude from catalogs</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
                <layout class="QHBoxLayout" name="Create_horizontalLayout_2_2">
                 <item>
-                 <spacer name="Create_horizontalSpacer_03">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
+                 <widget class="QLineEdit" name="Create_lineEdit_FolderToExclude"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Create_pushButton_EditExcludeList">
+                 <widget class="QPushButton" name="Create_pushButton_AddDirectoryToExclude">
                   <property name="text">
-                   <string>Edit list of folders to be excluded</string>
+                   <string>Add directory to exclude</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="document-edit-sign"/>
+                   <iconset theme="document-new"/>
                   </property>
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QTreeView" name="Create_treeView_Excluded">
+                <attribute name="headerVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
               </item>
               <item>
                <spacer name="Create_verticalSpacer_01">
@@ -6300,6 +6420,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6315,6 +6436,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Create_label_DefineCreate">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6343,6 +6465,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item>
                <widget class="Line" name="Create_hline_03">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6614,6 +6742,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6635,6 +6764,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
@@ -6663,6 +6793,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item>
                <widget class="Line" name="Create_hline_01">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6741,6 +6877,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item row="2" column="0">
                <widget class="Line" name="Statistics_line_Separate">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -6849,7 +6991,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>40</width>
-                    <height>20</height>
+                    <height>35</height>
                    </size>
                   </property>
                  </spacer>
@@ -7219,6 +7361,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Settings_label_Settings">
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                   <bold>true</bold>
                  </font>
@@ -7251,6 +7394,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Settings_label_SettingsFile">
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                   <bold>false</bold>
                  </font>
@@ -7277,6 +7421,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Settings_label_Data">
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                   <bold>false</bold>
                  </font>
@@ -7329,6 +7474,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Settings_label_About">
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                   <bold>true</bold>
                  </font>
@@ -7347,6 +7493,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_DateTitle">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>false</bold>
                    </font>
@@ -7414,6 +7561,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_VersionValue">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>true</bold>
                    </font>
@@ -7439,6 +7587,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>false</bold>
                    </font>
@@ -7455,6 +7604,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_DateValue">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>true</bold>
                    </font>
@@ -7504,14 +7654,26 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </layout>
             </item>
             <item row="9" column="0">
-             <widget class="Line" name="Settings_line_3">
+             <widget class="Line" name="Settings_line_1">
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="Line" name="Settings_line_4">
+             <widget class="Line" name="Settings_line_2">
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -7580,6 +7742,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </property>
                    <property name="font">
                     <font>
+                     <family>Noto Sans</family>
                      <pointsize>10</pointsize>
                      <bold>true</bold>
                     </font>
@@ -7687,6 +7850,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_4">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -7706,6 +7870,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -7725,6 +7890,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -7748,6 +7914,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -7761,6 +7928,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_CollectionFolder">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -7877,6 +8045,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <widget class="QLabel" name="Settings_label_Settings_3">
                          <property name="font">
                           <font>
+                           <family>Noto Sans</family>
                            <pointsize>10</pointsize>
                            <bold>true</bold>
                           </font>
@@ -7906,6 +8075,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <widget class="QLabel" name="Settings_label_Data_2">
                          <property name="font">
                           <font>
+                           <family>Noto Sans</family>
                            <pointsize>10</pointsize>
                            <bold>false</bold>
                           </font>
@@ -7919,6 +8089,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <widget class="QLabel" name="Settings_label_Data_3">
                          <property name="font">
                           <font>
+                           <family>Noto Sans</family>
                            <pointsize>10</pointsize>
                            <bold>false</bold>
                           </font>
@@ -7964,6 +8135,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLabel" name="Settings_label_CurrentFolder_9">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -7983,6 +8155,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8006,6 +8179,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8019,6 +8193,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8137,6 +8312,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>true</bold>
                        </font>
@@ -8166,6 +8342,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8189,6 +8366,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_UserName">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8204,6 +8382,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8217,6 +8396,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Port">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8232,6 +8412,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8251,6 +8432,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8270,6 +8452,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8283,6 +8466,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_Password">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8292,6 +8476,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_DatabaseName">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8301,6 +8486,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <widget class="QLineEdit" name="Settings_lineEdit_DataMode_Hosted_HostName">
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>8</pointsize>
                        </font>
                       </property>
@@ -8316,6 +8502,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="font">
                        <font>
+                        <family>Noto Sans</family>
                         <pointsize>10</pointsize>
                         <bold>false</bold>
                        </font>
@@ -8399,6 +8586,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_Theme">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>false</bold>
                    </font>
@@ -8476,6 +8664,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_IconSize">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>false</bold>
                    </font>
@@ -8489,6 +8678,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QLabel" name="Settings_label_Language">
                   <property name="font">
                    <font>
+                    <family>Noto Sans</family>
                     <pointsize>10</pointsize>
                     <bold>false</bold>
                    </font>
@@ -8546,6 +8736,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QLabel" name="Settings_label_Settings_2">
                 <property name="font">
                  <font>
+                  <family>Noto Sans</family>
                   <pointsize>10</pointsize>
                   <bold>true</bold>
                  </font>

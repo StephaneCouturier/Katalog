@@ -351,6 +351,7 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
+
         //Check if new collection (The folder is empty)
         QDir dir(collection->folder);
         dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
@@ -444,10 +445,27 @@
         //Load Tags
         reloadTagsData();
 
+        //Load directories to exclude
+        QSqlQuery queryLoad;
+        QString queryLoadSQL = QLatin1String(R"(
+                                        SELECT DISTINCT parameter_value2
+                                        FROM parameter
+                                        WHERE parameter_type ='exclude_directory'
+                                        ORDER BY parameter_value2
+                                )");
+        if (!queryLoad.exec(queryLoadSQL)) {
+            qDebug() << "Failed to execute query";
+            return;
+        }
+        QSqlQueryModel *model = new QSqlQueryModel;
+        model->setQuery(std::move(queryLoad));
+        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+        proxyModel->setSourceModel(model);
+        ui->Create_treeView_Excluded->setModel(proxyModel);
+
         //Verify Collection version and trigger migration
         if(collection->databaseMode=="Memory"){
-            qDebug()<< collection->version << collection->appVersion;
-            if (   collection->version < collection->appVersion ){
+            if ( collection->version < collection->appVersion ){
 
                 collection->version = "1.x";
 
