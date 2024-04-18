@@ -6356,21 +6356,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="Create_horizontalLayout_2_2">
+               <layout class="QVBoxLayout" name="verticalLayout_18">
                 <item>
                  <widget class="QLineEdit" name="Create_lineEdit_FolderToExclude"/>
                 </item>
-                <item>
-                 <widget class="QPushButton" name="Create_pushButton_AddDirectoryToExclude">
-                  <property name="text">
-                   <string>Add directory to exclude</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="document-new"/>
-                  </property>
-                 </widget>
-                </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Create_pushButton_AddDirectoryToExclude">
+                <property name="text">
+                 <string>Add directory to exclude</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-new"/>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QTreeView" name="Create_treeView_Excluded">

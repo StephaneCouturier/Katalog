@@ -29,3 +29,5 @@ QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a
 
 QComboBox             { padding: 0px 0px; margin: 0px; }
 QComboBox             { padding-left: 6px; }
+
+QFrame                { color: #333; }
