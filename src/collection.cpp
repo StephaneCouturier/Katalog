@@ -392,9 +392,7 @@ void Collection::loadStorageFileToTable()
 
         //Open file or return information
         if(!storageFile.open(QIODevice::ReadOnly)) {
-
             queryDelete.exec();
-
             return;
         }
 
@@ -486,8 +484,8 @@ void Collection::loadStorageFileToTable()
                     insertQuery.bindValue(":storage_container",fieldList[13]);
                     insertQuery.bindValue(":storage_comment", fieldList[14]);
 
-                    insertQuery.exec();
-
+                    if(line!="")
+                        insertQuery.exec();qDebug()<<line;
                 }
         }
         storageFile.close();

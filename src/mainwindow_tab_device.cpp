@@ -3153,6 +3153,19 @@ void MainWindow::migrateCollection()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     //Devices
+        //Delete default virtual and storage
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                        DELETE FROM device
+                                        WHERE device_id ='2' OR device_id = '3'
+                                    )");
+        query.prepare(querySQL);
+        query.exec();
+
+        QString query2SQL = "DELETE FROM storage WHERE storage_id = (SELECT MAX(storage_id) FROM storage);";
+        query.prepare(query2SQL);
+        query.exec();
+
         //Import Virtual devices in Physical group from locations
         importVirtualToDevices();
 
