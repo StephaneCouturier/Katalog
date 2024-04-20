@@ -59,7 +59,6 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_pushButton_ReloadCollection_clicked()
     {
-        collection->createStorageFile();
         loadCollection();
     }
     //----------------------------------------------------------------------

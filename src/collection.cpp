@@ -32,6 +32,7 @@
 #include "collection.h"
 #include "device.h"
 
+//Main attributes--------------------------------------------------------
 void Collection::updateCollectionVersion()
 {
     QSqlQuery queryUpdateVersion;
@@ -46,9 +47,9 @@ void Collection::updateCollectionVersion()
     queryUpdateVersion.bindValue(":parameter_type", "collection");
     queryUpdateVersion.bindValue(":parameter_value1", version);
     queryUpdateVersion.exec();
-    qDebug()<<"DEBUG: queryUpdateVersion: "<<queryUpdateVersion.lastError();
 }
 
+//File paths and creation -----------------------------------------------
 void Collection::generateCollectionFilesPaths()
 {
     searchHistoryFilePath       = folder + "/" + "search_history.csv";
@@ -113,9 +114,97 @@ void Collection::generateCollectionFiles()
             //Save
             saveParametersToFile();
         }
+
+        //Storage.csv
+        QFile newStorageFile(storageFilePath);
+        if(!newStorageFile.open(QIODevice::ReadOnly)) {
+
+            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                QTextStream stream(&newStorageFile);
+
+                stream << "ID"            << "\t"
+                       << "Name"          << "\t"
+                       << "Type"          << "\t"
+                       << "Location"      << "\t"
+                       << "Path"          << "\t"
+                       << "Label"         << "\t"
+                       << "FileSystem"    << "\t"
+                       << "Total"         << "\t"
+                       << "Free"          << "\t"
+                       << "BrandModel"    << "\t"
+                       << "SerialNumber"  << "\t"
+                       << "BuildDate"     << "\t"
+                       << "ContentType"   << "\t"
+                       << "Container"     << "\t"
+                       << "Comment"       << "\t"
+                       << '\n';
+
+                newStorageFile.close();
+
+                //Even if empty, load it to the model
+                loadStorageFileToTable();
+
+                return;
+            }
+        }
     }
 }
 
+//File loading-----------------------------------------------------------
+void Collection::load()
+{//Load collection
+    //Reset key values and clear database in "Memory" mode
+    version ="";
+    clearDatabaseData();
+
+    //Check if new collection (the folder would be empty)
+    QDir dir(folder);
+    dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    if(dir.entryList().isEmpty()){
+        version = appVersion;
+        updateCollectionVersion();
+    }
+
+    //Generate collection files paths and statistics parameters
+    generateCollectionFilesPaths();
+    generateCollectionFiles();
+
+    //Load Files to database
+    loadSearchHistoryFileToTable();
+    loadParameterFileToTable();
+    loadCatalogFilesToTable();
+    loadStorageFileToTable();
+    loadDeviceFileToTable();
+
+    //Add a default storage device, to force any new catalog to have one
+    insertPhysicalStorageGroup();
+}
+//----------------------------------------------------------------------
+void Collection::clearDatabaseData()
+{   //Clear database date in the context of Memory mode, prior to reloading files to tables
+    if(databaseMode=="Memory"){
+        QSqlQuery queryDelete;
+        queryDelete.exec("DELETE FROM device");
+        queryDelete.exec("DELETE FROM catalog");
+        queryDelete.exec("DELETE FROM storage");
+        queryDelete.exec("DELETE FROM file");
+        queryDelete.exec("DELETE FROM filetemp");
+        queryDelete.exec("DELETE FROM folder");
+        queryDelete.exec("DELETE FROM metadata");
+        queryDelete.exec("DELETE FROM statistics_device");
+        queryDelete.exec("DELETE FROM search");
+        queryDelete.exec("DELETE FROM tag");
+        queryDelete.exec("DELETE FROM parameter");
+
+        //MIGRATION 1.22 to 2.0
+        queryDelete.exec("DELETE FROM statistics_catalog");
+        queryDelete.exec("DELETE FROM statistics_storage");
+        queryDelete.exec("DELETE FROM virtual_storage");
+        queryDelete.exec("DELETE FROM virtual_storage_catalog");
+        queryDelete.exec("DELETE FROM device_catalog");
+    }
+}
 //----------------------------------------------------------------------
 void Collection::loadAllCatalogFiles()
 {//Load all catalog files to memory
@@ -133,76 +222,6 @@ void Collection::loadAllCatalogFiles()
             tempDevice.ID = queryLoadAllCatalogFiles.value(0).toInt();          
             tempDevice.loadDevice();
             tempDevice.catalog->loadCatalogFileListToTable();
-        }
-    }
-}
-void Collection::saveDeviceTableToFile()
-{
-    if (databaseMode == "Memory"){
-        QFile deviceFile(deviceFilePath);
-
-        //Get data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                            device_id                  ,
-                                            device_parent_id           ,
-                                            device_name                ,
-                                            device_type                ,
-                                            device_external_id         ,
-                                            device_path                ,
-                                            device_total_file_size     ,
-                                            device_total_file_count    ,
-                                            device_total_space         ,
-                                            device_free_space          ,
-                                            device_active              ,
-                                            device_group_id            ,
-                                            device_date_updated
-                                    FROM device
-                            )");
-        query.prepare(querySQL);
-        query.exec();
-
-        //Write data
-        if (deviceFile.open(QFile::WriteOnly | QFile::Text)) {
-
-            QTextStream textStreamToFile(&deviceFile);
-
-            //Prepare header line
-            textStreamToFile << "ID"         << "\t"
-                             << "Parent ID"  << "\t"
-                             << "Name"       << "\t"
-                             << "Type"       << "\t"
-                             << "ExternalID" << "\t"
-                             << "Path"       << "\t"
-                             << "total_file_size" << "\t"
-                             << "total_file_count"<< "\t"
-                             << "total_space"<< "\t"
-                             << "free_space" << "\t"
-                             << "active"     << "\t"
-                             << "groupID"    << "\t"
-                             << "date updated"    << "\t"
-                             << '\n';
-
-            //Iterate the records and generate lines
-            while (query.next()) {
-                const QSqlRecord record = query.record();
-                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                    if (i>0)
-                        textStreamToFile << '\t';
-                    textStreamToFile << record.value(i).toString();
-                }
-                //Write the result in the file
-                textStreamToFile << '\n';
-            }
-            deviceFile.close();
-        }
-        else{
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "Error opening output file:<br/>%1").arg(deviceFilePath));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
         }
     }
 }
@@ -378,7 +397,7 @@ void Collection::loadCatalogFilesToTable()
         }
     }
 }
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------
 void Collection::loadStorageFileToTable()
 {//load Storage file data to its table
     if (databaseMode=="Memory"){
@@ -485,7 +504,7 @@ void Collection::loadStorageFileToTable()
                     insertQuery.bindValue(":storage_comment", fieldList[14]);
 
                     if(line!="")
-                        insertQuery.exec();qDebug()<<line;
+                        insertQuery.exec();
                 }
         }
         storageFile.close();
@@ -590,7 +609,7 @@ void Collection::loadStatisticsDeviceFileToTable()
     }
 }
 //----------------------------------------------------------------------
-void Collection::loadParameters()
+void Collection::loadParameterFileToTable()
 {// Load the contents of the storage statistics file into the database
     if(databaseMode=="Memory"){
         //Clear database table
@@ -628,11 +647,9 @@ void Collection::loadParameters()
             while (!textStream.atEnd())
             {
                 line = textStream.readLine();
-                //qDebug() << "DEBUG: line:" << line;
 
                 //Split the string with tabulation into a list
                 QStringList fieldList = line.split('\t');
-
                 if (line.isNull())
                     break;
                 else
@@ -666,6 +683,244 @@ void Collection::loadParameters()
 
     while(queryVersion.next()){
         version = queryVersion.value(0).toString();
+    }
+}
+//----------------------------------------------------------------------
+void Collection::loadSearchHistoryFileToTable()
+{
+    if(databaseMode=="Memory"){
+
+        //Define storage file and prepare stream
+        QFile searchFile(searchHistoryFilePath);
+        QTextStream textStream(&searchFile);
+
+        QSqlQuery queryDelete;
+        queryDelete.prepare( "DELETE FROM search" );
+
+        //Open file or return information
+        if(!searchFile.open(QIODevice::ReadOnly)) {
+            return;
+        }
+        //Clear all entries of the current table
+        queryDelete.exec();
+
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(2)!="ID"){//test the validity of the file
+
+                    //Split the string with tabulation into a list
+                    QStringList fieldList = line.split('\t');
+
+                    //add empty values to support the addition of new fields to files from older versions
+                    int  targetFieldsCount = 37;
+                    int currentFiledsCount = fieldList.count();
+                    int    diffFieldsCount = targetFieldsCount - currentFiledsCount;
+                    if(diffFieldsCount !=0){
+                        for(int i=0; i<diffFieldsCount; i++){
+                            fieldList.append("");
+                        }
+                    }
+
+                    QSqlQuery insertQuery;
+                    QString insertQuerySQL = QLatin1String(R"(
+                                            INSERT INTO search(
+                                                date_time,
+                                                text_checked,
+                                                text_phrase,
+                                                text_criteria,
+                                                text_search_in,
+                                                file_type,
+                                                file_size_checked,
+                                                file_size_min,
+                                                file_size_min_unit,
+                                                file_size_max,
+                                                file_size_max_unit,
+                                                date_modified_checked,
+                                                date_modified_min,
+                                                date_modified_max,
+                                                duplicates_checked,
+                                                duplicates_name,
+                                                duplicates_size,
+                                                duplicates_date_modified,
+                                                differences_checked,
+                                                differences_name,
+                                                differences_size,
+                                                differences_date_modified,
+                                                differences_catalogs,
+                                                show_folders,
+                                                tag_checked,
+                                                tag,
+                                                search_location,
+                                                search_storage,
+                                                search_catalog,
+                                                search_catalog_checked,
+                                                search_directory_checked,
+                                                selected_directory,
+                                                text_exclude,
+                                                case_sensitive,
+                                                file_type_checked,
+                                                file_criteria_checked,
+                                                folder_criteria_checked
+                                                )
+                                            VALUES(
+                                                :date_time,
+                                                :text_checked,
+                                                :text_phrase,
+                                                :text_criteria,
+                                                :text_search_in,
+                                                :file_type,
+                                                :file_size_checked,
+                                                :file_size_min,
+                                                :file_size_min_unit,
+                                                :file_size_max,
+                                                :file_size_max_unit,
+                                                :date_modified_checked,
+                                                :date_modified_min,
+                                                :date_modified_max,
+                                                :duplicates_checked,
+                                                :duplicates_name,
+                                                :duplicates_size,
+                                                :duplicates_date_modified,
+                                                :differences_checked,
+                                                :differences_name,
+                                                :differences_size,
+                                                :differences_date_modified,
+                                                :differences_catalogs,
+                                                :show_folders,
+                                                :tag_checked,
+                                                :tag,
+                                                :search_location,
+                                                :search_storage,
+                                                :search_catalog,
+                                                :search_catalog_checked,
+                                                :search_directory_checked,
+                                                :selected_directory,
+                                                :text_exclude,
+                                                :case_sensitive,
+                                                :file_type_checked,
+                                                :file_criteria_checked,
+                                                :folder_criteria_checked
+                                                )
+                                            )");
+
+                    insertQuery.prepare(insertQuerySQL);
+                    insertQuery.bindValue(":date_time",                 fieldList[0]);
+                    insertQuery.bindValue(":text_checked",              fieldList[1]);
+                    insertQuery.bindValue(":text_phrase",               fieldList[2]);
+                    insertQuery.bindValue(":text_criteria",             fieldList[3]);
+                    insertQuery.bindValue(":text_search_in",            fieldList[4]);
+                    insertQuery.bindValue(":file_type",                 fieldList[5]);
+                    insertQuery.bindValue(":file_size_checked",         fieldList[6]);
+                    insertQuery.bindValue(":file_size_min",             fieldList[7]);
+                    insertQuery.bindValue(":file_size_min_unit",        fieldList[8]);
+                    insertQuery.bindValue(":file_size_max",             fieldList[9]);
+                    insertQuery.bindValue(":file_size_max_unit",        fieldList[10]);
+                    insertQuery.bindValue(":date_modified_checked",     fieldList[11]);
+                    insertQuery.bindValue(":date_modified_min",         fieldList[12]);
+                    insertQuery.bindValue(":date_modified_max",         fieldList[13]);
+                    insertQuery.bindValue(":duplicates_checked",        fieldList[14]);
+                    insertQuery.bindValue(":duplicates_name",           fieldList[15]);
+                    insertQuery.bindValue(":duplicates_size",           fieldList[16]);
+                    insertQuery.bindValue(":duplicates_date_modified",  fieldList[17]);
+                    insertQuery.bindValue(":show_folders",              fieldList[18]);
+                    insertQuery.bindValue(":tag_checked",               fieldList[19]);
+                    insertQuery.bindValue(":tag",                       fieldList[20]);
+                    insertQuery.bindValue(":search_location",           fieldList[21]);
+                    insertQuery.bindValue(":search_storage",            fieldList[22]);
+                    insertQuery.bindValue(":search_catalog",            fieldList[23]);
+                    insertQuery.bindValue(":search_catalog_checked",    fieldList[24]);
+                    insertQuery.bindValue(":search_directory_checked",  fieldList[25]);
+                    insertQuery.bindValue(":selected_directory",        fieldList[26]);
+                    insertQuery.bindValue(":text_exclude",              fieldList[27]);
+                    insertQuery.bindValue(":case_sensitive",            fieldList[28]);
+                    insertQuery.bindValue(":differences_checked",       fieldList[29]);
+                    insertQuery.bindValue(":differences_name",          fieldList[30]);
+                    insertQuery.bindValue(":differences_size",          fieldList[31]);
+                    insertQuery.bindValue(":differences_date_modified", fieldList[32]);
+                    insertQuery.bindValue(":differences_catalogs",      fieldList[33]);
+                    insertQuery.bindValue(":file_type_checked",         fieldList[34]);
+                    insertQuery.bindValue(":file_criteria_checked",     fieldList[35]);
+                    insertQuery.bindValue(":folder_criteria_checked",   fieldList[36]);
+                    insertQuery.exec();
+                }
+        }
+        searchFile.close();
+    }
+}
+//--------------------------------------------------------------------------
+//File saving ----------------------------------------------------------
+void Collection::saveDeviceTableToFile()
+{
+    if (databaseMode == "Memory"){
+        QFile deviceFile(deviceFilePath);
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT
+                                            device_id                  ,
+                                            device_parent_id           ,
+                                            device_name                ,
+                                            device_type                ,
+                                            device_external_id         ,
+                                            device_path                ,
+                                            device_total_file_size     ,
+                                            device_total_file_count    ,
+                                            device_total_space         ,
+                                            device_free_space          ,
+                                            device_active              ,
+                                            device_group_id            ,
+                                            device_date_updated
+                                    FROM device
+                            )");
+        query.prepare(querySQL);
+        query.exec();
+
+        //Write data
+        if (deviceFile.open(QFile::WriteOnly | QFile::Text)) {
+
+            QTextStream textStreamToFile(&deviceFile);
+
+            //Prepare header line
+            textStreamToFile << "ID"         << "\t"
+                             << "Parent ID"  << "\t"
+                             << "Name"       << "\t"
+                             << "Type"       << "\t"
+                             << "ExternalID" << "\t"
+                             << "Path"       << "\t"
+                             << "total_file_size" << "\t"
+                             << "total_file_count"<< "\t"
+                             << "total_space"<< "\t"
+                             << "free_space" << "\t"
+                             << "active"     << "\t"
+                             << "groupID"    << "\t"
+                             << "date updated"    << "\t"
+                             << '\n';
+
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        textStreamToFile << '\t';
+                    textStreamToFile << record.value(i).toString();
+                }
+                //Write the result in the file
+                textStreamToFile << '\n';
+            }
+            deviceFile.close();
+        }
+        else{
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(QCoreApplication::translate("MainWindow", "Error opening output file:<br/>%1").arg(deviceFilePath));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+        }
     }
 }
 //----------------------------------------------------------------------
@@ -806,7 +1061,6 @@ void Collection::saveParametersToFile()
         query.exec();
 
         if(parameterFile.open(QFile::WriteOnly | QFile::Text)) {
-
             //Iterate the records and generate lines
             while (query.next()) {
                 const QSqlRecord record = query.record();
@@ -823,47 +1077,8 @@ void Collection::saveParametersToFile()
         parameterFile.close();
     }
 }
-//----------------------------------------------------------------------
 
-void Collection::insertPhysicalStorageGroup() {
-    QSqlQuery query;
-    QString querySQL;
-
-    querySQL = QLatin1String(R"(
-                            SELECT COUNT(*)
-                            FROM device
-                            WHERE device_id = 1
-                        )");
-    query.prepare(querySQL);
-    query.exec();
-    query.next();
-    int result = query.value(0).toInt();
-
-    if(result == 0){
-        Device *newDeviceItem1 = new Device();
-        newDeviceItem1->ID = 1;
-        newDeviceItem1->parentID = 0;
-        newDeviceItem1->name = QCoreApplication::translate("MainWindow", " Physical Group");
-        newDeviceItem1->type = "Virtual";
-        newDeviceItem1->externalID = 0;
-        newDeviceItem1->groupID = 0;
-        newDeviceItem1->insertDevice();
-
-        Device *newDeviceItem2 = new Device();
-        newDeviceItem2->ID = 2;
-        newDeviceItem2->parentID = 1;
-        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Default Virtual group");
-        newDeviceItem2->type = "Virtual";
-        newDeviceItem2->externalID = 0;
-        newDeviceItem2->groupID = 0;
-        newDeviceItem2->insertDevice();
-    }
-
-    saveDeviceTableToFile();
-
-}
-//--------------------------------------------------------------------------
-
+//File deleting---------------------------------------------------------
 void Collection::deleteCatalogFile(Device *device) {
     if(databaseMode=="Memory"){
         //Move file to trash
@@ -896,42 +1111,87 @@ void Collection::deleteCatalogFile(Device *device) {
     }
 
 }
-//--------------------------------------------------------------------------
-void Collection::createStorageFile()
-{
-    if(databaseMode=="Memory"){
-        // Create it, if it does not exist
-        QFile newStorageFile(storageFilePath);
-        if(!newStorageFile.open(QIODevice::ReadOnly)) {
+//----------------------------------------------------------------------
 
-            if (newStorageFile.open(QFile::WriteOnly | QFile::Text)) {
+//Data management ------------------------------------------------------
+void Collection::insertPhysicalStorageGroup() {
+    //Add the default Physical Group and a Virtual sub-device
+    QSqlQuery query;
+    QString querySQL;
 
-                QTextStream stream(&newStorageFile);
+    querySQL = QLatin1String(R"(
+                            SELECT COUNT(*)
+                            FROM device
+                            WHERE device_id = 1
+                        )");
+    query.prepare(querySQL);
+    query.exec();
+    query.next();
+    int result = query.value(0).toInt();
+    if(result == 0){
+        Device *newDeviceItem1 = new Device();
+        newDeviceItem1->ID = 1;
+        newDeviceItem1->parentID = 0;
+        newDeviceItem1->name = QCoreApplication::translate("MainWindow", " Physical Group");
+        newDeviceItem1->type = "Virtual";
+        newDeviceItem1->externalID = 0;
+        newDeviceItem1->groupID = 0;
+        newDeviceItem1->insertDevice();
 
-                stream << "ID"            << "\t"
-                       << "Name"          << "\t"
-                       << "Type"          << "\t"
-                       << "Location"      << "\t"
-                       << "Path"          << "\t"
-                       << "Label"         << "\t"
-                       << "FileSystem"    << "\t"
-                       << "Total"         << "\t"
-                       << "Free"          << "\t"
-                       << "BrandModel"    << "\t"
-                       << "SerialNumber"  << "\t"
-                       << "BuildDate"     << "\t"
-                       << "ContentType"   << "\t"
-                       << "Container"     << "\t"
-                       << "Comment"       << "\t"
-                       << '\n';
+        Device *newDeviceItem2 = new Device();
+        newDeviceItem2->ID = 2;
+        newDeviceItem2->parentID = 1;
+        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Default Virtual group");
+        newDeviceItem2->type = "Virtual";
+        newDeviceItem2->externalID = 0;
+        newDeviceItem2->groupID = 0;
+        newDeviceItem2->insertDevice();
+    }
 
-                newStorageFile.close();
+    saveDeviceTableToFile();
 
-                //Even if empty, load it to the model
-                loadStorageFileToTable();
+    //Add a default storage device, to force any new catalog to have one
+    QSqlQuery queryStorage;
+    QString queryStorageSQL = QLatin1String(R"(
+                                    SELECT COUNT(*)
+                                    FROM device
+                                    WHERE device_type='Storage'
+                                )");
+    queryStorage.prepare(queryStorageSQL);
+    queryStorage.exec();
+    queryStorage.next();
 
-                return;
-            }
-        }
+    if (queryStorage.value(0).toInt() == 0){
+        //Create Device and related Storage under Physical group (ID=0)
+        Device *newStorageDevice = new Device();
+        newStorageDevice->generateDeviceID();
+        newStorageDevice->parentID = 2;
+        if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
+            newStorageDevice->parentID = 1;
+
+        newStorageDevice->name = QCoreApplication::translate("MainWindow", "Local disk");
+        newStorageDevice->type = "Storage";
+        newStorageDevice->path = "/";
+        #ifdef Q_OS_WINDOWS
+        newStorageDevice->path = "C:";
+        #endif
+        newStorageDevice->storage->path = newStorageDevice->path;
+        newStorageDevice->storage->generateID();
+        newStorageDevice->externalID = newStorageDevice->storage->ID;
+        newStorageDevice->groupID = 0;
+        newStorageDevice->insertDevice();
+        newStorageDevice->storage->name = newStorageDevice->name;
+        newStorageDevice->storage->insertStorage();
+        newStorageDevice->saveDevice();
+        newStorageDevice->updateDevice("create",
+                                       databaseMode,
+                                       false,
+                                       folder,
+                                       false);
+
+        //Save data to file
+        saveDeviceTableToFile();
+        saveStorageTableToFile();
     }
 }
+//----------------------------------------------------------------------

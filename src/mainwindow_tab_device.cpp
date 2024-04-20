@@ -3166,6 +3166,10 @@ void MainWindow::migrateCollection()
         query.prepare(query2SQL);
         query.exec();
 
+        QString query3SQL = "DELETE FROM parameter WHERE parameter_name = 'version'";
+        query.prepare(query3SQL);
+        query.exec();
+
         //Import Virtual devices in Physical group from locations
         importVirtualToDevices();
 
@@ -3191,6 +3195,25 @@ void MainWindow::migrateCollection()
         importExcludeIntoParameter();
 
     //Close procedure
+        //Add the current version
+        QSqlQuery insertQuery;
+        QString insertSQL = QLatin1String(R"(
+                                        INSERT INTO parameter (
+                                                    parameter_name,
+                                                    parameter_type,
+                                                    parameter_value1)
+                                        VALUES(
+                                                    :parameter_name,
+                                                    :parameter_type,
+                                                    :parameter_value1)
+                                )");
+        insertQuery.prepare(insertSQL);
+        insertQuery.bindValue(":parameter_name", "version");
+        insertQuery.bindValue(":parameter_type", "collection");
+        insertQuery.bindValue(":parameter_value1", currentVersion);
+        insertQuery.exec();
+        collection->saveParametersToFile();
+
     loadDevicesView();
     loadDevicesTreeToModel("Filters");
     QApplication::restoreOverrideCursor();

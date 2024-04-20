@@ -99,15 +99,6 @@
                             storage_date_updated  TEXT)
             )");
 
-        // DEVICE CATALOG ------------------------------------------------------
-
-            const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS device_catalog(
-                            device_id           NUMERIC,
-                            catalog_name        TEXT,
-                            directory_path      TEXT)
-            )");
-
         // FILE (storing all catalogs files)-------------------------------------
 
             const auto SQL_CREATE_FILE = QLatin1String(R"(
@@ -272,6 +263,15 @@
                             virtual_storage_id      NUMERIC,
                             catalog_name            TEXT,
                             directory_path          TEXT)
+            )");
+
+            // DEVICE CATALOG ------------------------------------------------------
+
+            const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS device_catalog(
+                            device_id           NUMERIC,
+                            catalog_name        TEXT,
+                            directory_path      TEXT)
             )");
 
 //-------------------------------------------------------------------------------

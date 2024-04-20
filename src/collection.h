@@ -80,18 +80,20 @@ public:
     void generateCollectionFiles();
 
     //File loading
+    void load();
+    void clearDatabaseData();
     void loadAllCatalogFiles();
     void loadDeviceFileToTable();
     void loadCatalogFilesToTable();
     void loadStorageFileToTable();
     void loadStatisticsDeviceFileToTable();
-    void loadParameters();
+    void loadParameterFileToTable();
+    void loadSearchHistoryFileToTable();
 
     //File saving
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
     void saveStatiticsToFile();
-    void createStorageFile();
     void saveParametersToFile();
 
     //File deleting

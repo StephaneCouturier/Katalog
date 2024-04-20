@@ -139,7 +139,6 @@ class MainWindow : public QMainWindow
             void startDatabase();
             void selectDatabaseFilePath();
             void selectNewDatabaseFolderPath();
-            void clearDatabaseData();
             void applyDatabaseModeToUI();
 
             //Objects

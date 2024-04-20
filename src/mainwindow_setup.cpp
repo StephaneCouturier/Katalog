@@ -185,21 +185,7 @@
         return QSqlError();
     }
     //----------------------------------------------------------------------
-    void MainWindow::clearDatabaseData()
-    {   //Clear database date in the context of Memory mode, prior to reloading files to tables
-        if(collection->databaseMode=="Memory"){
-            QSqlQuery queryDelete;
-            queryDelete.exec("DELETE FROM catalog");
-            queryDelete.exec("DELETE FROM storage");
-            queryDelete.exec("DELETE FROM device");
-            queryDelete.exec("DELETE FROM file");
-            queryDelete.exec("DELETE FROM filetemp");
-            queryDelete.exec("DELETE FROM folder");
-            queryDelete.exec("DELETE FROM statistics");
-            queryDelete.exec("DELETE FROM search");
-            queryDelete.exec("DELETE FROM tag");
-        }
-    }
+
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
         ui->Search_treeView_FilesFound->setContextMenuPolicy(Qt::CustomContextMenu);

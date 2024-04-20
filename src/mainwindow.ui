@@ -6037,9 +6037,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             </item>
             <item row="1" column="0">
              <widget class="Line" name="Explore_line_1">
-              <property name="styleSheet">
-               <string notr="true">color: #39b2e5; border-top: 1px solid #39b2e5;</string>
-              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>

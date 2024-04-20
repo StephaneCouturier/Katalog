@@ -121,26 +121,7 @@
         //Set the new path in Settings tab
         ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
-        //Redefine the path of the Storage file
-        collection->storageFilePath = collection->folder + "/" + "storage.csv";
-
         //Load the collection from this new folder;
-        //Clear database if mode is Memory
-        if(collection->databaseMode=="Memory"){
-            //Clear current entires from the tables
-            QSqlQuery queryDelete;
-            queryDelete.exec("DELETE FROM catalog");
-            queryDelete.exec("DELETE FROM storage");
-            queryDelete.exec("DELETE FROM file");
-            queryDelete.exec("DELETE FROM filetemp");
-            queryDelete.exec("DELETE FROM folder");
-            queryDelete.exec("DELETE FROM statistics");
-            queryDelete.exec("DELETE FROM search");
-            queryDelete.exec("DELETE FROM tag");
-        }
-
-        collection->createStorageFile();
-        collection->generateCollectionFilesPaths();
         loadCollection();
     }
 
@@ -239,7 +220,6 @@
         //Set the new path in Settings tab
         ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-        collection->createStorageFile();
         collection->generateCollectionFilesPaths();
     }
     //Hosted ---------------------------------------------------------------
@@ -351,90 +331,17 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
-
-        //Check if new collection (The folder is empty)
-        QDir dir(collection->folder);
-        dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
-        if(dir.entryList().isEmpty()){
-            collection->version = collection->appVersion;
-            collection->updateCollectionVersion();
-        }
-
-        //Generate collection files paths and statistics parameters
-        collection->generateCollectionFilesPaths();
-        collection->generateCollectionFiles();
-
-        //Load data from files to database ("Memory" database mode
-            //Create a Storage list (if none exists) + conversions
-            collection->createStorageFile();
-
-            //Clear database (when in memory)
-            clearDatabaseData();
-
-            //Load Files to database
-            loadSearchHistoryFileToTable();
-            collection->loadParameters();
-            collection->loadCatalogFilesToTable();
-            collection->loadStorageFileToTable();
-            collection->loadDeviceFileToTable();
+        collection->load();
 
         //Check active status and synch it
-            updateAllDeviceActive();
+        updateAllDeviceActive();
 
         //Load data from tables to models and update display
-            loadDevicesTreeToModel("Filters");
-            loadSearchHistoryTableToModel();
-            filterFromSelectedDevice();
-
-        //Add a default storage device, to force any new catalog to have one
-        collection->insertPhysicalStorageGroup();
-
-        QSqlQuery queryStorage;
-        QString queryStorageSQL = QLatin1String(R"(
-                                    SELECT COUNT(*)
-                                    FROM device
-                                    WHERE device_type='Storage'
-                                )");
-        queryStorage.prepare(queryStorageSQL);
-        queryStorage.exec();
-        queryStorage.next();
-
-        if (queryStorage.value(0).toInt() == 0){
-            //Create Device and related Storage under Physical group (ID=0)
-            Device *newStorageDevice = new Device();
-            newStorageDevice->generateDeviceID();
-            newStorageDevice->parentID = 2;
-            if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
-                newStorageDevice->parentID = 1;
-
-            newStorageDevice->name = tr("Local disk");
-            newStorageDevice->type = "Storage";
-            newStorageDevice->path = "/";
-            #ifdef Q_OS_WINDOWS
-            newStorageDevice->path = "C:";
-            #endif
-            newStorageDevice->storage->path = newStorageDevice->path;
-            newStorageDevice->storage->generateID();
-            newStorageDevice->externalID = newStorageDevice->storage->ID;
-            newStorageDevice->groupID = 0;
-            newStorageDevice->insertDevice();
-            newStorageDevice->storage->name = newStorageDevice->name;
-            newStorageDevice->storage->insertStorage();
-            newStorageDevice->saveDevice();
-            newStorageDevice->updateDevice("create",
-                                           collection->databaseMode,
-                                           false,
-                                           collection->folder,
-                                           false);
-
-            //Save data to file
-            collection->saveDeviceTableToFile();
-            collection->saveStorageTableToFile();
-        }
+        loadSearchHistoryTableToModel();
+        filterFromSelectedDevice();
 
         //Reload models
         loadDevicesTreeToModel("Filters");
-        loadDevicesView();
         loadParentsList();
 
         //Load Statistics
@@ -454,7 +361,7 @@
                                         ORDER BY parameter_value2
                                 )");
         if (!queryLoad.exec(queryLoadSQL)) {
-            qDebug() << "Failed to execute query";
+            qDebug() << "Failed to execute queryLoad exclude_directory.";
             return;
         }
         QSqlQueryModel *model = new QSqlQueryModel;
@@ -589,10 +496,7 @@
                     //Set the new path in Settings tab
                     ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-                    collection->createStorageFile();
-                    collection->generateCollectionFilesPaths();
                     loadCollection();
-
                     //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
         }
 
