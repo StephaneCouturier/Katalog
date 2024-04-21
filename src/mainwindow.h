@@ -508,6 +508,7 @@ class MainWindow : public QMainWindow
             void on_Tags_pushButton_OpenTagsFile_clicked();
             void on_Tags_listView_ExistingTags_clicked(const QModelIndex &index);
             void on_Tags_treeview_Explorer_clicked(const QModelIndex &index);
+            void on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos);
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();

@@ -45,7 +45,7 @@ int Tag::rowCount(const QModelIndex &parent) const
 int Tag::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 2;
+    return 3;
 }
 
 QVariant Tag::data(const QModelIndex &index, int role) const
@@ -54,8 +54,9 @@ QVariant Tag::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     switch (index.column()){
-    case 0: return QString(folderPath[index.row()]);
-    case 1: return QString(tagName[index.row()]);
+    case 0: return int(ID[index.row()]);
+    case 1: return QString(folderPath[index.row()]);
+    case 2: return QString(tagName[index.row()]);
     }
     return QVariant();
 }
@@ -64,17 +65,22 @@ QVariant Tag::headerData(int section, Qt::Orientation orientation, int role) con
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section){
-        case 0: return QString(tr("Folder"));
-        case 1: return QString(tr("Tag"));
+        case 0: return QString(tr("ID"));
+        case 1: return QString(tr("Folder"));
+        case 2: return QString(tr("Tag"));
         }
     }
     return QVariant();
 }
 
 // Create a method to populate the model with data
-void Tag::populateTagData(const QList<QString> &tFolderPath,
-                          const QList<QString> &tTagName)
+void Tag::populateTagData(
+    const QList<int> &tTagID,
+    const QList<QString> &tFolderPath,
+    const QList<QString> &tTagName)
 {
+    ID.clear();
+    ID = tTagID;
     folderPath.clear();
     folderPath = tFolderPath;
     tagName.clear();

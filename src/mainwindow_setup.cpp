@@ -197,6 +197,7 @@
         ui->Devices_treeView_DeviceList->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Filters_treeView_Devices->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->Create_treeView_Excluded->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->Tags_treeView_FolderTags->setContextMenuPolicy(Qt::CustomContextMenu);
     }
     //----------------------------------------------------------------------
     void MainWindow::loadSettings()

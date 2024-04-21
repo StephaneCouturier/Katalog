@@ -94,7 +94,7 @@
             qDebug()<<"DEBUG: query: "<<insertQuery.lastError();
 
             //Save
-            collection->saveParametersToFile();
+            collection->saveParameterTableToFile();
 
             //Reload to list view
             QSqlQuery queryLoad;

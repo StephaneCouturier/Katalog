@@ -49,11 +49,12 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void populateTagData(const QList<QString> &folderPath,
-                          const QList<QString> &tagName
-                          );
+    void populateTagData(const QList<int> &tTagID, const QList<QString> &folderPath,
+                         const QList<QString> &tagName
+                         );
 
 private:
+    QList<int> ID;
     QList<QString> folderPath;
     QList<QString> tagName;
 

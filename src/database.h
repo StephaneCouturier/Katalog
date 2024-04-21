@@ -209,6 +209,7 @@
 
             const auto SQL_CREATE_TAG = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS  tag(
+                            ID          INTEGER PRIMARY KEY AUTOINCREMENT,
                             name		TEXT,
                             path		TEXT,
                             type		TEXT,

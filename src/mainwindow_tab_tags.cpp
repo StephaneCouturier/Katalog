@@ -56,30 +56,41 @@
     {
         QString selectedTagFolder = ui->Tags_lineEdit_FolderPath->text();
         QString selectedTagName   = ui->Tags_lineEdit_TagName->text();
+        QDateTime dateTime = QDateTime::currentDateTime();//fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
 
         if(selectedTagName == ""){
             QMessageBox::information(this,"Katalog","Please enter or select a tag for this folder.");
             return;
         }
 
-        //file
-        QString tagsFilePath = collection->folder + "/" + "tags.csv";
+        //Insert tag entry
+        QSqlQuery insertQuery;
+        QString insertQuerySQL = QLatin1String(R"(
+                                            INSERT INTO tag(
+                                                ID,
+                                                name,
+                                                path,
+                                                type,
+                                                date_time)
+                                            VALUES(
+                                                NULL,
+                                                :name,
+                                                :path,
+                                                :type,
+                                                :date_time)
+                                            )");
+        insertQuery.prepare(insertQuerySQL);
+        insertQuery.bindValue(":name",      selectedTagName);
+        insertQuery.bindValue(":path",      selectedTagFolder);
+        insertQuery.bindValue(":type",      "");
+        insertQuery.bindValue(":date_time", dateTime.toString("yyyy/MM/dd hh:mm:ss"));
+        insertQuery.exec();
 
-        QString tagLine = selectedTagFolder + '\t' + selectedTagName;
+        //Save file
+        collection->saveTagTableToFile();
 
-        //Append data to the lists
-        QFile tagsFile(tagsFilePath);
-        if(tagsFile.open(QFile::Append | QFile::Text)) {
-            QTextStream stream(&tagsFile);
-            stream << tagLine << '\n';
-            tagsFile.close();
-        }
-        //else
-            //KMessageBox::information(this,"No tags file found.");
-
-        //Refresh the lists
+        //Reload
         reloadTagsData();
-
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_Reload_clicked()
@@ -89,8 +100,8 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_pushButton_OpenTagsFile_clicked()
     {
-        collection->tagsFilePath = collection->folder + "/" + "tags.csv";
-        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->tagsFilePath));
+        collection->tagFilePath = collection->folder + "/" + "tags.csv";
+        QDesktopServices::openUrl(QUrl::fromLocalFile(collection->tagFilePath));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Tags_listView_ExistingTags_clicked(const QModelIndex &index)
@@ -112,14 +123,48 @@
                 ui->Tags_lineEdit_FolderPath->setText(fileInfo.filePath());
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Tags_treeView_FolderTags_customContextMenuRequested(const QPoint &pos)
+    {
+        //Get selection data
+        QModelIndex index=ui->Tags_treeView_FolderTags->currentIndex();
+        int tagID = ui->Tags_treeView_FolderTags->model()->index(index.row(), 0, index.parent() ).data().toInt();
+
+        //Set actions
+        QPoint globalPos = ui->Tags_treeView_FolderTags->mapToGlobal(pos);
+        QMenu tagContextMenu;
+
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this directory/tag"), this);
+        tagContextMenu.addAction(menuDeviceAction1);
+        connect(menuDeviceAction1, &QAction::triggered, this, [ tagID, this]() {
+            //Delete
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                    DELETE FROM tag
+                                    WHERE ID=:ID
+                                )");
+            query.prepare(querySQL);
+            query.bindValue(":ID", tagID);
+            query.exec();
+
+            //Save file
+            collection->saveTagTableToFile();
+
+            //Reload
+            reloadTagsData();
+        });
+
+        tagContextMenu.exec(globalPos);
+
+    }
 
 //Methods-------------------------------------------------------------------
 
     void MainWindow::reloadTagsData()
     {
         selectedTagListName="";
-        if(collection->databaseMode=="Memory")
-                loadTagsToTable();
+
+        collection->loadTagFileToTable();
+
         loadTagsTableToExistingTagsModel();
         loadTagsTableToTagsAndFolderListModel();
     }
@@ -164,9 +209,9 @@
         queryDelete.exec();
 
         //Prepare for using the csv file storing tag data
-        collection->tagsFilePath = collection->folder + "/" + "tags.csv";
+        collection->tagFilePath = collection->folder + "/" + "tags.csv";
 
-        QFile tagFile(collection->tagsFilePath);
+        QFile tagFile(collection->tagFilePath);
         if(!tagFile.open(QIODevice::ReadOnly)) {
                 return;
         }
@@ -216,13 +261,14 @@
     void MainWindow::loadTagsTableToExistingTagsModel()
     {
         //Set up temporary lists
+        QList<int>     tTagIDs;
         QList<QString> tFolderPaths;
         QList<QString> tTagNames;
 
 		//Get full list of tags
 		QSqlQuery query;
 		QString querySQL = QLatin1String(R"(
-                                    SELECT path, name
+                                    SELECT ID, path, name
                                     FROM tag
                                     )");
         query.prepare(querySQL);
@@ -230,15 +276,16 @@
 
 		//Populate lists
 		while(query.next()){
-                        tFolderPaths << query.value(0).toString();
-                        tTagNames    << query.value(1).toString();
+            tTagIDs      << query.value(0).toInt();
+            tFolderPaths << query.value(1).toString();
+            tTagNames    << query.value(2).toString();
 		}
 
         // Create model
         Tag *tagModel = new Tag(this);
 
         // Populate model with data
-        tagModel->populateTagData(tFolderPaths, tTagNames);
+        tagModel->populateTagData(tTagIDs, tFolderPaths, tTagNames);
 
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);
@@ -258,13 +305,14 @@
     void MainWindow::loadTagsTableToTagsAndFolderListModel()
     {
         //Set up temporary lists
+        QList<int> tIDs;
         QList<QString> tFolderPaths;
         QList<QString> tTagNames;
 
         //Get full list of tags
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                                    SELECT path, name
+                                    SELECT ID, path, name
                                     FROM tag
                                     )");
         if(selectedTagListName!=""){
@@ -278,15 +326,16 @@
 
         //Populate lists
         while(query.next()){
-                        tFolderPaths << query.value(0).toString();
-                        tTagNames    << query.value(1).toString();
+            tIDs << query.value(0).toInt();
+            tFolderPaths << query.value(1).toString();
+            tTagNames    << query.value(2).toString();
         }
 
         // Create model
         Tag *tagModel = new Tag(this);
 
         // Populate model with data
-        tagModel->populateTagData(tFolderPaths, tTagNames);
+        tagModel->populateTagData(tIDs, tFolderPaths, tTagNames);
 
         QSortFilterProxyModel *proxyStorageModel = new QSortFilterProxyModel(this);
         proxyStorageModel->setSourceModel(tagModel);
@@ -295,7 +344,7 @@
         ui->Tags_treeView_FolderTags->setModel(proxyStorageModel);
         ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(1,Qt::AscendingOrder);
         ui->Tags_treeView_FolderTags->QTreeView::sortByColumn(0,Qt::AscendingOrder);
-        ui->Tags_treeView_FolderTags->header()->setSectionResizeMode(QHeaderView::Interactive);
-        ui->Tags_treeView_FolderTags->header()->resizeSection(0, 350); //Folder
+        ui->Tags_treeView_FolderTags->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->Tags_treeView_FolderTags->header()->hideSection(0); //IDs
     }
     //----------------------------------------------------------------------

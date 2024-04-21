@@ -3213,7 +3213,7 @@ void MainWindow::migrateCollection()
         insertQuery.bindValue(":parameter_type", "collection");
         insertQuery.bindValue(":parameter_value1", currentVersion);
         insertQuery.exec();
-        collection->saveParametersToFile();
+        collection->saveParameterTableToFile();
 
     loadDevicesView();
     loadDevicesTreeToModel("Filters");
@@ -4104,7 +4104,7 @@ void MainWindow::importExcludeIntoParameter()
     //Update collection version and save
     collection->version = currentVersion;
     collection->updateCollectionVersion();
-    collection->saveParametersToFile();
+    collection->saveParameterTableToFile();
 }
 
 //--------------------------------------------------------------------------

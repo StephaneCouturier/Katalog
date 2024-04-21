@@ -111,8 +111,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
+                ui->Devices_pushButton_EditList->hide();
                 ui->Statistics_pushButton_EditDeviceStatisticsFile->hide();
                 ui->Statistics_pushButton_Reload->hide();
+                ui->Tags_pushButton_OpenTagsFile->hide();
             }
 
         //Load all other Settings and apply values
@@ -189,9 +191,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             //Set file types
             setFileTypes();
-
-            //last tree type selected
-            QString selectedTreeType = settings.value("Filters/LastTreeType").toString();
 
         //Setup tab: Explore
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);

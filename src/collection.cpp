@@ -57,7 +57,8 @@ void Collection::generateCollectionFilesPaths()
     deviceFilePath              = folder + "/" + "device.csv";
     statisticsDeviceFileName    = "statistics.csv";
     statisticsDeviceFilePath    = folder + "/" + statisticsDeviceFileName;
-    parameterFilePath          = folder + "/" + "parameters.csv";
+    parameterFilePath           = folder + "/" + "parameters.csv";
+    tagFilePath                 = folder + "/" + "tags.csv";
 
     //v1.22 files
     deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
@@ -112,7 +113,7 @@ void Collection::generateCollectionFiles()
             insertQuery.exec();
 
             //Save
-            saveParametersToFile();
+            saveParameterTableToFile();
         }
 
         //Storage.csv
@@ -855,6 +856,61 @@ void Collection::loadSearchHistoryFileToTable()
     }
 }
 //--------------------------------------------------------------------------
+void Collection::loadTagFileToTable()
+{
+    if(databaseMode=="Memory"){
+
+        //Define storage file and prepare stream
+        QFile tagFile(tagFilePath);
+        QTextStream textStream(&tagFile);
+
+        QSqlQuery queryDelete;
+        queryDelete.prepare( "DELETE FROM tag" );
+
+        //Open file or return information
+        if(!tagFile.open(QIODevice::ReadOnly)) {
+            return;
+        }
+        //Clear all entries of the current table
+        queryDelete.exec();
+
+        while (true)
+        {
+            QString line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+                if (line.left(4)!="name"){//test the validity of the file
+                    //Split the string with tabulation into a list
+                    QStringList fieldList = line.split('\t');
+                    QSqlQuery insertQuery;
+                    QString insertQuerySQL = QLatin1String(R"(
+                                            INSERT INTO tag(
+                                                ID,
+                                                name,
+                                                path,
+                                                type,
+                                                date_time)
+                                            VALUES(
+                                                :ID,
+                                                :name,
+                                                :path,
+                                                :type,
+                                                :date_time)
+                                            )");
+                    insertQuery.prepare(insertQuerySQL);
+                    insertQuery.bindValue(":ID",        fieldList[0]);
+                    insertQuery.bindValue(":name",      fieldList[1]);
+                    insertQuery.bindValue(":path",      fieldList[2]);
+                    insertQuery.bindValue(":type",      fieldList[3]);
+                    insertQuery.bindValue(":date_time", fieldList[4]);
+                    insertQuery.exec();
+                }
+        }
+        tagFile.close();
+    }
+}
+//--------------------------------------------------------------------------
 //File saving ----------------------------------------------------------
 void Collection::saveDeviceTableToFile()
 {
@@ -1039,7 +1095,7 @@ void Collection::saveStatiticsToFile()
     }
 }
 //----------------------------------------------------------------------
-void Collection::saveParametersToFile()
+void Collection::saveParameterTableToFile()
 {
     if(databaseMode=="Memory"){
         //Prepare export file
@@ -1080,6 +1136,51 @@ void Collection::saveParametersToFile()
         }
 
         parameterFile.close();
+    }
+}
+//----------------------------------------------------------------------
+void Collection::saveTagTableToFile()
+{
+    if(databaseMode=="Memory"){
+        //Prepare export file
+        QFile tagFile(tagFilePath);
+        QTextStream out(&tagFile);
+
+        //Prepare header line
+        out << "ID"     << "\t"
+            << "type"   << "\t"
+            << "type"   << "\t"
+            << "value1" << "\t"
+            << "value2" << "\t"
+            << '\n';
+
+        //Get data
+        QSqlQuery query;
+        QString querySQL = QLatin1String(R"(
+                                    SELECT  ID,
+                                            name,
+                                            path,
+                                            type,
+                                            date_time
+                                    FROM tag
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if(tagFile.open(QFile::WriteOnly | QFile::Text)) {
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //Write the result to the file
+                out << '\n';
+            }
+        }
+        tagFile.close();
     }
 }
 
