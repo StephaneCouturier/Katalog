@@ -215,7 +215,7 @@
             )");
 
         // EXCLUDE --------------------------------------------------------------
-            const auto SQL_CREATE_EXCLUDE = QLatin1String(R"(
+            const auto SQL_CREATE_PARAMETER = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS parameter(
                                 parameter_name      TEXT,
                                 parameter_type      TEXT,

@@ -202,10 +202,22 @@
         if ( newDatabaseFile !=""){
             collection->databaseFilePath = newDatabaseFile;
             changeDatabaseFilePath();
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+
+            //Save Settings for the new collection folder value;
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+            //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
+            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+            db.setDatabaseName(collection->databaseFilePath);
+            if (!db.open())
+                qDebug()<< db.lastError();
+
+            loadCollection();
         }
-        else
-            ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
 
         //Reset selected values (to avoid actions on the last selected ones)
         resetSelection();
@@ -219,9 +231,8 @@
 
         //Set the new path in Settings tab
         ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
-
-        collection->generateCollectionFilesPaths();
     }
+
     //Hosted ---------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1)
     {
@@ -457,16 +468,22 @@
 
             loadCollection();
         }
-        // else
-        //     ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(false);
-
     }
     //----------------------------------------------------------------------
     void MainWindow::selectNewDatabaseFolderPath()
     {
+        //Get last db file location if "File" mode, otherwise use collection folder
+        QString newFileFolder;
+        if(collection->databaseFilePath !=""){
+            QFileInfo fileInfo(collection->databaseFilePath);
+            newFileFolder = fileInfo.absolutePath();
+        }
+        else
+            newFileFolder = collection->folder;
+
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to open:"),
-                                                                   collection->folder+"/newKatalogFile.db","*.db");
+        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to create and open:"),
+                                                                   newFileFolder + "/newKatalogFile.db","*.db");
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
@@ -476,18 +493,26 @@
                     QFile fileOut(collection->databaseFilePath);
                     if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
                         //create an empty file
+
+                        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                        db.setDatabaseName(collection->databaseFilePath);
+                        if (!db.open())
+                            qDebug()<< db.lastError();
+
+                        QSqlQuery q;
+                        q.exec(SQL_CREATE_DEVICE);
+                        q.exec(SQL_CREATE_CATALOG);
+                        q.exec(SQL_CREATE_STORAGE);
+                        q.exec(SQL_CREATE_FILE);
+                        q.exec(SQL_CREATE_FILETEMP);
+                        q.exec(SQL_CREATE_FOLDER);
+                        q.exec(SQL_CREATE_METADATA);
+                        q.exec(SQL_CREATE_STATISTICS_DEVICE);
+                        q.exec(SQL_CREATE_SEARCH);
+                        q.exec(SQL_CREATE_TAG);
+                        q.exec(SQL_CREATE_PARAMETER);
                     }
                     fileOut.close();
-
-                    QSqlQuery q;
-                    q.exec(SQL_CREATE_CATALOG);
-                    q.exec(SQL_CREATE_STORAGE);
-                    q.exec(SQL_CREATE_FILE);
-                    q.exec(SQL_CREATE_FILETEMP);
-                    q.exec(SQL_CREATE_FOLDER);
-                    q.exec(SQL_CREATE_METADATA);
-                    q.exec(SQL_CREATE_SEARCH);
-                    q.exec(SQL_CREATE_TAG);
 
                     //Save Settings for the new collection folder value;
                     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -497,7 +522,6 @@
                     ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
                     loadCollection();
-                    //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
         }
 
         //Reset selected values (to avoid actions on the last selected ones)
