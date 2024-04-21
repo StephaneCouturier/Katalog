@@ -1896,17 +1896,25 @@
 
             //Export Results
             else if(selectedProcess==tr("Export Results")){
-                        QString exportFileName = exportSearchResults();
-                        if (exportFileName !=""){
-                            QMessageBox msgBox;
-                            msgBox.setWindowTitle("Katalog");
-                            msgBox.setTextFormat(Qt::RichText);
-                            exportFileName = "file://" + exportFileName;
-                            msgBox.setText(tr("Results exported to the collection folder:")
-                                           +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
-                            msgBox.setIcon(QMessageBox::Information);
-                            msgBox.exec();
-                        }
+                QString exportFileName = exportSearchResults();
+                QFileInfo fileInfo(exportFileName);
+                QString  fileSuffix = fileInfo.suffix();
+                if (exportFileName !=""){
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Katalog");
+                    msgBox.setTextFormat(Qt::RichText);
+                    if(collection->databaseMode=="Memory" or fileSuffix=="csv"){
+                        exportFileName = "file://" + exportFileName;
+                        msgBox.setText(tr("Results exported to the collection folder:")
+                                       +"<br/><a href='"+exportFileName+"'>"+exportFileName+"</a>");
+                    }
+                    else{
+                        msgBox.setText(tr("Results exported a new Catalog:")
+                                       +"<br/>"+exportFileName);
+                    }
+                    msgBox.setIcon(QMessageBox::Information);
+                    msgBox.exec();
+                }
             }
 
             //KRename
@@ -1999,8 +2007,8 @@
 
             int result = QMessageBox::question(this,"Katalog",
                       tr("Create a catalog from these results?"
-                         "<br/>- Yes: create an idx file and use it to refine your search,"
-                         "<br/>- No:  simply export results to a csv file."),
+                         "<br/>- Yes: create a <b>Catalog</b> to store the results and use it to refine your search,"
+                         "<br/>- No:  export results to a <b>csv file</b>."),
                                               QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
 
             if ( result !=QMessageBox::Cancel){
@@ -2008,7 +2016,7 @@
                 //Prepare export file name
                 QDateTime now = QDateTime::currentDateTime();
                 QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
-                QString fileNameWithoutExtension = QString::fromLatin1("search_results_%1").arg(timestamp);
+                QString fileNameWithoutExtension = tr("search_results") + "_" + timestamp;
                 Device *newDevice = new Device();
 
                 if ( result ==QMessageBox::Yes){
@@ -2031,7 +2039,7 @@
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the newCatalog
-                    newDevice->catalog->sourcePath = newSearch->searchDateTime;
+                    newDevice->catalog->sourcePath = newSearch->searchDateTime;//passing a date instead oo a path, as there is no path for a given search that can be multi-catalog
                     newDevice->catalog->appVersion = currentVersion;
 
                     //Save new catalog
@@ -2060,12 +2068,30 @@
                     fileExtension="csv";
                 }
 
-                //Complete file name
+                //Complete file name based on databaseMode
+                if(collection->databaseMode=="Memory"){//Use collection folder
                     QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
                     fullFileName = collection->folder + "/" + fileNameWithExtension;
-                    selectedDevice->catalog->filePath = fullFileName;
-                    selectedDevice->catalog->name = selectedDevice->name;
-                    QFile exportFile(fullFileName);
+                }
+                else if(collection->databaseMode=="File"){//Use .db file folder
+                    if(fileExtension=="csv"){//for csv
+                        QFileInfo fileInfo(collection->databaseFilePath);
+                        QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
+                        fullFileName = fileInfo.absolutePath() + "/" + fileNameWithExtension;
+                    }
+                    else //for catalog
+                        fullFileName = newDevice->name;
+
+                }
+                else if(collection->databaseMode=="Host"){//Use user's home folder
+                    QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+                    QString homePath = standardsPaths[0];
+                    QString fileNameWithExtension = fileNameWithoutExtension + "." + fileExtension;
+                    fullFileName = homePath + "/" + fileNameWithExtension;
+                }
+                selectedDevice->catalog->filePath = fullFileName;
+                selectedDevice->catalog->name = selectedDevice->name;
+                QFile exportFile(fullFileName);
 
                 //Export search results to file
                 if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
