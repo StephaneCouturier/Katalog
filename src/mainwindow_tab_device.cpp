@@ -1455,7 +1455,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                             device_free_space,
                             device_active,
                             device_group_id,
-                            device_date_updated
+                            device_date_updated,
+                            device_order
                     FROM  device
                 )");
 
@@ -3428,7 +3429,8 @@ void MainWindow::importVirtualAssignmentsToDevices()
                             device_free_space NUMERIC DEFAULT 0,
                             device_active NUMERIC,
                             device_group_id NUMERIC,
-                            device_date_updated TEXT
+                            device_date_updated TEXT,
+                            device_order NUMERIC
                         )
                     )");
         query.prepare(querySQL);

@@ -47,7 +47,8 @@ void Device::loadDevice(){
                                     device_total_file_count,
                                     device_total_space,
                                     device_free_space,
-                                    device_group_id
+                                    device_group_id,
+                                    device_order
                             FROM  device
                             WHERE device_id =:device_id
                         )");
@@ -64,9 +65,10 @@ void Device::loadDevice(){
             path        = query.value(5).toString();
             totalFileSize  = query.value(6).toLongLong();
             totalFileCount = query.value(7).toLongLong();
-            totalSpace = query.value(8).toLongLong();
-            freeSpace  = query.value(9).toLongLong();
+            totalSpace  = query.value(8).toLongLong();
+            freeSpace   = query.value(9).toLongLong();
             groupID     = query.value(10).toInt();
+            order       = query.value(11).toInt();
         } else if (ID !=0){
             qDebug() << "loadDevice failed, no record found for device_id" << ID;
         }
@@ -216,7 +218,8 @@ void Device::insertDevice()
                                         device_total_file_count,
                                         device_total_space,
                                         device_free_space,
-                                        device_group_id)
+                                        device_group_id,
+                                        device_order)
                             VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -228,7 +231,8 @@ void Device::insertDevice()
                                         :device_total_file_count,
                                         :device_total_space,
                                         :device_free_space,
-                                        :device_group_id)
+                                        :device_group_id,
+                                        :device_order)
                                 )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
@@ -242,6 +246,7 @@ void Device::insertDevice()
     query.bindValue(":device_total_space", totalSpace);
     query.bindValue(":device_free_space", freeSpace);
     query.bindValue(":device_group_id", groupID);
+    query.bindValue(":device_order", order);
     query.exec();
 }
 
@@ -409,6 +414,7 @@ void Device::saveDevice()
                                     device_free_space =:device_free_space,
                                     device_group_id =:device_group_id,
                                     device_date_updated =:device_date_updated
+                                    device_order=:device_order
                             WHERE   device_id=:device_id
                         )");
     query.prepare(querySQL);
@@ -422,8 +428,9 @@ void Device::saveDevice()
     query.bindValue(":device_total_file_count", totalFileCount);
     query.bindValue(":device_total_space", totalSpace);
     query.bindValue(":device_free_space", freeSpace);
-    query.bindValue(":device_group_id",  groupID);
-    query.bindValue(":device_date_updated",  dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(":device_group_id", groupID);
+    query.bindValue(":device_date_updated", dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(":device_order", order);
     query.exec();
 }
 

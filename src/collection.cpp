@@ -280,7 +280,8 @@ void Collection::loadDeviceFileToTable()
                                         device_total_space,
                                         device_free_space,
                                         device_group_id,
-                                        device_date_updated )
+                                        device_date_updated,
+                                        device_order )
                         VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -293,7 +294,8 @@ void Collection::loadDeviceFileToTable()
                                         :device_total_space,
                                         :device_free_space,
                                         :device_group_id,
-                                        :device_date_updated )
+                                        :device_date_updated,
+                                        :device_order )
                     )");
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":device_id",fieldList[0].toInt());
@@ -309,6 +311,7 @@ void Collection::loadDeviceFileToTable()
                         insertQuery.bindValue(":device_free_space",fieldList[9]);
                         insertQuery.bindValue(":device_group_id",fieldList[11]);
                         insertQuery.bindValue(":device_date_updated",fieldList[12]);
+                        insertQuery.bindValue(":device_order",fieldList[13]);
                     }
                     insertQuery.exec();
                 }
@@ -874,7 +877,8 @@ void Collection::saveDeviceTableToFile()
                                             device_free_space          ,
                                             device_active              ,
                                             device_group_id            ,
-                                            device_date_updated
+                                            device_date_updated        ,
+                                            device_order
                                     FROM device
                             )");
         query.prepare(querySQL);
@@ -899,6 +903,7 @@ void Collection::saveDeviceTableToFile()
                              << "active"     << "\t"
                              << "groupID"    << "\t"
                              << "date updated"    << "\t"
+                             << "order"    << "\t"
                              << '\n';
 
             //Iterate the records and generate lines
