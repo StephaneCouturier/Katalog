@@ -105,6 +105,7 @@ class MainWindow : public QMainWindow
             void checkVersion();
             bool firstRun;
             bool developmentMode;
+            int themeID;
 
             //UI
             Ui::MainWindow *ui;

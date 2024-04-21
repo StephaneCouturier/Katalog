@@ -61,6 +61,9 @@
             msgBox.setText(tr("The database could not be initialized.<br/>Create a new database or select an existing one."));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
+
+            selectedTab=96; //Temporary value to indicated tab 6 should be selected.
+
             return;
         }
     }
@@ -200,8 +203,6 @@
     {
         //Check if a settings file already exists. If not, it is considered first use and one gets generated
             QFile settingsFile(collection->settingsFilePath);
-            int themeID = 1; //default value for the theme.
-            selectedTab = 3; //default value for the first launch. Create screen
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
 
             firstRun =false;
@@ -347,7 +348,10 @@
             ui->Statistics_checkBox_DisplayEachValue->setChecked(settings.value("Statistics/DisplayEachValue").toBool());
 
             //last tab selected
-            selectedTab = settings.value("Settings/selectedTab").toInt();
+            if(selectedTab==96)
+                selectedTab = 6;
+            else
+                selectedTab = settings.value("Settings/selectedTab").toInt();
             ui->tabWidget->setCurrentIndex(selectedTab);
 
             //Restore Statistics settings

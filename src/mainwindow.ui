@@ -5408,7 +5408,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>Physical Group</string>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -5424,7 +5424,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>Virtual Groups</string>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>

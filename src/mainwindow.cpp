@@ -41,8 +41,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-04-14";
+        releaseDate     = "2024-04-24";
         developmentMode = false;
+        themeID = 1; //default value for the theme.
+        selectedTab = 3; //default value for the first launch = Create screen.
 
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
