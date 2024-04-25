@@ -3195,6 +3195,9 @@ void MainWindow::migrateCollection()
     //Convert exclude.csv file into parameter.csv
         importExcludeIntoParameter();
 
+    //Convert Tags
+        convertTags();
+
     //Close procedure
         //Add the current version
         QSqlQuery insertQuery;
@@ -4105,6 +4108,54 @@ void MainWindow::importExcludeIntoParameter()
     collection->version = currentVersion;
     collection->updateCollectionVersion();
     collection->saveParameterTableToFile();
+}
+
+void MainWindow::convertTags()
+{//Convert Tags
+    QFile tagFile(collection->tagFilePath);
+
+    //Open file or return information
+    if(!tagFile.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QTextStream textStream(&tagFile);
+    while (true)
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+            {
+                //Split the string with tabulation into a list
+                QStringList fieldList = line.split('\t');
+                //qDebug()<<"fieldList"<<fieldList;
+                QSqlQuery insertQuery;
+                QString insertQuerySQL = QLatin1String(R"(
+                                        INSERT INTO tag(
+                                            ID,
+                                            name,
+                                            path,
+                                            type,
+                                            date_time)
+                                        VALUES(
+                                            NULL,
+                                            :name,
+                                            :path,
+                                            :type,
+                                            :date_time)
+                                        )");
+                insertQuery.prepare(insertQuerySQL);
+                insertQuery.bindValue(":name",      fieldList[1]);
+                insertQuery.bindValue(":path",      fieldList[0]);
+                insertQuery.bindValue(":type",      "");
+                insertQuery.bindValue(":date_time", "");
+                insertQuery.exec();
+            }
+    }
+    tagFile.close();
+
+    collection->saveTagTableToFile();
 }
 
 //--------------------------------------------------------------------------

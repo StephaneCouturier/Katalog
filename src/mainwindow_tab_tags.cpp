@@ -108,7 +108,6 @@
     {
         selectedTagListName = ui->Tags_listView_ExistingTags->model()->index(index.row(), 0, QModelIndex()).data().toString();
         ui->Tags_lineEdit_TagName->setText(selectedTagListName);
-        //loadTagsTableToModel();
         loadTagsTableToTagsAndFolderListModel();
     }
     //----------------------------------------------------------------------

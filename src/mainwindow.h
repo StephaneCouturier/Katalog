@@ -296,6 +296,7 @@ class MainWindow : public QMainWindow
             void importVirtualAssignmentsToDevices();
             void convertFoldersIdxFiles();
             void importExcludeIntoParameter();
+            void convertTags();
 
         //TAB: Statistics
             QStringList typeOfData;

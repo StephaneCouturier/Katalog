@@ -874,14 +874,16 @@ void Collection::loadTagFileToTable()
         //Clear all entries of the current table
         queryDelete.exec();
 
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                break;
-            else
-                if (line.left(4)!="name"){//test the validity of the file
-                    //Split the string with tabulation into a list
+        //Skip headers
+        QString line = textStream.readLine();
+        if(line.left(2)=="ID"){
+            while (true)
+            {
+                line = textStream.readLine();
+                if (line.isNull())
+                    break;
+                else
+                {    //Split the string with tabulation into a list
                     QStringList fieldList = line.split('\t');
                     QSqlQuery insertQuery;
                     QString insertQuerySQL = QLatin1String(R"(
@@ -899,15 +901,16 @@ void Collection::loadTagFileToTable()
                                                 :date_time)
                                             )");
                     insertQuery.prepare(insertQuerySQL);
-                    insertQuery.bindValue(":ID",        fieldList[0]);
+                    insertQuery.bindValue(":ID",        fieldList[0].toInt());
                     insertQuery.bindValue(":name",      fieldList[1]);
                     insertQuery.bindValue(":path",      fieldList[2]);
                     insertQuery.bindValue(":type",      fieldList[3]);
                     insertQuery.bindValue(":date_time", fieldList[4]);
                     insertQuery.exec();
                 }
+            }
+            tagFile.close();
         }
-        tagFile.close();
     }
 }
 //--------------------------------------------------------------------------
@@ -1147,11 +1150,11 @@ void Collection::saveTagTableToFile()
         QTextStream out(&tagFile);
 
         //Prepare header line
-        out << "ID"     << "\t"
-            << "type"   << "\t"
-            << "type"   << "\t"
-            << "value1" << "\t"
-            << "value2" << "\t"
+        out << "ID"         << "\t"
+            << "name"       << "\t"
+            << "path"       << "\t"
+            << "type"       << "\t"
+            << "date_time"  << "\t"
             << '\n';
 
         //Get data
