@@ -292,6 +292,18 @@
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
                 ui->Filters_widget_ConnectedDrives->hide();
 
+            //Filters selection for search Search/searchInFileCatalogsChecked
+                if ( settings.value("Search/searchInFileCatalogsChecked") != ""){
+                    //ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
+                    if ( settings.value("Search/searchInConnectedDriveChecked") == true){
+                        ui->Filters_checkBox_SearchInConnectedDrives->setChecked(1);
+                    }
+                    else
+                        ui->Filters_checkBox_SearchInCatalogs->setChecked(1);
+                }
+                else
+                    ui->Filters_checkBox_SearchInCatalogs->setChecked(1);
+
             //Show or Hide ShowHideSearchCriteria
             if ( settings.value("Settings/ShowHideSearchCriteria") == "go-down"){ //Hide
                     ui->Search_pushButton_ShowHideSearchCriteria->setIcon(QIcon::fromTheme("go-down"));

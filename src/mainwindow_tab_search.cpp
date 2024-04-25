@@ -1753,13 +1753,6 @@
         {//Set search values
 
             //Selections
-            if(search->searchInCatalogsChecked == 1){
-                        ui->Filters_checkBox_SearchInCatalogs->setChecked(search->searchInCatalogsChecked);
-            }
-            else if(search->searchInConnectedChecked== 1){
-                        ui->Filters_checkBox_SearchInConnectedDrives->setChecked(search->searchInConnectedChecked);
-            }
-
             ui->Filters_lineEdit_SeletedDirectory->setText(search->connectedDirectory);
             ui->Filters_label_DisplayStorage->setText(search->selectedStorage);
             ui->Filters_label_DisplayCatalog->setText(search->selectedCatalog);

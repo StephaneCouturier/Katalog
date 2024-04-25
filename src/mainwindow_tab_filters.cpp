@@ -65,7 +65,7 @@
     void MainWindow::on_Filters_checkBox_SearchInCatalogs_toggled(bool checked)
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/searchInFileCatalogsChecked", checked);
+        settings.setValue("Search/searchInFileCatalogsChecked", checked);
 
         if(checked==1){
             //Enable Catalogs selection
@@ -88,7 +88,7 @@
     void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastSearch/searchInConnectedDriveChecked", checked);
+        settings.setValue("Search/searchInConnectedDriveChecked", checked);
 
         if(checked==1){
             //Enable Directory selection
