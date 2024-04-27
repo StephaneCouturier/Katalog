@@ -429,7 +429,7 @@ void Device::saveDevice()
                                     device_total_space =:device_total_space,
                                     device_free_space =:device_free_space,
                                     device_group_id =:device_group_id,
-                                    device_date_updated =:device_date_updated
+                                    device_date_updated =:device_date_updated,
                                     device_order=:device_order
                             WHERE   device_id=:device_id
                         )");

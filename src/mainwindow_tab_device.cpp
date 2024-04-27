@@ -1101,7 +1101,6 @@ void MainWindow::saveDeviceForm()
     //Keep previous values
     activeDevice->loadDevice();
     int previousExternalID = activeDevice->externalID;
-    QString previousPath = activeDevice->path;
     QString previousName = activeDevice->name;
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
@@ -1115,7 +1114,7 @@ void MainWindow::saveDeviceForm()
         activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
 
     if (previousName != activeDevice->name
-        and activeDevice->verifyDeviceNameExists()==false
+        and activeDevice->verifyDeviceNameExists()==true
         and activeDevice->type=="Catalog"){
         //Duplicate catalog names are not allowed
         QMessageBox msgBox;
@@ -1128,7 +1127,7 @@ void MainWindow::saveDeviceForm()
         return;
     }
     if (previousExternalID != activeDevice->externalID
-        and activeDevice->verifyStorageExternalIDExists()
+        and activeDevice->verifyStorageExternalIDExists()==true
         and activeDevice->type=="Storage"){
         //Duplicate storage IDs (device external ID) are not allowed
         QMessageBox msgBox;

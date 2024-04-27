@@ -54,7 +54,19 @@ QVariant ExploreTreeView::data(const QModelIndex &index, int role) const
 
                 break;
             }
+
+            case Qt::BackgroundRole:
+            {
+                if (1 == index.row() % 2)
+                    return QColor(255, 255, 255);
+                else
+                    return QColor(247, 247, 247);
+
+                break;
+            }
+
         }
+
 
     return QSortFilterProxyModel::data(index, role);
 }
