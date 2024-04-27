@@ -331,6 +331,22 @@ bool Device::verifyStorageExternalIDExists()
     return queryExternalID.value(0).toInt() > 0;
 }
 
+void Device::getIDFromDeviceName()
+{
+    QSqlQuery queryIDFromDeviceName;
+    QString queryIDFromDeviceNameSQL = QLatin1String(R"(
+                                SELECT device_id
+                                FROM device
+                                WHERE device_name=:device_name
+                            )");
+    queryIDFromDeviceName.prepare(queryIDFromDeviceNameSQL);
+    queryIDFromDeviceName.bindValue(":device_name", name);
+    queryIDFromDeviceName.exec();
+    queryIDFromDeviceName.next();
+
+    ID = queryIDFromDeviceName.value(0).toInt();
+}
+
 void Device::deleteDevice(bool askConfirmation)
 {
     verifyHasSubDevice();

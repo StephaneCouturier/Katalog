@@ -636,7 +636,7 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
 void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 {
     int result = QMessageBox::warning(this,"Katalog",
-                                      tr("Do you want to remove this storage or catalog from this virtual device?"),QMessageBox::Yes|QMessageBox::Cancel);
+                                      tr("Do you want to unassign this catalog from this virtual device?"),QMessageBox::Yes|QMessageBox::Cancel);
 
     if ( result ==QMessageBox::Yes){
 
@@ -1115,7 +1115,7 @@ void MainWindow::saveDeviceForm()
         activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
 
     if (previousName != activeDevice->name
-        and activeDevice->verifyDeviceNameExists()
+        and activeDevice->verifyDeviceNameExists()==false
         and activeDevice->type=="Catalog"){
         //Duplicate catalog names are not allowed
         QMessageBox msgBox;
@@ -1561,7 +1561,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                       JOIN device child ON child.device_parent_id = parent.device_id
                       WHERE parent.device_id <> 1
                     )
-                    SELECT DISTINCT -- Add DISTINCT to remove duplicates
+                    SELECT DISTINCT
                         device_id,
                         device_parent_id,
                         device_name,
@@ -2437,7 +2437,7 @@ void MainWindow::saveCatalogChanges()
     activeDevice->catalog->updateCatalogFileHeaders(collection->databaseMode);
 
     //Update the list of files if the changes impact the contents (i.e. path, file type, hidden)
-    if (       activeDevice->catalog->sourcePath      != previousCatalog.catalog->sourcePath
+    if (   activeDevice->catalog->sourcePath      != previousCatalog.catalog->sourcePath
         or activeDevice->catalog->includeHidden   != previousCatalog.catalog->includeHidden
         or activeDevice->catalog->includeMetadata != previousCatalog.catalog->includeMetadata
         or activeDevice->catalog->fileType        != previousCatalog.catalog->fileType)

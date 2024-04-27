@@ -76,6 +76,7 @@ public:
         bool verifyDeviceNameExists();
         bool verifyParentDeviceExistsInPhysicalGroup();
         bool verifyStorageExternalIDExists();
+        void getIDFromDeviceName();
         void updateActive();
 
         QList<qint64> updateDevice(QString statiticsRequestSource,

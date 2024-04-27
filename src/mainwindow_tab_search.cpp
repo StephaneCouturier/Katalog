@@ -2016,7 +2016,21 @@
 
                     fileExtension="idx";
 
-                    //Create a new device and link catalog
+                    //Verify if a device name "Search Results" exist or create one as parent for search results
+                    Device searchResultsHolder;
+                    searchResultsHolder.name = tr("Search Results");
+                    searchResultsHolder.getIDFromDeviceName();
+
+                    if(searchResultsHolder.ID>0)
+                        newDevice->parentID = searchResultsHolder.ID;
+                    else{
+                        searchResultsHolder.generateDeviceID();
+                        searchResultsHolder.type = "Virtual";
+                        searchResultsHolder.groupID = 1;
+                        searchResultsHolder.parentID = 0;
+                        searchResultsHolder.insertDevice();
+                        newDevice->parentID = searchResultsHolder.ID;
+                    }
 
                     //Add Device entry
                     newDevice->generateDeviceID();
@@ -2024,10 +2038,11 @@
                     newDevice->name = fileNameWithoutExtension;
 
                     //Continue populating values
-                    newDevice->parentID = 1;
+
+                    newDevice->parentID = searchResultsHolder.ID;
                     newDevice->catalog->generateID();
                     newDevice->externalID = newDevice->catalog->ID;
-                    newDevice->groupID = 0; //DEV: ADAPT
+                    newDevice->groupID = 1;
                     newDevice->path = newSearch->searchDateTime;
                     newDevice->insertDevice();
 
