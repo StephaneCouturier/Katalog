@@ -1167,7 +1167,7 @@
             //Save the search criteria to the search history
             insertSearchHistoryToTable();
             if(collection->databaseMode=="Memory")
-                saveSearchHistoryTableToFile();
+                collection->saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
 
             //Stop animation
@@ -2264,76 +2264,6 @@
             query.bindValue(":text_exclude",              ui->Search_lineEdit_Exclude->text());
             query.bindValue(":case_sensitive",            ui->Search_checkBox_CaseSensitive->isChecked());
             query.exec();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::saveSearchHistoryTableToFile()
-        {
-            //Prepare export
-            QFile searchFile(collection->searchHistoryFilePath);
-            if(searchFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-                QTextStream out(&searchFile);
-
-                //Get data
-                QSqlQuery query;
-                QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                        date_time,
-                                        text_checked,
-                                        text_phrase,
-                                        text_criteria,
-                                        text_search_in,
-                                        file_type,
-                                        file_size_checked,
-                                        file_size_min,
-                                        file_size_min_unit,
-                                        file_size_max,
-                                        file_size_max_unit,
-                                        date_modified_checked,
-                                        date_modified_min,
-                                        date_modified_max,
-                                        duplicates_checked,
-                                        duplicates_name,
-                                        duplicates_size,
-                                        duplicates_date_modified,
-                                        show_folders,
-                                        tag_checked,
-                                        tag,
-                                        search_location,
-                                        search_storage,
-                                        search_catalog,
-                                        search_catalog_checked,
-                                        search_directory_checked,
-                                        selected_directory,
-                                        text_exclude,
-                                        case_sensitive,
-                                        differences_checked,
-                                        differences_name,
-                                        differences_size,
-                                        differences_date_modified,
-                                        differences_catalogs,
-                                        file_type_checked,
-                                        file_criteria_checked,
-                                        folder_criteria_checked
-                                    FROM search
-                                    ORDER BY date_time DESC
-                                   )");
-                query.prepare(querySQL);
-                query.exec();
-
-                //Iterate the result and write each line
-                while (query.next()) {
-                    const QSqlRecord record = query.record();
-                    for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                        if (i>0)
-                        out << '\t';
-                        out << record.value(i).toString();
-                    }
-                    out << '\n';
-                }
-            //searchFile.close();
-            }
-            searchFile.close();
         }
         //--------------------------------------------------------------------------
         void MainWindow::loadSearchHistoryTableToModel()

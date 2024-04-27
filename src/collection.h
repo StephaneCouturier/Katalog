@@ -96,6 +96,7 @@ public:
     void saveStorageTableToFile();
     void saveStatiticsToFile();
     void saveParameterTableToFile();
+    void saveSearchHistoryTableToFile();
     void saveTagTableToFile();
 
     //File deleting

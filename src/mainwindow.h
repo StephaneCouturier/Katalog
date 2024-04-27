@@ -174,8 +174,6 @@ class MainWindow : public QMainWindow
             void batchProcessSearchResults();
             void insertSearchHistoryToTable();
             void loadSearchHistoryTableToModel();
-            void saveSearchHistoryTableToFile();
-            void loadSearchHistoryFileToTable();
 
             int lastSearchSortSection;
             int lastSearchSortOrder;
@@ -297,6 +295,7 @@ class MainWindow : public QMainWindow
             void convertFoldersIdxFiles();
             void importExcludeIntoParameter();
             void convertTags();
+            void convertSearchHistory();
 
         //TAB: Statistics
             QStringList typeOfData;
