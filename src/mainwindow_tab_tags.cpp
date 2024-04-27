@@ -132,7 +132,7 @@
         QPoint globalPos = ui->Tags_treeView_FolderTags->mapToGlobal(pos);
         QMenu tagContextMenu;
 
-        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this directory/tag"), this);
+        QAction *menuDeviceAction1 = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove this tag"), this);
         tagContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ tagID, this]() {
             //Delete
