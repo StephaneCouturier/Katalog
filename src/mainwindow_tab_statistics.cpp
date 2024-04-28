@@ -335,6 +335,8 @@
                 if ( selectedTypeOfData == tr("Number of Files") ){
                     series1->setPen(penCatalogNumberFiles);
                     displayUnitText ="";
+                    loadSeries2 = false;
+                    loadSeries3 = false;
                 }
                 else{
                     series1->setPen(penCatalogTotalSize);
@@ -472,12 +474,15 @@
                 //Get the list of legend markers
                 QList<QLegendMarker*> markers = ui->Statistics_chartview_Graph1->chart()->legend()->markers();
 
-                //Remove the legend marker you want to hide
+                //Remove the legend markers
+                //At least one series is visible, remove second marker
                 markers.at(1)->setVisible(false);
-                if(selectedDevice->type !="Catalog"){
-                    markers.at(3)->setVisible(false);
-                    markers.at(5)->setVisible(false);
-                }
+
+                //Remove other markers when there are multiple series
+                if( markers.count()>2)
+                        markers.at(3)->setVisible(false);
+                if( markers.count()>4)
+                        markers.at(5)->setVisible(false);
 
                 //Set the modified list of markers back to the legend
                 ui->Statistics_chartview_Graph1->chart()->legend()->markers() = markers;
