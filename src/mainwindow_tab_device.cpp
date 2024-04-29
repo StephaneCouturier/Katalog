@@ -1040,11 +1040,7 @@ void MainWindow::editDevice()
     if(activeDevice->type =="Catalog"){
         ui->Devices_widget_EditCatalogFields->show();
         ui->Devices_widget_EditStorageFields->hide();
-
-        //ui->Catalogs_label_NameDisplay->setText(activeDevice->name);
-        //ui->Catalogs_label_Path->setText(activeDevice->catalog->sourcePath);
         ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
-        //ui->Catalogs_label_StorageDisplay->setText(activeDevice->catalog->storageName);
         ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
         ui->Catalogs_checkBox_IncludeMetadata->setChecked(activeDevice->catalog->includeMetadata);
         //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
@@ -1068,9 +1064,9 @@ void MainWindow::editDevice()
         ui->Storage_lineEdit_Panel_BrandModel->setText(activeDevice->storage->brand_model);
         ui->Storage_lineEdit_Panel_SerialNumber->setText(activeDevice->storage->serialNumber);
         ui->Storage_lineEdit_Panel_BuildDate->setText(activeDevice->storage->buildDate);
-        ui->Storage_lineEdit_Panel_ContentType->setText(activeDevice->storage->contentType);
-        ui->Storage_lineEdit_Panel_Container->setText(activeDevice->storage->container);
-        ui->Storage_lineEdit_Panel_Comment->setText(activeDevice->storage->comment);
+        ui->Storage_lineEdit_Panel_Comment1->setText(activeDevice->storage->comment1);
+        ui->Storage_lineEdit_Panel_Comment2->setText(activeDevice->storage->comment2);
+        ui->Storage_lineEdit_Panel_Comment3->setText(activeDevice->storage->comment3);
 
         displayStoragePicture();
     }
@@ -1290,7 +1286,7 @@ void MainWindow::saveDeviceForm()
         QSqlQuery queryStorage;
         QString queryStorageSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_id = :new_storage_id,
+                                    SET storage_id =:new_storage_id,
                                         storage_type =:storage_type,
                                         storage_location =:storage_location,
                                         storage_label =:storage_label,
@@ -1300,9 +1296,9 @@ void MainWindow::saveDeviceForm()
                                         storage_brand_model =:storage_brand_model,
                                         storage_serial_number =:storage_serial_number,
                                         storage_build_date =:storage_build_date,
-                                        storage_content_type =:storage_content_type,
-                                        storage_container =:storage_container,
-                                        storage_comment = :storage_comment
+                                        storage_comment1 =:storage_comment1,
+                                        storage_comment2 =:storage_comment2,
+                                        storage_comment3 =:storage_comment3
                                     WHERE storage_id =:storage_id
                                 )");
 
@@ -1314,9 +1310,9 @@ void MainWindow::saveDeviceForm()
         queryStorage.bindValue(":storage_brand_model",   ui->Storage_lineEdit_Panel_BrandModel->text());
         queryStorage.bindValue(":storage_serial_number", ui->Storage_lineEdit_Panel_SerialNumber->text());
         queryStorage.bindValue(":storage_build_date",    ui->Storage_lineEdit_Panel_BuildDate->text());
-        queryStorage.bindValue(":storage_content_type",  ui->Storage_lineEdit_Panel_ContentType->text());
-        queryStorage.bindValue(":storage_container",     ui->Storage_lineEdit_Panel_Container->text());
-        queryStorage.bindValue(":storage_comment",       ui->Storage_lineEdit_Panel_Comment->text());
+        queryStorage.bindValue(":storage_comment1",      ui->Storage_lineEdit_Panel_Comment1->text());
+        queryStorage.bindValue(":storage_comment2",      ui->Storage_lineEdit_Panel_Comment2->text());
+        queryStorage.bindValue(":storage_comment3",      ui->Storage_lineEdit_Panel_Comment3->text());
         queryStorage.bindValue(":storage_id",            activeDevice->storage->ID);
         queryStorage.exec();
 
@@ -1779,15 +1775,15 @@ void MainWindow::loadDevicesStorageToModel(){
                             device_active,
                             device_group_id,
                             device_date_updated,
-                            storage_type          ,
-                            storage_label         ,
-                            storage_file_system   ,
-                            storage_brand_model   ,
-                            storage_serial_number ,
-                            storage_build_date    ,
-                            storage_content_type  ,
-                            storage_container     ,
-                            storage_comment
+                            storage_type,
+                            storage_label,
+                            storage_file_system,
+                            storage_brand_model,
+                            storage_serial_number,
+                            storage_build_date,
+                            storage_comment1,
+                            storage_comment2,
+                            storage_comment3
                     FROM  device d
                     JOIN  storage s ON d.device_external_id = s.storage_id
                     WHERE device_type = 'Storage'

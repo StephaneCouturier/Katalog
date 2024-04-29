@@ -56,9 +56,9 @@ public:
     QString brand_model;
     QString serialNumber;
     QString buildDate;
-    QString contentType;
-    QString container;
-    QString comment;
+    QString comment1;
+    QString comment2;
+    QString comment3;
     QDateTime dateTimeUpdated;
 
     void generateID();

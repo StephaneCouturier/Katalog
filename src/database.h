@@ -94,10 +94,9 @@
                             storage_brand_model   TEXT,
                             storage_serial_number TEXT,
                             storage_build_date    TEXT,
-                            storage_content_type  TEXT,
-                            storage_container     TEXT,
-                            storage_comment       TEXT,
-                            storage_date_updated  TEXT)
+                            storage_comment1      TEXT,
+                            storage_comment2      TEXT,
+                            storage_comment3      TEXT)
             )");
 
         // FILE (storing all catalogs files)-------------------------------------

@@ -262,8 +262,7 @@ bool Device::verifyDeviceNameExists()
     query.prepare(querySQL);
     query.bindValue(":device_name", name);
 
-    if (!query.exec()) {
-        // Handle SQL error
+    if (!query.exec() and ID !=0) {
         qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }
@@ -286,7 +285,6 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
     query.bindValue(":device_id", parentID);
 
     if (!query.exec()) {
-        // Handle SQL error
         qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }

@@ -4665,7 +4665,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item row="9" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_ContentType"/>
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment1"/>
                       </item>
                       <item row="10" column="0">
                        <widget class="QLabel" name="Devices_label_Comment2">
@@ -4681,7 +4681,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item row="10" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Container"/>
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment2"/>
                       </item>
                       <item row="11" column="0">
                        <widget class="QLabel" name="Devices_label_Comment3">
@@ -4697,7 +4697,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </widget>
                       </item>
                       <item row="11" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment"/>
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment3"/>
                       </item>
                       <item row="12" column="0">
                        <spacer name="Devices_horizontalSpacer_3">

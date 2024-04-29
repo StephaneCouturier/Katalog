@@ -172,11 +172,11 @@ void Collection::load()
     generateCollectionFiles();
 
     //Load Files to database
-    loadSearchHistoryFileToTable();
     loadParameterFileToTable();
-    loadCatalogFilesToTable();
-    loadStorageFileToTable();
     loadDeviceFileToTable();
+    loadStorageFileToTable();
+    loadCatalogFilesToTable();
+    loadSearchHistoryFileToTable();
 
     //Add a default storage device, to force any new catalog to have one
     insertPhysicalStorageGroup();
@@ -468,9 +468,9 @@ void Collection::loadStorageFileToTable()
                                         storage_brand_model,
                                         storage_serial_number,
                                         storage_build_date,
-                                        storage_content_type,
-                                        storage_container,
-                                        storage_comment)
+                                        storage_comment1,
+                                        storage_comment2,
+                                        storage_comment3)
                                   values(
                                         :storage_id,
                                         :storage_name,
@@ -484,28 +484,28 @@ void Collection::loadStorageFileToTable()
                                         :storage_brand_model,
                                         :storage_serial_number,
                                         :storage_build_date,
-                                        :storage_content_type,
-                                        :storage_container,
-                                        :storage_comment)
+                                        :storage_comment1,
+                                        :storage_comment2,
+                                        :storage_comment3)
                                 )");
 
                     QSqlQuery insertQuery;
                     insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":storage_id",fieldList[0].toInt());
-                    insertQuery.bindValue(":storage_name",fieldList[1]);
-                    insertQuery.bindValue(":storage_type",fieldList[2]);
-                    insertQuery.bindValue(":storage_location",fieldList[3]);
-                    insertQuery.bindValue(":storage_path",fieldList[4]);
-                    insertQuery.bindValue(":storage_label",fieldList[5]);
-                    insertQuery.bindValue(":storage_file_system",fieldList[6]);
-                    insertQuery.bindValue(":storage_total_space",fieldList[7].toLongLong());
-                    insertQuery.bindValue(":storage_free_space",fieldList[8].toLongLong());
-                    insertQuery.bindValue(":storage_brand_model",fieldList[9]);
-                    insertQuery.bindValue(":storage_serial_number",fieldList[10]);
-                    insertQuery.bindValue(":storage_build_date",fieldList[11]);
-                    insertQuery.bindValue(":storage_content_type",fieldList[12]);
-                    insertQuery.bindValue(":storage_container",fieldList[13]);
-                    insertQuery.bindValue(":storage_comment", fieldList[14]);
+                    insertQuery.bindValue(":storage_id",            fieldList[0].toInt());
+                    insertQuery.bindValue(":storage_name",          fieldList[1]);
+                    insertQuery.bindValue(":storage_type",          fieldList[2]);
+                    insertQuery.bindValue(":storage_location",      fieldList[3]);
+                    insertQuery.bindValue(":storage_path",          fieldList[4]);
+                    insertQuery.bindValue(":storage_label",         fieldList[5]);
+                    insertQuery.bindValue(":storage_file_system",   fieldList[6]);
+                    insertQuery.bindValue(":storage_total_space",   fieldList[7].toLongLong());
+                    insertQuery.bindValue(":storage_free_space",    fieldList[8].toLongLong());
+                    insertQuery.bindValue(":storage_brand_model",   fieldList[9]);
+                    insertQuery.bindValue(":storage_serial_number", fieldList[10]);
+                    insertQuery.bindValue(":storage_build_date",    fieldList[11]);
+                    insertQuery.bindValue(":storage_comment1",      fieldList[12]);
+                    insertQuery.bindValue(":storage_comment2",      fieldList[13]);
+                    insertQuery.bindValue(":storage_comment3",      fieldList[14]);
 
                     if(line!="")
                         insertQuery.exec();
@@ -999,7 +999,7 @@ void Collection::saveStorageTableToFile()
         QTextStream out(&storageFile);
 
         //Prepare header line
-        out  << "ID"            << "\t"
+        out << "ID"            << "\t"
             << "Name"          << "\t"
             << "Type"          << "\t"
             << "Location"      << "\t"
@@ -1011,9 +1011,9 @@ void Collection::saveStorageTableToFile()
             << "BrandModel"    << "\t"
             << "SerialNumber"  << "\t"
             << "BuildDate"     << "\t"
-            << "ContentType"   << "\t"
-            << "Container"     << "\t"
-            << "Comment"       << "\t"
+            << "Comment1"      << "\t"
+            << "Comment2"      << "\t"
+            << "Comment3"      << "\t"
             << '\n';
 
         //Get data
@@ -1024,23 +1024,19 @@ void Collection::saveStorageTableToFile()
         query.prepare(querySQL);
         query.exec();
 
-        //Iterate the records and generate lines
-        while (query.next()) {
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                if (i>0)
-                    out << '\t';
-                out << record.value(i).toString();
-            }
-            //-- Write the result in the file
-            out << '\n';
-
-        }
-
         if(storageFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            //out << textData;
-            //Close the file
-            //storageFile.close();
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //-- Write the result in the file
+                out << '\n';
+
+            }
         }
         storageFile.close();
     }

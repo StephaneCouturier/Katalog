@@ -66,9 +66,9 @@ void Storage::insertStorage()
                             storage_brand_model,
                             storage_serial_number,
                             storage_build_date,
-                            storage_content_type,
-                            storage_container,
-                            storage_comment)
+                            storage_comment1,
+                            storage_comment2,
+                            storage_comment3)
                       VALUES(
                             :new_id,
                             :storage_name,
@@ -124,9 +124,9 @@ void Storage::loadStorage()
                                 storage_brand_model,
                                 storage_serial_number,
                                 storage_build_date,
-                                storage_content_type,
-                                storage_container,
-                                storage_comment
+                                storage_comment1,
+                                storage_comment2,
+                                storage_comment3
                             FROM storage
                             WHERE storage_id=:storage_id
                         )");
@@ -145,9 +145,9 @@ void Storage::loadStorage()
             brand_model  = query.value(7).toString();
             serialNumber = query.value(8).toString();
             buildDate    = query.value(9).toString();
-            contentType  = query.value(10).toString();
-            container    = query.value(11).toString();
-            comment      = query.value(12).toString();
+            comment1  = query.value(10).toString();
+            comment2    = query.value(11).toString();
+            comment3      = query.value(12).toString();
         } else {
             qDebug() << "No record found for storage_id" << ID;
         }
