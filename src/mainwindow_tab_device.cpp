@@ -1061,7 +1061,8 @@ void MainWindow::editDevice()
         ui->Storage_label_Panel_TotalSpace->setText(QLocale().formattedDataSize(activeDevice->totalSpace));
         ui->Storage_label_Panel_FreeSpace->setText(QLocale().formattedDataSize(activeDevice->freeSpace));
 
-        ui->Storage_lineEdit_Panel_BrandModel->setText(activeDevice->storage->brand_model);
+        ui->Storage_lineEdit_Panel_Brand->setText(activeDevice->storage->brand);
+        ui->Storage_lineEdit_Panel_Model->setText(activeDevice->storage->model);
         ui->Storage_lineEdit_Panel_SerialNumber->setText(activeDevice->storage->serialNumber);
         ui->Storage_lineEdit_Panel_BuildDate->setText(activeDevice->storage->buildDate);
         ui->Storage_lineEdit_Panel_Comment1->setText(activeDevice->storage->comment1);
@@ -1293,7 +1294,8 @@ void MainWindow::saveDeviceForm()
                                         storage_file_system =:storage_file_system,
                                         storage_total_space =:storage_total_space,
                                         storage_free_space =:storage_free_space,
-                                        storage_brand_model =:storage_brand_model,
+                                        storage_brand =:storage_brand,
+                                        storage_model =:storage_model,
                                         storage_serial_number =:storage_serial_number,
                                         storage_build_date =:storage_build_date,
                                         storage_comment1 =:storage_comment1,
@@ -1307,7 +1309,8 @@ void MainWindow::saveDeviceForm()
         queryStorage.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
         queryStorage.bindValue(":storage_label",         ui->Storage_lineEdit_Panel_Label->text());
         queryStorage.bindValue(":storage_file_system",   ui->Storage_lineEdit_Panel_FileSystem->text());
-        queryStorage.bindValue(":storage_brand_model",   ui->Storage_lineEdit_Panel_BrandModel->text());
+        queryStorage.bindValue(":storage_brand",         ui->Storage_lineEdit_Panel_Brand->text());
+        queryStorage.bindValue(":storage_model",         ui->Storage_lineEdit_Panel_Model->text());
         queryStorage.bindValue(":storage_serial_number", ui->Storage_lineEdit_Panel_SerialNumber->text());
         queryStorage.bindValue(":storage_build_date",    ui->Storage_lineEdit_Panel_BuildDate->text());
         queryStorage.bindValue(":storage_comment1",      ui->Storage_lineEdit_Panel_Comment1->text());
@@ -1778,7 +1781,8 @@ void MainWindow::loadDevicesStorageToModel(){
                             storage_type,
                             storage_label,
                             storage_file_system,
-                            storage_brand_model,
+                            storage_brand,
+                            storage_model,
                             storage_serial_number,
                             storage_build_date,
                             storage_comment1,
@@ -1839,7 +1843,8 @@ void MainWindow::loadDevicesStorageToModel(){
                                                  tr("Type"),
                                                  tr("Label"),
                                                  tr("FileSystem"),
-                                                 tr("Brand/Model"),
+                                                 tr("Brand"),
+                                                 tr("Model"),
                                                  tr("Serial Number"),
                                                  tr("Build Date"),
                                                  tr("Comment 1"),
@@ -1854,30 +1859,31 @@ void MainWindow::loadDevicesStorageToModel(){
     while (loadStorageQuery.next()) {
 
         //Get data for the item
-        int id = loadStorageQuery.value(0).toInt();
-        int parentId = loadStorageQuery.value(1).toInt();
-        QString name = loadStorageQuery.value(2).toString();
-        QString type = loadStorageQuery.value(3).toString();
-        int externalId = loadStorageQuery.value(4).toInt();
-        QString path = loadStorageQuery.value(5).toString();
-        qint64 size = loadStorageQuery.value(6).toLongLong();
-        qint64 number = loadStorageQuery.value(7).toLongLong();
-        qint64 total_space = loadStorageQuery.value(8).toLongLong();
-        qint64 free_space = loadStorageQuery.value(9).toLongLong();
-        qint64 used_space = total_space - free_space;
-        bool isActive = loadStorageQuery.value(10).toBool();
-        int groupID = loadStorageQuery.value(11).toBool();
-        QString dateTimeUpdated = loadStorageQuery.value(12).toString();
+        int id                          = loadStorageQuery.value(0).toInt();
+        int parentId                    = loadStorageQuery.value(1).toInt();
+        QString name                    = loadStorageQuery.value(2).toString();
+        QString type                    = loadStorageQuery.value(3).toString();
+        int externalId                  = loadStorageQuery.value(4).toInt();
+        QString path                    = loadStorageQuery.value(5).toString();
+        qint64 size                     = loadStorageQuery.value(6).toLongLong();
+        qint64 number                   = loadStorageQuery.value(7).toLongLong();
+        qint64 total_space              = loadStorageQuery.value(8).toLongLong();
+        qint64 free_space               = loadStorageQuery.value(9).toLongLong();
+        qint64 used_space               = total_space - free_space;
+        bool isActive                   = loadStorageQuery.value(10).toBool();
+        int groupID                     = loadStorageQuery.value(11).toBool();
+        QString dateTimeUpdated         = loadStorageQuery.value(12).toString();
 
-        QString storage_type = loadStorageQuery.value(13).toString();
-        QString storage_label = loadStorageQuery.value(14).toString();
-        QString storage_file_system = loadStorageQuery.value(15).toString();
-        QString storage_brand_model = loadStorageQuery.value(16).toString();
-        QString storage_serial_number = loadStorageQuery.value(17).toString();
-        QString storage_build_date = loadStorageQuery.value(18).toString();
-        QString storage_content_type = loadStorageQuery.value(19).toString();
-        QString storage_container = loadStorageQuery.value(20).toString();
-        QString storage_comment = loadStorageQuery.value(21).toString();
+        QString storage_type            = loadStorageQuery.value(13).toString();
+        QString storage_label           = loadStorageQuery.value(14).toString();
+        QString storage_file_system     = loadStorageQuery.value(15).toString();
+        QString storage_brand           = loadStorageQuery.value(16).toString();
+        QString storage_model           = loadStorageQuery.value(17).toString();
+        QString storage_serial_number   = loadStorageQuery.value(18).toString();
+        QString storage_build_date      = loadStorageQuery.value(19).toString();
+        QString storage_content_type    = loadStorageQuery.value(20).toString();
+        QString storage_container       = loadStorageQuery.value(21).toString();
+        QString storage_comment         = loadStorageQuery.value(22).toString();
 
         //Create the item for this row
         QList<QStandardItem*> rowItems;
@@ -1899,12 +1905,13 @@ void MainWindow::loadDevicesStorageToModel(){
         rowItems << new QStandardItem(storage_type);                //14
         rowItems << new QStandardItem(storage_label);               //15
         rowItems << new QStandardItem(storage_file_system);         //16
-        rowItems << new QStandardItem(storage_brand_model);         //17
-        rowItems << new QStandardItem(storage_serial_number);       //18
-        rowItems << new QStandardItem(storage_build_date);          //19
-        rowItems << new QStandardItem(storage_content_type);        //20
-        rowItems << new QStandardItem(storage_container);           //21
-        rowItems << new QStandardItem(storage_comment);             //22
+        rowItems << new QStandardItem(storage_brand);               //17
+        rowItems << new QStandardItem(storage_model);               //18
+        rowItems << new QStandardItem(storage_serial_number);       //19
+        rowItems << new QStandardItem(storage_build_date);          //20
+        rowItems << new QStandardItem(storage_content_type);        //21
+        rowItems << new QStandardItem(storage_container);           //22
+        rowItems << new QStandardItem(storage_comment);             //23
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -1964,20 +1971,22 @@ void MainWindow::loadDevicesStorageToModel(){
 
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
-        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
-        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
-        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_build_date
-        ui->Devices_treeView_DeviceList->header()->showSection(20); //Comment 1
-        ui->Devices_treeView_DeviceList->header()->showSection(21); //Comment 2
-        ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 3
+        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand
+        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_model
+        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_serial_number
+        ui->Devices_treeView_DeviceList->header()->showSection(20); //storage_build_date
+        ui->Devices_treeView_DeviceList->header()->showSection(21); //Comment 1
+        ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 2
+        ui->Devices_treeView_DeviceList->header()->showSection(23); //Comment 3
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
-        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand_model
-        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_serial_number
-        ui->Devices_treeView_DeviceList->header()->hideSection(19); //storage_build_date
-        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Comment 1
-        ui->Devices_treeView_DeviceList->header()->hideSection(21); //Comment 2
-        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Comment 3
+        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand
+        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_model
+        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_serial_number
+        ui->Devices_treeView_DeviceList->header()->hideSection(20); //storage_build_date
+        ui->Devices_treeView_DeviceList->header()->hideSection(21); //Comment 1
+        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Comment 2
+        ui->Devices_treeView_DeviceList->header()->hideSection(23); //Comment 3
     }
 
     ui->Devices_treeView_DeviceList->expandAll();
@@ -3148,6 +3157,9 @@ void MainWindow::migrateCollection()
     // Start animation while opening
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    //Convert Storage
+        convertStorage();
+
     //Devices
         //Delete default virtual and storage
         QSqlQuery query;
@@ -3193,8 +3205,10 @@ void MainWindow::migrateCollection()
     //Convert Tags
         convertTags();
 
-    //Convert Serach History
+    //Convert Search History
         convertSearchHistory();
+
+
 
     //Close procedure
         //Add the current version
@@ -3257,7 +3271,12 @@ void MainWindow::importStorageToDevices()
     //Create from storage
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                    SELECT storage_id, storage_name, storage_path, storage_location, storage_total_space, storage_free_space
+                                    SELECT  storage_id,
+                                            storage_name,
+                                            storage_path,
+                                            storage_location,
+                                            storage_total_space,
+                                            storage_free_space
                                     FROM storage
                                     ORDER BY storage_id ASC
                                 )");
@@ -3300,7 +3319,12 @@ void MainWindow::importCatalogsToDevices()
     //Create from catalogs
     QSqlQuery query;
     QString querySQL = QLatin1String(R"(
-                                    SELECT catalog_id, catalog_name, catalog_storage, catalog_source_path, catalog_file_count, catalog_total_file_size
+                                    SELECT  catalog_id,
+                                            catalog_name,
+                                            catalog_storage,
+                                            catalog_source_path,
+                                            catalog_file_count,
+                                            catalog_total_file_size
                                     FROM catalog
                                 )");
     query.prepare(querySQL);
@@ -4306,6 +4330,94 @@ void MainWindow::convertSearchHistory()
     collection->saveSearchHistoryTableToFile();
 }
 
+void MainWindow::convertStorage()
+{//Convert Tags
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                        DELETE FROM storage
+                                    )");
+    query.prepare(querySQL);
+    query.exec();
+
+    QFile storageFile(collection->storageFilePath);
+
+    //Open file or return information
+    if(!storageFile.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QTextStream textStream(&storageFile);
+    while (true)
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+        {
+            //Split the string with tabulation into a list
+            QStringList fieldList = line.split('\t');
+            //qDebug()<<"fieldList"<<fieldList;
+            QSqlQuery insertQuery;
+            QString insertQuerySQL = QLatin1String(R"(
+                                        INSERT INTO storage(
+                                                storage_id,
+                                                storage_name,
+                                                storage_type,
+                                                storage_location,
+                                                storage_path,
+                                                storage_label,
+                                                storage_file_system,
+                                                storage_total_space,
+                                                storage_free_space,
+                                                storage_brand,
+                                                storage_model,
+                                                storage_serial_number,
+                                                storage_build_date,
+                                                storage_comment1,
+                                                storage_comment2,
+                                                storage_comment3)
+                                          VALUES(
+                                                :storage_id,
+                                                :storage_name,
+                                                :storage_type,
+                                                :storage_location,
+                                                :storage_path,
+                                                :storage_label,
+                                                :storage_file_system,
+                                                :storage_total_space,
+                                                :storage_free_space,
+                                                :storage_brand,
+                                                :storage_model,
+                                                :storage_serial_number,
+                                                :storage_build_date,
+                                                :storage_comment1,
+                                                :storage_comment2,
+                                                :storage_comment3)
+                                    )");
+            insertQuery.prepare(insertQuerySQL);
+            insertQuery.bindValue(":storage_id",            fieldList[0]);
+            insertQuery.bindValue(":storage_name",          fieldList[1]);
+            insertQuery.bindValue(":storage_type",          fieldList[2]);
+            insertQuery.bindValue(":storage_location",      fieldList[3]);
+            insertQuery.bindValue(":storage_path",          fieldList[4]);
+            insertQuery.bindValue(":storage_label",         fieldList[5]);
+            insertQuery.bindValue(":storage_file_system",   fieldList[6]);
+            insertQuery.bindValue(":storage_total_space",   fieldList[7]);
+            insertQuery.bindValue(":storage_free_space",    fieldList[8]);
+            insertQuery.bindValue(":storage_brand",         fieldList[9]);
+            insertQuery.bindValue(":storage_model",         fieldList[9]);
+            insertQuery.bindValue(":storage_serial_number", fieldList[10]);
+            insertQuery.bindValue(":storage_build_date",    fieldList[11]);
+            insertQuery.bindValue(":storage_comment1",      fieldList[12]);
+            insertQuery.bindValue(":storage_comment2",      fieldList[13]);
+            insertQuery.bindValue(":storage_comment3",      fieldList[14]);
+            insertQuery.exec();
+        }
+    }
+    storageFile.close();
+
+    collection->saveStorageTableToFile();
+}
 //--------------------------------------------------------------------------
 //--- DEV: metadata --------------------------------------------------------
 //--------------------------------------------------------------------------

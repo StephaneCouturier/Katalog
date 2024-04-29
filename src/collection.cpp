@@ -133,7 +133,8 @@ void Collection::generateCollectionFiles()
                        << "FileSystem"    << "\t"
                        << "Total"         << "\t"
                        << "Free"          << "\t"
-                       << "BrandModel"    << "\t"
+                       << "Brand"    << "\t"
+                       << "Model"    << "\t"
                        << "SerialNumber"  << "\t"
                        << "BuildDate"     << "\t"
                        << "ContentType"   << "\t"
@@ -465,7 +466,8 @@ void Collection::loadStorageFileToTable()
                                         storage_file_system,
                                         storage_total_space,
                                         storage_free_space,
-                                        storage_brand_model,
+                                        storage_brand,
+                                        storage_model,
                                         storage_serial_number,
                                         storage_build_date,
                                         storage_comment1,
@@ -481,7 +483,8 @@ void Collection::loadStorageFileToTable()
                                         :storage_file_system,
                                         :storage_total_space,
                                         :storage_free_space,
-                                        :storage_brand_model,
+                                        :storage_brand,
+                                        :storage_model,
                                         :storage_serial_number,
                                         :storage_build_date,
                                         :storage_comment1,
@@ -500,12 +503,13 @@ void Collection::loadStorageFileToTable()
                     insertQuery.bindValue(":storage_file_system",   fieldList[6]);
                     insertQuery.bindValue(":storage_total_space",   fieldList[7].toLongLong());
                     insertQuery.bindValue(":storage_free_space",    fieldList[8].toLongLong());
-                    insertQuery.bindValue(":storage_brand_model",   fieldList[9]);
-                    insertQuery.bindValue(":storage_serial_number", fieldList[10]);
-                    insertQuery.bindValue(":storage_build_date",    fieldList[11]);
-                    insertQuery.bindValue(":storage_comment1",      fieldList[12]);
-                    insertQuery.bindValue(":storage_comment2",      fieldList[13]);
-                    insertQuery.bindValue(":storage_comment3",      fieldList[14]);
+                    insertQuery.bindValue(":storage_brand",         fieldList[9]);
+                    insertQuery.bindValue(":storage_model",         fieldList[10]);
+                    insertQuery.bindValue(":storage_serial_number", fieldList[11]);
+                    insertQuery.bindValue(":storage_build_date",    fieldList[12]);
+                    insertQuery.bindValue(":storage_comment1",      fieldList[13]);
+                    insertQuery.bindValue(":storage_comment2",      fieldList[14]);
+                    insertQuery.bindValue(":storage_comment3",      fieldList[15]);
 
                     if(line!="")
                         insertQuery.exec();
@@ -1008,7 +1012,8 @@ void Collection::saveStorageTableToFile()
             << "FileSystem"    << "\t"
             << "Total"         << "\t"
             << "Free"          << "\t"
-            << "BrandModel"    << "\t"
+            << "Brand"         << "\t"
+            << "Model"         << "\t"
             << "SerialNumber"  << "\t"
             << "BuildDate"     << "\t"
             << "Comment1"      << "\t"
@@ -1019,7 +1024,24 @@ void Collection::saveStorageTableToFile()
         //Get data
         QSqlQuery query;
         QString querySQL = QLatin1String(R"(
-                         SELECT * FROM storage
+                         SELECT
+                            storage_id            ,
+                            storage_name          ,
+                            storage_type          ,
+                            storage_location      ,
+                            storage_path          ,
+                            storage_label         ,
+                            storage_file_system   ,
+                            storage_total_space   ,
+                            storage_free_space    ,
+                            storage_brand         ,
+                            storage_model         ,
+                            storage_serial_number ,
+                            storage_build_date    ,
+                            storage_comment1      ,
+                            storage_comment2      ,
+                            storage_comment3
+                        FROM storage
                                     )");
         query.prepare(querySQL);
         query.exec();

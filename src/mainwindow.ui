@@ -4758,7 +4758,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Type"/>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="Devices_label_10">
+                       <widget class="QLabel" name="Devices_label_Brand">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4772,15 +4772,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="text">
-                         <string>Brand/Model</string>
+                         <string>Brand</string>
                         </property>
                        </widget>
                       </item>
                       <item row="1" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_BrandModel"/>
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Brand"/>
                       </item>
-                      <item row="2" column="0">
-                       <widget class="QLabel" name="Devices_label_12">
+                      <item row="4" column="0">
+                       <widget class="QLabel" name="Devices_label_SerialNumber">
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
@@ -4798,10 +4798,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="2" column="1">
+                      <item row="4" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_SerialNumber"/>
                       </item>
-                      <item row="3" column="0">
+                      <item row="5" column="0">
                        <widget class="QLabel" name="Devices_label_BuildDate">
                         <property name="minimumSize">
                          <size>
@@ -4820,10 +4820,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="3" column="1">
+                      <item row="5" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_BuildDate"/>
                       </item>
-                      <item row="4" column="0">
+                      <item row="6" column="0">
                        <widget class="QLabel" name="Devices_label_Label">
                         <property name="minimumSize">
                          <size>
@@ -4842,10 +4842,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="4" column="1">
+                      <item row="6" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Label"/>
                       </item>
-                      <item row="5" column="0">
+                      <item row="7" column="0">
                        <widget class="QLabel" name="Devices_label_FileSystem">
                         <property name="minimumSize">
                          <size>
@@ -4864,10 +4864,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="5" column="1">
+                      <item row="7" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_FileSystem"/>
                       </item>
-                      <item row="6" column="0">
+                      <item row="8" column="0">
                        <spacer name="Devices_verticalSpacer_3">
                         <property name="orientation">
                          <enum>Qt::Vertical</enum>
@@ -4883,14 +4883,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </spacer>
                       </item>
-                      <item row="7" column="0">
+                      <item row="9" column="0">
                        <widget class="QLabel" name="Devices_label_TotalSpace">
                         <property name="text">
                          <string>Total Space</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="7" column="1">
+                      <item row="9" column="1">
                        <layout class="QHBoxLayout" name="Devices_horizontalLayout_9">
                         <item>
                          <widget class="QLineEdit" name="Storage_lineEdit_Panel_Total">
@@ -4923,14 +4923,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </item>
                        </layout>
                       </item>
-                      <item row="8" column="0">
+                      <item row="10" column="0">
                        <widget class="QLabel" name="Devices_label_9">
                         <property name="text">
                          <string>Free Space</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="8" column="1">
+                      <item row="10" column="1">
                        <layout class="QHBoxLayout" name="Devices_horizontalLayout_10">
                         <item>
                          <widget class="QLineEdit" name="Storage_lineEdit_Panel_Free">
@@ -4962,6 +4962,28 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </widget>
                         </item>
                        </layout>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Model"/>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="Devices_label_Model">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>120</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Model</string>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>

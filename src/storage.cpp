@@ -63,7 +63,8 @@ void Storage::insertStorage()
                             storage_file_system,
                             storage_total_space,
                             storage_free_space,
-                            storage_brand_model,
+                            storage_brand,
+                            storage_model,
                             storage_serial_number,
                             storage_build_date,
                             storage_comment1,
@@ -78,6 +79,7 @@ void Storage::insertStorage()
                             "",
                             0,
                             0,
+                            "",
                             "",
                             "",
                             "",
@@ -121,7 +123,8 @@ void Storage::loadStorage()
                                 storage_file_system,
                                 storage_total_space,
                                 storage_free_space,
-                                storage_brand_model,
+                                storage_brand,
+                                storage_model,
                                 storage_serial_number,
                                 storage_build_date,
                                 storage_comment1,
@@ -142,12 +145,13 @@ void Storage::loadStorage()
             fileSystem   = query.value(4).toString();
             totalSpace   = query.value(5).toLongLong();
             freeSpace    = query.value(6).toLongLong();
-            brand_model  = query.value(7).toString();
-            serialNumber = query.value(8).toString();
-            buildDate    = query.value(9).toString();
-            comment1  = query.value(10).toString();
-            comment2    = query.value(11).toString();
-            comment3      = query.value(12).toString();
+            brand        = query.value(7).toString();
+            model        = query.value(8).toString();
+            serialNumber = query.value(9).toString();
+            buildDate    = query.value(10).toString();
+            comment1     = query.value(11).toString();
+            comment2     = query.value(12).toString();
+            comment3     = query.value(13).toString();
         } else {
             qDebug() << "No record found for storage_id" << ID;
         }

@@ -53,7 +53,8 @@ public:
     QString fileSystem;
     qint64  totalSpace;
     qint64  freeSpace;
-    QString brand_model;
+    QString brand;
+    QString model;
     QString serialNumber;
     QString buildDate;
     QString comment1;

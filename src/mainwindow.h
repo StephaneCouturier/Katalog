@@ -296,6 +296,7 @@ class MainWindow : public QMainWindow
             void importExcludeIntoParameter();
             void convertTags();
             void convertSearchHistory();
+            void convertStorage();
 
         //TAB: Statistics
             QStringList typeOfData;
