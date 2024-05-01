@@ -1,0 +1,5 @@
+title: Katalog Documentation
+theme: jekyll-theme-primer
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap

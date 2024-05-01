@@ -121,12 +121,7 @@ RESOURCES += \
     src/translations.qrc
 
 DISTFILES += \
-    docs/README.md \
-    docs/background.jpg \
-    docs/index.html \
-    docs/logo.jpg \
-    docs/script.js \
-    docs/style.css \
+    docs/_config.yml \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
