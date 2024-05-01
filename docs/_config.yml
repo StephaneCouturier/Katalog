@@ -4,6 +4,9 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
+baseurl: /Katalog
+url: https://stephanecouturier.github.io
+
 # Multilingual settings
 lang: en
 default_lang: en
