@@ -3,3 +3,10 @@ theme: jekyll-theme-primer
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+
+# Multilingual settings
+lang: en
+default_lang: en
+localized_paths:
+  en: /en/
+  fr: /fr/
