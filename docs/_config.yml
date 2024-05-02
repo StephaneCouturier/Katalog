@@ -11,5 +11,6 @@ url: https://stephanecouturier.github.io
 lang: en
 default_lang: en
 localized_paths:
+  cz: /cz/
   en: /en/
   fr: /fr/
