@@ -123,6 +123,7 @@ RESOURCES += \
 DISTFILES += \
     docs/Gemfile \
     docs/_config.yml \
+    docs/cz/index.md \
     docs/en/index.md \
     docs/fr/index.html \
     docs/index.html \
