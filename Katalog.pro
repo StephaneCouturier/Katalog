@@ -123,8 +123,8 @@ RESOURCES += \
 DISTFILES += \
     docs/Gemfile \
     docs/_config.yml \
-    docs/en/index.html \
-    docs/fr/index.html \
+    docs/en/index.md \
+    docs/fr/index.md \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
