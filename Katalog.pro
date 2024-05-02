@@ -124,7 +124,7 @@ DISTFILES += \
     docs/Gemfile \
     docs/_config.yml \
     docs/en/index.md \
-    docs/fr/index.md \
+    docs/fr/index.html \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
