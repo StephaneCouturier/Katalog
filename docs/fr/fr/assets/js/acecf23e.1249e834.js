@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkatalog_pages_2=self.webpackChunkkatalog_pages_2||[]).push([[1903],{1912:a=>{a.exports=JSON.parse('{"blogBasePath":"/Katalog/blog","blogTitle":"Blog"}')}}]);
