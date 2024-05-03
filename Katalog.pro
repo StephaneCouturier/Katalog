@@ -122,12 +122,103 @@ RESOURCES += \
 
 DISTFILES += \
     README.md \
+    docs/404.html \
     docs/Gemfile \
     docs/_config.yml \
+    docs/assets/css/styles.07bd052f.css \
+    docs/assets/images/docsVersionDropdown-35e13cbe46c9923327f30a76a90bff3b.png \
+    docs/assets/images/docusaurus-plushie-banner-a60f7593abca1e3eef26a9afa244e4fb.jpeg \
+    docs/assets/images/localeDropdown-f0d995e751e7656a1b0dbbc1134e49c2.png \
+    docs/assets/js/01a85c17.c39a71aa.js \
+    docs/assets/js/0e384e19.4d608f23.js \
+    docs/assets/js/14eb3368.f42f1f05.js \
+    docs/assets/js/1538.c41fc585.js \
+    docs/assets/js/15ca0c76.d7671995.js \
+    docs/assets/js/17896441.2a03a2bf.js \
+    docs/assets/js/18c41134.184af6b0.js \
+    docs/assets/js/1df93b7f.4d2cbab8.js \
+    docs/assets/js/1e4232ab.c07700c0.js \
+    docs/assets/js/1f391b9e.ccd9807d.js \
+    docs/assets/js/2237.eeaafd0c.js \
+    docs/assets/js/3242.273b0293.js \
+    docs/assets/js/36994c47.364b5155.js \
+    docs/assets/js/393a0b35.64b2fa22.js \
+    docs/assets/js/393be207.e78e0cf7.js \
+    docs/assets/js/42fb4d58.487fc62c.js \
+    docs/assets/js/464ce5e7.7064c938.js \
+    docs/assets/js/533a09ca.df8cd23f.js \
+    docs/assets/js/5566110a.4c7c2cf0.js \
+    docs/assets/js/59362658.17971da3.js \
+    docs/assets/js/5a5c66b3.49c559b4.js \
+    docs/assets/js/5c868d36.d18e263c.js \
+    docs/assets/js/5e95c892.24f64a67.js \
+    docs/assets/js/6875c492.3376aca5.js \
+    docs/assets/js/6bc7eaab.6a8164e3.js \
+    docs/assets/js/709de83f.2f935902.js \
+    docs/assets/js/73664a40.fc26c721.js \
+    docs/assets/js/7661071f.afa073f0.js \
+    docs/assets/js/7ba4394c.94d24dc4.js \
+    docs/assets/js/814f3328.2f3a5a97.js \
+    docs/assets/js/822bd8ab.232ee0de.js \
+    docs/assets/js/8717b14a.75625c2c.js \
+    docs/assets/js/925b3f96.443ef430.js \
+    docs/assets/js/9dcdaee3.8a70eed4.js \
+    docs/assets/js/9e4087bc.1245fdd5.js \
+    docs/assets/js/a6aa9e1f.0699f0bc.js \
+    docs/assets/js/a7456010.05dfefb2.js \
+    docs/assets/js/a7bd4aaa.8877968a.js \
+    docs/assets/js/a94703ab.b99c471b.js \
+    docs/assets/js/aba21aa0.c8001e84.js \
+    docs/assets/js/acecf23e.bc284cef.js \
+    docs/assets/js/ccc49370.be59fe37.js \
+    docs/assets/js/d9f32620.1649c650.js \
+    docs/assets/js/dff1c289.af052cbd.js \
+    docs/assets/js/e273c56f.8174ca32.js \
+    docs/assets/js/e44a2883.e5f33e9e.js \
+    docs/assets/js/f4f34a3a.5ffc00e5.js \
+    docs/assets/js/f55d3e7a.4bb90ea6.js \
+    docs/assets/js/main.a7e0d78f.js \
+    docs/assets/js/main.a7e0d78f.js.LICENSE.txt \
+    docs/assets/js/runtime~main.307c189a.js \
+    docs/blog/archive/index.html \
+    docs/blog/atom.xml \
+    docs/blog/first-blog-post/index.html \
+    docs/blog/index.html \
+    docs/blog/long-blog-post/index.html \
+    docs/blog/mdx-blog-post/index.html \
+    docs/blog/rss.xml \
+    docs/blog/tags/docusaurus/index.html \
+    docs/blog/tags/facebook/index.html \
+    docs/blog/tags/hello/index.html \
+    docs/blog/tags/hola/index.html \
+    docs/blog/tags/index.html \
+    docs/blog/welcome/index.html \
     docs/cz/index.md \
+    docs/docs/category/tutorial---basics/index.html \
+    docs/docs/category/tutorial---extras/index.html \
+    docs/docs/intro/index.html \
+    docs/docs/tutorial-basics/congratulations/index.html \
+    docs/docs/tutorial-basics/create-a-blog-post/index.html \
+    docs/docs/tutorial-basics/create-a-document/index.html \
+    docs/docs/tutorial-basics/create-a-page/index.html \
+    docs/docs/tutorial-basics/deploy-your-site/index.html \
+    docs/docs/tutorial-basics/markdown-features/index.html \
+    docs/docs/tutorial-extras/manage-docs-versions/index.html \
+    docs/docs/tutorial-extras/translate-your-site/index.html \
     docs/en/index.md \
     docs/fr/index.html \
+    docs/img/Banner_1.20.png \
+    docs/img/Katalog_logo_1.20.png \
+    docs/img/docusaurus-social-card.jpg \
+    docs/img/docusaurus.png \
+    docs/img/favicon.ico \
+    docs/img/logo.svg \
+    docs/img/undraw_docusaurus_mountain.svg \
+    docs/img/undraw_docusaurus_react.svg \
+    docs/img/undraw_docusaurus_tree.svg \
     docs/index.html \
+    docs/markdown-page/index.html \
+    docs/sitemap.xml \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
