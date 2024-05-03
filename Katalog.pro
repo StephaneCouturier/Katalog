@@ -121,6 +121,7 @@ RESOURCES += \
     src/translations.qrc
 
 DISTFILES += \
+    README.md \
     docs/Gemfile \
     docs/_config.yml \
     docs/cz/index.md \
