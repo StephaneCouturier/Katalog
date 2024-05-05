@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog</id>
+    <id>https://StephaneCouturier.github.io/Katalog/fr/blog</id>
     <title>Katalog Blog</title>
     <updated>2024-05-04T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog"/>
+    <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/fr/blog"/>
     <subtitle>Katalog Blog</subtitle>
-    <icon>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/img/favicon.ico</icon>
+    <icon>https://StephaneCouturier.github.io/Katalog/fr/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Major Release 2.0]]></title>
-        <id>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog/first-blog-post</id>
-        <link href="https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog/first-blog-post"/>
+        <id>https://StephaneCouturier.github.io/Katalog/fr/blog/first-blog-post</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/fr/blog/first-blog-post"/>
         <updated>2024-05-04T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[After an almost flawless record of releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.]]></summary>
         <content type="html"><![CDATA[<p>After an almost flawless record of releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.</p>

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Katalog Blog</title>
-        <link>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/blog</link>
+        <link>https://StephaneCouturier.github.io/Katalog/blog</link>
         <description>Katalog Blog</description>
         <lastBuildDate>Sat, 04 May 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,8 +10,8 @@
         <language>en</language>
         <item>
             <title><![CDATA[Major Release 2.0]]></title>
-            <link>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/blog/first-blog-post</link>
-            <guid>https://StephaneCouturier.github.io/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/blog/first-blog-post</guid>
+            <link>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</guid>
             <pubDate>Sat, 04 May 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[After an almost flawless record of releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.]]></description>
             <content:encoded><![CDATA[<p>After an almost flawless record of releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.</p>
