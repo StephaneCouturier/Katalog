@@ -1694,7 +1694,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); //Name
         ui->Devices_treeView_DeviceList->header()->resizeSection( 1, 100); //Type
         ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  25); //Active
-        ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  25); //ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  30); //ID
         ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  25); //Parent ID
         ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  25); //External ID
         ui->Devices_treeView_DeviceList->header()->resizeSection( 6, 100); //Number of Files

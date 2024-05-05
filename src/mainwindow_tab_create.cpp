@@ -122,7 +122,9 @@
     void MainWindow::on_Create_pushButton_AddStorage_clicked()
     {
         //Change tab to show the screen to add a storage
-        ui->tabWidget->setCurrentIndex(4); // tab 1 is the Collection tab
+        ui->tabWidget->setCurrentIndex(1); // tab 1 is the Devices tab
+        ui->Devices_radioButton_DeviceTree->setChecked(true); // the tree view is required to add a storage
+        loadDevicesView(); // refresh the view
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()

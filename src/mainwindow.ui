@@ -6219,22 +6219,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Image</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="image-jpeg"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
                   <property name="enabled">
                    <bool>true</bool>
@@ -6251,7 +6235,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Video">
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -6259,10 +6243,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>Video</string>
+                   <string>Image</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="video-mp4"/>
+                   <iconset theme="image-jpeg"/>
                   </property>
                  </widget>
                 </item>
@@ -6279,6 +6263,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="icon">
                    <iconset theme="folder-text"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Video">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>Video</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="video-mp4"/>
                   </property>
                  </widget>
                 </item>
