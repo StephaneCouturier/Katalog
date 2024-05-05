@@ -1381,7 +1381,7 @@ void Collection::insertPhysicalStorageGroup() {
         Device *newDeviceItem2 = new Device();
         newDeviceItem2->ID = 2;
         newDeviceItem2->parentID = 1;
-        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Default Virtual group");
+        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Virtual device");
         newDeviceItem2->type = "Virtual";
         newDeviceItem2->externalID = 0;
         newDeviceItem2->groupID = 0;

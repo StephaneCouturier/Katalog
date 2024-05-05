@@ -70,7 +70,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2201"/>
         <location filename="../mainwindow.ui" line="4498"/>
-        <location filename="../mainwindow.ui" line="6278"/>
+        <location filename="../mainwindow.ui" line="6262"/>
         <location filename="../mainwindow_tab_search.cpp" line="1446"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2185"/>
         <location filename="../mainwindow.ui" line="4482"/>
-        <location filename="../mainwindow.ui" line="6246"/>
+        <location filename="../mainwindow.ui" line="6230"/>
         <location filename="../mainwindow_tab_search.cpp" line="1440"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
@@ -286,7 +286,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2193"/>
         <location filename="../mainwindow.ui" line="4490"/>
-        <location filename="../mainwindow.ui" line="6230"/>
+        <location filename="../mainwindow.ui" line="6246"/>
         <location filename="../mainwindow_tab_search.cpp" line="1443"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
@@ -294,7 +294,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2209"/>
         <location filename="../mainwindow.ui" line="4506"/>
-        <location filename="../mainwindow.ui" line="6262"/>
+        <location filename="../mainwindow.ui" line="6278"/>
         <location filename="../mainwindow_tab_search.cpp" line="1449"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
@@ -1484,38 +1484,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="152"/>
+        <location filename="../mainwindow_tab_create.cpp" line="154"/>
         <source>Remove this directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="231"/>
+        <location filename="../mainwindow_tab_create.cpp" line="233"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="239"/>
+        <location filename="../mainwindow_tab_create.cpp" line="241"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="247"/>
+        <location filename="../mainwindow_tab_create.cpp" line="249"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="265"/>
+        <location filename="../mainwindow_tab_create.cpp" line="267"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="267"/>
+        <location filename="../mainwindow_tab_create.cpp" line="269"/>
         <location filename="../mainwindow_tab_device.cpp" line="1121"/>
         <source>Choose a different name and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="425"/>
+        <location filename="../mainwindow_tab_create.cpp" line="427"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2709,7 +2709,7 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../collection.cpp" line="1384"/>
-        <source>Default Virtual group</source>
+        <source>Virtual device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

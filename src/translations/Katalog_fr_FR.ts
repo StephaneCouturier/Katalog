@@ -237,7 +237,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2201"/>
         <location filename="../mainwindow.ui" line="4498"/>
-        <location filename="../mainwindow.ui" line="6278"/>
+        <location filename="../mainwindow.ui" line="6262"/>
         <location filename="../mainwindow_tab_search.cpp" line="1446"/>
         <source>Text</source>
         <translation>Texte</translation>
@@ -526,7 +526,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2209"/>
         <location filename="../mainwindow.ui" line="4506"/>
-        <location filename="../mainwindow.ui" line="6262"/>
+        <location filename="../mainwindow.ui" line="6278"/>
         <location filename="../mainwindow_tab_search.cpp" line="1449"/>
         <source>Video</source>
         <translation>Vidéo</translation>
@@ -890,7 +890,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2185"/>
         <location filename="../mainwindow.ui" line="4482"/>
-        <location filename="../mainwindow.ui" line="6246"/>
+        <location filename="../mainwindow.ui" line="6230"/>
         <location filename="../mainwindow_tab_search.cpp" line="1440"/>
         <source>Audio</source>
         <translation>Audio</translation>
@@ -898,7 +898,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2193"/>
         <location filename="../mainwindow.ui" line="4490"/>
-        <location filename="../mainwindow.ui" line="6230"/>
+        <location filename="../mainwindow.ui" line="6246"/>
         <location filename="../mainwindow_tab_search.cpp" line="1443"/>
         <source>Image</source>
         <translation>Image</translation>
@@ -1596,32 +1596,32 @@
         <translation>Editer la liste</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="152"/>
+        <location filename="../mainwindow_tab_create.cpp" line="154"/>
         <source>Remove this directory</source>
         <translation>Retirer ce répertoire</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="231"/>
+        <location filename="../mainwindow_tab_create.cpp" line="233"/>
         <source>Provide a name for this new catalog.&lt;br/&gt;</source>
         <translation>Donner un nom à ce nouveau catalogue.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="239"/>
+        <location filename="../mainwindow_tab_create.cpp" line="241"/>
         <source>Provide a path for this new catalog.&lt;br/&gt;</source>
         <translation>Donner un chemin pour ce nouveau catalogue.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="247"/>
+        <location filename="../mainwindow_tab_create.cpp" line="249"/>
         <source>Select a Storage for this new catalog.&lt;br/&gt;(Selection panel on the left and dropdown list)</source>
         <translation>Sélectionnez un stockage pour ce nouveau catalogue.&lt;br/&gt;(Panneau de sélection à gauche et liste déroulante)</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="265"/>
+        <location filename="../mainwindow_tab_create.cpp" line="267"/>
         <source>There is already a catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Il existe déjà un catalogue portant ce nom :&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="267"/>
+        <location filename="../mainwindow_tab_create.cpp" line="269"/>
         <location filename="../mainwindow_tab_device.cpp" line="1121"/>
         <source>Choose a different name and try again.</source>
         <translation>Choisissez un autre nom et réessayez.</translation>
@@ -1633,7 +1633,7 @@
         <translation>Erreur lors de l&apos;ouverture du fichier de sortie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_create.cpp" line="425"/>
+        <location filename="../mainwindow_tab_create.cpp" line="427"/>
         <source>Resolution</source>
         <translation>Résolution</translation>
     </message>
@@ -2723,8 +2723,8 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../collection.cpp" line="1384"/>
-        <source>Default Virtual group</source>
-        <translation>Group Virtuel par défaut</translation>
+        <source>Virtual device</source>
+        <translation>Appareil virtuel</translation>
     </message>
     <message>
         <location filename="../collection.cpp" line="1339"/>
