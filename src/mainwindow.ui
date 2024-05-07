@@ -7445,7 +7445,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item row="4" column="2">
-                 <widget class="QPushButton" name="Settings_pushButton_Wiki">
+                 <widget class="QPushButton" name="Settings_pushButton_Documentation">
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -7453,7 +7453,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </size>
                   </property>
                   <property name="text">
-                   <string>Katalog's Wiki</string>
+                   <string>Documentation</string>
                   </property>
                   <property name="icon">
                    <iconset theme="internet-web-browser"/>

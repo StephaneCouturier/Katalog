@@ -315,9 +315,9 @@
     }
     //----------------------------------------------------------------------
 //SETTINGS / About ---------------------------------------------------------
-    void MainWindow::on_Settings_pushButton_Wiki_clicked()
+    void MainWindow::on_Settings_pushButton_Documentation_clicked()
     {
-        QDesktopServices::openUrl(QUrl("https://github.com/StephaneCouturier/Katalog/wiki"));
+        QDesktopServices::openUrl(QUrl("https://stephanecouturier.github.io/Katalog/"));
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_ReleaseNotes_clicked()

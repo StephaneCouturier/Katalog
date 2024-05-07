@@ -366,7 +366,7 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1);
             void on_Settings_pushButton_OpenSettingsFile_clicked();
 
-            void on_Settings_pushButton_Wiki_clicked();
+            void on_Settings_pushButton_Documentation_clicked();
             void on_Settings_pushButton_ReleaseNotes_clicked();
             void on_Settings_checkBox_CheckVersion_stateChanged();
 
