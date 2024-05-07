@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkkatalog_pages_2=self.webpackChunkkatalog_pages_2||[]).push([[188],{2393:a=>{a.exports=JSON.parse('{"metadata":{"permalink":"/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
