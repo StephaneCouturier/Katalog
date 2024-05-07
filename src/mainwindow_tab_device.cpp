@@ -1039,6 +1039,11 @@ void MainWindow::editDevice()
     loadParentsList();
 
     //Load panel and values
+    if(collection->databaseMode=="Memory")
+        ui->Storage_label_Picture_2->setVisible(true);
+    else
+        ui->Storage_label_Picture_2->setVisible(false);
+
     ui->Devices_widget_Edit->setVisible(true);
     ui->Devices_lineEdit_Name->setText(activeDevice->name);
     ui->Devices_label_ItemDeviceTypeValue->setText(activeDevice->type);
