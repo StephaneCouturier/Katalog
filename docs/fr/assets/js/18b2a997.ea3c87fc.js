@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkkatalog_pages_2=self.webpackChunkkatalog_pages_2||[]).push([[970],{8929:e=>{e.exports=JSON.parse('{"tags":[{"label":"release","permalink":"/home/stephane/Documents/Informatique/Katalog/Documentation/Katalog-pages/build/fr/blog/tags/release","count":1}]}')}}]);
