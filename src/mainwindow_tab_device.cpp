@@ -1,4 +1,4 @@
- /*LICENCE
+/*LICENCE
     This file is part of Katalog
 
     Copyright (C) 2020, the Katalog Development team
@@ -1276,6 +1276,8 @@ void MainWindow::saveDeviceForm()
                 //Refresh
                 if(collection->databaseMode=="Memory")
                     collection->loadCatalogFilesToTable();
+
+
             }
         }
 
@@ -1342,6 +1344,7 @@ void MainWindow::saveDeviceForm()
 
     //Reload
     loadDevicesView();
+    loadStorageList();
 }
 //--------------------------------------------------------------------------
 void MainWindow::recordAllDeviceStats(QDateTime dateTime)
