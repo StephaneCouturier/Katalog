@@ -425,7 +425,7 @@
 
         //Devices
             ui->Devices_pushButton_TreeExpandCollapse->hide();
-            ui->Settings_widget_Import->hide();
+            ui->Catalogs_checkBox_IncludeMetadata->hide();
 
             //Catalogs
                 //DEV: preparing catalog-device relation

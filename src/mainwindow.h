@@ -364,7 +364,6 @@ class MainWindow : public QMainWindow
             void on_Settings_comboBox_Language_currentTextChanged(const QString &selectedLanguage);
             void on_Settings_comboBox_Theme_currentIndexChanged(int index);
             void on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1);
-            void on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged();
             void on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1);
             void on_Settings_pushButton_OpenSettingsFile_clicked();
 
@@ -484,9 +483,9 @@ class MainWindow : public QMainWindow
 
             //Catalogs
             void on_Catalogs_pushButton_UpdateAllActive_clicked();
-            void on_Catalogs_pushButton_Open_clicked();
             void on_Catalogs_pushButton_UpdateCatalog_clicked();
             void on_Catalogs_pushButton_Import_clicked();
+
             //Storage
             void on_Storage_pushButton_UpdateStorage_clicked();
 

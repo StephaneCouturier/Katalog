@@ -1050,9 +1050,7 @@ void MainWindow::editDevice()
         ui->Devices_widget_EditCatalogFields->hide();
 
         ui->Storage_lineEdit_Panel_ID->setText(QString::number(activeDevice->storage->ID));
-        ui->Storage_label_NameDisplay->setText(activeDevice->storage->name);
         ui->Storage_lineEdit_Panel_Type->setText(activeDevice->storage->type);
-        ui->Storage_label_Panel_Path->setText(activeDevice->storage->path);
         ui->Storage_lineEdit_Panel_Label->setText(activeDevice->storage->label);
         ui->Storage_lineEdit_Panel_FileSystem->setText(activeDevice->storage->fileSystem);
 
@@ -3011,23 +3009,6 @@ void MainWindow::createMissingParentDirectories() {
             }
         }
     }
-}
-//--------------------------------------------------------------------------
-void MainWindow::on_Catalogs_pushButton_Open_clicked()
-{
-    //save catalogs
-    int result = QMessageBox::warning(this, "Katalog",
-                                      tr("You are about to edit the catalog file directly.<br/><br/>"
-                                         "It generally recommended to Create a new catalog with the right initial settings (source path, file type, include Hidden Files, storage), rather than modify the catalog file directly.<br/><br/>"
-                                         "Check the Wiki page <a href='https://github.com/StephaneCouturier/Katalog/wiki/Catalogs#edit'>Catalogs/Edit</a> to understand the impact of changing this file directly.<br/><br/>"
-                                         "Do you want to continue anyway?")
-                                      , QMessageBox::Yes
-                                          | QMessageBox::Cancel);
-    if ( result == QMessageBox::Cancel){
-        return;
-    }
-    else
-        QDesktopServices::openUrl(QUrl::fromLocalFile(selectedDevice->catalog->filePath));
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()

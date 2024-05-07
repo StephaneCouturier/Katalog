@@ -279,13 +279,6 @@
         settings.setValue("Settings/Theme", index);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_checkBox_SaveRecordWhenUpdate_stateChanged()
-    {
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        saveStatisticsEnabled = ui->Settings_checkBox_SaveRecordWhenUpdate->isChecked();
-        settings.setValue("Settings/AutoSaveRecordWhenUpdate", saveStatisticsEnabled);
-    }
-    //----------------------------------------------------------------------
     void MainWindow::on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1)
     {
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);

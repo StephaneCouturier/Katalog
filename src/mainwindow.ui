@@ -4293,30 +4293,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
-                <layout class="QHBoxLayout" name="Devices_horizontalLayout_16">
-                 <item>
-                  <widget class="QLabel" name="Devices_label_ItemEdition">
-                   <property name="text">
-                    <string>Device</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="Devices_horizontalSpacer_13">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item>
                 <layout class="QFormLayout" name="Devices_formLayout_4">
                  <item row="1" column="0">
                   <widget class="QLabel" name="Devices_label_ItemEditionName">
@@ -4354,6 +4330,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <width>100</width>
                      <height>0</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
                    </property>
                    <property name="text">
                     <string>Device Type</string>
@@ -4457,16 +4440,36 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item row="1" column="0">
                    <layout class="QGridLayout" name="Devices_gridLayout_18">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="Catalogs_label_FileType">
-                      <property name="minimumSize">
+                    <item row="0" column="2">
+                     <spacer name="Devices_horizontalSpacer_14">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
                        <size>
-                        <width>120</width>
-                        <height>0</height>
+                        <width>40</width>
+                        <height>20</height>
                        </size>
                       </property>
+                     </spacer>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
                       <property name="text">
-                       <string>File Type</string>
+                       <string>Include Hidden Files</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QCheckBox" name="Catalogs_checkBox_IncludeMetadata">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="text">
+                       <string>Include Metadata</string>
                       </property>
                      </widget>
                     </item>
@@ -4518,49 +4521,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="2">
-                     <spacer name="Devices_horizontalSpacer_14">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="Catalogs_label_FileType">
+                      <property name="minimumSize">
                        <size>
-                        <width>40</width>
-                        <height>20</height>
+                        <width>120</width>
+                        <height>0</height>
                        </size>
                       </property>
-                     </spacer>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QCheckBox" name="Catalogs_checkBox_IncludeMetadata">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
                       <property name="text">
-                       <string>Include Metadata</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QCheckBox" name="Catalogs_checkBox_IncludeHidden">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="text">
-                       <string>Include Hidden Files</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QPushButton" name="Catalogs_pushButton_Open">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="text">
-                       <string>Open in text editor</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-edit-sign"/>
+                       <string>File Type</string>
                       </property>
                      </widget>
                     </item>
@@ -4593,130 +4563,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item row="2" column="0">
                    <layout class="QGridLayout" name="Devices_gridLayout_21">
-                    <item row="0" column="0">
-                     <layout class="QFormLayout" name="Devices_formLayout">
-                      <item row="0" column="0">
-                       <widget class="QLabel" name="Devices_label_ID">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>ID</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_ID"/>
-                      </item>
-                      <item row="1" column="0">
-                       <widget class="QLabel" name="Devices_label_Name">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Name</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="1" column="1">
-                       <widget class="QLabel" name="Storage_label_NameDisplay">
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="0">
-                       <widget class="QLabel" name="Devices_label_Path">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Path</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="1">
-                       <widget class="QLabel" name="Storage_label_Panel_Path">
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="9" column="0">
-                       <widget class="QLabel" name="Devices_label_Comment1">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Comment 1</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="9" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment1"/>
-                      </item>
-                      <item row="10" column="0">
-                       <widget class="QLabel" name="Devices_label_Comment2">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Comment 2</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="10" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment2"/>
-                      </item>
-                      <item row="11" column="0">
-                       <widget class="QLabel" name="Devices_label_Comment3">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Comment 3</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="11" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment3"/>
-                      </item>
-                      <item row="12" column="0">
-                       <spacer name="Devices_horizontalSpacer_3">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item row="13" column="1">
-                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_13"/>
-                      </item>
-                     </layout>
-                    </item>
                     <item row="0" column="1">
                      <spacer name="Devices_horizontalSpacer_6">
                       <property name="orientation">
@@ -4733,9 +4579,61 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                      </spacer>
                     </item>
-                    <item row="0" column="2">
-                     <layout class="QFormLayout" name="Devices_formLayout_2">
+                    <item row="0" column="4">
+                     <layout class="QVBoxLayout" name="Devices_verticalLayout_27">
+                      <item>
+                       <widget class="QWidget" name="Storage_widget_Picture_2" native="true">
+                        <property name="enabled">
+                         <bool>true</bool>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_28">
+                         <item>
+                          <widget class="QLabel" name="Storage_label_Picture_2">
+                           <property name="text">
+                            <string>Device Picture</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="3">
+                     <spacer name="Devices_horizontalSpacer_12">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="0">
+                     <layout class="QFormLayout" name="Devices_formLayout">
                       <item row="0" column="0">
+                       <widget class="QLabel" name="Devices_label_ID">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Storage ID</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_ID"/>
+                      </item>
+                      <item row="1" column="0">
                        <widget class="QLabel" name="Devices_label_Type">
                         <property name="minimumSize">
                          <size>
@@ -4754,10 +4652,158 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="0" column="1">
+                      <item row="1" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Type"/>
                       </item>
-                      <item row="1" column="0">
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="Devices_label_Comment1">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Comment 1</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment1"/>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="Devices_label_Comment2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Comment 2</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment2"/>
+                      </item>
+                      <item row="4" column="0">
+                       <widget class="QLabel" name="Devices_label_Comment3">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Comment 3</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment3"/>
+                      </item>
+                      <item row="5" column="0">
+                       <spacer name="Devices_horizontalSpacer_3">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="6" column="0">
+                       <widget class="QLabel" name="Devices_label_TotalSpace">
+                        <property name="text">
+                         <string>Total Space</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="11" column="1">
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_13"/>
+                      </item>
+                      <item row="6" column="1">
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_9">
+                        <item>
+                         <widget class="QLineEdit" name="Storage_lineEdit_Panel_Total">
+                          <property name="maximumSize">
+                           <size>
+                            <width>120</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="Storage_label_Panel_TotalSpace">
+                          <property name="maximumSize">
+                           <size>
+                            <width>100</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>Total Space</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="7" column="0">
+                       <widget class="QLabel" name="Devices_label_9">
+                        <property name="text">
+                         <string>Free Space</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="7" column="1">
+                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_10">
+                        <item>
+                         <widget class="QLineEdit" name="Storage_lineEdit_Panel_Free">
+                          <property name="maximumSize">
+                           <size>
+                            <width>120</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="Storage_label_Panel_FreeSpace">
+                          <property name="maximumSize">
+                           <size>
+                            <width>100</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>Free Space</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="2">
+                     <layout class="QFormLayout" name="Devices_formLayout_2">
+                      <item row="2" column="0">
                        <widget class="QLabel" name="Devices_label_Brand">
                         <property name="minimumSize">
                          <size>
@@ -4776,8 +4822,30 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="1" column="1">
+                      <item row="2" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Brand"/>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="Devices_label_Model">
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>120</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Model</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Model"/>
                       </item>
                       <item row="4" column="0">
                        <widget class="QLabel" name="Devices_label_SerialNumber">
@@ -4823,7 +4891,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item row="5" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_BuildDate"/>
                       </item>
-                      <item row="6" column="0">
+                      <item row="0" column="0">
                        <widget class="QLabel" name="Devices_label_Label">
                         <property name="minimumSize">
                          <size>
@@ -4842,10 +4910,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="6" column="1">
+                      <item row="0" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Label"/>
                       </item>
-                      <item row="7" column="0">
+                      <item row="1" column="0">
                        <widget class="QLabel" name="Devices_label_FileSystem">
                         <property name="minimumSize">
                          <size>
@@ -4864,7 +4932,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </widget>
                       </item>
-                      <item row="7" column="1">
+                      <item row="1" column="1">
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_FileSystem"/>
                       </item>
                       <item row="8" column="0">
@@ -4883,145 +4951,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         </property>
                        </spacer>
                       </item>
-                      <item row="9" column="0">
-                       <widget class="QLabel" name="Devices_label_TotalSpace">
-                        <property name="text">
-                         <string>Total Space</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="9" column="1">
-                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_9">
-                        <item>
-                         <widget class="QLineEdit" name="Storage_lineEdit_Panel_Total">
-                          <property name="maximumSize">
-                           <size>
-                            <width>120</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="Storage_label_Panel_TotalSpace">
-                          <property name="maximumSize">
-                           <size>
-                            <width>100</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Total Space</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item row="10" column="0">
-                       <widget class="QLabel" name="Devices_label_9">
-                        <property name="text">
-                         <string>Free Space</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="10" column="1">
-                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_10">
-                        <item>
-                         <widget class="QLineEdit" name="Storage_lineEdit_Panel_Free">
-                          <property name="maximumSize">
-                           <size>
-                            <width>120</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="Storage_label_Panel_FreeSpace">
-                          <property name="maximumSize">
-                           <size>
-                            <width>100</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Free Space</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </item>
-                      <item row="2" column="1">
-                       <widget class="QLineEdit" name="Storage_lineEdit_Panel_Model"/>
-                      </item>
-                      <item row="2" column="0">
-                       <widget class="QLabel" name="Devices_label_Model">
-                        <property name="minimumSize">
-                         <size>
-                          <width>120</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>120</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Model</string>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
-                    </item>
-                    <item row="0" column="4">
-                     <layout class="QVBoxLayout" name="Devices_verticalLayout_27">
-                      <item>
-                       <widget class="QWidget" name="Storage_widget_Picture_2" native="true">
-                        <property name="enabled">
-                         <bool>true</bool>
-                        </property>
-                        <layout class="QVBoxLayout" name="verticalLayout_28">
-                         <item>
-                          <widget class="QLabel" name="Storage_label_Picture_2">
-                           <property name="text">
-                            <string>Device Picture</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item row="0" column="3">
-                     <spacer name="Devices_horizontalSpacer_12">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
                     </item>
                    </layout>
                   </item>
@@ -6219,22 +6149,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locale">
-                   <locale language="English" country="UnitedStates"/>
-                  </property>
-                  <property name="text">
-                   <string>Audio</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="audio-x-mpeg"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
                   <property name="enabled">
                    <bool>true</bool>
@@ -6251,7 +6165,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Audio">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -6259,10 +6173,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <locale language="English" country="UnitedStates"/>
                   </property>
                   <property name="text">
-                   <string>Text</string>
+                   <string>Audio</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="folder-text"/>
+                   <iconset theme="audio-x-mpeg"/>
                   </property>
                  </widget>
                 </item>
@@ -6279,6 +6193,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="icon">
                    <iconset theme="video-mp4"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locale">
+                   <locale language="English" country="UnitedStates"/>
+                  </property>
+                  <property name="text">
+                   <string>Text</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="folder-text"/>
                   </property>
                  </widget>
                 </item>
@@ -7360,10 +7290,59 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="leftMargin">
                <number>12</number>
               </property>
+              <item row="1" column="2">
+               <widget class="QLabel" name="Settings_label_SettingsFile">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Open Settings file</string>
+                </property>
+               </widget>
+              </item>
               <item row="6" column="2">
                <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
               </item>
-              <item row="1" column="7">
+              <item row="1" column="3">
+               <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Open the collection folder</string>
+                </property>
+                <property name="text">
+                 <string>Open</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open"/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <spacer name="Settings_horizontalSpacer_28">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>30</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="6">
                <spacer name="Settings_horizontalSpacer_15">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -7390,95 +7369,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="text">
                  <string>Other Settings</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <spacer name="Settings_horizontalSpacer_28">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>30</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="5">
-               <widget class="QLabel" name="Settings_label_SettingsFile">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>10</pointsize>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Open Settings file</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QCheckBox" name="Settings_checkBox_SaveRecordWhenUpdate">
-                <property name="toolTip">
-                 <string>Keep records of files and size for Statistics</string>
-                </property>
-                <property name="text">
-                 <string>Save records</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QLabel" name="Settings_label_Data">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans</family>
-                  <pointsize>10</pointsize>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Catalog updates</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="4">
-               <spacer name="Settings_horizontalSpacer_14">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="6">
-               <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Open the collection folder</string>
-                </property>
-                <property name="text">
-                 <string>Open</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-open"/>
                 </property>
                </widget>
               </item>
@@ -8024,7 +7914,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QWidget" name="Settings_widget_Import" native="true">
+                   <widget class="QWidget" name="Settings_widget_MemorySettings" native="true">
                     <layout class="QHBoxLayout" name="horizontalLayout_17">
                      <property name="leftMargin">
                       <number>10</number>
