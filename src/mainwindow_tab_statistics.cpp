@@ -75,6 +75,7 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Statistics_pushButton_Reload_clicked()
     {
+        collection->loadStatisticsDeviceFileToTable();
         loadStatisticsChart();
     }
     //----------------------------------------------------------------------
