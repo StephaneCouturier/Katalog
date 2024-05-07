@@ -446,12 +446,19 @@ void MainWindow::on_Devices_pushButton_SelectPath_clicked()
 //--------------------------------------------------------------------------
 void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
 {
-    reportAllUpdates(activeDevice,
-                     activeDevice->updateDevice("update",
+    //Prepare a list with 0 for catalog update, as no catalog is updated
+    QList<qint64> list;
+    list <<0<<0<<0<<0<<0<<0<<0;
+
+    //Update storage and add to the list
+    list += activeDevice->updateDevice("update",
                                                 collection->databaseMode,
                                                 true,
                                                 collection->folder,
-                                                false),
+                                                false);
+    //Report the change
+    reportAllUpdates(activeDevice,
+                     list,
                      "update");
     collection->saveDeviceTableToFile();
     collection->saveStatiticsToFile();
