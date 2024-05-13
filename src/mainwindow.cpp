@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Set current version, release date, and development mode
         currentVersion  = "2.0";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-05-07";
+        releaseDate     = "2024-05-13";
         developmentMode = false;
         themeID = 1; //default value for the theme.
         selectedTab = 3; //default value for the first launch = Create screen.

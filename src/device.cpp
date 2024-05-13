@@ -392,6 +392,16 @@ void Device::deleteDevice(bool askConfirmation)
                     storage->deleteStorage();
                 }
             }
+
+        //Delete storage values
+        if(type == "Storage"){
+            storage->deleteStorage();
+        }
+
+        //Delete catalog values
+        if(type == "Catalog"){
+            catalog->deleteCatalog();
+        }
     }
     else{
         QMessageBox msgBox;
@@ -399,16 +409,6 @@ void Device::deleteDevice(bool askConfirmation)
         msgBox.setText(QCoreApplication::translate("MainWindow", "The selected device cannot be deleted as long as it has sub-devices."));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
-    }
-
-    //Delete storage values
-    if(type == "Storage"){
-        storage->deleteStorage();
-    }
-
-    //Delete catalog values
-    if(type == "Catalog"){
-        catalog->deleteCatalog();
     }
 }
 
