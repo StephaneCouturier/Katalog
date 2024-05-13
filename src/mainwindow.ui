@@ -4250,22 +4250,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="Storage_pushButton_EditAll">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>Edit the list in a spreadsheet ( tab separated file)</string>
-                   </property>
-                   <property name="text">
-                    <string>Edit list</string>
-                   </property>
-                   <property name="icon">
-                    <iconset theme="document-edit-sign"/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <spacer name="Storage_horizontalSpacer_05">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
