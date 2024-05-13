@@ -13,9 +13,9 @@
             <link>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</link>
             <guid>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</guid>
             <pubDate>Sat, 04 May 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[After releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.]]></description>
-            <content:encoded><![CDATA[<p>After releasing 1 version of Katalog every month, and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.</p>
-<p>Here is finally the release 2.0: <a href="https://github.com/StephaneCouturier/Katalog/releases/tag/untagged-919a87b06978dced1ff3" target="_blank" rel="noopener noreferrer">Release Notes</a></p>
+            <description><![CDATA[After releasing 1 version of Katalog every month and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.]]></description>
+            <content:encoded><![CDATA[<p>After releasing 1 version of Katalog every month and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.</p>
+<p>Here is finally the release 2.0: <a href="https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0" target="_blank" rel="noopener noreferrer">Release Notes</a></p>
 <p>This development focused on main 2 enablers:</p>
 <ul>
 <li>
@@ -26,9 +26,8 @@
 </li>
 </ul>
 <p>These changes involved major updates of the data model and data management.<br>
-Therefore the version comes with support for a 1.x &gt; 2.0 migration procedure.<br>
-⚠ <strong>Backup up your Katalog collection data made with previous versions before</strong>. ⚠</p>
-<p>To know more about this main changes, explore the pages Devices and Settings.</p>
+Therefore the version comes with support for a 1.x &gt; 2.0 migration procedure.</p>
+<p>⚠ <strong>Backup up your Katalog collection data made with previous versions before</strong>. ⚠</p>
 <p>Any feedback via Facebook, Github, email are always appreciated 😉</p>]]></content:encoded>
             <category>release</category>
         </item>
