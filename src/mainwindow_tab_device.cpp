@@ -1706,10 +1706,10 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(QHeaderView::Interactive);
         ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); //Name
         ui->Devices_treeView_DeviceList->header()->resizeSection( 1, 100); //Type
-        ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  25); //Active
-        ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  30); //ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  25); //Parent ID
-        ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  25); //External ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  30); //Active
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  50); //ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  50); //Parent ID
+        ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  50); //External ID
         ui->Devices_treeView_DeviceList->header()->resizeSection( 6, 100); //Number of Files
         ui->Devices_treeView_DeviceList->header()->resizeSection( 7, 100); //Total File Size
         ui->Devices_treeView_DeviceList->header()->resizeSection( 8, 100); //Used space
@@ -1960,10 +1960,10 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); //Name
     ui->Devices_treeView_DeviceList->header()->resizeSection( 1, 100); //Type
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  25); //Active
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  25); //ID
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  25); //Parent ID
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  25); //External ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  30); //Active
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  50); //ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  50); //Parent ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  50); //External ID
     ui->Devices_treeView_DeviceList->header()->resizeSection( 6, 100); //Number of Files
     ui->Devices_treeView_DeviceList->header()->resizeSection( 7, 100); //Total File Size
     ui->Devices_treeView_DeviceList->header()->resizeSection( 8, 100); //Used space
@@ -1971,7 +1971,7 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
     ui->Devices_treeView_DeviceList->header()->resizeSection(11, 150); //date updated
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
-    ui->Devices_treeView_DeviceList->header()->resizeSection(13,  25); //Group ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection(13,  30); //Group ID
 
     ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
     ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
@@ -2189,10 +2189,10 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(QHeaderView::Interactive);
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents); //Name
     ui->Devices_treeView_DeviceList->header()->resizeSection( 1, 100); //Type
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  25); //Active
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  25); //ID
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  25); //Parent ID
-    ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  25); //External ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 2,  30); //Active
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 3,  50); //ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 4,  50); //Parent ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection( 5,  50); //External ID
     ui->Devices_treeView_DeviceList->header()->resizeSection( 6, 100); //Number of Files
     ui->Devices_treeView_DeviceList->header()->resizeSection( 7, 100); //Total File Size
     ui->Devices_treeView_DeviceList->header()->resizeSection( 8, 100); //Used space
@@ -2200,7 +2200,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
     ui->Devices_treeView_DeviceList->header()->resizeSection(11, 150); //date updated
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
-    ui->Devices_treeView_DeviceList->header()->resizeSection(13,  25); //Group ID
+    ui->Devices_treeView_DeviceList->header()->resizeSection(13,  30); //Group ID
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(17, QHeaderView::ResizeToContents); //Path
     ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(21, QHeaderView::ResizeToContents); //Path
 
