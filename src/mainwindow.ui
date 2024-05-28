@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1158</width>
-    <height>1360</height>
+    <width>1080</width>
+    <height>720</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>120</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>16777215</height>
+    <width>720</width>
+    <height>480</height>
    </size>
   </property>
   <property name="font">
@@ -6101,6 +6101,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <item>
                  <widget class="QLabel" name="Create_label_includeFileType">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Noto Sans</family>
@@ -6121,6 +6127,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
@@ -6136,6 +6148,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QRadioButton" name="Create_radioButton_FileType_Image">
                   <property name="enabled">
                    <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
                   </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
@@ -6153,6 +6171,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
@@ -6169,6 +6193,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
                   </property>
@@ -6184,6 +6214,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <widget class="QRadioButton" name="Create_radioButton_FileType_Text">
                   <property name="enabled">
                    <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
                   </property>
                   <property name="locale">
                    <locale language="English" country="UnitedStates"/>
@@ -7382,49 +7418,52 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               </item>
               <item>
                <layout class="QGridLayout" name="Settings_gridLayout_About">
-                <item row="2" column="1">
-                 <widget class="QLabel" name="Settings_label_DateTitle">
+                <item row="0" column="0">
+                 <spacer name="Settings_horizontalSpacer_27">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>30</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="7">
+                 <spacer name="Settings_horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QLabel" name="Settings_label_DateValue">
                   <property name="font">
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>10</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
                    <string>Date</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                   </property>
-                 </widget>
-                </item>
-                <item row="4" column="3">
-                 <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Release Notes</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="internet-web-browser"/>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
-                  <property name="toolTip">
-                   <string>Verify if a new version of Katalog is available when starting the app.</string>
-                  </property>
-                  <property name="text">
-                   <string>Check at start up</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                  <property name="indent">
+                   <number>10</number>
                   </property>
                  </widget>
                 </item>
@@ -7470,6 +7509,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="3">
+                 <widget class="QLabel" name="Settings_label_DateTitle">
+                  <property name="font">
+                   <font>
+                    <family>Noto Sans</family>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Date</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="1">
                  <widget class="QLabel" name="Settings_label_VersionTitle">
                   <property name="maximumSize">
@@ -7493,41 +7549,37 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="2">
-                 <widget class="QLabel" name="Settings_label_DateValue">
-                  <property name="font">
-                   <font>
-                    <family>Noto Sans</family>
-                    <pointsize>10</pointsize>
-                    <bold>true</bold>
-                   </font>
+                <item row="0" column="6">
+                 <widget class="QCheckBox" name="Settings_checkBox_CheckVersion">
+                  <property name="toolTip">
+                   <string>Verify if a new version of Katalog is available when starting the app.</string>
                   </property>
                   <property name="text">
-                   <string>Date</string>
+                   <string>Check at start up</string>
                   </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="indent">
-                   <number>10</number>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="4">
-                 <spacer name="Settings_horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
+                <item row="4" column="6">
+                 <widget class="QPushButton" name="Settings_pushButton_ReleaseNotes">
+                  <property name="maximumSize">
                    <size>
-                    <width>40</width>
-                    <height>20</height>
+                    <width>150</width>
+                    <height>16777215</height>
                    </size>
                   </property>
-                 </spacer>
+                  <property name="text">
+                   <string>Release Notes</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="internet-web-browser"/>
+                  </property>
+                 </widget>
                 </item>
-                <item row="2" column="0">
-                 <spacer name="Settings_horizontalSpacer_27">
+                <item row="0" column="5">
+                 <spacer name="Settings_horizontalSpacer_29">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -7599,7 +7651,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
-                <height>20</height>
+                <height>10</height>
                </size>
               </property>
              </spacer>
@@ -7623,118 +7675,193 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="1" column="0">
              <widget class="QWidget" name="Settings_widget_DataMode" native="true">
               <layout class="QGridLayout" name="gridLayout_14">
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="Settings_horizontalLayout_5">
-                 <item>
-                  <widget class="QLabel" name="Settings_label_DatabaseMode">
-                   <property name="minimumSize">
-                    <size>
-                     <width>125</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Noto Sans</family>
-                     <pointsize>10</pointsize>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Data management</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="Settings_horizontalSpacer_25">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="Settings_label_DataMode">
-                   <property name="text">
-                    <string>Data mode</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
-                   <item>
-                    <property name="text">
-                     <string>Memory</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>File</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hosted</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="Settings_label_DataModeRequiresRestart">
-                   <property name="text">
-                    <string>(Changing requires to restart)</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="Settings_horizontalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="4" column="0">
+                <widget class="QWidget" name="Settings_widget_DataMode_LocalSQLite" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_15">
+                  <property name="leftMargin">
+                   <number>30</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <item>
+                     <widget class="QLabel" name="Settings_label_CurrentFolder_9">
+                      <property name="font">
+                       <font>
+                        <family>Noto Sans</family>
+                        <pointsize>10</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Data mode &quot;SQLite local file&quot;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="Settings_label_CurrentFolder_10">
+                      <property name="minimumSize">
+                       <size>
+                        <width>125</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Noto Sans</family>
+                        <pointsize>10</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>The collection data is saved to an SQLite .db file.</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_Dat">
+                    <item>
+                     <widget class="QLabel" name="Settings_label_DatabaseFilePath">
+                      <property name="minimumSize">
+                       <size>
+                        <width>125</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Noto Sans</family>
+                        <pointsize>10</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Database File Path</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
+                      <property name="font">
+                       <font>
+                        <family>Noto Sans</family>
+                        <pointsize>8</pointsize>
+                       </font>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_3">
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_SelectDatabaseFilePath">
+                      <property name="toolTip">
+                       <string>Select a different Collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Select and open database file</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="edit-select"/>
+                      </property>
+                      <property name="flat">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_EditDatabaseFile">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Open the collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Edit</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-edit"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_NewDatabaseFile">
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Create a new database file</string>
+                      </property>
+                      <property name="text">
+                       <string>New</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-new"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="Settings_horizontalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
                </item>
                <item row="2" column="0">
-                <spacer name="Settings_verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="3" column="0">
                 <widget class="QWidget" name="Settings_widget_DataMode_CSVFiles" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_16">
                   <property name="leftMargin">
                    <number>30</number>
                   </property>
                   <property name="topMargin">
+                   <number>9</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <item>
@@ -7903,6 +8030,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <property name="leftMargin">
                       <number>10</number>
                      </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
                      <item>
                       <layout class="QGridLayout" name="Settings_gridLayout_9">
                        <item row="4" column="1">
@@ -8013,184 +8143,105 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </layout>
                 </widget>
                </item>
-               <item row="5" column="0">
-                <widget class="QWidget" name="Settings_widget_DataMode_LocalSQLite" native="true">
-                 <layout class="QVBoxLayout" name="verticalLayout_15">
-                  <property name="leftMargin">
-                   <number>30</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_5">
-                    <item>
-                     <widget class="QLabel" name="Settings_label_CurrentFolder_9">
-                      <property name="font">
-                       <font>
-                        <family>Noto Sans</family>
-                        <pointsize>10</pointsize>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Data mode &quot;SQLite local file&quot;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="Settings_label_CurrentFolder_10">
-                      <property name="minimumSize">
-                       <size>
-                        <width>125</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Noto Sans</family>
-                        <pointsize>10</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>The collection data is saved to an SQLite .db file.</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_Dat">
-                    <item>
-                     <widget class="QLabel" name="Settings_label_DatabaseFilePath">
-                      <property name="minimumSize">
-                       <size>
-                        <width>125</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Noto Sans</family>
-                        <pointsize>10</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Database File Path</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLineEdit" name="Settings_lineEdit_DatabaseFilePath">
-                      <property name="font">
-                       <font>
-                        <family>Noto Sans</family>
-                        <pointsize>8</pointsize>
-                       </font>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="Settings_horizontalLayout_3">
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_16">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>125</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_SelectDatabaseFilePath">
-                      <property name="toolTip">
-                       <string>Select a different Collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Select and open database file</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="edit-select"/>
-                      </property>
-                      <property name="flat">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_EditDatabaseFile">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Open the collection folder</string>
-                      </property>
-                      <property name="text">
-                       <string>Edit</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-edit"/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Settings_pushButton_NewDatabaseFile">
-                      <property name="maximumSize">
-                       <size>
-                        <width>150</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="toolTip">
-                       <string>Create a new database file</string>
-                      </property>
-                      <property name="text">
-                       <string>New</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="document-new"/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="Settings_horizontalSpacer_2">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
+               <item row="1" column="0">
+                <layout class="QHBoxLayout" name="Settings_horizontalLayout_5">
+                 <item>
+                  <widget class="QLabel" name="Settings_label_DatabaseMode">
+                   <property name="minimumSize">
+                    <size>
+                     <width>125</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans</family>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Data management</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="Settings_horizontalSpacer_25">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Settings_label_DataMode">
+                   <property name="text">
+                    <string>Data mode</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="Settings_comboBox_DatabaseMode">
+                   <item>
+                    <property name="text">
+                     <string>Memory</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>File</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hosted</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Settings_label_DataModeRequiresRestart">
+                   <property name="text">
+                    <string>(Changing requires to restart)</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="Settings_horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </item>
-               <item row="10" column="0">
+               <item row="9" column="0">
                 <widget class="QWidget" name="Settings_widget_DataMode_Hosted" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_17">
                   <property name="leftMargin">
                    <number>30</number>
                   </property>
                   <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <item>
@@ -8410,7 +8461,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </layout>
                 </widget>
                </item>
-               <item row="11" column="0">
+               <item row="10" column="0">
                 <layout class="QHBoxLayout" name="Settings_horizontalLayout_19">
                  <item>
                   <spacer name="Settings_horizontalSpacer_19">
