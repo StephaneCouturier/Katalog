@@ -10,8 +10,8 @@
         <language>en</language>
         <item>
             <title><![CDATA[Major Release 2.0]]></title>
-            <link>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</link>
-            <guid>https://StephaneCouturier.github.io/Katalog/blog/first-blog-post</guid>
+            <link>https://StephaneCouturier.github.io/Katalog/blog/release-2-0</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/blog/release-2-0</guid>
             <pubDate>Sat, 04 May 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[After releasing 1 version of Katalog every month and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.]]></description>
             <content:encoded><![CDATA[<p>After releasing 1 version of Katalog every month and as no major bug had been reported, the releases were paused since last July to enable the work on this next big one.</p>
@@ -28,6 +28,7 @@
 <p>These changes involved major updates of the data model and data management.<br>
 Therefore the version comes with support for a 1.x &gt; 2.0 migration procedure.</p>
 <p>⚠ <strong>Backup up your Katalog collection data made with previous versions before</strong>. ⚠</p>
+<p>To know more about these main changes, explore the pages <em>Devices</em> and <em>Settings</em> from the Documentation.</p>
 <p>Any feedback via Facebook, Github, email are always appreciated 😉</p>]]></content:encoded>
             <category>release</category>
         </item>

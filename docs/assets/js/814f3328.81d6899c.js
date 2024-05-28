@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Major Release 2.0","permalink":"/Katalog/blog/release-2-0","unlisted":false}]}')}}]);
