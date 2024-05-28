@@ -988,7 +988,7 @@ void Collection::saveDeviceTableToFile()
         else{
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow", "Error opening output file:<br/>%1").arg(deviceFilePath));
+            msgBox.setText(QCoreApplication::translate("MainWindow", "DEBUG: Error opening output file:<br/>%1").arg(deviceFilePath));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }

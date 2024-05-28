@@ -82,7 +82,6 @@
             //Reload
             loadSelectedDirectoryFilesToExplore();
         }
-
     }
     //----------------------------------------------------------------------
     void MainWindow::on_ExploreTreeViewFileListHeaderSortOrderChanged(){

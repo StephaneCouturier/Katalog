@@ -70,10 +70,10 @@ void Device::loadDevice(){
             groupID     = query.value(10).toInt();
             order       = query.value(11).toInt();
         } else if (ID !=0){
-            qDebug() << "loadDevice failed, no record found for device_id" << ID;
+            qDebug() << "DEBUG: loadDevice query failed, no record found for device_id" << ID;
         }
     } else {
-        qDebug() << "Query execution failed:" << query.lastError().text();
+        qDebug() << "DEBUG: loadDevice query execution failed:" << query.lastError().text();
         return;
     }
 
@@ -181,7 +181,7 @@ void Device::getCatalogStorageID(){
             qDebug() << "getCatalogStorageID failed, no record found for device_name" << name;
         }
     } else {
-        qDebug() << "getCatalogStorageID query execution failed:" << query.lastError().text();
+        qDebug() << "DEBUG: getCatalogStorageID query execution failed:" << query.lastError().text();
     }
 }
 
@@ -263,7 +263,7 @@ bool Device::verifyDeviceNameExists()
     query.bindValue(":device_name", name);
 
     if (!query.exec() and ID !=0) {
-        qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
+        qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }
 
@@ -285,7 +285,7 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
     query.bindValue(":device_id", parentID);
 
     if (!query.exec()) {
-        qDebug() << "Error executing verifyDeviceNameExists:" << query.lastError().text();
+        qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
         return false;
     }
 

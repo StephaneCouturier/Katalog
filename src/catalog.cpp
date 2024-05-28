@@ -883,7 +883,7 @@ void Catalog::loadExcludedFolders()
                                 )");
     query.prepare(querySQL);
     query.exec();
-    qDebug()<<query.lastError();
+
     while(query.next()){
         excludedFolders<<query.value(0).toString();
     }
