@@ -197,66 +197,6 @@
             ui->Tags_treeview_Explorer->expandToDepth(1);
     }
     //----------------------------------------------------------------------
-    void MainWindow::loadTagsToTable()
-    {
-        //Clear table
-        QSqlQuery queryDelete;
-        QString queryDeleteSQL = QLatin1String(R"(
-                                    DELETE FROM tag
-                                )");
-        queryDelete.prepare(queryDeleteSQL);
-        queryDelete.exec();
-
-        //Prepare for using the csv file storing tag data
-        collection->tagFilePath = collection->folder + "/" + "tags.csv";
-
-        QFile tagFile(collection->tagFilePath);
-        if(!tagFile.open(QIODevice::ReadOnly)) {
-                return;
-        }
-
-        // Loop through each line of the csv file, and load data in table
-        QTextStream textStream(&tagFile);
-        QStringList fieldList;
-        QSqlQuery queryInsert;
-        while (true)
-        {
-            QString line = textStream.readLine();
-            if (line.isNull())
-                    break;
-            else{
-                //Split the line with tabulation into a list
-                fieldList = line.split('\t');
-
-                //Check data
-                if (fieldList.count()!=2)
-                        return;
-
-                //Append data to the table
-                QString queryInsertSQL = QLatin1String(R"(
-                                            INSERT INTO tag(
-                                                            name,
-                                                            path,
-                                                            type,
-                                                            date_time
-                                            )
-                                            VALUES(
-                                                            :name,
-                                                            :path,
-                                                            :type,
-                                                            :date_time
-                                            )
-                )");
-                queryInsert.prepare(queryInsertSQL);
-                queryInsert.bindValue(":name",fieldList[1]);
-                queryInsert.bindValue(":path",fieldList[0]);
-                queryInsert.bindValue(":type","not_stored_in_file_yet");    //fieldList[2]
-                queryInsert.bindValue(":date_time","not_stored_in_file_yet");//fieldList[3]
-                queryInsert.exec();
-             }
-        }
-    }
-    //----------------------------------------------------------------------
     void MainWindow::loadTagsTableToExistingTagsModel()
     {
         //Set up temporary lists
