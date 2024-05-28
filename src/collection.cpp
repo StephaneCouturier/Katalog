@@ -20,10 +20,10 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
-* /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   catalog.cpp
-// Purpose:     class to create catalogs (list of files and their attributes)
+// File Name:   collection.cpp
+// Purpose:     Class/model for the collection (all contents including devices, catalogs, files)
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////

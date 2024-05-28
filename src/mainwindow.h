@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow.h
 // Purpose:     Class for the main window
@@ -79,6 +79,7 @@
 #include <QtCharts/QValueAxis>
 #include <QScatterSeries>
 #include <QtCharts/QLegendMarker>
+
 //Katalog object classes
 #include "collection.h"
 #include "search.h"

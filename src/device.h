@@ -20,10 +20,10 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   device.h
-// Purpose:     Class/model for the virtual storage device
+// Purpose:     Class/model for the devices (virtual, storage, or catalogs)
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////

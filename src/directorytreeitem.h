@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   devicetreeview.h
 // Purpose:     Class/model to display a tree of directories

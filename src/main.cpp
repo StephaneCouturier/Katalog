@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
-* /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   main.cpp
 // Purpose:     Main file for the application at start
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 //             // Can contain any information desired. (otherText)
 //             i18n("-"),
 //             // The program homepage string. (homePageAddress = QString())
-//             QStringLiteral("https://github.com/StephaneCouturier/Katalog/wiki"),
+//             QStringLiteral("https://stephanecouturier.github.io/Katalog/"),
 //             // The bug report address
 //             // (bugsEmailAddress = QLatin1String("submit@bugs.kde.org")
 //             QStringLiteral("https://github.com/StephaneCouturier/Katalog/issues/new"));

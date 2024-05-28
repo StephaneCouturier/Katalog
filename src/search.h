@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   search.h
 // Purpose:     Class/model for the search (criteria for running the search of files and folders and results)
@@ -32,8 +32,8 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "qdatetime.h"
-#include "qstandarditemmodel.h"
+#include <QDateTime>
+#include <QStandardItemModel>
 #include <QAbstractTableModel>
 #include <QCoreApplication>
 #include <QSqlQuery>

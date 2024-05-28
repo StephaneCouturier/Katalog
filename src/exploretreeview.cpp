@@ -23,7 +23,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   exploretreeview.cpp
-// Purpose:
+// Purpose:     Class/model to display a tree of directories
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -54,41 +54,19 @@ QVariant ExploreTreeView::data(const QModelIndex &index, int role) const
 
                 break;
             }
-
-            // case Qt::BackgroundRole:
-            // {
-            //     if (1 == index.row() % 2)
-            //         return QColor(255, 255, 255);
-            //     else
-            //         return QColor(247, 247, 247);
-
-            //     break;
-            // }
-
         }
-
 
     return QSortFilterProxyModel::data(index, role);
 }
 
 QVariant ExploreTreeView::headerData(int section, Qt::Orientation orientation, int role) const
 {
-//    QList<int> grayColumnList;
-//    grayColumnList    <<0 <<1;
-
     switch ( role )
          {
             case Qt::DisplayRole:
             {
                 return QSortFilterProxyModel::headerData( section, orientation, role) ;
             }
-            case Qt::BackgroundRole:
-            {
-//                if (grayColumnList.contains(section))  //change background
-//                    return QBrush(QColor(245, 245, 245));
-//                break;
-            }
         }
         return QVariant();
-
 }

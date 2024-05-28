@@ -23,8 +23,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_filters.cpp
-// Purpose:     methods for the Fitlers panel
-// Description:
+// Purpose:     methods for the SELECTION panel
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Selection
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

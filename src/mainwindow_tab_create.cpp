@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_create.cpp
 // Purpose:     methods for the screen CREATE
-// Description: https://github.com/StephaneCouturier/Katalog/wiki/Create
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Create
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

@@ -23,7 +23,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   filesview.cpp
-// Purpose:
+// Purpose:     Class/model to display a list of files
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -122,36 +122,17 @@ QVariant FilesView::data(const QModelIndex &index, int role) const
 
                 break;
             }
-
-            // case Qt::BackgroundRole:
-            // {
-            //     if (1 == index.row() % 2)
-            //         return QColor(247, 247, 247);
-            //     else
-            //         return QColor(255, 255, 255);
-            //     break;
-            // }
-
         }
     return QSortFilterProxyModel::data(index, role);
 }
 
 QVariant FilesView::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    QList<int> grayColumnList;
-    grayColumnList    <<7 <<8 <<9 <<10 <<11;
-
     switch ( role )
          {
             case Qt::DisplayRole:
             {
                 return QSortFilterProxyModel::headerData( section, orientation, role) ;
-            }
-            case Qt::BackgroundRole:
-            {
-                if (grayColumnList.contains(section))  //change background
-                    //return QBrush(QColor(245, 245, 245));
-                break;
             }
         }
         return QVariant();

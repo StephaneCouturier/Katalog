@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
-* /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.cpp
 // Purpose:     class to create catalogs (list of files and their attributes)
@@ -30,9 +30,9 @@
 */
 
 #include "catalog.h"
-#include "qapplication.h"
-#include "qdir.h"
-#include "qsqlerror.h"
+#include <QApplication>
+#include <QDir>
+#include <QSqlError>
 
 Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -895,7 +895,6 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     //Prepare database, queries, and inputs
 
         //Remove any former files from db for older catalog with same name
-        //DEV: replace by Catalog ID
         QSqlQuery deleteFileQuery;
         QString deleteFileQuerySQL = QLatin1String(R"(
                                                 DELETE FROM file

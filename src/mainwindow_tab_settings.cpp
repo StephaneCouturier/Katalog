@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_settings.cpp
 // Purpose:     methods for the Settings panel
-// Description:
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Settings
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

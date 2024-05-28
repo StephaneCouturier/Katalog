@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_search.cpp
 // Purpose:     methods for the screen SEARCH
-// Description:
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

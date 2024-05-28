@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_statistics.cpp
 // Purpose:     methods for the screen STATISTICS
-// Description: https://github.com/StephaneCouturier/Katalog/wiki/Statistics
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Statistics
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

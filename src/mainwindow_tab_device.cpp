@@ -23,8 +23,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_device.cpp
-// Purpose:     methods for the screen Devices
-// Description: https://github.com/StephaneCouturier/Katalog/wiki/Devices
+// Purpose:     https://stephanecouturier.github.io/Katalog/docs/Features/Devices
+// Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -874,15 +874,6 @@ void MainWindow::setDeviceTreeExpandState(bool toggle)
                 ui->Devices_treeView_DeviceList->collapseAll();
                 ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
             }
-            // else if ( deviceTreeExpandState == 1 ){
-            //     ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
-            //     ui->Devices_treeView_DeviceList->collapseAll();
-            //     ui->Devices_treeView_DeviceList->expandToDepth(deviceTreeExpandState);
-            // }
-            // else{
-            //     ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("expand-all"));
-            //     ui->Devices_treeView_DeviceList->collapseAll();
-            // }
             else if ( deviceTreeExpandState != treeLevels-3 ){
                 ui->Devices_pushButton_TreeExpandCollapse->setIcon(QIcon::fromTheme("collapse-all"));
                 ui->Devices_treeView_DeviceList->collapseAll();
@@ -950,6 +941,7 @@ void MainWindow::loadParentsList()
     query.bindValue(":selected_device_id", activeDevice->ID);
     query.bindValue(":device_group_id", activeDevice->groupID);
     query.exec();
+    query.next();
 
     //Load to comboboxes
     ui->Devices_comboBox_Parent->clear();

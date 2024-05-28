@@ -20,15 +20,12 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   catalog.h
+// File Name:   tag.h
 // Purpose:     Class/model for the tags
 // Description:
 // Author:      Stephane Couturier
-// Modified by: Stephane Couturier
-// Created:     2020-07-11
-// Version:     0.1
 /////////////////////////////////////////////////////////////////////////////
 */
 

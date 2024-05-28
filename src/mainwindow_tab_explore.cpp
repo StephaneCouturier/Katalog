@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_explore.cpp
 // Purpose:     methods for the screen EXPLORE
-// Description: https://github.com/StephaneCouturier/Katalog/wiki/Explore
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Explore
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

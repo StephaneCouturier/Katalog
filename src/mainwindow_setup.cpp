@@ -30,8 +30,8 @@
 */
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "database.h"
+#include "ui_mainwindow.h"
 
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()
@@ -275,7 +275,6 @@
             }
 
             selectedDevice->ID   = settings.value("Selection/SelectedDeviceID").toInt();
-            selectedDevice->loadDevice();
 
             graphicStartDate = QDateTime::fromString(settings.value("Statistics/graphStartDate").toString(),"yyyy-mm-dd");
 

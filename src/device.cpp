@@ -20,7 +20,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
-* /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   device.cpp
 // Purpose:     class to manage devices
@@ -30,8 +30,8 @@
 */
 
 #include "device.h"
-#include "qapplication.h"
-#include "qsqlerror.h"
+#include <QApplication>
+#include <QSqlError>
 
 void Device::loadDevice(){
     //Load device values
@@ -359,7 +359,7 @@ void Device::deleteDevice(bool askConfirmation)
             if (askConfirmation==true){
 
                 if(type=="Storage"){
-                    impactMessage = QCoreApplication::translate("MainWindow","This will remove the device and the storage details."); //DEV: and all statistics history
+                    impactMessage = QCoreApplication::translate("MainWindow","This will remove the device and the storage details.");
                 }
                 msgBox.setText(QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?"
                                                                          "<table>"
@@ -541,11 +541,8 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                     Device updatedDevice;
                     updatedDevice.ID = deviceIDList[deviceID];
                     updatedDevice.loadDevice();
-                    // updatedDevice.catalog->name = name;
-                    // updatedDevice.catalog->sourcePath = path;
 
                     QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
-             //                   deviceUpdatesList  = catalog->updateCatalogFiles(databaseMode, collectionFolder, true);
 
                     if(catalogUpdatesList[0]==1){
                         //Update catalog with new values

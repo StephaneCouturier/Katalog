@@ -20,10 +20,10 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /*FILE DESCRIPTION
- * /////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   catalog.h
-// Purpose:     Class/model for the catalog (list of files from a device)
+// Purpose:     Class/model for the catalog (list of files from a directory on a device)
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -79,8 +79,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     void setSourcePath(QString selectedSourcePath);
-    void updateFileCount();//from database
-    void updateTotalFileSize();//from database
+    void updateFileCount();
+    void updateTotalFileSize();
     void setStorageName(QString selectedStorageName);
     void setDateLoaded(QDateTime dateTime);
     void setDateUpdated(QDateTime dateTime);

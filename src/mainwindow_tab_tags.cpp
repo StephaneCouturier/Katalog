@@ -24,7 +24,7 @@
 // Application: Katalog
 // File Name:   mainwindow_tab_tags.cpp
 // Purpose:     methods for the screen Tags
-// Description:
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Tags
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

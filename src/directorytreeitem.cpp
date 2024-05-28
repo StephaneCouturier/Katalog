@@ -23,7 +23,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   directorytreeitem.cpp
-// Purpose:
+// Purpose:     Class/model to display a tree of directories
 // Description:
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ bool DirectoryTreeItem::insertColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.insert(position, QVariant());
 
-    for (DirectoryTreeItem *child : qAsConst(childItems))
+    for (DirectoryTreeItem *child : std::as_const(childItems))
         child->insertColumns(position, columns);
 
     return true;
@@ -125,7 +125,7 @@ bool DirectoryTreeItem::removeColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.remove(position);
 
-    for (DirectoryTreeItem *child : qAsConst(childItems))
+    for (DirectoryTreeItem *child : std::as_const(childItems))
         child->removeColumns(position, columns);
 
     return true;
