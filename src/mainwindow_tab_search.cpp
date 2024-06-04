@@ -686,9 +686,9 @@
     //Methods-----------------------------------------------------------------------
 
         //Search methods
-        //run a search of files in each selected catalog based on user inputs
         void MainWindow::searchFiles()
-        {
+        {//Run a search of files in each selected catalog based on user inputs
+
             // Start animation while opening
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -1177,9 +1177,8 @@
             ui->Search_comboBox_SelectProcess->setEnabled(true);
         }
         //----------------------------------------------------------------------
-        //run a search of files for the selected Catalog
         void MainWindow::searchFilesInCatalog(Device *device)
-        {
+        {//Run a search of files for the selected Catalog
             //Prepare Inputs including Regular Expression
                 QFile catalogFile(device->catalog->sourcePath);
 
@@ -1405,9 +1404,8 @@
                 }
         }
         //----------------------------------------------------------------------
-        //run a search of files for the selected Directory
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
-        {
+        {//Run a search of files for the selected Directory
             //Define how to use the search text //COMMON to searchFilesInCatalog
                 if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
                     newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
@@ -1661,41 +1659,42 @@
         void MainWindow::initiateSearchFields()
         {
             //Add filetype English value additionally to the displayed/translated value
-                    ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
-                    ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
-                    ui->Search_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
-                    ui->Search_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
-                    ui->Search_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+            ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+            ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+            ui->Search_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+            ui->Search_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+            ui->Search_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
 
-                    ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
-                    ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
-                    ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
-                    ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
-                    ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
+            ui->Catalogs_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
+            ui->Catalogs_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
+            ui->Catalogs_comboBox_FileType->setItemData(2, "Image", Qt::UserRole);
+            ui->Catalogs_comboBox_FileType->setItemData(3, "Text",  Qt::UserRole);
+            ui->Catalogs_comboBox_FileType->setItemData(4, "Video", Qt::UserRole);
 
-                    ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
-                    ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
-                    ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
+            ui->Search_comboBox_SelectProcess->setItemData(0, "Select...",   Qt::UserRole);
+            ui->Search_comboBox_SelectProcess->setItemData(1, "Export Results", Qt::UserRole);
+            ui->Search_comboBox_SelectProcess->setItemData(2, "Rename (KRename)", Qt::UserRole);
 
-                    //Prepare list of size units for the Catalog selection combobox
-                    // the first line is the one displayed by default
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("GiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
-                    ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
-                    ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
+            //Prepare list of size units for the Catalog selection combobox
+            //The first line is the one displayed by default
+            ui->Search_comboBox_MinSizeUnit->addItem(tr("TiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(tr("GiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
+            ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
 
-                    //Load last search values (from settings file)
-                    if (newSearch->selectedMaximumSize ==0)
-                        newSearch->selectedMaximumSize = 1000;
+            ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
+            ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
 
-                    //Populate Differences combo boxes with selected catalogs
-                    refreshDifferencesCatalogSelection();
+            //Load last search values (from settings file)
+            if (newSearch->selectedMaximumSize ==0)
+                newSearch->selectedMaximumSize = 1000;
+
+            //Populate Differences combo boxes with selected catalogs
+            refreshDifferencesCatalogSelection();
         }
         //----------------------------------------------------------------------
         void MainWindow::resetToDefaultSearchCriteria()
