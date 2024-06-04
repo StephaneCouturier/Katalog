@@ -355,7 +355,9 @@
                 loadDevicesView();
 
                 //Restore selected catalog
-                ui->Filters_label_DisplayCatalog->setText(ui->Filters_label_DisplayCatalog->text());
+                ui->Filters_label_DisplayCatalog->setText(newDevice->name);
+                selectedDevice->ID = newDevice->ID;
+                selectedDevice->loadDevice();
 
                 //Refresh filter tree
                 collection->loadDeviceFileToTable();
@@ -374,6 +376,7 @@
             }
     }
     //--------------------------------------------------------------------------
+
 //DEV --------------------------------------------------------------------------
 
     void MainWindow::setMediaFile(QString filePath)
