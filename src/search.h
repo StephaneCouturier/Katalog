@@ -124,6 +124,7 @@ public:
     //Methods
     void loadSearchHistoryCriteria();
     void setMultipliers();
+    void insertSearchHistoryToTable();
 };
 
 #endif // SEARCH_H

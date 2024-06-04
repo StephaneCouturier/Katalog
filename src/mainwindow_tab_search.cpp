@@ -1165,9 +1165,8 @@
                     }
 
             //Save the search criteria to the search history
-            insertSearchHistoryToTable();
-            if(collection->databaseMode=="Memory")
-                collection->saveSearchHistoryTableToFile();
+            newSearch->insertSearchHistoryToTable();
+            collection->saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
 
             //Stop animation
@@ -2136,134 +2135,6 @@
             }
 
             return fullFileName;
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::insertSearchHistoryToTable()
-        {//Save Search to db
-
-            QDateTime nowDateTime = QDateTime::currentDateTime();
-            QString searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
-
-            QSqlQuery query;
-            QString querySQL = QLatin1String(R"(
-                                INSERT INTO search(
-                                    date_time,
-                                    text_checked,
-                                    text_phrase,
-                                    text_criteria,
-                                    text_search_in,
-                                    file_criteria_checked,
-                                    file_type_checked,
-                                    file_type,
-                                    file_size_checked,
-                                    file_size_min,
-                                    file_size_min_unit,
-                                    file_size_max,
-                                    file_size_max_unit,
-                                    date_modified_checked,
-                                    date_modified_min,
-                                    date_modified_max,
-                                    duplicates_checked,
-                                    duplicates_name,
-                                    duplicates_size,
-                                    duplicates_date_modified,
-                                    differences_checked,
-                                    differences_name,
-                                    differences_size,
-                                    differences_date_modified,
-                                    differences_catalogs,
-                                    folder_criteria_checked,
-                                    show_folders,
-                                    tag_checked,
-                                    tag,
-                                    search_location,
-                                    search_storage,
-                                    search_catalog,
-                                    search_catalog_checked,
-                                    search_directory_checked,
-                                    selected_directory,
-                                    text_exclude,
-                                    case_sensitive
-                                )
-                                VALUES(
-                                    :date_time,
-                                    :text_checked,
-                                    :text_phrase,
-                                    :text_criteria,
-                                    :text_search_in,
-                                    :file_criteria_checked,
-                                    :file_type_checked,
-                                    :file_type,
-                                    :file_size_checked,
-                                    :file_size_min,
-                                    :file_size_min_unit,
-                                    :file_size_max,
-                                    :file_size_max_unit,
-                                    :date_modified_checked,
-                                    :date_modified_min,
-                                    :date_modified_max,
-                                    :duplicates_checked,
-                                    :duplicates_name,
-                                    :duplicates_size,
-                                    :duplicates_date_modified,
-                                    :differences_checked,
-                                    :differences_name,
-                                    :differences_size,
-                                    :differences_date_modified,
-                                    :differences_catalogs,
-                                    :folder_criteria_checked,
-                                    :show_folders,
-                                    :tag_checked,
-                                    :tag,
-                                    :search_location,
-                                    :search_storage,
-                                    :search_catalog,
-                                    :search_catalog_checked,
-                                    :search_directory_checked,
-                                    :selected_directory,
-                                    :text_exclude,
-                                    :case_sensitive
-                                )
-                )");
-
-            query.prepare(querySQL);
-            query.bindValue(":date_time",                 searchDateTime);
-            query.bindValue(":text_checked",              ui->Search_checkBox_FileName->isChecked());
-            query.bindValue(":text_phrase",               ui->Search_lineEdit_SearchText->text());
-            query.bindValue(":text_criteria",             newSearch->selectedTextCriteria);
-            query.bindValue(":text_search_in",            newSearch->selectedSearchIn);
-            query.bindValue(":file_criteria_checked",     ui->Search_checkBox_FileCriteria->isChecked());
-            query.bindValue(":file_type_checked",         ui->Search_checkBox_Type->isChecked());
-            query.bindValue(":file_type",                 newSearch->selectedFileType);
-            query.bindValue(":file_size_checked",         ui->Search_checkBox_Size->isChecked());
-            query.bindValue(":file_size_min",             newSearch->selectedMinimumSize);
-            query.bindValue(":file_size_min_unit",        newSearch->selectedMinSizeUnit);
-            query.bindValue(":file_size_max",             newSearch->selectedMaximumSize);
-            query.bindValue(":file_size_max_unit",        newSearch->selectedMaxSizeUnit);
-            query.bindValue(":date_modified_checked",     ui->Search_checkBox_Date->isChecked());
-            query.bindValue(":date_modified_min",         ui->Search_dateTimeEdit_Min->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-            query.bindValue(":date_modified_max",         ui->Search_dateTimeEdit_Max->dateTime().toString("yyyy/MM/dd hh:mm:ss"));
-            query.bindValue(":duplicates_checked",        ui->Search_checkBox_Duplicates->isChecked());
-            query.bindValue(":duplicates_name",           ui->Search_checkBox_DuplicatesName->isChecked());
-            query.bindValue(":duplicates_size",           ui->Search_checkBox_DuplicatesSize->isChecked());
-            query.bindValue(":duplicates_date_modified",  ui->Search_checkBox_DuplicatesDateModified->isChecked());
-            query.bindValue(":differences_checked",       ui->Search_checkBox_Differences->isChecked());
-            query.bindValue(":differences_name",          ui->Search_checkBox_DifferencesName->isChecked());
-            query.bindValue(":differences_size",          ui->Search_checkBox_DifferencesSize->isChecked());
-            query.bindValue(":differences_date_modified", ui->Search_checkBox_DifferencesDateModified->isChecked());
-            query.bindValue(":differences_catalogs",      newSearch->differencesCatalog1+"||"+newSearch->differencesCatalog2);
-            query.bindValue(":folder_criteria_checked",   ui->Search_checkBox_FolderCriteria->isChecked());
-            query.bindValue(":show_folders",              ui->Search_checkBox_ShowFolders->isChecked());
-            query.bindValue(":tag_checked",               ui->Search_checkBox_Tags->isChecked());
-            query.bindValue(":tag",                       ui->Search_comboBox_Tags->currentText());
-            query.bindValue(":search_storage",            selectedDevice->name);
-            query.bindValue(":search_catalog",            selectedDevice->name);
-            query.bindValue(":search_catalog_checked",    ui->Filters_checkBox_SearchInCatalogs->isChecked());
-            query.bindValue(":search_directory_checked",  ui->Filters_checkBox_SearchInConnectedDrives->isChecked());
-            query.bindValue(":selected_directory",        ui->Filters_lineEdit_SeletedDirectory->text());
-            query.bindValue(":text_exclude",              ui->Search_lineEdit_Exclude->text());
-            query.bindValue(":case_sensitive",            ui->Search_checkBox_CaseSensitive->isChecked());
-            query.exec();
         }
         //--------------------------------------------------------------------------
         void MainWindow::loadSearchHistoryTableToModel()

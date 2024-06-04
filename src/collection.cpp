@@ -1165,112 +1165,114 @@ void Collection::saveParameterTableToFile()
 //----------------------------------------------------------------------
 void Collection::saveSearchHistoryTableToFile()
 {
-    //Prepare export
-    QFile searchFile(searchHistoryFilePath);
-    if(searchFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+    if(databaseMode=="Memory"){
+        //Prepare export
+        QFile searchFile(searchHistoryFilePath);
+        if(searchFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 
-        QTextStream out(&searchFile);
+            QTextStream out(&searchFile);
 
-        //Prepare header line
-        out << "date_time"                  << "\t"
-            << "text_checked"               << "\t"
-            << "text_phrase"                << "\t"
-            << "text_criteria"              << "\t"
-            << "text_search_in"             << "\t"
-            << "file_type"                  << "\t"
-            << "file_size_checked"          << "\t"
-            << "file_size_min"              << "\t"
-            << "file_size_min_unit"         << "\t"
-            << "file_size_max"              << "\t"
-            << "file_size_max_unit"         << "\t"
-            << "date_modified_checked"      << "\t"
-            << "date_modified_min"          << "\t"
-            << "date_modified_max"          << "\t"
-            << "duplicates_checked"         << "\t"
-            << "duplicates_name"            << "\t"
-            << "duplicates_size"            << "\t"
-            << "duplicates_date_modified"   << "\t"
-            << "show_folders"               << "\t"
-            << "tag_checked"                << "\t"
-            << "tag"                        << "\t"
-            << "search_location"            << "\t"
-            << "search_storage"             << "\t"
-            << "search_catalog"             << "\t"
-            << "search_catalog_checked"     << "\t"
-            << "search_directory_checked"   << "\t"
-            << "selected_directory"         << "\t"
-            << "text_exclude"               << "\t"
-            << "case_sensitive"             << "\t"
-            << "differences_checked"        << "\t"
-            << "differences_name"           << "\t"
-            << "differences_size"           << "\t"
-            << "differences_date_modified"  << "\t"
-            << "differences_catalogs"       << "\t"
-            << "file_type_checked"          << "\t"
-            << "file_criteria_checked"      << "\t"
-            << "folder_criteria_checked"    << "\t"
-            << '\n';
+            //Prepare header line
+            out << "date_time"                  << "\t"
+                << "text_checked"               << "\t"
+                << "text_phrase"                << "\t"
+                << "text_criteria"              << "\t"
+                << "text_search_in"             << "\t"
+                << "file_type"                  << "\t"
+                << "file_size_checked"          << "\t"
+                << "file_size_min"              << "\t"
+                << "file_size_min_unit"         << "\t"
+                << "file_size_max"              << "\t"
+                << "file_size_max_unit"         << "\t"
+                << "date_modified_checked"      << "\t"
+                << "date_modified_min"          << "\t"
+                << "date_modified_max"          << "\t"
+                << "duplicates_checked"         << "\t"
+                << "duplicates_name"            << "\t"
+                << "duplicates_size"            << "\t"
+                << "duplicates_date_modified"   << "\t"
+                << "show_folders"               << "\t"
+                << "tag_checked"                << "\t"
+                << "tag"                        << "\t"
+                << "search_location"            << "\t"
+                << "search_storage"             << "\t"
+                << "search_catalog"             << "\t"
+                << "search_catalog_checked"     << "\t"
+                << "search_directory_checked"   << "\t"
+                << "selected_directory"         << "\t"
+                << "text_exclude"               << "\t"
+                << "case_sensitive"             << "\t"
+                << "differences_checked"        << "\t"
+                << "differences_name"           << "\t"
+                << "differences_size"           << "\t"
+                << "differences_date_modified"  << "\t"
+                << "differences_catalogs"       << "\t"
+                << "file_type_checked"          << "\t"
+                << "file_criteria_checked"      << "\t"
+                << "folder_criteria_checked"    << "\t"
+                << '\n';
 
-        //Get data
-        QSqlQuery query;
-        QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                        date_time,
-                                        text_checked,
-                                        text_phrase,
-                                        text_criteria,
-                                        text_search_in,
-                                        file_type,
-                                        file_size_checked,
-                                        file_size_min,
-                                        file_size_min_unit,
-                                        file_size_max,
-                                        file_size_max_unit,
-                                        date_modified_checked,
-                                        date_modified_min,
-                                        date_modified_max,
-                                        duplicates_checked,
-                                        duplicates_name,
-                                        duplicates_size,
-                                        duplicates_date_modified,
-                                        show_folders,
-                                        tag_checked,
-                                        tag,
-                                        search_location,
-                                        search_storage,
-                                        search_catalog,
-                                        search_catalog_checked,
-                                        search_directory_checked,
-                                        selected_directory,
-                                        text_exclude,
-                                        case_sensitive,
-                                        differences_checked,
-                                        differences_name,
-                                        differences_size,
-                                        differences_date_modified,
-                                        differences_catalogs,
-                                        file_type_checked,
-                                        file_criteria_checked,
-                                        folder_criteria_checked
-                                    FROM search
-                                    ORDER BY date_time DESC
-                                   )");
-        query.prepare(querySQL);
-        query.exec();
+            //Get data
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        SELECT
+                                            date_time,
+                                            text_checked,
+                                            text_phrase,
+                                            text_criteria,
+                                            text_search_in,
+                                            file_type,
+                                            file_size_checked,
+                                            file_size_min,
+                                            file_size_min_unit,
+                                            file_size_max,
+                                            file_size_max_unit,
+                                            date_modified_checked,
+                                            date_modified_min,
+                                            date_modified_max,
+                                            duplicates_checked,
+                                            duplicates_name,
+                                            duplicates_size,
+                                            duplicates_date_modified,
+                                            show_folders,
+                                            tag_checked,
+                                            tag,
+                                            search_location,
+                                            search_storage,
+                                            search_catalog,
+                                            search_catalog_checked,
+                                            search_directory_checked,
+                                            selected_directory,
+                                            text_exclude,
+                                            case_sensitive,
+                                            differences_checked,
+                                            differences_name,
+                                            differences_size,
+                                            differences_date_modified,
+                                            differences_catalogs,
+                                            file_type_checked,
+                                            file_criteria_checked,
+                                            folder_criteria_checked
+                                        FROM search
+                                        ORDER BY date_time DESC
+                                       )");
+            query.prepare(querySQL);
+            query.exec();
 
-        //Iterate the result and write each line
-        while (query.next()) {
-            const QSqlRecord record = query.record();
-            for (int i=0, recCount = record.count() ; i<recCount ; ++i){
-                if (i>0)
-                    out << '\t';
-                out << record.value(i).toString();
+            //Iterate the result and write each line
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                out << '\n';
             }
-            out << '\n';
+            //searchFile.close();
         }
-        //searchFile.close();
+        searchFile.close();
     }
-    searchFile.close();
 }
 //----------------------------------------------------------------------
 void Collection::saveTagTableToFile()

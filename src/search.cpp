@@ -193,3 +193,132 @@ void Search::setMultipliers()
     else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
             sizeMultiplierMax = sizeMultiplierMax *1024*1024*1024*1024;
 }
+
+//----------------------------------------------------------------------
+void Search::insertSearchHistoryToTable()
+{//Save Search to db
+
+    QDateTime nowDateTime = QDateTime::currentDateTime();
+    QString searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+    QSqlQuery query;
+    QString querySQL = QLatin1String(R"(
+                                INSERT INTO search(
+                                    date_time,
+                                    text_checked,
+                                    text_phrase,
+                                    text_criteria,
+                                    text_search_in,
+                                    file_criteria_checked,
+                                    file_type_checked,
+                                    file_type,
+                                    file_size_checked,
+                                    file_size_min,
+                                    file_size_min_unit,
+                                    file_size_max,
+                                    file_size_max_unit,
+                                    date_modified_checked,
+                                    date_modified_min,
+                                    date_modified_max,
+                                    duplicates_checked,
+                                    duplicates_name,
+                                    duplicates_size,
+                                    duplicates_date_modified,
+                                    differences_checked,
+                                    differences_name,
+                                    differences_size,
+                                    differences_date_modified,
+                                    differences_catalogs,
+                                    folder_criteria_checked,
+                                    show_folders,
+                                    tag_checked,
+                                    tag,
+                                    search_location,
+                                    search_storage,
+                                    search_catalog,
+                                    search_catalog_checked,
+                                    search_directory_checked,
+                                    selected_directory,
+                                    text_exclude,
+                                    case_sensitive
+                                )
+                                VALUES(
+                                    :date_time,
+                                    :text_checked,
+                                    :text_phrase,
+                                    :text_criteria,
+                                    :text_search_in,
+                                    :file_criteria_checked,
+                                    :file_type_checked,
+                                    :file_type,
+                                    :file_size_checked,
+                                    :file_size_min,
+                                    :file_size_min_unit,
+                                    :file_size_max,
+                                    :file_size_max_unit,
+                                    :date_modified_checked,
+                                    :date_modified_min,
+                                    :date_modified_max,
+                                    :duplicates_checked,
+                                    :duplicates_name,
+                                    :duplicates_size,
+                                    :duplicates_date_modified,
+                                    :differences_checked,
+                                    :differences_name,
+                                    :differences_size,
+                                    :differences_date_modified,
+                                    :differences_catalogs,
+                                    :folder_criteria_checked,
+                                    :show_folders,
+                                    :tag_checked,
+                                    :tag,
+                                    :search_location,
+                                    :search_storage,
+                                    :search_catalog,
+                                    :search_catalog_checked,
+                                    :search_directory_checked,
+                                    :selected_directory,
+                                    :text_exclude,
+                                    :case_sensitive
+                                )
+                )");
+
+    query.prepare(querySQL);
+    query.bindValue(":date_time",                 searchDateTime);
+    query.bindValue(":text_checked",              searchOnFileName);
+    query.bindValue(":text_phrase",               searchText);
+    query.bindValue(":text_criteria",             selectedTextCriteria);
+    query.bindValue(":text_search_in",            selectedSearchIn);
+    query.bindValue(":file_criteria_checked",     searchOnFileCriteria);
+    query.bindValue(":file_type_checked",         searchOnType);
+    query.bindValue(":file_type",                 selectedFileType);
+    query.bindValue(":file_size_checked",         searchOnSize);
+    query.bindValue(":file_size_min",             selectedMinimumSize);
+    query.bindValue(":file_size_min_unit",        selectedMinSizeUnit);
+    query.bindValue(":file_size_max",             selectedMaximumSize);
+    query.bindValue(":file_size_max_unit",        selectedMaxSizeUnit);
+    query.bindValue(":date_modified_checked",     searchOnDate);
+    query.bindValue(":date_modified_min",         selectedDateMin);
+    query.bindValue(":date_modified_max",         selectedDateMax);
+    query.bindValue(":duplicates_checked",        searchOnDuplicates);
+    query.bindValue(":duplicates_name",           searchDuplicatesOnName);
+    query.bindValue(":duplicates_size",           searchDuplicatesOnSize);
+    query.bindValue(":duplicates_date_modified",  searchDuplicatesOnDate);
+    query.bindValue(":differences_checked",       searchOnDifferences);
+    query.bindValue(":differences_name",          differencesOnName);
+    query.bindValue(":differences_size",          differencesOnSize);
+    query.bindValue(":differences_date_modified", differencesOnDate);
+    query.bindValue(":differences_catalogs",      differencesCatalog1 + "||" + differencesCatalog2);
+    query.bindValue(":folder_criteria_checked",   searchOnFolderCriteria);
+    query.bindValue(":show_folders",              showFoldersOnly);
+    query.bindValue(":tag_checked",               searchOnTags);
+    query.bindValue(":tag",                       selectedTagName);
+    query.bindValue(":search_storage",            selectedStorage);
+    query.bindValue(":search_catalog",            selectedCatalog);
+    query.bindValue(":search_catalog_checked",    searchInCatalogsChecked);
+    query.bindValue(":search_directory_checked",  searchInConnectedChecked);
+    query.bindValue(":selected_directory",        connectedDirectory);
+    query.bindValue(":text_exclude",              selectedSearchExclude);
+    query.bindValue(":case_sensitive",            caseSensitive);
+    query.exec();
+}
