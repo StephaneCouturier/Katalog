@@ -33,6 +33,7 @@
 #include <QTranslator>
 #include <QMessageBox>
 
+
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
 //    #include <KLocalizedString>
@@ -103,13 +104,24 @@ int main(int argc, char *argv[])
 //        parser.process(app);
 //        aboutData.processCommandLine(&parser);
     #else
-        QApplication::setStyle("fusion");       
+        QApplication::setStyle("fusion");
     #endif
 
-    //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the path set just after)
-    QIcon::setThemeName( "breeze" );
-    //Set icon fallback in case theme is not available
-    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":fallback-icons");
+    //Themes and Icons
+        // Detect if the theme is dark
+        QPalette palette = app.palette();
+        bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
+
+        //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the path set just after)
+        QIcon::setThemeName( "breeze" );
+
+        // Set the theme name and fallback search paths
+        if (isDarkTheme) {
+            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons-dark");
+        }
+        else {
+            QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons");
+        }
 
     MainWindow window;
     window.show();

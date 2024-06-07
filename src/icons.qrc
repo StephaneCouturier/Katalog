@@ -1,56 +1,108 @@
 <RCC>
     <qresource prefix="/">
+        <file>fallback-icons/address-book-new.png</file>
+        <file>fallback-icons/application-x-zerosize.png</file>
         <file>fallback-icons/audio-x-mpeg.png</file>
+        <file>fallback-icons/collapse-all.png</file>
         <file>fallback-icons/configure.png</file>
+        <file>fallback-icons/dialog-ok-apply.png</file>
         <file>fallback-icons/document-edit-sign.png</file>
         <file>fallback-icons/document-edit.png</file>
         <file>fallback-icons/document-export.png</file>
         <file>fallback-icons/document-new.png</file>
         <file>fallback-icons/document-open.png</file>
+        <file>fallback-icons/document-preview-archive.png</file>
         <file>fallback-icons/document-save.png</file>
+        <file>fallback-icons/drive-harddisk-root.png</file>
         <file>fallback-icons/drive-harddisk.png</file>
+        <file>fallback-icons/drive-multidisk.png</file>
         <file>fallback-icons/edit-clear-history.png</file>
         <file>fallback-icons/edit-copy.png</file>
         <file>fallback-icons/edit-delete.png</file>
+        <file>fallback-icons/edit-download.png</file>
         <file>fallback-icons/edit-find.png</file>
+        <file>fallback-icons/edit-paste-in-place.png</file>
         <file>fallback-icons/edit-paste.png</file>
         <file>fallback-icons/edit-select.png</file>
+        <file>fallback-icons/expand-all.png</file>
         <file>fallback-icons/folder-new.png</file>
+        <file>fallback-icons/folder.png</file>
         <file>fallback-icons/format-convert-to-path.png</file>
-        <file>fallback-icons/gparted.png</file>
-        <file>fallback-icons/image-jpeg.png</file>
-        <file>fallback-icons/journal-new.png</file>
-        <file>fallback-icons/media-playlist-repeat.png</file>
-        <file>fallback-icons/office-chart-line.png</file>
-        <file>fallback-icons/tag.png</file>
-        <file>fallback-icons/tools-wizard.png</file>
-        <file>fallback-icons/video-mp4.png</file>
-        <file>fallback-icons/view-media-playlist.png</file>
-        <file>fallback-icons/view-refresh.png</file>
-        <file>fallback-icons/xml-node-duplicate.png</file>
-        <file>fallback-icons/view-filter.png</file>
-        <file>fallback-icons/edit-download.png</file>
-        <file>fallback-icons/internet-web-browser.png</file>
         <file>fallback-icons/go-down.png</file>
         <file>fallback-icons/go-next.png</file>
         <file>fallback-icons/go-previous.png</file>
         <file>fallback-icons/go-up.png</file>
-        <file>fallback-icons/view-statistics.png</file>
-        <file>fallback-icons/document-preview-archive.png</file>
-        <file>fallback-icons/user-trash.png</file>
-        <file>fallback-icons/folder.png</file>
-        <file>fallback-icons/edit-paste-in-place.png</file>
-        <file>fallback-icons/address-book-new.png</file>
-        <file>fallback-icons/view-list-tree.png</file>
+        <file>fallback-icons/gparted.png</file>
+        <file>fallback-icons/image-jpeg.png</file>
+        <file>fallback-icons/internet-web-browser.png</file>
+        <file>fallback-icons/journal-new.png</file>
         <file>fallback-icons/kontact-import-wizard.png</file>
-        <file>fallback-icons/collapse-all.png</file>
-        <file>fallback-icons/expand-all.png</file>
-        <file>fallback-icons/dialog-ok-apply.png</file>
-        <file>fallback-icons/application-x-zerosize.png</file>
-        <file>fallback-icons/view-list-text.png</file>
         <file>fallback-icons/media-optical-blu-ray.png</file>
         <file>fallback-icons/media-optical.png</file>
-        <file>fallback-icons/drive-multidisk.png</file>
-        <file>fallback-icons/drive-harddisk-root.png</file>
+        <file>fallback-icons/media-playlist-repeat.png</file>
+        <file>fallback-icons/office-chart-line.png</file>
+        <file>fallback-icons/tag.png</file>
+        <file>fallback-icons/tools-wizard.png</file>
+        <file>fallback-icons/user-trash.png</file>
+        <file>fallback-icons/video-mp4.png</file>
+        <file>fallback-icons/view-filter.png</file>
+        <file>fallback-icons/view-list-text.png</file>
+        <file>fallback-icons/view-list-tree.png</file>
+        <file>fallback-icons/view-media-playlist.png</file>
+        <file>fallback-icons/view-refresh.png</file>
+        <file>fallback-icons/view-statistics.png</file>
+        <file>fallback-icons/xml-node-duplicate.png</file>
+        <file>fallback-icons-dark/address-book-new.png</file>
+        <file>fallback-icons-dark/application-x-zerosize.png</file>
+        <file>fallback-icons-dark/audio-x-mpeg.png</file>
+        <file>fallback-icons-dark/collapse-all.png</file>
+        <file>fallback-icons-dark/configure.png</file>
+        <file>fallback-icons-dark/dialog-ok-apply.png</file>
+        <file>fallback-icons-dark/document-edit-sign.png</file>
+        <file>fallback-icons-dark/document-edit.png</file>
+        <file>fallback-icons-dark/document-export.png</file>
+        <file>fallback-icons-dark/document-new.png</file>
+        <file>fallback-icons-dark/document-open.png</file>
+        <file>fallback-icons-dark/document-preview-archive.png</file>
+        <file>fallback-icons-dark/document-save.png</file>
+        <file>fallback-icons-dark/drive-harddisk-root.png</file>
+        <file>fallback-icons-dark/drive-harddisk.png</file>
+        <file>fallback-icons-dark/drive-multidisk.png</file>
+        <file>fallback-icons-dark/edit-clear-history.png</file>
+        <file>fallback-icons-dark/edit-copy.png</file>
+        <file>fallback-icons-dark/edit-delete.png</file>
+        <file>fallback-icons-dark/edit-download.png</file>
+        <file>fallback-icons-dark/edit-find.png</file>
+        <file>fallback-icons-dark/edit-paste-in-place.png</file>
+        <file>fallback-icons-dark/edit-paste.png</file>
+        <file>fallback-icons-dark/edit-select.png</file>
+        <file>fallback-icons-dark/expand-all.png</file>
+        <file>fallback-icons-dark/folder-new.png</file>
+        <file>fallback-icons-dark/folder.png</file>
+        <file>fallback-icons-dark/format-convert-to-path.png</file>
+        <file>fallback-icons-dark/go-down.png</file>
+        <file>fallback-icons-dark/go-next.png</file>
+        <file>fallback-icons-dark/go-previous.png</file>
+        <file>fallback-icons-dark/go-up.png</file>
+        <file>fallback-icons-dark/gparted.png</file>
+        <file>fallback-icons-dark/image-jpeg.png</file>
+        <file>fallback-icons-dark/internet-web-browser.png</file>
+        <file>fallback-icons-dark/journal-new.png</file>
+        <file>fallback-icons-dark/kontact-import-wizard.png</file>
+        <file>fallback-icons-dark/media-optical-blu-ray.png</file>
+        <file>fallback-icons-dark/media-optical.png</file>
+        <file>fallback-icons-dark/media-playlist-repeat.png</file>
+        <file>fallback-icons-dark/office-chart-line.png</file>
+        <file>fallback-icons-dark/tag.png</file>
+        <file>fallback-icons-dark/tools-wizard.png</file>
+        <file>fallback-icons-dark/user-trash.png</file>
+        <file>fallback-icons-dark/video-mp4.png</file>
+        <file>fallback-icons-dark/view-filter.png</file>
+        <file>fallback-icons-dark/view-list-text.png</file>
+        <file>fallback-icons-dark/view-list-tree.png</file>
+        <file>fallback-icons-dark/view-media-playlist.png</file>
+        <file>fallback-icons-dark/view-refresh.png</file>
+        <file>fallback-icons-dark/view-statistics.png</file>
+        <file>fallback-icons-dark/xml-node-duplicate.png</file>
     </qresource>
 </RCC>
