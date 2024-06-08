@@ -381,13 +381,16 @@
             lastSearchSortOrder           = settings.value("Search/lastSearchSortOrder").toInt();
             lastSearchHistorySortSection  = settings.value("Search/lastSearchHistorySortSection").toInt();
             lastSearchHistorySortOrder    = settings.value("Search/lastSearchHistorySortOrder").toInt();
+
+            optionDisplayPhysicalGroup    = settings.value("Devices/DisplayPhysicalGroup", true).toBool();
+            optionDisplayVirtualGroups    = settings.value("Devices/DisplayVirtualGroups", true).toBool();
+            optionDisplayStorage          = settings.value("Devices/DisplayStorage", true).toBool();
+            optionDisplayCatalogs         = settings.value("Devices/DisplayCatalogs", true).toBool();
+            optionDisplayFullTable        = settings.value("Devices/DisplayFullTable", false).toBool();
+
             optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
-            optionDisplayCatalogs         = settings.value("Devices/DisplayCatalogs").toBool();
-            optionDisplayStorage          = settings.value("Devices/DisplayStorage").toBool();
-            optionDisplayPhysicalGroup    = settings.value("Devices/DisplayPhysicalGroup").toBool();
-            optionDisplayVirtualGroups    = settings.value("Devices/DisplayVirtualGroups").toBool();
-            optionDisplayFullTable        = settings.value("Devices/DisplayFullTable").toBool();
+
 
             //Restore DEV Settings
             if(developmentMode==true){
