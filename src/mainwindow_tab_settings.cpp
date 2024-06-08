@@ -374,9 +374,10 @@
         proxyModel->setSourceModel(model);
         ui->Create_treeView_Excluded->setModel(proxyModel);
 
-        //Verify Collection version and trigger migration
+        //Verify Collection version and trigger migration or updates
         if(collection->databaseMode=="Memory"){
-            if ( collection->version < collection->appVersion ){
+            if ( collection->version < collection->appVersion and collection->version < "2.0"){
+                //Migration 1.x > 2.0
 
                 collection->version = "1.x";
 
@@ -427,6 +428,24 @@
                     qApp->deleteLater();
                     return;
                 }
+            }
+
+            if ( collection->version < collection->appVersion and collection->version >= "2.0"){
+                //No change betwween 2.0 and 2.1
+
+                //Update collection version
+                collection->version = collection->appVersion;
+                collection->updateCollectionVersion();
+                collection->saveParameterTableToFile();
+
+                //Inform
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "Updated collection to v2.1."
+                                                           ).arg( collection->version, collection->appVersion));
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.exec();
             }
         }
     }

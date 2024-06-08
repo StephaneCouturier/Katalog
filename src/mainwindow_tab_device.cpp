@@ -3214,21 +3214,21 @@ void MainWindow::migrateCollection()
         insertQuery.prepare(insertSQL);
         insertQuery.bindValue(":parameter_name", "version");
         insertQuery.bindValue(":parameter_type", "collection");
-        insertQuery.bindValue(":parameter_value1", currentVersion);
+        insertQuery.bindValue(":parameter_value1", "2.0");
         insertQuery.exec();
         collection->saveParameterTableToFile();
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(tr("Upgraded collection to v2.0."));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
 
     loadCollection();
     loadDevicesView();
     loadDevicesTreeToModel("Filters");
     QApplication::restoreOverrideCursor();
     ui->tabWidget->setCurrentIndex(1);
-
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("Upgraded collection to v2.0."));
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
 }
 //------ Method per object --------------------------------------------------------------
 void MainWindow::importVirtualToDevices()
