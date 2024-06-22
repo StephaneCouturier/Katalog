@@ -296,6 +296,58 @@ DISTFILES += \
     src/fallback-icons/view-refresh.png \
     src/fallback-icons/view-statistics.png \
     src/fallback-icons/xml-node-duplicate.png \
+    src/fallback-icons-dark/address-book-new.png \
+    src/fallback-icons-dark/application-x-zerosize.png \
+    src/fallback-icons-dark/audio-x-mpeg.png \
+    src/fallback-icons-dark/collapse-all.png \
+    src/fallback-icons-dark/configure.png \
+    src/fallback-icons-dark/dialog-ok-apply.png \
+    src/fallback-icons-dark/document-edit-sign.png \
+    src/fallback-icons-dark/document-edit.png \
+    src/fallback-icons-dark/document-export.png \
+    src/fallback-icons-dark/document-new.png \
+    src/fallback-icons-dark/document-open.png \
+    src/fallback-icons-dark/document-preview-archive.png \
+    src/fallback-icons-dark/document-save.png \
+    src/fallback-icons-dark/drive-harddisk-root.png \
+    src/fallback-icons-dark/drive-harddisk.png \
+    src/fallback-icons-dark/drive-multidisk.png \
+    src/fallback-icons-dark/edit-clear-history.png \
+    src/fallback-icons-dark/edit-copy.png \
+    src/fallback-icons-dark/edit-delete.png \
+    src/fallback-icons-dark/edit-download.png \
+    src/fallback-icons-dark/edit-find.png \
+    src/fallback-icons-dark/edit-paste-in-place.png \
+    src/fallback-icons-dark/edit-paste.png \
+    src/fallback-icons-dark/edit-select.png \
+    src/fallback-icons-dark/expand-all.png \
+    src/fallback-icons-dark/folder-new.png \
+    src/fallback-icons-dark/folder.png \
+    src/fallback-icons-dark/format-convert-to-path.png \
+    src/fallback-icons-dark/go-down.png \
+    src/fallback-icons-dark/go-next.png \
+    src/fallback-icons-dark/go-previous.png \
+    src/fallback-icons-dark/go-up.png \
+    src/fallback-icons-dark/gparted.png \
+    src/fallback-icons-dark/image-jpeg.png \
+    src/fallback-icons-dark/internet-web-browser.png \
+    src/fallback-icons-dark/journal-new.png \
+    src/fallback-icons-dark/kontact-import-wizard.png \
+    src/fallback-icons-dark/media-optical-blu-ray.png \
+    src/fallback-icons-dark/media-optical.png \
+    src/fallback-icons-dark/media-playlist-repeat.png \
+    src/fallback-icons-dark/office-chart-line.png \
+    src/fallback-icons-dark/tag.png \
+    src/fallback-icons-dark/tools-wizard.png \
+    src/fallback-icons-dark/user-trash.png \
+    src/fallback-icons-dark/video-mp4.png \
+    src/fallback-icons-dark/view-filter.png \
+    src/fallback-icons-dark/view-list-text.png \
+    src/fallback-icons-dark/view-list-tree.png \
+    src/fallback-icons-dark/view-media-playlist.png \
+    src/fallback-icons-dark/view-refresh.png \
+    src/fallback-icons-dark/view-statistics.png \
+    src/fallback-icons-dark/xml-node-duplicate.png \
     src/styles/tabwidget_blue.css \
     src/styles/tabwidget_dev.css \
     src/translations/Katalog_cz_CZ.qm \
