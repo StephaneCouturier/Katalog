@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Posledn\xed p\u0159\xedsp\u011bvky","items":[{"title":"2024-05-04 Hlavn\xed vyd\xe1n\xed 2.0","permalink":"/Katalog/cs/blog/2024/05/04/Major-Release-2-0","unlisted":false}]}')}}]);

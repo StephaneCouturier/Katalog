@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Messages r\xe9cents","items":[{"title":"Major Release 2.0","permalink":"/Katalog/fr/blog/release-2-0","unlisted":false}]}')}}]);

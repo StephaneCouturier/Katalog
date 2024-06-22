@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://StephaneCouturier.github.io/Katalog/cs/blog</id>
+    <title>Katalog Blog</title>
+    <updated>2024-05-04T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/cs/blog"/>
+    <subtitle>Katalog Blog</subtitle>
+    <icon>https://StephaneCouturier.github.io/Katalog/cs/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[2024-05-04 Hlavní vydání 2.0]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/05/04/Major-Release-2-0</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/2024/05/04/Major-Release-2-0"/>
+        <updated>2024-05-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Po vydání 1 verze Katalogu každý měsíc a protože nebyla hlášena žádná zásadní chyba, byla vydání od loňského července pozastavena, aby bylo možné pracovat na této další velké.]]></summary>
+        <content type="html"><![CDATA[<p>Po vydání 1 verze Katalogu každý měsíc a protože nebyla hlášena žádná zásadní chyba, byla vydání od loňského července pozastavena, aby bylo možné pracovat na této další velké.</p>
+<p>Zde je konečně vydání 2.0: <a href="https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0" target="_blank" rel="noopener noreferrer">Poznámky k vydání</a></p>
+<p>Tento vývoj se zaměřil na 2 hlavní faktory:</p>
+<ul>
+<li>
+<p><strong>Zařízení</strong>: Seznamy virtuálních zařízení, úložiště a katalogu jsou nyní přístupné z jediné karty, která poskytuje ekvivalent na 3 předchozích kartách. Poskytuje flexibilitu při vytváření a globální <strong>hierarchii zařízení</strong> pro vylepšení možností vyhledávání nebo statistiky</p>
+</li>
+<li>
+<p><strong>Data</strong> lze nyní spravovat v <strong>databázovém souboru</strong> (formát SQLite), přičemž je zachována možnost zůstat u tradičních souborů csv. To také umožní budoucí možnost hostovat databázi na serveru.</p>
+</li>
+</ul>
+<p>Tyto změny zahrnovaly velké aktualizace datového modelu a správy dat.<br>
+Verze proto přichází s podporou pro migraci 1.x &gt; 2.0.</p>
+<p>⚠ <strong>Zálohujte si data sbírky Katalog vytvořená s předchozími verzemi</strong>. ⚠</p>
+<p>Chcete-li se o těchto hlavních změnách dozvědět více, prozkoumejte stránky <em>Zařízení</em> a <em>Nastavení</em> v dokumentaci.</p>
+<p>Vždy oceníme jakoukoli zpětnou vazbu přes Facebook, Github, e-mail 😉</p>]]></content>
+    </entry>
+</feed>

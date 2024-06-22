@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Katalog Blog</title>
+        <link>https://StephaneCouturier.github.io/Katalog/cs/blog</link>
+        <description>Katalog Blog</description>
+        <lastBuildDate>Sat, 04 May 2024 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>cs</language>
+        <item>
+            <title><![CDATA[2024-05-04 Hlavní vydání 2.0]]></title>
+            <link>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/05/04/Major-Release-2-0</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/05/04/Major-Release-2-0</guid>
+            <pubDate>Sat, 04 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Po vydání 1 verze Katalogu každý měsíc a protože nebyla hlášena žádná zásadní chyba, byla vydání od loňského července pozastavena, aby bylo možné pracovat na této další velké.]]></description>
+            <content:encoded><![CDATA[<p>Po vydání 1 verze Katalogu každý měsíc a protože nebyla hlášena žádná zásadní chyba, byla vydání od loňského července pozastavena, aby bylo možné pracovat na této další velké.</p>
+<p>Zde je konečně vydání 2.0: <a href="https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0" target="_blank" rel="noopener noreferrer">Poznámky k vydání</a></p>
+<p>Tento vývoj se zaměřil na 2 hlavní faktory:</p>
+<ul>
+<li>
+<p><strong>Zařízení</strong>: Seznamy virtuálních zařízení, úložiště a katalogu jsou nyní přístupné z jediné karty, která poskytuje ekvivalent na 3 předchozích kartách. Poskytuje flexibilitu při vytváření a globální <strong>hierarchii zařízení</strong> pro vylepšení možností vyhledávání nebo statistiky</p>
+</li>
+<li>
+<p><strong>Data</strong> lze nyní spravovat v <strong>databázovém souboru</strong> (formát SQLite), přičemž je zachována možnost zůstat u tradičních souborů csv. To také umožní budoucí možnost hostovat databázi na serveru.</p>
+</li>
+</ul>
+<p>Tyto změny zahrnovaly velké aktualizace datového modelu a správy dat.<br>
+Verze proto přichází s podporou pro migraci 1.x &gt; 2.0.</p>
+<p>⚠ <strong>Zálohujte si data sbírky Katalog vytvořená s předchozími verzemi</strong>. ⚠</p>
+<p>Chcete-li se o těchto hlavních změnách dozvědět více, prozkoumejte stránky <em>Zařízení</em> a <em>Nastavení</em> v dokumentaci.</p>
+<p>Vždy oceníme jakoukoli zpětnou vazbu přes Facebook, Github, e-mail 😉</p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>
