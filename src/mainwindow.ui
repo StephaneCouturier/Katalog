@@ -5281,7 +5281,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </size>
                    </property>
                    <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply options to the Selection device tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    <string>Apply options to the Selection device tree.</string>
                    </property>
                    <property name="text">
                     <string>&lt;&lt;</string>
@@ -5340,6 +5340,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="toolTip">
+                    <string>Display the *Physical Group* and its related Devices.</string>
+                   </property>
                    <property name="text">
                     <string>Physical Group</string>
                    </property>
@@ -5356,6 +5359,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="toolTip">
+                    <string>Display the *Virtual Groups* and their related Devices.</string>
+                   </property>
                    <property name="text">
                     <string>Virtual Groups</string>
                    </property>
@@ -5371,6 +5377,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <width>90</width>
                      <height>0</height>
                     </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Display the *Storage* devices (if unticked, the Catalogs would be hidden too).</string>
                    </property>
                    <property name="text">
                     <string>Storage</string>
@@ -5389,6 +5398,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <width>100</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Display the *Catalog* devices.</string>
                      </property>
                      <property name="text">
                       <string>Catalogs</string>
@@ -5455,6 +5467,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="Devices_pushButton_InsertRootLevel">
+                   <property name="toolTip">
+                    <string>Create and insert a new Virtual Group device at the top of the hierarchy, and open the Edit panel.</string>
+                   </property>
                    <property name="text">
                     <string>Insert Virtual Group</string>
                    </property>
@@ -5465,6 +5480,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="Devices_pushButton_AddVirtual">
+                   <property name="toolTip">
+                    <string>Create and insert a new Virtual device under the selected device in the hierarchy, and open the Edit panel.</string>
+                   </property>
                    <property name="text">
                     <string>Add Virtual</string>
                    </property>

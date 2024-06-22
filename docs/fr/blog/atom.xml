@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://StephaneCouturier.github.io/Katalog/fr/blog</id>
+    <title>Katalog Blog</title>
+    <updated>2024-05-04T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/fr/blog"/>
+    <subtitle>Katalog Blog</subtitle>
+    <icon>https://StephaneCouturier.github.io/Katalog/fr/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Major Release 2.0]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-0</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-0"/>
+        <updated>2024-05-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Après avoir publié 1 version de Katalog chaque mois et comme aucun bug majeur n'avait été signalé, les versions ont été suspendues depuis juillet dernier pour permettre de travailler sur cette prochaine grande version.]]></summary>
+        <content type="html"><![CDATA[<p>Après avoir publié 1 version de Katalog chaque mois et comme aucun bug majeur n'avait été signalé, les versions ont été suspendues depuis juillet dernier pour permettre de travailler sur cette prochaine grande version.</p>
+<p>Voici enfin la release 2.0 : <a href="https://github.com/StephaneCouturier/Katalog/releases/tag/v2.0" target="_blank" rel="noopener noreferrer">Release Notes</a></p>
+<p>Ce développement s'est concentré sur 2 principaux catalyseurs&nbsp;:</p>
+<ul>
+<li>
+<p><strong>Périphériques</strong>&nbsp;: les listes de périphériques virtuels, de stockage et de catalogue sont désormais toutes accessibles à partir d'un seul onglet fournissant l'équivalent sur les 3 onglets précédents. Il offre la flexibilité de créer une <strong>hiérarchie globale d'appareils</strong> pour améliorer les fonctionnalités de recherche ou de statistiques.</p>
+</li>
+<li>
+<p>Les <strong>données</strong> peuvent désormais être gérées dans un <strong>fichier de base de données</strong> (format SQLite), tout en conservant la possibilité de conserver les fichiers CSV traditionnels. Cela permettra également une future option pour héberger la base de données sur un serveur.</p>
+</li>
+</ul>
+<p>Ces changements impliquaient des mises à jour majeures du modèle de données et de la gestion des données.<br>
+Par conséquent, la version prend en charge une procédure de migration 1.x &gt; 2.0.</p>
+<p>⚠ <strong>Sauvegardez auparavant les données de votre collection Katalog créées avec les versions précédentes</strong>. ⚠</p>
+<p>Pour en savoir plus sur ces principaux changements, explorez les pages <em>Périphériques</em> et <em>Paramètres</em> de la Documentation.</p>
+<p>Tous les commentaires via Facebook, Github, e-mail sont toujours appréciés 😉</p>]]></content>
+        <author>
+            <name>StephaneCouturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="release" term="release"/>
+    </entry>
+</feed>
