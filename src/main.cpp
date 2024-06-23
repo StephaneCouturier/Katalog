@@ -33,7 +33,6 @@
 #include <QTranslator>
 #include <QMessageBox>
 
-
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
 //    #include <KLocalizedString>
@@ -112,10 +111,10 @@ int main(int argc, char *argv[])
         QPalette palette = app.palette();
         bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
 
-        //Set theme (on linux it would use the Desktop one, on windows this will fallbak to the path set just after)
+        //Set theme (on linux with Plasma it would use the Desktop one, on windows this will fallback to the path set just after)
         QIcon::setThemeName( "breeze" );
 
-        // Set the theme name and fallback search paths
+        //Set the fallback paths
         if (isDarkTheme) {
             QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons-dark");
         }

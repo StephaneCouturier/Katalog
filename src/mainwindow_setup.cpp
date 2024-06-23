@@ -73,7 +73,6 @@
     //----------------------------------------------------------------------
     QSqlError MainWindow::initializeDatabase()
     {
-
         //Get database mode ("Memory", "File", or "Hosted") and fields
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
         collection->databaseMode     = settings.value("Settings/databaseMode").toString();

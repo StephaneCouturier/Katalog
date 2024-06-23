@@ -1144,24 +1144,24 @@
                     qint64 sizeItem;
                     newSearch->filesFoundTotalSize = 0;
                     foreach (sizeItem, newSearch->fileSizes) {
-                                newSearch->filesFoundTotalSize = newSearch->filesFoundTotalSize + sizeItem;
+                        newSearch->filesFoundTotalSize = newSearch->filesFoundTotalSize + sizeItem;
                     }
                     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(newSearch->filesFoundTotalSize));
 
                     //Other statistics, covering the case where no results are returned.
                     if (newSearch->filesFoundNumber !=0){
-                                newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
+                        newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
                         QList<qint64> fileSizeList = newSearch->fileSizes;
-                                std::sort(fileSizeList.begin(), fileSizeList.end());
-                                newSearch->filesFoundMinSize = fileSizeList.first();
-                                newSearch->filesFoundMaxSize = fileSizeList.last();
+                        std::sort(fileSizeList.begin(), fileSizeList.end());
+                        newSearch->filesFoundMinSize = fileSizeList.first();
+                        newSearch->filesFoundMaxSize = fileSizeList.last();
 
-                                QList<QString> fileDateList = newSearch->fileDateTimes;
-                                std::sort(fileDateList.begin(), fileDateList.end());
-                                newSearch->filesFoundMinDate = fileDateList.first();
-                                newSearch->filesFoundMaxDate = fileDateList.last();
+                        QList<QString> fileDateList = newSearch->fileDateTimes;
+                        std::sort(fileDateList.begin(), fileDateList.end());
+                        newSearch->filesFoundMinDate = fileDateList.first();
+                        newSearch->filesFoundMaxDate = fileDateList.last();
 
-                                ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
+                        ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
                     }
 
             //Save the search criteria to the search history
