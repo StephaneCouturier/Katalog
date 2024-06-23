@@ -4,10 +4,10 @@
 
 ### Katalog is an application to manage storage devices and catalogs of files to search and get statistics
 
-- [**Create**](https://stephanecouturier.github.io/Katalog/docs/Features/Create) catalogs from different sources or devices,
-- [**Search**](https://stephanecouturier.github.io/Katalog/docs/Features/Search) files even when the devices are disconnected, and find duplicates or differences
-- [**Explore**](https://stephanecouturier.github.io/Katalog/docs/Features/Explore) the contents of the catalogs while devices are disconnected,
-- Organize your collection of [**Catalogs**](https://stephanecouturier.github.io/Katalog/docs/Features/DevicesCatalogs) and [**Storage**](https://stephanecouturier.github.io/Katalog/docs/Features/DevicesStorage) devices, and get [**Statistics**](https://stephanecouturier.github.io/Katalog/docs/Features/Statistics),
+- [**Create**](https://stephanecouturier.github.io/Katalog/docs/Create) catalogs from different sources or devices,
+- [**Search**](https://stephanecouturier.github.io/Katalog/docs/Search) files even when the devices are disconnected, and find duplicates or differences
+- [**Explore**](https://stephanecouturier.github.io/Katalog/docs/Explore) the contents of the catalogs while devices are disconnected,
+- Organize your collection of [**Catalogs**](https://stephanecouturier.github.io/Katalog/docs/DevicesCatalogs) and [**Storage**](https://stephanecouturier.github.io/Katalog/docs/DevicesStorage) devices, and get [**Statistics**](https://stephanecouturier.github.io/Katalog/docs/Statistics),
 - currently available in English, French, Czech, and German
 - Linux(Plasma) and Windows.
 
@@ -20,8 +20,8 @@
 
 ### First use / tips
 
-- Simply start with the [**Create**](https://stephanecouturier.github.io/Katalog/docs/Features/Create) screen. Create your first catalog and experiment!
-- All data are stored in several files stored in the [Collection folder](https://stephanecouturier.github.io/Katalog/docs/Features/Settings#collection). There is not one file containing everything. Instead, having multiple files grants flexibility to manage one or several collection. Each catalog of files is a different file, all statistics are stored in one file, all storage devices are stored in one file too.
+- Simply start with the [**Create**](https://stephanecouturier.github.io/Katalog/docs/Create) screen. Create your first catalog and experiment!
+- All data are stored in several files stored in the [Collection folder](https://stephanecouturier.github.io/Katalog/docs/Settings#collection). There is not one file containing everything. Instead, having multiple files grants flexibility to manage one or several collection. Each catalog of files is a different file, all statistics are stored in one file, all storage devices are stored in one file too.
 
 # User Documentation
 
