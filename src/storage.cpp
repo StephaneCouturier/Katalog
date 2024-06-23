@@ -259,8 +259,6 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
             return list;
         }
 
-        dateTimeUpdated = QDateTime::currentDateTime();
-
     //Save to Storage table
         QSqlQuery queryTotalSpace;
         QString queryTotalSpaceSQL = QLatin1String(R"(
@@ -321,65 +319,6 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
         list.append(newStorageTotalSpace);
         list.append(deltaStorageTotalSpace);
 
-    //Save statistics
-        dateTimeUpdated = QDateTime::currentDateTime();
-        saveStatistics(dateTimeUpdated);
-
     //Return the list of update information
         return list;
-}
-
-void Storage::saveStatistics(QDateTime dateTime)
-{      
-        QSqlQuery querySaveStatistics;
-        QString querySaveStatisticsSQL = QLatin1String(R"(
-                                        INSERT INTO statistics_storage(
-                                                date_time,
-                                                storage_name,
-                                                storage_free_space,
-                                                storage_total_space,
-                                                record_type)
-                                        VALUES(
-                                                :date_time,
-                                                :storage_name,
-                                                :storage_free_space,
-                                                :storage_total_space,
-                                                :record_type)
-                                        )");
-        querySaveStatistics.prepare(querySaveStatisticsSQL);
-        querySaveStatistics.bindValue(":date_time", dateTime.toString("yyyy-MM-dd hh:mm:ss"));
-        querySaveStatistics.bindValue(":storage_name", name);
-        querySaveStatistics.bindValue(":storage_free_space", freeSpace);
-        querySaveStatistics.bindValue(":storage_total_space", totalSpace);
-        if (dateTime == dateTimeUpdated)
-            querySaveStatistics.bindValue(":record_type", "update");
-        else
-            querySaveStatistics.bindValue(":record_type", "snapshot");
-
-        querySaveStatistics.exec();
-}
-
-void Storage::saveStatisticsToFile(QString filePath, QDateTime dateTime)
-{
-        //Prepare file and data
-        QFile fileOut(filePath);
-        QString record_type;
-        if (dateTime == dateTimeUpdated)
-            record_type = "update";
-        else
-            record_type = "snapshot";
-
-        QString statisticsLine =   dateTime.toString("yyyy-MM-dd hh:mm:ss") + "\t"
-                                + name + "\t"
-                                + QString::number(freeSpace) + "\t"
-                                + QString::number(totalSpace) + "\t"
-                                + QString::number(ID) + "\t"
-                                + record_type;
-
-        // Write data
-        if (fileOut.open(QFile::WriteOnly | QIODevice::Append | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            stream << statisticsLine << "\n";
-        }
-        fileOut.close();
 }
