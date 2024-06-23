@@ -439,13 +439,13 @@
                 collection->saveParameterTableToFile();
 
                 //Inform
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                           "Updated collection to v2.1."
-                                                           ).arg( collection->version, collection->appVersion));
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
+                // QMessageBox msgBox;
+                // msgBox.setWindowTitle("Katalog");
+                // msgBox.setText(QCoreApplication::translate("MainWindow",
+                //                                            "Updated collection to v2.1."
+                //                                            ).arg( collection->version, collection->appVersion));
+                // msgBox.setIcon(QMessageBox::Information);
+                // msgBox.exec();
             }
         }
     }
