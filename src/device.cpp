@@ -457,7 +457,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     QApplication::setOverrideCursor(Qt::WaitCursor);
     //Prepare
     QList<qint64> deviceUpdatesList;
-    dateTimeUpdated = QDateTime::currentDateTime();
     Device parentDevice;
     parentDevice.ID = parentID;
     parentDevice.loadDevice();
@@ -478,6 +477,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //Update catalog with new values
             totalFileCount = deviceUpdatesList[1];
             totalFileSize  = deviceUpdatesList[3];
+            dateTimeUpdated = QDateTime::currentDateTime();
             saveStatistics(dateTimeUpdated, statiticsRequestSource);
             deviceUpdatesList<<1;
             deviceUpdatesList<<0;
@@ -584,9 +584,12 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
         //Update storage itself
         QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
-        freeSpace  = storageUpdates[3];
-        totalSpace = storageUpdates[5];
-        saveStatistics(dateTimeUpdated, statiticsRequestSource);
+        if( storageUpdates.count() > 0 and storageUpdates[0]==1){
+            freeSpace  = storageUpdates[3];
+            totalSpace = storageUpdates[5];
+            dateTimeUpdated = QDateTime::currentDateTime();
+            saveStatistics(dateTimeUpdated, statiticsRequestSource);
+        }
 
         deviceUpdatesList += storageUpdates[0];
         deviceUpdatesList += storageUpdates[1];
@@ -603,7 +606,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //DEV: update all children devices
         // }
         qDebug()<<"Updating a list of devices from a virtual one is not avaialable yet.";
-
+        dateTimeUpdated = QDateTime::currentDateTime();
         saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         //DEV: also save statistics of all parents
