@@ -70,7 +70,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2201"/>
         <location filename="../mainwindow.ui" line="4485"/>
-        <location filename="../mainwindow.ui" line="6228"/>
+        <location filename="../mainwindow.ui" line="6246"/>
         <location filename="../mainwindow_tab_search.cpp" line="1443"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
@@ -167,27 +167,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8405"/>
+        <location filename="../mainwindow.ui" line="8423"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8385"/>
+        <location filename="../mainwindow.ui" line="8403"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7749"/>
+        <location filename="../mainwindow.ui" line="7767"/>
         <source>Database File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8187"/>
+        <location filename="../mainwindow.ui" line="8205"/>
         <source>Data mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8200"/>
+        <location filename="../mainwindow.ui" line="8218"/>
         <location filename="../mainwindow.cpp" line="185"/>
         <source>File</source>
         <translation type="unfinished"></translation>
@@ -240,7 +240,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2139"/>
         <location filename="../mainwindow.ui" line="4635"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1848"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1875"/>
         <location filename="../mainwindow_tab_explore.cpp" line="637"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
@@ -253,10 +253,10 @@
     <message>
         <location filename="../mainwindow.ui" line="2180"/>
         <location filename="../mainwindow.ui" line="4464"/>
-        <location filename="../mainwindow.ui" line="6140"/>
+        <location filename="../mainwindow.ui" line="6158"/>
         <location filename="../mainwindow_tab_search.cpp" line="1435"/>
         <location filename="../mainwindow_tab_search.cpp" line="1720"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2322"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2396"/>
         <location filename="../mainwindow_tab_filters.cpp" line="284"/>
         <location filename="../mainwindow_tab_filters.cpp" line="287"/>
         <location filename="../mainwindow_tab_filters.cpp" line="288"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2185"/>
         <location filename="../mainwindow.ui" line="4469"/>
-        <location filename="../mainwindow.ui" line="6184"/>
+        <location filename="../mainwindow.ui" line="6202"/>
         <location filename="../mainwindow_tab_search.cpp" line="1437"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
@@ -286,7 +286,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2193"/>
         <location filename="../mainwindow.ui" line="4477"/>
-        <location filename="../mainwindow.ui" line="6162"/>
+        <location filename="../mainwindow.ui" line="6180"/>
         <location filename="../mainwindow_tab_search.cpp" line="1440"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
@@ -294,7 +294,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2209"/>
         <location filename="../mainwindow.ui" line="4493"/>
-        <location filename="../mainwindow.ui" line="6206"/>
+        <location filename="../mainwindow.ui" line="6224"/>
         <location filename="../mainwindow_tab_search.cpp" line="1446"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
@@ -337,22 +337,22 @@
         <location filename="../mainwindow.ui" line="5083"/>
         <location filename="../mainwindow.ui" line="5126"/>
         <location filename="../mainwindow.ui" line="5163"/>
-        <location filename="../mainwindow.ui" line="5609"/>
-        <location filename="../mainwindow.ui" line="5695"/>
-        <location filename="../mainwindow.ui" line="5747"/>
+        <location filename="../mainwindow.ui" line="5627"/>
+        <location filename="../mainwindow.ui" line="5713"/>
+        <location filename="../mainwindow.ui" line="5765"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5063"/>
-        <location filename="../mainwindow.ui" line="5394"/>
+        <location filename="../mainwindow.ui" line="5406"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="335"/>
         <source>Catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5106"/>
-        <location filename="../mainwindow.ui" line="6997"/>
+        <location filename="../mainwindow.ui" line="7015"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="305"/>
         <source>Total File Size</source>
         <translation type="unfinished"></translation>
@@ -373,8 +373,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5533"/>
-        <location filename="../mainwindow_tab_device.cpp" line="239"/>
+        <location filename="../mainwindow.ui" line="5551"/>
+        <location filename="../mainwindow_tab_device.cpp" line="238"/>
         <location filename="../mainwindow_tab_filters.cpp" line="224"/>
         <source>Explore</source>
         <translation type="unfinished"></translation>
@@ -382,37 +382,37 @@
     <message>
         <location filename="../mainwindow.ui" line="4966"/>
         <location filename="../mainwindow.ui" line="5195"/>
-        <location filename="../mainwindow_tab_device.cpp" line="217"/>
-        <location filename="../mainwindow_tab_device.cpp" line="294"/>
-        <location filename="../mainwindow_tab_device.cpp" line="347"/>
+        <location filename="../mainwindow_tab_device.cpp" line="216"/>
+        <location filename="../mainwindow_tab_device.cpp" line="293"/>
+        <location filename="../mainwindow_tab_device.cpp" line="346"/>
         <location filename="../mainwindow_tab_filters.cpp" line="168"/>
         <location filename="../mainwindow_tab_filters.cpp" line="206"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7811"/>
-        <location filename="../mainwindow_tab_device.cpp" line="254"/>
-        <location filename="../mainwindow_tab_device.cpp" line="309"/>
-        <location filename="../mainwindow_tab_device.cpp" line="362"/>
+        <location filename="../mainwindow.ui" line="7829"/>
+        <location filename="../mainwindow_tab_device.cpp" line="253"/>
+        <location filename="../mainwindow_tab_device.cpp" line="308"/>
+        <location filename="../mainwindow_tab_device.cpp" line="361"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3667"/>
         <location filename="../mainwindow_tab_search.cpp" line="1957"/>
-        <location filename="../mainwindow_tab_device.cpp" line="399"/>
+        <location filename="../mainwindow_tab_device.cpp" line="398"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5536"/>
+        <location filename="../mainwindow.ui" line="5554"/>
         <source>Explore a catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="272"/>
-        <location filename="../mainwindow.ui" line="5879"/>
+        <location filename="../mainwindow.ui" line="5897"/>
         <location filename="../mainwindow_tab_search.cpp" line="807"/>
         <location filename="../mainwindow_tab_search.cpp" line="829"/>
         <location filename="../mainwindow_tab_search.cpp" line="966"/>
@@ -422,15 +422,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1623"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1846"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2082"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1622"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1873"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2137"/>
         <location filename="../mainwindow_tab_explore.cpp" line="639"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5592"/>
+        <location filename="../mainwindow.ui" line="5610"/>
         <source>Directories</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,7 +442,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="202"/>
-        <location filename="../mainwindow_tab_device.cpp" line="962"/>
+        <location filename="../mainwindow_tab_device.cpp" line="961"/>
         <source>Virtual</source>
         <translation type="unfinished"></translation>
     </message>
@@ -477,37 +477,32 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4651"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1855"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1882"/>
         <source>Comment 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4667"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1856"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1883"/>
         <source>Comment 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4683"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1857"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1884"/>
         <source>Comment 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4805"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1851"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1878"/>
         <source>Brand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4827"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1852"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1879"/>
         <source>Model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5284"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply options to the Selection device tree.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -516,8 +511,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5678"/>
-        <location filename="../mainwindow.ui" line="7002"/>
+        <location filename="../mainwindow.ui" line="5344"/>
+        <source>Display the *Physical Group* and its related Devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5363"/>
+        <source>Display the *Virtual Groups* and their related Devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5382"/>
+        <source>Display the *Storage* devices (if unticked, the Catalogs would be hidden too).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5403"/>
+        <source>Display the *Catalog* devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5471"/>
+        <source>Create and insert a new Virtual Group device at the top of the hierarchy, and open the Edit panel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5484"/>
+        <source>Create and insert a new Virtual device under the selected device in the hierarchy, and open the Edit panel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5696"/>
+        <location filename="../mainwindow.ui" line="7020"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="208"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="298"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="336"/>
@@ -525,113 +550,113 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5785"/>
+        <location filename="../mainwindow.ui" line="5803"/>
         <source>Click to open the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5988"/>
+        <location filename="../mainwindow.ui" line="6006"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5991"/>
+        <location filename="../mainwindow.ui" line="6009"/>
         <source>Create a catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6031"/>
+        <location filename="../mainwindow.ui" line="6049"/>
         <source>2- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6047"/>
+        <location filename="../mainwindow.ui" line="6065"/>
         <source>Select Content options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6118"/>
+        <location filename="../mainwindow.ui" line="6136"/>
         <source>include File Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6261"/>
+        <location filename="../mainwindow.ui" line="6279"/>
         <source>Other options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6320"/>
+        <location filename="../mainwindow.ui" line="6338"/>
         <source>Directories to exclude from catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6337"/>
+        <location filename="../mainwindow.ui" line="6355"/>
         <source>Add directory to exclude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6397"/>
+        <location filename="../mainwindow.ui" line="6415"/>
         <source>3- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6413"/>
+        <location filename="../mainwindow.ui" line="6431"/>
         <source>Define &amp; Create catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6467"/>
+        <location filename="../mainwindow.ui" line="6485"/>
         <source>Select Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6492"/>
+        <location filename="../mainwindow.ui" line="6510"/>
         <source>Add a new storage device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4245"/>
-        <location filename="../mainwindow.ui" line="6495"/>
+        <location filename="../mainwindow.ui" line="6513"/>
         <source>Add Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6536"/>
+        <location filename="../mainwindow.ui" line="6554"/>
         <source>Enter the Name of the new catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6548"/>
+        <location filename="../mainwindow.ui" line="6566"/>
         <source>NewCatalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6551"/>
+        <location filename="../mainwindow.ui" line="6569"/>
         <source>Enter a name for your new catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6573"/>
+        <location filename="../mainwindow.ui" line="6591"/>
         <source>Generate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6631"/>
+        <location filename="../mainwindow.ui" line="6649"/>
         <source>Launch the cataloging and save it to a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6637"/>
+        <location filename="../mainwindow.ui" line="6655"/>
         <source>Create Catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6719"/>
+        <location filename="../mainwindow.ui" line="6737"/>
         <source>1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6741"/>
+        <location filename="../mainwindow.ui" line="6759"/>
         <source>Select Source path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -641,17 +666,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5344"/>
+        <location filename="../mainwindow.ui" line="5347"/>
         <source>Physical Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5360"/>
+        <location filename="../mainwindow.ui" line="5366"/>
         <source>Virtual Groups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5459"/>
+        <location filename="../mainwindow.ui" line="5474"/>
         <source>Insert Virtual Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -692,76 +717,76 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8617"/>
+        <location filename="../mainwindow.ui" line="8635"/>
         <source>Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8590"/>
+        <location filename="../mainwindow.ui" line="8608"/>
         <source>Use bigger icon size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8047"/>
+        <location filename="../mainwindow.ui" line="8065"/>
         <source>Load last catalog to Explore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8455"/>
+        <location filename="../mainwindow.ui" line="8473"/>
         <source>Database Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8365"/>
+        <location filename="../mainwindow.ui" line="8383"/>
         <source>User Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8335"/>
+        <location filename="../mainwindow.ui" line="8353"/>
         <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7827"/>
+        <location filename="../mainwindow.ui" line="7845"/>
         <source>Create a new database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8205"/>
+        <location filename="../mainwindow.ui" line="8223"/>
         <location filename="../mainwindow.cpp" line="186"/>
         <source>Hosted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8164"/>
+        <location filename="../mainwindow.ui" line="8182"/>
         <source>Data management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.ui" line="6797"/>
+        <location filename="../mainwindow.ui" line="6815"/>
         <source>Select the path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="522"/>
         <location filename="../mainwindow.ui" line="4404"/>
-        <location filename="../mainwindow.ui" line="6800"/>
-        <location filename="../mainwindow.ui" line="7239"/>
+        <location filename="../mainwindow.ui" line="6818"/>
+        <location filename="../mainwindow.ui" line="7257"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="250"/>
-        <location filename="../mainwindow.ui" line="5376"/>
-        <location filename="../mainwindow_tab_device.cpp" line="990"/>
+        <location filename="../mainwindow.ui" line="5385"/>
+        <location filename="../mainwindow_tab_device.cpp" line="989"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="351"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="353"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7830"/>
+        <location filename="../mainwindow.ui" line="7848"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
@@ -784,38 +809,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6900"/>
-        <location filename="../mainwindow.ui" line="7183"/>
+        <location filename="../mainwindow.ui" line="6918"/>
+        <location filename="../mainwindow.ui" line="7201"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6824"/>
+        <location filename="../mainwindow.ui" line="6842"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6827"/>
+        <location filename="../mainwindow.ui" line="6845"/>
         <source>View collection statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6977"/>
+        <location filename="../mainwindow.ui" line="6995"/>
         <source>Type of data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6993"/>
+        <location filename="../mainwindow.ui" line="7011"/>
         <source>Select the type of data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6878"/>
+        <location filename="../mainwindow.ui" line="6896"/>
         <source>Edit the file storing all records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5469"/>
+        <location filename="../mainwindow.ui" line="5487"/>
         <source>Add Virtual</source>
         <translation type="unfinished"></translation>
     </message>
@@ -846,223 +871,228 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6881"/>
+        <location filename="../mainwindow.ui" line="6899"/>
         <source>Edit Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6897"/>
+        <location filename="../mainwindow.ui" line="6915"/>
         <source>Reload the file storing all records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7023"/>
+        <location filename="../mainwindow.ui" line="7041"/>
         <source>Display each value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7120"/>
+        <location filename="../mainwindow.ui" line="7138"/>
         <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7123"/>
+        <location filename="../mainwindow.ui" line="7141"/>
         <source>Tag folders for search and statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7259"/>
+        <location filename="../mainwindow.ui" line="7277"/>
         <source>Add the tag to this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7262"/>
+        <location filename="../mainwindow.ui" line="7280"/>
         <source>Tag the folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7195"/>
+        <location filename="../mainwindow.ui" line="7213"/>
         <source>Current folders and tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7202"/>
+        <location filename="../mainwindow.ui" line="7220"/>
         <source>Select a tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7212"/>
-        <location filename="../mainwindow.ui" line="7236"/>
+        <location filename="../mainwindow.ui" line="7230"/>
+        <location filename="../mainwindow.ui" line="7254"/>
         <source>Select a folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7143"/>
+        <location filename="../mainwindow.ui" line="7161"/>
         <source>Existing tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7161"/>
-        <location filename="../mainwindow.ui" line="7180"/>
+        <location filename="../mainwindow.ui" line="7179"/>
+        <location filename="../mainwindow.ui" line="7198"/>
         <source>Reload the file storing the tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7293"/>
-        <location filename="../mainwindow.ui" line="8077"/>
-        <location filename="../mainwindow_setup.cpp" line="237"/>
+        <location filename="../mainwindow.ui" line="7311"/>
+        <location filename="../mainwindow.ui" line="8095"/>
+        <location filename="../mainwindow_setup.cpp" line="236"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7502"/>
-        <location filename="../mainwindow.ui" line="7545"/>
+        <location filename="../mainwindow.ui" line="7520"/>
+        <location filename="../mainwindow.ui" line="7563"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7574"/>
+        <location filename="../mainwindow.ui" line="7592"/>
         <source>Release Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8213"/>
-        <location filename="../mainwindow.ui" line="8272"/>
+        <location filename="../mainwindow.ui" line="8231"/>
+        <location filename="../mainwindow.ui" line="8290"/>
         <source>(Changing requires to restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7879"/>
+        <location filename="../mainwindow.ui" line="7897"/>
         <source>Data mode &quot;Memory&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7983"/>
+        <location filename="../mainwindow.ui" line="8001"/>
         <source>Select and read folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8090"/>
+        <location filename="../mainwindow.ui" line="8108"/>
         <source>Preload last catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8107"/>
+        <location filename="../mainwindow.ui" line="8125"/>
         <source>Start up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8121"/>
+        <location filename="../mainwindow.ui" line="8139"/>
         <source>Back up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7705"/>
+        <location filename="../mainwindow.ui" line="7723"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7479"/>
+        <location filename="../mainwindow.ui" line="5284"/>
+        <source>Apply options to the Selection device tree.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="7497"/>
         <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7725"/>
+        <location filename="../mainwindow.ui" line="7743"/>
         <source>The collection data is saved to an SQLite .db file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7789"/>
+        <location filename="../mainwindow.ui" line="7807"/>
         <source>Select and open database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8265"/>
+        <location filename="../mainwindow.ui" line="8283"/>
         <source>Data mode &quot;Hosted database&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8295"/>
+        <location filename="../mainwindow.ui" line="8313"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8494"/>
+        <location filename="../mainwindow.ui" line="8512"/>
         <source>Apply and restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8552"/>
+        <location filename="../mainwindow.ui" line="8570"/>
         <source>Select a theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8556"/>
+        <location filename="../mainwindow.ui" line="8574"/>
         <source>Desktop Theme</source>
         <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8561"/>
-        <location filename="../mainwindow_setup.cpp" line="230"/>
+        <location filename="../mainwindow.ui" line="8579"/>
+        <location filename="../mainwindow_setup.cpp" line="229"/>
         <location filename="../mainwindow.cpp" line="131"/>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8539"/>
+        <location filename="../mainwindow.ui" line="8557"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8638"/>
+        <location filename="../mainwindow.ui" line="8656"/>
         <source>(requires to restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8631"/>
+        <location filename="../mainwindow.ui" line="8649"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7943"/>
+        <location filename="../mainwindow.ui" line="7961"/>
         <source>Collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7786"/>
-        <location filename="../mainwindow.ui" line="7980"/>
-        <location filename="../mainwindow.ui" line="8491"/>
+        <location filename="../mainwindow.ui" line="7804"/>
+        <location filename="../mainwindow.ui" line="7998"/>
+        <location filename="../mainwindow.ui" line="8509"/>
         <source>Select a different Collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7391"/>
+        <location filename="../mainwindow.ui" line="7409"/>
         <source>Other Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7339"/>
-        <location filename="../mainwindow.ui" line="7808"/>
-        <location filename="../mainwindow.ui" line="8002"/>
+        <location filename="../mainwindow.ui" line="7357"/>
+        <location filename="../mainwindow.ui" line="7826"/>
+        <location filename="../mainwindow.ui" line="8020"/>
         <source>Open the collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7342"/>
+        <location filename="../mainwindow.ui" line="7360"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7164"/>
+        <location filename="../mainwindow.ui" line="7182"/>
         <location filename="../mainwindow_tab_search.cpp" line="381"/>
         <location filename="../mainwindow_tab_explore.cpp" line="177"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8005"/>
+        <location filename="../mainwindow.ui" line="8023"/>
         <location filename="../mainwindow_tab_search.cpp" line="385"/>
         <location filename="../mainwindow_tab_explore.cpp" line="181"/>
         <location filename="../mainwindow_tab_explore.cpp" line="222"/>
@@ -1101,17 +1131,17 @@
         <location filename="../mainwindow_tab_search.cpp" line="825"/>
         <location filename="../mainwindow_tab_search.cpp" line="962"/>
         <location filename="../mainwindow_tab_search.cpp" line="1109"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1611"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1834"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2070"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1610"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1861"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2125"/>
         <location filename="../mainwindow_tab_explore.cpp" line="632"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2314"/>
-        <location filename="../mainwindow.ui" line="7460"/>
-        <location filename="../mainwindow.ui" line="7522"/>
+        <location filename="../mainwindow.ui" line="7478"/>
+        <location filename="../mainwindow.ui" line="7540"/>
         <location filename="../mainwindow_tab_search.cpp" line="805"/>
         <location filename="../mainwindow_tab_search.cpp" line="827"/>
         <location filename="../mainwindow_tab_search.cpp" line="964"/>
@@ -1138,73 +1168,73 @@
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="56"/>
         <location filename="../mainwindow_tab_tags.cpp" line="44"/>
-        <location filename="../mainwindow_tab_device.cpp" line="439"/>
+        <location filename="../mainwindow_tab_device.cpp" line="438"/>
         <location filename="../mainwindow_tab_filters.cpp" line="266"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="247"/>
+        <location filename="../mainwindow_setup.cpp" line="246"/>
         <location filename="../mainwindow_tab_settings.cpp" line="146"/>
         <source>Select the directory for this collection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3561"/>
-        <location filename="../mainwindow.ui" line="5730"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1618"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1841"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2077"/>
+        <location filename="../mainwindow.ui" line="5748"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1617"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1868"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2132"/>
         <source>Total Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4397"/>
-        <location filename="../mainwindow.ui" line="5892"/>
+        <location filename="../mainwindow.ui" line="5910"/>
         <source>Source Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4517"/>
         <location filename="../mainwindow_tab_search.cpp" line="2199"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2084"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2406"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2139"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2480"/>
         <source>File Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1613"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1836"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2072"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1612"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1863"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2127"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2543"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2617"/>
         <source>Select the csv file to be imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2612"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2686"/>
         <source>A file was found, but could not be loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1614"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1837"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2073"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1613"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1864"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2128"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4893"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1849"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1876"/>
         <source>Label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4915"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1850"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1877"/>
         <source>FileSystem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1220,92 +1250,92 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4849"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1853"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1880"/>
         <source>Serial Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4871"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1854"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1881"/>
         <source>Build Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="92"/>
+        <location filename="../mainwindow_tab_device.cpp" line="91"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="278"/>
+        <location filename="../mainwindow_tab_device.cpp" line="277"/>
         <source>Delete this catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="325"/>
+        <location filename="../mainwindow_tab_device.cpp" line="324"/>
         <source>Unassign this storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="333"/>
+        <location filename="../mainwindow_tab_device.cpp" line="332"/>
         <source>Delete this storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="371"/>
+        <location filename="../mainwindow_tab_device.cpp" line="370"/>
         <source>Add Virtual device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="378"/>
+        <location filename="../mainwindow_tab_device.cpp" line="377"/>
         <source>Add Storage device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="407"/>
+        <location filename="../mainwindow_tab_device.cpp" line="406"/>
         <source>This Group is necessary to host Storage and Catalogs.&lt;br/&gt;It cannot be deleted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1616"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1615"/>
         <source>External ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1617"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1840"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2076"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1616"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1867"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2131"/>
         <source>Number of files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1621"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1844"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2080"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1620"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1871"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2135"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="353"/>
         <source>Total space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1121"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1120"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1156"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1155"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1620"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1843"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2079"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1619"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1870"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2134"/>
         <source>Free space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1619"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1842"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2078"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1618"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1869"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2133"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="351"/>
         <source>Used space</source>
         <translation type="unfinished"></translation>
@@ -1334,17 +1364,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6271"/>
+        <location filename="../mainwindow.ui" line="6289"/>
         <source>Include Hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6288"/>
+        <location filename="../mainwindow.ui" line="6306"/>
         <source>Follow symbolic links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6570"/>
+        <location filename="../mainwindow.ui" line="6588"/>
         <source>Generate a catalog name based on the path.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1354,17 +1384,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7412"/>
+        <location filename="../mainwindow.ui" line="7430"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8060"/>
+        <location filename="../mainwindow.ui" line="8078"/>
         <source>Auto-backup catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8587"/>
+        <location filename="../mainwindow.ui" line="8605"/>
         <source>Keep records of files and size for Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1434,18 +1464,18 @@
     </message>
     <message>
         <location filename="../collection.cpp" line="351"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2599"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2673"/>
         <source>No catalog found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8057"/>
+        <location filename="../mainwindow.ui" line="8075"/>
         <source>Always keep one back of each catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="261"/>
-        <location filename="../mainwindow_tab_device.cpp" line="316"/>
+        <location filename="../mainwindow_tab_device.cpp" line="260"/>
+        <location filename="../mainwindow_tab_device.cpp" line="315"/>
         <source>Filelight</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1481,7 +1511,7 @@
     </message>
     <message>
         <location filename="../mainwindow_tab_create.cpp" line="269"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1123"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1122"/>
         <source>Choose a different name and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1491,7 +1521,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7558"/>
+        <location filename="../mainwindow.ui" line="7576"/>
         <source>Check at start up</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1506,12 +1536,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2428"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2502"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="234"/>
+        <location filename="../mainwindow_setup.cpp" line="233"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1529,7 +1559,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6920"/>
+        <location filename="../mainwindow.ui" line="6938"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1549,189 +1579,189 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="724"/>
+        <location filename="../mainwindow_setup.cpp" line="723"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="3033"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3107"/>
         <source>Update all active catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="3033"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3107"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2075"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2130"/>
         <source>Catalog ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="70"/>
+        <location filename="../mainwindow_tab_device.cpp" line="69"/>
         <source>Virtual Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="646"/>
+        <location filename="../mainwindow_tab_device.cpp" line="645"/>
         <source>Do you want to unassign this catalog from this virtual device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1622"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1845"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2081"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1621"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1872"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2136"/>
         <source>Date updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1624"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1847"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2083"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1623"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1874"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2138"/>
         <source>Group ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4613"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1839"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1866"/>
         <source>Storage ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2085"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2140"/>
         <source>include hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2086"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2141"/>
         <source>include metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2087"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2142"/>
         <source>Parent storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2088"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2143"/>
         <source>Fulldevice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2089"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2144"/>
         <source>Date Loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2402"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2476"/>
         <source>Save changes to the definition of the catalog?&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2403"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2477"/>
         <source>field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2403"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2477"/>
         <source>previous value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2403"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2477"/>
         <source>new value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2410"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2484"/>
         <source>Include Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2834"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2908"/>
         <source>Catalog updated: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2835"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2852"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2874"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2891"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2915"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2950"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2909"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2926"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2948"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2965"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2989"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3024"/>
         <source>Path: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2838"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2877"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2912"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2951"/>
         <source>Number of files: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2838"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2839"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2856"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2857"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2858"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2895"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2896"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2897"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2919"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2920"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2921"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2954"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2955"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2956"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2912"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2913"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2930"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2931"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2932"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2969"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2970"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2971"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2993"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2994"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2995"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3028"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3029"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3030"/>
         <source>(added: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2839"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2878"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2913"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2952"/>
         <source>Total file size: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2851"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2890"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2914"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2949"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2925"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2964"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2988"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3023"/>
         <source>Storage updated: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2856"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2895"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2919"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2954"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2930"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2969"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2993"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3028"/>
         <source>Used Space: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2857"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2896"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2920"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2955"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2931"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2970"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2994"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3029"/>
         <source>Free Space: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2858"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2897"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2921"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2956"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2932"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2971"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2995"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3030"/>
         <source>Total Space: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2873"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2947"/>
         <source>Catalog created: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="3223"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3297"/>
         <source>Upgraded collection to v2.0.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1767,58 +1797,58 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2455"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2529"/>
         <source>Update the catalog content with the new criteria?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="778"/>
+        <location filename="../mainwindow_tab_device.cpp" line="777"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2942"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3016"/>
         <source>&lt;br/&gt;&lt;br/&gt; %1 updated Catalogs (active), %2 skipped Catalogs (inactive)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="385"/>
+        <location filename="../mainwindow_tab_device.cpp" line="384"/>
         <source>Assign selected catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="500"/>
+        <location filename="../mainwindow_tab_device.cpp" line="499"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1134"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1133"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1135"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1134"/>
         <source>Choose a different ID and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2090"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2145"/>
         <source>App Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2091"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2146"/>
         <source>File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2418"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2492"/>
         <source>Is Full Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="2932"/>
+        <location filename="../mainwindow_tab_device.cpp" line="3006"/>
         <source>&lt;table&gt;&lt;br/&gt;Selected active catalogs from &lt;b&gt;%1&lt;/b&gt; are updated.&amp;nbsp;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1829,7 +1859,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5843"/>
+        <location filename="../mainwindow.ui" line="5861"/>
         <location filename="../mainwindow_tab_explore.cpp" line="635"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
@@ -1857,7 +1887,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7555"/>
+        <location filename="../mainwindow.ui" line="7573"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1903,32 +1933,32 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="105"/>
+        <location filename="../mainwindow_setup.cpp" line="104"/>
         <source>The database file could not be found:&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="129"/>
+        <location filename="../mainwindow_setup.cpp" line="128"/>
         <source>The database could not be opened:&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="135"/>
+        <location filename="../mainwindow_setup.cpp" line="134"/>
         <source>Connected to Hosted database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="238"/>
+        <location filename="../mainwindow_setup.cpp" line="237"/>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="262"/>
+        <location filename="../mainwindow_setup.cpp" line="261"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="263"/>
+        <location filename="../mainwindow_setup.cpp" line="262"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1963,7 +1993,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6513"/>
+        <location filename="../mainwindow.ui" line="6531"/>
         <source>catalog is for the full device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2000,8 +2030,8 @@ Use a different combinaison.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8044"/>
-        <location filename="../mainwindow.ui" line="8087"/>
+        <location filename="../mainwindow.ui" line="8062"/>
+        <location filename="../mainwindow.ui" line="8105"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2402,54 +2432,54 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6937"/>
+        <location filename="../mainwindow.ui" line="6955"/>
         <source>all records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6942"/>
+        <location filename="../mainwindow.ui" line="6960"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="282"/>
         <source>updates only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6947"/>
+        <location filename="../mainwindow.ui" line="6965"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="278"/>
         <source>snapshots only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7899"/>
+        <location filename="../mainwindow.ui" line="7917"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7919"/>
+        <location filename="../mainwindow.ui" line="7937"/>
         <source>The database is in Memory only (RAM).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8689"/>
+        <location filename="../mainwindow.ui" line="8707"/>
         <source>Language &amp; Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7323"/>
+        <location filename="../mainwindow.ui" line="7341"/>
         <source>Open Settings file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5816"/>
+        <location filename="../mainwindow.ui" line="5834"/>
         <source>Display folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5866"/>
+        <location filename="../mainwindow.ui" line="5884"/>
         <source>and all sub-folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5853"/>
+        <location filename="../mainwindow.ui" line="5871"/>
         <source>Order folders first</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2476,16 +2506,16 @@ to the trash?</source>
     <message>
         <location filename="../mainwindow.ui" line="4306"/>
         <location filename="../mainwindow.ui" line="4326"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1612"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1835"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2071"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1611"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1862"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2126"/>
         <source>Device Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="1615"/>
-        <location filename="../mainwindow_tab_device.cpp" line="1838"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2074"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1614"/>
+        <location filename="../mainwindow_tab_device.cpp" line="1865"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2129"/>
         <source>Parent ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2495,7 +2525,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8195"/>
+        <location filename="../mainwindow.ui" line="8213"/>
         <location filename="../mainwindow.cpp" line="184"/>
         <source>Memory</source>
         <translation type="unfinished"></translation>
@@ -2538,39 +2568,39 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7059"/>
+        <location filename="../mainwindow.ui" line="7077"/>
         <source>Graphic Start Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8566"/>
+        <location filename="../mainwindow.ui" line="8584"/>
         <location filename="../mainwindow.cpp" line="134"/>
         <source>Katalog Colors (dark)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7089"/>
+        <location filename="../mainwindow.ui" line="7107"/>
         <source>Select date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4456"/>
-        <location filename="../mainwindow_tab_device.cpp" line="2414"/>
+        <location filename="../mainwindow_tab_device.cpp" line="2488"/>
         <source>Include Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6278"/>
+        <location filename="../mainwindow.ui" line="6296"/>
         <source>Include Media files metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8702"/>
+        <location filename="../mainwindow.ui" line="8720"/>
         <source>TESTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8714"/>
+        <location filename="../mainwindow.ui" line="8732"/>
         <source>TEST MEDIA</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2640,11 +2670,6 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="444"/>
-        <source>Updated collection to v2.1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow_tab_settings.cpp" line="461"/>
         <source>Select the database to open:</source>
         <translation type="unfinished"></translation>
@@ -2660,7 +2685,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_device.cpp" line="271"/>
+        <location filename="../mainwindow_tab_device.cpp" line="270"/>
         <source>Unassign this catalog</source>
         <translation type="unfinished"></translation>
     </message>
