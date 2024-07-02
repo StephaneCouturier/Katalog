@@ -79,6 +79,11 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
     loadDevicesTreeToModel("Filters");
     loadDevicesView();
     loadParentsList();
+
+    //Make it the activeDevice and edit
+    activeDevice->ID = newDevice->ID;
+    activeDevice->loadDevice();
+    editDevice();
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_AddVirtual_clicked()
