@@ -929,7 +929,7 @@ void MainWindow::loadParentsList()
                                 SELECT device_name, device_id
                                 FROM device
                                 WHERE device_id !=0
-                                AND device_id !=:selected_device_id
+                                AND device_id !=:device_id
                                 AND device_group_id =:device_group_id
                             )");
 
@@ -942,10 +942,9 @@ void MainWindow::loadParentsList()
     }
 
     query.prepare(querySQL);
-    query.bindValue(":selected_device_id", activeDevice->ID);
+    query.bindValue(":device_id", activeDevice->ID);
     query.bindValue(":device_group_id", activeDevice->groupID);
     query.exec();
-    query.next();
 
     //Load to comboboxes
     ui->Devices_comboBox_Parent->clear();
