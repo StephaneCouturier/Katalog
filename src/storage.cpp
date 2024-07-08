@@ -223,7 +223,6 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
     qint64 previousStorageFreeSpace  = freeSpace;
     qint64 previousStorageTotalSpace = totalSpace;
     qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
-    QDateTime lastUpdate  = dateTimeUpdated;
 
     //Get device information
         QStorageInfo storageInfo;
@@ -290,18 +289,6 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
         queryTotalSpace.bindValue(":device_free_space",QString::number(freeSpace));
         queryTotalSpace.bindValue(":device_external_id", ID);
         queryTotalSpace.exec();
-
-    //Stop if the update was not done (lastUpdate time did not change)
-        if (lastUpdate == dateTimeUpdated){
-            list.append(0);//not updated
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            return list;
-        }
 
     //Prepare to report changes to the storage
         qint64 newStorageFreeSpace    = freeSpace;
