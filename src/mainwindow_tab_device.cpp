@@ -574,6 +574,9 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
                 collection->saveDeviceTableToFile();
             }
 
+            //Update parents
+            activeDevice->updateParentsNumbers();
+
             //Reload
             loadDevicesView();
             loadDevicesTreeToModel("Filters");
