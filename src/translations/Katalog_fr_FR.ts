@@ -397,7 +397,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4035"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
-        <translation>Enregistrez les valeurs de tous les appareils pour obtenir des statistiques sur la collection complète.</translation>
+        <translation>Enregistrez les valeurs de tous les périphériques pour obtenir des statistiques sur la collection complète.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3973"/>
@@ -407,7 +407,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4290"/>
         <source>Device Name</source>
-        <translation>Nom de l&apos;appareil</translation>
+        <translation>Nom du périphérique</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4365"/>
@@ -418,7 +418,7 @@
         <location filename="../mainwindow.ui" line="4339"/>
         <location filename="../mainwindow.ui" line="4352"/>
         <source>Device ID</source>
-        <translation>Reference de l&apos;appareil</translation>
+        <translation>Reference du périphérique</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6995"/>
@@ -617,7 +617,7 @@
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="96"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-        <translation>Un appareil virtuel ne peut être ajouté qu&apos;à un autre appareil virtuel.&lt;br/&gt;</translation>
+        <translation>Un périphérique virtuel ne peut être ajouté qu&apos;à un autre périphérique virtuel.&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="282"/>
@@ -769,7 +769,7 @@
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="1148"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation>Un catalogue dans le groupe Physique ne peut être défini que sous un stockage ou ce groupe. Sélectionnez un stockage dans ce groupe.&lt;br/&gt;&lt;br/&gt;Pour utiliser ce catalogue sous un appareil dans un groupe virtuel, utilisez la commande Attribuer.&lt;b&gt;</translation>
+        <translation>Un catalogue dans le groupe Physique ne peut être défini que sous un stockage ou ce groupe. Sélectionnez un stockage dans ce groupe.&lt;br/&gt;&lt;br/&gt;Pour utiliser ce catalogue sous un périphérique dans un groupe virtuel, utilisez la commande Attribuer.&lt;b&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="1659"/>
@@ -789,7 +789,7 @@
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="188"/>
         <source>All device records</source>
-        <translation>Tous les enregistrements de l&apos;appareil</translation>
+        <translation>Tous les enregistrements du périphérique</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_statistics.cpp" line="365"/>
@@ -852,7 +852,7 @@
         <location filename="../mainwindow.ui" line="333"/>
         <location filename="../mainwindow.ui" line="3947"/>
         <source>Device tree</source>
-        <translation>Arborescence des appareils</translation>
+        <translation>Arborescence des périphériques</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="656"/>
@@ -1088,7 +1088,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4577"/>
         <source>Device Picture</source>
-        <translation>Image de l&apos;appareil</translation>
+        <translation>Image du périphérique</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8635"/>
@@ -1193,12 +1193,12 @@
     <message>
         <location filename="../mainwindow.ui" line="5344"/>
         <source>Display the *Physical Group* and its related Devices.</source>
-        <translation>Affichez le *Groupe physique* et ses appareils associés.</translation>
+        <translation>Affichez le *Groupe physique* et ses périphériques associés.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5363"/>
         <source>Display the *Virtual Groups* and their related Devices.</source>
-        <translation>Affichez les *Groupes virtuels* et leurs appareils associés.</translation>
+        <translation>Affichez les *Groupes virtuels* et leurs périphériques associés.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5382"/>
@@ -1208,7 +1208,7 @@
     <message>
         <location filename="../mainwindow.ui" line="5403"/>
         <source>Display the *Catalog* devices.</source>
-        <translation>Affichez les appareils *Catalogue*.</translation>
+        <translation>Affichez les périphériques *Catalogue*.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5471"/>
@@ -1738,7 +1738,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="504"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation>Le catalogue est déjà attribué à cet appareil virtuel.</translation>
+        <translation>Le catalogue est déjà attribué à ce périphérique virtuel.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="654"/>
@@ -1803,12 +1803,12 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <location filename="../catalog.cpp" line="389"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?.</source>
-        <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;Cela pourrait signifier que la source est vide ou que l&apos;appareil n&apos;est pas monté dans ce dossier.&lt;br/&gt;Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide)&#xa0;? .</translation>
+        <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;Cela pourrait signifier que la source est vide ou que le périphérique n&apos;est pas monté dans ce dossier.&lt;br/&gt;Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide)&#xa0;? .</translation>
     </message>
     <message>
         <location filename="../catalog.cpp" line="427"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-        <translation>Le catalogue &lt;b&gt;%1&lt;/b&gt; ne peut pas être mis à jour.&lt;br/&gt;&lt;br/&gt; Le dossier source est introuvable.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/ &gt;&lt;br/&gt; Raisons possibles&#xa0;:&lt;br/&gt; - l&apos;appareil n&apos;est pas connecté et monté,&lt;br/&gt; - le dossier source a été déplacé ou renommé.,&lt;br/&gt; - le dossier source saisi est incorrect.</translation>
+        <translation>Le catalogue &lt;b&gt;%1&lt;/b&gt; ne peut pas être mis à jour.&lt;br/&gt;&lt;br/&gt; Le dossier source est introuvable.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/ &gt;&lt;br/&gt; Raisons possibles&#xa0;:&lt;br/&gt; - le périphérique n&apos;est pas connecté et monté,&lt;br/&gt; - le dossier source a été déplacé ou renommé.,&lt;br/&gt; - le dossier source saisi est incorrect.</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="2569"/>
@@ -1865,7 +1865,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="2183"/>
         <source>Fulldevice</source>
-        <translation>Appareil complet</translation>
+        <translation>Périphérique complet</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="2184"/>
@@ -1875,7 +1875,7 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="2532"/>
         <source>Is Full Device</source>
-        <translation>Est un appareil complet</translation>
+        <translation>Est un périphérique complet</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="3046"/>
@@ -2020,12 +2020,12 @@ Le fichier peut-être réparé manuellement, voir la page wiki :
     <message>
         <location filename="../mainwindow.ui" line="4504"/>
         <source>is full device</source>
-        <translation>est un appareil plein</translation>
+        <translation>est un périphérique plein</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6531"/>
         <source>catalog is for the full device</source>
-        <translation>le catalogue est pour l&apos;appareil complet</translation>
+        <translation>le catalogue est pour le périphérique complet</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="831"/>
@@ -2520,7 +2520,7 @@ to the trash?</source>
         <location filename="../mainwindow_tab_device.cpp" line="1902"/>
         <location filename="../mainwindow_tab_device.cpp" line="2166"/>
         <source>Device Type</source>
-        <translation>Type d&apos;appareil</translation>
+        <translation>Type de périphérique</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="1654"/>
@@ -2711,7 +2711,7 @@ to the trash?</source>
     <message>
         <location filename="../collection.cpp" line="1386"/>
         <source>Virtual device</source>
-        <translation>Appareil virtuel</translation>
+        <translation>Périphérique virtuel</translation>
     </message>
     <message>
         <location filename="../collection.cpp" line="1341"/>
@@ -2721,7 +2721,7 @@ to the trash?</source>
     <message>
         <location filename="../device.cpp" line="362"/>
         <source>This will remove the device and the storage details.</source>
-        <translation>Cela supprimera l&apos;appareil et les détails de stockage.</translation>
+        <translation>Cela supprimera le périphérique et les détails de stockage.</translation>
     </message>
     <message>
         <location filename="../device.cpp" line="364"/>
@@ -2731,17 +2731,17 @@ to the trash?</source>
     <message>
         <location filename="../device.cpp" line="409"/>
         <source>The selected device cannot be deleted as long as it has sub-devices.</source>
-        <translation>L&apos;appareil sélectionné ne peut pas être supprimé tant qu&apos;il comporte des sous-appareils.</translation>
+        <translation>Le périphérique sélectionné ne peut pas être supprimé tant qu&apos;il comporte des sous-périphériques.</translation>
     </message>
     <message>
         <location filename="../storage.cpp" line="176"/>
         <source>No Path was provided for the Storage:&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;. &lt;br/&gt;Edit the device to provide one and try again.</source>
-        <translation>Aucun chemin n&apos;a été fourni pour le stockage&#xa0;:&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;. &lt;br/&gt;Modifiez l&apos;appareil pour en fournir un et réessayez.</translation>
+        <translation>Aucun chemin n&apos;a été fourni pour le stockage&#xa0;:&lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;. &lt;br/&gt;Modifiez le périphérique pour en fournir un et réessayez.</translation>
     </message>
     <message>
         <location filename="../storage.cpp" line="198"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-        <translation>Stockage&#xa0;: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Le dossier source ne contient aucun fichier&#xa0;:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&gt;&lt; br/&gt;Cela pourrait signifier que l&apos;appareil n&apos;est pas monté sur ce dossier,&lt;br/&gt;ou que le dossier est simplement vide.&lt;br/&gt;&lt;br/&gt;Forcer quand même l&apos;obtention des valeurs&#xa0;?</translation>
+        <translation>Stockage&#xa0;: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Le dossier source ne contient aucun fichier&#xa0;:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&gt;&lt; br/&gt;Cela pourrait signifier que le périphérique n&apos;est pas monté sur ce dossier,&lt;br/&gt;ou que le dossier est simplement vide.&lt;br/&gt;&lt;br/&gt;Forcer quand même l&apos;obtention des valeurs&#xa0;?</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_tags.cpp" line="135"/>
