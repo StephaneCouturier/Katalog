@@ -342,7 +342,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.exec(globalPos);
     }
-    else{
+    else{//activeDevice->type=="Virtual"
         QPoint globalPos = ui->Devices_treeView_DeviceList->mapToGlobal(pos);
         QMenu deviceContextMenu;
 
@@ -400,7 +400,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
 
         deviceContextMenu.addSeparator();
 
-        QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
+        QAction *menuDeviceAction4 = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete this Virtual device"), this);
         deviceContextMenu.addAction(menuDeviceAction4);
         connect(menuDeviceAction4, &QAction::triggered, this, [this, deviceName]() {
             if(activeDevice->ID !=1)

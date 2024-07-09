@@ -774,7 +774,6 @@
     <message>
         <location filename="../mainwindow.ui" line="3667"/>
         <location filename="../mainwindow_tab_search.cpp" line="1957"/>
-        <location filename="../mainwindow_tab_device.cpp" line="403"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
@@ -2491,6 +2490,11 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
         <location filename="../mainwindow_tab_device.cpp" line="382"/>
         <source>Add Storage device</source>
         <translation>Speichergerät hinzufügen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device.cpp" line="403"/>
+        <source>Delete this Virtual device</source>
+        <translation>Dieses virtuelle Gerät löschen</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="411"/>

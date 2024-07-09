@@ -573,7 +573,6 @@
     <message>
         <location filename="../mainwindow.ui" line="3667"/>
         <location filename="../mainwindow_tab_search.cpp" line="1957"/>
-        <location filename="../mainwindow_tab_device.cpp" line="403"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
@@ -2485,6 +2484,11 @@ Soubor lze opravit ručně, navštivte stránku wiki:
         <location filename="../mainwindow_tab_device.cpp" line="382"/>
         <source>Add Storage device</source>
         <translation>Přidat úložné zařízení</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_device.cpp" line="403"/>
+        <source>Delete this Virtual device</source>
+        <translation>Smazat toto Virtuální zařízení</translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_device.cpp" line="411"/>
