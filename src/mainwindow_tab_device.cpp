@@ -576,6 +576,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
 
             //Reload
             loadDevicesView();
+            loadDevicesTreeToModel("Filters");
         }
     }
 }
