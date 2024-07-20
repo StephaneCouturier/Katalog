@@ -121,11 +121,11 @@ void Device::loadSubDeviceList()
                                     WITH RECURSIVE hierarchy AS (
                                         SELECT device_id
                                         FROM device
-                                        WHERE device_id = :device_id
+                                        WHERE device_id = :device_id AND EXISTS (SELECT 1 FROM device WHERE device_id = :device_parent_id)
                                         UNION ALL
                                         SELECT t.device_id
                                         FROM device t
-                                        JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                        JOIN hierarchy h ON t.device_parent_id = h.device_id AND t.device_id != h.device_id
                                     )
                                     SELECT device_id
                                     FROM hierarchy )
