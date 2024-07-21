@@ -1666,11 +1666,22 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
     //Create a map to store items by ID for easy access
     QMap<int, QStandardItem*> itemMap;
 
+    //Prepare a list of processed devices to avoid duplicates
+    QSet<int> processedDeviceIds;
+
     //Populate model
     while (query.next()) {
 
         //Get data forthe item
         int id = query.value(0).toInt();
+
+        if (processedDeviceIds.contains(id)) {
+            // Skip this row and proceed to the next one
+            qDebug() << "loadDevicesTreeToModel - Duplicate device ID found:" << id;
+            continue;
+        }
+        processedDeviceIds.insert(id);
+
         int parentId = query.value(1).toInt();
         QString name = query.value(2).toString();
         QString type = query.value(3).toString();
