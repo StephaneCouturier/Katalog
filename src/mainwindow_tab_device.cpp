@@ -1677,7 +1677,6 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
 
         if (processedDeviceIds.contains(id)) {
             // Skip this row and proceed to the next one
-            qDebug() << "loadDevicesTreeToModel - Duplicate device ID found:" << id;
             continue;
         }
         processedDeviceIds.insert(id);
