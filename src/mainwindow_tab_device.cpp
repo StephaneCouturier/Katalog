@@ -1107,7 +1107,7 @@ void MainWindow::saveDeviceForm()
     if (previousName != activeDevice->name
         and activeDevice->verifyDeviceNameExists()==true
         and (activeDevice->type=="Catalog" or activeDevice->type=="Storage")){
-        //Duplicate catalog names are not allowed
+        //Duplicate names are not allowed for Catalogs and Storage devices
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
         msgBox.setText( tr("There is already a Catalog or Storage with this name:<br/><b>").arg(activeDevice->type)
@@ -1328,9 +1328,32 @@ void MainWindow::saveDeviceForm()
     newParentDevice.updateNumbersFromChildren();
     newParentDevice.updateParentsNumbers();
 
-    //Refresh Filters tree if device name changed
-    if(previousName != activeDevice->name)
+    if(previousName != activeDevice->name){
+        //If Catalog, rename other devices assigned in virtual group
+        if(activeDevice->type == "Catalog"){
+            QSqlQuery query;
+            QString querySQL = QLatin1String(R"(
+                                        SELECT device_id
+                                        FROM device
+                                        WHERE device_type='Catalog'
+                                        AND device_external_id =:device_external_id
+                                    )");
+            query.prepare(querySQL);
+            query.bindValue(":device_external_id", activeDevice->externalID);
+            query.exec();
+
+            while(query.next()){
+                Device tempDevice;
+                tempDevice.ID = query.value(0).toInt();
+                tempDevice.loadDevice();
+                tempDevice.name = activeDevice->name;
+                tempDevice.saveDevice();
+            }
+        }
+
+        //Refresh Filters tree if device name changed
         loadDevicesTreeToModel("Filters");
+    }
 
     //Finalize
     ui->Devices_widget_Edit->hide();
