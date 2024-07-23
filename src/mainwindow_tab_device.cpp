@@ -1106,11 +1106,11 @@ void MainWindow::saveDeviceForm()
 
     if (previousName != activeDevice->name
         and activeDevice->verifyDeviceNameExists()==true
-        and activeDevice->type=="Catalog"){
+        and (activeDevice->type=="Catalog" or activeDevice->type=="Storage")){
         //Duplicate catalog names are not allowed
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText( tr("There is already a Catalog with this name:<br/><b>").arg(activeDevice->type)
+        msgBox.setText( tr("There is already a Catalog or Storage with this name:<br/><b>").arg(activeDevice->type)
                        + activeDevice->name
                        + "</b><br/><br/>"+tr("Choose a different name and try again."));
         msgBox.setIcon(QMessageBox::Warning);
