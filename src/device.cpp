@@ -257,10 +257,12 @@ bool Device::verifyDeviceNameExists()
                                     SELECT COUNT(*)
                                     FROM   device
                                     WHERE  device_name = :device_name
+                                    AND device_type =:device_type
                                 )");
 
     query.prepare(querySQL);
     query.bindValue(":device_name", name);
+    query.bindValue(":device_type", type);
 
     if (!query.exec() and ID !=0) {
         qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();

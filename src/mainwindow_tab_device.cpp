@@ -1107,16 +1107,22 @@ void MainWindow::saveDeviceForm()
     if (previousName != activeDevice->name
         and activeDevice->verifyDeviceNameExists()==true
         and (activeDevice->type=="Catalog" or activeDevice->type=="Storage")){
-        //Duplicate names are not allowed for Catalogs and Storage devices
+        //Duplicate names are not allowed for Catalogs and for Storage devices separately (A Storage can have the same name as a Catalog)
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
-        msgBox.setText( tr("There is already a Catalog or Storage with this name:<br/><b>").arg(activeDevice->type)
-                       + activeDevice->name
-                       + "</b><br/><br/>"+tr("Choose a different name and try again."));
+        QString message;
+        if (activeDevice->type == "Catalog") {
+            message = tr("There is already a Catalog with this name:<br/><b>");
+        }
+        else if (activeDevice->type == "Storage") {
+            message = tr("There is already a Storage with this name:<br/><b>");
+        }
+        msgBox.setText(message + activeDevice->name + "</b><br/><br/>" + tr("Choose a different name and try again."));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
         return;
     }
+
     if (previousExternalID != activeDevice->externalID
         and activeDevice->verifyStorageExternalIDExists()==true
         and activeDevice->type=="Storage"){
@@ -1272,8 +1278,6 @@ void MainWindow::saveDeviceForm()
                 //Refresh
                 if(collection->databaseMode=="Memory")
                     collection->loadCatalogFilesToTable();
-
-
             }
         }
 
