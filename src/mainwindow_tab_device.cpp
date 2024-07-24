@@ -1036,7 +1036,15 @@ void MainWindow::editDevice()
     if(activeDevice->type =="Catalog"){
         ui->Devices_widget_EditCatalogFields->show();
         ui->Devices_widget_EditStorageFields->hide();
-        ui->Catalogs_comboBox_FileType->setCurrentText(activeDevice->catalog->fileType);
+
+        QMap<QString, QString> fileTypeTranslations;
+        fileTypeTranslations.insert("All", tr("All"));
+        fileTypeTranslations.insert("Audio", tr("Audio"));
+        fileTypeTranslations.insert("Image", tr("Image"));
+        fileTypeTranslations.insert("Text", tr("Text"));
+        fileTypeTranslations.insert("Video", tr("Video"));
+        ui->Catalogs_comboBox_FileType->setCurrentText(fileTypeTranslations.value(activeDevice->catalog->fileType));
+
         ui->Catalogs_checkBox_IncludeHidden->setChecked(activeDevice->catalog->includeHidden);
         ui->Catalogs_checkBox_IncludeMetadata->setChecked(activeDevice->catalog->includeMetadata);
         //DEV: ui->Catalogs_checkBox_isFullDevice->setChecked(selectedCatalogIsFullDevice);
