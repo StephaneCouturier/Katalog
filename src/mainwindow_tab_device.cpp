@@ -2211,9 +2211,9 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                  tr("Used space"),
                                                  tr("Free space"),
                                                  tr("Total space"),
+                                                 tr("Group ID"),
                                                  tr("Date updated"),
                                                  tr("Path"),
-                                                 tr("Group ID"),
                                                  tr("File Type"),
                                                  tr("include hidden"),
                                                  tr("include metadata"),
@@ -2230,7 +2230,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     //Populate model
     while (loadCatalogQuery.next()) {
 
-        //Get data forthe item
+        //Get data for the item
         int id = loadCatalogQuery.value(0).toInt();
         int parentId = loadCatalogQuery.value(1).toInt();
         QString name = loadCatalogQuery.value(2).toString();
@@ -2292,12 +2292,18 @@ void MainWindow::loadDevicesCatalogToModel(){
         totalSpaceItem->setData(total_space, Qt::DisplayRole);
         rowItems << totalSpaceItem;                                 // 10
 
-        rowItems << new QStandardItem(dateTimeUpdated);             // 11
-        rowItems << new QStandardItem(path);                        // 12
+        rowItems << new QStandardItem(groupID);                     // 11
+        rowItems << new QStandardItem(dateTimeUpdated);             // 12
+        rowItems << new QStandardItem(path);                        // 13
 
-        QStandardItem *groupIdItem = new QStandardItem();
-        groupIdItem->setData(groupID, Qt::DisplayRole);
-        rowItems << groupIdItem;                                    // 13
+        rowItems << new QStandardItem(catalog_file_type);           // 14
+        rowItems << new QStandardItem(catalog_include_hidden);      // 15
+        rowItems << new QStandardItem(catalog_include_metadata);    // 16
+        rowItems << new QStandardItem(parent_storage);              // 17
+        rowItems << new QStandardItem(catalog_is_full_device);      // 18
+        rowItems << new QStandardItem(catalog_date_loaded);         // 19
+        rowItems << new QStandardItem(catalog_app_version);         // 20
+        rowItems << new QStandardItem(catalog_file_path);           // 21
 
         //Get the item representing the name, and map the parent ID
         QStandardItem* item = rowItems.at(0);
@@ -2343,10 +2349,10 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->resizeSection( 9, 100); //Free space
     ui->Devices_treeView_DeviceList->header()->resizeSection(10, 100); //Total space
     ui->Devices_treeView_DeviceList->header()->resizeSection(11, 150); //date updated
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(12, QHeaderView::ResizeToContents); //Path
-    ui->Devices_treeView_DeviceList->header()->resizeSection(13,  30); //Group ID
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(17, QHeaderView::ResizeToContents); //Path
-    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(21, QHeaderView::ResizeToContents); //Path
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(13, QHeaderView::ResizeToContents); //Path
+    ui->Devices_treeView_DeviceList->header()->resizeSection(14,  30); //file type
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(19, QHeaderView::ResizeToContents); //
+    ui->Devices_treeView_DeviceList->header()->setSectionResizeMode(21, QHeaderView::ResizeToContents); //
 
     ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
     ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
@@ -2354,7 +2360,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     ui->Devices_treeView_DeviceList->header()->hideSection( 8); //Used space
     ui->Devices_treeView_DeviceList->header()->hideSection( 9); //Free space
     ui->Devices_treeView_DeviceList->header()->hideSection(10); //Total space
-    ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+    ui->Devices_treeView_DeviceList->header()->hideSection(11); //Group ID
 
     if(developmentMode==true){
         ui->Devices_treeView_DeviceList->header()->showSection(16); //catalog_include_metadata
@@ -2368,21 +2374,21 @@ void MainWindow::loadDevicesCatalogToModel(){
     if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
         ui->Devices_treeView_DeviceList->header()->showSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->showSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->showSection(19); //app version
-        ui->Devices_treeView_DeviceList->header()->showSection(20); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->showSection(19); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->showSection(20); //app version
         ui->Devices_treeView_DeviceList->header()->showSection(21); //File path
 
     } else {
         ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
         ui->Devices_treeView_DeviceList->header()->hideSection(5); //External ID
-        ui->Devices_treeView_DeviceList->header()->hideSection(19); //app version
-        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(19); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(20); //app version
         ui->Devices_treeView_DeviceList->header()->hideSection(21); //File path
     }
 
     if (collection->databaseMode !="Memory") {
-        ui->Devices_treeView_DeviceList->header()->hideSection(20); //Datae loaded
-        ui->Devices_treeView_DeviceList->header()->hideSection(22); //File path
+        ui->Devices_treeView_DeviceList->header()->hideSection(19); //Date loaded
+        ui->Devices_treeView_DeviceList->header()->hideSection(21); //File path
     }
 
     ui->Devices_treeView_DeviceList->expandAll();

@@ -47,7 +47,7 @@ void DeviceTreeView::initializeLists()
     filecountColumnList << 3 << 4 << 5 << 6;
     filesizeColumnList  << 7 << 8 << 9 << 10;
     boldColumnList      << 0 << 6 << 7 << 8 << 9 << 10;
-    booleanColumnList   << 2; //<<17 <<18 <<20;
+    booleanColumnList   << 2 << 15; //<<17 <<18 <<20;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
