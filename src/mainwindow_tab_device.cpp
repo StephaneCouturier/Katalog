@@ -1030,7 +1030,7 @@ void MainWindow::editDevice()
 
     ui->Devices_widget_Edit->setVisible(true);
     ui->Devices_lineEdit_Name->setText(activeDevice->name);
-    ui->Devices_label_ItemDeviceTypeValue->setText(activeDevice->type);
+    ui->Devices_label_ItemDeviceTypeValue->setText(translateType(activeDevice->type));
     ui->Devices_label_ItemDeviceIDValue->setText(QString::number(activeDevice->ID));
 
     if(activeDevice->type =="Catalog"){

@@ -735,4 +735,15 @@
         }
     }
     //----------------------------------------------------------------------
-
+    QString MainWindow::translateType(const QString &type) {
+        if (type == "Virtual") {
+            return tr("Virtual");
+        } else if (type == "Storage") {
+            return tr("Storage");
+        } else if (type == "Catalog") {
+            return tr("Catalog");
+        }
+        else {
+            return type; // Return the original string if no translation is found
+        }
+    }
