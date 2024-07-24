@@ -2163,7 +2163,7 @@ void MainWindow::loadDevicesCatalogToModel(){
                     FROM  device d
                     JOIN catalog c ON d.device_external_id = c.catalog_id
                     WHERE device_type = 'Catalog'
-                    AND device_group_id = 0
+                    AND device_group_id = :device_group_id
                 )");
 
     if (      selectedDevice->type == "Storage" ){
@@ -2194,6 +2194,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     loadCatalogQuery.prepare(loadCatalogQuerySQL);
     loadCatalogQuery.bindValue(":device_id",        selectedDevice->ID);
     loadCatalogQuery.bindValue(":device_parent_id", selectedDevice->ID);
+    loadCatalogQuery.bindValue(":device_group_id",  selectedDevice->groupID);
     loadCatalogQuery.exec();
 
     //Prepare the tree model: headers
