@@ -2045,7 +2045,7 @@
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the newCatalog
-                    newDevice->catalog->sourcePath = newSearch->searchDateTime;//passing a date instead oo a path, as there is no path for a given search that can be multi-catalog
+                    newDevice->catalog->sourcePath = newSearch->searchDateTime; //passing a date instead of a path, as there is no path for a given search that can be multi-catalog
                     newDevice->catalog->appVersion = currentVersion;
 
                     //Save new catalog
@@ -2058,7 +2058,7 @@
                     catalogMetadata.prepend("<catalogIsFullDevice>");
                     catalogMetadata.prepend("<catalogIncludeSymblinks>");
                     catalogMetadata.prepend("<catalogStorage>EXPORT");
-                    catalogMetadata.prepend("<catalogFileType>EXPORT");
+                    catalogMetadata.prepend("<catalogFileType>"+newSearch->selectedFileType);
                     catalogMetadata.prepend("<catalogIncludeHidden>false");
                     catalogMetadata.prepend("<catalogTotalFileSize>0");
                     catalogMetadata.prepend("<catalogFileCount>0");
