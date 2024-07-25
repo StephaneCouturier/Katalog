@@ -937,7 +937,6 @@ void MainWindow::loadParentsList()
 
     //Load to comboboxes
     ui->Devices_comboBox_Parent->clear();
-    ui->Devices_comboBox_Parent->addItem("Top level", query.value(1).toInt());
 
     while(query.next())
     {
