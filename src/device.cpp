@@ -463,6 +463,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     parentDevice.ID = parentID;
     parentDevice.loadDevice();
     updateActive();
+    dateTimeUpdated = QDateTime::currentDateTime();
 
     //Update device and children depending on type
     if (type=="Catalog"){
@@ -479,7 +480,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //Update catalog with new values
             totalFileCount = deviceUpdatesList[1];
             totalFileSize  = deviceUpdatesList[3];
-            dateTimeUpdated = QDateTime::currentDateTime();
+
             saveStatistics(dateTimeUpdated, statiticsRequestSource);
             deviceUpdatesList<<1;
             deviceUpdatesList<<0;
