@@ -19,14 +19,10 @@ SearchProcess::SearchProcess(MainWindow *mainWindow, QString searchDatabaseMode,
 
 void SearchProcess::run()
 {
-    qDebug() << "";
-    qDebug() << "DEBUG: SearchProcess::run()" << isStopped << stopRequested << mainWindow->selectedDevice->name;
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     //Initialize the database connection within the SearchProcess thread
     QString connectionName = "searchConnection";
-    //QString connectionName = "searchConnection" + QString::number(reinterpret_cast<quintptr>(QThread::currentThreadId()));
-    //qDebug() << "DEBUG: connectionName" << connectionName;
 
     // Initialize the database connection within the SearchProcess thread
     QSqlError dbError = mainWindow->initializeDatabase(connectionName);
@@ -37,15 +33,13 @@ void SearchProcess::run()
     }
 
     //Searching "Begin With" for "File name or Folder name" is not supported yet
-    if (    mainWindow->newSearch->selectedTextCriteria==tr("Begins With")
-        and mainWindow->newSearch->selectedSearchIn !=tr("File names only")){
+    if (    mainWindow->newSearch->selectedTextCriteria==QCoreApplication::translate("MainWindow", "Begins With")
+        and mainWindow->newSearch->selectedSearchIn !=QCoreApplication::translate("MainWindow", "File names only")){
         emit searchStopped();
         QApplication::restoreOverrideCursor(); //Stop animation
-        QMessageBox::information(mainWindow,"Katalog",tr("The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
+        QMessageBox::information(mainWindow,"Katalog",QCoreApplication::translate("MainWindow", "The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
         return;
     }
-
-    qWarning() << "DEBUG: SearchProcess::run() device: " << mainWindow->selectedDevice->name;
 
     //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
         //Process the SEARCH in CATALOGS
@@ -114,13 +108,13 @@ void SearchProcess::searchFilesInCatalog(const Device *device)
     QRegularExpressionMatch foldermatch;
 
     //Define how to use the search text
-    if(mainWindow->newSearch->selectedTextCriteria == tr("Exact Phrase"))
+    if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Exact Phrase"))
         mainWindow->newSearch->regexSearchtext=mainWindow->newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("Begins With"))
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Begins With"))
         mainWindow->newSearch->regexSearchtext="(^"+mainWindow->newSearch->searchText+")";
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("Any Word"))
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Any Word"))
         mainWindow->newSearch->regexSearchtext=mainWindow->newSearch->searchText.replace(" ","|");
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("All Words")){
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "All Words")){
         QString searchTextToSplit = mainWindow->newSearch->searchText;
         QString groupRegEx = "";
         QRegularExpression lineSplitExp(" ");
@@ -287,11 +281,11 @@ qDebug()<<"DEBUG: stopRequested: " << stopRequested;
         if (mainWindow->newSearch->searchOnFileName==true){
             //Depends on the "Search in" criteria,
             //Reduces the abosulte path to the required text string and matches the search text
-            if(mainWindow->newSearch->selectedSearchIn == tr("File names only"))
+            if(mainWindow->newSearch->selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only"))
             {
                 match = regex.match(lineFileName);
             }
-            else if(mainWindow->newSearch->selectedSearchIn == tr("Folder path only"))
+            else if(mainWindow->newSearch->selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only"))
             {
 
                 //Check that the folder name matches the search text
@@ -303,7 +297,7 @@ qDebug()<<"DEBUG: stopRequested: " << stopRequested;
                     match = regex.match(lineFileName);
                 }
                 else
-                    match = foldermatch; //selectedSearchIn == tr("Files and Folder paths")
+                    match = foldermatch; //selectedSearchIn == QCoreApplication::translate("MainWindow", "Files and Folder paths")
             }
             else {
                 match = regex.match(lineFileFullPath);
@@ -451,11 +445,11 @@ void SearchProcess::processSearchResults()
 
         // Populate model with data
         fileViewModel->setSourceModel(mainWindow->newSearch);
-        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+        fileViewModel->setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Name"));
+        fileViewModel->setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Size"));
+        fileViewModel->setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Date"));
+        fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Folder"));
+        fileViewModel->setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Catalog"));
 
         //TEST
         // Connect model to treeview and display
@@ -466,7 +460,7 @@ void SearchProcess::processSearchResults()
         // ui->Search_treeView_FilesFound->header()->hideSection(1); //TEST
         // ui->Search_treeView_FilesFound->header()->hideSection(2); //TEST
 
-        // ui->Search_label_FoundTitle->setText(tr("Folders found"));
+        // ui->Search_label_FoundTitle->setText(QCoreApplication::translate("MainWindow", "Folders found"));
     }
 
     //Populate model with files if the folder option is not selected
@@ -474,13 +468,13 @@ void SearchProcess::processSearchResults()
     {
         // Populate model with data
         fileViewModel->setSourceModel(mainWindow->newSearch);
-        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+        fileViewModel->setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Name"));
+        fileViewModel->setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Size"));
+        fileViewModel->setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Date"));
+        fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Folder"));
+        fileViewModel->setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Catalog"));
         if (mainWindow->newSearch->searchInConnectedChecked == true){
-            fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
+            fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Search Directory"));
         }
 
         //TEST
@@ -496,7 +490,7 @@ void SearchProcess::processSearchResults()
         // ui->Search_treeView_FilesFound->header()->showSection(1);
         // ui->Search_treeView_FilesFound->header()->showSection(2);
 
-        // ui->Search_label_FoundTitle->setText(tr("Files found"));
+        // ui->Search_label_FoundTitle->setText(QCoreApplication::translate("MainWindow", "Files found"));
     }
 
     //Process DUPLICATES -------------------------------
@@ -612,11 +606,11 @@ void SearchProcess::processSearchResults()
 
         //FilesView *fileViewModel = new FilesView(this);
         fileViewModel->setSourceModel(loadCatalogQueryModel);
-        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+        fileViewModel->setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Name"));
+        fileViewModel->setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Size"));
+        fileViewModel->setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Date"));
+        fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Folder"));
+        fileViewModel->setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Catalog"));
 
         // Connect model to tree/table view
         // ui->Search_treeView_FilesFound->setModel(fileViewModel);
@@ -627,7 +621,7 @@ void SearchProcess::processSearchResults()
         // ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
         // ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
-        // ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
+        // ui->Search_label_FoundTitle->setText(QCoreApplication::translate("MainWindow", "Duplicates found"));
         mainWindow->newSearch->filesFoundNumber = fileViewModel->rowCount();
 
     }
@@ -759,11 +753,11 @@ void SearchProcess::processSearchResults()
 
         //FilesView *fileViewModel = new FilesView(this);
         fileViewModel->setSourceModel(loadCatalogQueryModel);
-        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog"));
+        fileViewModel->setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Name"));
+        fileViewModel->setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Size"));
+        fileViewModel->setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Date"));
+        fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Folder"));
+        fileViewModel->setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Catalog"));
 
         // // Connect model to tree/table view
         // ui->Search_treeView_FilesFound->setModel(fileViewModel);
@@ -775,7 +769,7 @@ void SearchProcess::processSearchResults()
         // ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
 
         // // Display count of files
-        // ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
+        // ui->Search_label_FoundTitle->setText(QCoreApplication::translate("MainWindow", "Duplicates found"));
 
     }
 

@@ -195,14 +195,14 @@
             qDebug()<<"  exporting to file:" << backupFilePath;
             if (!backupMemoryDatabaseToFile("defaultConnection", backupFilePath)) {
                 msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                           "Failed to backup in-memory database to file.<br/>"
-                                                           "<br/> Text with first parameter<br/><b>%1</b><br/>"
+                                                           "Failed to export in-memory database to file.<br/>"
+                                                           "<br/> Export file path: <br/><b>%1</b><br/>"
                                                            ).arg( backupFilePath ));
             } else {
                 msgBox.setIcon(QMessageBox::Information);
                 msgBox.setText(QCoreApplication::translate("MainWindow",
                                                            "Successful export of collection to SQLite database file.<br/>"
-                                                           "<br/> File: <br/><b>%1</b><br/>"
+                                                           "<br/> Export file path: <br/><b>%1</b><br/>"
                                                            ).arg( backupFilePath ));
             }
 

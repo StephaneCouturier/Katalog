@@ -3738,9 +3738,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QFontComboBox" name="fontComboBox"/>
-                    </item>
-                    <item>
                      <widget class="QTreeView" name="Search_treeView_CatalogsFound">
                       <property name="minimumSize">
                        <size>
