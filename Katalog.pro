@@ -82,6 +82,7 @@ SOURCES += \
     src/mainwindow_tab_statistics.cpp \
     src/mainwindow_tab_tags.cpp \
     src/search.cpp \
+    src/searchprocess.cpp \
     src/storage.cpp \
     src/tag.cpp
 
@@ -99,6 +100,7 @@ HEADERS += \
     src/filesview.h \
     src/mainwindow.h \
     src/search.h \
+    src/searchprocess.h \
     src/storage.h \
     src/tag.h \
     src/tag.h

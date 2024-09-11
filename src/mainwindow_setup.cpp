@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "database.h"
 #include "ui_mainwindow.h"
+//#include <sqlite3.h> // Include the SQLite C API
 
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()
@@ -57,7 +58,7 @@
         }
 
         // Initialize the database:
-        QSqlError err = initializeDatabase();
+        QSqlError err = initializeDatabase("defaultConnection");
         if (err.type() != QSqlError::NoError) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
@@ -65,16 +66,16 @@
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
 
-            selectedTab=96; //Temporary value to indicated tab 6 should be selected.
+            selectedTab=96; //Temporary value to indicate tab 6 should be selected.
 
             return;
         }
     }
     //----------------------------------------------------------------------
-    QSqlError MainWindow::initializeDatabase()
+    QSqlError MainWindow::initializeDatabase(const QString &connectionName)
     {
         //Get database mode ("Memory", "File", or "Hosted") and fields
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         collection->databaseMode     = settings.value("Settings/databaseMode").toString();
         collection->databaseFilePath = settings.value("Settings/DatabaseFilePath").toString();
         collection->databaseHostName = settings.value("Settings/databaseHostName").toString();
@@ -83,113 +84,156 @@
         collection->databaseUserName = settings.value("Settings/databaseUserName").toString();
         collection->databasePassword = settings.value("Settings/databasePassword").toString();
 
-        //Set defaults if values are not provided
-        if(collection->databaseMode=="")
-            collection->databaseMode="Memory";
+        // Set defaults if values are not provided
+        if (collection->databaseMode.isEmpty())
+            collection->databaseMode = "Memory";
 
-        //Prepare database based on selected mode
-        if(collection->databaseMode=="Memory"){
+        // Prepare database based on selected mode
+        QSqlDatabase db;
 
-            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-
+        if (collection->databaseMode == "Memory") {
+            db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
             db.setDatabaseName(":memory:");
-            if (!db.open())
-                return db.lastError();
         }
-        else if(collection->databaseMode=="File"){
+
+        else if (collection->databaseMode == "File") {
             QFile databaseFile(collection->databaseFilePath);
-            if (!databaseFile.exists()){
+            if (!databaseFile.exists()) {
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setText(tr("The database file could not be found:<br/>") + collection->databaseFilePath);
                 msgBox.setIcon(QMessageBox::Warning);
                 msgBox.exec();
             }
-            else{
-                QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+            else {
+                db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
                 db.setDatabaseName(collection->databaseFilePath);
-                if (!db.open())
-                    return db.lastError();
             }
         }
-        else if(collection->databaseMode=="Hosted"){
 
-            QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+        else if (collection->databaseMode == "Hosted") {
+            db = QSqlDatabase::addDatabase("QPSQL", connectionName);
             db.setHostName(collection->databaseHostName);
             db.setDatabaseName(collection->databaseName);
             db.setPort(collection->databasePort);
             db.setUserName(collection->databaseUserName);
             db.setPassword(collection->databasePassword);
 
-            if (!db.open()){
+            // Open the database connection
+            if (!db.open()) {
                 QSqlError error = db.lastError();
-                QMessageBox msgBox;
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setText(tr("The database could not be opened:<br/>") + error.databaseText());
-                msgBox.exec();
-            }
-            else {
-                QMessageBox msgBox;
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.setText(tr("Connected to Hosted database."));
-                msgBox.exec();
+                QMessageBox::warning(this, "Katalog", tr("The database could not be opened:<br/>") + error.databaseText());
+                return error;
+            } else {
+                QMessageBox::information(this, "Katalog", tr("Connected to Hosted database."));
             }
         }
 
-        //Create tables if they do not exist
-        QSqlQuery q;
-        if (!q.exec(SQL_CREATE_DEVICE))
-            return q.lastError();
+        // Open the database connection
+        if (!db.open())
+            return db.lastError();
 
-        if (!q.exec(SQL_CREATE_CATALOG))
-            return q.lastError();
+        // Create tables if they do not exist
+        QSqlQuery q(db);
+        if (!q.exec(SQL_CREATE_DEVICE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_CATALOG)) return q.lastError();
+        if (!q.exec(SQL_CREATE_STORAGE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_DEVICE_CATALOG)) return q.lastError();
+        if (!q.exec(SQL_CREATE_FILE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_FILETEMP)) return q.lastError();
+        if (!q.exec(SQL_CREATE_FOLDER)) return q.lastError();
+        if (!q.exec(SQL_CREATE_METADATA)) return q.lastError();
+        if (!q.exec(SQL_CREATE_STATISTICS_DEVICE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_SEARCH)) return q.lastError();
+        if (!q.exec(SQL_CREATE_TAG)) return q.lastError();
+        if (!q.exec(SQL_CREATE_PARAMETER)) return q.lastError();
 
-        if (!q.exec(SQL_CREATE_STORAGE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_DEVICE_CATALOG))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FILE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FILETEMP))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_FOLDER))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_METADATA))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STATISTICS_DEVICE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_SEARCH))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_TAG))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_PARAMETER))
-            return q.lastError();
-
-        //Migration
-        if (!q.exec(SQL_CREATE_STATISTICS_CATALOG))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_STATISTICS_STORAGE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE))
-            return q.lastError();
-
-        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG))
-            return q.lastError();
+        // Migration
+        if (!q.exec(SQL_CREATE_STATISTICS_CATALOG)) return q.lastError();
+        if (!q.exec(SQL_CREATE_STATISTICS_STORAGE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE)) return q.lastError();
+        if (!q.exec(SQL_CREATE_VIRTUAL_STORAGE_CATALOG)) return q.lastError();
 
         return QSqlError();
     }
     //----------------------------------------------------------------------
+    bool MainWindow::backupMemoryDatabaseToFile(const QString &memoryConnectionName, const QString &filePath) {
+        // Open the file-based database (destination)
+        QSqlDatabase fileDb = QSqlDatabase::addDatabase("QSQLITE", "file_connection");
+        fileDb.setDatabaseName(filePath);
+
+        if (!fileDb.open()) {
+            QMessageBox::warning(nullptr, "Database Error", "Unable to open file-based database: " + fileDb.lastError().text());
+            return false;
+        }
+
+        // Get the in-memory database
+        QSqlDatabase memoryDb = QSqlDatabase::database(memoryConnectionName, false);
+
+        if (!memoryDb.isOpen()) {
+            QMessageBox::warning(nullptr, "Database Error", "In-memory database is not open.");
+            return false;
+        }
+
+        // Dump schema and data from in-memory database
+        QSqlQuery query(memoryDb);
+        if (!query.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
+            QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + query.lastError().text());
+            return false;
+        }
+
+        // Apply schema and data to the file-based database
+        QSqlQuery fileDbQuery(fileDb);
+        while (query.next()) {
+            QString tableName = query.value(0).toString();
+            QString createTableSQL = query.value(1).toString();
+
+            //Process table copy, except for the system table sqlite_sequence
+            if (tableName != "sqlite_sequence")
+            {
+                // Create table in file-based database
+                if (!fileDbQuery.exec(createTableSQL)) {
+                    QMessageBox::warning(nullptr, "Database Error", "Error creating table in file-based database: " + fileDbQuery.lastError().text());
+                    return false;
+                }
+
+                // Copy data from in-memory to file-based database
+                QSqlQuery dataQuery(memoryDb);
+                QString selectDataSQL = QString("SELECT * FROM %1").arg(tableName);
+                if (!dataQuery.exec(selectDataSQL)) {
+                    QMessageBox::warning(nullptr, "Database Error", "Error retrieving data from in-memory database: " + dataQuery.lastError().text());
+                    return false;
+                }
+
+                // Prepare insert query for file-based database
+                QString insertSQL = QString("INSERT INTO %1 VALUES (").arg(tableName);
+                for (int i = 0; i < dataQuery.record().count(); ++i) {
+                    if (i > 0) insertSQL += ", ";
+                    insertSQL += "?";
+                }
+                insertSQL += ")";
+
+                QSqlQuery insertQuery(fileDb);
+
+                fileDbQuery.exec("BEGIN TRANSACTION");
+                while (dataQuery.next()) {
+                    insertQuery.prepare(insertSQL);
+                    for (int i = 0; i < dataQuery.record().count(); ++i) {
+                        insertQuery.addBindValue(dataQuery.value(i));
+                    }
+
+                    if (!insertQuery.exec()) {
+                        QMessageBox::warning(nullptr, "Database Error", "Error inserting data: " + insertQuery.lastError().text());
+                        return false;
+                    }
+                }
+                fileDbQuery.exec("COMMIT");
+            }
+        }
+
+        fileDb.close();
+        return true;
+    }
 
 //Set up -------------------------------------------------------------------
     void MainWindow::setupFileContextMenus(){
@@ -441,7 +485,7 @@
 
         //Settings
             ui->Settings_comboBox_DatabaseMode->removeItem(2);
-
+            ui->Settings_pushButton_ExportToSQLitFile->hide();
         //TESTS
             //ui->Storage_pushButton_TestMedia->hide();
             //ui->Storage_listView_Media->hide();
@@ -735,15 +779,4 @@
         }
     }
     //----------------------------------------------------------------------
-    QString MainWindow::translateType(const QString &type) {
-        if (type == "Virtual") {
-            return tr("Virtual");
-        } else if (type == "Storage") {
-            return tr("Storage");
-        } else if (type == "Catalog") {
-            return tr("Catalog");
-        }
-        else {
-            return type; // Return the original string if no translation is found
-        }
-    }
+

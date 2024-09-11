@@ -64,20 +64,21 @@ public:
         QList<int> deviceIDList;
         struct deviceListRow { int ID; QString type; };
         QVector<deviceListRow> deviceListTable;
+        QList<Device> subDevices;
 
         //States
         bool hasSubDevice;
         bool active;
 
     //Methods
-        void loadDevice();
+        void loadDevice(QString connectionName);
 
-        void verifyHasSubDevice();
+        void verifyHasSubDevice(QString connectionName);
         bool verifyDeviceNameExists();
         bool verifyParentDeviceExistsInPhysicalGroup();
         bool verifyStorageExternalIDExists();
         void getIDFromDeviceName();
-        void updateActive();
+        void updateActive(QString connectionName);
 
         QList<qint64> updateDevice(QString statiticsRequestSource,
                                    QString databaseMode,
@@ -93,9 +94,10 @@ public:
         void deleteDevice(bool askConfirmation);
         void saveDevice();
         void saveStatistics(QDateTime dateTime, QString requestSource);
+        void loadSubDeviceTree(QString connectionName);
 
 private:
-        void loadSubDeviceList();
+        void loadSubDeviceList(QString connectionName);
 
 };
 

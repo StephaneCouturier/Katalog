@@ -126,13 +126,11 @@
     // Device tree ---------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_clicked(const QModelIndex &index)
     {//Get selected device data
-
         //Load selected device data
-        selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();;
-        selectedDevice->loadDevice();
-
+        selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
+        selectedDevice->loadDevice("defaultConnection");
         QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Selection/SelectedDeviceID",   selectedDevice->ID);
+        settings.setValue("Selection/SelectedDeviceID", selectedDevice->ID);
 
         filterFromSelectedDevice();
 
@@ -146,7 +144,7 @@
         //Get selection data
         QModelIndex index=ui->Filters_treeView_Devices->currentIndex();
         selectedDevice->ID = ui->Filters_treeView_Devices->model()->index(index.row(), 3, index.parent() ).data().toInt();
-        selectedDevice->loadDevice();
+        selectedDevice->loadDevice("defaultConnection");
 
         on_Filters_treeView_Devices_clicked(index);
 
@@ -225,7 +223,7 @@
             deviceContextMenu.addAction(menuDeviceAction2);
             connect(menuDeviceAction2, &QAction::triggered, this, [this, deviceName]() {
                 exploreDevice->ID = selectedDevice->ID;
-                exploreDevice->loadDevice();
+                exploreDevice->loadDevice("defaultConnection");
 
                 exploreSelectedFolderFullPath = exploreDevice->path;
                 exploreSelectedDirectoryName  = exploreDevice->path;

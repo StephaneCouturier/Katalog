@@ -124,7 +124,7 @@ public:
     //Methods
     void loadSearchHistoryCriteria();
     void setMultipliers();
-    void insertSearchHistoryToTable();
+    void insertSearchHistoryToTable(QString connectionName);
 };
 
 #endif // SEARCH_H

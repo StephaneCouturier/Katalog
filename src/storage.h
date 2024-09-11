@@ -65,7 +65,7 @@ public:
     void generateID();
     void insertStorage();
     void deleteStorage();
-    void loadStorage();
+    void loadStorage(QString connectionName);
     QList<qint64> updateStorageInfo(bool reportStorageUpdate);
 
 };

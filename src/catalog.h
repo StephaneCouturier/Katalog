@@ -43,12 +43,20 @@
 #include <QDirIterator>
 #include <QStringListModel>
 
+#include <QMutex>
+#include <QObject>
+#include <QThread>
+#include <QSqlDatabase>
+#include <QDebug>
+
 class Catalog : public QAbstractTableModel
 {
     Q_OBJECT
 
+
 public:
-    Catalog(QObject *parent = nullptr);
+    explicit Catalog(QObject *parent = nullptr);
+    ~Catalog();
 
     //Attributes
         //Saved
@@ -82,12 +90,12 @@ public:
     void updateFileCount();
     void updateTotalFileSize();
     void setStorageName(QString selectedStorageName);
-    void setDateLoaded(QDateTime dateTime);
+    void setDateLoaded(QDateTime dateTime, QString connectionName);
     void setDateUpdated(QDateTime dateTime);
 
     void generateID();
     void insertCatalog();
-    void loadCatalog();
+    void loadCatalog(QString connectionName);
     void deleteCatalog();
     void saveCatalog();
 
@@ -101,7 +109,7 @@ public:
     void saveCatalogToFile(QString databaseMode, QString collectionFolder);
     void saveFoldersToFile(QString databaseMode, QString collectionFolder);
 
-    void loadCatalogFileListToTable();
+    void loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested);
     void loadFoldersToTable();
     void saveStatistics(QDateTime dateTime);
     void saveStatisticsToFile(QString filePath, QDateTime dateTime);
@@ -123,6 +131,8 @@ private:
     QList<QString> fileCatalogs;
 
     void getFileExtensions();
+
+    QThread *workerThread;
 
 };
 

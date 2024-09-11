@@ -227,7 +227,7 @@
 
         //Scale and unit setting
             qint64 sizeDivider = 1;
-            QSqlQuery queryMaxValue;
+            QSqlQuery queryMaxValue(QSqlDatabase::database("defaultConnection"));
             QString queryMaxValueSQL = QLatin1String(R"(
                                     SELECT MAX(device_total_file_size), MAX(device_total_space)
                                     FROM statistics_device
@@ -261,7 +261,7 @@
         //Get the data depending on the type of source
 
             //Get virtual device data
-                QSqlQuery queryStatistics;
+                QSqlQuery queryStatistics(QSqlDatabase::database("defaultConnection"));
                 QString queryStatisticsSQL = QLatin1String(R"(
                                             SELECT date_time, device_file_count, device_total_file_size, device_free_space, device_total_space
                                             FROM statistics_device

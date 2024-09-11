@@ -158,6 +158,11 @@
         resetSelection();
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ExportToSQLitFile_clicked()
+    {
+
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
     {
         //Open the selected collection folder
@@ -357,7 +362,7 @@
         reloadTagsData();
 
         //Load directories to exclude
-        QSqlQuery queryLoad;
+        QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
         QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -431,7 +436,8 @@
             }
 
             if ( collection->version < collection->appVersion and collection->version >= "2.0"){
-                //No change betwween 2.0 and 2.1
+                //Apply db or file changes since 2.0
+                //No changes yet.
 
                 //Update collection version
                 collection->version = collection->appVersion;
@@ -511,7 +517,7 @@
                         if (!db.open())
                             qDebug()<< db.lastError();
 
-                        QSqlQuery q;
+                        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
                         q.exec(SQL_CREATE_DEVICE);
                         q.exec(SQL_CREATE_CATALOG);
                         q.exec(SQL_CREATE_STORAGE);

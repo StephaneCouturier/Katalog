@@ -36,12 +36,19 @@
 #include "mainwindow_tab_search.cpp"
 #include "mainwindow_tab_tags.cpp"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+#include "searchprocess.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    newSearch(new Search(this)),
+    ui(new Ui::MainWindow),
+    searchProcess(nullptr),
+    isSearchRunning(false)
 {
     //Set current version, release date, and development mode
-        currentVersion  = "2.2";
+        currentVersion  = "2.3";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-07-25";
+        releaseDate     = "2024-09-11";
         developmentMode = false;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
@@ -138,13 +145,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Load Collection data
         //Load Collection
             loadCollection();
-            selectedDevice->loadDevice();
+            selectedDevice->loadDevice("defaultConnection");
             filterFromSelectedDevice();
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){
                 exploreDevice->ID = settings.value("Explore/lastExploreDeviceID").toInt();
-                exploreDevice->loadDevice();
+                exploreDevice->loadDevice("defaultConnection");
                 exploreSelectedFolderFullPath = settings.value("Explore/lastExploreSelectedFolderFullPath").toString();
                 exploreSelectedDirectoryName  = settings.value("Explore/lastExploreSelectedDirectoryName").toString();
 
@@ -227,7 +234,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
 
             //Restore last Search values
-            QSqlQuery query;
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
                                 SELECT MAX(date_time)
                                 FROM search
@@ -268,7 +275,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
-      delete ui;
+    delete ui;
+    if (searchProcess) {
+        searchProcess->stop();
+        searchProcess->wait();
+        delete searchProcess;
+    }
+    delete newSearch; // Ensure newSearch is deleted
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -302,7 +315,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
 //DEV: Templates
 /*
-qDebug()<<"DEBUG value: " << value;
+qDebug()<<"DEBUG value: " << value <<QDateTime::currentDateTime();
 
 QMessageBox msgBox;
 msgBox.setWindowTitle("Katalog");
@@ -315,7 +328,7 @@ msgBox.setText(QCoreApplication::translate("MainWindow",
 msgBox.setIcon(QMessageBox::Information);
 msgBox.exec();
 
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT *
                                     FROM table

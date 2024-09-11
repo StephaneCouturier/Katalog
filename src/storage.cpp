@@ -37,7 +37,7 @@
 
 void Storage::generateID()
 {//Generate ID and add it to name
-    QSqlQuery queryDeviceNumber;
+    QSqlQuery queryDeviceNumber(QSqlDatabase::database("defaultConnection"));
     QString queryDeviceNumberSQL = QLatin1String(R"(
                                         SELECT MAX (storage_id)
                                         FROM storage
@@ -88,7 +88,7 @@ void Storage::insertStorage()
                             "")
                     )");
 
-    QSqlQuery insertQuery;
+    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
     insertQuery.prepare(querySQL);
     insertQuery.bindValue(":new_id", ID);
     insertQuery.bindValue(":storage_name", name);
@@ -101,7 +101,7 @@ void Storage::insertStorage()
 void Storage::deleteStorage()
 {
     //Delete from the table
-    QSqlQuery queryDeviceNumber;
+    QSqlQuery queryDeviceNumber(QSqlDatabase::database("defaultConnection"));
     QString queryDeviceNumberSQL = QLatin1String(R"(
                                                 DELETE FROM storage
                                                 WHERE storage_id = :storage_id
@@ -111,9 +111,9 @@ void Storage::deleteStorage()
     queryDeviceNumber.exec();
 }
 
-void Storage::loadStorage()
+void Storage::loadStorage(QString connectionName)
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
                             SELECT
                                 storage_name,
@@ -223,6 +223,7 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
     qint64 previousStorageFreeSpace  = freeSpace;
     qint64 previousStorageTotalSpace = totalSpace;
     qint64 previousStorageUsedSpace  = previousStorageTotalSpace - previousStorageFreeSpace;
+    QDateTime lastUpdate  = dateTimeUpdated;
 
     //Get device information
         QStorageInfo storageInfo;
@@ -258,8 +259,10 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
             return list;
         }
 
+        dateTimeUpdated = QDateTime::currentDateTime();
+
     //Save to Storage table
-        QSqlQuery queryTotalSpace;
+        QSqlQuery queryTotalSpace(QSqlDatabase::database("defaultConnection"));
         QString queryTotalSpaceSQL = QLatin1String(R"(
                                         UPDATE storage
                                         SET storage_total_space = :storage_total_space,
@@ -289,6 +292,18 @@ QList<qint64> Storage::updateStorageInfo(bool reportStorageUpdate)
         queryTotalSpace.bindValue(":device_free_space",QString::number(freeSpace));
         queryTotalSpace.bindValue(":device_external_id", ID);
         queryTotalSpace.exec();
+
+    //Stop if the update was not done (lastUpdate time did not change)
+        if (lastUpdate == dateTimeUpdated){
+            list.append(0);//not updated
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            list.append(0);
+            return list;
+        }
 
     //Prepare to report changes to the storage
         qint64 newStorageFreeSpace    = freeSpace;

@@ -75,7 +75,7 @@
 
         if(newFolderToExclude!=""){
             //Insert new entry
-            QSqlQuery insertQuery;
+            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
             QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
                                                     parameter_name,
@@ -97,7 +97,7 @@
             collection->saveParameterTableToFile();
 
             //Reload to list view
-            QSqlQuery queryLoad;
+            QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
             QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -155,7 +155,7 @@
         excludeContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ selectedDirectory, this]() {
             //Delete
-            QSqlQuery query;
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
                                     DELETE FROM parameter
                                     WHERE parameter_type ='exclude_directory'
@@ -166,7 +166,7 @@
             query.exec();
 
             //Reload
-            QSqlQuery queryLoad;
+            QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
             QString queryLoadSQL = QLatin1String(R"(
                                         SELECT DISTINCT parameter_value2
                                         FROM parameter
@@ -308,7 +308,7 @@
             //Add path to parent Storage device if empty
             Device parentStorageDevice;
             parentStorageDevice.ID = newDevice->parentID;
-            parentStorageDevice.loadDevice();
+            parentStorageDevice.loadDevice("defaultConnection");
             if(parentStorageDevice.path == ""){
                 parentStorageDevice.path = newDevice->path;
                 parentStorageDevice.saveDevice();
@@ -338,7 +338,7 @@
 
                 //Update the new catalog loadedversion to indicate that files are already in memory
                 QDateTime emptyDateTime = *new QDateTime;
-                newDevice->catalog->setDateLoaded(emptyDateTime);
+                newDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
 
                 //Save statistics
                 collection->saveStatiticsToFile();
@@ -357,7 +357,7 @@
                 //Restore selected catalog
                 ui->Filters_label_DisplayCatalog->setText(newDevice->name);
                 selectedDevice->ID = newDevice->ID;
-                selectedDevice->loadDevice();
+                selectedDevice->loadDevice("defaultConnection");
 
                 //Refresh filter tree
                 collection->loadDeviceFileToTable();

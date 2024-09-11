@@ -82,7 +82,7 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
 void Search::loadSearchHistoryCriteria()
 {
     //Query
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                 SELECT
                                     date_time,
@@ -195,13 +195,13 @@ void Search::setMultipliers()
 }
 
 //----------------------------------------------------------------------
-void Search::insertSearchHistoryToTable()
+void Search::insertSearchHistoryToTable(QString connectionName)
 {//Save Search to db
 
     QDateTime nowDateTime = QDateTime::currentDateTime();
     QString searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
 
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
                                 INSERT INTO search(
                                     date_time,

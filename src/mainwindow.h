@@ -89,6 +89,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class SearchProcess;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -96,6 +98,30 @@ class MainWindow : public QMainWindow
     public:
         explicit MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
+
+        //Objects
+        Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
+        Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
+        Collection *collection = new Collection();
+
+        //FileTypes
+        QStringList fileType_Image;
+        QStringList fileType_Audio;
+        QStringList fileType_Video;
+        QStringList fileType_Text;
+        QStringList fileType_ImageS;
+        QStringList fileType_AudioS;
+        QStringList fileType_VideoS;
+        QStringList fileType_TextS;
+
+        // Getter methods
+        int getDifferencesCatalog1ID() const;
+        int getDifferencesCatalog2ID() const;
+
+        QSqlError initializeDatabase(const QString &connectionName);
+        bool backupMemoryDatabaseToFile(const QString &memoryConnectionName, const QString &filePath);
+        // void checkDatabaseContent(const QString &connectionName);
+        // void copyDataFromGlobalToSearchConnection(const QString &connectionName);
 
     private:
         //Global
@@ -124,33 +150,19 @@ class MainWindow : public QMainWindow
             int selectedTab;
 
             //FileTypes
-            QStringList fileType_Image;
-            QStringList fileType_Audio;
-            QStringList fileType_Video;
-            QStringList fileType_Text;
-            QStringList fileType_ImageS;
-            QStringList fileType_AudioS;
-            QStringList fileType_VideoS;
-            QStringList fileType_TextS;
             QStringList fileType_current;
             void setFileTypes();
 
             //Database
-            QSqlError initializeDatabase();
             void startDatabase();
             void selectDatabaseFilePath();
             void selectNewDatabaseFolderPath();
             void applyDatabaseModeToUI();
 
             //Objects
-            Collection *collection = new Collection();
-            Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
-
-            //Useful functions
-            QString translateType(const QString &type);
 
         //Filters panel
             int  filtersTreeExpandState;
@@ -162,7 +174,9 @@ class MainWindow : public QMainWindow
             void displaySelectedDeviceName();
 
         //TAB: Search
-            Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
+            SearchProcess *searchProcess;
+            bool isSearchRunning;
+
             Search *loadSearch = new Search(); //temporary search object used to load criteria from a previous search.
             Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
 
@@ -183,7 +197,9 @@ class MainWindow : public QMainWindow
 
             void refreshDifferencesCatalogSelection();
             void searchFiles();
+            void searchFilesStoppable();
             void searchFilesInCatalog(Device *device);
+            //void searchFilesInCatalogNEW(Device *device);
             void searchFilesInDirectory(const QString &sourceDirectory);
 
             //Search history
@@ -323,7 +339,17 @@ class MainWindow : public QMainWindow
             void changeCollectionFolder();
             void changeDatabaseFilePath();
 
+    public slots:
+            void updateSearchResults();
+
    private slots:
+            void handleSearchCompleted();
+            void handleSearchStopped();
+
+            // Define a slot to handle the search completed signal
+            void onSearchCompleted() {
+                // Perform UI-related operations here
+            }
 
         //Filters
             void on_Filters_pushButton_Filters_Hide_clicked();
@@ -352,6 +378,7 @@ class MainWindow : public QMainWindow
             void on_Settings_lineEdit_CollectionFolder_returnPressed();
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
+            void on_Settings_pushButton_ExportToSQLitFile_clicked();
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
@@ -515,7 +542,6 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-
 };
 
 #endif // MAINWINDOW_H

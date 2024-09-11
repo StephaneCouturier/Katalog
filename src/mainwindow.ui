@@ -49,7 +49,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
+    <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -73,10 +73,10 @@
        <item>
         <spacer name="Filters_verticalSpacer_6">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Policy::Fixed</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -114,7 +114,7 @@
        <item>
         <spacer name="ShowFilters_verticalSpacer_WhenFiltersHidden_1">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -130,7 +130,7 @@
     <item row="0" column="2">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <property name="handleWidth">
        <number>3</number>
@@ -202,7 +202,7 @@
                    <string>Virtual</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -250,7 +250,7 @@
                    <string>Storage</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -272,7 +272,7 @@
                    <string>Catalog</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -297,10 +297,10 @@
            <item>
             <spacer name="Filters_verticalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
+              <enum>QSizePolicy::Policy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -333,14 +333,14 @@
                    <string>Device tree</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <spacer name="Filters_horizontalSpacer_9">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -380,16 +380,16 @@
               <item>
                <widget class="QTreeView" name="Filters_treeView_Devices">
                 <property name="sizeAdjustPolicy">
-                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                 <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
                 </property>
                 <property name="editTriggers">
-                 <set>QAbstractItemView::NoEditTriggers</set>
+                 <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                 </property>
                 <property name="alternatingRowColors">
                  <bool>false</bool>
                 </property>
                 <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
+                 <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
                 </property>
                 <property name="rootIsDecorated">
                  <bool>true</bool>
@@ -419,7 +419,7 @@
                 <number>0</number>
                </property>
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -458,7 +458,7 @@
                 <number>0</number>
                </property>
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -600,7 +600,7 @@
              <item>
               <spacer name="Filters_horizontalSpacer_3">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -628,7 +628,7 @@
                 <string>Reset all filters</string>
                </property>
                <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
+                <enum>Qt::LayoutDirection::LeftToRight</enum>
                </property>
                <property name="text">
                 <string/>
@@ -671,10 +671,10 @@
         <item row="1" column="0">
          <spacer name="Filters_verticalSpacer_5">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Policy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -727,10 +727,10 @@
            <locale language="English" country="UnitedStates"/>
           </property>
           <property name="tabPosition">
-           <enum>QTabWidget::North</enum>
+           <enum>QTabWidget::TabPosition::North</enum>
           </property>
           <property name="tabShape">
-           <enum>QTabWidget::Rounded</enum>
+           <enum>QTabWidget::TabShape::Rounded</enum>
           </property>
           <property name="currentIndex">
            <number>0</number>
@@ -742,7 +742,7 @@
            </size>
           </property>
           <property name="elideMode">
-           <enum>Qt::ElideRight</enum>
+           <enum>Qt::TextElideMode::ElideRight</enum>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -854,7 +854,7 @@
                      </property>
                      <property name="font">
                       <font>
-                       <family>Noto Sans</family>
+                       <family>Sans Serif</family>
                        <pointsize>10</pointsize>
                       </font>
                      </property>
@@ -868,14 +868,14 @@
                       <string>Search criteria</string>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <spacer name="Search_horizontalSpacer_3">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1001,10 +1001,10 @@
                    <item>
                     <spacer name="Search_horizontalSpacer_16">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
+                      <enum>QSizePolicy::Policy::Fixed</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1039,10 +1039,10 @@
                    <item>
                     <spacer name="Search_horizontalSpacer_14">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
+                      <enum>QSizePolicy::Policy::Fixed</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1080,10 +1080,10 @@
                    <item>
                     <spacer name="Search_horizontalSpacer_15">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
+                      <enum>QSizePolicy::Policy::Fixed</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1240,7 +1240,7 @@
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -1277,7 +1277,7 @@
                          <string>with</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                         </property>
                         <property name="margin">
                          <number>6</number>
@@ -1329,10 +1329,10 @@
                       <item>
                        <spacer name="Search_horizontalSpacer_01">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -1398,7 +1398,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>in</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                         </property>
                         <property name="margin">
                          <number>6</number>
@@ -1442,10 +1442,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_03">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -1520,7 +1520,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -1549,10 +1549,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_17">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -1618,7 +1618,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>exclude</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                         </property>
                         <property name="margin">
                          <number>6</number>
@@ -1647,10 +1647,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_13">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -1697,14 +1697,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string/>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <spacer name="Search_horizontalSpacer_24">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1748,7 +1748,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string/>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                      </property>
                     </widget>
                    </item>
@@ -1786,10 +1786,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <item>
                     <spacer name="Search_horizontalSpacer_8">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
+                      <enum>QSizePolicy::Policy::Expanding</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1857,7 +1857,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -1882,7 +1882,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -1929,7 +1929,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>&gt;</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -1951,7 +1951,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="buttonSymbols">
-                         <enum>QAbstractSpinBox::UpDownArrows</enum>
+                         <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
                         </property>
                         <property name="maximum">
                          <number>1000</number>
@@ -1989,10 +1989,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_10">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2026,7 +2026,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>&lt;</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -2083,10 +2083,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_05">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2217,10 +2217,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_07">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2270,7 +2270,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -2295,7 +2295,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -2342,7 +2342,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>&gt;</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -2364,7 +2364,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                         <property name="date">
                          <date>
@@ -2378,10 +2378,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_11">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2415,7 +2415,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>&lt;</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -2437,7 +2437,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          </size>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                         <property name="date">
                          <date>
@@ -2451,10 +2451,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_06">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2467,10 +2467,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_04">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2514,7 +2514,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -2539,7 +2539,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -2565,10 +2565,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_12">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2629,10 +2629,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_09">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -2684,7 +2684,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string/>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                           </property>
                          </widget>
                         </item>
@@ -2715,7 +2715,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string/>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                           </property>
                          </widget>
                         </item>
@@ -2741,10 +2741,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <item>
                          <spacer name="Search_horizontalSpacer_18">
                           <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
+                           <enum>Qt::Orientation::Horizontal</enum>
                           </property>
                           <property name="sizeType">
-                           <enum>QSizePolicy::Fixed</enum>
+                           <enum>QSizePolicy::Policy::Fixed</enum>
                           </property>
                           <property name="sizeHint" stdset="0">
                            <size>
@@ -2805,10 +2805,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <item>
                          <spacer name="Search_horizontalSpacer_19">
                           <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
+                           <enum>Qt::Orientation::Horizontal</enum>
                           </property>
                           <property name="sizeType">
-                           <enum>QSizePolicy::Expanding</enum>
+                           <enum>QSizePolicy::Policy::Expanding</enum>
                           </property>
                           <property name="sizeHint" stdset="0">
                            <size>
@@ -2874,10 +2874,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <item>
                             <spacer name="Search_horizontalSpacer_20">
                              <property name="orientation">
-                              <enum>Qt::Horizontal</enum>
+                              <enum>Qt::Orientation::Horizontal</enum>
                              </property>
                              <property name="sizeType">
-                              <enum>QSizePolicy::Fixed</enum>
+                              <enum>QSizePolicy::Policy::Fixed</enum>
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
@@ -2920,7 +2920,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <string>Catalog 1</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>6</number>
@@ -2979,7 +2979,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <string>Catalog2</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>6</number>
@@ -3013,10 +3013,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_22">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3066,14 +3066,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string/>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <spacer name="Search_horizontalSpacer_23">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -3120,7 +3120,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <string/>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                      </property>
                     </widget>
                    </item>
@@ -3155,10 +3155,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <item>
                     <spacer name="Search_horizontalSpacer_6">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
+                      <enum>QSizePolicy::Policy::Expanding</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -3202,10 +3202,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_7">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3236,7 +3236,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string/>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                         </property>
                        </widget>
                       </item>
@@ -3256,10 +3256,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_1">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3295,10 +3295,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_21">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3337,10 +3337,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Search_horizontalSpacer_4">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                         <enum>QSizePolicy::Policy::Expanding</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3366,10 +3366,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <widget class="Line" name="Search_line_SeparateResults">
                   <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
+                   <enum>QFrame::Shadow::Plain</enum>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                  </widget>
                 </item>
@@ -3431,7 +3431,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string/>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3442,10 +3442,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <spacer name="Search_horizontalSpacer_25">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                     <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
+                     <enum>QSizePolicy::Policy::Fixed</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -3507,7 +3507,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>Files found</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                     <property name="indent">
                      <number>10</number>
@@ -3533,7 +3533,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>0</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3561,7 +3561,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>Total Size</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                     <property name="indent">
                      <number>10</number>
@@ -3587,7 +3587,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>0</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3600,7 +3600,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </font>
                     </property>
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -3712,7 +3712,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </sizepolicy>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="childrenCollapsible">
                    <bool>false</bool>
@@ -3738,6 +3738,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <number>0</number>
                     </property>
                     <item>
+                     <widget class="QFontComboBox" name="fontComboBox"/>
+                    </item>
+                    <item>
                      <widget class="QTreeView" name="Search_treeView_CatalogsFound">
                       <property name="minimumSize">
                        <size>
@@ -3755,7 +3758,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <locale language="English" country="UnitedStates"/>
                       </property>
                       <property name="editTriggers">
-                       <set>QAbstractItemView::NoEditTriggers</set>
+                       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                       </property>
                      </widget>
                     </item>
@@ -3784,7 +3787,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <widget class="QTreeView" name="Search_treeView_FilesFound">
                       <property name="editTriggers">
-                       <set>QAbstractItemView::NoEditTriggers</set>
+                       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                       </property>
                       <property name="alternatingRowColors">
                        <bool>true</bool>
@@ -3854,7 +3857,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Search history</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -3867,7 +3870,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </font>
                   </property>
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -3894,10 +3897,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
+                 <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
                 </property>
                 <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
+                 <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
                 </property>
                 <property name="sortingEnabled">
                  <bool>true</bool>
@@ -3921,10 +3924,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="6">
                <widget class="Line" name="Devices_line_separateButtons">
                 <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                 <enum>QFrame::Shadow::Plain</enum>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                </widget>
               </item>
@@ -3954,10 +3957,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="4">
                <spacer name="Devices_horizontalSpacer_10">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
+                 <enum>QSizePolicy::Policy::Expanding</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -4009,10 +4012,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="0" column="9">
                <spacer name="Devices_horizontalSpacer_9">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -4047,7 +4050,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="10" column="0">
              <widget class="QTreeView" name="Devices_treeView_DeviceList">
               <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
+               <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
               </property>
               <property name="alternatingRowColors">
                <bool>true</bool>
@@ -4103,7 +4106,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>0</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
@@ -4113,7 +4116,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <number>0</number>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -4147,7 +4150,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="Line" name="Storage_line_02">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -4175,7 +4178,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="Line" name="Storage_line_03">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -4203,10 +4206,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Storage_horizontalSpacer_08">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                    <enum>QSizePolicy::Policy::Fixed</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -4232,7 +4235,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <widget class="Line" name="Storage_line_04">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -4252,7 +4255,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Storage_horizontalSpacer_05">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -4427,7 +4430,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item row="0" column="2">
                      <spacer name="Devices_horizontalSpacer_14">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -4550,10 +4553,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item row="0" column="1">
                      <spacer name="Devices_horizontalSpacer_6">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -4586,10 +4589,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item row="0" column="3">
                      <spacer name="Devices_horizontalSpacer_12">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -4690,7 +4693,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item row="5" column="0">
                        <spacer name="Devices_horizontalSpacer_3">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -4721,7 +4724,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            </size>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -4737,7 +4740,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string>Total Space</string>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -4761,7 +4764,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            </size>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -4777,7 +4780,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <string>Free Space</string>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -4922,10 +4925,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item row="8" column="0">
                        <spacer name="Devices_verticalSpacer_3">
                         <property name="orientation">
-                         <enum>Qt::Vertical</enum>
+                         <enum>Qt::Orientation::Vertical</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -4979,7 +4982,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Devices_horizontalSpacer_2">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -5025,7 +5028,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Devices_horizontalSpacer">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5083,14 +5086,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>0</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="Line" name="Catalogs_line_01">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -5126,14 +5129,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>0</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="Line" name="Catalogs_line_02">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Orientation::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -5163,17 +5166,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>0</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <spacer name="Storage_horizontalSpacer_7">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                    <enum>QSizePolicy::Policy::Fixed</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5246,7 +5249,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Storage_horizontalSpacer_6">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5431,10 +5434,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <item>
                        <spacer name="Devices_horizontalSpacer_ReplaceCatalogsOption_2">
                         <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                         <enum>Qt::Orientation::Horizontal</enum>
                         </property>
                         <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
+                         <enum>QSizePolicy::Policy::Fixed</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -5452,10 +5455,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Storage_horizontalSpacer_9">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                    <enum>QSizePolicy::Policy::Fixed</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5494,7 +5497,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Storage_horizontalSpacer_8">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5507,7 +5510,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="horizontalSpacer_11">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5531,13 +5534,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </font>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+               <enum>QFrame::Shadow::Plain</enum>
               </property>
               <property name="lineWidth">
                <number>0</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -5569,7 +5572,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="2" column="0">
              <widget class="QSplitter" name="Explore_splitter">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="childrenCollapsible">
                <bool>false</bool>
@@ -5631,10 +5634,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Explore_horizontalSpacer_05">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Minimum</enum>
+                       <enum>QSizePolicy::Policy::Minimum</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -5649,7 +5652,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <widget class="QTreeView" name="Explore_treeview_Directories">
                     <property name="editTriggers">
-                     <set>QAbstractItemView::NoEditTriggers</set>
+                     <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                     </property>
                     <property name="alternatingRowColors">
                      <bool>true</bool>
@@ -5717,10 +5720,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Explore_horizontalSpacer_4">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -5769,7 +5772,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Explore_horizontalSpacer_03">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -5782,10 +5785,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Explore_horizontalSpacer_5">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -5803,7 +5806,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <string>Click to open the file</string>
                     </property>
                     <property name="editTriggers">
-                     <set>QAbstractItemView::NoEditTriggers</set>
+                     <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                     </property>
                     <property name="alternatingRowColors">
                      <bool>true</bool>
@@ -5929,10 +5932,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item row="0" column="2">
                    <spacer name="Explore_horizontalSpacer_01">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Orientation::Horizontal</enum>
                     </property>
                     <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
+                     <enum>QSizePolicy::Policy::Fixed</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -5962,7 +5965,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <item row="0" column="2">
                 <spacer name="Explore_horizontalSpacer_02">
                  <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                  <enum>Qt::Orientation::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -5992,7 +5995,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="1" column="0">
              <widget class="Line" name="Explore_line_1">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -6072,7 +6075,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Create_horizontalSpacer_04">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6093,13 +6096,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                 <enum>QFrame::Shadow::Plain</enum>
                 </property>
                 <property name="lineWidth">
                  <number>0</number>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -6136,7 +6139,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>include File Type</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -6279,7 +6282,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Other options</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -6312,10 +6315,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <spacer name="Create_verticalSpacer_3">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6338,7 +6341,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>Directories to exclude from catalogs</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -6369,7 +6372,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <spacer name="Create_verticalSpacer_01">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6438,7 +6441,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Create_horizontalSpacer_09">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6453,23 +6456,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="Line" name="Create_hline_03">
                 <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                 <enum>QFrame::Shadow::Plain</enum>
                 </property>
                 <property name="lineWidth">
                  <number>0</number>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
               <item>
                <spacer name="Create_verticalSpacer_02">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6535,10 +6538,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <spacer name="Create_verticalSpacer_03">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6606,10 +6609,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <spacer name="Create_verticalSpacer_04">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6624,10 +6627,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Create_horizontalSpacer_01">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6668,7 +6671,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Create_horizontalSpacer_02">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6683,7 +6686,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <spacer name="Create_verticalSpacer_05">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -6698,14 +6701,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="0" column="1">
              <widget class="Line" name="Create_vline_01">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
              </widget>
             </item>
             <item row="0" column="3">
              <widget class="Line" name="Create_vline_02">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
              </widget>
             </item>
@@ -6766,7 +6769,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Create_horizontalSpacer_05">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6781,13 +6784,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="Line" name="Create_hline_01">
                 <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                 <enum>QFrame::Shadow::Plain</enum>
                 </property>
                 <property name="lineWidth">
                  <number>0</number>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -6865,13 +6868,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="2" column="0">
                <widget class="Line" name="Statistics_line_Separate">
                 <property name="frameShadow">
-                 <enum>QFrame::Plain</enum>
+                 <enum>QFrame::Shadow::Plain</enum>
                 </property>
                 <property name="lineWidth">
                  <number>0</number>
                 </property>
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -6880,7 +6883,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Storage_horizontalSpacer_02">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6938,7 +6941,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Source</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -6970,10 +6973,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Statistics_horizontalSpacer_4">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -6995,7 +6998,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Type of data</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -7025,7 +7028,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Statistics_horizontalSpacer_01">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7052,10 +7055,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Statistics_horizontalSpacer_10">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7077,7 +7080,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Graphic Start Date</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -7114,7 +7117,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Statistics_horizontalSpacer_9">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7287,7 +7290,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <spacer name="Tags_horizontalSpacer_7">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7367,10 +7370,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="1">
                <spacer name="Settings_horizontalSpacer_28">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
+                 <enum>QSizePolicy::Policy::Fixed</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -7383,7 +7386,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="6">
                <spacer name="Settings_horizontalSpacer_15">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -7430,7 +7433,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <string>About</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -7439,10 +7442,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="0">
                  <spacer name="Settings_horizontalSpacer_27">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7455,7 +7458,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="4" column="7">
                  <spacer name="Settings_horizontalSpacer_5">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7478,7 +7481,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Date</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                   <property name="indent">
                    <number>10</number>
@@ -7520,7 +7523,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Version</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                   <property name="indent">
                    <number>10</number>
@@ -7540,7 +7543,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Date</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -7563,7 +7566,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>Version</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -7599,10 +7602,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="5">
                  <spacer name="Settings_horizontalSpacer_29">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -7619,36 +7622,36 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="9" column="0">
              <widget class="Line" name="Settings_line_1">
               <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+               <enum>QFrame::Shadow::Plain</enum>
               </property>
               <property name="lineWidth">
                <number>0</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="3" column="0">
              <widget class="Line" name="Settings_line_2">
               <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+               <enum>QFrame::Shadow::Plain</enum>
               </property>
               <property name="lineWidth">
                <number>0</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="8" column="0">
              <spacer name="Settings_verticalSpacer_04">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Policy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -7661,10 +7664,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="11" column="0">
              <spacer name="Settings_verticalSpacer_5">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
+               <enum>QSizePolicy::Policy::Expanding</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -7677,10 +7680,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="6" column="0">
              <spacer name="Settings_verticalSpacer_07">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Policy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -7785,10 +7788,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Settings_horizontalSpacer_16">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -7855,7 +7858,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Settings_horizontalSpacer_2">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -7979,10 +7982,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <spacer name="Settings_horizontalSpacer_12">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeType">
-                       <enum>QSizePolicy::Fixed</enum>
+                       <enum>QSizePolicy::Policy::Fixed</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -8028,9 +8031,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
+                     <widget class="QPushButton" name="Settings_pushButton_ExportToSQLitFile">
+                      <property name="toolTip">
+                       <string>Open the collection folder</string>
+                      </property>
+                      <property name="text">
+                       <string>Export to SQLite file</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-export"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <spacer name="Settings_horizontalSpacer_11">
                       <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
@@ -8143,7 +8159,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item row="4" column="2">
                         <spacer name="Settings_horizontalSpacer_18">
                          <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
+                          <enum>Qt::Orientation::Horizontal</enum>
                          </property>
                          <property name="sizeHint" stdset="0">
                           <size>
@@ -8186,10 +8202,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Settings_horizontalSpacer_25">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                    <enum>QSizePolicy::Policy::Fixed</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -8231,14 +8247,14 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <string>(Changing requires to restart)</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <spacer name="Settings_horizontalSpacer_6">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -8290,7 +8306,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <string>(Changing requires to restart)</string>
                       </property>
                       <property name="alignment">
-                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -8484,7 +8500,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <item>
                   <spacer name="Settings_horizontalSpacer_19">
                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -8532,7 +8548,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item row="1" column="3">
                <spacer name="Settings_horizontalSpacer_10">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -8589,7 +8605,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="3">
                  <spacer name="Settings_horizontalSpacer_13">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -8656,17 +8672,17 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <string>(requires to restart)</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="4">
                  <spacer name="Settings_horizontalSpacer_17">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -8679,10 +8695,10 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item row="0" column="0">
                  <spacer name="Settings_horizontalSpacer_26">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>

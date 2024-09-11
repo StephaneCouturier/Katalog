@@ -30,13 +30,22 @@
 */
 
 #include "catalog.h"
+#include "search.h"
+
 #include <QApplication>
 #include <QDir>
 #include <QSqlError>
 
-Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent)
-{
+Catalog::Catalog(QObject *parent) : QAbstractTableModel(parent), workerThread(nullptr) {
 
+}
+
+Catalog::~Catalog() {
+    if (workerThread) {
+        workerThread->quit();
+        workerThread->wait();
+        delete workerThread;
+    }
 }
 
 //file list model
@@ -98,7 +107,7 @@ void Catalog::setSourcePath(QString selectedSourcePath)
 }
 void Catalog::updateFileCount()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                             SELECT COUNT(file_name)
                             FROM file
@@ -112,7 +121,7 @@ void Catalog::updateFileCount()
 }
 void Catalog::updateTotalFileSize()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                             SELECT SUM(file_size)
                             FROM file
@@ -124,12 +133,13 @@ void Catalog::updateTotalFileSize()
     query.next();
     totalFileSize = query.value(0).toLongLong();
 }
-void Catalog::setDateLoaded(QDateTime dateTime)
+void Catalog::setDateLoaded(QDateTime dateTime, QString connectionName)
 {
+    //Only needed in "Memory" mode, used to avoid reloading a catalog already in memory.
+    //Define date
     if(dateTime.isNull()){
         dateLoaded = QDateTime::currentDateTime();
-
-        QSqlQuery catalogQuery;
+        QSqlQuery catalogQuery(QSqlDatabase::database(connectionName));
         QString catalogQuerySQL = QLatin1String(R"(
                                         UPDATE catalog
                                         SET catalog_date_loaded =:catalog_date_loaded
@@ -137,18 +147,32 @@ void Catalog::setDateLoaded(QDateTime dateTime)
                                       )");
         catalogQuery.prepare(catalogQuerySQL);
         catalogQuery.bindValue(":catalog_date_loaded", dateLoaded.toString("yyyy-MM-dd hh:mm:ss"));
-        catalogQuery.bindValue(":catalog_name",        name);
+        catalogQuery.bindValue(":catalog_name",        name);//DEV replace by id
         catalogQuery.exec();
     }
-    else
+    else{
         dateLoaded = dateTime;
+    }
+
+    //Update
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    QString querySQL = QLatin1String(R"(
+                                    SELECT catalog_date_loaded
+                                    FROM catalog
+                                )");
+    query.prepare(querySQL);
+    query.exec();
+    query.next();
+    while(query.next()){
+        qDebug()<<query.value(0).toString();
+    }
 }
 void Catalog::setDateUpdated(QDateTime dateTime)
 {
     if(dateTime.isNull()){
         dateUpdated = QDateTime::currentDateTime();
 
-        QSqlQuery catalogQuery;
+        QSqlQuery catalogQuery(QSqlDatabase::database("defaultConnection"));
         QString catalogQuerySQL = QLatin1String(R"(
                                             UPDATE catalog
                                             SET catalog_date_updated =:catalog_date_updated
@@ -167,7 +191,7 @@ void Catalog::setDateUpdated(QDateTime dateTime)
 void Catalog::generateID()
 {//Generate ID
     int maxID = 0;
-    QSqlQuery queryCatalogID;
+    QSqlQuery queryCatalogID(QSqlDatabase::database("defaultConnection"));
     QString queryCatalogIDSQL = QLatin1String(R"(
                                     SELECT MAX (catalog_id)
                                     FROM catalog
@@ -182,7 +206,7 @@ void Catalog::generateID()
 
 void Catalog::insertCatalog()
 {//Insert new catalog entry
-    QSqlQuery insertCatalogQuery;
+    QSqlQuery insertCatalogQuery(QSqlDatabase::database("defaultConnection"));
     QString insertCatalogQuerySQL = QLatin1String(R"(
                                         INSERT OR IGNORE INTO catalog (
                                                         catalog_id,
@@ -239,7 +263,7 @@ void Catalog::insertCatalog()
 
 void Catalog::deleteCatalog()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                             DELETE FROM catalog
                             WHERE catalog_name=:catalog_name
@@ -260,7 +284,7 @@ void Catalog::deleteCatalog()
 
 void Catalog::saveCatalog()
 {//Update database with catalog values
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                             UPDATE catalog
                             SET     catalog_name             =:catalog_name,
@@ -395,7 +419,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
             int result = msgBox.exec();
 
             if ( result == QMessageBox::Cancel){
-                list.append(0);//catalog not updated
+                list.append(0);//Catalog not updated
                 list.append(0);
                 list.append(0);
                 list.append(0);
@@ -405,7 +429,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                 QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
-        //catalog the directory (iterator)
+        //Catalog the directory (iterator)
         catalogDirectory(databaseMode, collectionFolder);
 
         //Populate list to report changes
@@ -413,7 +437,7 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
         qint64 deltaFileCount     = newFileCount - previousFileCount;
         qint64 newTotalFileSize   = totalFileSize;
         qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
-        list.append(1);//catalog updated
+        list.append(1);//Catalog updated
         list.append(newFileCount);
         list.append(deltaFileCount);
         list.append(newTotalFileSize);
@@ -433,14 +457,14 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
                                                 "    - the source folder entered is incorrect.").arg(name,sourcePath));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
-            list.append(0);//catalog not updated
+            list.append(0);//Catalog not updated
             list.append(0);
             list.append(0);
             list.append(0);
             list.append(0);
         }
         else{
-            list.append(0);//catalog not updated
+            list.append(0);//Catalog not updated
             list.append(0);
             list.append(0);
             list.append(0);
@@ -451,9 +475,9 @@ QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collecti
     return list;
 }
 
-void Catalog::loadCatalog()
+void Catalog::loadCatalog(QString connectionName)
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
                             SELECT
                                 catalog_id                   ,
@@ -501,8 +525,8 @@ void Catalog::loadCatalog()
 void Catalog::renameCatalog(QString newCatalogName)
 {
 
-    //update db
-    QSqlQuery query;
+    //Update db
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
                                 SET   catalog_name=:new_catalog_name
@@ -514,7 +538,7 @@ void Catalog::renameCatalog(QString newCatalogName)
     query.exec();
     query.next();
 
-    //rename value of current object
+    //Rename value of current object
     name = newCatalogName;
 
 }
@@ -541,22 +565,22 @@ void Catalog::renameCatalogFile(QString newCatalogName)
     filePath = newCatalogFilePath;
 }
 
-void Catalog::loadCatalogFileListToTable()
+void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested)
 {//Load catalog files from file, if latest version is not already in memory
+    {
+        if ( dateLoaded < dateUpdated ){
+            //Inputs
+            QFile catalogFile(filePath);
 
-    if ( dateLoaded < dateUpdated ){
-        //Inputs
-        QFile catalogFile(filePath);
+            if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
 
-        if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
+                //Set up a text stream from the file's data
+                QTextStream streamCatalogFile(&catalogFile);
+                QString lineCatalogFile;
 
-            //Set up a text stream from the file's data
-            QTextStream streamCatalogFile(&catalogFile);
-            QString lineCatalogFile;
-
-            //Prepare database and queries
-                //clear database from old version of catalog
-                QSqlQuery deleteQuery;
+                //Prepare database and queries
+                //Clear database from old version of catalog
+                QSqlQuery deleteQuery(QSqlDatabase::database(connectionName));
                 QString deleteQuerySQL = QLatin1String(R"(
                                     DELETE FROM file
                                     WHERE file_catalog_id=:file_catalog_id
@@ -564,9 +588,8 @@ void Catalog::loadCatalogFileListToTable()
                 deleteQuery.prepare(deleteQuerySQL);
                 deleteQuery.bindValue(":file_catalog_id", ID);
                 deleteQuery.exec();
-
-                //prepare insert query for file
-                QSqlQuery insertFileQuery;
+                //Prepare insert query for file
+                QSqlQuery insertFileQuery(QSqlDatabase::database(connectionName));
                 QString insertFileSQL = QLatin1String(R"(
                                         INSERT INTO file (
                                                 file_catalog_id,
@@ -587,9 +610,9 @@ void Catalog::loadCatalogFileListToTable()
                                                 :file_full_path )
                                         )");
 
-                //prepare insert query for folder
-                                QSqlQuery insertFolderQuery;
-                                QString insertFolderSQL = QLatin1String(R"(
+                //Prepare insert query for folder
+                QSqlQuery insertFolderQuery(QSqlDatabase::database(connectionName));
+                QString insertFolderSQL = QLatin1String(R"(
                                         INSERT INTO folder(
                                                 folder_catalog_id,
                                                 folder_path
@@ -599,13 +622,19 @@ void Catalog::loadCatalogFileListToTable()
                                                 :folder_path)
                                         )");
 
-            //process each line of the file
+                //Process each line of the file
                 while (true){
+                    QMutexLocker locker(&mutex);
+                    if (stopRequested) {
+                        return;
+                    }
+                    locker.unlock(); // Unlock the mutex while processing to allow stop requests
+
                     lineCatalogFile = streamCatalogFile.readLine();
                     if (lineCatalogFile.isNull())
                         break;
 
-                    //exclude catalog meta data
+                    //Exclude catalog meta data
                     if (lineCatalogFile.left(1)=="<"){continue;}
 
                     //Split the line text with tabulations into a list
@@ -628,37 +657,39 @@ void Catalog::loadCatalogFileListToTable()
                     //Retrieve file info
                     QFileInfo fileInfo(lineFilePath);
 
-                    // Get the fileDateTime from the list if available
+                    //Get the fileDateTime from the list if available
                     QString lineFileDatetime;
                     if (fieldListCount >= 3){
-                            lineFileDatetime = lineFieldList[2];}
+                        lineFileDatetime = lineFieldList[2];}
                     else lineFileDatetime = "";
 
                     QString folder = fileInfo.path();
 
                     //Load folder into the database
-                        insertFolderQuery.prepare(insertFolderSQL);
-                        insertFolderQuery.bindValue(":folder_catalog_id", ID);
-                        insertFolderQuery.bindValue(":folder_path",      folder);
-                        insertFolderQuery.exec();
+                    insertFolderQuery.prepare(insertFolderSQL);
+                    insertFolderQuery.bindValue(":folder_catalog_id", ID);
+                    insertFolderQuery.bindValue(":folder_path",       folder);
+                    insertFolderQuery.exec();
 
                     //Load file into the database
-                        insertFileQuery.prepare(insertFileSQL);
-                        insertFileQuery.bindValue(":file_name",        fileInfo.fileName());
-                        insertFileQuery.bindValue(":file_size",        lineFileSize);
-                        insertFileQuery.bindValue(":file_folder_path", folder );
-                        insertFileQuery.bindValue(":file_date_updated",lineFileDatetime);
-                        insertFileQuery.bindValue(":file_catalog",     name);
-                        insertFileQuery.bindValue(":file_full_path",   lineFilePath);
-                        insertFileQuery.exec();
+                    insertFileQuery.prepare(insertFileSQL);
+                    insertFileQuery.bindValue(":file_catalog_id",  ID);
+                    insertFileQuery.bindValue(":file_name",        fileInfo.fileName());
+                    insertFileQuery.bindValue(":file_size",        lineFileSize);
+                    insertFileQuery.bindValue(":file_folder_path", folder );
+                    insertFileQuery.bindValue(":file_date_updated",lineFileDatetime);
+                    insertFileQuery.bindValue(":file_catalog",     name);
+                    insertFileQuery.bindValue(":file_full_path",   lineFilePath);
+                    insertFileQuery.exec();
                 }
 
-            //update catalog loaded version
+                //Update catalog loaded version
                 QDateTime emptyDateTime = *new QDateTime;
-                setDateLoaded(emptyDateTime);
+                setDateLoaded(emptyDateTime, connectionName);
 
-            //close file
+                //Close file
                 catalogFile.close();
+            }
         }
     }
 }
@@ -674,7 +705,7 @@ void Catalog::loadFoldersToTable()
         folderFilePath = folderFilePath.left(pos);
         folderFilePath +=".folders.idx";
 
-        QSqlQuery insertFolderQuery;
+        QSqlQuery insertFolderQuery(QSqlDatabase::database("defaultConnection"));
         QString insertFolderSQL = QLatin1String(R"(
                                         INSERT INTO folder(
                                                 folder_catalog_id,
@@ -694,7 +725,7 @@ void Catalog::loadFoldersToTable()
             QString lineFolderFile;
 
             //Clear database from old version of catalog
-            QSqlQuery deleteQuery;
+            QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
             QString deleteQuerySQL = QLatin1String(R"(
                                 DELETE FROM folder
                                 WHERE folder_catalog_id=:folder_catalog_id
@@ -727,10 +758,12 @@ void Catalog::loadFoldersToTable()
         }
         else{ //If no folder file is found, fall back on generating the list from the files themselves
             //Load files first
-            loadCatalogFileListToTable();
+            QMutex tempMutex;
+            bool tempStopRequested = false;
+            loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
 
             //Get list of folders
-            QSqlQuery selectFoldersQuery;
+            QSqlQuery selectFoldersQuery(QSqlDatabase::database("defaultConnection"));
             QString selectFoldersQuerySQL = QLatin1String(R"(
                                                 SELECT DISTINCT file_folder_path
                                                 FROM file
@@ -756,7 +789,7 @@ void Catalog::loadFoldersToTable()
 
 void Catalog::saveStatistics(QDateTime dateTime)
 {
-    QSqlQuery querySaveStatistics;
+    QSqlQuery querySaveStatistics(QSqlDatabase::database("defaultConnection"));
     QString querySaveStatisticsSQL = QLatin1String(R"(
                                         INSERT INTO statistics_catalog(
                                                 date_time,
@@ -810,7 +843,7 @@ void Catalog::saveStatisticsToFile(QString filePath, QDateTime dateTime)
 
 bool Catalog::catalogNameExists()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   catalog
@@ -874,7 +907,7 @@ void Catalog::getFileExtensions()
 
 void Catalog::loadExcludedFolders()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                     SELECT DISTINCT parameter_value2
                                     FROM parameter
@@ -895,7 +928,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     //Prepare database, queries, and inputs
 
         //Remove any former files from db for older catalog with same name
-        QSqlQuery deleteFileQuery;
+        QSqlQuery deleteFileQuery(QSqlDatabase::database("defaultConnection"));
         QString deleteFileQuerySQL = QLatin1String(R"(
                                                 DELETE FROM file
                                                 WHERE file_catalog_id=:file_catalog_id
@@ -904,7 +937,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
         deleteFileQuery.bindValue(":file_catalog_id", ID);
         deleteFileQuery.exec();
 
-        QSqlQuery deleteFolderQuery;
+        QSqlQuery deleteFolderQuery(QSqlDatabase::database("defaultConnection"));
         QString deleteFolderQuerySQL = QLatin1String(R"(
                                                 DELETE FROM folder
                                                 WHERE folder_catalog_id=:folder_catalog_id
@@ -914,7 +947,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
         deleteFolderQuery.exec();
 
         //Prepare insert query for file
-        QSqlQuery insertFileQuery;
+        QSqlQuery insertFileQuery(QSqlDatabase::database("defaultConnection"));
         QString insertFileSQL = QLatin1String(R"(
                                             INSERT INTO file (
                                                             file_catalog_id,
@@ -937,7 +970,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
         insertFileQuery.prepare(insertFileSQL);
 
         //Prepare insert query for folder
-        QSqlQuery insertFolderQuery;
+        QSqlQuery insertFolderQuery(QSqlDatabase::database("defaultConnection"));
         QString insertFolderSQL = QLatin1String(R"(
                                             INSERT OR IGNORE INTO folder(
                                                 folder_catalog_id,
@@ -958,7 +991,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     //Scan entries with iterator
         QString entryPath;
         //Start a transaction to save all inserts at once in the db
-        QSqlQuery beginQuery;
+        QSqlQuery beginQuery(QSqlDatabase::database("defaultConnection"));
         QString beginQuerySQL = QLatin1String(R"(
                                             BEGIN
                                             )");
@@ -1062,7 +1095,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     }
 
     //Commit the transaction to save all inserts at once in the db
-    QSqlQuery commitQuery;
+    QSqlQuery commitQuery(QSqlDatabase::database("defaultConnection"));
     QString commitQuerySQL = QLatin1String(R"(
                                         COMMIT
                                         )");
@@ -1078,7 +1111,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
         //Save data to file
         QStringList fileList;
 
-        QSqlQuery queryFileList;
+        QSqlQuery queryFileList(QSqlDatabase::database("defaultConnection"));
         QString queryFileListSQL = QLatin1String(R"(
                         SELECT file_full_path, file_size, file_date_updated
                         FROM file
@@ -1118,7 +1151,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
 
     //Update catalog in db
     //DEV: duplicate of saveCatalog?
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                 UPDATE catalog
                                 SET catalog_include_symblinks =:catalog_include_symblinks,
@@ -1138,7 +1171,7 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
     //Update catalog date loaded and updated
     QDateTime emptyDateTime = *new QDateTime;
     setDateUpdated(emptyDateTime);
-    setDateLoaded(emptyDateTime);
+    setDateLoaded(emptyDateTime, "defaultConnection");
 }
 
 //--------------------------------------------------------------------------
@@ -1173,7 +1206,7 @@ void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
 {//Save a catalog's folders to a new file
     if(databaseMode=="Memory"){
         //Get the folder list from database
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT
                                         folder_catalog_id,
@@ -1207,3 +1240,5 @@ void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
         fileOut.close();
     }
 }
+
+//--------------------------------------------------------------------------

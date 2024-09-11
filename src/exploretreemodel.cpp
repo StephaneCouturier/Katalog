@@ -156,7 +156,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
         QList<ExploreTreeItem*> parents;
         parents << parent;
 
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                 SELECT DISTINCT (REPLACE(folder_path, :catalogSourcePathRoot, '')) AS file_path, folder_path AS full_path
                                 FROM  folder
@@ -212,7 +212,7 @@ void ExploreTreeModel::setupModelData(ExploreTreeItem *parent)
                     }
 
                     int nChild = 0;
-                    QSqlQuery query2(sQuery);
+                    QSqlQuery query2(sQuery, QSqlDatabase::database("defaultConnection"));
 
                     if(query2.next())
                         nChild = query2.value(0).toInt();

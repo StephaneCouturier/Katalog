@@ -95,7 +95,7 @@ void Collection::generateCollectionFiles()
             }
 
             //Add the current version
-            QSqlQuery insertQuery;
+            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
             QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
                                                     parameter_name,
@@ -186,7 +186,7 @@ void Collection::load()
 void Collection::clearDatabaseData()
 {   //Clear database date in the context of Memory mode, prior to reloading files to tables
     if(databaseMode=="Memory"){
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.exec("DELETE FROM device");
         queryDelete.exec("DELETE FROM catalog");
         queryDelete.exec("DELETE FROM storage");
@@ -211,7 +211,7 @@ void Collection::clearDatabaseData()
 void Collection::loadAllCatalogFiles()
 {//Load all catalog files to memory
     if(databaseMode=="Memory"){
-        QSqlQuery queryLoadAllCatalogFiles;
+        QSqlQuery queryLoadAllCatalogFiles(QSqlDatabase::database("defaultConnection"));
         QString queryLoadAllCatalogFilesSQL = QLatin1String(R"(
                                         SELECT device_id
                                         FROM device
@@ -221,9 +221,11 @@ void Collection::loadAllCatalogFiles()
         queryLoadAllCatalogFiles.exec();
         while(queryLoadAllCatalogFiles.next()){
             Device tempDevice;
-            tempDevice.ID = queryLoadAllCatalogFiles.value(0).toInt();          
-            tempDevice.loadDevice();
-            tempDevice.catalog->loadCatalogFileListToTable();
+            tempDevice.ID = queryLoadAllCatalogFiles.value(0).toInt();
+            tempDevice.loadDevice("defaultConnection");
+            QMutex tempMutex;
+            bool tempStopRequested = false;
+            tempDevice.catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
         }
     }
 }
@@ -232,7 +234,7 @@ void Collection::loadDeviceFileToTable()
 {
     if(databaseMode=="Memory"){
         //Clear table
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL;
         querySQL = QLatin1String(R"(
                         DELETE FROM device
@@ -268,7 +270,7 @@ void Collection::loadDeviceFileToTable()
 
                     //Split the string with tabulation into a list
                     QStringList fieldList = line.split('\t');
-                    QSqlQuery insertQuery;
+                    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
                     querySQL = QLatin1String(R"(
                         INSERT INTO device (
                                         device_id,
@@ -326,7 +328,7 @@ void Collection::loadCatalogFilesToTable()
 {
     if(databaseMode=="Memory"){
         //Clear catalog table
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.prepare( "DELETE FROM catalog" );
         queryDelete.exec();
 
@@ -411,7 +413,7 @@ void Collection::loadStorageFileToTable()
         QFile storageFile(storageFilePath);
         QTextStream textStream(&storageFile);
 
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.prepare( "DELETE FROM storage" );
 
         //Open file or return information
@@ -492,7 +494,7 @@ void Collection::loadStorageFileToTable()
                                         :storage_comment3)
                                 )");
 
-                    QSqlQuery insertQuery;
+                    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":storage_id",            fieldList[0].toInt());
                     insertQuery.bindValue(":storage_name",          fieldList[1]);
@@ -523,7 +525,7 @@ void Collection::loadStatisticsDeviceFileToTable()
 {// Load the contents of the storage statistics file into the database
     if(databaseMode=="Memory"){
         //Clear database table
-        QSqlQuery deleteQuery;
+        QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
         deleteQuery.exec("DELETE FROM statistics_device");
 
         //Get infos stored in the file
@@ -535,7 +537,7 @@ void Collection::loadStatisticsDeviceFileToTable()
         QTextStream textStream(&statisticsDeviceFile);
 
         //Prepare query to load file info
-        QSqlQuery insertQuery;
+        QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
         QString insertSQL = QLatin1String(R"(
                                     INSERT INTO statistics_device (
                                                 date_time               ,
@@ -621,7 +623,7 @@ void Collection::loadParameterFileToTable()
 {// Load the contents of the storage statistics file into the database
     if(databaseMode=="Memory"){
         //Clear database table
-        QSqlQuery deleteQuery;
+        QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
         deleteQuery.exec("DELETE FROM parameters");
 
         //Get data stored in the file
@@ -630,7 +632,7 @@ void Collection::loadParameterFileToTable()
             QTextStream textStream(&parametersFile);
 
             //Prepare query to load file info
-            QSqlQuery insertQuery;
+            QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
             QString insertSQL = QLatin1String(R"(
                                         INSERT INTO parameter (
                                                     parameter_name,
@@ -677,7 +679,7 @@ void Collection::loadParameterFileToTable()
     }
 
     //Get collection version
-    QSqlQuery queryVersion;
+    QSqlQuery queryVersion(QSqlDatabase::database("defaultConnection"));
     QString queryVersionSQL = QLatin1String(R"(
                                     SELECT parameter_value1
                                     FROM parameter
@@ -702,7 +704,7 @@ void Collection::loadSearchHistoryFileToTable()
         QFile searchFile(searchHistoryFilePath);
         QTextStream textStream(&searchFile);
 
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.prepare( "DELETE FROM search" );
 
         //Open file or return information
@@ -735,7 +737,7 @@ void Collection::loadSearchHistoryFileToTable()
                             }
                         }
 
-                        QSqlQuery insertQuery;
+                        QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
                         QString insertQuerySQL = QLatin1String(R"(
                                                 INSERT INTO search(
                                                     date_time,
@@ -871,7 +873,7 @@ void Collection::loadTagFileToTable()
         QFile tagFile(tagFilePath);
         QTextStream textStream(&tagFile);
 
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.prepare( "DELETE FROM tag" );
 
         //Open file or return information
@@ -892,7 +894,7 @@ void Collection::loadTagFileToTable()
                 else
                 {    //Split the string with tabulation into a list
                     QStringList fieldList = line.split('\t');
-                    QSqlQuery insertQuery;
+                    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
                     QString insertQuerySQL = QLatin1String(R"(
                                             INSERT INTO tag(
                                                 ID,
@@ -928,7 +930,7 @@ void Collection::saveDeviceTableToFile()
         QFile deviceFile(deviceFilePath);
 
         //Get data
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT
                                             device_id                  ,
@@ -1022,7 +1024,7 @@ void Collection::saveStorageTableToFile()
             << '\n';
 
         //Get data
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                          SELECT
                             storage_id            ,
@@ -1084,7 +1086,7 @@ void Collection::saveStatiticsToFile()
             << '\n';
 
         //Get data
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT  date_time,
                                             device_id,
@@ -1134,7 +1136,7 @@ void Collection::saveParameterTableToFile()
             << '\n';
 
         //Get data
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT  parameter_name,
                                             parameter_type,
@@ -1213,7 +1215,7 @@ void Collection::saveSearchHistoryTableToFile()
                 << '\n';
 
             //Get data
-            QSqlQuery query;
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
                                         SELECT
                                             date_time,
@@ -1291,7 +1293,7 @@ void Collection::saveTagTableToFile()
             << '\n';
 
         //Get data
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT  ID,
                                             name,
@@ -1345,7 +1347,7 @@ void Collection::deleteCatalogFile(Device *device) {
             msgBox.exec();
         }
         //Clear current entires from the table
-        QSqlQuery queryDelete;
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
         queryDelete.exec("DELETE FROM catalog");
 
         //refresh catalog lists
@@ -1358,7 +1360,7 @@ void Collection::deleteCatalogFile(Device *device) {
 //Data management ------------------------------------------------------
 void Collection::insertPhysicalStorageGroup() {
     //Add the default Physical Group and a Virtual sub-device
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
 
     querySQL = QLatin1String(R"(
@@ -1393,7 +1395,7 @@ void Collection::insertPhysicalStorageGroup() {
     saveDeviceTableToFile();
 
     //Add a default storage device, to force any new catalog to have one
-    QSqlQuery queryStorage;
+    QSqlQuery queryStorage(QSqlDatabase::database("defaultConnection"));
     QString queryStorageSQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM device

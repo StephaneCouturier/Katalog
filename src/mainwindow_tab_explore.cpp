@@ -452,7 +452,7 @@
         //Check catalog's number of files and confirm load if too big
         if( collection->databaseMode == "Memory"
             and (exploreDevice->catalog->dateLoaded < exploreDevice->catalog->dateUpdated)){
-            QSqlQuery query;
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
                                     SELECT device_total_file_count
                                     FROM device
@@ -485,9 +485,12 @@
             loadCatalogDirectoriesToExplore();
 
         //Load the files of the Selected Catalog
-            if( collection->databaseMode == "Memory")
-                exploreDevice->catalog->loadCatalogFileListToTable();
+            if( collection->databaseMode == "Memory"){
+                QMutex tempMutex;
+                bool tempStopRequested = false;
+                exploreDevice->catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
 
+            }
             loadSelectedDirectoryFilesToExplore();
 
         //Go to the Explorer tab
@@ -533,7 +536,7 @@
                                 FROM folder
                                 WHERE folder_catalog_id =:folder_catalog_id
                                )");
-            QSqlQuery countQuery;
+            QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
             countQuery.prepare(countSQL);
             countQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
             countQuery.exec();
@@ -602,7 +605,7 @@
             exploreSelectedFolderFullPath.remove("EXPORT");
         }
 
-        QSqlQuery loadCatalogQuery;
+        QSqlQuery loadCatalogQuery(QSqlDatabase::database("defaultConnection"));
         loadCatalogQuery.prepare(selectSQL);
         loadCatalogQuery.bindValue(":folder_catalog_id", exploreDevice->externalID);
 
@@ -667,7 +670,7 @@
             countSQL = countSQL + " AND file_folder_path =:file_folder_path";
         }
 
-        QSqlQuery countQuery;
+        QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
         countQuery.prepare(countSQL);
         countQuery.bindValue(":file_catalog_id", exploreDevice->externalID);
 

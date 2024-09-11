@@ -64,7 +64,7 @@
         }
 
         //Insert tag entry
-        QSqlQuery insertQuery;
+        QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
         QString insertQuerySQL = QLatin1String(R"(
                                             INSERT INTO tag(
                                                 ID,
@@ -136,7 +136,7 @@
         tagContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [ tagID, this]() {
             //Delete
-            QSqlQuery query;
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
             QString querySQL = QLatin1String(R"(
                                     DELETE FROM tag
                                     WHERE ID=:ID
@@ -205,7 +205,7 @@
         QList<QString> tTagNames;
 
 		//Get full list of tags
-		QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
 		QString querySQL = QLatin1String(R"(
                                     SELECT ID, path, name
                                     FROM tag
@@ -249,7 +249,7 @@
         QList<QString> tTagNames;
 
         //Get full list of tags
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL = QLatin1String(R"(
                                     SELECT ID, path, name
                                     FROM tag

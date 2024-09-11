@@ -33,9 +33,9 @@
 #include <QApplication>
 #include <QSqlError>
 
-void Device::loadDevice(){
-    //Load device values
-    QSqlQuery query;
+void Device::loadDevice(QString connectionName){
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    QSqlQuery query(db);
     QString querySQL = QLatin1String(R"(
                             SELECT  device_id,
                                     device_parent_id,
@@ -80,7 +80,7 @@ void Device::loadDevice(){
     //Load storage values
     if(type == "Storage"){
         storage->ID = externalID;
-        storage->loadStorage();
+        storage->loadStorage(connectionName);
         storage->path = path;
         storage->totalSpace = totalSpace;
         storage->freeSpace  = freeSpace;
@@ -89,7 +89,7 @@ void Device::loadDevice(){
     //Load catalog values
     if(type == "Catalog"){
         catalog->ID = externalID;
-        catalog->loadCatalog();
+        catalog->loadCatalog(connectionName);
         catalog->name = name;
         catalog->sourcePath = path;
         catalog->fileCount = totalFileCount;
@@ -97,18 +97,63 @@ void Device::loadDevice(){
     }
 
     //Load sub-device list
-    loadSubDeviceList();
+    loadSubDeviceList(connectionName);
+    loadSubDeviceTree(connectionName);
 
     //Update states
-    verifyHasSubDevice();
-    updateActive();
+    verifyHasSubDevice(connectionName);
+    updateActive(connectionName);
 }
 
-void Device::loadSubDeviceList()
+void Device::loadSubDeviceTree(QString connectionName) {
+    subDevices.clear();
+
+    QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) {
+        qDebug() << "DEBUG: Database is not open.";
+        return;
+    }
+
+    QSqlQuery query(db);
+    QString querySQL = QLatin1String(R"(
+                                    SELECT
+                                        device_id, device_type
+                                    FROM device
+                                    WHERE device_id IN (
+                                        WITH RECURSIVE hierarchy AS (
+                                            SELECT device_id
+                                            FROM device
+                                            WHERE device_id = :device_id
+                                            UNION ALL
+                                            SELECT t.device_id
+                                            FROM device t
+                                            JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                        )
+                                        SELECT device_id
+                                        FROM hierarchy )
+                                    AND device_id != :device_id
+                        )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id",        ID);
+
+    if (query.exec()) {
+        while (query.next()) {
+            Device subDevice;
+            subDevice.ID = query.value(0).toInt();
+            subDevice.type = query.value(1).toString();
+            subDevice.loadDevice(connectionName);
+            subDevices.append(subDevice);
+        }
+    } else {
+        qDebug() << "DEBUG: Failed to execute device/loadSubDeviceTree:" << query.lastError().text();
+    }
+}
+
+void Device::loadSubDeviceList(QString connectionName)
 {
     //Get catalog data based on filters
     //Generate SQL query from filters
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL;
 
     //Prepare Query
@@ -121,11 +166,11 @@ void Device::loadSubDeviceList()
                                     WITH RECURSIVE hierarchy AS (
                                         SELECT device_id
                                         FROM device
-                                        WHERE device_id = :device_id AND EXISTS (SELECT 1 FROM device WHERE device_id = :device_parent_id)
+                                        WHERE device_id = :device_id
                                         UNION ALL
                                         SELECT t.device_id
                                         FROM device t
-                                        JOIN hierarchy h ON t.device_parent_id = h.device_id AND t.device_id != h.device_id
+                                        JOIN hierarchy h ON t.device_parent_id = h.device_id
                                     )
                                     SELECT device_id
                                     FROM hierarchy )
@@ -156,7 +201,7 @@ void Device::loadSubDeviceList()
 
 void Device::getCatalogStorageID(){
     //Retrieve device_parent_id for an item in the physical group
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                     WITH RECURSIVE find_special AS
                         (SELECT device_id, device_parent_id, device_name
@@ -188,7 +233,7 @@ void Device::getCatalogStorageID(){
 void Device::generateDeviceID()
 {//Generate new ID
     if(ID==0){
-        QSqlQuery query;
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
         QString querySQL;
         querySQL = QLatin1String(R"(
                             SELECT MAX(device_id)
@@ -204,7 +249,7 @@ void Device::generateDeviceID()
 void Device::insertDevice()
 {//Insert device in table
 
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
     querySQL = QLatin1String(R"(
                             INSERT INTO device(
@@ -236,7 +281,7 @@ void Device::insertDevice()
                                 )");
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
-    query.bindValue(":device_parent_id",parentID);
+    query.bindValue(":device_parent_id", parentID);
     query.bindValue(":device_name",name);
     query.bindValue(":device_type", type);
     query.bindValue(":device_path", path);
@@ -252,17 +297,15 @@ void Device::insertDevice()
 
 bool Device::verifyDeviceNameExists()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   device
                                     WHERE  device_name = :device_name
-                                    AND device_type =:device_type
                                 )");
 
     query.prepare(querySQL);
     query.bindValue(":device_name", name);
-    query.bindValue(":device_type", type);
 
     if (!query.exec() and ID !=0) {
         qDebug() << "DEBUG: Error executing verifyDeviceNameExists:" << query.lastError().text();
@@ -275,7 +318,7 @@ bool Device::verifyDeviceNameExists()
 
 bool Device::verifyParentDeviceExistsInPhysicalGroup()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                                     SELECT COUNT(*)
                                     FROM   device
@@ -295,9 +338,9 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
     return query.value(0).toInt() > 0;
 }
 
-void Device::verifyHasSubDevice()
+void Device::verifyHasSubDevice(QString connectionName)
 {
-    QSqlQuery queryVerifyChildren;
+    QSqlQuery queryVerifyChildren(QSqlDatabase::database(connectionName));
     QString queryVerifyChildrenSQL = QLatin1String(R"(
                                 SELECT COUNT(*)
                                 FROM device
@@ -317,7 +360,7 @@ void Device::verifyHasSubDevice()
 
 bool Device::verifyStorageExternalIDExists()
 {
-    QSqlQuery queryExternalID;
+    QSqlQuery queryExternalID(QSqlDatabase::database("defaultConnection"));
     QString queryExternalIDSQL = QLatin1String(R"(
                                 SELECT COUNT(device_external_id)
                                 FROM device
@@ -333,7 +376,7 @@ bool Device::verifyStorageExternalIDExists()
 
 void Device::getIDFromDeviceName()
 {
-    QSqlQuery queryIDFromDeviceName;
+    QSqlQuery queryIDFromDeviceName(QSqlDatabase::database("defaultConnection"));
     QString queryIDFromDeviceNameSQL = QLatin1String(R"(
                                 SELECT device_id
                                 FROM device
@@ -349,7 +392,7 @@ void Device::getIDFromDeviceName()
 
 void Device::deleteDevice(bool askConfirmation)
 {
-    verifyHasSubDevice();
+    verifyHasSubDevice("defaultConnection");
 
     if ( hasSubDevice == false ){
 
@@ -380,7 +423,7 @@ void Device::deleteDevice(bool askConfirmation)
             if ( result == QMessageBox::Yes){
 
                 //Delete selected ID
-                QSqlQuery query;
+                QSqlQuery query(QSqlDatabase::database("defaultConnection"));
                 QString querySQL = QLatin1String(R"(
                                     DELETE FROM device
                                     WHERE device_id=:device_id
@@ -416,7 +459,7 @@ void Device::deleteDevice(bool askConfirmation)
 
 void Device::saveDevice()
 {//Update database with device values
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
                             UPDATE  device
                             SET     device_name =:device_name,
@@ -461,8 +504,8 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     QList<qint64> deviceUpdatesList;
     Device parentDevice;
     parentDevice.ID = parentID;
-    parentDevice.loadDevice();
-    updateActive();
+    parentDevice.loadDevice("defaultConnection");
+    updateActive("defaultConnection");
     dateTimeUpdated = QDateTime::currentDateTime();
 
     //Update device and children depending on type
@@ -480,7 +523,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //Update catalog with new values
             totalFileCount = deviceUpdatesList[1];
             totalFileSize  = deviceUpdatesList[3];
-
             saveStatistics(dateTimeUpdated, statiticsRequestSource);
             deviceUpdatesList<<1;
             deviceUpdatesList<<0;
@@ -499,7 +541,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         deviceUpdatesList.append(storageUpdatesList);
 
         //Update related devices (other catalog devices using the same catalog ID)
-        QSqlQuery queryRelatedDevice;
+        QSqlQuery queryRelatedDevice(QSqlDatabase::database("defaultConnection"));
         QString queryRelatedDeviceSQL = QLatin1String(R"(
                                     SELECT device_id
                                     FROM device
@@ -514,7 +556,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         while(queryRelatedDevice.next()){
             Device relatedDevice;
             relatedDevice.ID = queryRelatedDevice.value(0).toInt();
-            relatedDevice.loadDevice();
+            relatedDevice.loadDevice("defaultConnection");
             relatedDevice.totalFileCount = totalFileCount;
             relatedDevice.totalFileSize  = totalFileSize;
             relatedDevice.saveDevice();
@@ -528,7 +570,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         //Update catalogs
         if(includeSubDevices==true){
             //Get list of catalogs
-            loadSubDeviceList();
+            loadSubDeviceList("defaultConnection");
 
             //Process the list
             qint64 globalUpdateFileCount = 0;
@@ -543,7 +585,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                 for(int deviceID = 0; deviceID<deviceIDList.count(); deviceID++) {
                     Device updatedDevice;
                     updatedDevice.ID = deviceIDList[deviceID];
-                    updatedDevice.loadDevice();
+                    updatedDevice.loadDevice("defaultConnection");
 
                     QList<qint64> catalogUpdatesList = updatedDevice.catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
 
@@ -587,12 +629,9 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
         //Update storage itself
         QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
-        if( storageUpdates.count() > 0 and storageUpdates[0]==1){
-            freeSpace  = storageUpdates[3];
-            totalSpace = storageUpdates[5];
-            dateTimeUpdated = QDateTime::currentDateTime();
-            saveStatistics(dateTimeUpdated, statiticsRequestSource);
-        }
+        freeSpace  = storageUpdates[3];
+        totalSpace = storageUpdates[5];
+        saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         deviceUpdatesList += storageUpdates[0];
         deviceUpdatesList += storageUpdates[1];
@@ -609,7 +648,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
             //DEV: update all children devices
         // }
         qDebug()<<"Updating a list of devices from a virtual one is not avaialable yet.";
-        dateTimeUpdated = QDateTime::currentDateTime();
+
         saveStatistics(dateTimeUpdated, statiticsRequestSource);
 
         //DEV: also save statistics of all parents
@@ -631,7 +670,7 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
 void Device::updateNumbersFromChildren()
 {
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
 
     //Update file values
@@ -695,7 +734,7 @@ void Device::updateNumbersFromChildren()
 
 void Device::updateParentsNumbers()
 {//recursively update parent numbers, from bottom to top
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
 
     //Get List of parent items
@@ -729,12 +768,12 @@ void Device::updateParentsNumbers()
 
         Device tempCurrentDevice;
         tempCurrentDevice.ID = tempID;
-        tempCurrentDevice.loadDevice();
+        tempCurrentDevice.loadDevice("defaultConnection");
         tempCurrentDevice.updateNumbersFromChildren();
     }
 }
 
-void Device::updateActive()
+void Device::updateActive(QString connectionName)
 {//Update the Active value: verify that the path is active = the related drive is mounted
     if(path !=""){
         QDir dir(path);
@@ -744,7 +783,7 @@ void Device::updateActive()
         active = false;
     }
 
-    QSqlQuery query;
+    QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
                         UPDATE device
                         SET    device_active =:device_active
@@ -758,7 +797,7 @@ void Device::updateActive()
 
 void Device::saveStatistics(QDateTime dateTime, QString requestSource)
 {
-    QSqlQuery querySaveStatistics;
+    QSqlQuery querySaveStatistics(QSqlDatabase::database("defaultConnection"));
     QString querySaveStatisticsSQL = QLatin1String(R"(
                                         INSERT INTO statistics_device(
                                                 date_time,
