@@ -485,7 +485,7 @@
 
         //Settings
             ui->Settings_comboBox_DatabaseMode->removeItem(2);
-            ui->Settings_pushButton_ExportToSQLitFile->hide();
+
         //TESTS
             //ui->Storage_pushButton_TestMedia->hide();
             //ui->Storage_listView_Media->hide();

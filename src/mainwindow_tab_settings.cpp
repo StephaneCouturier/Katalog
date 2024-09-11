@@ -160,7 +160,58 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_ExportToSQLitFile_clicked()
     {
+        if (collection->databaseMode == "Memory") {
+            //Start animation
+            QApplication::setOverrideCursor(Qt::WaitCursor);
 
+            //List all Catalogs indexes to be loaded into memory
+            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+            QString querySQL = QLatin1String(R"(
+                                    SELECT device_id
+                                    FROM device
+                                    WHERE device_type ="Catalog"
+            )");
+            query.prepare(querySQL);
+            query.exec();
+
+            //Prepare temporary variables
+            Device tempCatalogDevice;
+            QMutex tempMutex;
+            bool tempStopRequested = false;
+
+            //Load each catalog contents into memory
+            while(query.next()){
+                tempCatalogDevice.ID = query.value(0).toInt();
+                tempCatalogDevice.loadDevice("defaultConnection");
+                qDebug()<<"  loading catalog: " << tempCatalogDevice.ID << tempCatalogDevice.name;
+                tempCatalogDevice.catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
+            }
+
+            QString backupFilePath = collection->folder + "/backup.db"; // Path to the output file
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+
+            //Dump all the database in Memory to the sql File
+            qDebug()<<"  exporting to file:" << backupFilePath;
+            if (!backupMemoryDatabaseToFile("defaultConnection", backupFilePath)) {
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "Failed to backup in-memory database to file.<br/>"
+                                                           "<br/> Text with first parameter<br/><b>%1</b><br/>"
+                                                           ).arg( backupFilePath ));
+            } else {
+                msgBox.setIcon(QMessageBox::Information);
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "Successful export of collection to SQLite database file.<br/>"
+                                                           "<br/> File: <br/><b>%1</b><br/>"
+                                                           ).arg( backupFilePath ));
+            }
+
+            //Stop animation
+            QApplication::restoreOverrideCursor();
+
+            //Inform of end of process
+            msgBox.exec();
+        }
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_OpenFolder_clicked()
