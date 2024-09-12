@@ -5,7 +5,6 @@
 #include <QThread>
 #include "mainwindow.h"
 #include "filesview.h"
-#include "search.h"
 
 class SearchProcess : public QThread
 {
@@ -27,7 +26,7 @@ private:
     bool stopRequested = false;
     QMutex mutex;
     void searchFilesInCatalog(const Device *device);
-    void searchFilesInDirectory(const QString &directory);
+    void searchFilesInDirectory(const QString &sourceDirectory);
     void processSearchResults();
 
 signals:

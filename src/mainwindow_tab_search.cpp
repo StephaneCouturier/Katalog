@@ -2257,9 +2257,7 @@
         //--------------------------------------------------------------------------
         //Stoppable Search process
         void MainWindow::searchFilesStoppable(){
-            qDebug() << "Search button clicked."<<QDateTime::currentDateTime();
             if (isSearchRunning) {
-                qDebug() << "Stopping search...";
                 if (searchProcess) {
                     searchProcess->stop();
                     searchProcess->wait();
@@ -2274,7 +2272,6 @@
                 ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
             } else {
-                qDebug() << "Starting search...";
                 getSearchCriteria();
 
                 searchProcess = new SearchProcess(this, collection->databaseMode);
