@@ -8030,7 +8030,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <item>
                      <widget class="QPushButton" name="Settings_pushButton_ExportToSQLitFile">
                       <property name="toolTip">
-                       <string>Open the collection folder</string>
+                       <string>Export to convert and open the collection in &quot;File&quot; mode.</string>
                       </property>
                       <property name="text">
                        <string>Export to SQLite file</string>
