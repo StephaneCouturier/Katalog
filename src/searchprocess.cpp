@@ -341,13 +341,13 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
 
     //Run a search of files for the selected Directory
     //Define how to use the search text //COMMON to searchFilesInCatalog
-    if(mainWindow->newSearch->selectedTextCriteria == tr("Exact Phrase"))
+    if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Exact Phrase"))
         mainWindow->newSearch->regexSearchtext=mainWindow->newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("Begins With"))
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Begins With"))
         mainWindow->newSearch->regexSearchtext="(^"+mainWindow->newSearch->searchText+")";
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("Any Word"))
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "Any Word"))
         mainWindow->newSearch->regexSearchtext=mainWindow->newSearch->searchText.replace(" ","|");
-    else if(mainWindow->newSearch->selectedTextCriteria == tr("All Words")){
+    else if(mainWindow->newSearch->selectedTextCriteria == QCoreApplication::translate("MainWindow", "All Words")){
         QString searchTextToSplit = mainWindow->newSearch->searchText;
         QString groupRegEx = "";
         QRegularExpression lineSplitExp(" ");
@@ -366,18 +366,18 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
     mainWindow->newSearch->regexPattern = mainWindow->newSearch->regexSearchtext;
 
     //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
-    if ( mainWindow->newSearch->searchOnFileCriteria==true and mainWindow->newSearch->selectedFileType !=tr("All")){
+    if ( mainWindow->newSearch->searchOnFileCriteria==true and mainWindow->newSearch->selectedFileType !=QCoreApplication::translate("MainWindow", "All")){
         //Get the list of file extension and join it into one string
-        if(mainWindow->newSearch->selectedFileType ==tr("Audio")){
+        if(mainWindow->newSearch->selectedFileType ==QCoreApplication::translate("MainWindow", "Audio")){
             mainWindow->newSearch->regexFileType = mainWindow->fileType_AudioS.join("|");
         }
-        if(mainWindow->newSearch->selectedFileType ==tr("Image")){
+        if(mainWindow->newSearch->selectedFileType ==QCoreApplication::translate("MainWindow", "Image")){
             mainWindow->newSearch->regexFileType = mainWindow->fileType_ImageS.join("|");
         }
-        if(mainWindow->newSearch->selectedFileType ==tr("Text")){
+        if(mainWindow->newSearch->selectedFileType ==QCoreApplication::translate("MainWindow", "Text")){
             mainWindow->newSearch->regexFileType = mainWindow->fileType_TextS.join("|");
         }
-        if(mainWindow->newSearch->selectedFileType ==tr("Video")){
+        if(mainWindow->newSearch->selectedFileType ==QCoreApplication::translate("MainWindow", "Video")){
             mainWindow->newSearch->regexFileType = mainWindow->fileType_VideoS.join("|");
         }
 
@@ -507,7 +507,7 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
         if (mainWindow->newSearch->searchOnFileName==true){
             //Depending on the "Search in" criteria,
             //reduce the abosulte path to the reaquired text string and match the search text
-            if(mainWindow->newSearch->selectedSearchIn == tr("File names only"))
+            if(mainWindow->newSearch->selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only"))
             {
                 // Extract the file name from the lineFilePath
                 QFileInfo file(lineFilePath);
@@ -515,7 +515,7 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
 
                 match = regex.match(reducedLine);
             }
-            else if(mainWindow->newSearch->selectedSearchIn == tr("Folder path only"))
+            else if(mainWindow->newSearch->selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only"))
             {
                 //Keep only the folder name, so all characters left of the last occurence of / in the path.
                 reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));

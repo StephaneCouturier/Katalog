@@ -72,6 +72,7 @@
         <location filename="../mainwindow.ui" line="4485"/>
         <location filename="../mainwindow.ui" line="6246"/>
         <location filename="../mainwindow_tab_search.cpp" line="1453"/>
+        <location filename="../searchprocess.cpp" line="377"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,7 +101,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="1201"/>
         <location filename="../mainwindow_tab_search.cpp" line="1426"/>
         <location filename="../mainwindow_tab_search.cpp" line="1715"/>
-        <location filename="../searchprocess.cpp" line="117"/>
+        <location filename="../searchprocess.cpp" line="114"/>
+        <location filename="../searchprocess.cpp" line="350"/>
         <source>All Words</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,7 +110,8 @@
         <location filename="../mainwindow.ui" line="1314"/>
         <location filename="../mainwindow_tab_search.cpp" line="1195"/>
         <location filename="../mainwindow_tab_search.cpp" line="1420"/>
-        <location filename="../searchprocess.cpp" line="111"/>
+        <location filename="../searchprocess.cpp" line="108"/>
+        <location filename="../searchprocess.cpp" line="344"/>
         <source>Exact Phrase</source>
         <translation type="unfinished"></translation>
     </message>
@@ -118,7 +121,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="1197"/>
         <location filename="../mainwindow_tab_search.cpp" line="1422"/>
         <location filename="../searchprocess.cpp" line="36"/>
-        <location filename="../searchprocess.cpp" line="113"/>
+        <location filename="../searchprocess.cpp" line="110"/>
+        <location filename="../searchprocess.cpp" line="346"/>
         <source>Begins With</source>
         <translation type="unfinished"></translation>
     </message>
@@ -126,7 +130,8 @@
         <location filename="../mainwindow.ui" line="1324"/>
         <location filename="../mainwindow_tab_search.cpp" line="1199"/>
         <location filename="../mainwindow_tab_search.cpp" line="1424"/>
-        <location filename="../searchprocess.cpp" line="115"/>
+        <location filename="../searchprocess.cpp" line="112"/>
+        <location filename="../searchprocess.cpp" line="348"/>
         <source>Any Word</source>
         <translation type="unfinished"></translation>
     </message>
@@ -147,7 +152,8 @@
         <location filename="../mainwindow_tab_search.cpp" line="1587"/>
         <location filename="../mainwindow_tab_search.cpp" line="1716"/>
         <location filename="../searchprocess.cpp" line="37"/>
-        <location filename="../searchprocess.cpp" line="284"/>
+        <location filename="../searchprocess.cpp" line="272"/>
+        <location filename="../searchprocess.cpp" line="510"/>
         <source>File names only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,7 +161,8 @@
         <location filename="../mainwindow.ui" line="1437"/>
         <location filename="../mainwindow_tab_search.cpp" line="1360"/>
         <location filename="../mainwindow_tab_search.cpp" line="1595"/>
-        <location filename="../searchprocess.cpp" line="288"/>
+        <location filename="../searchprocess.cpp" line="276"/>
+        <location filename="../searchprocess.cpp" line="518"/>
         <source>Folder path only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -209,10 +216,10 @@
         <location filename="../mainwindow_tab_search.cpp" line="969"/>
         <location filename="../mainwindow_tab_search.cpp" line="1116"/>
         <location filename="../mainwindow_tab_explore.cpp" line="636"/>
-        <location filename="../searchprocess.cpp" line="449"/>
-        <location filename="../searchprocess.cpp" line="472"/>
-        <location filename="../searchprocess.cpp" line="610"/>
-        <location filename="../searchprocess.cpp" line="757"/>
+        <location filename="../searchprocess.cpp" line="671"/>
+        <location filename="../searchprocess.cpp" line="694"/>
+        <location filename="../searchprocess.cpp" line="832"/>
+        <location filename="../searchprocess.cpp" line="979"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,6 +291,7 @@
         <location filename="../mainwindow_tab_filters.cpp" line="382"/>
         <location filename="../mainwindow_tab_filters.cpp" line="386"/>
         <location filename="../mainwindow_tab_filters.cpp" line="387"/>
+        <location filename="../searchprocess.cpp" line="369"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,6 +300,7 @@
         <location filename="../mainwindow.ui" line="4469"/>
         <location filename="../mainwindow.ui" line="6202"/>
         <location filename="../mainwindow_tab_search.cpp" line="1447"/>
+        <location filename="../searchprocess.cpp" line="371"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -300,6 +309,7 @@
         <location filename="../mainwindow.ui" line="4477"/>
         <location filename="../mainwindow.ui" line="6180"/>
         <location filename="../mainwindow_tab_search.cpp" line="1450"/>
+        <location filename="../searchprocess.cpp" line="374"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,6 +318,7 @@
         <location filename="../mainwindow.ui" line="4493"/>
         <location filename="../mainwindow.ui" line="6224"/>
         <location filename="../mainwindow_tab_search.cpp" line="1456"/>
+        <location filename="../searchprocess.cpp" line="380"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
@@ -336,7 +347,7 @@
     <message>
         <location filename="../mainwindow.ui" line="3507"/>
         <location filename="../mainwindow_tab_search.cpp" line="852"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2328"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2325"/>
         <source>Files found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,10 +442,10 @@
         <location filename="../mainwindow_tab_search.cpp" line="972"/>
         <location filename="../mainwindow_tab_search.cpp" line="1119"/>
         <location filename="../mainwindow_tab_explore.cpp" line="639"/>
-        <location filename="../searchprocess.cpp" line="452"/>
-        <location filename="../searchprocess.cpp" line="475"/>
-        <location filename="../searchprocess.cpp" line="613"/>
-        <location filename="../searchprocess.cpp" line="760"/>
+        <location filename="../searchprocess.cpp" line="674"/>
+        <location filename="../searchprocess.cpp" line="697"/>
+        <location filename="../searchprocess.cpp" line="835"/>
+        <location filename="../searchprocess.cpp" line="982"/>
         <source>Catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,6 +1035,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="8033"/>
+        <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="8036"/>
         <source>Export to SQLite file</source>
         <translation type="unfinished"></translation>
@@ -1098,7 +1114,6 @@
         <location filename="../mainwindow.ui" line="7357"/>
         <location filename="../mainwindow.ui" line="7826"/>
         <location filename="../mainwindow.ui" line="8020"/>
-        <location filename="../mainwindow.ui" line="8033"/>
         <source>Open the collection folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1158,10 +1173,10 @@
         <location filename="../mainwindow_tab_device.cpp" line="1833"/>
         <location filename="../mainwindow_tab_device.cpp" line="2069"/>
         <location filename="../mainwindow_tab_explore.cpp" line="635"/>
-        <location filename="../searchprocess.cpp" line="448"/>
-        <location filename="../searchprocess.cpp" line="471"/>
-        <location filename="../searchprocess.cpp" line="609"/>
-        <location filename="../searchprocess.cpp" line="756"/>
+        <location filename="../searchprocess.cpp" line="670"/>
+        <location filename="../searchprocess.cpp" line="693"/>
+        <location filename="../searchprocess.cpp" line="831"/>
+        <location filename="../searchprocess.cpp" line="978"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1176,10 +1191,10 @@
         <location filename="../mainwindow_tab_search.cpp" line="2202"/>
         <location filename="../mainwindow_tab_explore.cpp" line="637"/>
         <location filename="../mainwindow_tab_statistics.cpp" line="373"/>
-        <location filename="../searchprocess.cpp" line="450"/>
-        <location filename="../searchprocess.cpp" line="473"/>
-        <location filename="../searchprocess.cpp" line="611"/>
-        <location filename="../searchprocess.cpp" line="758"/>
+        <location filename="../searchprocess.cpp" line="672"/>
+        <location filename="../searchprocess.cpp" line="695"/>
+        <location filename="../searchprocess.cpp" line="833"/>
+        <location filename="../searchprocess.cpp" line="980"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,16 +1203,16 @@
         <location filename="../mainwindow_tab_search.cpp" line="834"/>
         <location filename="../mainwindow_tab_search.cpp" line="971"/>
         <location filename="../mainwindow_tab_search.cpp" line="1118"/>
-        <location filename="../searchprocess.cpp" line="451"/>
-        <location filename="../searchprocess.cpp" line="474"/>
-        <location filename="../searchprocess.cpp" line="612"/>
-        <location filename="../searchprocess.cpp" line="759"/>
+        <location filename="../searchprocess.cpp" line="673"/>
+        <location filename="../searchprocess.cpp" line="696"/>
+        <location filename="../searchprocess.cpp" line="834"/>
+        <location filename="../searchprocess.cpp" line="981"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="823"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2310"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2307"/>
         <source>Folders found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1211,7 +1226,7 @@
     </message>
     <message>
         <location filename="../mainwindow_setup.cpp" line="290"/>
-        <location filename="../mainwindow_tab_settings.cpp" line="146"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="147"/>
         <source>Select the directory for this collection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1919,7 +1934,7 @@ The file can be fixed manually, please visit the wiki page:
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="983"/>
         <location filename="../mainwindow_tab_search.cpp" line="1131"/>
-        <location filename="../mainwindow_tab_search.cpp" line="2364"/>
+        <location filename="../mainwindow_tab_search.cpp" line="2361"/>
         <source>Duplicates found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2036,7 +2051,7 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <location filename="../mainwindow_tab_search.cpp" line="837"/>
-        <location filename="../searchprocess.cpp" line="477"/>
+        <location filename="../searchprocess.cpp" line="699"/>
         <source>Search Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2649,82 +2664,87 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="197"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="175"/>
+        <source>Select the directory and file name for his export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_settings.cpp" line="241"/>
         <source>Failed to export in-memory database to file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="203"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="247"/>
         <source>Successful export of collection to SQLite database file.&lt;br/&gt;&lt;br/&gt; Export file path: &lt;br/&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="445"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="486"/>
         <source>Collection Upgrade Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="447"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="488"/>
         <source>This application of &apos;Katalog&apos; is in version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="449"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="490"/>
         <source>Current collection version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="451"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="492"/>
         <source>Collection folder: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="453"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="494"/>
         <source>This upgrade process can be performed automatically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="455"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="496"/>
         <source>Find out about the main changes and the migration in this &lt;a href=&apos;%1&apos;&gt;Major release 2.0&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="457"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="498"/>
         <source>Find the usual list of new features in the &lt;a href=&apos;%1&apos;&gt;Release Notes&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="459"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="500"/>
         <source>&lt;span&gt;&lt;b style=&apos;color:red;&apos;&gt;Back up the collection folder/files before upgrading!&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="461"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="502"/>
         <source>What should be done now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="467"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="508"/>
         <source>Upgrade Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="468"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="509"/>
         <source>Choose a Different Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="469"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="510"/>
         <source>Exit Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="518"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="559"/>
         <source>Select the database to open:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_settings.cpp" line="554"/>
+        <location filename="../mainwindow_tab_settings.cpp" line="595"/>
         <source>Select the database to create and open:</source>
         <translation type="unfinished"></translation>
     </message>
