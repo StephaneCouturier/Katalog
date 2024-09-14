@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "database.h"
+#include <QProgressDialog>
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()
@@ -161,38 +162,87 @@
     void MainWindow::on_Settings_pushButton_ExportToSQLitFile_clicked()
     {
         if (collection->databaseMode == "Memory") {
-            //Start animation
-            QApplication::setOverrideCursor(Qt::WaitCursor);
 
-            //List all Catalogs indexes to be loaded into memory
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-            QString querySQL = QLatin1String(R"(
-                                    SELECT device_id
-                                    FROM device
-                                    WHERE device_type ="Catalog"
-            )");
-            query.prepare(querySQL);
-            query.exec();
-
-            //Prepare temporary variables
-            Device tempCatalogDevice;
-            QMutex tempMutex;
-            bool tempStopRequested = false;
-
-            //Load each catalog contents into memory
-            while(query.next()){
-                tempCatalogDevice.ID = query.value(0).toInt();
-                tempCatalogDevice.loadDevice("defaultConnection");
-                qDebug()<<"  loading catalog: " << tempCatalogDevice.ID << tempCatalogDevice.name;
-                tempCatalogDevice.catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
-            }
-
-            QString backupFilePath = collection->folder + "/backup.db"; // Path to the output file
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
 
+            //Folder and file name selection
+
+                //Default folder and file name
+                QString backupFilePath = collection->folder + "/backup.db"; // Path to the output file
+
+                //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+                QString selectedBackupFilePath = QFileDialog::getSaveFileName(this, tr("Select the directory and file name for his export."),
+                                                                backupFilePath);
+
+                //Unless the selection was cancelled, set the new collection folder, and refresh all data
+                if ( selectedBackupFilePath !=""){
+                    QFile newBackupFile(selectedBackupFilePath);
+                    if( !newBackupFile.exists())
+                        backupFilePath = selectedBackupFilePath;
+                    else{
+                        msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                                   "Katalog cannot export to an existing file.<br/>"
+                                                                   "Selected existing file: <br/><b>%1</b><br/>"
+                                                                   "Select a new file name.<br/>"
+                                                                   ).arg( selectedBackupFilePath ));
+                        msgBox.exec();
+                        return;
+                    }
+                }
+
+            //Load all Catalogs indexes into memory
+
+                //Prepare temporary variables
+                Device tempCatalogDevice;
+                QMutex tempMutex;
+                bool tempStopRequested = false;
+
+                // Get the number of devices to be processed
+                QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
+                QString countQuerySQL = QLatin1String(R"(
+                    SELECT COUNT(*)
+                    FROM device
+                    WHERE device_type ="Catalog"
+                )");
+                countQuery.prepare(countQuerySQL);
+                countQuery.exec();
+                countQuery.next();
+                int deviceCount = countQuery.value(0).toInt();
+
+                // Create the progress dialog
+                QProgressDialog progress("Loading devices...", "Cancel", 0, deviceCount, this);
+                progress.setWindowModality(Qt::WindowModal);
+                int i = 0;
+
+                // List all Catalogs indexes to be loaded into memory
+                QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+                QString querySQL = QLatin1String(R"(
+                    SELECT device_id, device_name
+                    FROM device
+                    WHERE device_type ="Catalog"
+                )");
+                query.prepare(querySQL);
+                query.exec();
+
+                while(query.next()){
+                    progress.setValue(i);
+                    progress.setLabelText(QString("Loading device: %1").arg(query.value(1).toString()));
+
+                    if (progress.wasCanceled()){
+                        return;
+                    }
+
+                    tempCatalogDevice.ID = query.value(0).toInt();
+                    tempCatalogDevice.loadDevice("defaultConnection");
+                    tempCatalogDevice.catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
+
+                    i++;
+                }
+
+                progress.setValue(deviceCount);
+
             //Dump all the database in Memory to the sql File
-            qDebug()<<"  exporting to file:" << backupFilePath;
             if (!backupMemoryDatabaseToFile("defaultConnection", backupFilePath)) {
                 msgBox.setText(QCoreApplication::translate("MainWindow",
                                                            "Failed to export in-memory database to file.<br/>"
@@ -205,9 +255,6 @@
                                                            "<br/> Export file path: <br/><b>%1</b><br/>"
                                                            ).arg( backupFilePath ));
             }
-
-            //Stop animation
-            QApplication::restoreOverrideCursor();
 
             //Inform of end of process
             msgBox.exec();
