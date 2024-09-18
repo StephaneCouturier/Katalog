@@ -88,6 +88,21 @@
 
         }
         //----------------------------------------------------------------------
+        void MainWindow::on_Search_comboBox_TextCriteria_currentIndexChanged(int index)
+        {
+            // "Begin With" can only be used in "File names only"
+            ui->Search_comboBox_SearchIn->clear();
+
+            if (index==2) { //"Begin With" is selected
+                ui->Search_comboBox_SearchIn->addItem(tr("File names only"));
+            }
+            else {
+                ui->Search_comboBox_SearchIn->addItem(tr("File names only"));
+                ui->Search_comboBox_SearchIn->addItem(tr("File names or Folder paths"));
+                ui->Search_comboBox_SearchIn->addItem(tr("Folder path only"));
+            }
+        }
+        //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ResetAll_clicked()
         {
             resetToDefaultSearchCriteria();
@@ -703,14 +718,7 @@
             //Prepare the SEARCH -------------------------------
 
                 //Clear the object newSearch and get new search criteria
-                    getSearchCriteria();
-
-                // Searching "Begin With" for "File name or Folder name" is not supported yet
-                    if (newSearch->selectedTextCriteria==tr("Begins With") and newSearch->selectedSearchIn !=tr("File names only")){
-                        QApplication::restoreOverrideCursor(); //Stop animation
-                        QMessageBox::information(this,"Katalog",tr("The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
-                        return;
-                    }
+                getSearchCriteria();
 
             //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
                 //Process the SEARCH in CATALOGS
@@ -744,6 +752,7 @@
                             }
                         }
                     }
+
                 //Process the SEARCH in SELECTED DIRECTORY
                     else if (newSearch->searchInConnectedChecked == true){
                             QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();

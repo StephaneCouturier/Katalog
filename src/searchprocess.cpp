@@ -32,15 +32,6 @@ void SearchProcess::run()
         return;
     }
 
-    //Searching "Begin With" for "File name or Folder name" is not supported yet
-    if (    mainWindow->newSearch->selectedTextCriteria==QCoreApplication::translate("MainWindow", "Begins With")
-        and mainWindow->newSearch->selectedSearchIn !=QCoreApplication::translate("MainWindow", "File names only")){
-        emit searchStopped();
-        QApplication::restoreOverrideCursor(); //Stop animation
-        QMessageBox::information(mainWindow,"Katalog",QCoreApplication::translate("MainWindow", "The option 'Begin With' can only be used with 'File names only'.\nUse a different combinaison."));
-        return;
-    }
-
     //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
         //Process the SEARCH in CATALOGS
         if (mainWindow->newSearch->searchInCatalogsChecked == true) {

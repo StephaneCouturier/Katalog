@@ -408,6 +408,7 @@ class MainWindow : public QMainWindow
             void on_Search_pushButton_ProcessResults_clicked();
             void on_Search_pushButton_PasteFromClipboard_clicked();
             void on_Search_lineEdit_SearchText_returnPressed();
+            void on_Search_comboBox_TextCriteria_currentIndexChanged(int index);
 
             void on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index);
             void on_Search_treeView_FilesFound_clicked(const QModelIndex &index);
