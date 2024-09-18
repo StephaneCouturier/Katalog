@@ -38,16 +38,27 @@
 DeviceTreeView::DeviceTreeView(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
-    initializeLists(); //to populate the lists
+    initializeLists(); //Populate the lists of data types
 }
 
 
 void DeviceTreeView::initializeLists()
 {
+    //Assign fields to data types.
+    //   1 list per data type except for text used as default (no customization)
+    // + 1 list for bold text
+
+    //Device fields
     filecountColumnList << 3 << 4 << 5 << 6;
     filesizeColumnList  << 7 << 8 << 9 << 10;
+    booleanColumnList   << 2;
     boldColumnList      << 0 << 6 << 7 << 8 << 9 << 10;
-    booleanColumnList   << 2 << 15; //<<17 <<18 <<20;
+
+    //Storage fields
+    //All text
+
+    //Catalog fields
+    booleanColumnList   << 25 << 26 << 28;
 }
 
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
