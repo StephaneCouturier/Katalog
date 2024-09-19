@@ -529,6 +529,9 @@
                </layout>
               </item>
               <item>
+               <widget class="QFontComboBox" name="fontComboBox"/>
+              </item>
+              <item>
                <widget class="QTreeView" name="Filters_treeView_Directory">
                 <property name="enabled">
                  <bool>true</bool>
@@ -7342,44 +7345,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="2">
-               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
-              </item>
-              <item row="1" column="3">
-               <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Open the collection folder</string>
-                </property>
-                <property name="text">
-                 <string>Open</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="document-open"/>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <spacer name="Settings_horizontalSpacer_28">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Policy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>30</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
               <item row="1" column="6">
                <spacer name="Settings_horizontalSpacer_15">
                 <property name="orientation">
@@ -7407,6 +7372,71 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 </property>
                 <property name="text">
                  <string>Other Settings</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <spacer name="Settings_horizontalSpacer_28">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Policy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>30</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="6" column="2">
+               <layout class="QGridLayout" name="Settings_gridLayout_Settings_2"/>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="Settings_pushButton_OpenSettingsFile">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Open the collection folder</string>
+                </property>
+                <property name="text">
+                 <string>Open</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open"/>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="2">
+               <widget class="QLabel" name="Settings_label_SettingsFileCaseSensitiveSort">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>File list display</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="3">
+               <widget class="QCheckBox" name="Settings_checkBox_SettingsFileCaseSensitiveSort">
+                <property name="toolTip">
+                 <string>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</string>
+                </property>
+                <property name="text">
+                 <string>File sorting is Case Sensitive</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
