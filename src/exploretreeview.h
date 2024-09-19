@@ -39,11 +39,15 @@ class ExploreTreeView  : public QSortFilterProxyModel
 
 public:
     ExploreTreeView(QObject *parent = nullptr);
+    bool caseSensitive = false;
+
+protected:
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
     QString percentBrush;
-    QVariant data( const QModelIndex &index, int role ) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    QVariant data( const QModelIndex &index, int role ) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
 };
 

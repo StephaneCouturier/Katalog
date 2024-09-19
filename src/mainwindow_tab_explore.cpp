@@ -518,13 +518,13 @@
 
             ExploreTreeView *exploreProxyModel = new ExploreTreeView();
             exploreProxyModel->setSourceModel(exploreTreeModel);
-            //ui->Explore_treeview_Directories->QTreeView::sortByColumn(lastExploreSortSection,Qt::SortOrder(lastExploreSortOrder));
-            ui->Explore_treeview_Directories->QTreeView::sortByColumn(5,Qt::SortOrder(0));
-            ui->Explore_treeview_Directories->header()->setSectionResizeMode(QHeaderView::Interactive);
-            //ui->Explore_treeview_Directories->header()->resizeSection(0, 600); //Directory
+            exploreProxyModel->caseSensitive = fileSortCaseSensitive;
 
         // Connect model to treeview
+            ui->Explore_treeview_Directories->setSortingEnabled(true);
             ui->Explore_treeview_Directories->setModel(exploreProxyModel);
+            ui->Explore_treeview_Directories->QTreeView::sortByColumn(0,Qt::SortOrder(0));
+
             ui->Explore_treeview_Directories->header()->resizeSection(0,  300);
             ui->Explore_treeview_Directories->hideColumn(1);//NoOfItems
             ui->Explore_treeview_Directories->hideColumn(2);//FullPath
