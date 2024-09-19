@@ -630,6 +630,7 @@
         loadCatalogQueryModel->setQuery(std::move(loadCatalogQuery));
 
         FilesView *proxyModel2 = new FilesView(this);
+        proxyModel2->caseSensitive = fileSortCaseSensitive;
         proxyModel2->setSourceModel(loadCatalogQueryModel);
 
         proxyModel2->setHeaderData(0, Qt::Horizontal, tr("Name"));

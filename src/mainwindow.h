@@ -123,6 +123,9 @@ class MainWindow : public QMainWindow
         // void checkDatabaseContent(const QString &connectionName);
         // void copyDataFromGlobalToSearchConnection(const QString &connectionName);
 
+        //Settings
+        bool fileSortCaseSensitive;
+
     private:
         //Global
             //Application version
@@ -396,6 +399,7 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_BiggerIconSize_stateChanged(int arg1);
             void on_Settings_checkBox_LoadLastCatalog_stateChanged(int arg1);
             void on_Settings_pushButton_OpenSettingsFile_clicked();
+            void on_Settings_checkBox_SettingsFileCaseSensitiveSort_stateChanged();
 
             void on_Settings_pushButton_Documentation_clicked();
             void on_Settings_pushButton_ReleaseNotes_clicked();

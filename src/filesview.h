@@ -39,6 +39,7 @@ class FilesView  : public QSortFilterProxyModel
 
 public:
     FilesView(QObject *parent = nullptr);
+    bool caseSensitive = false;
 
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;

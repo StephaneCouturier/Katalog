@@ -434,6 +434,9 @@
             optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
 
+            //Restore other settings
+            fileSortCaseSensitive       = settings.value("Settings/FileCaseSensitiveSort").toBool();
+            ui->Settings_checkBox_SettingsFileCaseSensitiveSort->setChecked(fileSortCaseSensitive);
 
             //Restore DEV Settings
             if(developmentMode==true){

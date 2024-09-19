@@ -428,6 +428,13 @@
         settings.setValue("Settings/CheckVersion", ui->Settings_checkBox_CheckVersion->isChecked());
     }
     //----------------------------------------------------------------------
+    void MainWindow::on_Settings_checkBox_SettingsFileCaseSensitiveSort_stateChanged()
+    {
+        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        settings.setValue("Settings/FileCaseSensitiveSort", ui->Settings_checkBox_SettingsFileCaseSensitiveSort->isChecked());
+        fileSortCaseSensitive = ui->Settings_checkBox_SettingsFileCaseSensitiveSort->isChecked();
+    }
+    //----------------------------------------------------------------------
 
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()

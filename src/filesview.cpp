@@ -147,7 +147,11 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
         QString leftString = leftData.toString();
         QString rightString = rightData.toString();
 
-        return QString::compare(leftString, rightString, Qt::CaseInsensitive) < 0;
+        if (caseSensitive) {
+            return leftString < rightString;
+        } else {
+            return QString::compare(leftString, rightString, Qt::CaseInsensitive) < 0;
+        }
     }
 
     return QSortFilterProxyModel::lessThan(left, right);

@@ -657,6 +657,7 @@ void SearchProcess::processSearchResults()
             mainWindow->newSearch->fileCatalogs <<"";
 
         // Populate model with data
+        fileViewModel->caseSensitive = mainWindow->fileSortCaseSensitive;
         fileViewModel->setSourceModel(mainWindow->newSearch);
         fileViewModel->setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Name"));
         fileViewModel->setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Size"));

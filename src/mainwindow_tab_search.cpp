@@ -794,6 +794,7 @@
                     QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
                     // Prepare model to display
                     FilesView *fileViewModel = new FilesView(this);
+                    fileViewModel->caseSensitive = fileSortCaseSensitive;
 
                     //Populate model with folders only if this option is selected
                     if ( newSearch->searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
