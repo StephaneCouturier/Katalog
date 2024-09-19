@@ -137,3 +137,18 @@ QVariant FilesView::headerData(int section, Qt::Orientation orientation, int rol
         }
         return QVariant();
 }
+
+bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    QVariant leftData = sourceModel()->data(left);
+    QVariant rightData = sourceModel()->data(right);
+
+    if (leftData.typeId() == QMetaType::QString && rightData.typeId() == QMetaType::QString) {
+        QString leftString = leftData.toString();
+        QString rightString = rightData.toString();
+
+        return QString::compare(leftString, rightString, Qt::CaseInsensitive) < 0;
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
+}

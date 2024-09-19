@@ -40,11 +40,12 @@ class FilesView  : public QSortFilterProxyModel
 public:
     FilesView(QObject *parent = nullptr);
 
+protected:
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+    QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+
 private:
     QString percentBrush;
-    QVariant data( const QModelIndex &index, int role ) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 };
-
 #endif // FILESVIEW_H
