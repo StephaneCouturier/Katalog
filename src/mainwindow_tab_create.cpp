@@ -337,38 +337,35 @@
                 newDevice->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
 
                 //Update the new catalog loadedversion to indicate that files are already in memory
-                QDateTime emptyDateTime = *new QDateTime;
+                QDateTime emptyDateTime = *new QDateTime; //Using an empty date as the function will manage creating one if needed
                 newDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
 
                 //Save statistics
                 collection->saveStatiticsToFile();
 
                 //Refresh data and UI
-                //Refresh the catalog list for the Search screen
-                collection->loadCatalogFilesToTable();
+                    //Refresh the catalog list for the combobox of the Search screen
+                    refreshDifferencesCatalogSelection();
 
-                //Refresh the catalog list for the combobox of the Search screen
-                refreshDifferencesCatalogSelection();
+                    //Refresh Catalogs list
+                    updateAllDeviceActive();
+                    loadDevicesView();
 
-                //Refresh Catalogs list
-                updateAllDeviceActive();
-                loadDevicesView();
+                    //Restore selected catalog
+                    ui->Filters_label_DisplayCatalog->setText(newDevice->name);
+                    selectedDevice->ID = newDevice->ID;
+                    selectedDevice->loadDevice("defaultConnection");
 
-                //Restore selected catalog
-                ui->Filters_label_DisplayCatalog->setText(newDevice->name);
-                selectedDevice->ID = newDevice->ID;
-                selectedDevice->loadDevice("defaultConnection");
+                    //Refresh filter tree
+                    collection->loadDeviceFileToTable();
+                    loadDevicesTreeToModel("Filters");
+                    loadDevicesView();
 
-                //Refresh filter tree
-                collection->loadDeviceFileToTable();
-                loadDevicesTreeToModel("Filters");
-                loadDevicesView();
+                    //Change tab to show the result of the catalog creation
+                    ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
 
-                //Change tab to show the result of the catalog creation
-                ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
-
-                //Disable buttons
-                ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+                    //Disable buttons
+                    ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
             }
             else{
                 newDevice->deleteDevice(false);

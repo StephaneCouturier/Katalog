@@ -143,11 +143,11 @@ void Catalog::setDateLoaded(QDateTime dateTime, QString connectionName)
         QString catalogQuerySQL = QLatin1String(R"(
                                         UPDATE catalog
                                         SET catalog_date_loaded =:catalog_date_loaded
-                                        WHERE catalog_name =:catalog_name
+                                        WHERE catalog_id =:catalog_id
                                       )");
         catalogQuery.prepare(catalogQuerySQL);
         catalogQuery.bindValue(":catalog_date_loaded", dateLoaded.toString("yyyy-MM-dd hh:mm:ss"));
-        catalogQuery.bindValue(":catalog_name",        name);//DEV replace by id
+        catalogQuery.bindValue(":catalog_id", ID);
         catalogQuery.exec();
     }
     else{
