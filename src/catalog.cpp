@@ -153,19 +153,6 @@ void Catalog::setDateLoaded(QDateTime dateTime, QString connectionName)
     else{
         dateLoaded = dateTime;
     }
-
-    //Update
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-    QString querySQL = QLatin1String(R"(
-                                    SELECT catalog_date_loaded
-                                    FROM catalog
-                                )");
-    query.prepare(querySQL);
-    query.exec();
-    query.next();
-    while(query.next()){
-        qDebug()<<query.value(0).toString();
-    }
 }
 void Catalog::setDateUpdated(QDateTime dateTime)
 {
