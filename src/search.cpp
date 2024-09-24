@@ -46,7 +46,7 @@ int Search::rowCount(const QModelIndex &parent) const
 int Search::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;
+    return 6;
 }
 
 QVariant Search::data(const QModelIndex &index, int role) const
@@ -57,9 +57,10 @@ QVariant Search::data(const QModelIndex &index, int role) const
     switch (index.column()){
         case 0: return QString(fileNames[index.row()]);
         case 1: return qint64 (fileSizes[index.row()]);
-        case 3: return QString(filePaths[index.row()]);
         case 2: return QString(fileDateTimes[index.row()]);
+        case 3: return QString(filePaths[index.row()]);
         case 4: return QString(fileCatalogs[index.row()]);
+        case 5: return int(fileCatalogIDs[index.row()]);
     }
     return QVariant();
 }
@@ -70,9 +71,10 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
         switch (section){
             case 0: return QString(tr("Name"));
             case 1: return QString(tr("Size"));
-            case 3: return QString(tr("Folder"));
             case 2: return QString(tr("Date"));
-            case 4: return QString(tr("Catalog"));
+            case 3: return QString(tr("Folder"));
+            case 4: return QString(tr("Catalog Name"));
+            case 5: return QString(tr("Catalog ID"));
         }
     }
     return QVariant();

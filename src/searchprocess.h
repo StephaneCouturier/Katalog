@@ -15,6 +15,7 @@ public:
     void stop();
     FilesView *fileViewModel = new FilesView(this);
     QString databaseMode;
+    QString connectionName;
 
 protected:
     void run() override;

@@ -78,17 +78,21 @@ public:
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
+
     bool searchOnDuplicates;
     bool searchDuplicatesOnName;
     bool searchDuplicatesOnSize;
     bool searchDuplicatesOnDate;
+
     bool searchOnDifferences;
     bool differencesOnName;
     bool differencesOnSize;
     bool differencesOnDate;
-    QStringList differencesCatalogs;
-    QString differencesCatalog1;
-    QString differencesCatalog2;
+    QStringList differencesCatalogs; //DEV: history: store DeviceID
+    QString differencesCatalog1;//DEV: history: store DeviceID
+    QString differencesCatalog2;//DEV: history: store DeviceID
+    int differencesDeviceID1;
+    int differencesDeviceID2;
 
     bool searchOnFolderCriteria;
     bool showFoldersOnly;
@@ -104,9 +108,10 @@ public:
     //Results
     QList<QString> fileNames;
     QList<qint64>  fileSizes;
-    QList<QString> filePaths;
     QList<QString> fileDateTimes;
+    QList<QString> filePaths;
     QList<QString> fileCatalogs;
+    QList<int>     fileCatalogIDs;
 
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;
