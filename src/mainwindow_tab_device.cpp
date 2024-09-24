@@ -2092,16 +2092,16 @@ void MainWindow::loadDevicesCatalogToModel(){
                                                 tr("Date updated"),     //11
                                                 tr("Path"),             //12
                                                 tr("Group ID"),         //13
-                                                tr("14"),               //14
-                                                tr("15"),               //15
-                                                tr("16"),               //16
-                                                tr("17"),               //17
-                                                tr("18"),               //18
-                                                tr("19"),               //19
-                                                tr("20"),               //20
-                                                tr("21"),               //21
-                                                tr("22"),               //22
-                                                tr("23"),               //23
+                                                "14",                   //14
+                                                "15",                   //15
+                                                "16",                   //16
+                                                "17",                   //17
+                                                "18",                   //18
+                                                "19",                   //19
+                                                "20",                   //20
+                                                "21",                   //21
+                                                "22",                   //22
+                                                "23",                   //23
                                                 tr("File Type"),        //24
                                                 tr("include hidden"),   //25
                                                 tr("include metadata"), //26
