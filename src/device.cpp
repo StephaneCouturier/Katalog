@@ -153,12 +153,12 @@ void Device::loadSubDeviceList(QString connectionName)
 {
     //Get catalog data based on filters
     //Generate SQL query from filters
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-    QString querySQL;
+    QSqlQuery queryLoadSubDeviceList(QSqlDatabase::database(connectionName));
+    QString queryLoadSubDeviceListSQL;
 
     //Prepare Query
     if(type !="All"){
-        querySQL  = QLatin1String(R"(
+        queryLoadSubDeviceListSQL  = QLatin1String(R"(
                                     SELECT
                                         device_id, device_type
                                     FROM device
@@ -178,7 +178,7 @@ void Device::loadSubDeviceList(QString connectionName)
                             )");
     }
     else{
-        querySQL  = QLatin1String(R"(
+        queryLoadSubDeviceListSQL  = QLatin1String(R"(
                                     SELECT
                                         device_id, device_type
                                     FROM device
@@ -186,23 +186,23 @@ void Device::loadSubDeviceList(QString connectionName)
     }
 
     //Execute query
-    query.prepare(querySQL);
-    query.bindValue(":device_id",        ID);
-    query.bindValue(":device_parent_id", ID);
-    query.exec();
+    queryLoadSubDeviceList.prepare(queryLoadSubDeviceListSQL);
+    queryLoadSubDeviceList.bindValue(":device_id",        ID);
+    queryLoadSubDeviceList.bindValue(":device_parent_id", ID);
+    queryLoadSubDeviceList.exec();
 
     deviceIDList.clear();
     deviceListTable.clear();
-    while (query.next()) {
-        deviceIDList<<query.value(0).toInt();
-        deviceListTable.append({query.value(0).toInt(),query.value(1).toString()});
+    while (queryLoadSubDeviceList.next()) {
+        deviceIDList<<queryLoadSubDeviceList.value(0).toInt();
+        deviceListTable.append({queryLoadSubDeviceList.value(0).toInt(),queryLoadSubDeviceList.value(1).toString()});
     }
 }
 
 void Device::getCatalogStorageID(){
     //Retrieve device_parent_id for an item in the physical group
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
+    QSqlQuery queryGetCatalogStorageID(QSqlDatabase::database("defaultConnection"));
+    QString queryGetCatalogStorageIDSQL = QLatin1String(R"(
                     WITH RECURSIVE find_special AS
                         (SELECT device_id, device_parent_id, device_name
                         FROM device WHERE device_id = 1
@@ -216,42 +216,42 @@ void Device::getCatalogStorageID(){
                     FROM find_special
                     WHERE device_name = :name
                 )");
-    query.prepare(querySQL);
-    query.bindValue(":name", name);
+    queryGetCatalogStorageID.prepare(queryGetCatalogStorageIDSQL);
+    queryGetCatalogStorageID.bindValue(":name", name);
 
-    if (query.exec()) {
-        if (query.next()) {
-            ID = query.value(0).toInt();
+    if (queryGetCatalogStorageID.exec()) {
+        if (queryGetCatalogStorageID.next()) {
+            ID = queryGetCatalogStorageID.value(0).toInt();
         } else {
             qDebug() << "getCatalogStorageID failed, no record found for device_name" << name;
         }
     } else {
-        qDebug() << "DEBUG: getCatalogStorageID query execution failed:" << query.lastError().text();
+        qDebug() << "DEBUG: getCatalogStorageID query execution failed:" << queryGetCatalogStorageID.lastError().text();
     }
 }
 
 void Device::generateDeviceID()
 {//Generate new ID
     if(ID==0){
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-        QString querySQL;
-        querySQL = QLatin1String(R"(
+        QSqlQuery queryGenerateDeviceID(QSqlDatabase::database("defaultConnection"));
+        QString queryGenerateDeviceIDSQL;
+        queryGenerateDeviceIDSQL = QLatin1String(R"(
                             SELECT MAX(device_id)
                             FROM device
                         )");
-        query.prepare(querySQL);
-        query.exec();
-        query.next();
-        ID = query.value(0).toInt() + 1;
+        queryGenerateDeviceID.prepare(queryGenerateDeviceIDSQL);
+        queryGenerateDeviceID.exec();
+        queryGenerateDeviceID.next();
+        ID = queryGenerateDeviceID.value(0).toInt() + 1;
     }
 }
 
 void Device::insertDevice()
 {//Insert device in table
 
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL;
-    querySQL = QLatin1String(R"(
+    QSqlQuery queryInsertDevice(QSqlDatabase::database("defaultConnection"));
+    QString queryInsertDeviceSQL;
+    queryInsertDeviceSQL = QLatin1String(R"(
                             INSERT INTO device(
                                         device_id,
                                         device_parent_id,
@@ -279,20 +279,20 @@ void Device::insertDevice()
                                         :device_group_id,
                                         :device_order)
                                 )");
-    query.prepare(querySQL);
-    query.bindValue(":device_id", ID);
-    query.bindValue(":device_parent_id", parentID);
-    query.bindValue(":device_name",name);
-    query.bindValue(":device_type", type);
-    query.bindValue(":device_path", path);
-    query.bindValue(":device_external_id", externalID);
-    query.bindValue(":device_total_file_size", totalFileSize);
-    query.bindValue(":device_total_file_count", totalFileCount);
-    query.bindValue(":device_total_space", totalSpace);
-    query.bindValue(":device_free_space", freeSpace);
-    query.bindValue(":device_group_id", groupID);
-    query.bindValue(":device_order", order);
-    query.exec();
+    queryInsertDevice.prepare(queryInsertDeviceSQL);
+    queryInsertDevice.bindValue(":device_id", ID);
+    queryInsertDevice.bindValue(":device_parent_id", parentID);
+    queryInsertDevice.bindValue(":device_name",name);
+    queryInsertDevice.bindValue(":device_type", type);
+    queryInsertDevice.bindValue(":device_path", path);
+    queryInsertDevice.bindValue(":device_external_id", externalID);
+    queryInsertDevice.bindValue(":device_total_file_size", totalFileSize);
+    queryInsertDevice.bindValue(":device_total_file_count", totalFileCount);
+    queryInsertDevice.bindValue(":device_total_space", totalSpace);
+    queryInsertDevice.bindValue(":device_free_space", freeSpace);
+    queryInsertDevice.bindValue(":device_group_id", groupID);
+    queryInsertDevice.bindValue(":device_order", order);
+    queryInsertDevice.exec();
 }
 
 bool Device::verifyDeviceNameExists()
