@@ -1019,6 +1019,8 @@
                                 newSearch->filePaths.clear();
                                 newSearch->fileDateTimes.clear();
                                 newSearch->fileCatalogs.clear();
+                                newSearch->fileCatalogIDs.clear();
+
                                 while(duplicatesQuery.next()){
                                     newSearch->fileNames.append(duplicatesQuery.value(0).toString());
                                     newSearch->fileSizes.append(duplicatesQuery.value(1).toLongLong());
@@ -1033,12 +1035,6 @@
 
                                 //FilesView *fileViewModel = new FilesView(this);
                                 fileViewModel->setSourceModel(loadCatalogQueryModel);
-                                fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                                fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                                fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                                fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                                fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog Name"));
-                                fileViewModel->setHeaderData(5, Qt::Horizontal, tr("Catalog ID"));
 
                                 // Connect model to tree/table view
                                 ui->Search_treeView_FilesFound->setModel(fileViewModel);
@@ -1308,6 +1304,12 @@
             //Stop animation
             QApplication::restoreOverrideCursor();
 
+            if (newSearch->searchInConnectedChecked == true){
+                ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
+                ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
+                ui->Search_treeView_FilesFound->header()->hideSection(5);
+            }
+
             //Enable Export
             ui->Search_pushButton_ProcessResults->setEnabled(true);
             ui->Search_comboBox_SelectProcess->setEnabled(true);
@@ -1548,6 +1550,7 @@
 
         void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
         {//Run a search of files for the selected Directory
+
             //Define how to use the search text //COMMON to searchFilesInCatalog
                 if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
                     newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
@@ -1597,7 +1600,6 @@
              }
 
             //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
-
             if ( newSearch->selectedSearchExclude !=""){
 
                 //Prepare
@@ -1763,10 +1765,11 @@
 
                             //Populate result lists
                             newSearch->fileNames.append(file.fileName());
-                            newSearch->filePaths.append(file.path());
                             newSearch->fileSizes.append(lineFileSize);
                             newSearch->fileDateTimes.append(lineFileDatetime);
+                            newSearch->filePaths.append(file.path());
                             newSearch->fileCatalogs.append(sourceDirectory);
+                            newSearch->fileCatalogIDs.append(0);
                         }
                     }
                     else{
@@ -1787,10 +1790,11 @@
 
                             //Populate result lists
                             newSearch->fileNames.append(file.fileName());
-                            newSearch->filePaths.append(file.path());
                             newSearch->fileSizes.append(lineFileSize);
                             newSearch->fileDateTimes.append(lineFileDatetime);
+                            newSearch->filePaths.append(file.path());
                             newSearch->fileCatalogs.append(sourceDirectory);
+                            newSearch->fileCatalogIDs.append(0);
                         }
                     }
             }
@@ -2392,6 +2396,7 @@
         }
 
         //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
         //Stoppable Search process
         void MainWindow::searchFilesStoppable(){
             if (isSearchRunning) {
@@ -2430,25 +2435,23 @@
             ui->Search_treeView_CatalogsFound->setModel(newSearch->deviceFoundModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
 
-            // Connect model to treeview and display
-            if(collection->databaseMode !="Memory"){
-                ui->Search_treeView_FilesFound->setModel(searchProcess->fileViewModel);
-            }
-            else{
-                ui->Search_treeView_FilesFound->setModel(searchProcess->fileViewModel);
-            }
+            FilesView *fileViewModel = new FilesView(this);
+            fileViewModel->caseSensitive = fileSortCaseSensitive;
+            fileViewModel->setSourceModel(newSearch);
+
+            ui->Search_treeView_FilesFound->setModel(fileViewModel);
+
+            //Update search statistics
+            newSearch->filesFoundNumber = fileViewModel->rowCount();
 
             //Process FOLDER SEARCH
             //Populate model with folders only if this option is selected
             if ( newSearch->searchOnFolderCriteria==true and newSearch->showFoldersOnly==true )
             {
                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents); //Path
-                //ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
                 ui->Search_treeView_FilesFound->header()->hideSection(0); //Name
                 ui->Search_treeView_FilesFound->header()->hideSection(1); //Size
                 ui->Search_treeView_FilesFound->header()->hideSection(2); //Date
-                // ui->Search_treeView_FilesFound->header()->hideSection(4); //Catalog Name
-                // ui->Search_treeView_FilesFound->header()->hideSection(5); //Catalog ID
 
                 ui->Search_label_FoundTitle->setText(tr("Folders found"));
             }
@@ -2487,6 +2490,12 @@
 
                 else
                     ui->Search_label_FoundTitle->setText(tr("Files found"));
+            }
+
+            if (newSearch->searchInConnectedChecked == true){
+                ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
+                ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
+                ui->Search_treeView_FilesFound->header()->hideSection(5);
             }
 
             ui->Search_label_NumberResults->setText(QString::number(newSearch->filesFoundNumber));
