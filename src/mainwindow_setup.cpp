@@ -32,7 +32,6 @@
 #include "mainwindow.h"
 #include "database.h"
 #include "ui_mainwindow.h"
-//#include <sqlite3.h> // Include the SQLite C API
 
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()
@@ -176,21 +175,46 @@
         }
 
         // Dump schema and data from in-memory database
-        QSqlQuery query(memoryDb);
-        if (!query.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
-            QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + query.lastError().text());
+        QSqlQuery queryTableList(memoryDb);
+        if (!queryTableList.exec("SELECT name, sql FROM sqlite_master WHERE type='table'")) {
+            QMessageBox::warning(nullptr, "Database Error", "Error retrieving schema from in-memory database: " + queryTableList.lastError().text());
             return false;
         }
 
+        //Display progress
+        //Prepare temporary variables
+
+            // Get the total number of files for all devices
+            QSqlQuery tableCountQuery(QSqlDatabase::database("defaultConnection"));
+            QString tableCountQuerySQL = QLatin1String(R"(
+                        SELECT COUNT(*) FROM sqlite_master WHERE type='table'
+                    )");
+            tableCountQuery.prepare(tableCountQuerySQL);
+            tableCountQuery.exec();
+            tableCountQuery.next();
+            qint64 totalTableCount = tableCountQuery.value(0).toInt();
+
+        QProgressDialog progress("Dumping Tables...", "Cancel", 0, totalTableCount, this);
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setMinimumDuration(0); // This will make the dialog appear immediately
+        progress.setValue(0);
+        qint64 tablesDumped = 0;
+
         // Apply schema and data to the file-based database
         QSqlQuery fileDbQuery(fileDb);
-        while (query.next()) {
-            QString tableName = query.value(0).toString();
-            QString createTableSQL = query.value(1).toString();
+        while (queryTableList.next()) {
+            QString tableName = queryTableList.value(0).toString();
+            QString createTableSQL = queryTableList.value(1).toString();
+
+            progress.setLabelText(QString("Dumping table <br/> %1 <br/><br/> %2 table(s) dumped out of %3" ).arg(tableName, QLocale().toString(tablesDumped), QLocale().toString(totalTableCount)) );
+            progress.setValue(tablesDumped);
+
+            QCoreApplication::processEvents();
 
             //Process table copy, except for the system table sqlite_sequence
             if (tableName != "sqlite_sequence")
             {
+                qDebug()<<tablesDumped;
                 // Create table in file-based database
                 if (!fileDbQuery.exec(createTableSQL)) {
                     QMessageBox::warning(nullptr, "Database Error", "Error creating table in file-based database: " + fileDbQuery.lastError().text());
@@ -229,6 +253,12 @@
                 }
                 fileDbQuery.exec("COMMIT");
             }
+
+            if (progress.wasCanceled())
+                return false;
+
+            tablesDumped += 1;
+            progress.setValue(tablesDumped);
         }
 
         fileDb.close();

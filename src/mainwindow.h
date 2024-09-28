@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QButtonGroup>
+#include <QProgressDialog>
 //QtCore
 #include <QFile>
 #include <QFileInfo>

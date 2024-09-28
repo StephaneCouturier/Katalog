@@ -32,7 +32,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "database.h"
-#include <QProgressDialog>
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()
@@ -197,6 +196,7 @@
                     SELECT SUM(device_total_file_count)
                     FROM device
                     WHERE device_type ="Catalog"
+                    AND device_group_id = 0
                 )");
                 fileCountQuery.prepare(fileCountQuerySQL);
                 fileCountQuery.exec();
@@ -223,7 +223,7 @@
                     QString deviceName = query.value(1).toString();
                     qint64 deviceFileCount = query.value(2).toInt();
 
-                    progress.setLabelText(QString("Loading catalog prior to export<br/> %1 <br/><br/> %2 files loaded out of %3" ).arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFileCount)) );
+                    progress.setLabelText(QString("Loading all catalogs prior to export<br/> %1 <br/><br/> %2 files loaded out of %3" ).arg(deviceName, QLocale().toString(filesLoaded), QLocale().toString(totalFileCount)) );
 
                     tempCatalogDevice.ID = deviceId;
                     tempCatalogDevice.loadDevice("defaultConnection");
