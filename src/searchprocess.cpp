@@ -4,7 +4,6 @@
 
 #include "searchprocess.h"
 #include "device.h"
-#include "src/filesview.h"
 #include <QApplication>
 #include <QMessageBox>
 #include <QSqlQuery>
@@ -31,6 +30,14 @@ void SearchProcess::run()
         emit searchStopped();
         return;
     }
+
+    //Clear search results
+    mainWindow->newSearch->fileNames.clear();
+    mainWindow->newSearch->filePaths.clear();
+    mainWindow->newSearch->fileSizes.clear();
+    mainWindow->newSearch->fileDateTimes.clear();
+    mainWindow->newSearch->fileCatalogs.clear();
+    mainWindow->newSearch->fileCatalogIDs.clear();
 
     //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
 
@@ -587,6 +594,7 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
                 mainWindow->newSearch->fileSizes.append(lineFileSize);
                 mainWindow->newSearch->fileDateTimes.append(lineFileDatetime);
                 mainWindow->newSearch->fileCatalogs.append(sourceDirectory);
+                mainWindow->newSearch->fileCatalogIDs.append(0);
             }
         }
         else{
@@ -611,6 +619,7 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
                 mainWindow->newSearch->fileSizes.append(lineFileSize);
                 mainWindow->newSearch->fileDateTimes.append(lineFileDatetime);
                 mainWindow->newSearch->fileCatalogs.append(sourceDirectory);
+                mainWindow->newSearch->fileCatalogIDs.append(0);
             }
         }
     }
@@ -697,21 +706,6 @@ void SearchProcess::processSearchResults()
             mainWindow->newSearch->fileSizes.append(0);
             mainWindow->newSearch->fileDateTimes.append("");
         }
-
-        // Populate model with data
-        fileViewModel->caseSensitive = mainWindow->fileSortCaseSensitive;
-        fileViewModel->setSourceModel(mainWindow->newSearch);
-    }
-
-    //Populate model with Files (if the Folder option is not selected)
-    else
-    {
-        // Populate model with data
-        fileViewModel->caseSensitive = mainWindow->fileSortCaseSensitive;
-        fileViewModel->setSourceModel(mainWindow->newSearch);
-        if (mainWindow->newSearch->searchInConnectedChecked == true){
-            fileViewModel->setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("MainWindow", "Search Directory"));
-        }
     }
 
     //Process DUPLICATES -------------------------------
@@ -748,11 +742,9 @@ void SearchProcess::processSearchResults()
         insertQuery.prepare(insertSQL);
 
         //loop through the result list and populate database
-
         int rows = mainWindow->newSearch->rowCount();
 
         for (int i=0; i<rows; i++) {
-
             //Append data to the database
             insertQuery.bindValue(":file_name",         mainWindow->newSearch->index(i,0).data().toString());
             insertQuery.bindValue(":file_size",         mainWindow->newSearch->index(i,1).data().toString());
@@ -824,9 +816,6 @@ void SearchProcess::processSearchResults()
             mainWindow->newSearch->fileCatalogs.append(duplicatesQuery.value(4).toString());
             mainWindow->newSearch->fileCatalogIDs.append(duplicatesQuery.value(5).toInt());
         }
-
-        //Update search statistics
-        mainWindow->newSearch->filesFoundNumber = fileViewModel->rowCount();
     }
 
     //Process DIFFERENCES -------------------------------
@@ -838,6 +827,9 @@ void SearchProcess::processSearchResults()
              or mainWindow->newSearch->differencesOnDate == true)){
 
         //Load Search results into the database
+        QSqlQuery transactionQuery(QSqlDatabase::database(connectionName));
+        transactionQuery.exec("BEGIN TRANSACTION");
+
         //Clear database
         QSqlQuery deleteQuery(QSqlDatabase::database(connectionName));
         deleteQuery.exec("DELETE FROM filetemp");
@@ -992,6 +984,8 @@ void SearchProcess::processSearchResults()
         if (!differencesQuery.exec())
             qDebug() << "DEBUG: differencesQuery failed:" << differencesQuery.lastError();
 
+        transactionQuery.exec("COMMIT");
+
         //Recapture file results for Stats
         mainWindow->newSearch->fileNames.clear();
         mainWindow->newSearch->fileSizes.clear();
@@ -1017,9 +1011,6 @@ void SearchProcess::processSearchResults()
     mainWindow->newSearch->filesFoundMaxSize = 0;
     mainWindow->newSearch->filesFoundMinDate = "";
     mainWindow->newSearch->filesFoundMaxDate = "";
-
-    //Number of files found
-    mainWindow->newSearch->filesFoundNumber = fileViewModel->rowCount();
 
     //Total size of files found
     qint64 sizeItem;

@@ -783,16 +783,16 @@ void Device::updateActive(QString connectionName)
         active = false;
     }
 
-    QSqlQuery query(QSqlDatabase::database(connectionName));
-    QString querySQL = QLatin1String(R"(
+    QSqlQuery queryUpdateActive(QSqlDatabase::database(connectionName));
+    QString queryUpdateActiveSQL = QLatin1String(R"(
                         UPDATE device
                         SET    device_active =:device_active
                         WHERE  device_id =:device_id
                     )");
-    query.prepare(querySQL);
-    query.bindValue(":device_active", active);
-    query.bindValue(":device_id", ID);
-    query.exec();
+    queryUpdateActive.prepare(queryUpdateActiveSQL);
+    queryUpdateActive.bindValue(":device_active", active);
+    queryUpdateActive.bindValue(":device_id", ID);
+    queryUpdateActive.exec();
 }
 
 void Device::saveStatistics(QDateTime dateTime, QString requestSource)

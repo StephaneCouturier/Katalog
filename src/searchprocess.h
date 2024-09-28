@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QThread>
 #include "mainwindow.h"
-#include "filesview.h"
 
 class SearchProcess : public QThread
 {
@@ -13,7 +12,6 @@ class SearchProcess : public QThread
 public:
     explicit SearchProcess(MainWindow *mainWindow, QString databaseMode, QObject *parent = nullptr);
     void stop();
-    FilesView *fileViewModel = new FilesView(this);
     QString databaseMode;
     QString connectionName;
 
