@@ -735,7 +735,7 @@
                         if (ui->Search_checkBox_Differences->isChecked() == true){
 
                             //Load diffDevice1 files
-                            diffDevice1->ID = ui->Search_comboBox_DifferencesCatalog1->currentData().toInt();
+                            diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
                             diffDevice1->loadDevice("defaultConnection");
 
                             if(diffDevice1->type == "Catalog") {
@@ -753,7 +753,7 @@
                             }
 
                             //Load diffDevice2 files
-                            diffDevice2->ID = ui->Search_comboBox_DifferencesCatalog2->currentData().toInt();
+                            diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
                             diffDevice2->loadDevice("defaultConnection");
 
                             if(diffDevice2->type == "Catalog") {
@@ -1925,13 +1925,24 @@
                 ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
                 ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
                 ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
-                ui->Search_widget_DifferencesCatalogs->setHidden(true);
                 ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
                 ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
                 ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
                 ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
-                ui->Search_comboBox_DifferencesCatalog1->setCurrentText(search->differencesCatalog1);
-                ui->Search_comboBox_DifferencesCatalog2->setCurrentText(search->differencesCatalog2);
+                //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
+                for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
+                    if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
+                        ui->Search_comboBox_DifferencesDevice1->setCurrentIndex(i);
+                        break;
+                    }
+                }
+                for (int i = 0; i < ui->Search_comboBox_DifferencesDevice2->count(); i++) {
+                    if (ui->Search_comboBox_DifferencesDevice2->itemData(i).toInt() == search->differencesDeviceID2) {
+                        ui->Search_comboBox_DifferencesDevice2->setCurrentIndex(i);
+                        break;
+                    }
+                }
+                //ui->Search_comboBox_DifferencesCatalog2->setCurrentText(search->differencesCatalog2);
 
                 //Folder criteria
                 ui->Search_checkBox_FolderCriteria->setChecked(search->searchOnFolderCriteria);
@@ -1978,14 +1989,9 @@
                 newSearch->differencesOnName        = ui->Search_checkBox_DifferencesName->checkState();
                 newSearch->differencesOnSize        = ui->Search_checkBox_DifferencesSize->checkState();
                 newSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
-
-                newSearch->differencesCatalog1      = ui->Search_comboBox_DifferencesCatalog1->currentText();
-                newSearch->differencesCatalog2      = ui->Search_comboBox_DifferencesCatalog2->currentText();
-
-                newSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesCatalog1->currentData().toInt();
-                newSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesCatalog2->currentData().toInt();
-
-                newSearch->differencesCatalogs  << newSearch->differencesCatalog1 << newSearch->differencesCatalog2;
+                newSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+                newSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+                newSearch->differencesDevices << QString::number(newSearch->differencesDeviceID1) << QString::number(newSearch->differencesDeviceID2);
 
                 newSearch->searchOnFolderCriteria   = ui->Search_checkBox_FolderCriteria->isChecked();
                 newSearch->showFoldersOnly          = ui->Search_checkBox_ShowFolders->isChecked();
@@ -2001,8 +2007,8 @@
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
-            ui->Search_comboBox_DifferencesCatalog1->clear();
-            ui->Search_comboBox_DifferencesCatalog2->clear();
+            ui->Search_comboBox_DifferencesDevice1->clear();
+            ui->Search_comboBox_DifferencesDevice2->clear();
 
             Device loopDevice;
             foreach(int ID, selectedDevice->deviceIDList)
@@ -2010,8 +2016,8 @@
                 loopDevice.ID = ID;
                 loopDevice.loadDevice("defaultConnection");
                 //if(loopDevice.type == "Catalog"){
-                    ui->Search_comboBox_DifferencesCatalog1->addItem(loopDevice.name,loopDevice.ID);
-                    ui->Search_comboBox_DifferencesCatalog2->addItem(loopDevice.name,loopDevice.ID);
+                    ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
+                    ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
                 //}
             }
         }
@@ -2556,9 +2562,9 @@
 
         // Implement the getter methods
         int MainWindow::getDifferencesCatalog1ID() const {
-            return ui->Search_comboBox_DifferencesCatalog1->currentData().toInt();
+            return ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
         }
 
         int MainWindow::getDifferencesCatalog2ID() const {
-            return ui->Search_comboBox_DifferencesCatalog2->currentData().toInt();
+            return ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }

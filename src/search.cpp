@@ -157,10 +157,10 @@ void Search::loadSearchHistoryCriteria()
         differencesOnName      = query.value(23).toBool();
         differencesOnSize      = query.value(24).toBool();
         differencesOnDate      = query.value(25).toBool();
-        differencesCatalogs    = query.value(26).toString().split("||");
-        if (differencesCatalogs.length()>1){
-            differencesCatalog1 = differencesCatalogs[0];
-            differencesCatalog2 = differencesCatalogs[1];
+        differencesDevices    = query.value(26).toString().split("||");
+        if (differencesDevices.length()>1){
+            differencesDeviceID1 = differencesDevices[0].toInt();
+            differencesDeviceID2 = differencesDevices[1].toInt();
         }
         searchOnFolderCriteria  = query.value(27).toBool();
         showFoldersOnly         = query.value(28).toBool();
@@ -310,7 +310,7 @@ void Search::insertSearchHistoryToTable(QString connectionName)
     query.bindValue(":differences_name",          differencesOnName);
     query.bindValue(":differences_size",          differencesOnSize);
     query.bindValue(":differences_date_modified", differencesOnDate);
-    query.bindValue(":differences_catalogs",      differencesCatalog1 + "||" + differencesCatalog2);
+    query.bindValue(":differences_catalogs",      QString::number(differencesDeviceID1) + "||" + QString::number(differencesDeviceID2));
     query.bindValue(":folder_criteria_checked",   searchOnFolderCriteria);
     query.bindValue(":show_folders",              showFoldersOnly);
     query.bindValue(":tag_checked",               searchOnTags);

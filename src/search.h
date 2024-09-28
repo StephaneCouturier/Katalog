@@ -88,9 +88,7 @@ public:
     bool differencesOnName;
     bool differencesOnSize;
     bool differencesOnDate;
-    QStringList differencesCatalogs; //DEV: history: store DeviceID
-    QString differencesCatalog1;//DEV: history: store DeviceID
-    QString differencesCatalog2;//DEV: history: store DeviceID
+    QStringList differencesDevices;
     int differencesDeviceID1;
     int differencesDeviceID2;
 
