@@ -2826,7 +2826,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <number>8</number>
                         </property>
                         <item>
-                         <widget class="QWidget" name="Search_widget_DifferencesCatalogs" native="true">
+                         <widget class="QWidget" name="Search_widget_DifferencesDevices" native="true">
                           <layout class="QHBoxLayout" name="horizontalLayout_2">
                            <property name="spacing">
                             <number>0</number>

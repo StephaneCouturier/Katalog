@@ -236,7 +236,7 @@
                 ui->Search_checkBox_DifferencesName->setEnabled(true);
                 ui->Search_checkBox_DifferencesSize->setEnabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setEnabled(true);
-                ui->Search_widget_DifferencesCatalogs->setHidden(false);
+                ui->Search_widget_DifferencesDevices->setHidden(false);
                 ui->Search_checkBox_ShowFolders->setChecked(false);
                 ui->Search_checkBox_Duplicates->setChecked(false);
                 ui->Search_checkBox_DuplicatesName->setEnabled(false);
@@ -245,7 +245,7 @@
                 ui->Search_treeView_CatalogsFound->setEnabled(false);
             }
             else{
-                ui->Search_widget_DifferencesCatalogs->setHidden(true);
+                ui->Search_widget_DifferencesDevices->setHidden(true);
                 ui->Search_checkBox_DifferencesName->setDisabled(true);
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);

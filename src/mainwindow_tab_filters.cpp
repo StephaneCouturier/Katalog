@@ -83,6 +83,8 @@
             //Prevent uncheck if SearchInConnectedDrives is also unchecked
             ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
         }
+
+        ui->Search_checkBox_Differences->setEnabled(true);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_checkBox_SearchInConnectedDrives_toggled(bool checked)
@@ -111,6 +113,13 @@
             //Prevent uncheck if SearchInCatalogs is also unchecked
             ui->Filters_checkBox_SearchInConnectedDrives->setChecked(true);
         }
+
+        //Hide elements for search on Differences
+        ui->Search_checkBox_Differences->setChecked(false);
+        ui->Search_checkBox_DifferencesName->setChecked(false);
+        ui->Search_checkBox_DifferencesSize->setChecked(false);
+        ui->Search_checkBox_DifferencesDateModified->setChecked(false);
+        ui->Search_checkBox_Differences->setEnabled(false);
     }
     //----------------------------------------------------------------------
 
