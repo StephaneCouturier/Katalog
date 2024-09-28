@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.3";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-09-11";
+        releaseDate     = "2024-09-28";
         developmentMode = false;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
@@ -115,6 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->Statistics_calendarWidget->hide();
             ui->Devices_widget_Edit->hide();
             ui->Devices_widget_ReplaceCatalogsOption->hide();
+            ui->Search_widget_DifferencesDevices->hide();
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
