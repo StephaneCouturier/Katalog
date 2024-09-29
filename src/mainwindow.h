@@ -430,7 +430,13 @@ class MainWindow : public QMainWindow
             void on_Search_checkBox_Tags_toggled(bool checked);
             void on_Search_checkBox_Type_toggled(bool checked);
             void on_Search_checkBox_Duplicates_toggled(bool checked);
+            void on_Search_checkBox_DuplicatesName_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1);
             void on_Search_checkBox_Differences_toggled(bool checked);
+            void on_Search_checkBox_DifferencesName_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1);
+            void on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1);
 
             void on_Search_checkBox_ShowFolders_toggled(bool checked);
             void on_Search_checkBox_FolderCriteria_toggled(bool checked);

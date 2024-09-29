@@ -228,6 +228,40 @@
                 ui->Search_checkBox_DuplicatesSize->setDisabled(true);
                 ui->Search_checkBox_DuplicatesDateModified->setDisabled(true);
             }
+
+            //Ensure at least 1 checkbox is checked, by default the first one
+            if(checked==1 and ui->Search_checkBox_DuplicatesName->isChecked() == false and
+               ui->Search_checkBox_DuplicatesSize->isChecked() == false and
+               ui->Search_checkBox_DuplicatesDateModified->isChecked() == false){
+                ui->Search_checkBox_DuplicatesName->setChecked(true);
+            }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesName_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if size and date are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DuplicatesName->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesSize_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if name and date are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesDateModified->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DuplicatesSize->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DuplicatesDateModified_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if name and size are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DuplicatesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DuplicatesSize->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DuplicatesDateModified->setCheckState(Qt::Checked);
+                }
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_checkBox_Differences_toggled(bool checked)
@@ -250,6 +284,40 @@
                 ui->Search_checkBox_DifferencesSize->setDisabled(true);
                 ui->Search_checkBox_DifferencesDateModified->setDisabled(true);
                 ui->Search_treeView_CatalogsFound->setEnabled(true);
+            }
+
+            //ensure at least 1 checkbox is checked, by default the first one
+            if(checked==1 and ui->Search_checkBox_DifferencesName->isChecked() == false and
+                ui->Search_checkBox_DifferencesSize->isChecked() == false and
+                ui->Search_checkBox_DifferencesDateModified->isChecked() == false){
+                ui->Search_checkBox_DifferencesName->setChecked(true);
+            }
+        }
+        void MainWindow::on_Search_checkBox_DifferencesName_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if size and date are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DifferencesName->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DifferencesSize_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if name and date are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesDateModified->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DifferencesSize->setCheckState(Qt::Checked);
+                }
+            }
+        }
+        void MainWindow::on_Search_checkBox_DifferencesDateModified_checkStateChanged(const Qt::CheckState &arg1)
+        {
+            //Leave it checked if name and size are unchecked
+            if(arg1==Qt::Unchecked){
+                if(ui->Search_checkBox_DifferencesName->checkState()==Qt::Unchecked && ui->Search_checkBox_DifferencesSize->checkState()==Qt::Unchecked){
+                    ui->Search_checkBox_DifferencesDateModified->setCheckState(Qt::Checked);
+                }
             }
         }
         //----------------------------------------------------------------------
