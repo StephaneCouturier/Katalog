@@ -1464,7 +1464,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                     device_date_updated,
                     0 AS level
                   FROM device
-                  WHERE device_id = 0 OR device_id = 1
+                  WHERE device_parent_id = 0
 
                   UNION ALL
 
@@ -1588,7 +1588,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         device_date_updated,
                         0 AS level
                       FROM device
-                      WHERE device_id <> 1
+                      WHERE device_group_id <> 0
 
                       UNION ALL
 
