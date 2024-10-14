@@ -1444,23 +1444,66 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
 
+
     querySQL = QLatin1String(R"(
-                    SELECT  device_id,
-                            device_parent_id,
-                            device_name,
-                            device_type,
-                            device_external_id,
-                            device_path,
-                            device_total_file_size,
-                            device_total_file_count,
-                            device_total_space,
-                            device_free_space,
-                            device_active,
-                            device_group_id,
-                            device_date_updated,
-                            device_order
-                    FROM  device
-                )");
+
+                WITH RECURSIVE device_tree AS (
+                  SELECT
+                    device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_external_id,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_group_id,
+                    device_date_updated,
+                    0 AS level
+                  FROM device
+                  WHERE device_id = 0 OR device_id = 1
+
+                  UNION ALL
+
+                  SELECT
+                    child.device_id,
+                    child.device_parent_id,
+                    child.device_name,
+                    child.device_type,
+                    child.device_external_id,
+                    child.device_path,
+                    child.device_total_file_size,
+                    child.device_total_file_count,
+                    child.device_total_space,
+                    child.device_free_space,
+                    child.device_active,
+                    child.device_group_id,
+                    child.device_date_updated,
+                    parent.level + 1 AS level
+                  FROM device_tree parent
+                  JOIN device child ON child.device_parent_id = parent.device_id
+                )
+                SELECT
+                    device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_external_id,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_group_id,
+                    device_date_updated,
+                    level
+                FROM device_tree
+
+            )");
 
     if (ui->Devices_checkBox_DisplayPhysicalGroup->isChecked() == true and
         ui->Devices_checkBox_DisplayVirtualGroups->isChecked() == false) {
@@ -1481,7 +1524,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         device_free_space,
                         device_active,
                         device_group_id,
-                        device_date_updated
+                        device_date_updated,
+                        0 AS level
                       FROM device
                       WHERE device_id = 1
 
@@ -1500,7 +1544,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         child.device_free_space,
                         child.device_active,
                         child.device_group_id,
-                        child.device_date_updated
+                        child.device_date_updated,
+                        parent.level + 1 AS level
                       FROM device_tree parent
                       JOIN device child ON child.device_parent_id = parent.device_id
                     )
@@ -1517,7 +1562,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         device_free_space,
                         device_active,
                         device_group_id,
-                        device_date_updated
+                        device_date_updated,
+                        level
                     FROM device_tree
                 )");
     }
@@ -1539,7 +1585,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         device_free_space,
                         device_active,
                         device_group_id,
-                        device_date_updated
+                        device_date_updated,
+                        0 AS level
                       FROM device
                       WHERE device_id <> 1
 
@@ -1558,7 +1605,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         child.device_free_space,
                         child.device_active,
                         child.device_group_id,
-                        child.device_date_updated
+                        child.device_date_updated,
+                        parent.level + 1 AS level
                       FROM device_tree parent
                       JOIN device child ON child.device_parent_id = parent.device_id
                       WHERE parent.device_id <> 1
@@ -1576,7 +1624,8 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                         device_free_space,
                         device_active,
                         device_group_id,
-                        device_date_updated
+                        device_date_updated,
+                        level
                     FROM device_tree
                 )");
     }
@@ -1599,7 +1648,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                 )");
     }
 
-    querySQL +=" ORDER BY device_type DESC, device_parent_id ASC, device_id ASC ";
+    querySQL +=" ORDER BY level ASC, device_type DESC, device_parent_id ASC, device_id ASC; ";
     query.prepare(querySQL);
     query.exec();
 
