@@ -2235,15 +2235,15 @@
                 QString fileNameWithoutExtension = tr("search_results") + "_" + timestamp;
                 Device *newDevice = new Device();
 
+                //Export to new Device/Catalog
                 if ( result ==QMessageBox::Yes){
 
                     fileExtension="idx";
 
-                    //Verify if a device name "Search Results" exist or create one as parent for search results
+                    //Verify if a virtual device name "Search Results" exists, or create one as parent for search results
                     Device searchResultsHolder;
                     searchResultsHolder.name = tr("Search Results");
                     searchResultsHolder.getIDFromDeviceName();
-
                     if(searchResultsHolder.ID>0)
                         newDevice->parentID = searchResultsHolder.ID;
                     else{
@@ -2255,24 +2255,21 @@
                         newDevice->parentID = searchResultsHolder.ID;
                     }
 
-                    //Add Device entry
+                    //Add Device entry and populate values
                     newDevice->generateDeviceID();
                     newDevice->type = "Catalog";
                     newDevice->name = fileNameWithoutExtension;
-
-                    //Continue populating values
-
-                    newDevice->parentID = searchResultsHolder.ID;
+                        //newDevice->parentID = searchResultsHolder.ID;
                     newDevice->catalog->generateID();
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
-                    newDevice->path = newSearch->searchDateTime;
+                    newDevice->path = newSearch->searchDateTime; //passing a date instead of a path, as there is not 1 path for a given search that can be multi-catalog
                     newDevice->insertDevice();
 
-                    //Get inputs and set values of the newCatalog
-                    newDevice->catalog->sourcePath = newSearch->searchDateTime;//passing a date instead oo a path, as there is no path for a given search that can be multi-catalog
+                    //Get inputs and set values of the new Catalog
+                    newDevice->catalog->sourcePath = newSearch->searchDateTime; //passing a date instead of a path, as there is not 1 path for a given search that can be multi-catalog
                     newDevice->catalog->appVersion = currentVersion;
-
+                    newDevice->catalog->sourcePath = "EXPORT";
                     //Save new catalog
                     newDevice->catalog->insertCatalog();
                     collection->saveDeviceTableToFile();
@@ -2312,7 +2309,6 @@
                     }
                     else //for catalog
                         fullFileName = newDevice->name;
-
                 }
                 else if(collection->databaseMode=="Host"){//Use user's home folder
                     QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
@@ -2324,22 +2320,98 @@
                 selectedDevice->catalog->name = selectedDevice->name;
                 QFile exportFile(fullFileName);
 
-                //Export search results to file
+                //Export search results to file table
+                if ( result ==QMessageBox::Yes){
+                    //Export list of files to the "file" table
+                    for (int i = 0; i < newSearch->fileNames.size(); ++i)
+                    {
+                        //Prepare insert query for file
+                        QSqlQuery insertFileQuery(QSqlDatabase::database("defaultConnection"));
+                        QString insertFileSQL = QLatin1String(R"(
+                                                    INSERT INTO file (
+                                                                    file_catalog_id,
+                                                                    file_name,
+                                                                    file_folder_path,
+                                                                    file_size,
+                                                                    file_date_updated,
+                                                                    file_catalog,
+                                                                    file_full_path
+                                                                    )
+                                                    VALUES(
+                                                                    :file_catalog_id,
+                                                                    :file_name,
+                                                                    :file_folder_path,
+                                                                    :file_size,
+                                                                    :file_date_updated,
+                                                                    :file_catalog,
+                                                                    :file_full_path )
+                                                    )");
+                        insertFileQuery.prepare(insertFileSQL);
+
+                        //Prepare insert query for folder
+                        QSqlQuery insertFolderQuery(QSqlDatabase::database("defaultConnection"));
+                        QString insertFolderSQL = QLatin1String(R"(
+                                                    INSERT OR IGNORE INTO folder(
+                                                        folder_catalog_id,
+                                                        folder_path
+                                                     )
+                                                    VALUES(
+                                                        :folder_catalog_id,
+                                                        :folder_path)
+                                                    )");
+                        insertFolderQuery.prepare(insertFolderSQL);
+
+                        //Insert root folder (so that it is displayed even when there are no sub-folders)
+                        insertFolderQuery.prepare(insertFolderSQL);
+                        insertFolderQuery.bindValue(":folder_catalog_id", newDevice->catalog->ID);
+                        insertFolderQuery.bindValue(":folder_path", newDevice->catalog->sourcePath);
+                        insertFolderQuery.exec();
+
+                        //Insert dirs
+                            insertFolderQuery.prepare(insertFolderSQL);
+                            insertFolderQuery.bindValue(":folder_catalog_id", newDevice->catalog->ID);
+                            insertFolderQuery.bindValue(":folder_path", newSearch->filePaths[i]);
+                            insertFolderQuery.exec();
+
+                        //Insert files
+                            //QFile file(newSearch->filePaths[i]);
+                            insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
+                            insertFileQuery.bindValue(":file_name",         newSearch->fileNames[i]);
+                            insertFileQuery.bindValue(":file_size",         QString::number(newSearch->fileSizes[i]));
+                            insertFileQuery.bindValue(":file_folder_path",  newSearch->filePaths[i]);
+                            insertFileQuery.bindValue(":file_date_updated", newSearch->fileDateTimes[i]);
+                            insertFileQuery.bindValue(":file_catalog",      newSearch->fileCatalogs[i]);
+                            insertFileQuery.bindValue(":file_full_path",    newSearch->filePaths[i]);
+                            insertFileQuery.exec();
+
+                            //Media File Metadata
+                            //DEV: includeMetadata
+                            //     if(includeMetadata == true){
+                            //         setMediaFile(entryPath);
+                            //     }
+                    }
+                }
+
+                //Export search results to file table and the export file
                 if (exportFile.open(QFile::WriteOnly | QFile::Text)) {
 
                     QTextStream stream(&exportFile);
 
+                    //Export file metadata
                     for (int i = 0; i < catalogMetadata.size(); ++i)
                     {
-                                    stream << catalogMetadata[i] << '\n';
+                        stream << catalogMetadata[i] << '\n';
                     }
+
+                    //Export list of files
                     for (int i = 0; i < newSearch->fileNames.size(); ++i)
                     {
-                                    QString line = newSearch->filePaths[i] + "/" + newSearch->fileNames[i] + "\t"
-                                                   + QString::number(newSearch->fileSizes[i]) + "\t"
-                                                   + newSearch->fileDateTimes[i] + "\t"
-                                                   + newSearch->fileCatalogs[i];
-                                    stream << line << '\n';
+                        //Export to file
+                        QString line = newSearch->filePaths[i] + "/" + newSearch->fileNames[i] + "\t"
+                                       + QString::number(newSearch->fileSizes[i]) + "\t"
+                                       + newSearch->fileDateTimes[i] + "\t"
+                                       + newSearch->fileCatalogs[i];
+                        stream << line << '\n';
                     }
                 }
                 exportFile.close();
@@ -2595,6 +2667,10 @@
             newSearch->insertSearchHistoryToTable("defaultConnection");
             collection->saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
+
+            //Enable Export
+            ui->Search_pushButton_ProcessResults->setEnabled(true);
+            ui->Search_comboBox_SelectProcess->setEnabled(true);
 
             QApplication::restoreOverrideCursor();
         }
