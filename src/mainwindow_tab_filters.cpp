@@ -289,6 +289,8 @@
         //Reset selected values
         selectedDevice = new Device();
         selectedDevice->type = tr("All");
+        selectedDevice->ID = 0;
+        selectedDevice->loadDevice("defaultConnection");
 
         //Reset displayed values
         ui->Filters_label_DisplayStorage->setText(tr("All"));
@@ -374,7 +376,7 @@
     }
     //----------------------------------------------------------------------
     void MainWindow::displaySelectedDeviceName(){
-        if ( selectedDevice->type == "" )
+        if ( selectedDevice->type == "" or selectedDevice->type == tr("All") )
         {
             ui->Filters_label_DisplayDevice->setText(tr("All"));
             ui->Filters_label_DisplayStorage->setText(tr("All"));
