@@ -42,19 +42,19 @@
         //Buttons and other changes
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
-            if(collection->databaseMode !="Memory"){
-                searchFilesStoppable();
-            }
-            else
+            // if(collection->databaseMode !="Memory"){
+            //     searchFilesStoppable();
+            // }
+            // else
                 searchFiles();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            if(collection->databaseMode !="Memory"){
-                searchFilesStoppable();
-            }
-            else
+            // if(collection->databaseMode !="Memory"){
+            //     searchFilesStoppable();
+            // }
+            // else
                 searchFiles();
         }
         //----------------------------------------------------------------------
@@ -2263,7 +2263,7 @@
                     newDevice->catalog->generateID();
                     newDevice->externalID = newDevice->catalog->ID;
                     newDevice->groupID = 1;
-                    newDevice->path = newSearch->searchDateTime; //passing a date instead of a path, as there is not 1 path for a given search that can be multi-catalog
+                    newDevice->path = "EXPORT"; //there is not 1 path for a given search that can be multi-catalog
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the new Catalog
