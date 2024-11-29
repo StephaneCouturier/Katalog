@@ -225,6 +225,20 @@
                                 parameter_value2    TEXT)
             )");
 
+        // BACKUP MAPPING -------------------------------------------------------
+
+            const auto SQL_CREATE_BACKUP_MAPPING = QLatin1String(R"(
+                        CREATE TABLE IF NOT EXISTS  device_mapping(
+                            mapping_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                            mapping_name                TEXT,
+                            mapping_type                TEXT,
+                            mapping_device_source_id    NUMERIC,
+                            mapping_device_target_id    NUMERIC,
+                            mapping_backup_last_date    TEXT,
+                            mapping_backup_last_size    TEXT)
+            )");
+
+
         // MIGRATION 1.22 to 2.0 ------------------------------------------------
 
             // STATISTICS -----------------------------------------------------------

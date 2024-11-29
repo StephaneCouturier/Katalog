@@ -59,6 +59,7 @@ void Collection::generateCollectionFilesPaths()
     statisticsDeviceFilePath    = folder + "/" + statisticsDeviceFileName;
     parameterFilePath           = folder + "/" + "parameters.csv";
     tagFilePath                 = folder + "/" + "tags.csv";
+    mappingFilePath             = folder + "/" + "device_mapping.csv";
 
     //v1.22 files
     deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
@@ -178,6 +179,7 @@ void Collection::load()
     loadStorageFileToTable();
     loadCatalogFilesToTable();
     loadSearchHistoryFileToTable();
+    loadMappingFileToTable();
 
     //Add a default storage device, to force any new catalog to have one
     insertPhysicalStorageGroup();
@@ -198,6 +200,7 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM search");
         queryDelete.exec("DELETE FROM tag");
         queryDelete.exec("DELETE FROM parameter");
+        queryDelete.exec("DELETE FROM device_mapping");
 
         //MIGRATION 1.22 to 2.0
         queryDelete.exec("DELETE FROM statistics_catalog");
@@ -922,6 +925,72 @@ void Collection::loadTagFileToTable()
         }
     }
 }
+
+void Collection::loadMappingFileToTable()
+{
+    if(databaseMode=="Memory"){
+
+        //Define storage file and prepare stream
+        QFile mappingFile(mappingFilePath);
+        QTextStream textStream(&mappingFile);
+
+        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
+        queryDelete.prepare( "DELETE FROM device_mapping" );
+
+        //Open file or return information
+        if(!mappingFile.open(QIODevice::ReadOnly)) {
+            qDebug() << "loadMappingFileToTable: File not found";
+            return;
+        }
+        //Clear all entries of the current table
+        queryDelete.exec();
+
+        //Skip headers
+        QString line = textStream.readLine();
+
+        while (true)
+        {
+            line = textStream.readLine();
+            if (line.isNull())
+                break;
+            else
+            {    //Split the string with tabulation into a list
+                QStringList fieldList = line.split('\t');
+                QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+                QString insertQuerySQL = QLatin1String(R"(
+                                        INSERT INTO device_mapping(
+                                            mapping_id,
+                                            mapping_name,
+                                            mapping_type,
+                                            mapping_device_source_id,
+                                            mapping_device_target_id,
+                                            mapping_backup_last_date,
+                                            mapping_backup_last_size
+                                        )
+                                        VALUES(
+                                            :mapping_id,
+                                            :mapping_name,
+                                            :mapping_type,
+                                            :mapping_device_source_id,
+                                            :mapping_device_target_id,
+                                            :mapping_backup_last_date,
+                                            :mapping_backup_last_size
+                                        )
+                                        )");
+                insertQuery.prepare(insertQuerySQL);
+                insertQuery.bindValue(":mapping_id",               fieldList[0].toInt());
+                insertQuery.bindValue(":mapping_name",             fieldList[1]);
+                insertQuery.bindValue(":mapping_type",             fieldList[2]);
+                insertQuery.bindValue(":mapping_device_source_id", fieldList[3]);
+                insertQuery.bindValue(":mapping_device_target_id", fieldList[4]);
+                insertQuery.bindValue(":mapping_backup_last_date", fieldList[5]);
+                insertQuery.bindValue(":mapping_backup_last_size", fieldList[6]);
+                insertQuery.exec();
+            }
+        }
+        mappingFile.close();
+    }
+}
 //--------------------------------------------------------------------------
 //File saving ----------------------------------------------------------
 void Collection::saveDeviceTableToFile()
@@ -1319,6 +1388,49 @@ void Collection::saveTagTableToFile()
             }
         }
         tagFile.close();
+    }
+}
+
+void Collection::saveMappingTableToFile()
+{
+    if(databaseMode=="Memory"){
+        //Prepare export file
+        QFile mappingFile(mappingFilePath);
+        QTextStream out(&mappingFile);
+
+        //Prepare header line
+        out << "id"               << "\t"
+            << "name"             << "\t"
+            << "type"             << "\t"
+            << "device_source_id" << "\t"
+            << "device_target_id" << "\t"
+            << "backup_last_date" << "\t"
+            << "backup_last_size" << "\t"
+            << '\n';
+
+        //Get data
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+                                    SELECT *
+                                    FROM device_mapping
+                                )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if(mappingFile.open(QFile::WriteOnly | QFile::Text)) {
+            //Iterate the records and generate lines
+            while (query.next()) {
+                const QSqlRecord record = query.record();
+                for (int i=0, recCount = record.count() ; i<recCount ; ++i){
+                    if (i>0)
+                        out << '\t';
+                    out << record.value(i).toString();
+                }
+                //Write the result to the file
+                out << '\n';
+            }
+        }
+        mappingFile.close();
     }
 }
 

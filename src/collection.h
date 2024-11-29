@@ -76,6 +76,7 @@ public:
     QString statisticsDeviceFilePath;
     QString parameterFilePath;
     QString tagFilePath;
+    QString mappingFilePath;
     void generateCollectionFilesPaths();
     void generateCollectionFiles();
 
@@ -90,6 +91,7 @@ public:
     void loadParameterFileToTable();
     void loadSearchHistoryFileToTable();
     void loadTagFileToTable();
+    void loadMappingFileToTable();
 
     //File saving
     void saveDeviceTableToFile();
@@ -98,6 +100,7 @@ public:
     void saveParameterTableToFile();
     void saveSearchHistoryTableToFile();
     void saveTagTableToFile();
+    void saveMappingTableToFile();
 
     //File deleting
     void deleteCatalogFile(Device *device);

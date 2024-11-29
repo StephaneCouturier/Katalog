@@ -339,6 +339,9 @@ class MainWindow : public QMainWindow
             QString selectedTagListName;
             QString newTagFolderPath;
 
+        //TAB: BackUp
+            void loadBackUpMapping();
+
         //TAB: Settings
             void changeCollectionFolder();
             void changeDatabaseFilePath();
@@ -530,6 +533,9 @@ class MainWindow : public QMainWindow
 
             //Storage
             void on_Storage_pushButton_UpdateStorage_clicked();
+
+            //BackUp
+            void on_BackUp_pushButton_SaveMapping_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();

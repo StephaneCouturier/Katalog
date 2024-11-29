@@ -73,6 +73,7 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mainwindow_setup.cpp \
+    src/mainwindow_tab_backup.cpp \
     src/mainwindow_tab_create.cpp \
     src/mainwindow_tab_device.cpp \
     src/mainwindow_tab_explore.cpp \
