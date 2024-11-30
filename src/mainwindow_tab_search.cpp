@@ -2083,10 +2083,8 @@
             {
                 loopDevice.ID = ID;
                 loopDevice.loadDevice("defaultConnection");
-                //if(loopDevice.type == "Catalog"){
-                    ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
-                    ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
-                //}
+                ui->Search_comboBox_DifferencesDevice1->addItem(loopDevice.name,loopDevice.ID);
+                ui->Search_comboBox_DifferencesDevice2->addItem(loopDevice.name,loopDevice.ID);
             }
         }
         //----------------------------------------------------------------------

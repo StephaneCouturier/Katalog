@@ -34,40 +34,38 @@
 
 void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
 {
+    saveNewMapping();
     collection->saveMappingTableToFile();
+}
+void MainWindow::on_BackUp_pushButton_ReloadLists_clicked()
+{
+    loadBackUpDeviceLists();
 }
 
 void MainWindow::loadBackUpMapping()
 {
-    qDebug() << "loadBackUpMapping";
-
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
 
-    //select data from device_mapping and device tables
-    // query.prepare("SELECT bm.id, "
-    //                   "bm.name, "
-    //                   "d1.name as device_source, "
-    //                   "d2.name as device_target, "
-    //                   "bm.backup_last_date, "
-    //                   "bm.backup_last_size "
-    //               "FROM device_mapping bm, "
-    //                   "device d1, "
-    //                   "device d2 "
-    //               "WHERE bm.device_source_id = d1.id AND bm.device_target_id = d2.id");
+    QString querySQL = QLatin1String(R"(
+                    SELECT
+                        dm.mapping_id,
+                        dm.mapping_name,
+                        dm.mapping_type,
+                        dm.mapping_device_source_id,
+                        d1.device_name,
+                        dm.mapping_device_target_id,
+                        d2.device_name,
+                        dm.mapping_backup_last_date,
+                        dm.mapping_backup_last_size
+                    FROM device_mapping dm,
+                        device d1,
+                        device d2
+                    WHERE dm.mapping_device_source_id = d1.device_id
+                    AND   dm.mapping_device_target_id = d2.device_id
+                                )");
 
-    //select data from device_mapping table joining with device table
-    // query.prepare("SELECT bm.id, "
-    //                   "bm.name, "
-    //                   "d1.name as device_source, "
-    //                   "d2.name as device_target, "
-    //                   "bm.backup_last_date, "
-    //                   "bm.backup_last_size "
-    //               "FROM device_mapping bm "
-    //               "JOIN device d1 ON bm.device_source_id = d1.id "
-    //               "JOIN device d2 ON bm.device_target_id = d2.id");
-
-    query.prepare("SELECT * FROM device_mapping");
+    query.prepare(querySQL);
 
     if (!query.exec())
     {
@@ -82,7 +80,9 @@ void MainWindow::loadBackUpMapping()
     model->setHorizontalHeaderItem(1, new QStandardItem("name"));
     model->setHorizontalHeaderItem(2, new QStandardItem("type"));
     model->setHorizontalHeaderItem(3, new QStandardItem("device_source_id"));
+    model->setHorizontalHeaderItem(3, new QStandardItem("device_source_name"));
     model->setHorizontalHeaderItem(4, new QStandardItem("device_target_id"));
+    model->setHorizontalHeaderItem(4, new QStandardItem("device_target_name"));
     model->setHorizontalHeaderItem(5, new QStandardItem("backup_last_date"));
     model->setHorizontalHeaderItem(6, new QStandardItem("backup_last_size"));
 
@@ -98,10 +98,99 @@ void MainWindow::loadBackUpMapping()
         row.append(new QStandardItem(query.value(5).toString()));
         row.append(new QStandardItem(query.value(6).toString()));
         model->appendRow(row);
-        qDebug() << "row: " << row;
     }
 
     //Load model to the view
     ui->BackUp_tableView_CurrentMappings->setModel(model);
+    ui->BackUp_tableView_CurrentMappings->resizeColumnsToContents();
+    ui->BackUp_tableView_CurrentMappings->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+void MainWindow::loadBackUpDeviceLists()
+{
+    //Create a model for the table
+    QStandardItemModel *model = new QStandardItemModel();
+    model->setColumnCount(3);
+    model->setHorizontalHeaderItem(0, new QStandardItem("parentname"));
+    model->setHorizontalHeaderItem(1, new QStandardItem("id"));
+    model->setHorizontalHeaderItem(2, new QStandardItem("name"));
+
+    //Populate the model from each deviceListTable if type = "Catalog"
+    for (int i = 0; i < selectedDevice->deviceListTable.size(); i++)
+    {
+        if (selectedDevice->deviceListTable.at(i).type == "Catalog")
+        {   //Load device
+            Device tempDevice;
+            tempDevice.ID = selectedDevice->deviceListTable.at(i).ID;
+            tempDevice.loadDevice("defaultConnection");
+
+            //Add row
+            QList<QStandardItem*> row;
+            row.append(new QStandardItem(QString::number(tempDevice.parentID)));
+            row.append(new QStandardItem(QString::number(tempDevice.ID)));
+            row.append(new QStandardItem(tempDevice.name));
+            model->appendRow(row);
+        }
+    }
+
+    //Load model to the view
+    ui->BackUp_treeView_List1->setModel(model);
+    ui->BackUp_treeView_List1->resizeColumnToContents(1);
+    ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //Load model to the view
+    ui->BackUp_treeView_List2->setModel(model);
+    ui->BackUp_treeView_List2->resizeColumnToContents(1);
+    ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+void MainWindow::saveNewMapping()
+{
+    //Get the selected devices from BackUp_treeView_List1 and BackUp_treeView_List2
+    QModelIndexList selectedIndexes1 = ui->BackUp_treeView_List1->selectionModel()->selectedIndexes();
+    QModelIndexList selectedIndexes2 = ui->BackUp_treeView_List2->selectionModel()->selectedIndexes();
+
+    //Get the value of the second column as device id
+    QString device1ID = selectedIndexes1.at(1).data().toString();
+    QString device2ID = selectedIndexes2.at(1).data().toString();
+
+    //Get mapping name
+    QString mappingName = ui->BackUp_lineEdit_Name->text();
+
+    //Insert mapping in the table device_mapping
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                            INSERT INTO device_mapping
+                            (   mapping_name,
+                                mapping_type,
+                                mapping_device_source_id,
+                                mapping_device_target_id
+                            )
+                            VALUES
+                            (   :mapping_name,
+                                :mapping_type,
+                                :mapping_device_source_id,
+                                :mapping_device_target_id
+                            )
+                        )");
+    query.prepare(querySQL);
+    query.bindValue(":mapping_name", mappingName);
+    query.bindValue(":mapping_type", "Backup");
+    query.bindValue(":mapping_device_source_id", device1ID);
+    query.bindValue(":mapping_device_target_id", device2ID);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error inserting device_mapping: " << query.lastError();
+        return;
+    }
+
+    //Reload the mapping table
+    loadBackUpMapping();
+
+    //Clear the mapping name
+    ui->BackUp_lineEdit_Name->clear();
+
+    //Clear the selection
+    ui->BackUp_treeView_List1->clearSelection();
+    ui->BackUp_treeView_List2->clearSelection();
 
 }

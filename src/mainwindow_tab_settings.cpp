@@ -478,9 +478,6 @@
         proxyModel->setSourceModel(model);
         ui->Create_treeView_Excluded->setModel(proxyModel);
 
-        //Load mapping to backup tab
-        loadBackUpMapping();
-
         //Verify Collection version and trigger migration or updates
         if(collection->databaseMode=="Memory"){
             if ( collection->version < collection->appVersion and collection->version < "2.0"){

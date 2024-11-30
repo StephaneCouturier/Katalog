@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.3";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-09-28";
+        releaseDate     = "2024-11-30";
         developmentMode = false;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
@@ -148,6 +148,10 @@ MainWindow::MainWindow(QWidget *parent) :
             loadCollection();
             selectedDevice->loadDevice("defaultConnection");
             filterFromSelectedDevice();
+
+            //Load mapping to backup tab
+            loadBackUpMapping();
+            loadBackUpDeviceLists();
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){

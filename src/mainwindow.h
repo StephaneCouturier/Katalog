@@ -341,6 +341,8 @@ class MainWindow : public QMainWindow
 
         //TAB: BackUp
             void loadBackUpMapping();
+            void loadBackUpDeviceLists();
+            void saveNewMapping();
 
         //TAB: Settings
             void changeCollectionFolder();
@@ -536,6 +538,7 @@ class MainWindow : public QMainWindow
 
             //BackUp
             void on_BackUp_pushButton_SaveMapping_clicked();
+            void on_BackUp_pushButton_ReloadLists_clicked();
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();

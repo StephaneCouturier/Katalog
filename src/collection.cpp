@@ -151,6 +151,29 @@ void Collection::generateCollectionFiles()
                 return;
             }
         }
+
+        //Device mapping
+        QFile newMappingFile(mappingFilePath);
+        if(!newMappingFile.open(QIODevice::ReadOnly)) {
+
+            if (newMappingFile.open(QFile::WriteOnly | QFile::Text)) {
+
+                QTextStream stream(&newMappingFile);
+
+                stream  << "ID"               << "\t"
+                        << "Name"             << "\t"
+                        << "Type"             << "\t"
+                        << "Device source ID" << "\t"
+                        << "Device target ID" << "\t"
+                        << "BackUp Last Date" << "\t"
+                        << "Backup Last Size" << "\t"
+                        << '\n';
+
+                newMappingFile.close();
+
+                return;
+            }
+        }
     }
 }
 

@@ -146,10 +146,7 @@
         if (!q.exec(SQL_CREATE_SEARCH)) return q.lastError();
         if (!q.exec(SQL_CREATE_TAG)) return q.lastError();
         if (!q.exec(SQL_CREATE_PARAMETER)) return q.lastError();
-        if(developmentMode==true){
-            if (!q.exec(SQL_CREATE_BACKUP_MAPPING)) return q.lastError();
-            qDebug()<<"developmentMode: device_mapping table created"<<q.lastError();
-        }
+        if (!q.exec(SQL_CREATE_BACKUP_MAPPING)) return q.lastError();
 
         // Migration
         if (!q.exec(SQL_CREATE_STATISTICS_CATALOG)) return q.lastError();
@@ -498,7 +495,6 @@
     void MainWindow::hideDevelopmentUIItems()
     {
         //Tabs
-            ui->tabWidget->removeTab(6);
             ui->tabWidget->removeTab(8);
 
         //Filter

@@ -7311,51 +7311,64 @@ background: url(:/images/link-h.png) repeat-x center;</string>
           </widget>
           <widget class="QWidget" name="tab_BackUp">
            <attribute name="icon">
-            <iconset theme="QIcon::ThemeIcon::SystemReboot"/>
+            <iconset theme="QIcon::ThemeIcon::MediaPlaylistRepeat"/>
            </attribute>
            <attribute name="title">
             <string>BackUp</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="3" column="0">
+            <item row="4" column="0">
              <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
-              <item row="0" column="0">
+              <item row="2" column="1">
+               <widget class="QLabel" name="BackUp_label_TargetDevice">
+                <property name="text">
+                 <string>Target device</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QTreeView" name="BackUp_treeView_List1"/>
+              </item>
+              <item row="2" column="0">
                <widget class="QLabel" name="BackUp_label_SourceDevice">
                 <property name="text">
                  <string>Source device</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="BackUp_label_TargetDevice">
+              <item row="3" column="1">
+               <widget class="QTreeView" name="BackUp_treeView_List2"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="BackUp_pushButton_ReloadLists">
+                <property name="maximumSize">
+                 <size>
+                  <width>250</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>BackUp device</string>
+                 <string>Reload device lists</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QTreeView" name="BackUp_treeView_List1"/>
-              </item>
-              <item row="1" column="1">
-               <widget class="QTreeView" name="BackUp_treeView_List2"/>
-              </item>
              </layout>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="BackUp_label_CurrentMappings">
-              <property name="text">
-               <string>Current mappings</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="BackUp_label_CreateMapping">
               <property name="text">
                <string>Create New mapping</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
+            <item row="0" column="0">
+             <widget class="QLabel" name="BackUp_label_CurrentMappings">
+              <property name="text">
+               <string>Device mappings</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
              <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Save">
               <item>
                <widget class="QLabel" name="BackUp_label_Name">
@@ -7383,7 +7396,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
                 <property name="text">
-                 <string>Save selected mapping</string>
+                 <string>Create mapping</string>
                 </property>
                </widget>
               </item>
@@ -7393,6 +7406,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QTableView" name="BackUp_tableView_CurrentMappings">
               <property name="lineWidth">
                <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="Line" name="BackUp_line_Separate1">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
