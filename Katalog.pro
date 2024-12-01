@@ -63,6 +63,7 @@ SOURCES += \
     src/catalog.cpp \
     src/collection.cpp \
     src/device.cpp \
+    src/devicemappingview.cpp \
     src/devicetreeview.cpp \
     src/directorytreeitem.cpp \
     src/directorytreemodel.cpp \
@@ -92,6 +93,7 @@ HEADERS += \
     src/collection.h \
     src/database.h \
     src/device.h \
+    src/devicemappingview.h \
     src/devicetreeview.h \
     src/directorytreeitem.h \
     src/directorytreemodel.h \

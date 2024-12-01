@@ -178,7 +178,7 @@ void MainWindow::on_Devices_checkBox_DisplayVirtualGroups_stateChanged(int arg1)
 void MainWindow::on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-    settings.setValue("Devices/DisplayFullTable", arg1);
+    settings.setValue("Devices/DisplayFullDeviceTable", arg1);
     loadDevicesView();
 }
 //--------------------------------------------------------------------------

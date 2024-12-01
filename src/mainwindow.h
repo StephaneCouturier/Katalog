@@ -277,7 +277,7 @@ class MainWindow : public QMainWindow
             bool optionDisplayStorage;
             bool optionDisplayPhysicalGroup;
             bool optionDisplayVirtualGroups;
-            bool optionDisplayFullTable;
+            bool optionDisplayFullDeviceTable;
             int  deviceTreeExpandState;
 
             void addDeviceVirtual();
@@ -340,6 +340,7 @@ class MainWindow : public QMainWindow
             QString newTagFolderPath;
 
         //TAB: BackUp
+            bool optionDisplayFullMappingTable;
             void loadBackUpMapping();
             void loadBackUpDeviceLists();
             void saveNewMapping();
@@ -538,7 +539,10 @@ class MainWindow : public QMainWindow
 
             //BackUp
             void on_BackUp_pushButton_SaveMapping_clicked();
+            void on_BackUp_pushButton_ReloadDeviceMappings_clicked();
             void on_BackUp_pushButton_ReloadLists_clicked();
+            void on_BackUp_pushButton_DeleteSelectedMapping_clicked();
+            void on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1);
 
         //Statistics
             void on_Statistics_pushButton_EditDeviceStatisticsFile_clicked();

@@ -216,7 +216,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->Devices_checkBox_DisplayStorage->setChecked(optionDisplayStorage);
             ui->Devices_checkBox_DisplayPhysicalGroup->setChecked(optionDisplayPhysicalGroup);
             ui->Devices_checkBox_DisplayVirtualGroups->setChecked(optionDisplayVirtualGroups);
-            ui->Devices_checkBox_DisplayFullTable->setChecked(optionDisplayFullTable);
+            ui->Devices_checkBox_DisplayFullTable->setChecked(optionDisplayFullDeviceTable);
             loadParentsList();
 
             QString displayContents = settings.value("Devices/DisplayContents").toString();
@@ -254,6 +254,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //Restore last Search values
             filterFromSelectedDevice();
+
+        //Setup tab: BackUp
+            ui->BackUp_checkBox_DisplayFullTable->setChecked(optionDisplayFullMappingTable);
 
     //Context menu and other slots and signals
             setupFileContextMenus();

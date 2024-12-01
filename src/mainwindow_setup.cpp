@@ -447,8 +447,8 @@
             ui->Statistics_lineEdit_GraphicStartDate->setText(graphicStartDate.toString("yyyy-mm-dd"));
 
             //Restore last sort order for the catalogs and storage
-            lastDevicesSortSection       = settings.value("Devices/lastDevicesSortSection").toInt();
-            lastDevicesSortOrder         = settings.value("Devices/lastDevicesSortOrder").toInt();
+            lastDevicesSortSection        = settings.value("Devices/lastDevicesSortSection").toInt();
+            lastDevicesSortOrder          = settings.value("Devices/lastDevicesSortOrder").toInt();
             lastStorageSortSection        = settings.value("Storage/lastStorageSortSection").toInt();
             lastStorageSortOrder          = settings.value("Storage/lastStorageSortOrder").toInt();
             lastExploreSortSection        = settings.value("Explore/lastExploreSortSection").toInt();
@@ -462,7 +462,8 @@
             optionDisplayVirtualGroups    = settings.value("Devices/DisplayVirtualGroups", true).toBool();
             optionDisplayStorage          = settings.value("Devices/DisplayStorage", true).toBool();
             optionDisplayCatalogs         = settings.value("Devices/DisplayCatalogs", true).toBool();
-            optionDisplayFullTable        = settings.value("Devices/DisplayFullTable", false).toBool();
+            optionDisplayFullDeviceTable  = settings.value("Devices/DisplayFullDeviceTable", false).toBool();
+            optionDisplayFullMappingTable = settings.value("BackUp/DisplayFullMappingTable", false).toBool();
 
             optionDisplayFolders          = settings.value("Explore/DisplayFolders").toBool();
             optionDisplaySubFolders       = settings.value("Explore/DisplaySubFolders").toBool();
