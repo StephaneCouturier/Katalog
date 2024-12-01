@@ -125,37 +125,14 @@ void MainWindow::loadBackUpMapping()
                                 END AS file_count_difference_percentage,
 
                                 (
-                                    CASE
-                                        WHEN ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60) >= 31536000
-                                        THEN
-                                            CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 / 31536000) AS INTEGER) || :years
-                                        ELSE ''
-                                    END ||
-                                    CASE
-                                        WHEN ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 31536000) >= 2592000
-                                        THEN
-                                            CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER) || :months
-                                        ELSE ''
-                                    END ||
-                                    CASE
-                                        WHEN ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 2592000) >= 86400
-                                        THEN
-                                            CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER) || :days
-                                        ELSE ''
-                                    END ||
-                                    CASE
-                                        WHEN ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 86400) >= 3600
-                                        THEN
-                                            CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER) || :hours
-                                        ELSE ''
-                                    END ||
-                                    CASE
-                                        WHEN ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 3600) >= 60
-                                        THEN
-                                            CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER) || :minutes
-                                        ELSE ''
-                                    END ||
-                                    CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 60) AS INTEGER) || :seconds
+                                    PRINTF('%02d:%02d:%02d %02d:%02d:%02d',
+                                        CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 / 31536000) AS INTEGER),
+                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 31536000) / 2592000) AS INTEGER),
+                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 2592000) / 86400) AS INTEGER),
+                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 86400) / 3600) AS INTEGER),
+                                        CAST(ABS(((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 3600) / 60) AS INTEGER),
+                                        CAST(ABS((julianday(d2.device_date_updated) - julianday(d1.device_date_updated)) * 24 * 60 * 60 % 60) AS INTEGER)
+                                    )
                                 ) AS formatted_time_difference
 
                             FROM device_mapping dm,
@@ -170,19 +147,6 @@ void MainWindow::loadBackUpMapping()
                         )");
 
     query.prepare(querySQL);
-    // query.bindValue(":seconds","seconds");
-    // query.bindValue(":minutes","minutes");
-    // query.bindValue(":hours","hours");
-    // query.bindValue(":days","days");
-    // query.bindValue(":months","months");
-    // query.bindValue(":years","years");
-
-    query.bindValue(":seconds","s ");
-    query.bindValue(":minutes","m ");
-    query.bindValue(":hours","h ");
-    query.bindValue(":days","d ");
-    query.bindValue(":months","M ");
-    query.bindValue(":years","y ");
 
     if (!query.exec())
     {
