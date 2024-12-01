@@ -123,9 +123,18 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
 
     case Qt::DecorationRole:
     {
-        //Icon for tree items
-        if( index.column()==4 or index.column()==10 ){
+        //Icon for source catalog
+        if( index.column()==4 ){
             QModelIndex idx = index.sibling(index.row(), 5);
+            if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
+                return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
+            }
+            else
+                return QIcon(QIcon::fromTheme("media-optical"));
+        }
+        //Icon for target catalog
+        if( index.column()==10 ){
+            QModelIndex idx = index.sibling(index.row(), 11);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
