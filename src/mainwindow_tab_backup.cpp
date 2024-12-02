@@ -227,22 +227,26 @@ void MainWindow::loadBackUpDeviceLists(QString list)
     //Create a model for the table
     QStandardItemModel *model = new QStandardItemModel();
     model->setColumnCount(3);
-    model->setHorizontalHeaderItem(0, new QStandardItem("parentID"));
-    model->setHorizontalHeaderItem(1, new QStandardItem("ID"));
-    model->setHorizontalHeaderItem(2, new QStandardItem("Name"));
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Parent Device")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("Device ID")));
+    model->setHorizontalHeaderItem(2, new QStandardItem(tr("Device Name")));
 
     //Populate the model from each deviceListTable if type = "Catalog"
     for (int i = 0; i < selectedDevice->deviceListTable.size(); i++)
     {
         if (selectedDevice->deviceListTable.at(i).type == "Catalog")
-        {   //Load device
+        {   //Load device an its parent
             Device tempDevice;
             tempDevice.ID = selectedDevice->deviceListTable.at(i).ID;
             tempDevice.loadDevice("defaultConnection");
 
+            Device tempParentDevice;
+            tempParentDevice.ID = tempDevice.parentID;
+            tempParentDevice.loadDevice("defaultConnection");
+
             //Add row
             QList<QStandardItem*> row;
-            row.append(new QStandardItem(QString::number(tempDevice.parentID)));
+            row.append(new QStandardItem(tempParentDevice.name));
             row.append(new QStandardItem(QString::number(tempDevice.ID)));
             row.append(new QStandardItem(tempDevice.name));
             model->appendRow(row);
@@ -254,6 +258,7 @@ void MainWindow::loadBackUpDeviceLists(QString list)
         ui->BackUp_treeView_List1->setModel(model);
         ui->BackUp_treeView_List1->resizeColumnToContents(1);
         ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->BackUp_treeView_List1->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 
     //Load model to the Target view
@@ -261,6 +266,7 @@ void MainWindow::loadBackUpDeviceLists(QString list)
         ui->BackUp_treeView_List2->setModel(model);
         ui->BackUp_treeView_List2->resizeColumnToContents(1);
         ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->BackUp_treeView_List2->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 }
 
