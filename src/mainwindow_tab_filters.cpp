@@ -146,6 +146,9 @@
         refreshDifferencesCatalogSelection();
 
         ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
+
+        //Use device's path as default to create a new catalog
+        ui->Create_lineEdit_NewCatalogPath->setText(selectedDevice->path);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Filters_treeView_Devices_customContextMenuRequested(const QPoint &pos)
