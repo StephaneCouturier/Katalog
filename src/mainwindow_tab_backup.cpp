@@ -173,7 +173,7 @@ void MainWindow::loadBackUpMapping()
         querySQL += prepareSQL;
     }
 
-    querySQL +=" ORDER BY d1.device_type DESC, d1.device_parent_id ASC, dm.mapping_name ASC ";
+    querySQL +=" ORDER BY dm.mapping_name ASC ";
     query.prepare(querySQL);
     query.bindValue(":device_id",        selectedDevice->ID);
     query.bindValue(":device_parent_id", selectedDevice->ID);
