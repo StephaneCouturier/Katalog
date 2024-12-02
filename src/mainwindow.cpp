@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.3";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-11-30";
+        releaseDate     = "2024-12-02";
         developmentMode = false;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
@@ -85,10 +85,14 @@ MainWindow::MainWindow(QWidget *parent) :
                 hideDevelopmentUIItems();
             }
 
-            QButtonGroup buttonGroup;
-            buttonGroup.addButton(ui->Devices_radioButton_DeviceTree);
-            buttonGroup.addButton(ui->Devices_radioButton_StorageList);
-            buttonGroup.addButton(ui->Devices_radioButton_CatalogList);
+            QButtonGroup buttonGroupDevices;
+            buttonGroupDevices.addButton(ui->Devices_radioButton_DeviceTree);
+            buttonGroupDevices.addButton(ui->Devices_radioButton_StorageList);
+            buttonGroupDevices.addButton(ui->Devices_radioButton_CatalogList);
+
+            QButtonGroup buttonGroupBackUp;
+            buttonGroupBackUp.addButton(ui->BackUp_radioButton_Source);
+            buttonGroupBackUp.addButton(ui->BackUp_radioButton_Target);
 
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);

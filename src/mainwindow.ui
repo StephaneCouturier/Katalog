@@ -7467,6 +7467,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
+               <widget class="QRadioButton" name="BackUp_radioButton_Source">
+                <property name="text">
+                 <string>based on Sources</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="BackUp_radioButton_Target">
+                <property name="text">
+                 <string>based on Targets</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>

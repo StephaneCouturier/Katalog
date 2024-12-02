@@ -89,6 +89,17 @@ void MainWindow::on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt:
     loadBackUpMapping();
 }
 
+void MainWindow::on_BackUp_radioButton_Source_clicked()
+{
+    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("BackUp/FilterMappingTable", "Source");
+}
+
+void MainWindow::on_BackUp_radioButton_Target_clicked()
+{
+    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+    settings.setValue("BackUp/FilterMappingTable", "Target");
+}
 
 //Methods-----------------------------------------------------------------------
 
@@ -149,28 +160,55 @@ void MainWindow::loadBackUpMapping()
                             AND   dm.mapping_device_target_id = d2.device_id
                         )");
 
-    if (      selectedDevice->type == "Storage" ){
-        querySQL += " AND d1.device_parent_id =:device_parent_id ";
+    if(ui->BackUp_radioButton_Target->isChecked()==true){
+        if (      selectedDevice->type == "Storage" ){
+            querySQL += " AND d2.device_parent_id =:device_parent_id ";
+        }
+        else if ( selectedDevice->type == "Catalog" ){
+            querySQL += " AND d2.device_id =:device_id ";
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL = QLatin1String(R"(
+                                            AND d2.device_id IN (
+                                            WITH RECURSIVE hierarchy AS (
+                                                 SELECT device_id, device_parent_id, device_name
+                                                 FROM device
+                                                 WHERE device_id = :device_id
+                                                 UNION ALL
+                                                 SELECT t.device_id, t.device_parent_id, t.device_name
+                                                 FROM device t
+                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                            )
+                                            SELECT device_id
+                                            FROM hierarchy)
+                                        )");
+            querySQL += prepareSQL;
+        }
     }
-    else if ( selectedDevice->type == "Catalog" ){
-        querySQL += " AND d1.device_id =:device_id ";
-    }
-    else if ( selectedDevice->type == "Virtual" ){
-        QString prepareSQL = QLatin1String(R"(
-                                        AND d1.device_id IN (
-                                        WITH RECURSIVE hierarchy AS (
-                                             SELECT device_id, device_parent_id, device_name
-                                             FROM device
-                                             WHERE device_id = :device_id
-                                             UNION ALL
-                                             SELECT t.device_id, t.device_parent_id, t.device_name
-                                             FROM device t
-                                             JOIN hierarchy h ON t.device_parent_id = h.device_id
-                                        )
-                                        SELECT device_id
-                                        FROM hierarchy)
-                                    )");
-        querySQL += prepareSQL;
+    else{
+        if (      selectedDevice->type == "Storage" ){
+            querySQL += " AND d1.device_parent_id =:device_parent_id ";
+        }
+        else if ( selectedDevice->type == "Catalog" ){
+            querySQL += " AND d1.device_id =:device_id ";
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL = QLatin1String(R"(
+                                            AND d1.device_id IN (
+                                            WITH RECURSIVE hierarchy AS (
+                                                 SELECT device_id, device_parent_id, device_name
+                                                 FROM device
+                                                 WHERE device_id = :device_id
+                                                 UNION ALL
+                                                 SELECT t.device_id, t.device_parent_id, t.device_name
+                                                 FROM device t
+                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                            )
+                                            SELECT device_id
+                                            FROM hierarchy)
+                                        )");
+            querySQL += prepareSQL;
+        }
     }
 
     querySQL +=" ORDER BY dm.mapping_name ASC ";

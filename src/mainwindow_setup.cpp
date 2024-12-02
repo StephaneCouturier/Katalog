@@ -472,6 +472,12 @@
             fileSortCaseSensitive       = settings.value("Settings/FileCaseSensitiveSort").toBool();
             ui->Settings_checkBox_SettingsFileCaseSensitiveSort->setChecked(fileSortCaseSensitive);
 
+            //BackUp Tab
+            QString filterMappingTable = settings.value("BackUp/FilterMappingTable", "Source").toString();
+            if(filterMappingTable=="Target"){
+                ui->BackUp_radioButton_Target->setChecked(true);
+            }
+
             //Restore DEV Settings
             if(developmentMode==true){
                 ui->Settings_comboBox_DatabaseMode->setCurrentText(tr(collection->databaseMode.toStdString().c_str()));
