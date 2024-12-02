@@ -49,10 +49,10 @@ void DeviceMappingView::initializeLists()
     // + 1 list for bold text
 
     //Device fields
-    filecountColumnList <<  7 << 13 << 17;
-    filesizeColumnList  <<  6 << 12 << 15;
-    percentColumnList   << 16 << 18;
-    booleanColumnList   <<  5 << 11;
+    filecountColumnList <<  8 << 15 << 19;
+    filesizeColumnList  <<  7 << 14 << 17;
+    percentColumnList   << 18 << 20;
+    booleanColumnList   <<  5 << 12;
     //boldColumnList      << 0;
 }
 

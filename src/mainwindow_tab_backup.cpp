@@ -105,12 +105,14 @@ void MainWindow::loadBackUpMapping()
                                 dm.mapping_device_source_id,
                                 d1.device_name,
                                 d1.device_active,
+                                d1.device_path,
                                 d1.device_total_file_size,
                                 d1.device_total_file_count,
                                 d1.device_date_updated,
                                 dm.mapping_device_target_id,
                                 d2.device_name,
                                 d2.device_active,
+                                d2.device_path,
                                 d2.device_total_file_size,
                                 d2.device_total_file_count,
                                 d2.device_date_updated,
@@ -148,7 +150,7 @@ void MainWindow::loadBackUpMapping()
                         )");
 
     querySQL += QLatin1String(R"(
-                            ORDER BY dm.mapping_id
+                            ORDER BY dm.mapping_name
                         )");
 
     query.prepare(querySQL);
@@ -169,20 +171,22 @@ void MainWindow::loadBackUpMapping()
     queryModel->setHeaderData(3, Qt::Horizontal, tr("Source ID"));
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Source"));
     queryModel->setHeaderData(5, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(7, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(8, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(9, Qt::Horizontal, tr("Target ID"));
-    queryModel->setHeaderData(10, Qt::Horizontal, tr("Target"));
-    queryModel->setHeaderData(11, Qt::Horizontal, tr("Active"));
-    queryModel->setHeaderData(12, Qt::Horizontal, tr("File Size"));
-    queryModel->setHeaderData(13, Qt::Horizontal, tr("Files"));
-    queryModel->setHeaderData(14, Qt::Horizontal, tr("Date Updated"));
-    queryModel->setHeaderData(15, Qt::Horizontal, tr("Size Diff."));
-    queryModel->setHeaderData(16, Qt::Horizontal, tr("Size Diff.(%)"));
-    queryModel->setHeaderData(17, Qt::Horizontal, tr("Files Diff."));
-    queryModel->setHeaderData(18, Qt::Horizontal, tr("Files Diff.(%)"));
-    queryModel->setHeaderData(19, Qt::Horizontal, tr("Date Diff."));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData(7, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(8, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(9, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("Target ID"));
+    queryModel->setHeaderData(11, Qt::Horizontal, tr("Target"));
+    queryModel->setHeaderData(12, Qt::Horizontal, tr("Active"));
+    queryModel->setHeaderData(13, Qt::Horizontal, tr("Path"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("File Size"));
+    queryModel->setHeaderData(15, Qt::Horizontal, tr("Files"));
+    queryModel->setHeaderData(16, Qt::Horizontal, tr("Date Updated"));
+    queryModel->setHeaderData(17, Qt::Horizontal, tr("Size Diff."));
+    queryModel->setHeaderData(18, Qt::Horizontal, tr("Size Diff.(%)"));
+    queryModel->setHeaderData(19, Qt::Horizontal, tr("Files Diff."));
+    queryModel->setHeaderData(20, Qt::Horizontal, tr("Files Diff.(%)"));
+    queryModel->setHeaderData(21, Qt::Horizontal, tr("Date Diff."));
 
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
     //proxyModel->caseSensitive = fileSortCaseSensitive;
@@ -199,6 +203,7 @@ void MainWindow::loadBackUpMapping()
     {
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, true);
+        ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, true);
@@ -210,6 +215,7 @@ void MainWindow::loadBackUpMapping()
 
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, false);
+        ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, false);
