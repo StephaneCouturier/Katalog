@@ -151,7 +151,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //Load mapping to backup tab
             loadBackUpMapping();
-            loadBackUpDeviceLists();
 
         //Restore last opened catalog to Explore tab
             if(ui->Settings_checkBox_LoadLastCatalog->isChecked()==true){

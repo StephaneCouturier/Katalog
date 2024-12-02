@@ -7317,124 +7317,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <string>BackUp</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QLabel" name="BackUp_label_CurrentMappings">
-              <property name="text">
-               <string>Device mappings</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QTableView" name="BackUp_tableView_CurrentMappings">
-              <property name="lineWidth">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Save">
-              <item>
-               <widget class="QLabel" name="BackUp_label_Name">
-                <property name="text">
-                 <string>Mapping name</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
-                <property name="text">
-                 <string>Create mapping</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="7" column="0">
-             <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
-              <item row="2" column="1">
-               <widget class="QLabel" name="BackUp_label_TargetDevice">
-                <property name="text">
-                 <string>Target device</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QTreeView" name="BackUp_treeView_List1"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="BackUp_label_SourceDevice">
-                <property name="text">
-                 <string>Source device</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QTreeView" name="BackUp_treeView_List2"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="BackUp_pushButton_ReloadLists">
-                <property name="maximumSize">
-                 <size>
-                  <width>250</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Reload device lists</string>
-                </property>
-                <property name="icon">
-                 <iconset theme="view-refresh"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="5" column="0">
-             <widget class="Line" name="BackUp_line_Separate1">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Delete selected mapping</string>
-              </property>
-              <property name="icon">
-               <iconset theme="QIcon::ThemeIcon::EditDelete"/>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="BackUp_label_CreateMapping">
-              <property name="text">
-               <string>Create New mapping</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
@@ -7474,6 +7356,140 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="BackUp_label_CurrentMappings">
+              <property name="text">
+               <string>Device mappings</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QTableView" name="BackUp_tableView_CurrentMappings">
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0">
+             <layout class="QHBoxLayout" name="BackUp_horizontalLayout_Save">
+              <item>
+               <widget class="QLabel" name="BackUp_label_Name">
+                <property name="text">
+                 <string>Mapping name</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="BackUp_lineEdit_Name"/>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
+                <property name="text">
+                 <string>Create mapping</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="0">
+             <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
+              <property name="maximumSize">
+               <size>
+                <width>250</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Delete selected mapping</string>
+              </property>
+              <property name="icon">
+               <iconset theme="QIcon::ThemeIcon::EditDelete"/>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="Line" name="BackUp_line_Separate1">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <layout class="QGridLayout" name="BackUp_gridLayout_CreateMapping">
+              <item row="2" column="1">
+               <widget class="QLabel" name="BackUp_label_TargetDevice">
+                <property name="text">
+                 <string>Target device</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QTreeView" name="BackUp_treeView_List1"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="BackUp_label_SourceDevice">
+                <property name="text">
+                 <string>Source device</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QTreeView" name="BackUp_treeView_List2"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceList">
+                <property name="maximumSize">
+                 <size>
+                  <width>250</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Load Source Catalogs</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="view-refresh"/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetList">
+                <property name="maximumSize">
+                 <size>
+                  <width>250</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Load Target Catalogs</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="view-refresh"/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="BackUp_label_CreateMapping">
+              <property name="text">
+               <string>Create New mapping</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

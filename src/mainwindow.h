@@ -342,7 +342,7 @@ class MainWindow : public QMainWindow
         //TAB: BackUp
             bool optionDisplayFullMappingTable;
             void loadBackUpMapping();
-            void loadBackUpDeviceLists();
+            void loadBackUpDeviceLists(QString list);
             void saveNewMapping();
 
         //TAB: Settings
@@ -540,7 +540,8 @@ class MainWindow : public QMainWindow
             //BackUp
             void on_BackUp_pushButton_SaveMapping_clicked();
             void on_BackUp_pushButton_ReloadDeviceMappings_clicked();
-            void on_BackUp_pushButton_ReloadLists_clicked();
+            void on_BackUp_pushButton_ReloadSourceList_clicked();
+            void on_BackUp_pushButton_ReloadTargetList_clicked();
             void on_BackUp_pushButton_DeleteSelectedMapping_clicked();
             void on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1);
 

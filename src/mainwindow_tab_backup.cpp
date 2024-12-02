@@ -40,9 +40,14 @@ void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
     saveNewMapping();
     collection->saveMappingTableToFile();
 }
-void MainWindow::on_BackUp_pushButton_ReloadLists_clicked()
+void MainWindow::on_BackUp_pushButton_ReloadSourceList_clicked()
 {
-    loadBackUpDeviceLists();
+    loadBackUpDeviceLists("Source");
+}
+
+void MainWindow::on_BackUp_pushButton_ReloadTargetList_clicked()
+{
+    loadBackUpDeviceLists("Target");
 }
 
 void MainWindow::on_BackUp_pushButton_ReloadDeviceMappings_clicked()
@@ -217,7 +222,7 @@ void MainWindow::loadBackUpMapping()
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-void MainWindow::loadBackUpDeviceLists()
+void MainWindow::loadBackUpDeviceLists(QString list)
 {
     //Create a model for the table
     QStandardItemModel *model = new QStandardItemModel();
@@ -244,14 +249,19 @@ void MainWindow::loadBackUpDeviceLists()
         }
     }
 
-    //Load model to the view
-    ui->BackUp_treeView_List1->setModel(model);
-    ui->BackUp_treeView_List1->resizeColumnToContents(1);
-    ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    //Load model to the view
-    ui->BackUp_treeView_List2->setModel(model);
-    ui->BackUp_treeView_List2->resizeColumnToContents(1);
-    ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //Load model to the Source view
+    if (list =="Source"){
+        ui->BackUp_treeView_List1->setModel(model);
+        ui->BackUp_treeView_List1->resizeColumnToContents(1);
+        ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    }
+
+    //Load model to the Target view
+    if (list =="Target"){
+        ui->BackUp_treeView_List2->setModel(model);
+        ui->BackUp_treeView_List2->resizeColumnToContents(1);
+        ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    }
 }
 
 void MainWindow::saveNewMapping()
