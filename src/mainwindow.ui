@@ -7328,12 +7328,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              <widget class="QPushButton" name="BackUp_pushButton_DeleteSelectedMapping">
               <property name="maximumSize">
                <size>
-                <width>250</width>
+                <width>200</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>Delete selected mapping</string>
+               <string>Delete selected</string>
               </property>
               <property name="icon">
                <iconset theme="QIcon::ThemeIcon::EditDelete"/>
@@ -7356,6 +7356,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
                 <property name="text">
                  <string>Create mapping</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
                 </property>
                </widget>
               </item>
@@ -7441,6 +7444,13 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="1" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
+               <widget class="QLabel" name="BackUp_label_CurrentMappings">
+                <property name="text">
+                 <string>Device mappings</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="BackUp_pushButton_ReloadDeviceMappings">
                 <property name="maximumSize">
                  <size>
@@ -7449,7 +7459,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Reload device mappings</string>
+                 <string>Reload</string>
                 </property>
                 <property name="icon">
                  <iconset theme="view-refresh"/>
@@ -7477,13 +7487,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
              </layout>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="BackUp_label_CurrentMappings">
-              <property name="text">
-               <string>Device mappings</string>
-              </property>
-             </widget>
             </item>
             <item row="3" column="0">
              <widget class="QTableView" name="BackUp_tableView_CurrentMappings">

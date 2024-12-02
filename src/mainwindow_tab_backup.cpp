@@ -96,8 +96,8 @@ void MainWindow::loadBackUpMapping()
 {
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-
-    QString querySQL = QLatin1String(R"(
+    QString querySQL;
+    querySQL = QLatin1String(R"(
                             SELECT
                                 dm.mapping_id,
                                 dm.mapping_name,
@@ -149,11 +149,34 @@ void MainWindow::loadBackUpMapping()
                             AND   dm.mapping_device_target_id = d2.device_id
                         )");
 
-    querySQL += QLatin1String(R"(
-                            ORDER BY dm.mapping_name
-                        )");
+    if (      selectedDevice->type == "Storage" ){
+        querySQL += " AND d1.device_parent_id =:device_parent_id ";
+    }
+    else if ( selectedDevice->type == "Catalog" ){
+        querySQL += " AND d1.device_id =:device_id ";
+    }
+    else if ( selectedDevice->type == "Virtual" ){
+        QString prepareSQL = QLatin1String(R"(
+                                        AND d1.device_id IN (
+                                        WITH RECURSIVE hierarchy AS (
+                                             SELECT device_id, device_parent_id, device_name
+                                             FROM device
+                                             WHERE device_id = :device_id
+                                             UNION ALL
+                                             SELECT t.device_id, t.device_parent_id, t.device_name
+                                             FROM device t
+                                             JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                        )
+                                        SELECT device_id
+                                        FROM hierarchy)
+                                    )");
+        querySQL += prepareSQL;
+    }
 
+    querySQL +=" ORDER BY d1.device_type DESC, d1.device_parent_id ASC, dm.mapping_name ASC ";
     query.prepare(querySQL);
+    query.bindValue(":device_id",        selectedDevice->ID);
+    query.bindValue(":device_parent_id", selectedDevice->ID);
 
     if (!query.exec())
     {

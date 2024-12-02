@@ -93,27 +93,27 @@
         <translation>Nur Schnappschüsse</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7509"/>
-        <location filename="../mainwindow.ui" line="8333"/>
+        <location filename="../mainwindow.ui" line="7512"/>
+        <location filename="../mainwindow.ui" line="8336"/>
         <location filename="../mainwindow_setup.cpp" line="311"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7655"/>
+        <location filename="../mainwindow.ui" line="7658"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7745"/>
-        <location filename="../mainwindow.ui" line="7788"/>
+        <location filename="../mainwindow.ui" line="7748"/>
+        <location filename="../mainwindow.ui" line="7791"/>
         <source>Version</source>
         <translation>Ausführung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2314"/>
-        <location filename="../mainwindow.ui" line="7703"/>
-        <location filename="../mainwindow.ui" line="7765"/>
+        <location filename="../mainwindow.ui" line="7706"/>
+        <location filename="../mainwindow.ui" line="7768"/>
         <location filename="../mainwindow_tab_search.cpp" line="941"/>
         <location filename="../mainwindow_tab_search.cpp" line="964"/>
         <location filename="../mainwindow_tab_search.cpp" line="1310"/>
@@ -124,27 +124,27 @@
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7817"/>
+        <location filename="../mainwindow.ui" line="7820"/>
         <source>Release Notes</source>
         <translation>Versionshinweise</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8894"/>
+        <location filename="../mainwindow.ui" line="8897"/>
         <source>(requires to restart)</source>
         <translation>(erfordert Neustart)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8843"/>
+        <location filename="../mainwindow.ui" line="8846"/>
         <source>Keep records of files and size for Statistics</source>
         <translation>Führen Sie Aufzeichnungen über Dateien und Größe für Statistiken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8887"/>
+        <location filename="../mainwindow.ui" line="8890"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8313"/>
+        <location filename="../mainwindow.ui" line="8316"/>
         <source>Always keep one back of each catalog</source>
         <translation>Bewahren Sie von jedem Katalog immer eine Rückseite auf</translation>
     </message>
@@ -164,11 +164,6 @@
         <translation>Neue Zuordnung erstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7336"/>
-        <source>Delete selected mapping</source>
-        <translation>Ausgewählte Zuordnung löschen</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="7348"/>
         <source>Mapping name</source>
         <translation>Zuordnungsname</translation>
@@ -179,113 +174,108 @@
         <translation>Zuordnung erstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7390"/>
+        <location filename="../mainwindow.ui" line="7393"/>
         <source>Select Source device</source>
         <translation>Quellgerät auswählen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7403"/>
+        <location filename="../mainwindow.ui" line="7406"/>
         <source>Load Source Catalogs</source>
         <translation>Quellkataloge laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7417"/>
+        <location filename="../mainwindow.ui" line="7420"/>
         <source>Select Target device</source>
         <translation>Zielgerät auswählen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7430"/>
+        <location filename="../mainwindow.ui" line="7433"/>
         <source>Load Target Catalogs</source>
         <translation>Zielkataloge laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7452"/>
-        <source>Reload device mappings</source>
-        <translation>Gerätezuordnungen neu laden</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="7484"/>
+        <location filename="../mainwindow.ui" line="7449"/>
         <source>Device mappings</source>
         <translation>Gerätezuordnungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7621"/>
+        <location filename="../mainwindow.ui" line="7624"/>
         <source>File list display</source>
         <translation>Anzeige der Dateiliste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7628"/>
+        <location filename="../mainwindow.ui" line="7631"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
         <translation>Wenn aktiviert, wird bei der Sortierung die Groß- und Kleinschreibung beachtet, so dass die Reihenfolge AA, AB, AC, Aa, Ab, Ac lautet</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7631"/>
+        <location filename="../mainwindow.ui" line="7634"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Bei der Dateisortierung wird zwischen Groß- und Kleinschreibung unterschieden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7722"/>
+        <location filename="../mainwindow.ui" line="7725"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8142"/>
+        <location filename="../mainwindow.ui" line="8145"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>Die Erfassungsdaten werden lokal auf dem Computer in .idx- oder .csv-Dateien gespeichert.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8162"/>
+        <location filename="../mainwindow.ui" line="8165"/>
         <source>The database is in Memory only (RAM).</source>
         <translation>Die Datenbank befindet sich nur im Arbeitsspeicher (RAM).</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8258"/>
+        <location filename="../mainwindow.ui" line="8261"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
         <translation>Exportieren, um die Sammlung zu konvertieren und im „Datei“-Modus zu öffnen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8261"/>
+        <location filename="../mainwindow.ui" line="8264"/>
         <source>Export to SQLite file</source>
         <translation>In SQLite-Datei exportieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8316"/>
+        <location filename="../mainwindow.ui" line="8319"/>
         <source>Auto-backup catalogs</source>
         <translation>Kataloge mit automatischer Sicherung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8521"/>
+        <location filename="../mainwindow.ui" line="8524"/>
         <source>Data mode &quot;Hosted database&quot;</source>
         <translation>Datenmodus „Gehostete Datenbank“</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8551"/>
+        <location filename="../mainwindow.ui" line="8554"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
         <translation>Die Erfassungsdaten werden in einer Datenbank gespeichert, die auf einem lokalen oder Remote-Server gehostet wird.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8750"/>
+        <location filename="../mainwindow.ui" line="8753"/>
         <source>Apply and restart</source>
         <translation>Anwenden und neu starten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8795"/>
+        <location filename="../mainwindow.ui" line="8798"/>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8808"/>
+        <location filename="../mainwindow.ui" line="8811"/>
         <source>Select a theme</source>
         <translation>Wähle ein Thema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8812"/>
+        <location filename="../mainwindow.ui" line="8815"/>
         <source>Desktop Theme</source>
         <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
         <translation>Desktop-Design</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8817"/>
+        <location filename="../mainwindow.ui" line="8820"/>
         <location filename="../mainwindow_setup.cpp" line="304"/>
         <location filename="../mainwindow.cpp" line="139"/>
         <source>Katalog Colors (light)</source>
@@ -293,44 +283,44 @@
         <translation>Katalogfarben (hell)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8945"/>
+        <location filename="../mainwindow.ui" line="8948"/>
         <source>Language &amp; Theme</source>
         <translation>Sprache und Thema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7569"/>
+        <location filename="../mainwindow.ui" line="7572"/>
         <source>Other Settings</source>
         <translation>Andere Einstellungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7801"/>
+        <location filename="../mainwindow.ui" line="7804"/>
         <source>Check at start up</source>
         <translation>Beim Start prüfen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8661"/>
+        <location filename="../mainwindow.ui" line="8664"/>
         <source>Port</source>
         <translation>Pforte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8641"/>
+        <location filename="../mainwindow.ui" line="8644"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7992"/>
+        <location filename="../mainwindow.ui" line="7995"/>
         <source>Database File Path</source>
         <translation>Pfad der Datenbankdatei</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8186"/>
+        <location filename="../mainwindow.ui" line="8189"/>
         <source>Collection folder</source>
         <translation>Sammelordner</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8029"/>
-        <location filename="../mainwindow.ui" line="8223"/>
-        <location filename="../mainwindow.ui" line="8747"/>
+        <location filename="../mainwindow.ui" line="8032"/>
+        <location filename="../mainwindow.ui" line="8226"/>
+        <location filename="../mainwindow.ui" line="8750"/>
         <source>Select a different Collection folder</source>
         <translation>Wählen Sie einen anderen Sammlungsordner</translation>
     </message>
@@ -345,18 +335,19 @@
     <message>
         <location filename="../mainwindow.ui" line="6924"/>
         <location filename="../mainwindow.ui" line="7207"/>
+        <location filename="../mainwindow.ui" line="7462"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7601"/>
-        <location filename="../mainwindow.ui" line="8051"/>
-        <location filename="../mainwindow.ui" line="8245"/>
+        <location filename="../mainwindow.ui" line="7604"/>
+        <location filename="../mainwindow.ui" line="8054"/>
+        <location filename="../mainwindow.ui" line="8248"/>
         <source>Open the collection folder</source>
         <translation>Öffne den Sammlungsordner</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7604"/>
+        <location filename="../mainwindow.ui" line="7607"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
@@ -369,7 +360,7 @@
         <translation>Suche</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8451"/>
+        <location filename="../mainwindow.ui" line="8454"/>
         <location filename="../mainwindow.cpp" line="195"/>
         <source>Memory</source>
         <translation>Speicher</translation>
@@ -550,19 +541,19 @@
         <translation>Date de début du graphique</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8822"/>
+        <location filename="../mainwindow.ui" line="8825"/>
         <location filename="../mainwindow.cpp" line="142"/>
         <source>Katalog Colors (dark)</source>
         <translation>Katalog Colors (sombre)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8300"/>
-        <location filename="../mainwindow.ui" line="8343"/>
+        <location filename="../mainwindow.ui" line="8303"/>
+        <location filename="../mainwindow.ui" line="8346"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Laden Sie die zuletzt ausgewählten Kataloge beim Start vorab, um die nächste Suche zu beschleunigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7539"/>
+        <location filename="../mainwindow.ui" line="7542"/>
         <source>Open Settings file</source>
         <translation>Öffnen Sie die Einstellungsdatei</translation>
     </message>
@@ -572,12 +563,12 @@
         <translation>Groß- und Kleinschreibung beachten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8443"/>
+        <location filename="../mainwindow.ui" line="8446"/>
         <source>Data mode</source>
         <translation>Datenmodus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8456"/>
+        <location filename="../mainwindow.ui" line="8459"/>
         <location filename="../mainwindow.cpp" line="196"/>
         <source>File</source>
         <translation>Datei</translation>
@@ -629,7 +620,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2139"/>
         <location filename="../mainwindow.ui" line="4635"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="168"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="193"/>
         <location filename="../mainwindow_tab_device.cpp" line="1896"/>
         <location filename="../mainwindow_tab_explore.cpp" line="641"/>
         <source>Type</source>
@@ -789,53 +780,58 @@
         <translation>Auszuschließendes Verzeichnis hinzufügen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8469"/>
-        <location filename="../mainwindow.ui" line="8528"/>
+        <location filename="../mainwindow.ui" line="7336"/>
+        <source>Delete selected</source>
+        <translation>Auswahl löschen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="8472"/>
+        <location filename="../mainwindow.ui" line="8531"/>
         <source>(Changing requires to restart)</source>
         <translation>(Änderung erfordert einen Neustart)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8122"/>
+        <location filename="../mainwindow.ui" line="8125"/>
         <source>Data mode &quot;Memory&quot;</source>
         <translation>Datenmodus „Speicher“</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8226"/>
+        <location filename="../mainwindow.ui" line="8229"/>
         <source>Select and read folder</source>
         <translation>Ordner auswählen und lesen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8346"/>
+        <location filename="../mainwindow.ui" line="8349"/>
         <source>Preload last catalogs</source>
         <translation>Letzte Kataloge vorab laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8363"/>
+        <location filename="../mainwindow.ui" line="8366"/>
         <source>Start up</source>
         <translation>Start-up</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8377"/>
+        <location filename="../mainwindow.ui" line="8380"/>
         <source>Back up</source>
         <translation>Sichern</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7948"/>
+        <location filename="../mainwindow.ui" line="7951"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
         <translation>Datenmodus „SQLite lokale Datei“</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7968"/>
+        <location filename="../mainwindow.ui" line="7971"/>
         <source>The collection data is saved to an SQLite .db file.</source>
         <translation>Die Erfassungsdaten werden in einer SQLite-DB-Datei gespeichert.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8032"/>
+        <location filename="../mainwindow.ui" line="8035"/>
         <source>Select and open database file</source>
         <translation>Datenbankdatei auswählen und öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8054"/>
+        <location filename="../mainwindow.ui" line="8057"/>
         <location filename="../mainwindow_tab_device.cpp" line="253"/>
         <location filename="../mainwindow_tab_device.cpp" line="308"/>
         <location filename="../mainwindow_tab_device.cpp" line="361"/>
@@ -918,7 +914,7 @@
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7798"/>
+        <location filename="../mainwindow.ui" line="7801"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Überprüfen Sie beim Starten der App, ob eine neue Version des Katalogs verfügbar ist.</translation>
     </message>
@@ -991,6 +987,8 @@
         <translation>Katalog durchsuchen</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="197"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="204"/>
         <location filename="../mainwindow_tab_device.cpp" line="1671"/>
         <location filename="../mainwindow_tab_device.cpp" line="1894"/>
         <location filename="../mainwindow_tab_device.cpp" line="2142"/>
@@ -1315,48 +1313,48 @@
         <translation>Gerätebild</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8873"/>
+        <location filename="../mainwindow.ui" line="8876"/>
         <source>Icons</source>
         <translation>Ikony</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8846"/>
+        <location filename="../mainwindow.ui" line="8849"/>
         <source>Use bigger icon size</source>
         <translation>Použijte větší velikost ikony</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8303"/>
+        <location filename="../mainwindow.ui" line="8306"/>
         <source>Load last catalog to Explore</source>
         <translation>Laden Sie den letzten Katalog in Explore</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8711"/>
+        <location filename="../mainwindow.ui" line="8714"/>
         <source>Database Name</source>
         <translation>Name der Datenbank</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8621"/>
+        <location filename="../mainwindow.ui" line="8624"/>
         <source>User Name</source>
         <translation>Nutzername</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8591"/>
+        <location filename="../mainwindow.ui" line="8594"/>
         <source>Host Name</source>
         <translation>Hostname</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8070"/>
+        <location filename="../mainwindow.ui" line="8073"/>
         <source>Create a new database file</source>
         <translation>Vytvořte nový soubor databáze</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8461"/>
+        <location filename="../mainwindow.ui" line="8464"/>
         <location filename="../mainwindow.cpp" line="197"/>
         <source>Hosted</source>
         <translation>Bereitgestellt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8420"/>
+        <location filename="../mainwindow.ui" line="8423"/>
         <source>Data management</source>
         <translation>Datenmanagement</translation>
     </message>
@@ -1367,7 +1365,7 @@
         <translation>Wählen Sie den Pfad</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8073"/>
+        <location filename="../mainwindow.ui" line="8076"/>
         <source>New</source>
         <translation>Neu</translation>
     </message>
@@ -1451,12 +1449,12 @@
         <translation>Zeigen Sie jeden Wert an</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8958"/>
+        <location filename="../mainwindow.ui" line="8961"/>
         <source>TESTS</source>
         <translation>TESTS</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8970"/>
+        <location filename="../mainwindow.ui" line="8973"/>
         <source>TEST MEDIA</source>
         <translation>TEST MEDIA</translation>
     </message>
@@ -1467,7 +1465,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6944"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="170"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="195"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
@@ -1503,13 +1501,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3973"/>
-        <location filename="../mainwindow.ui" line="7475"/>
+        <location filename="../mainwindow.ui" line="7485"/>
         <source>Full Table</source>
         <translation>Vollständiger Tisch</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4290"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="232"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="261"/>
         <source>Device Name</source>
         <translation>Gerätename</translation>
     </message>
@@ -1521,7 +1519,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4339"/>
         <location filename="../mainwindow.ui" line="4352"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="231"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="260"/>
         <source>Device ID</source>
         <translation>Geräte ID</translation>
     </message>
@@ -1672,7 +1670,7 @@
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8248"/>
+        <location filename="../mainwindow.ui" line="8251"/>
         <location filename="../mainwindow_tab_search.cpp" line="479"/>
         <location filename="../mainwindow_tab_explore.cpp" line="181"/>
         <location filename="../mainwindow_tab_explore.cpp" line="222"/>
@@ -2461,18 +2459,18 @@ in den Papierkorb?</translation>
         <translation>Gesamtgröße</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="167"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="192"/>
         <source>Mapping Name</source>
         <translation>Zuordnungsname</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="169"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="194"/>
         <source>Source ID</source>
         <translation>Quell-ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="171"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="177"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="196"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="203"/>
         <location filename="../mainwindow_tab_device.cpp" line="1661"/>
         <location filename="../mainwindow_tab_device.cpp" line="1884"/>
         <location filename="../mainwindow_tab_device.cpp" line="2132"/>
@@ -2480,60 +2478,60 @@ in den Papierkorb?</translation>
         <translation>Aktiv</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="172"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="178"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="198"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="205"/>
         <source>File Size</source>
         <translation>Dateigröße</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="173"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="179"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="199"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="206"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="174"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="180"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="200"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="207"/>
         <source>Date Updated</source>
         <translation>Aktualisierungsdatum</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="175"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="201"/>
         <source>Target ID</source>
         <translation>Ziel-ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="176"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="202"/>
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="181"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="208"/>
         <source>Size Diff.</source>
         <translation>Größenunterschied.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="182"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="209"/>
         <source>Size Diff.(%)</source>
         <translation>Größenunterschied (%)</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="183"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="210"/>
         <source>Files Diff.</source>
         <translation>Dateien Diff.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="184"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="211"/>
         <source>Files Diff.(%)</source>
         <translation>Dateiunterschied (%)</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="185"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="212"/>
         <source>Date Diff.</source>
         <translation>Datumsunterschied.</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="230"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="259"/>
         <source>Parent Device</source>
         <translation>Übergeordnetes Gerät</translation>
     </message>
@@ -2606,7 +2604,7 @@ Die Datei kann manuell repariert werden, besuchen Sie bitte die Wiki-Seite:
 &lt;a href=&apos;https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions&apos;&gt;Speicher/fixing-for-new-versions&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="166"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="191"/>
         <location filename="../mainwindow_tab_device.cpp" line="1662"/>
         <location filename="../mainwindow_tab_device.cpp" line="1885"/>
         <location filename="../mainwindow_tab_device.cpp" line="2133"/>

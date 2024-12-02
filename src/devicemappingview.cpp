@@ -136,8 +136,8 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
                 return QIcon(QIcon::fromTheme("media-optical"));
         }
         //Icon for target catalog
-        if( index.column()==10 ){
-            QModelIndex idx = index.sibling(index.row(), 11);
+        if( index.column()==11 ){
+            QModelIndex idx = index.sibling(index.row(), 12);
             if( QSortFilterProxyModel::data(idx, Qt::DisplayRole).toBool()==true ){
                 return QIcon(QIcon::fromTheme("media-optical-blu-ray"));
             }
