@@ -182,7 +182,7 @@ void MainWindow::loadBackUpMapping()
     queryModel->setHeaderData(16, Qt::Horizontal, tr("Size Diff.(%)"));
     queryModel->setHeaderData(17, Qt::Horizontal, tr("Files Diff."));
     queryModel->setHeaderData(18, Qt::Horizontal, tr("Files Diff.(%)"));
-    queryModel->setHeaderData(19, Qt::Horizontal, tr("Time Diff."));
+    queryModel->setHeaderData(19, Qt::Horizontal, tr("Date Diff."));
 
     DeviceMappingView *proxyModel = new DeviceMappingView(this);
     //proxyModel->caseSensitive = fileSortCaseSensitive;
