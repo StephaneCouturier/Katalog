@@ -57,8 +57,8 @@
     <message>
         <location filename="../mainwindow.ui" line="767"/>
         <location filename="../mainwindow.ui" line="1123"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="167"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="205"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="170"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="208"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -182,28 +182,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8664"/>
+        <location filename="../mainwindow.ui" line="8681"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8644"/>
+        <location filename="../mainwindow.ui" line="8661"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7995"/>
+        <location filename="../mainwindow.ui" line="8012"/>
         <source>Database File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8446"/>
+        <location filename="../mainwindow.ui" line="8463"/>
         <source>Data mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8459"/>
-        <location filename="../mainwindow.cpp" line="196"/>
+        <location filename="../mainwindow.ui" line="8476"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2139"/>
         <location filename="../mainwindow.ui" line="4635"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="193"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="231"/>
         <location filename="../mainwindow_tab_device.cpp" line="1896"/>
         <location filename="../mainwindow_tab_explore.cpp" line="641"/>
         <source>Type</source>
@@ -274,22 +274,22 @@
         <location filename="../mainwindow_tab_search.cpp" line="1648"/>
         <location filename="../mainwindow_tab_search.cpp" line="1934"/>
         <location filename="../mainwindow_tab_device.cpp" line="2440"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="291"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="296"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="297"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="298"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="308"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="309"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="379"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="381"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="294"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="299"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="300"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="301"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="311"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="312"/>
         <location filename="../mainwindow_tab_filters.cpp" line="382"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="383"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="387"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="388"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="392"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="393"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="397"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="398"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="384"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="385"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="386"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="390"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="391"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="395"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="396"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="400"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="401"/>
         <location filename="../searchprocess.cpp" line="405"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -398,7 +398,7 @@
     <message>
         <location filename="../mainwindow.ui" line="5551"/>
         <location filename="../mainwindow_tab_device.cpp" line="238"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="231"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="234"/>
         <source>Explore</source>
         <translation type="unfinished"></translation>
     </message>
@@ -408,13 +408,13 @@
         <location filename="../mainwindow_tab_device.cpp" line="216"/>
         <location filename="../mainwindow_tab_device.cpp" line="293"/>
         <location filename="../mainwindow_tab_device.cpp" line="346"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="175"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="213"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="178"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="216"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8057"/>
+        <location filename="../mainwindow.ui" line="8074"/>
         <location filename="../mainwindow_tab_device.cpp" line="253"/>
         <location filename="../mainwindow_tab_device.cpp" line="308"/>
         <location filename="../mainwindow_tab_device.cpp" line="361"/>
@@ -441,8 +441,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="197"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="204"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="235"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="242"/>
         <location filename="../mainwindow_tab_device.cpp" line="1671"/>
         <location filename="../mainwindow_tab_device.cpp" line="1894"/>
         <location filename="../mainwindow_tab_device.cpp" line="2142"/>
@@ -738,48 +738,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8876"/>
+        <location filename="../mainwindow.ui" line="8893"/>
         <source>Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8849"/>
+        <location filename="../mainwindow.ui" line="8866"/>
         <source>Use bigger icon size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8306"/>
+        <location filename="../mainwindow.ui" line="8323"/>
         <source>Load last catalog to Explore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8714"/>
+        <location filename="../mainwindow.ui" line="8731"/>
         <source>Database Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8624"/>
+        <location filename="../mainwindow.ui" line="8641"/>
         <source>User Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8594"/>
+        <location filename="../mainwindow.ui" line="8611"/>
         <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8073"/>
+        <location filename="../mainwindow.ui" line="8090"/>
         <source>Create a new database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8464"/>
-        <location filename="../mainwindow.cpp" line="197"/>
+        <location filename="../mainwindow.ui" line="8481"/>
+        <location filename="../mainwindow.cpp" line="201"/>
         <source>Hosted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8423"/>
+        <location filename="../mainwindow.ui" line="8440"/>
         <source>Data management</source>
         <translation type="unfinished"></translation>
     </message>
@@ -807,7 +807,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8076"/>
+        <location filename="../mainwindow.ui" line="8093"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
@@ -873,13 +873,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3973"/>
-        <location filename="../mainwindow.ui" line="7485"/>
+        <location filename="../mainwindow.ui" line="7502"/>
         <source>Full Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4290"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="261"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="299"/>
         <source>Device Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -891,7 +891,7 @@
     <message>
         <location filename="../mainwindow.ui" line="4339"/>
         <location filename="../mainwindow.ui" line="4352"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="260"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="298"/>
         <source>Device ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -958,56 +958,56 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7512"/>
-        <location filename="../mainwindow.ui" line="8336"/>
+        <location filename="../mainwindow.ui" line="7529"/>
+        <location filename="../mainwindow.ui" line="8353"/>
         <location filename="../mainwindow_setup.cpp" line="311"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7748"/>
-        <location filename="../mainwindow.ui" line="7791"/>
+        <location filename="../mainwindow.ui" line="7765"/>
+        <location filename="../mainwindow.ui" line="7808"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7820"/>
+        <location filename="../mainwindow.ui" line="7837"/>
         <source>Release Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8472"/>
-        <location filename="../mainwindow.ui" line="8531"/>
+        <location filename="../mainwindow.ui" line="8489"/>
+        <location filename="../mainwindow.ui" line="8548"/>
         <source>(Changing requires to restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8125"/>
+        <location filename="../mainwindow.ui" line="8142"/>
         <source>Data mode &quot;Memory&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8229"/>
+        <location filename="../mainwindow.ui" line="8246"/>
         <source>Select and read folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8349"/>
+        <location filename="../mainwindow.ui" line="8366"/>
         <source>Preload last catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8366"/>
+        <location filename="../mainwindow.ui" line="8383"/>
         <source>Start up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8380"/>
+        <location filename="../mainwindow.ui" line="8397"/>
         <source>Back up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7951"/>
+        <location filename="../mainwindow.ui" line="7968"/>
         <source>Data mode &quot;SQLite local file&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1062,120 +1062,130 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7624"/>
+        <location filename="../mainwindow.ui" line="7472"/>
+        <source>based on Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="7482"/>
+        <source>based on Targets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="7641"/>
         <source>File list display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7631"/>
+        <location filename="../mainwindow.ui" line="7648"/>
         <source>If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7634"/>
+        <location filename="../mainwindow.ui" line="7651"/>
         <source>File sorting is Case Sensitive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7725"/>
+        <location filename="../mainwindow.ui" line="7742"/>
         <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7971"/>
+        <location filename="../mainwindow.ui" line="7988"/>
         <source>The collection data is saved to an SQLite .db file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8035"/>
+        <location filename="../mainwindow.ui" line="8052"/>
         <source>Select and open database file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8261"/>
+        <location filename="../mainwindow.ui" line="8278"/>
         <source>Export to convert and open the collection in &quot;File&quot; mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8264"/>
+        <location filename="../mainwindow.ui" line="8281"/>
         <source>Export to SQLite file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8524"/>
+        <location filename="../mainwindow.ui" line="8541"/>
         <source>Data mode &quot;Hosted database&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8554"/>
+        <location filename="../mainwindow.ui" line="8571"/>
         <source>The collection data is saved to a database hosted on a local or remote serveur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8753"/>
+        <location filename="../mainwindow.ui" line="8770"/>
         <source>Apply and restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8811"/>
+        <location filename="../mainwindow.ui" line="8828"/>
         <source>Select a theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8815"/>
+        <location filename="../mainwindow.ui" line="8832"/>
         <source>Desktop Theme</source>
         <extracomment>Best for integration in Plasma, light and dark themes.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8820"/>
+        <location filename="../mainwindow.ui" line="8837"/>
         <location filename="../mainwindow_setup.cpp" line="304"/>
-        <location filename="../mainwindow.cpp" line="139"/>
+        <location filename="../mainwindow.cpp" line="143"/>
         <source>Katalog Colors (light)</source>
         <extracomment>With custom colors, for desktop light theme.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8798"/>
+        <location filename="../mainwindow.ui" line="8815"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8897"/>
+        <location filename="../mainwindow.ui" line="8914"/>
         <source>(requires to restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8890"/>
+        <location filename="../mainwindow.ui" line="8907"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8189"/>
+        <location filename="../mainwindow.ui" line="8206"/>
         <source>Collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8032"/>
-        <location filename="../mainwindow.ui" line="8226"/>
-        <location filename="../mainwindow.ui" line="8750"/>
+        <location filename="../mainwindow.ui" line="8049"/>
+        <location filename="../mainwindow.ui" line="8243"/>
+        <location filename="../mainwindow.ui" line="8767"/>
         <source>Select a different Collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7572"/>
+        <location filename="../mainwindow.ui" line="7589"/>
         <source>Other Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7604"/>
-        <location filename="../mainwindow.ui" line="8054"/>
-        <location filename="../mainwindow.ui" line="8248"/>
+        <location filename="../mainwindow.ui" line="7621"/>
+        <location filename="../mainwindow.ui" line="8071"/>
+        <location filename="../mainwindow.ui" line="8265"/>
         <source>Open the collection folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7607"/>
+        <location filename="../mainwindow.ui" line="7624"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1187,7 +1197,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8251"/>
+        <location filename="../mainwindow.ui" line="8268"/>
         <location filename="../mainwindow_tab_search.cpp" line="479"/>
         <location filename="../mainwindow_tab_explore.cpp" line="181"/>
         <location filename="../mainwindow_tab_explore.cpp" line="222"/>
@@ -1234,8 +1244,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2314"/>
-        <location filename="../mainwindow.ui" line="7706"/>
-        <location filename="../mainwindow.ui" line="7768"/>
+        <location filename="../mainwindow.ui" line="7723"/>
+        <location filename="../mainwindow.ui" line="7785"/>
         <location filename="../mainwindow_tab_search.cpp" line="941"/>
         <location filename="../mainwindow_tab_search.cpp" line="964"/>
         <location filename="../mainwindow_tab_search.cpp" line="1310"/>
@@ -1262,7 +1272,7 @@
         <location filename="../mainwindow_tab_create.cpp" line="56"/>
         <location filename="../mainwindow_tab_tags.cpp" line="44"/>
         <location filename="../mainwindow_tab_device.cpp" line="438"/>
-        <location filename="../mainwindow_tab_filters.cpp" line="273"/>
+        <location filename="../mainwindow_tab_filters.cpp" line="276"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1296,18 +1306,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="192"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="230"/>
         <source>Mapping Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="194"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="232"/>
         <source>Source ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="196"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="203"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="234"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="241"/>
         <location filename="../mainwindow_tab_device.cpp" line="1661"/>
         <location filename="../mainwindow_tab_device.cpp" line="1884"/>
         <location filename="../mainwindow_tab_device.cpp" line="2132"/>
@@ -1315,60 +1325,60 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="198"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="205"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="236"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="243"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="199"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="206"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="237"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="244"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="200"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="207"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="238"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="245"/>
         <source>Date Updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="201"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="239"/>
         <source>Target ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="202"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="240"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="208"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="246"/>
         <source>Size Diff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="209"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="247"/>
         <source>Size Diff.(%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="210"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="248"/>
         <source>Files Diff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="211"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="249"/>
         <source>Files Diff.(%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="212"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="250"/>
         <source>Date Diff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="259"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="297"/>
         <source>Parent Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1383,7 +1393,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_tab_backup.cpp" line="191"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="229"/>
         <location filename="../mainwindow_tab_device.cpp" line="1662"/>
         <location filename="../mainwindow_tab_device.cpp" line="1885"/>
         <location filename="../mainwindow_tab_device.cpp" line="2133"/>
@@ -1548,17 +1558,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7658"/>
+        <location filename="../mainwindow.ui" line="7675"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8319"/>
+        <location filename="../mainwindow.ui" line="8336"/>
         <source>Auto-backup catalogs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8846"/>
+        <location filename="../mainwindow.ui" line="8863"/>
         <source>Keep records of files and size for Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1633,7 +1643,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8316"/>
+        <location filename="../mainwindow.ui" line="8333"/>
         <source>Always keep one back of each catalog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1685,7 +1695,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7804"/>
+        <location filename="../mainwindow.ui" line="7821"/>
         <source>Check at start up</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1724,7 +1734,7 @@ The file can be fixed manually, please visit the wiki page:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6944"/>
-        <location filename="../mainwindow_tab_backup.cpp" line="195"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="233"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1744,7 +1754,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow_setup.cpp" line="804"/>
+        <location filename="../mainwindow_setup.cpp" line="810"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2055,7 +2065,7 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7801"/>
+        <location filename="../mainwindow.ui" line="7818"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2192,8 +2202,8 @@ The file can be fixed manually, please visit the wiki page:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8303"/>
-        <location filename="../mainwindow.ui" line="8346"/>
+        <location filename="../mainwindow.ui" line="8320"/>
+        <location filename="../mainwindow.ui" line="8363"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2635,22 +2645,22 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8145"/>
+        <location filename="../mainwindow.ui" line="8162"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8165"/>
+        <location filename="../mainwindow.ui" line="8182"/>
         <source>The database is in Memory only (RAM).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8948"/>
+        <location filename="../mainwindow.ui" line="8965"/>
         <source>Language &amp; Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7542"/>
+        <location filename="../mainwindow.ui" line="7559"/>
         <source>Open Settings file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2711,8 +2721,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8454"/>
-        <location filename="../mainwindow.cpp" line="195"/>
+        <location filename="../mainwindow.ui" line="8471"/>
+        <location filename="../mainwindow.cpp" line="199"/>
         <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2759,8 +2769,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8825"/>
-        <location filename="../mainwindow.cpp" line="142"/>
+        <location filename="../mainwindow.ui" line="8842"/>
+        <location filename="../mainwindow.cpp" line="146"/>
         <source>Katalog Colors (dark)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2781,12 +2791,12 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8961"/>
+        <location filename="../mainwindow.ui" line="8978"/>
         <source>TESTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8973"/>
+        <location filename="../mainwindow.ui" line="8990"/>
         <source>TEST MEDIA</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2881,7 +2891,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="299"/>
+        <location filename="../mainwindow.cpp" line="303"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation type="unfinished"></translation>
     </message>
