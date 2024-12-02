@@ -49,8 +49,8 @@ void DeviceMappingView::initializeLists()
     // + 1 list for bold text
 
     //Device fields
-    filecountColumnList <<  6 << 12 << 17;
-    filesizeColumnList  <<  7 << 13 << 15;
+    filecountColumnList <<  7 << 13 << 17;
+    filesizeColumnList  <<  6 << 12 << 15;
     percentColumnList   << 16 << 18;
     booleanColumnList   <<  5 << 11;
     //boldColumnList      << 0;
@@ -116,6 +116,9 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
             return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
         if ( filesizeColumnList.contains(index.column()) )
+            return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
+
+        if ( percentColumnList.contains(index.column()) )
             return QVariant ( Qt::AlignVCenter | Qt::AlignRight );
 
         break;

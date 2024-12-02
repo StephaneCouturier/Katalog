@@ -192,12 +192,9 @@ void MainWindow::loadBackUpMapping()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     if (optionDisplayFullMappingTable == false)// ui->BackUp_checkBox_DisplayFullTable->isChecked() == false )
     {
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(0, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(2, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, true);
@@ -205,17 +202,18 @@ void MainWindow::loadBackUpMapping()
     }
     else
     {
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(0, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(2, false);
+
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, false);
     }
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(0, true);
+    ui->BackUp_tableView_CurrentMappings->setColumnHidden(2, true);
+
     ui->BackUp_tableView_CurrentMappings->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
