@@ -374,6 +374,42 @@ bool Device::verifyStorageExternalIDExists()
     return queryExternalID.value(0).toInt() > 0;
 }
 
+bool Device::verifyDeviceHasSourceMapping()
+{
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    query.prepare("SELECT COUNT(*) FROM device_mapping WHERE mapping_device_source_id = :deviceId");
+    query.bindValue(":deviceId", ID);
+
+    if (!query.exec()) {
+        return false;
+    }
+
+    if (query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0;
+    }
+
+    return false;
+}
+
+bool Device::verifyDeviceHasTargetMapping()
+{
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    query.prepare("SELECT COUNT(*) FROM device_mapping WHERE mapping_device_target_id = :deviceId");
+    query.bindValue(":deviceId", ID);
+
+    if (!query.exec()) {
+        return false;
+    }
+
+    if (query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0;
+    }
+
+    return false;
+}
+
 void Device::getIDFromDeviceName()
 {
     QSqlQuery queryIDFromDeviceName(QSqlDatabase::database("defaultConnection"));

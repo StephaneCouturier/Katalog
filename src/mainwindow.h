@@ -541,8 +541,9 @@ class MainWindow : public QMainWindow
             void on_BackUp_pushButton_SaveMapping_clicked();
             void on_BackUp_pushButton_ReloadDeviceMappings_clicked();
             void on_BackUp_pushButton_ReloadSourceList_clicked();
+            void on_BackUp_pushButton_ReloadSourceListWithoutMapping_clicked();
             void on_BackUp_pushButton_ReloadTargetList_clicked();
-            void on_BackUp_pushButton_DeleteSelectedMapping_clicked();
+            void on_BackUp_pushButton_ReloadTargetListWithoutMapping_clicked();            void on_BackUp_pushButton_DeleteSelectedMapping_clicked();
             void on_BackUp_checkBox_DisplayFullTable_checkStateChanged(const Qt::CheckState &arg1);
             void on_BackUp_radioButton_Source_clicked();
             void on_BackUp_radioButton_Target_clicked();

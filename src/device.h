@@ -77,6 +77,8 @@ public:
         bool verifyDeviceNameExists();
         bool verifyParentDeviceExistsInPhysicalGroup();
         bool verifyStorageExternalIDExists();
+        bool verifyDeviceHasSourceMapping();
+        bool verifyDeviceHasTargetMapping();
         void getIDFromDeviceName();
         void updateActive(QString connectionName);
 

@@ -45,9 +45,19 @@ void MainWindow::on_BackUp_pushButton_ReloadSourceList_clicked()
     loadBackUpDeviceLists("Source");
 }
 
+void MainWindow::on_BackUp_pushButton_ReloadSourceListWithoutMapping_clicked()
+{
+    loadBackUpDeviceLists("Source_without_mapping");
+}
+
 void MainWindow::on_BackUp_pushButton_ReloadTargetList_clicked()
 {
     loadBackUpDeviceLists("Target");
+}
+
+void MainWindow::on_BackUp_pushButton_ReloadTargetListWithoutMapping_clicked()
+{
+    loadBackUpDeviceLists("Target_without_mapping");
 }
 
 void MainWindow::on_BackUp_pushButton_ReloadDeviceMappings_clicked()
@@ -311,29 +321,50 @@ void MainWindow::loadBackUpDeviceLists(QString list)
             tempParentDevice.ID = tempDevice.parentID;
             tempParentDevice.loadDevice("defaultConnection");
 
-            //Add row
-            QList<QStandardItem*> row;
-            row.append(new QStandardItem(tempParentDevice.name));
-            row.append(new QStandardItem(QString::number(tempDevice.ID)));
-            row.append(new QStandardItem(tempDevice.name));
-            model->appendRow(row);
+            //Add row if valid for the type of list
+            if (list == "Source_without_mapping") {
+                // Only add devices that do NOT have a mapping
+                if (!tempDevice.verifyDeviceHasSourceMapping()) {
+                    QList<QStandardItem*> row;
+                    row.append(new QStandardItem(tempParentDevice.name));
+                    row.append(new QStandardItem(QString::number(tempDevice.ID)));
+                    row.append(new QStandardItem(tempDevice.name));
+                    model->appendRow(row);
+                }
+            }
+            else if (list == "Target_without_mapping") {
+                // Only add devices that do NOT have a mapping
+                if (!tempDevice.verifyDeviceHasTargetMapping()) {
+                    QList<QStandardItem*> row;
+                    row.append(new QStandardItem(tempParentDevice.name));
+                    row.append(new QStandardItem(QString::number(tempDevice.ID)));
+                    row.append(new QStandardItem(tempDevice.name));
+                    model->appendRow(row);
+                }
+            }
+            else {
+                // For other list types, add all devices
+                QList<QStandardItem*> row;
+                row.append(new QStandardItem(tempParentDevice.name));
+                row.append(new QStandardItem(QString::number(tempDevice.ID)));
+                row.append(new QStandardItem(tempDevice.name));
+                model->appendRow(row);
+            }
         }
     }
 
-    //Load model to the Source view
-    if (list =="Source"){
-        ui->BackUp_treeView_List1->setModel(model);
-        ui->BackUp_treeView_List1->resizeColumnToContents(1);
-        ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        ui->BackUp_treeView_List1->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    }
-
     //Load model to the Target view
-    if (list =="Target"){
+    if (list.contains("Target")){
         ui->BackUp_treeView_List2->setModel(model);
         ui->BackUp_treeView_List2->resizeColumnToContents(1);
         ui->BackUp_treeView_List2->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->BackUp_treeView_List2->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }
+    else{
+        ui->BackUp_treeView_List1->setModel(model);
+        ui->BackUp_treeView_List1->resizeColumnToContents(1);
+        ui->BackUp_treeView_List1->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->BackUp_treeView_List1->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 }
 

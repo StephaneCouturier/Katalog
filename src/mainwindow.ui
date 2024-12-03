@@ -7410,6 +7410,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QPushButton" name="BackUp_pushButton_ReloadSourceListWithoutMapping">
+                  <property name="maximumSize">
+                   <size>
+                    <width>250</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>without mapping</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-refresh"/>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
               <item row="1" column="1">
@@ -7431,6 +7447,22 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <property name="text">
                    <string>Load Target Catalogs</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="view-refresh"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="BackUp_pushButton_ReloadTargetListWithoutMapping">
+                  <property name="maximumSize">
+                   <size>
+                    <width>250</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>without mapping</string>
                   </property>
                   <property name="icon">
                    <iconset theme="view-refresh"/>
