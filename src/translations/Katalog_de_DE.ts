@@ -2546,6 +2546,42 @@ in den Papierkorb?</translation>
         <translation>Übergeordnetes Gerät</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="348"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="353"/>
+        <source>Populate the lists first (One or both device lists are empty).</source>
+        <translation>Füllen Sie zuerst die Listen auf (eine oder beide Gerätelisten sind leer).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="363"/>
+        <source>Invalid selection model</source>
+        <translation>Ungültiges Auswahlmodell</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="374"/>
+        <source>Select a device from both lists.</source>
+        <translation>Wählen Sie aus beiden Listen ein Gerät aus.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="384"/>
+        <source>Invalid device selection.</source>
+        <translation>Ungültige Geräteauswahl.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="394"/>
+        <source>Empty device ID.</source>
+        <translation>Leere Geräte-ID.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="401"/>
+        <source>Provide a mapping name.</source>
+        <translation>Geben Sie einen Zuordnungsnamen an.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="407"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation>Wählen Sie eine andere Quelle oder ein anderes Ziel (ein Gerät darf nicht auf sich selbst abgebildet werden).</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_device.cpp" line="3151"/>
         <source>Update all active catalogs</source>
         <translation>Aktualisieren Sie alle aktiven Kataloge</translation>

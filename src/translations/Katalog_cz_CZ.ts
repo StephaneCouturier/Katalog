@@ -2344,6 +2344,42 @@ do koše?</translation>
         <translation>Nadřazené zařízení</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="348"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="353"/>
+        <source>Populate the lists first (One or both device lists are empty).</source>
+        <translation>Nejprve naplňte seznamy (jeden nebo oba seznamy zařízení jsou prázdné).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="363"/>
+        <source>Invalid selection model</source>
+        <translation>Neplatný model výběru</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="374"/>
+        <source>Select a device from both lists.</source>
+        <translation>Vyberte zařízení z obou seznamů.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="384"/>
+        <source>Invalid device selection.</source>
+        <translation>Neplatný výběr zařízení.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="394"/>
+        <source>Empty device ID.</source>
+        <translation>Prázdné ID zařízení.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="401"/>
+        <source>Provide a mapping name.</source>
+        <translation>Zadejte název mapování.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="407"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation>Vyberte jiný zdroj nebo cíl (zařízení nesmí být mapováno samo na sebe).</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_device.cpp" line="2160"/>
         <source>App Version</source>
         <translation>Verze aplikace</translation>

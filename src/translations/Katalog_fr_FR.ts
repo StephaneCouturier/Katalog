@@ -1639,6 +1639,42 @@
         <translation>Périphérique parent</translation>
     </message>
     <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="348"/>
+        <location filename="../mainwindow_tab_backup.cpp" line="353"/>
+        <source>Populate the lists first (One or both device lists are empty).</source>
+        <translation>Remplissez d’abord les listes (une ou les deux listes d’appareils sont vides).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="363"/>
+        <source>Invalid selection model</source>
+        <translation>Modèle de sélection non valide</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="374"/>
+        <source>Select a device from both lists.</source>
+        <translation>Sélectionnez un appareil dans les deux listes.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="384"/>
+        <source>Invalid device selection.</source>
+        <translation>Sélection d&apos;appareil non valide.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="394"/>
+        <source>Empty device ID.</source>
+        <translation>ID d&apos;appareil vide.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="401"/>
+        <source>Provide a mapping name.</source>
+        <translation>Fournissez un nom de mappage.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow_tab_backup.cpp" line="407"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation>Sélectionnez une source ou une cible différente (un périphérique ne doit pas être mappé sur lui-même).</translation>
+    </message>
+    <message>
         <location filename="../mainwindow_tab_device.cpp" line="2661"/>
         <source>Select the csv file to be imported</source>
         <translation>Choisir le fichier csv à importer</translation>

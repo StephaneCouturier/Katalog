@@ -339,16 +339,74 @@ void MainWindow::loadBackUpDeviceLists(QString list)
 
 void MainWindow::saveNewMapping()
 {
-    //Get the selected devices from BackUp_treeView_List1 and BackUp_treeView_List2
-    QModelIndexList selectedIndexes1 = ui->BackUp_treeView_List1->selectionModel()->selectedIndexes();
-    QModelIndexList selectedIndexes2 = ui->BackUp_treeView_List2->selectionModel()->selectedIndexes();
+    //Get data and validate it
+        //Check if models are valid and have data
+        QAbstractItemModel* model1 = ui->BackUp_treeView_List1->model();
+        QAbstractItemModel* model2 = ui->BackUp_treeView_List2->model();
 
-    //Get the value of the second column as device id
-    QString device1ID = selectedIndexes1.at(1).data().toString();
-    QString device2ID = selectedIndexes2.at(1).data().toString();
+        if (!model1 || !model2) {
+            QMessageBox::warning(this, "Katalog", tr("Populate the lists first (One or both device lists are empty)."));
+            return;
+        }
 
-    //Get mapping name
-    QString mappingName = ui->BackUp_lineEdit_Name->text();
+        if (model1->rowCount() == 0 || model2->rowCount() == 0) {
+            QMessageBox::warning(this, "Katalog", tr("Populate the lists first (One or both device lists are empty)."));
+            return;
+        }
+
+        //Get selection models
+        QItemSelectionModel* selectionModel1 = ui->BackUp_treeView_List1->selectionModel();
+        QItemSelectionModel* selectionModel2 = ui->BackUp_treeView_List2->selectionModel();
+
+        //Check if selection models exist
+        if (!selectionModel1 || !selectionModel2) {
+            QMessageBox::warning(this, "Katalog", tr("Invalid selection model"));
+            return;
+        }
+
+        //Get selected rows
+        QModelIndexList selectedRows1 = selectionModel1->selectedRows();
+        QModelIndexList selectedRows2 = selectionModel2->selectedRows();
+
+        //Validate selections
+        if (selectedRows1.isEmpty() || selectedRows2.isEmpty()) {
+            QMessageBox::warning(this, "Katalog",
+                                 tr("Select a device from both lists."));
+            return;
+        }
+
+        //Safely get device IDs using first selected row
+        QModelIndex deviceIndex1 = selectedRows1.first().siblingAtColumn(1);
+        QModelIndex deviceIndex2 = selectedRows2.first().siblingAtColumn(1);
+
+        //Additional null check
+        if (!deviceIndex1.isValid() || !deviceIndex2.isValid()) {
+            QMessageBox::warning(this, "Katalog", tr("Invalid device selection."));
+            return;
+        }
+
+        QString device1ID = deviceIndex1.data().toString();
+        QString device2ID = deviceIndex2.data().toString();
+
+
+        //Validate device IDs
+        if (device1ID.isEmpty() || device2ID.isEmpty()) {
+            QMessageBox::warning(this, "Katalog", tr("Empty device ID."));
+            return;
+        }
+
+        //Validate mapping name
+        QString mappingName = ui->BackUp_lineEdit_Name->text().trimmed();
+        if (mappingName.isEmpty()) {
+            QMessageBox::warning(this, "Katalog", tr("Provide a mapping name."));
+            return;
+        }
+
+        //Prevent mapping a device to itself
+        if (device1ID == device2ID) {
+            QMessageBox::warning(this, "Katalog", tr("Select a different source or target (a device shall not be mapped to itself)."));
+            return;
+        }
 
     //Insert mapping in the table device_mapping
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
