@@ -303,10 +303,11 @@ void MainWindow::loadBackUpDeviceLists(QString list)
 {
     //Create a model for the table
     QStandardItemModel *model = new QStandardItemModel();
-    model->setColumnCount(3);
+    model->setColumnCount(4);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Parent Device")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Device ID")));
     model->setHorizontalHeaderItem(2, new QStandardItem(tr("Device Name")));
+    model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
 
     //Populate the model from each deviceListTable if type = "Catalog"
     for (int i = 0; i < selectedDevice->deviceListTable.size(); i++)
@@ -329,6 +330,7 @@ void MainWindow::loadBackUpDeviceLists(QString list)
                     row.append(new QStandardItem(tempParentDevice.name));
                     row.append(new QStandardItem(QString::number(tempDevice.ID)));
                     row.append(new QStandardItem(tempDevice.name));
+                    row.append(new QStandardItem(QLocale().formattedDataSize((tempDevice.totalFileSize)) + "  "));
                     model->appendRow(row);
                 }
             }
@@ -339,6 +341,7 @@ void MainWindow::loadBackUpDeviceLists(QString list)
                     row.append(new QStandardItem(tempParentDevice.name));
                     row.append(new QStandardItem(QString::number(tempDevice.ID)));
                     row.append(new QStandardItem(tempDevice.name));
+                    row.append(new QStandardItem(QLocale().formattedDataSize((tempDevice.totalFileSize)) + "  "));
                     model->appendRow(row);
                 }
             }
@@ -348,6 +351,7 @@ void MainWindow::loadBackUpDeviceLists(QString list)
                 row.append(new QStandardItem(tempParentDevice.name));
                 row.append(new QStandardItem(QString::number(tempDevice.ID)));
                 row.append(new QStandardItem(tempDevice.name));
+                row.append(new QStandardItem(QLocale().formattedDataSize((tempDevice.totalFileSize)) + "  "));
                 model->appendRow(row);
             }
         }
