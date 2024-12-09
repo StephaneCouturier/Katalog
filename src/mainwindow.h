@@ -342,6 +342,8 @@ class MainWindow : public QMainWindow
         //TAB: BackUp
             bool optionDisplayFullMappingTable;
             void loadBackUpMapping();
+            void loadBackUpMappingTotals();
+            void loadBackUpMappingTable();
             void loadBackUpDeviceLists(QString list);
             void saveNewMapping();
 

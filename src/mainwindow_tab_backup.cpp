@@ -112,8 +112,132 @@ void MainWindow::on_BackUp_radioButton_Target_clicked()
 }
 
 //Methods-----------------------------------------------------------------------
-
 void MainWindow::loadBackUpMapping()
+{
+    loadBackUpMappingTotals();
+    loadBackUpMappingTable();
+}
+
+void MainWindow::loadBackUpMappingTotals()
+{
+
+    ui->BackUp_label_CurrentMappings_DeviceValue->setText(selectedDevice->name);
+
+    //Load data from table device_mapping
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL;
+    querySQL = QLatin1String(R"(
+        SELECT
+            COUNT(*) AS total_mappings,
+
+            SUM(d1.device_total_file_size) AS total_source_file_size,
+            SUM(d2.device_total_file_size) AS total_target_file_size,
+            SUM(d2.device_total_file_size - d1.device_total_file_size) AS total_size_difference,
+            ROUND(SUM(d2.device_total_file_size) * 100.0 / NULLIF(SUM(d1.device_total_file_size), 0), 2) AS total_size_difference_percentage,
+
+            SUM(d1.device_total_file_count) AS total_source_file_count,
+            SUM(d2.device_total_file_count) AS total_target_file_count,
+            SUM(d2.device_total_file_count - d1.device_total_file_count) AS total_file_count_difference,
+            ROUND(SUM(d2.device_total_file_count) * 100.0 / NULLIF(SUM(d1.device_total_file_count), 0), 2) AS total_file_count_difference_percentage,
+
+            ROUND(AVG(d2.device_total_file_size) * 100.0 / NULLIF(AVG(d1.device_total_file_size), 0), 2) AS avg_size_difference_percentage,
+            ROUND(AVG(d2.device_total_file_count) * 100.0 / NULLIF(AVG(d1.device_total_file_count), 0), 2) AS avg_file_count_difference_percentage
+        FROM
+            device_mapping dm,
+            device d1,
+            device d2
+        WHERE
+            dm.mapping_device_source_id = d1.device_id
+            AND dm.mapping_device_target_id = d2.device_id
+                        )");
+
+    if(ui->BackUp_radioButton_Target->isChecked()==true){
+        if (      selectedDevice->type == "Storage" ){
+            querySQL += " AND d2.device_parent_id =:device_parent_id ";
+        }
+        else if ( selectedDevice->type == "Catalog" ){
+            querySQL += " AND d2.device_id =:device_id ";
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL = QLatin1String(R"(
+                                            AND d2.device_id IN (
+                                            WITH RECURSIVE hierarchy AS (
+                                                 SELECT device_id, device_parent_id, device_name
+                                                 FROM device
+                                                 WHERE device_id = :device_id
+                                                 UNION ALL
+                                                 SELECT t.device_id, t.device_parent_id, t.device_name
+                                                 FROM device t
+                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                            )
+                                            SELECT device_id
+                                            FROM hierarchy)
+                                        )");
+            querySQL += prepareSQL;
+        }
+    }
+    else{
+        if (      selectedDevice->type == "Storage" ){
+            querySQL += " AND d1.device_parent_id =:device_parent_id ";
+        }
+        else if ( selectedDevice->type == "Catalog" ){
+            querySQL += " AND d1.device_id =:device_id ";
+        }
+        else if ( selectedDevice->type == "Virtual" ){
+            QString prepareSQL = QLatin1String(R"(
+                                            AND d1.device_id IN (
+                                            WITH RECURSIVE hierarchy AS (
+                                                 SELECT device_id, device_parent_id, device_name
+                                                 FROM device
+                                                 WHERE device_id = :device_id
+                                                 UNION ALL
+                                                 SELECT t.device_id, t.device_parent_id, t.device_name
+                                                 FROM device t
+                                                 JOIN hierarchy h ON t.device_parent_id = h.device_id
+                                            )
+                                            SELECT device_id
+                                            FROM hierarchy)
+                                        )");
+            querySQL += prepareSQL;
+        }
+    }
+
+    //querySQL +=" ORDER BY dm.mapping_name ASC ";
+    query.prepare(querySQL);
+    query.bindValue(":device_id",        selectedDevice->ID);
+    query.bindValue(":device_parent_id", selectedDevice->ID);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error loading device_mapping: " << query.lastError();
+        return;
+    }
+
+    query.next();
+    ui->BackUp_label_TotalMappings_Value->setText(query.value(0).toString());
+
+    qint64 mapped = query.value(2).toLongLong();
+    qint64 difference = selectedDevice->totalFileSize - mapped;
+    float coverage = static_cast<float>(selectedDevice->totalFileSize - difference) / static_cast<float>(selectedDevice->totalFileSize) * 100;
+
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeValue->setText(QLocale().formattedDataSize(selectedDevice->totalFileSize));
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeMapped->setText(QLocale().formattedDataSize(mapped));
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizeDiffValue->setText(QLocale().formattedDataSize((selectedDevice->totalFileSize - query.value(2).toLongLong())) + "  ");
+    ui->BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue->setText(QLocale().toString(coverage, 'f', 2) + " %");
+
+    ui->BackUp_label_TotalMappings_SizeSourceValue->setText(QLocale().formattedDataSize((query.value(1).toLongLong())) + "  ");
+    ui->BackUp_label_TotalMappings_SizeTargetValue->setText(QLocale().formattedDataSize((query.value(2).toLongLong())) + "  ");
+    ui->BackUp_label_TotalMappings_SizeDiffValue->setText(QLocale().formattedDataSize(query.value(3).toLongLong()) + "  ");
+    ui->BackUp_label_TotalMappings_SizePercentValue->setText(QLocale().toString(query.value(4).toDouble(), 'f', 2) + " %");
+
+    ui->BackUp_label_TotalMappings_FilesSourceTotal->setText(query.value(5).toString());
+    ui->BackUp_label_TotalMappings_FilesTargetTotal->setText(query.value(6).toString());
+    ui->BackUp_label_TotalMappings_FilesDiffValue->setText(QLocale().toString(query.value(7).toLongLong()) + "  ");
+    ui->BackUp_label_TotalMappings_FilesPercentValue->setText(QLocale().toString(query.value(8).toDouble(), 'f', 2) + " %");
+
+}
+
+void MainWindow::loadBackUpMappingTable()
 {
     //Load data from table device_mapping
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
@@ -276,19 +400,18 @@ void MainWindow::loadBackUpMapping()
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, true);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, true);
+        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, true);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, true);
     }
     else
     {
-
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(3, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(5, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(6, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(9, false);
-        ui->BackUp_tableView_CurrentMappings->setColumnHidden(11, false);
+        ui->BackUp_tableView_CurrentMappings->setColumnHidden(10, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(12, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(13, false);
         ui->BackUp_tableView_CurrentMappings->setColumnHidden(14, false);
