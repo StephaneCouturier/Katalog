@@ -7325,11 +7325,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
              </widget>
             </item>
             <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout">
+             <layout class="QHBoxLayout" name="BackUp_horizontalLayout_2">
               <item>
                <widget class="QLabel" name="BackUp_label_CurrentMappings">
                 <property name="text">
-                 <string>BackUp Mappings of device</string>
+                 <string>BackUp links for device</string>
                 </property>
                </widget>
               </item>
@@ -7356,7 +7356,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="toolTip">
-                 <string>Reload mappings and refresh statistiques</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -7409,7 +7409,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QLabel" name="BackUp_label_Name">
                 <property name="text">
-                 <string>Mapping name</string>
+                 <string>Link name</string>
                 </property>
                </widget>
               </item>
@@ -7419,7 +7419,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
               <item>
                <widget class="QPushButton" name="BackUp_pushButton_SaveMapping">
                 <property name="text">
-                 <string>Create mapping</string>
+                 <string>Create link</string>
                 </property>
                 <property name="icon">
                  <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
@@ -7444,7 +7444,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <item row="11" column="0" colspan="2">
              <widget class="QLabel" name="BackUp_label_CreateMapping">
               <property name="text">
-               <string>Create New mapping</string>
+               <string>Create new link</string>
               </property>
              </widget>
             </item>
@@ -7466,7 +7466,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Mappings</string>
+                 <string>Catalog Links</string>
                 </property>
                </widget>
               </item>
@@ -7737,7 +7737,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Device coverage</string>
+                 <string>Coverage</string>
                 </property>
                </widget>
               </item>
@@ -7774,7 +7774,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Total Device</string>
+                 <string>Total</string>
                 </property>
                </widget>
               </item>
@@ -7810,12 +7810,35 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Mapped</string>
+                 <string>Linked</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizeMapped">
+                <property name="minimumSize">
+                 <size>
+                  <width>25</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue">
                 <property name="minimumSize">
                  <size>
                   <width>25</width>
@@ -7846,7 +7869,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Unmapped</string>
+                 <string>Unlinked</string>
                 </property>
                </widget>
               </item>
@@ -7874,7 +7897,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentValue">
+               <widget class="QLabel" name="BackUp_label_TotalMappings_DeviceCoverageLabelSizePercentUnlinkedValue">
                 <property name="minimumSize">
                  <size>
                   <width>25</width>
@@ -7931,7 +7954,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <widget class="QLabel" name="BackUp_label_SourceDevice">
                   <property name="text">
-                   <string>Select Source device</string>
+                   <string>Select Source catalog</string>
                   </property>
                  </widget>
                 </item>
@@ -7960,7 +7983,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </size>
                   </property>
                   <property name="text">
-                   <string>without mapping</string>
+                   <string>without links</string>
                   </property>
                   <property name="icon">
                    <iconset theme="view-refresh"/>
@@ -7974,7 +7997,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                 <item>
                  <widget class="QLabel" name="BackUp_label_TargetDevice">
                   <property name="text">
-                   <string>Select Target device</string>
+                   <string>Select Target catalog</string>
                   </property>
                  </widget>
                 </item>
@@ -8003,7 +8026,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </size>
                   </property>
                   <property name="text">
-                   <string>without mapping</string>
+                   <string>without links</string>
                   </property>
                   <property name="icon">
                    <iconset theme="view-refresh"/>
