@@ -4,10 +4,44 @@
         <title>Katalog Blog</title>
         <link>https://StephaneCouturier.github.io/Katalog/fr/blog</link>
         <description>Katalog Blog</description>
-        <lastBuildDate>Sat, 04 May 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 05 Sep 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>fr</language>
+        <item>
+            <title><![CDATA[A test of QML and Kirigami for Katalog]]></title>
+            <link>https://StephaneCouturier.github.io/Katalog/fr/blog/2024/09/05/Testing-QML-and-Kirigam</link>
+            <guid>https://StephaneCouturier.github.io/Katalog/fr/blog/2024/09/05/Testing-QML-and-Kirigam</guid>
+            <pubDate>Thu, 05 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Looking at the future of Katalog, a few direction are still there since the start of the project:]]></description>
+            <content:encoded><![CDATA[<p>Looking at the future of Katalog, a few direction are still there since the start of the project:</p>
+<ul>
+<li>Multi-platform: why not even consider Mobile ? (ok, iOS should really be covered first)</li>
+<li>Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data</li>
+<li>User Experience: nicer interface, more responsive.</li>
+</ul>
+<p>It happens that there is now a way to address all that at once: QML with Kirigami</p>
+<ul>
+<li>QML is the modern interface design code from Qt (which makes 100% of Katalog today)</li>
+<li>Kirigami is the QML based framework by KDE to provide additional interface and consistency in the KDE world.</li>
+</ul>
+<p>Well, so far it works :)
+Installation of the Kirigami:</p>
+<ul>
+<li>Linux (using kdebuild)</li>
+<li>Windows (using Craft)</li>
+</ul>
+<p>Interface</p>
+<ul>
+<li>globaldrawer</li>
+<li>pages for each former tab</li>
+</ul>
+<p>Backend / C++</p>
+<ul>
+<li>Basic Search function, connection to a collection database file and returning results based on the text criteria:</li>
+</ul>]]></content:encoded>
+            <category>pre-development</category>
+        </item>
         <item>
             <title><![CDATA[Major Release 2.0]]></title>
             <link>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-0</link>

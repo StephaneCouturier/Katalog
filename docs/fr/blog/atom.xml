@@ -2,11 +2,49 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://StephaneCouturier.github.io/Katalog/fr/blog</id>
     <title>Katalog Blog</title>
-    <updated>2024-05-04T00:00:00.000Z</updated>
+    <updated>2024-09-05T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/fr/blog"/>
     <subtitle>Katalog Blog</subtitle>
     <icon>https://StephaneCouturier.github.io/Katalog/fr/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[A test of QML and Kirigami for Katalog]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/fr/blog/2024/09/05/Testing-QML-and-Kirigam</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/fr/blog/2024/09/05/Testing-QML-and-Kirigam"/>
+        <updated>2024-09-05T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Looking at the future of Katalog, a few direction are still there since the start of the project:]]></summary>
+        <content type="html"><![CDATA[<p>Looking at the future of Katalog, a few direction are still there since the start of the project:</p>
+<ul>
+<li>Multi-platform: why not even consider Mobile ? (ok, iOS should really be covered first)</li>
+<li>Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data</li>
+<li>User Experience: nicer interface, more responsive.</li>
+</ul>
+<p>It happens that there is now a way to address all that at once: QML with Kirigami</p>
+<ul>
+<li>QML is the modern interface design code from Qt (which makes 100% of Katalog today)</li>
+<li>Kirigami is the QML based framework by KDE to provide additional interface and consistency in the KDE world.</li>
+</ul>
+<p>Well, so far it works :)
+Installation of the Kirigami:</p>
+<ul>
+<li>Linux (using kdebuild)</li>
+<li>Windows (using Craft)</li>
+</ul>
+<p>Interface</p>
+<ul>
+<li>globaldrawer</li>
+<li>pages for each former tab</li>
+</ul>
+<p>Backend / C++</p>
+<ul>
+<li>Basic Search function, connection to a collection database file and returning results based on the text criteria:</li>
+</ul>]]></content>
+        <author>
+            <name>StephaneCouturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="pre-development" term="pre-development"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Major Release 2.0]]></title>
         <id>https://StephaneCouturier.github.io/Katalog/fr/blog/release-2-0</id>
