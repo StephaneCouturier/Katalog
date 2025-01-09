@@ -525,6 +525,7 @@
             ui->Create_checkBox_IncludeSymblinks->hide();
             ui->Create_checkBox_isFullDevice->hide();
             ui->Create_checkBox_IncludeMetadata->hide();
+            ui->Create_radioButton_SambaDirectory->hide();
 
         //Settings
             ui->Settings_comboBox_DatabaseMode->removeItem(2);

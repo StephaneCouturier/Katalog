@@ -481,6 +481,9 @@ class MainWindow : public QMainWindow
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
+            void on_Create_radioButton_SambaDirectory_clicked();
+            void on_Create_radioButton_MountedDrive_clicked();
+            void on_Create_pushButton_VerifyConnection_clicked();
 
         //Explore
             void on_Explore_splitter_splitterMoved();

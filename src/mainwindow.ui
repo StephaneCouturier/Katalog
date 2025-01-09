@@ -733,7 +733,7 @@
            <enum>QTabWidget::TabShape::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="iconSize">
            <size>
@@ -6687,7 +6687,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </layout>
               </item>
               <item>
-               <spacer name="Create_verticalSpacer_05">
+               <spacer name="Create_verticalSpacer">
                 <property name="orientation">
                  <enum>Qt::Orientation::Vertical</enum>
                 </property>
@@ -6798,40 +6798,222 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="Create_horizontalLayout_Input">
+               <widget class="QLabel" name="Create_label_SelectThePath_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Type of source</string>
+                </property>
+                <property name="margin">
+                 <number>6</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_TypeOfSource">
                 <item>
-                 <widget class="QLineEdit" name="Create_lineEdit_NewCatalogPath">
+                 <widget class="QRadioButton" name="Create_radioButton_MountedDrive">
                   <property name="text">
-                   <string/>
+                   <string>Mounted drive</string>
                   </property>
-                  <property name="clearButtonEnabled">
+                  <property name="checked">
                    <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="Create_pushButton_PickPath">
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Select the path</string>
-                  </property>
+                 <widget class="QRadioButton" name="Create_radioButton_SambaDirectory">
                   <property name="text">
-                   <string>Select</string>
-                  </property>
-                  <property name="icon">
-                   <iconset theme="edit-select"/>
+                   <string>Samba directory</string>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
               <item>
-               <widget class="QTreeView" name="Create_treeView_Explorer"/>
+               <widget class="QWidget" name="Create_widget_SambaSettings" native="true">
+                <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="4" column="0">
+                  <spacer name="Create_verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="Create_label_IPaddress">
+                     <property name="text">
+                      <string>IP address</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaServerIP">
+                     <property name="text">
+                      <string>192.168.1.16</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaDirectory">
+                     <property name="text">
+                      <string>PiPublic</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="Create_label_Directory">
+                     <property name="text">
+                      <string>Directory</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="Create_label_Username">
+                     <property name="text">
+                      <string>Username</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaUser"/>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="Create_label_Password">
+                     <property name="text">
+                      <string>Password</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaPassword"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="Create_label_SelectThePath_7">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Connection settings</string>
+                   </property>
+                   <property name="margin">
+                    <number>6</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="Create_horizontalLayout_VerifyConnection">
+                   <item>
+                    <widget class="QPushButton" name="Create_pushButton_VerifyConnection">
+                     <property name="text">
+                      <string>Verify connection</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="Create_label_ConnectionResult">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="Create_widget_DriveSettings" native="true">
+                <layout class="QGridLayout" name="gridLayout_9">
+                 <item row="2" column="0">
+                  <widget class="QTreeView" name="Create_treeView_Explorer"/>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="Create_label_SelectThePath_6">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Noto Sans</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Path</string>
+                   </property>
+                   <property name="margin">
+                    <number>6</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="Create_horizontalLayout_Input">
+                   <item>
+                    <widget class="QLineEdit" name="Create_lineEdit_NewCatalogPath">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="clearButtonEnabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="Create_pushButton_PickPath">
+                     <property name="maximumSize">
+                      <size>
+                       <width>120</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Select the path</string>
+                     </property>
+                     <property name="text">
+                      <string>Select</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-select"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </item>

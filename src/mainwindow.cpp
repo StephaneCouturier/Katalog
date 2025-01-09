@@ -46,10 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
     isSearchRunning(false)
 {
     //Set current version, release date, and development mode
-        currentVersion  = "2.3";
+        currentVersion  = "2.4";
         collection->appVersion = currentVersion;
-        releaseDate     = "2024-12-02";
-        developmentMode = false;
+        releaseDate     = "2025-01-09";
+        developmentMode = true;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
 
@@ -94,6 +94,10 @@ MainWindow::MainWindow(QWidget *parent) :
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Source);
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Target);
 
+            QButtonGroup buttonGroupCreateTypeOfSource;
+            buttonGroupCreateTypeOfSource.addButton(ui->Create_radioButton_MountedDrive);
+            buttonGroupCreateTypeOfSource.addButton(ui->Create_radioButton_SambaDirectory);
+
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
             ui->Settings_comboBox_DatabaseMode->setItemData(0, "Memory", Qt::UserRole);
@@ -120,6 +124,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->Devices_widget_Edit->hide();
             ui->Devices_widget_ReplaceCatalogsOption->hide();
             ui->Search_widget_DifferencesDevices->hide();
+            ui->Create_widget_SambaSettings->hide();
 
         //Hide file edtion items
             if( collection->databaseMode != "Memory"){
