@@ -220,19 +220,35 @@
         settings.setValue("Settings/sambaUser", sambaUser);
         settings.setValue("Settings/sambaPassword", sambaPassword);
 
+        // Format credentials properly
+        QString credString;
+        if (!sambaUser.isEmpty()) {
+            if (!sambaUser.contains("\\")) {
+                credString = QString("WORKGROUP\\%1%2").arg(sambaUser,
+                                                            !sambaPassword.isEmpty() ? "%" + sambaPassword : "");
+            } else {
+                credString = QString("%1%2").arg(sambaUser,
+                                                 !sambaPassword.isEmpty() ? "%" + sambaPassword : "");
+            }
+        }
+
+        qDebug() << "Testing connection with credentials:" <<
+            (sambaUser.isEmpty() ? "anonymous" : sambaUser);
+
         // First, verify the share exists using smbclient
         QProcess smbList;
         QStringList listArgs;
-        listArgs << "-N" << "-L" << sambaServerIP;
 
-        if (!sambaUser.isEmpty()) {
-            listArgs << "-U" << sambaUser;
-            if (!sambaPassword.isEmpty()) {
-                QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-                env.insert("SMBPASSWD", sambaPassword);
-                smbList.setProcessEnvironment(env);
-            }
+        if (sambaUser.isEmpty()) {
+            listArgs << "-N";  // Anonymous/guest access
+        } else {
+            listArgs << "-U" << credString;
         }
+
+        listArgs << "-L" << sambaServerIP;
+
+        qDebug() << "Running smbclient with args:" <<
+            listArgs.join(" ").replace(QRegularExpression("\\%.+"), "%***");
 
         smbList.start("smbclient", listArgs);
         smbList.waitForFinished();
@@ -242,35 +258,36 @@
         qDebug() << "Share list output:" << listOutput;
         qDebug() << "Share list error:" << listError;
 
-        // Check if our target share exists in the list
-        if (!listOutput.contains(sambaDirectory, Qt::CaseInsensitive)) {
+        if (listError.contains("NT_STATUS_LOGON_FAILURE")) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Share not found: ") + sambaDirectory +
-                           tr("<br/><br/>Available shares:<br/>") + listOutput.replace("\n", "<br/>"));
+            msgBox.setText(tr("Authentication failed for share access.<br/><br/>"
+                              "Things to check:<br/>"
+                              "- Username format (try with DOMAIN\\username)<br/>"
+                              "- Password correctness<br/>"
+                              "- Share permissions<br/><br/>"
+                              "Debug info:<br/>") +
+                           listError.replace("\n", "<br/>"));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
             return;
         }
 
-        // Now try to actually access the share contents
+        // Now try to access the specific share
         QProcess smbClient;
         QStringList args;
         QString shareUrl = QString("//%1/%2").arg(sambaServerIP, sambaDirectory);
 
-        // Build command based on authentication
         if (sambaUser.isEmpty()) {
-            args << "-N";  // No authentication
+            args << "-N";
         } else {
-            args << "-U" << sambaUser;
+            args << "-U" << credString;
         }
-        args << shareUrl << "-c" << "ls";  // List contents of the share
 
-        if (!sambaPassword.isEmpty()) {
-            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-            env.insert("SMBPASSWD", sambaPassword);
-            smbClient.setProcessEnvironment(env);
-        }
+        args << shareUrl << "-c" << "ls";
+
+        qDebug() << "Running share access with args:" <<
+            args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
 
         smbClient.start("smbclient", args);
         smbClient.waitForFinished();
@@ -281,24 +298,30 @@
         qDebug() << "Directory listing error:" << error;
 
         if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
+            QString errorMsg = error;
+            if (error.contains("Not enough '\\' characters")) {
+                errorMsg += tr("<br/><br/>Note: There might be an issue with the username format. "
+                               "Try these formats:<br/>"
+                               "- username<br/>"
+                               "- DOMAIN\\username<br/>"
+                               "- username@DOMAIN");
+            }
+
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(tr("Error accessing share:<br/>") + shareUrl +
-                           tr("<br/><br/>Error message:<br/>") + error);
+                           tr("<br/><br/>Error message:<br/>") + errorMsg.replace("\n", "<br/>"));
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
             return;
         }
 
-        // If we got output, parse and display the files
+        // Parse and display the files if successful
         if (!output.isEmpty()) {
             QStringList files = output.split("\n", Qt::SkipEmptyParts);
             QString fileList;
-            //int count = 0;
 
             for (const QString& file : files) {
-                //if (count++ >= 5) break;  // Just show first 5 files
-                qDebug() << "File: " << file;
                 if (!file.trimmed().isEmpty()) {
                     fileList += file.trimmed() + "<br/>";
                 }
@@ -318,10 +341,6 @@
             msgBox.exec();
         }
     }
-
-
-
-
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)
