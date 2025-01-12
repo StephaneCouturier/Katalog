@@ -32,6 +32,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#ifdef Q_OS_UNIX
+#include <unistd.h>
+#endif
+
 //UI----------------------------------------------------------------------------
 
     void MainWindow::on_Create_treeView_Explorer_clicked(const QModelIndex &index)
@@ -204,75 +208,120 @@
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_VerifyConnection_clicked()
     {
-        //Get samba settings
         QString sambaServerIP = ui->Create_lineEdit_SambaServerIP->text();
         QString sambaDirectory = ui->Create_lineEdit_SambaDirectory->text();
         QString sambaUser = ui->Create_lineEdit_SambaUser->text();
         QString sambaPassword = ui->Create_lineEdit_SambaPassword->text();
 
-        //Save to SettingsFile
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/sambaServerIP",  sambaServerIP);
+        // Save settings as before
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+        settings.setValue("Settings/sambaServerIP", sambaServerIP);
         settings.setValue("Settings/sambaDirectory", sambaDirectory);
-        settings.setValue("Settings/sambaUser",      sambaUser);
-        settings.setValue("Settings/sambaPassword",  sambaPassword);
+        settings.setValue("Settings/sambaUser", sambaUser);
+        settings.setValue("Settings/sambaPassword", sambaPassword);
 
-        QString sharePath; // = QString("//") + sambaServerIP + "/" + sambaDirectory;
+        // First, verify the share exists using smbclient
+        QProcess smbList;
+        QStringList listArgs;
+        listArgs << "-N" << "-L" << sambaServerIP;
 
-
-            auto currentOS = QOperatingSystemVersion::current();
-
-            if (currentOS.type() == QOperatingSystemVersion::Windows) {
-                sharePath = QString("//%1/%2").arg(sambaServerIP, sambaDirectory);
+        if (!sambaUser.isEmpty()) {
+            listArgs << "-U" << sambaUser;
+            if (!sambaPassword.isEmpty()) {
+                QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+                env.insert("SMBPASSWD", sambaPassword);
+                smbList.setProcessEnvironment(env);
             }
-            else if (currentOS.type() == QOperatingSystemVersion::MacOS) {
-                // macOS uses smb:// protocol but Qt will handle it through /Volumes
-                // Check if it's already mounted in /Volumes first
-                QString volumePath = QString("/Volumes/%1").arg(sambaDirectory);
-                if (QDir(volumePath).exists()) {
-                    sharePath = volumePath;
+        }
+
+        smbList.start("smbclient", listArgs);
+        smbList.waitForFinished();
+        QString listOutput = smbList.readAllStandardOutput();
+        QString listError = smbList.readAllStandardError();
+
+        qDebug() << "Share list output:" << listOutput;
+        qDebug() << "Share list error:" << listError;
+
+        // Check if our target share exists in the list
+        if (!listOutput.contains(sambaDirectory, Qt::CaseInsensitive)) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Share not found: ") + sambaDirectory +
+                           tr("<br/><br/>Available shares:<br/>") + listOutput.replace("\n", "<br/>"));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
+
+        // Now try to actually access the share contents
+        QProcess smbClient;
+        QStringList args;
+        QString shareUrl = QString("//%1/%2").arg(sambaServerIP, sambaDirectory);
+
+        // Build command based on authentication
+        if (sambaUser.isEmpty()) {
+            args << "-N";  // No authentication
+        } else {
+            args << "-U" << sambaUser;
+        }
+        args << shareUrl << "-c" << "ls";  // List contents of the share
+
+        if (!sambaPassword.isEmpty()) {
+            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+            env.insert("SMBPASSWD", sambaPassword);
+            smbClient.setProcessEnvironment(env);
+        }
+
+        smbClient.start("smbclient", args);
+        smbClient.waitForFinished();
+        QString output = smbClient.readAllStandardOutput();
+        QString error = smbClient.readAllStandardError();
+
+        qDebug() << "Directory listing output:" << output;
+        qDebug() << "Directory listing error:" << error;
+
+        if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Error accessing share:<br/>") + shareUrl +
+                           tr("<br/><br/>Error message:<br/>") + error);
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
+
+        // If we got output, parse and display the files
+        if (!output.isEmpty()) {
+            QStringList files = output.split("\n", Qt::SkipEmptyParts);
+            QString fileList;
+            //int count = 0;
+
+            for (const QString& file : files) {
+                //if (count++ >= 5) break;  // Just show first 5 files
+                qDebug() << "File: " << file;
+                if (!file.trimmed().isEmpty()) {
+                    fileList += file.trimmed() + "<br/>";
                 }
-                sharePath = QString("smb://%1/%2").arg(sambaServerIP, sambaDirectory);
-            }
-            else { // Linux and others
-                sharePath = QString("smb://%1/%2").arg(sambaServerIP, sambaDirectory);
             }
 
-            //test if samba directory is accessible
-            QProcess process;
-            process.start("smbclient", QStringList() << sharePath << "-U" << sambaUser);
-            process.waitForFinished();
-            QString output = process.readAllStandardOutput();
-            QString error = process.readAllStandardError();
-            qDebug() << "Output: " << output;
-            qDebug() << "Error: " << error;
-
-            if (output.contains("NT_STATUS_LOGON_FAILURE")) {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Unable to access share:<br/>") + sharePath + "<br/><br/>" + tr("Check your credentials and try again."));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-            }
-            else {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Share is accessible:<br/>") + sharePath);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            }
-
-            // Check if the path is accessible
-            // QDir dir(sharePath);
-            // if (!dir.exists()) {
-            //     qDebug() << "Unable to access share:" << sharePath;
-            // }
-            // else {
-            //     qDebug() << "Share is accessible:" << sharePath;
-            // }
-
-
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Share is accessible:<br/>") + shareUrl +
+                           tr("<br/><br/>Sample files found:<br/>") + fileList);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Share is accessible but appears to be empty:<br/>") + shareUrl);
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.exec();
+        }
     }
+
+
+
+
 
 //Methods-----------------------------------------------------------------------
     void MainWindow::loadFileSystem(QString newCatalogPath)
