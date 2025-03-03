@@ -51,13 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
         releaseDate     = "2025-03-03";
         developmentMode = false;
 
-        // Detect if the theme is light or dark
+        //Detect if the theme is light or dark
         QPalette palette = QApplication::palette();
-        qDebug() << "Window color value: " << palette.color(QPalette::Window).value();
-        //Set default theme
-        // QPalette palette = parent->palette();
         bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
-        qDebug() << "isDarkTheme: " << isDarkTheme;
         if (isDarkTheme) {
             themeID = 2; //default value for the theme = Katalog Colors (dark).
         }
