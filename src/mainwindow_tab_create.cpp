@@ -63,10 +63,10 @@
                                                         | QFileDialog::DontResolveSymlinks);
         //Save selected directory, and update input line for the source path
         //newDevice->catalog->setSourcePath(dir);
-        ui->Create_lineEdit_NewCatalogPath->setText(newSelectedPath);
+        ui->Create_lineEdit_NewCatalogPath->setText(dir);
 
         //Select this directory in the treeview.
-        loadFileSystem(newSelectedPath);
+        loadFileSystem(dir);
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_AddDirectoryToExclude_clicked()
