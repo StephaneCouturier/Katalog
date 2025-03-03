@@ -406,326 +406,7 @@
             }
     }
     //--------------------------------------------------------------------------
-    QString MainWindow::connectToShare(const QString &serverIP, const QString &directory, const QString &username, const QString &password)
-    {
-        qDebug() << " " << "Connecting to share:" << serverIP << directory << username << password;
-        QString sharePath = "false";
 
-        // Format credentials properly
-        QString credString;
-        if (!username.isEmpty()) {
-            if (!username.contains("\\")) {
-                credString = QString("WORKGROUP\\%1%2").arg(username,
-                                                            !password.isEmpty() ? "%" + password : "");
-            } else {
-                credString = QString("%1%2").arg(username,
-                                                 !password.isEmpty() ? "%" + password : "");
-            }
-        }
-
-        // Verify the share exists using smbclient
-        QProcess smbList;
-        QStringList listArgs;
-
-        if (username.isEmpty()) {
-            listArgs << "-N"; // Anonymous/guest access
-        } else {
-            listArgs << "-U" << credString;
-        }
-
-        listArgs << "-L" << serverIP;
-
-        qDebug() << "Verifying share access with args:" <<
-            listArgs.join(" ").replace(QRegularExpression("\\%.+"), "%***");
-
-        smbList.start("smbclient", listArgs);
-        smbList.waitForFinished();
-        QString listOutput = smbList.readAllStandardOutput();
-        QString listError = smbList.readAllStandardError();
-
-        if (listError.contains("NT_STATUS_LOGON_FAILURE")) {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("Authentication failed for share access.<br/><br/>"
-                              "Things to check:<br/>"
-                              "- Username format (try with DOMAIN\\username)<br/>"
-                              "- Password correctness<br/>"
-                              "- Share permissions<br/><br/>"
-                              "Debug info:<br/>") +
-                           listError.replace("\n", "<br/>"));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-            return "false";
-        }
-
-
-        // Format the share path based on OS
-        auto currentOS = QOperatingSystemVersion::current();
-
-
-        if (currentOS.type() == QOperatingSystemVersion::Windows) {
-            sharePath = QString("//%1/%2").arg(serverIP, directory);
-            if (!QDir(sharePath).exists()) {
-                sharePath = QString("\\\\%1\\%2").arg(serverIP, directory);
-                qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
-            }
-        }
-        else if (currentOS.type() == QOperatingSystemVersion::MacOS) {
-            QString volumePath = QString("/Volumes/%1").arg(directory);
-            if (QDir(volumePath).exists()) {
-                sharePath = volumePath;
-            } else {
-                sharePath = QString("//%1/%2").arg(serverIP, directory);
-            }
-            qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
-        }
-        else { // Linux
-        #ifdef Q_OS_UNIX
-            qDebug() << "DEBUG: createCatalog / Format the share path for Linux:" << sharePath;
-
-            QString mntPath = QString("/run/user/%1/gvfs/smb-share:server=%2,share=%3")
-                                  .arg(QString::number(getuid()), serverIP, directory);
-
-            if (QDir(mntPath).exists()) {
-                sharePath = mntPath;
-            } else {
-                // Check if it's mounted elsewhere
-                QProcess mountProcess;
-                mountProcess.start("mount");
-                mountProcess.waitForFinished();
-                QString mountOutput = mountProcess.readAllStandardOutput();
-
-                // Look for the share in mount output
-                QRegularExpression re(QString("on\\s+(/[^\\s]+).*%1.*%2").arg(serverIP, directory));
-                QRegularExpressionMatch match = re.match(mountOutput);
-                if (match.hasMatch()) {
-                    sharePath = match.captured(1);
-                } else {
-                    sharePath = QString("smb://%1/%2").arg(serverIP, directory);
-                }
-            }
-
-
-
-
-
-
-
-            // Now try to access the specific share
-            QProcess smbClient;
-            QStringList args;
-            QString shareUrl = QString("//%1/%2").arg(serverIP, directory);
-
-            if (username.isEmpty()) {
-                args << "-N";
-            } else {
-                args << "-U" << credString;
-            }
-
-            args << shareUrl << "-c" << "ls";
-
-            qDebug() << "Running share access with args:" <<
-                args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
-
-            smbClient.start("smbclient", args);
-            smbClient.waitForFinished();
-            QString output = smbClient.readAllStandardOutput();
-            QString error = smbClient.readAllStandardError();
-            qDebug() << "Directory listing output:" << output;
-            qDebug() << "Directory listing error:" << error;
-
-
-            QList<SmbEntry> results = listSmbDirectory(serverIP, directory, sharePath, credString);
-
-            qDebug() << "Found" << results.size() << "entries";
-
-
-
-
-            if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
-                QString errorMsg = error;
-                if (error.contains("Not enough '\\' characters")) {
-                    errorMsg += tr("<br/><br/>Note: There might be an issue with the username format. "
-                                   "Try these formats:<br/>"
-                                   "- username<br/>"
-                                   "- DOMAIN\\username<br/>"
-                                   "- username@DOMAIN");
-                }
-
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Error accessing share:<br/>") + shareUrl +
-                               tr("<br/><br/>Error message:<br/>") + errorMsg.replace("\n", "<br/>"));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
-                //return;
-            }
-
-            // Parse and display the files if successful
-            if (!output.isEmpty()) {
-                QStringList files = output.split("\n", Qt::SkipEmptyParts);
-                QString fileList;
-
-                for (const QString& file : files) {
-                    if (!file.trimmed().isEmpty()) {
-                        fileList += file.trimmed() + "<br/>";
-                    }
-                }
-
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Share is accessible:<br/>") + shareUrl +
-                               tr("<br/><br/>Sample files found:<br/>") + fileList);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            } else {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Share is accessible but appears to be empty:<br/>") + shareUrl);
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.exec();
-            }
-
-
-        #else
-                sharePath = QString("smb://%1/%2").arg(serverIP, directory);
-        #endif
-        }
-
-        qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
-
-        // Verify we can access the specific share
-        // QDir dir(sharePath);
-        // if (!dir.exists()) {
-        //     QMessageBox msgBox;
-        //     msgBox.setWindowTitle("Katalog");
-        //     msgBox.setText(tr("Unable to access share. Please mount it first in your file manager."));
-        //     msgBox.setIcon(QMessageBox::Warning);
-        //     msgBox.exec();
-        //     return false;
-        // }
-
-        // If we got here, the share is accessible
-        qDebug() << "DEBUG: createCatalog / Share mounted at:" << sharePath;
-        return sharePath;
-    }
-
-
-    void MainWindow::iterateFiles(const QString &shareUrl,
-                                  const QString &username,
-                                  const QString &password,
-                                  const QStringList &fileExtensions)
-    {
-        QString credString;
-        if (!username.isEmpty()) {
-            if (!username.contains("\\")) {
-                credString = QString("WORKGROUP\\%1%2").arg(username,
-                                                            !password.isEmpty() ? "%" + password : "");
-            } else {
-                credString = QString("%1%2").arg(username,
-                                                 !password.isEmpty() ? "%" + password : "");
-            }
-        }
-
-        QProcess smbClient;
-        QStringList args;
-
-        if (username.isEmpty()) {
-            args << "-N";
-        } else {
-            args << "-U" << credString;
-        }
-
-        args << shareUrl << "-c" << "ls";
-
-        qDebug() << "Running share access with args:" <<
-            args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
-
-        smbClient.start("smbclient", args);
-        smbClient.waitForFinished();
-        QString output = smbClient.readAllStandardOutput();
-        QString error = smbClient.readAllStandardError();
-
-        qDebug() << "Directory listing output:" << output;
-        qDebug() << "Directory listing error:" << error;
-
-        if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
-            qDebug() << "Error accessing share:" << error;
-            return;
-        }
-
-        QStringList files = output.split("\n", Qt::SkipEmptyParts);
-        for (const QString& file : files) {
-            if (!file.trimmed().isEmpty()) {
-                qDebug() << "File:" << file.trimmed();
-                // Process the file as needed
-            }
-        }
-    }
-
-    void MainWindow::listFilesRecursively(const QString &shareUrl, const QString &username, const QString &password, const QString &currentPath)
-    {
-        QString credString;
-        if (!username.isEmpty()) {
-            if (!username.contains("\\")) {
-                credString = QString("WORKGROUP\\%1%2").arg(username,
-                                                            !password.isEmpty() ? "%" + password : "");
-            } else {
-                credString = QString("%1%2").arg(username,
-                                                 !password.isEmpty() ? "%" + password : "");
-            }
-        }
-
-        QProcess smbClient;
-        QStringList args;
-
-        if (username.isEmpty()) {
-            args << "-N";
-        } else {
-            args << "-U" << credString;
-        }
-
-        args << shareUrl << "-c" << QString("cd %1; ls").arg(currentPath);
-
-        qDebug() << "Running share access with args:" <<
-            args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
-
-        smbClient.start("smbclient", args);
-        smbClient.waitForFinished();
-        QString output = smbClient.readAllStandardOutput();
-        QString error = smbClient.readAllStandardError();
-
-        qDebug() << "Directory listing output:" << output;
-        qDebug() << "Directory listing error:" << error;
-
-        if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
-            qDebug() << "Error accessing share:" << error;
-            return;
-        }
-
-        QStringList lines = output.split("\n", Qt::SkipEmptyParts);
-        for (const QString& line : lines) {
-            if (line.trimmed().isEmpty()) continue;
-
-            QStringList parts = line.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
-            if (parts.size() < 2) continue;
-
-            QString name = parts.last();
-            QString type = parts.first();
-
-            if (type == "D") {
-                // It's a directory, recurse into it
-                QString newPath = currentPath.isEmpty() ? name : currentPath + "/" + name;
-                qDebug() << "Entering directory:" << newPath;
-                listFilesRecursively(shareUrl, username, password, newPath);
-            } else {
-                // It's a file, process it
-                QString filePath = currentPath.isEmpty() ? name : currentPath + "/" + name;
-                qDebug() << "File:" << filePath;
-                // Add your file processing logic here
-            }
-        }
-    }
 //DEV --------------------------------------------------------------------------
 
     //--- Metadata
@@ -784,7 +465,6 @@
 
      }
     //--------------------------------------------------------------------------
-
     /*
     void MainWindow::getMetaData(QMediaPlayer *player)
     {
@@ -807,10 +487,8 @@
 
     */
 
-
     //--- Samba server -----------------------------------------------------------------------
-
-     void MainWindow::on_Create_comboBox_SourceType_currentTextChanged(const QString &arg1)
+    void MainWindow::on_Create_comboBox_SourceType_currentTextChanged(const QString &arg1)
      {
          if (arg1 == "Samba share") {
              ui->Create_widget_SambaSettings->show();
@@ -820,20 +498,20 @@
              ui->Create_widget_DriveSettings->show();
          }
      }
-
-     void MainWindow::on_Create_radioButton_SambaDirectory_clicked()
+    //--------------------------------------------------------------------------
+    void MainWindow::on_Create_radioButton_SambaDirectory_clicked()
      {
          ui->Create_widget_SambaSettings->show();
          ui->Create_widget_DriveSettings->hide();
      }
     //--------------------------------------------------------------------------
-     void MainWindow::on_Create_radioButton_MountedDrive_clicked()
+    void MainWindow::on_Create_radioButton_MountedDrive_clicked()
      {
          ui->Create_widget_SambaSettings->hide();
          ui->Create_widget_DriveSettings->show();
      }
     //--------------------------------------------------------------------------
-     void MainWindow::on_Create_pushButton_VerifyConnection_clicked()
+    void MainWindow::on_Create_pushButton_VerifyConnection_clicked()
      {
          QString sambaServerIP = ui->Create_lineEdit_SambaServerIP->text();
          QString sambaDirectory = ui->Create_lineEdit_SambaDirectory->text();
@@ -987,8 +665,7 @@
 
      }
     //--------------------------------------------------------------------------
-
-     class SmbEntry {
+    class SmbEntry {
      public:
          QString name;
          bool isDirectory;
@@ -997,7 +674,7 @@
          QString fullPath;
      };
     //--------------------------------------------------------------------------
-     QList<SmbEntry> listSmbDirectory(const QString &serverIP, const QString &shareName,
+    QList<SmbEntry> listSmbDirectory(const QString &serverIP, const QString &shareName,
                                       const QString &path, const QString &credString) {
          QList<SmbEntry> entries;
          QProcess smbClient;
@@ -1093,8 +770,8 @@
          return entries;
      }
 
-    // Usage example:
-     void MainWindow::listShareContents(const QString &serverIP, const QString &shareName,
+    //--------------------------------------------------------------------------
+    void MainWindow::listShareContents(const QString &serverIP, const QString &shareName,
                                         const QString &credString) {
          QList<SmbEntry> allEntries = listSmbDirectory(serverIP, shareName, "", credString);
 
@@ -1126,3 +803,323 @@
          }
      }
     //--------------------------------------------------------------------------
+     QString MainWindow::connectToShare(const QString &serverIP, const QString &directory, const QString &username, const QString &password)
+     {
+         qDebug() << " " << "Connecting to share:" << serverIP << directory << username << password;
+         QString sharePath = "false";
+
+         // Format credentials properly
+         QString credString;
+         if (!username.isEmpty()) {
+             if (!username.contains("\\")) {
+                 credString = QString("WORKGROUP\\%1%2").arg(username,
+                                                             !password.isEmpty() ? "%" + password : "");
+             } else {
+                 credString = QString("%1%2").arg(username,
+                                                  !password.isEmpty() ? "%" + password : "");
+             }
+         }
+
+         // Verify the share exists using smbclient
+         QProcess smbList;
+         QStringList listArgs;
+
+         if (username.isEmpty()) {
+             listArgs << "-N"; // Anonymous/guest access
+         } else {
+             listArgs << "-U" << credString;
+         }
+
+         listArgs << "-L" << serverIP;
+
+         qDebug() << "Verifying share access with args:" <<
+             listArgs.join(" ").replace(QRegularExpression("\\%.+"), "%***");
+
+         smbList.start("smbclient", listArgs);
+         smbList.waitForFinished();
+         QString listOutput = smbList.readAllStandardOutput();
+         QString listError = smbList.readAllStandardError();
+
+         if (listError.contains("NT_STATUS_LOGON_FAILURE")) {
+             QMessageBox msgBox;
+             msgBox.setWindowTitle("Katalog");
+             msgBox.setText(tr("Authentication failed for share access.<br/><br/>"
+                               "Things to check:<br/>"
+                               "- Username format (try with DOMAIN\\username)<br/>"
+                               "- Password correctness<br/>"
+                               "- Share permissions<br/><br/>"
+                               "Debug info:<br/>") +
+                            listError.replace("\n", "<br/>"));
+             msgBox.setIcon(QMessageBox::Warning);
+             msgBox.exec();
+             return "false";
+         }
+
+
+         // Format the share path based on OS
+         auto currentOS = QOperatingSystemVersion::current();
+
+
+         if (currentOS.type() == QOperatingSystemVersion::Windows) {
+             sharePath = QString("//%1/%2").arg(serverIP, directory);
+             if (!QDir(sharePath).exists()) {
+                 sharePath = QString("\\\\%1\\%2").arg(serverIP, directory);
+                 qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
+             }
+         }
+         else if (currentOS.type() == QOperatingSystemVersion::MacOS) {
+             QString volumePath = QString("/Volumes/%1").arg(directory);
+             if (QDir(volumePath).exists()) {
+                 sharePath = volumePath;
+             } else {
+                 sharePath = QString("//%1/%2").arg(serverIP, directory);
+             }
+             qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
+         }
+         else { // Linux
+#ifdef Q_OS_UNIX
+             qDebug() << "DEBUG: createCatalog / Format the share path for Linux:" << sharePath;
+
+             QString mntPath = QString("/run/user/%1/gvfs/smb-share:server=%2,share=%3")
+                                   .arg(QString::number(getuid()), serverIP, directory);
+
+             if (QDir(mntPath).exists()) {
+                 sharePath = mntPath;
+             } else {
+                 // Check if it's mounted elsewhere
+                 QProcess mountProcess;
+                 mountProcess.start("mount");
+                 mountProcess.waitForFinished();
+                 QString mountOutput = mountProcess.readAllStandardOutput();
+
+                 // Look for the share in mount output
+                 QRegularExpression re(QString("on\\s+(/[^\\s]+).*%1.*%2").arg(serverIP, directory));
+                 QRegularExpressionMatch match = re.match(mountOutput);
+                 if (match.hasMatch()) {
+                     sharePath = match.captured(1);
+                 } else {
+                     sharePath = QString("smb://%1/%2").arg(serverIP, directory);
+                 }
+             }
+
+
+
+
+
+
+
+             // Now try to access the specific share
+             QProcess smbClient;
+             QStringList args;
+             QString shareUrl = QString("//%1/%2").arg(serverIP, directory);
+
+             if (username.isEmpty()) {
+                 args << "-N";
+             } else {
+                 args << "-U" << credString;
+             }
+
+             args << shareUrl << "-c" << "ls";
+
+             qDebug() << "Running share access with args:" <<
+                 args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
+
+             smbClient.start("smbclient", args);
+             smbClient.waitForFinished();
+             QString output = smbClient.readAllStandardOutput();
+             QString error = smbClient.readAllStandardError();
+             qDebug() << "Directory listing output:" << output;
+             qDebug() << "Directory listing error:" << error;
+
+
+             QList<SmbEntry> results = listSmbDirectory(serverIP, directory, sharePath, credString);
+
+             qDebug() << "Found" << results.size() << "entries";
+
+
+
+
+             if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
+                 QString errorMsg = error;
+                 if (error.contains("Not enough '\\' characters")) {
+                     errorMsg += tr("<br/><br/>Note: There might be an issue with the username format. "
+                                    "Try these formats:<br/>"
+                                    "- username<br/>"
+                                    "- DOMAIN\\username<br/>"
+                                    "- username@DOMAIN");
+                 }
+
+                 QMessageBox msgBox;
+                 msgBox.setWindowTitle("Katalog");
+                 msgBox.setText(tr("Error accessing share:<br/>") + shareUrl +
+                                tr("<br/><br/>Error message:<br/>") + errorMsg.replace("\n", "<br/>"));
+                 msgBox.setIcon(QMessageBox::Warning);
+                 msgBox.exec();
+                 //return;
+             }
+
+             // Parse and display the files if successful
+             if (!output.isEmpty()) {
+                 QStringList files = output.split("\n", Qt::SkipEmptyParts);
+                 QString fileList;
+
+                 for (const QString& file : files) {
+                     if (!file.trimmed().isEmpty()) {
+                         fileList += file.trimmed() + "<br/>";
+                     }
+                 }
+
+                 QMessageBox msgBox;
+                 msgBox.setWindowTitle("Katalog");
+                 msgBox.setText(tr("Share is accessible:<br/>") + shareUrl +
+                                tr("<br/><br/>Sample files found:<br/>") + fileList);
+                 msgBox.setIcon(QMessageBox::Information);
+                 msgBox.exec();
+             } else {
+                 QMessageBox msgBox;
+                 msgBox.setWindowTitle("Katalog");
+                 msgBox.setText(tr("Share is accessible but appears to be empty:<br/>") + shareUrl);
+                 msgBox.setIcon(QMessageBox::Information);
+                 msgBox.exec();
+             }
+
+
+#else
+             sharePath = QString("smb://%1/%2").arg(serverIP, directory);
+#endif
+         }
+
+         qDebug() << "DEBUG: createCatalog / OS / Share path:" << currentOS.type() << sharePath;
+
+         // Verify we can access the specific share
+         // QDir dir(sharePath);
+         // if (!dir.exists()) {
+         //     QMessageBox msgBox;
+         //     msgBox.setWindowTitle("Katalog");
+         //     msgBox.setText(tr("Unable to access share. Please mount it first in your file manager."));
+         //     msgBox.setIcon(QMessageBox::Warning);
+         //     msgBox.exec();
+         //     return false;
+         // }
+
+         // If we got here, the share is accessible
+         qDebug() << "DEBUG: createCatalog / Share mounted at:" << sharePath;
+         return sharePath;
+     }
+
+    //--------------------------------------------------------------------------
+    void MainWindow::iterateFiles(const QString &shareUrl,
+                                   const QString &username,
+                                   const QString &password,
+                                   const QStringList &fileExtensions)
+     {
+         QString credString;
+         if (!username.isEmpty()) {
+             if (!username.contains("\\")) {
+                 credString = QString("WORKGROUP\\%1%2").arg(username,
+                                                             !password.isEmpty() ? "%" + password : "");
+             } else {
+                 credString = QString("%1%2").arg(username,
+                                                  !password.isEmpty() ? "%" + password : "");
+             }
+         }
+
+         QProcess smbClient;
+         QStringList args;
+
+         if (username.isEmpty()) {
+             args << "-N";
+         } else {
+             args << "-U" << credString;
+         }
+
+         args << shareUrl << "-c" << "ls";
+
+         qDebug() << "Running share access with args:" <<
+             args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
+
+         smbClient.start("smbclient", args);
+         smbClient.waitForFinished();
+         QString output = smbClient.readAllStandardOutput();
+         QString error = smbClient.readAllStandardError();
+
+         qDebug() << "Directory listing output:" << output;
+         qDebug() << "Directory listing error:" << error;
+
+         if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
+             qDebug() << "Error accessing share:" << error;
+             return;
+         }
+
+         QStringList files = output.split("\n", Qt::SkipEmptyParts);
+         for (const QString& file : files) {
+             if (!file.trimmed().isEmpty()) {
+                 qDebug() << "File:" << file.trimmed();
+                 // Process the file as needed
+             }
+         }
+     }
+    //--------------------------------------------------------------------------
+    void MainWindow::listFilesRecursively(const QString &shareUrl, const QString &username, const QString &password, const QString &currentPath)
+     {
+         QString credString;
+         if (!username.isEmpty()) {
+             if (!username.contains("\\")) {
+                 credString = QString("WORKGROUP\\%1%2").arg(username,
+                                                             !password.isEmpty() ? "%" + password : "");
+             } else {
+                 credString = QString("%1%2").arg(username,
+                                                  !password.isEmpty() ? "%" + password : "");
+             }
+         }
+
+         QProcess smbClient;
+         QStringList args;
+
+         if (username.isEmpty()) {
+             args << "-N";
+         } else {
+             args << "-U" << credString;
+         }
+
+         args << shareUrl << "-c" << QString("cd %1; ls").arg(currentPath);
+
+         qDebug() << "Running share access with args:" <<
+             args.join(" ").replace(QRegularExpression("\\%.+"), "%***");
+
+         smbClient.start("smbclient", args);
+         smbClient.waitForFinished();
+         QString output = smbClient.readAllStandardOutput();
+         QString error = smbClient.readAllStandardError();
+
+         qDebug() << "Directory listing output:" << output;
+         qDebug() << "Directory listing error:" << error;
+
+         if (!error.isEmpty() && !error.contains("NT_STATUS_OK")) {
+             qDebug() << "Error accessing share:" << error;
+             return;
+         }
+
+         QStringList lines = output.split("\n", Qt::SkipEmptyParts);
+         for (const QString& line : lines) {
+             if (line.trimmed().isEmpty()) continue;
+
+             QStringList parts = line.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
+             if (parts.size() < 2) continue;
+
+             QString name = parts.last();
+             QString type = parts.first();
+
+             if (type == "D") {
+                 // It's a directory, recurse into it
+                 QString newPath = currentPath.isEmpty() ? name : currentPath + "/" + name;
+                 qDebug() << "Entering directory:" << newPath;
+                 listFilesRecursively(shareUrl, username, password, newPath);
+             } else {
+                 // It's a file, process it
+                 QString filePath = currentPath.isEmpty() ? name : currentPath + "/" + name;
+                 qDebug() << "File:" << filePath;
+                 // Add your file processing logic here
+             }
+         }
+     }
