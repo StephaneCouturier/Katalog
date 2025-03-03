@@ -50,7 +50,21 @@ MainWindow::MainWindow(QWidget *parent) :
         collection->appVersion = currentVersion;
         releaseDate     = "2025-03-03";
         developmentMode = false;
-        themeID = 1; //default value for the theme = Katalog Colors (light).
+
+        // Detect if the theme is light or dark
+        QPalette palette = QApplication::palette();
+        qDebug() << "Window color value: " << palette.color(QPalette::Window).value();
+        //Set default theme
+        // QPalette palette = parent->palette();
+        bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
+        qDebug() << "isDarkTheme: " << isDarkTheme;
+        if (isDarkTheme) {
+            themeID = 2; //default value for the theme = Katalog Colors (dark).
+        }
+        else {
+            themeID = 1; //default value for the theme = Katalog Colors (light).
+        }
+
         selectedTab = 3; //default value for the first launch = Create screen.
 
     //Prepare paths, user setting file, check version
@@ -148,10 +162,10 @@ MainWindow::MainWindow(QWidget *parent) :
             #endif
 
             //load custom Katalog stylesheet instead of default theme
-            if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (light)") ){
+            if ( themeID == 1 ){
                 loadCustomThemeLight();
             }
-            else if ( ui->Settings_comboBox_Theme->currentText() == tr("Katalog Colors (dark)") ){
+            else if ( themeID == 2 ){
                 loadCustomThemeDark();
             }
 

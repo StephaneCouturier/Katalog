@@ -301,7 +301,10 @@
                 QString userLanguage = QLocale::system().name();
                 settings.setValue("Settings/Language", userLanguage);
 
-                QString themeName = tr("Katalog Colors (light)");
+                ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
+
+                //Get the translate theme name from combobox
+                QString themeName = ui->Settings_comboBox_Theme->currentText();
 
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Katalog");
