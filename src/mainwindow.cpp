@@ -48,8 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.4";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-01-09";
-        developmentMode = true;
+        releaseDate     = "2025-03-03";
+        developmentMode = false;
         themeID = 1; //default value for the theme = Katalog Colors (light).
         selectedTab = 3; //default value for the first launch = Create screen.
 
@@ -94,9 +94,12 @@ MainWindow::MainWindow(QWidget *parent) :
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Source);
             buttonGroupBackUp.addButton(ui->BackUp_radioButton_Target);
 
-            QButtonGroup buttonGroupCreateTypeOfSource;
-            buttonGroupCreateTypeOfSource.addButton(ui->Create_radioButton_MountedDrive);
-            buttonGroupCreateTypeOfSource.addButton(ui->Create_radioButton_SambaDirectory);
+            QButtonGroup buttonGroupCreateFilesType;
+            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Any);
+            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Audio);
+            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Image);
+            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Text);
+            buttonGroupCreateFilesType.addButton(ui->Create_radioButton_FileType_Video);
 
         //Settings screen
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);

@@ -733,7 +733,7 @@
            <enum>QTabWidget::TabShape::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -6798,7 +6798,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="Create_label_SelectThePath_2">
+               <widget class="QLabel" name="Create_label_TypeOfSource">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -6820,25 +6820,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="Create_horizontalLayout_TypeOfSource">
+               <widget class="QComboBox" name="Create_comboBox_SourceType">
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_MountedDrive">
-                  <property name="text">
-                   <string>Mounted drive</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
+                 <property name="text">
+                  <string>Local drive</string>
+                 </property>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="Create_radioButton_SambaDirectory">
-                  <property name="text">
-                   <string>Samba directory</string>
-                  </property>
-                 </widget>
+                 <property name="text">
+                  <string>Samba share</string>
+                 </property>
                 </item>
-               </layout>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="Create_horizontalLayout_TypeOfSource"/>
               </item>
               <item>
                <widget class="QWidget" name="Create_widget_SambaSettings" native="true">
@@ -6958,7 +6954,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <widget class="QTreeView" name="Create_treeView_Explorer"/>
                  </item>
                  <item row="0" column="0">
-                  <widget class="QLabel" name="Create_label_SelectThePath_6">
+                  <widget class="QLabel" name="Create_label_Path">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>

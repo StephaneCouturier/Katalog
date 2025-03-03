@@ -525,7 +525,10 @@
             ui->Create_checkBox_IncludeSymblinks->hide();
             ui->Create_checkBox_isFullDevice->hide();
             ui->Create_checkBox_IncludeMetadata->hide();
-            ui->Create_radioButton_SambaDirectory->hide();
+            //DEV: Samba is not implemented yet
+            ui->Create_label_TypeOfSource->hide();
+            ui->Create_comboBox_SourceType->hide();
+            ui->Create_label_Path->hide();
 
         //Settings
             ui->Settings_comboBox_DatabaseMode->removeItem(2);

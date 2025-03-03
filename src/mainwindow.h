@@ -127,6 +127,7 @@ class MainWindow : public QMainWindow
         //Settings
         bool fileSortCaseSensitive;
 
+        void listShareContents(const QString &serverIP, const QString &shareName, const QString &credString);
     private:
         //Global
             //Application version
@@ -248,6 +249,17 @@ class MainWindow : public QMainWindow
 
         //TAB: Create
             QFileSystemModel *fileSystemModel;
+
+            QString connectToShare(const QString& serverIP, const QString& directory,
+                                   const QString& username, const QString& password);
+
+            void iterateFiles(const QString &shareUrl, const QString &username,
+                              const QString &password, const QStringList &fileExtensions);
+
+            void listFilesRecursively(const QString &shareUrl,
+                                      const QString &username,
+                                      const QString &password,
+                                      const QString &currentPath);
 
             QStringList storageNameList;
 
@@ -576,6 +588,7 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
+            void on_Create_comboBox_SourceType_currentTextChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H
