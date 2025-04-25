@@ -126,8 +126,11 @@ class MainWindow : public QMainWindow
 
         //Settings
         bool fileSortCaseSensitive;
-
         void listShareContents(const QString &serverIP, const QString &shareName, const QString &credString);
+
+        //Command line
+        void cmd_updateCatalog(const QString &catalogId, bool displayReport);
+
     private:
         //Global
             //Application version

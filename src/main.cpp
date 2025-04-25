@@ -32,6 +32,7 @@
 #include <QCommandLineParser>
 #include <QTranslator>
 #include <QMessageBox>
+#include <QCommandLineParser>
 
 //#ifdef Q_OS_LINUX
 //    #include <KAboutData>
@@ -122,7 +123,47 @@ int main(int argc, char *argv[])
             QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons");
         }
 
-    MainWindow window;
+
+    //Command line parser
+        QCommandLineParser parser;
+        parser.setApplicationDescription("Catalog and search files");
+        parser.addHelpOption();
+        parser.addVersionOption();
+
+        // Define command-line options
+        QCommandLineOption myOption("report", "Display the update summary with a message box.");
+        parser.addOption(myOption);
+
+        QCommandLineOption catalogIdOption("deviceID", "Device ID to update.", "deviceID");
+        parser.addOption(catalogIdOption);
+
+        // Define a command-line argument
+        parser.addPositionalArgument("action", "The action to perform.");
+
+        // Process the command-line arguments
+        parser.process(app);
+
+        // Retrieve the values
+        bool displayReport = parser.isSet(myOption);
+        QString action = parser.positionalArguments().value(0);
+        QString deviceID = parser.value(catalogIdOption);
+
+        if (!action.isEmpty()) {
+            // Handle the action
+            qDebug() << "Action:" << action;
+            if (action == "update_catalog") {
+                // Create an instance of MainWindow to perform the action
+                MainWindow window;
+                window.cmd_updateCatalog(deviceID, displayReport);
+                // Exit the application after performing the action
+                return 0;
+            }
+        }
+
+        // If no specific action is requested, create and show the main window
+        MainWindow window;
+        window.show();
+
     window.show();
 
     return app.exec();

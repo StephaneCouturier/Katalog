@@ -4524,6 +4524,81 @@ void MainWindow::convertStorage()
 
     collection->saveStorageTableToFile();
 }
+
+void MainWindow::cmd_updateCatalog(const QString &deviceID, bool displayReport)
+{
+    qDebug() << "Updating device:   " << deviceID;
+
+    //Set up the database connection
+
+        //Set up and start database (modes: "Memory", "File", or "Hosted")
+        startDatabase();
+
+        //Load Collection data
+        //Load Collection
+        loadCollection();
+        selectedDevice->loadDevice("defaultConnection");
+
+    //Set selected device to the one specified by catalogId
+    selectedDevice->ID = deviceID.toInt();
+    selectedDevice->loadDevice("defaultConnection");
+
+    if(selectedDevice->type != "Catalog"){
+        qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
+        qDebug() << "Device ID: " << selectedDevice->ID;;
+        qDebug() << "Device Name: " << selectedDevice->name;
+        qDebug() << "Device Type: " << selectedDevice->type;
+        return;
+    }
+
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Catalog values prior to update:";
+    qDebug() << "Catalog ID: " << selectedDevice->ID;;
+    qDebug() << "Catalog Name: " << selectedDevice->name;
+    qDebug() << "Catalog Path: " << selectedDevice->path;
+    qDebug() << "Catalog Type: " << selectedDevice->type;
+    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
+    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
+    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
+
+    // Perform the update operation
+    //Update and report
+    if(displayReport==true){
+        reportAllUpdates(selectedDevice,
+        selectedDevice->updateDevice("update",
+                                     collection->databaseMode,
+                                     true,
+                                     collection->folder,
+                                     true),
+                         "update");
+    }
+    else{
+        selectedDevice->updateDevice("update",
+                                     collection->databaseMode,
+                                     true,
+                                     collection->folder,
+                                     true);
+    }
+
+    selectedDevice->catalog->appVersion = currentVersion;
+
+    //Save data
+    collection->saveDeviceTableToFile();
+    collection->saveStatiticsToFile();
+
+    //Report device info after update
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Catalog updated successfully.";
+    qDebug() << "Catalog ID: "   << selectedDevice->ID;;
+    qDebug() << "Catalog Name: " << selectedDevice->name;
+    qDebug() << "Catalog Path: " << selectedDevice->path;
+    qDebug() << "Catalog Type: " << selectedDevice->type;
+    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
+    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
+    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
+
+}
+
 //--------------------------------------------------------------------------
 //--- DEV: metadata --------------------------------------------------------
 //--------------------------------------------------------------------------
