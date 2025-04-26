@@ -4562,41 +4562,88 @@ void MainWindow::cmd_updateCatalog(const QString &deviceID, bool displayReport)
     qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
 
     // Perform the update operation
-    //Update and report
-    if(displayReport==true){
-        reportAllUpdates(selectedDevice,
-        selectedDevice->updateDevice("update",
-                                     collection->databaseMode,
-                                     true,
-                                     collection->folder,
-                                     true),
-                         "update");
+    //Update and report if active
+    if(selectedDevice->active==true){
+        if(displayReport==true){
+            reportAllUpdates(selectedDevice,
+            selectedDevice->updateDevice("update",
+                                         collection->databaseMode,
+                                         true,
+                                         collection->folder,
+                                         true),
+                             "update");
+        }
+        else{
+            selectedDevice->updateDevice("update",
+                                         collection->databaseMode,
+                                         true,
+                                         collection->folder,
+                                         true);
+        }
+
+        selectedDevice->catalog->appVersion = currentVersion;
+
+        //Save data
+        collection->saveDeviceTableToFile();
+        collection->saveStatiticsToFile();
+
+        //Report device info after update
+        qDebug() << "-----------------------------------------------------------------------";
+        qDebug() << "Catalog updated successfully.";
+        qDebug() << "Catalog ID: "   << selectedDevice->ID;;
+        qDebug() << "Catalog Name: " << selectedDevice->name;
+        qDebug() << "Catalog Path: " << selectedDevice->path;
+        qDebug() << "Catalog Type: " << selectedDevice->type;
+        qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
+        qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
+        qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
     }
     else{
-        selectedDevice->updateDevice("update",
-                                     collection->databaseMode,
-                                     true,
-                                     collection->folder,
-                                     true);
-    }
+        qDebug() << "";
+        qDebug() << "The Catalog was not updated as it is not active.";
+        qDebug() << "";
+        }
+}
 
-    selectedDevice->catalog->appVersion = currentVersion;
+void MainWindow::cmd_listGroup0Catalogs()
+{
+    //Set up the database connection
 
-    //Save data
-    collection->saveDeviceTableToFile();
-    collection->saveStatiticsToFile();
+        //Set up and start database (modes: "Memory", "File", or "Hosted")
+        startDatabase();
 
-    //Report device info after update
+        //Load Collection data
+        //Load Collection
+        loadCollection();
+        selectedDevice->loadDevice("defaultConnection");
+
+    //Query the database for all devices of type catalog in the device group 0
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                                    SELECT device_id, device_name, device_active
+                                    FROM device
+                                    WHERE device_type = 'Catalog'
+                                    AND device_group_id = 0
+                                    ORDER BY device_id
+                                )");
+
+    //Prepare and execute the query
+    query.prepare(querySQL);
+    query.exec();
+    qDebug() << query.lastError();
     qDebug() << "-----------------------------------------------------------------------";
-    qDebug() << "Catalog updated successfully.";
-    qDebug() << "Catalog ID: "   << selectedDevice->ID;;
-    qDebug() << "Catalog Name: " << selectedDevice->name;
-    qDebug() << "Catalog Path: " << selectedDevice->path;
-    qDebug() << "Catalog Type: " << selectedDevice->type;
-    qDebug() << "Catalog Size: " << selectedDevice->totalFileSize;
-    qDebug() << "Catalog Files: " << selectedDevice->totalFileCount;
-    qDebug() << "Catalog update date: " << selectedDevice->dateTimeUpdated.toString();
+    qDebug() << "Catalogs";
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "Device ID" << "    Active" << "      Device Name:";
 
+    //Iterate through the results and print the device ID and name
+    while (query.next()) {
+        int deviceID = query.value(0).toInt();
+        QString deviceName = query.value(1).toString();
+        bool deviceActive = query.value(2).toBool();
+        qDebug() << "  " << deviceID << "         " << deviceActive << "      " << deviceName;
+    }
+    qDebug() << "-----------------------------------------------------------------------";
 }
 
 //--------------------------------------------------------------------------

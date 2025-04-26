@@ -44,6 +44,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    QApplication::setApplicationName("Katalog");
+    QApplication::setApplicationVersion("2.4");
 
     //Get language choice and apply translation
         //Get user home path
@@ -126,7 +128,7 @@ int main(int argc, char *argv[])
 
     //Command line parser
         QCommandLineParser parser;
-        parser.setApplicationDescription("Catalog and search files");
+        parser.setApplicationDescription("Katalog is an application to manage catalogs of disks and files:");
         parser.addHelpOption();
         parser.addVersionOption();
 
@@ -134,28 +136,40 @@ int main(int argc, char *argv[])
         QCommandLineOption myOption("report", "Display the update summary with a message box.");
         parser.addOption(myOption);
 
-        QCommandLineOption catalogIdOption("deviceID", "Device ID to update.", "deviceID");
-        parser.addOption(catalogIdOption);
-
-        // Define a command-line argument
-        parser.addPositionalArgument("action", "The action to perform.");
+        // Define command-line arguments
+        parser.addPositionalArgument("action", "The action to perform (ex: update_catalog, list_catalogs).");
+        parser.addPositionalArgument("deviceID", "Device ID on which the action is performed (required for update_catalog).");
 
         // Process the command-line arguments
         parser.process(app);
 
         // Retrieve the values
         bool displayReport = parser.isSet(myOption);
-        QString action = parser.positionalArguments().value(0);
-        QString deviceID = parser.value(catalogIdOption);
+        QString action   = parser.positionalArguments().value(0);
+        QString deviceID = parser.positionalArguments().value(1);
+        //QString deviceID = parser.value(catalogIdOption);
 
         if (!action.isEmpty()) {
             // Handle the action
+            qDebug() << "";
             qDebug() << "Action:" << action;
             if (action == "update_catalog") {
                 // Create an instance of MainWindow to perform the action
                 MainWindow window;
                 window.cmd_updateCatalog(deviceID, displayReport);
                 // Exit the application after performing the action
+                return 0;
+            }
+            else if (action == "list_catalogs") {
+                // Create an instance of MainWindow to perform the action
+                MainWindow window;
+                window.cmd_listGroup0Catalogs();
+                // Exit the application after performing the action
+                return 0;
+            }
+            else{
+                qDebug() << "Incorrect action requested. Valid actions: update_catalog, list_catalogs." << action;
+                qDebug() << "";
                 return 0;
             }
         }
