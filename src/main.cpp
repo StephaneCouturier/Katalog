@@ -146,7 +146,6 @@ int main(int argc, char *argv[])
         bool displayReport = parser.isSet(myOption);
         QString action   = parser.positionalArguments().value(0);
         int deviceID = parser.positionalArguments().value(1).toInt();
-        //QString deviceID = parser.value(catalogIdOption);
 
         if (!action.isEmpty()) {
             // Handle the action

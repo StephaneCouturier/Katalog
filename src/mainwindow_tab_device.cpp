@@ -4610,7 +4610,6 @@ void MainWindow::cmd_listGroup0Catalogs()
     //Prepare and execute the query
     query.prepare(querySQL);
     query.exec();
-    qDebug() << query.lastError();
     qDebug() << "-----------------------------------------------------------------------";
     qDebug() << "Catalogs";
     qDebug() << "-----------------------------------------------------------------------";

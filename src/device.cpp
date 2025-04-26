@@ -35,6 +35,10 @@
 
 void Device::loadDevice(QString connectionName){
     QSqlDatabase db = QSqlDatabase::database(connectionName);
+    if (!db.isOpen()) {
+        qDebug() << "DEBUG: Database is not open.";
+        return;
+    }
     QSqlQuery query(db);
     QString querySQL = QLatin1String(R"(
                             SELECT  device_id,
