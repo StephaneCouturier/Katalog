@@ -127,17 +127,20 @@ int main(int argc, char *argv[])
 
     //Command line parser
         QCommandLineParser parser;
-        parser.setApplicationDescription("Katalog is an application to manage catalogs of disks and files:");
+        parser.setApplicationDescription("Katalog is an application to manage catalogs of disks and files.");
         parser.addHelpOption();
         parser.addVersionOption();
 
         // Define command-line options
-        QCommandLineOption myOption("report", "Display the update summary with a message box.");
+        QCommandLineOption myOption("report", "Display the update summary of each catalog update in a message box.");
         parser.addOption(myOption);
 
         // Define command-line arguments
-        parser.addPositionalArgument("action", "The action to perform (ex: update_catalog, list_catalogs).");
-        parser.addPositionalArgument("deviceID", "Device ID on which the action is performed (required for update_catalog).");
+        parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
+                                               "  list_catalogs     - List all catalogs (ID, active state, name)\n"
+                                               "  update_catalog    - Update a specific catalog (deviceID)\n"
+                                               "  update_all_active - Update all active catalogs.");
+        parser.addPositionalArgument("deviceID", "Device ID on which the action is performed (required for update_catalog)");
 
         // Process the command-line arguments
         parser.process(app);
