@@ -125,7 +125,6 @@ int main(int argc, char *argv[])
             QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/fallback-icons");
         }
 
-
     //Command line parser
         QCommandLineParser parser;
         parser.setApplicationDescription("Katalog is an application to manage catalogs of disks and files:");
@@ -146,13 +145,14 @@ int main(int argc, char *argv[])
         // Retrieve the values
         bool displayReport = parser.isSet(myOption);
         QString action   = parser.positionalArguments().value(0);
-        QString deviceID = parser.positionalArguments().value(1);
+        int deviceID = parser.positionalArguments().value(1).toInt();
         //QString deviceID = parser.value(catalogIdOption);
 
         if (!action.isEmpty()) {
             // Handle the action
             qDebug() << "";
             qDebug() << "Action:" << action;
+
             if (action == "update_catalog") {
                 // Create an instance of MainWindow to perform the action
                 MainWindow window;
@@ -167,8 +167,15 @@ int main(int argc, char *argv[])
                 // Exit the application after performing the action
                 return 0;
             }
+            else if (action == "update_all_active") {
+                // Create an instance of MainWindow to perform the action
+                MainWindow window;
+                window.cmd_updateAllActive(displayReport);
+                // Exit the application after performing the action
+                return 0;
+            }
             else{
-                qDebug() << "Incorrect action requested. Valid actions: update_catalog, list_catalogs." << action;
+                qDebug() << "Incorrect action requested. Valid actions: update_catalog, list_catalogs, update_all_active." << action;
                 qDebug() << "";
                 return 0;
             }

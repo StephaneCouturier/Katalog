@@ -4525,23 +4525,13 @@ void MainWindow::convertStorage()
     collection->saveStorageTableToFile();
 }
 
-void MainWindow::cmd_updateCatalog(const QString &deviceID, bool displayReport)
+void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
 {
-    qDebug() << "Updating device:   " << deviceID;
-
-    //Set up the database connection
-
-        //Set up and start database (modes: "Memory", "File", or "Hosted")
-        startDatabase();
-
-        //Load Collection data
-        //Load Collection
-        loadCollection();
-        selectedDevice->loadDevice("defaultConnection");
+    qDebug() << "Updating device:   " << deviceId;
 
     //Set selected device to the one specified by catalogId
-    selectedDevice->ID = deviceID.toInt();
-    selectedDevice->loadDevice("defaultConnection");
+        selectedDevice->ID = deviceId;
+        selectedDevice->loadDevice("defaultConnection");
 
     if(selectedDevice->type != "Catalog"){
         qDebug() << tr("The device selected must be a Catalog. Try with a different device ID");
@@ -4588,7 +4578,7 @@ void MainWindow::cmd_updateCatalog(const QString &deviceID, bool displayReport)
         collection->saveStatiticsToFile();
 
         //Report device info after update
-        qDebug() << "-----------------------------------------------------------------------";
+        qDebug() << "---";
         qDebug() << "Catalog updated successfully.";
         qDebug() << "Catalog ID: "   << selectedDevice->ID;;
         qDebug() << "Catalog Name: " << selectedDevice->name;
@@ -4607,16 +4597,6 @@ void MainWindow::cmd_updateCatalog(const QString &deviceID, bool displayReport)
 
 void MainWindow::cmd_listGroup0Catalogs()
 {
-    //Set up the database connection
-
-        //Set up and start database (modes: "Memory", "File", or "Hosted")
-        startDatabase();
-
-        //Load Collection data
-        //Load Collection
-        loadCollection();
-        selectedDevice->loadDevice("defaultConnection");
-
     //Query the database for all devices of type catalog in the device group 0
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL = QLatin1String(R"(
@@ -4643,6 +4623,33 @@ void MainWindow::cmd_listGroup0Catalogs()
         bool deviceActive = query.value(2).toBool();
         qDebug() << "  " << deviceID << "         " << deviceActive << "      " << deviceName;
     }
+    qDebug() << "-----------------------------------------------------------------------";
+}
+
+
+void MainWindow::cmd_updateAllActive(bool displayReport)
+{
+    //Select all active catalog devices from database
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+                           SELECT device_id
+                           FROM device
+                           WHERE device_type = 'Catalog'
+                           AND device_active = 1
+                           ORDER BY device_id
+                       )");
+       query.prepare(querySQL);
+       query.exec();
+
+    //Update each catalog
+        while (query.next()) {
+            int deviceID = query.value(0).toInt();
+            qDebug() << "processing:   "<< deviceID ;
+            cmd_updateCatalog(deviceID, displayReport);
+        }
+
+    qDebug() << "-----------------------------------------------------------------------";
+    qDebug() << "All active catalogs updated";
     qDebug() << "-----------------------------------------------------------------------";
 }
 

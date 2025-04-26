@@ -129,8 +129,9 @@ class MainWindow : public QMainWindow
         void listShareContents(const QString &serverIP, const QString &shareName, const QString &credString);
 
         //Command line
-        void cmd_updateCatalog(const QString &catalogId, bool displayReport);
+        void cmd_updateCatalog(int deviceId, bool displayReport);
         void cmd_listGroup0Catalogs();
+        void cmd_updateAllActive(bool displayReport);
 
     private:
         //Global
