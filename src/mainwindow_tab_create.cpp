@@ -499,17 +499,17 @@
          }
      }
     //--------------------------------------------------------------------------
-    void MainWindow::on_Create_radioButton_SambaDirectory_clicked()
-     {
-         ui->Create_widget_SambaSettings->show();
-         ui->Create_widget_DriveSettings->hide();
-     }
-    //--------------------------------------------------------------------------
-    void MainWindow::on_Create_radioButton_MountedDrive_clicked()
-     {
-         ui->Create_widget_SambaSettings->hide();
-         ui->Create_widget_DriveSettings->show();
-     }
+    // void MainWindow::on_Create_radioButton_SambaDirectory_clicked()
+    //  {
+    //      ui->Create_widget_SambaSettings->show();
+    //      ui->Create_widget_DriveSettings->hide();
+    //  }
+    // //--------------------------------------------------------------------------
+    // void MainWindow::on_Create_radioButton_MountedDrive_clicked()
+    //  {
+    //      ui->Create_widget_SambaSettings->hide();
+    //      ui->Create_widget_DriveSettings->show();
+    //  }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_VerifyConnection_clicked()
      {
