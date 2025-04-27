@@ -95,7 +95,6 @@
             insertQuery.bindValue(":parameter_type", "exclude_directory");
             insertQuery.bindValue(":parameter_value2", newFolderToExclude);
             insertQuery.exec();
-            qDebug()<<"DEBUG: query: "<<insertQuery.lastError();
 
             //Save
             collection->saveParameterTableToFile();
