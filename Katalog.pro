@@ -224,6 +224,7 @@ DISTFILES += \
     docs/index.html \
     docs/markdown-page/index.html \
     docs/sitemap.xml \
+    scripts/Katalog.sh \
     src/images/Appname_Logo.png \
     src/images/Banner.png \
     src/images/Katalog_logo_64.ico \
