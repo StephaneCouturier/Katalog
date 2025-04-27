@@ -88,8 +88,8 @@
     void MainWindow::on_Settings_pushButton_DatabaseModeApplyAndRestart_clicked()
     {
         //Save choice of mode
-        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(),Qt::UserRole).toString();
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+        collection->databaseMode = ui->Settings_comboBox_DatabaseMode->itemData(ui->Settings_comboBox_DatabaseMode->currentIndex(), Qt::UserRole).toString();
+        QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         settings.setValue("Settings/databaseMode", collection->databaseMode);
 
         //Save folder
@@ -108,8 +108,9 @@
             settings.setValue("Settings/databaseUserName", ui->Settings_lineEdit_DataMode_Hosted_UserName->text());
             settings.setValue("Settings/databasePassword", ui->Settings_lineEdit_DataMode_Hosted_Password->text());
         }
-        //Restart
-        QProcess::startDetached(QApplication::applicationFilePath(), QApplication::arguments());
+
+        //Trigger the restart action
+        QProcess::startDetached(QApplication::applicationFilePath(), QStringList() << "restart");
         QApplication::exit();
     }
     //----------------------------------------------------------------------

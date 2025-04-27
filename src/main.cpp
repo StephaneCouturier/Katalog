@@ -132,8 +132,8 @@ int main(int argc, char *argv[])
         parser.addVersionOption();
 
         // Define command-line options
-        QCommandLineOption myOption("report", "Display the update summary of each catalog update in a message box.");
-        parser.addOption(myOption);
+        QCommandLineOption reportOption("report", "Display the update summary of each catalog update in a message box.");
+        parser.addOption(reportOption);
 
         // Define command-line arguments
         parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
@@ -146,16 +146,27 @@ int main(int argc, char *argv[])
         parser.process(app);
 
         // Retrieve the values
-        bool displayReport = parser.isSet(myOption);
-        QString action   = parser.positionalArguments().value(0);
-        int deviceID = parser.positionalArguments().value(1).toInt();
+        bool displayReport  = parser.isSet(reportOption);
+        QStringList positionalArguments = parser.positionalArguments();
+        QString action      = positionalArguments.value(0);
+        QString deviceIDStr = positionalArguments.value(1);
 
         if (!action.isEmpty()) {
             // Handle the action
             qDebug() << "";
-            qDebug() << "Action:" << action;
+            qDebug() << "Action selected:" << action;
 
             if (action == "update_catalog") {
+                if (deviceIDStr.isEmpty()) {
+                    qWarning() << "Stopped. A device ID is required for update_catalog action.\n";
+                    return 1;
+                }
+                bool deviceIDIsInt;
+                int deviceID = deviceIDStr.toInt(&deviceIDIsInt);
+                if (!deviceIDIsInt) {
+                    qWarning() << "Stopped. The device ID must be an integer.\n";
+                    return 1;
+                }
                 // Create an instance of MainWindow to perform the action
                 MainWindow window;
                 window.cmd_updateCatalog(deviceID, displayReport);
@@ -175,11 +186,45 @@ int main(int argc, char *argv[])
                 window.cmd_updateAllActive(displayReport);
                 // Exit the application after performing the action
                 return 0;
+            } else if (action == "restart") {
+                // Handle the restart action
+                qDebug() << "Restarting the application...";
+
+                // Prepare arguments for restarting the application
+                QStringList newArgs;
+                bool skipNext = false;
+                for (const QString &arg : QApplication::arguments()) {
+                    if (skipNext) {
+                        skipNext = false;
+                        continue;
+                    }
+                    if (arg == "--catalogID" || arg == "--report" || arg == "--myoption") {
+                        // Skip the next argument as it is the value for the current option
+                        skipNext = true;
+                    } else if (arg.startsWith("--")) {
+                        // Include other options
+                        newArgs << arg;
+                    } else if (arg.startsWith("-")) {
+                        // Include short options
+                        newArgs << arg;
+                    } else {
+                        // Skip positional arguments (actions)
+                        continue;
+                    }
+                }
+
+                // Start the new process
+                QProcess::startDetached(QApplication::applicationFilePath(), newArgs);
+
+                // Exit the current application
+                return 0;
             }
             else{
-                qDebug() << "Incorrect action requested. Valid actions: update_catalog, list_catalogs, update_all_active." << action;
+                qDebug() << "Incorrect action requested. \n"
+                            "Valid actions: list_catalogs, update_catalog, update_all_active.\n"
+                            "For more information, use ./Katalog --help";
                 qDebug() << "";
-                return 0;
+                return 1;
             }
         }
 
