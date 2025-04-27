@@ -2025,34 +2025,38 @@ void MainWindow::loadDevicesStorageToModel(){
     ui->Devices_treeView_DeviceList->header()->resizeSection(23, 150); //Comment3
 
     //Show or Hide
-    ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
-    ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
-    ui->Devices_treeView_DeviceList->header()->hideSection( 4); //Parent ID
-    ui->Devices_treeView_DeviceList->header()->showSection( 5); //External ID
-    ui->Devices_treeView_DeviceList->header()->showSection( 8); //Used space
-    ui->Devices_treeView_DeviceList->header()->showSection( 9); //Free space
-    ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
-    ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
+        //Permanent fields
+        ui->Devices_treeView_DeviceList->header()->hideSection( 1); //Type
+        ui->Devices_treeView_DeviceList->header()->hideSection( 3); //ID
+        ui->Devices_treeView_DeviceList->header()->hideSection( 4); //Parent ID
+        ui->Devices_treeView_DeviceList->header()->showSection( 5); //External ID
+        ui->Devices_treeView_DeviceList->header()->showSection( 8); //Used space
+        ui->Devices_treeView_DeviceList->header()->showSection( 9); //Free space
+        ui->Devices_treeView_DeviceList->header()->showSection(10); //Total space
+        ui->Devices_treeView_DeviceList->header()->hideSection(13); //Group ID
 
-    if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
-        ui->Devices_treeView_DeviceList->header()->showSection( 2); //Active
-        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand
-        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_model
-        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_serial_number
-        ui->Devices_treeView_DeviceList->header()->showSection(20); //storage_build_date
-        ui->Devices_treeView_DeviceList->header()->showSection(21); //Comment 1
-        ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 2
-        ui->Devices_treeView_DeviceList->header()->showSection(23); //Comment 3
-    } else {
-        ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
-        ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand
-        ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_model
-        ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_serial_number
-        ui->Devices_treeView_DeviceList->header()->hideSection(20); //storage_build_date
-        ui->Devices_treeView_DeviceList->header()->hideSection(21); //Comment 1
-        ui->Devices_treeView_DeviceList->header()->hideSection(22); //Comment 2
-        ui->Devices_treeView_DeviceList->header()->hideSection(23); //Comment 3
-    }
+        //Optional fields
+        if (ui->Devices_checkBox_DisplayFullTable->isChecked()) {
+            ui->Devices_treeView_DeviceList->header()->showSection( 2); //Active
+            ui->Devices_treeView_DeviceList->header()->showSection(14); //storage_type
+            ui->Devices_treeView_DeviceList->header()->showSection(17); //storage_brand
+            ui->Devices_treeView_DeviceList->header()->showSection(18); //storage_model
+            ui->Devices_treeView_DeviceList->header()->showSection(19); //storage_serial_number
+            ui->Devices_treeView_DeviceList->header()->showSection(20); //storage_build_date
+            ui->Devices_treeView_DeviceList->header()->showSection(21); //Comment 1
+            ui->Devices_treeView_DeviceList->header()->showSection(22); //Comment 2
+            ui->Devices_treeView_DeviceList->header()->showSection(23); //Comment 3
+        } else {
+            ui->Devices_treeView_DeviceList->header()->hideSection(2); //Active
+            ui->Devices_treeView_DeviceList->header()->hideSection(14); //storage_type
+            ui->Devices_treeView_DeviceList->header()->hideSection(17); //storage_brand
+            ui->Devices_treeView_DeviceList->header()->hideSection(18); //storage_model
+            ui->Devices_treeView_DeviceList->header()->hideSection(19); //storage_serial_number
+            ui->Devices_treeView_DeviceList->header()->hideSection(20); //storage_build_date
+            ui->Devices_treeView_DeviceList->header()->hideSection(21); //Comment 1
+            ui->Devices_treeView_DeviceList->header()->hideSection(22); //Comment 2
+            ui->Devices_treeView_DeviceList->header()->hideSection(23); //Comment 3
+        }
 
     ui->Devices_treeView_DeviceList->expandAll();
 }
