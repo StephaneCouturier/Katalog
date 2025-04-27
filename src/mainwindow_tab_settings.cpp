@@ -113,49 +113,90 @@
         QApplication::exit();
     }
     //----------------------------------------------------------------------
-    void MainWindow::changeCollectionFolder()
-    {
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("LastCollectionFolder", collection->folder);
-
-        //Set the new path in Settings tab
-        ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
-
-        //Load the collection from this new folder;
-        loadCollection();
-    }
 
     //Memory ---------------------------------------------------------------
+    void MainWindow::changeCollectionFolder(QString newDirectory)
+    {
+        //Test the new directory path is not empty
+        if ( newDirectory !=""){
+            //Test if the directory exists, and propose to create it otherwise. If refused, set back the current folder.
+            if (!QDir(newDirectory).exists()) {
+
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "The directory does not exist. Create it?"));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                msgBox.setButtonText(QMessageBox::Yes, tr("Create"));
+                msgBox.setButtonText(QMessageBox::No, tr("Cancel"));
+                int result = msgBox.exec();
+
+                if (result == QMessageBox::Yes) {
+                    //Create the folder and set it as the new collection folder
+                    QDir().mkdir(newDirectory);
+
+                } else {
+                    //Reset the former folder path and exit procedure
+                    ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+                    ui->Settings_pushButton_Apply->setEnabled(false);
+                    return;
+                }
+            }
+
+            //Set the new collection folder
+            collection->folder = newDirectory;
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+
+            //Apply the new value and reload
+            qDebug() << "Changed collection folder to" << collection->folder;
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
+
+            //Save Settings for the new collection folder value
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("LastCollectionFolder", collection->folder);
+
+            //Load the collection from this new folder;
+            loadCollection();
+
+            //Reset selected values (to avoid actions on the last selected ones)
+            resetSelection();
+
+            ui->Settings_pushButton_Apply->setEnabled(false);
+        }
+    }
+    //----------------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_CollectionFolder_returnPressed()
     {
         QString dir = ui->Settings_lineEdit_CollectionFolder->text();
-
-        //Unless the selection was cancelled, set the new collection folder, and refresh all data
-        if ( dir !=""){
-            collection->folder = dir;
-            changeCollectionFolder();
-        }
-
-        //Reset selected values (to avoid actions on the last selected ones)
-        resetSelection();
+        changeCollectionFolder(dir);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1)
+    {
+        ui->Settings_pushButton_Apply->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_Apply_clicked()
+    {
+        //Set the new collection folder, and refresh all data
+        QString newDirectory = ui->Settings_lineEdit_CollectionFolder->text();
+        changeCollectionFolder(newDirectory);
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_SelectFolder_clicked()
     {
         //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-        QString dir = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
+        QString newDirectory = QFileDialog::getExistingDirectory(this, tr("Select the directory for this collection"),
                                                         collection->folder,
                                                         QFileDialog::ShowDirsOnly
                                                             | QFileDialog::DontResolveSymlinks);
 
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
-        if ( dir !=""){
-            collection->folder = dir;
-            changeCollectionFolder();
+        if ( newDirectory !=""){
+            changeCollectionFolder(newDirectory);
         }
-
-        //Reset selected values (to avoid actions on the last selected ones)
-        resetSelection();
     }
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_pushButton_ExportToSQLitFile_clicked()

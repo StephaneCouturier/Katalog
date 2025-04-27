@@ -365,7 +365,7 @@ class MainWindow : public QMainWindow
             void saveNewMapping();
 
         //TAB: Settings
-            void changeCollectionFolder();
+            void changeCollectionFolder(QString newDirectory);
             void changeDatabaseFilePath();
 
     public slots:
@@ -408,6 +408,8 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
             void on_Settings_pushButton_ExportToSQLitFile_clicked();
+            void on_Settings_pushButton_Apply_clicked();
+            void on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1);
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();

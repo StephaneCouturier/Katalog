@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.4";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-03-03";
+        releaseDate     = "2025-04-27";
         developmentMode = false;
 
         //Detect if the theme is light or dark
@@ -224,6 +224,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //Set file types
             setFileTypes();
+
+            //Set apply button to disabled
+            ui->Settings_pushButton_Apply->setEnabled(false);
 
         //Setup tab: Explore
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);
