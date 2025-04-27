@@ -1919,7 +1919,7 @@
             ui->Search_comboBox_TextCriteria->setCurrentText(tr("All Words"));
             ui->Search_comboBox_SearchIn->setCurrentText(tr("File names only"));
             ui->Search_checkBox_CaseSensitive->setChecked(false);
-            ui->Search_lineEdit_Exclude->setText(tr(""));
+            ui->Search_lineEdit_Exclude->setText("");
 
             //File criteria
             ui->Search_checkBox_FileCriteria->setChecked(false);

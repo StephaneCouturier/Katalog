@@ -6863,15 +6863,21 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    </item>
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="Create_lineEdit_SambaServerIP">
+                     <property name="inputMask">
+                      <string notr="true"/>
+                     </property>
                      <property name="text">
-                      <string>192.168.1.16</string>
+                      <string/>
                      </property>
                     </widget>
                    </item>
                    <item row="1" column="1">
                     <widget class="QLineEdit" name="Create_lineEdit_SambaDirectory">
+                     <property name="inputMask">
+                      <string notr="true"/>
+                     </property>
                      <property name="text">
-                      <string>PiPublic</string>
+                      <string/>
                      </property>
                     </widget>
                    </item>
@@ -6890,7 +6896,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item row="2" column="1">
-                    <widget class="QLineEdit" name="Create_lineEdit_SambaUser"/>
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaUser">
+                     <property name="inputMask">
+                      <string notr="true"/>
+                     </property>
+                    </widget>
                    </item>
                    <item row="3" column="0">
                     <widget class="QLabel" name="Create_label_Password">
@@ -6900,7 +6910,11 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QLineEdit" name="Create_lineEdit_SambaPassword"/>
+                    <widget class="QLineEdit" name="Create_lineEdit_SambaPassword">
+                     <property name="inputMask">
+                      <string notr="true"/>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </item>
