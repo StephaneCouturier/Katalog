@@ -35,7 +35,7 @@
 //Main attributes--------------------------------------------------------
 void Collection::updateCollectionVersion()
 {
-    QSqlQuery queryUpdateVersion;
+    QSqlQuery queryUpdateVersion(QSqlDatabase::database("defaultConnection"));
     QString queryUpdateVersionSQL = QLatin1String(R"(
                                     UPDATE parameter
                                     SET parameter_value1 = :parameter_value1
