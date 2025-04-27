@@ -226,7 +226,8 @@ MainWindow::MainWindow(QWidget *parent) :
             setFileTypes();
 
             //Set apply button to disabled
-            ui->Settings_pushButton_Apply->setEnabled(false);
+            ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
+            ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
 
         //Setup tab: Explore
             ui->Explore_checkBox_DisplayFolders->setChecked(optionDisplayFolders);

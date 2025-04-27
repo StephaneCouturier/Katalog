@@ -366,7 +366,7 @@ class MainWindow : public QMainWindow
 
         //TAB: Settings
             void changeCollectionFolder(QString newDirectory);
-            void changeDatabaseFilePath();
+            void changeDatabaseFilePath(QString newDatabaseFilePath);
 
     public slots:
             void updateSearchResults();
@@ -408,14 +408,16 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_KeepOneBackUp_stateChanged();
             void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
             void on_Settings_pushButton_ExportToSQLitFile_clicked();
-            void on_Settings_pushButton_Apply_clicked();
+            void on_Settings_pushButton_ApplyFolderpath_clicked();
             void on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1);
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
             void on_Settings_pushButton_NewDatabaseFile_clicked();
-
+            void on_Settings_pushButton_ApplyFilepath_clicked();
+            void on_Settings_lineEdit_DatabaseFilePath_textChanged(const QString &arg1);
             void on_Settings_lineEdit_DatabaseFilePath_returnPressed();
+
             void on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1);
             void on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1);
             void on_Settings_lineEdit_DataMode_Hosted_Port_textChanged(const QString &arg1);

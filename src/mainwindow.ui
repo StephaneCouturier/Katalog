@@ -8719,6 +8719,16 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                      </widget>
                     </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_ApplyFilepath">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Apply</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </item>
                   <item>
@@ -8914,7 +8924,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="Settings_pushButton_Apply">
+                     <widget class="QPushButton" name="Settings_pushButton_ApplyFolderpath">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>

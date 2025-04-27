@@ -139,7 +139,7 @@
                 } else {
                     //Reset the former folder path and exit procedure
                     ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
-                    ui->Settings_pushButton_Apply->setEnabled(false);
+                    ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
                     return;
                 }
             }
@@ -148,8 +148,6 @@
             collection->folder = newDirectory;
             ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
-            //Apply the new value and reload
-            qDebug() << "Changed collection folder to" << collection->folder;
             //Set the new path in Settings tab
             ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
 
@@ -163,7 +161,7 @@
             //Reset selected values (to avoid actions on the last selected ones)
             resetSelection();
 
-            ui->Settings_pushButton_Apply->setEnabled(false);
+            ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
         }
     }
     //----------------------------------------------------------------------
@@ -175,10 +173,10 @@
     //----------------------------------------------------------------------
     void MainWindow::on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1)
     {
-        ui->Settings_pushButton_Apply->setEnabled(true);
+        ui->Settings_pushButton_ApplyFolderpath->setEnabled(true);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_pushButton_Apply_clicked()
+    void MainWindow::on_Settings_pushButton_ApplyFolderpath_clicked()
     {
         //Set the new collection folder, and refresh all data
         QString newDirectory = ui->Settings_lineEdit_CollectionFolder->text();
@@ -332,14 +330,61 @@
         selectNewDatabaseFolderPath();
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_returnPressed()
+    void MainWindow::changeDatabaseFilePath(QString newDatabaseFilePath)
     {
-        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
+        //Test the new directory path is not empty
+        if ( newDatabaseFilePath !=""){
+            //Test if the file exists, and propose to create it otherwise. If refused, set back the current file.
+            QFileInfo fileInfo(newDatabaseFilePath);
+            if (!fileInfo.exists()) {
 
-        //Unless the selection was cancelled, set the new collection folder, and refresh all data
-        if ( newDatabaseFile !=""){
-            collection->databaseFilePath = newDatabaseFile;
-            changeDatabaseFilePath();
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Katalog");
+                msgBox.setText(QCoreApplication::translate("MainWindow",
+                                                           "The database file does not exist. Create it?"));
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                msgBox.setButtonText(QMessageBox::Yes, tr("Create"));
+                msgBox.setButtonText(QMessageBox::No, tr("Cancel"));
+                int result = msgBox.exec();
+
+                if (result == QMessageBox::Yes) {
+                    //Create the file and set it as the new collection folder
+                    collection->databaseFilePath = newDatabaseFilePath;
+
+                    QFile fileOut(collection->databaseFilePath);
+                    if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                        //create an empty file
+
+                        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                        db.setDatabaseName(collection->databaseFilePath);
+                        if (!db.open())
+                            qDebug()<< db.lastError();
+
+                        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+                        q.exec(SQL_CREATE_DEVICE);
+                        q.exec(SQL_CREATE_CATALOG);
+                        q.exec(SQL_CREATE_STORAGE);
+                        q.exec(SQL_CREATE_FILE);
+                        q.exec(SQL_CREATE_FILETEMP);
+                        q.exec(SQL_CREATE_FOLDER);
+                        q.exec(SQL_CREATE_METADATA);
+                        q.exec(SQL_CREATE_STATISTICS_DEVICE);
+                        q.exec(SQL_CREATE_SEARCH);
+                        q.exec(SQL_CREATE_TAG);
+                        q.exec(SQL_CREATE_PARAMETER);
+                    }
+                    fileOut.close();
+
+                } else {
+                    //Reset the former file path and exit procedure
+                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+                    ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
+                    return;
+                }
+            }
+
+            collection->databaseFilePath = newDatabaseFilePath;
 
             //Save Settings for the new collection folder value;
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
@@ -348,27 +393,116 @@
             //Set the new path in Settings tab
             ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
 
-            //ui->Settings_pushButton_DatabaseModeApplyAndRestart->setEnabled(true);
-            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-            db.setDatabaseName(collection->databaseFilePath);
-            if (!db.open())
-                qDebug()<< db.lastError();
+            //Close the existing database connection if open
+            QString connectionName;
+            {
+                QSqlDatabase db = QSqlDatabase::database();
+                connectionName = db.connectionName();
+                connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
+                db.close();
+            }
+            QSqlDatabase::removeDatabase(connectionName);
 
+            //Open the new database file
+            startDatabase();
+
+            //Load the collection data from the new database
+            loadCollection();
+
+            //Reset selected values (to avoid actions on the last selected ones)
+            resetSelection();
+
+            ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_returnPressed()
+    {
+        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
+        changeDatabaseFilePath(newDatabaseFile);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_pushButton_ApplyFilepath_clicked()
+    {
+        QString newDatabaseFile = ui->Settings_lineEdit_DatabaseFilePath->text();
+        changeDatabaseFilePath(newDatabaseFile);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_textChanged(const QString &arg1)
+    {
+        ui->Settings_pushButton_ApplyFilepath->setEnabled(true);
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::selectNewDatabaseFolderPath()
+    {
+        //Get last db file location if "File" mode, otherwise use collection folder
+        QString newFileFolder;
+        if(collection->databaseFilePath !=""){
+            QFileInfo fileInfo(collection->databaseFilePath);
+            newFileFolder = fileInfo.absolutePath();
+        }
+        else
+            newFileFolder = collection->folder;
+
+        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
+        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to create and open:"),
+                                                                   newFileFolder + "/newKatalogFile.db","*.db");
+
+        //Unless the selection was cancelled, set the new collection folder, and refresh all data
+        if ( newDatabaseFilePath !=""){
+
+            collection->databaseFilePath = newDatabaseFilePath;
+
+            QFile fileOut(collection->databaseFilePath);
+            if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
+                //create an empty file
+
+                QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+                db.setDatabaseName(collection->databaseFilePath);
+                if (!db.open())
+                    qDebug()<< db.lastError();
+
+                QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+                q.exec(SQL_CREATE_DEVICE);
+                q.exec(SQL_CREATE_CATALOG);
+                q.exec(SQL_CREATE_STORAGE);
+                q.exec(SQL_CREATE_FILE);
+                q.exec(SQL_CREATE_FILETEMP);
+                q.exec(SQL_CREATE_FOLDER);
+                q.exec(SQL_CREATE_METADATA);
+                q.exec(SQL_CREATE_STATISTICS_DEVICE);
+                q.exec(SQL_CREATE_SEARCH);
+                q.exec(SQL_CREATE_TAG);
+                q.exec(SQL_CREATE_PARAMETER);
+            }
+            fileOut.close();
+
+            //Save Settings for the new collection folder value;
+            QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
+            settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+
+            //Set the new path in Settings tab
+            ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
+
+            //Close the existing database connection if open
+            QString connectionName;
+            {
+                QSqlDatabase db = QSqlDatabase::database();
+                connectionName = db.connectionName();
+                connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
+                db.close();
+            }
+            QSqlDatabase::removeDatabase(connectionName);
+
+            //Open the new database file
+            startDatabase();
+
+            //Load the collection data from the new database
             loadCollection();
         }
 
         //Reset selected values (to avoid actions on the last selected ones)
         resetSelection();
-    }
-    //----------------------------------------------------------------------
-    void MainWindow::changeDatabaseFilePath()
-    {
-        //Save Settings for the new collection folder value;
-        QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-        settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
-
-        //Set the new path in Settings tab
-        ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
     }
 
     //Hosted ---------------------------------------------------------------
@@ -636,75 +770,3 @@
         }
     }
 
-    //----------------------------------------------------------------------
-    void MainWindow::selectNewDatabaseFolderPath()
-    {
-        //Get last db file location if "File" mode, otherwise use collection folder
-        QString newFileFolder;
-        if(collection->databaseFilePath !=""){
-            QFileInfo fileInfo(collection->databaseFilePath);
-            newFileFolder = fileInfo.absolutePath();
-        }
-        else
-            newFileFolder = collection->folder;
-
-        //Open a dialog for the user to select the directory of the collection where catalog files are stored.
-        QString newDatabaseFilePath = QFileDialog::getSaveFileName(this, tr("Select the database to create and open:"),
-                                                                   newFileFolder + "/newKatalogFile.db","*.db");
-
-        //Unless the selection was cancelled, set the new collection folder, and refresh all data
-        if ( newDatabaseFilePath !=""){
-
-                    collection->databaseFilePath = newDatabaseFilePath;
-
-                    QFile fileOut(collection->databaseFilePath);
-                    if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-                        //create an empty file
-
-                        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-                        db.setDatabaseName(collection->databaseFilePath);
-                        if (!db.open())
-                            qDebug()<< db.lastError();
-
-                        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
-                        q.exec(SQL_CREATE_DEVICE);
-                        q.exec(SQL_CREATE_CATALOG);
-                        q.exec(SQL_CREATE_STORAGE);
-                        q.exec(SQL_CREATE_FILE);
-                        q.exec(SQL_CREATE_FILETEMP);
-                        q.exec(SQL_CREATE_FOLDER);
-                        q.exec(SQL_CREATE_METADATA);
-                        q.exec(SQL_CREATE_STATISTICS_DEVICE);
-                        q.exec(SQL_CREATE_SEARCH);
-                        q.exec(SQL_CREATE_TAG);
-                        q.exec(SQL_CREATE_PARAMETER);
-                    }
-                    fileOut.close();
-
-                    //Save Settings for the new collection folder value;
-                    QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
-                    settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
-
-                    //Set the new path in Settings tab
-                    ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
-
-                    //Close the existing database connection if open
-                    QString connectionName;
-                    {
-                        QSqlDatabase db = QSqlDatabase::database();
-                        connectionName = db.connectionName();
-                        connectionName = connectionName.isEmpty() ? "defaultConnection" : connectionName;
-                        db.close();
-                    }
-                    QSqlDatabase::removeDatabase(connectionName);
-
-                    //Open the new database file
-                    startDatabase();
-
-                    //Load the collection data from the new database
-                    loadCollection();
-        }
-
-        //Reset selected values (to avoid actions on the last selected ones)
-        resetSelection();
-    }
