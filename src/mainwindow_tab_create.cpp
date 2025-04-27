@@ -168,6 +168,7 @@
             query.prepare(querySQL);
             query.bindValue(":parameter_value2", selectedDirectory);
             query.exec();
+            collection->saveParameterTableToFile();
 
             //Reload
             QSqlQuery queryLoad(QSqlDatabase::database("defaultConnection"));
