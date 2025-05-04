@@ -128,16 +128,18 @@
                 msgBox.setText(QCoreApplication::translate("MainWindow",
                                                            "The directory does not exist. Create it?"));
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                msgBox.setButtonText(QMessageBox::Yes, tr("Create"));
-                msgBox.setButtonText(QMessageBox::No, tr("Cancel"));
-                int result = msgBox.exec();
+                QPushButton *createButton = msgBox.addButton(tr("Create"), QMessageBox::YesRole);
+                createButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
+                QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
+                cancelButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                msgBox.exec();
 
-                if (result == QMessageBox::Yes) {
+                if (msgBox.clickedButton() == createButton) {
+
                     //Create the folder and set it as the new collection folder
                     QDir().mkdir(newDirectory);
 
-                } else {
+                } else if (msgBox.clickedButton() == cancelButton) {
                     //Reset the former folder path and exit procedure
                     ui->Settings_lineEdit_CollectionFolder->setText(collection->folder);
                     ui->Settings_pushButton_ApplyFolderpath->setEnabled(false);
@@ -172,7 +174,7 @@
         changeCollectionFolder(dir);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1)
+    void MainWindow::on_Settings_lineEdit_CollectionFolder_textChanged()
     {
         ui->Settings_pushButton_ApplyFolderpath->setEnabled(true);
     }
@@ -344,12 +346,13 @@
                 msgBox.setText(QCoreApplication::translate("MainWindow",
                                                            "The database file does not exist. Create it?"));
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                msgBox.setButtonText(QMessageBox::Yes, tr("Create"));
-                msgBox.setButtonText(QMessageBox::No, tr("Cancel"));
-                int result = msgBox.exec();
+                QPushButton *createButton = msgBox.addButton(tr("Create"), QMessageBox::YesRole);
+                createButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
+                QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
+                cancelButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                msgBox.exec();
 
-                if (result == QMessageBox::Yes) {
+                if (msgBox.clickedButton() == createButton) {
                     //Create the file and set it as the new collection folder
                     collection->databaseFilePath = newDatabaseFilePath;
 
@@ -377,7 +380,7 @@
                     }
                     fileOut.close();
 
-                } else {
+                } else  if (msgBox.clickedButton() == cancelButton){
                     //Reset the former file path and exit procedure
                     ui->Settings_lineEdit_DatabaseFilePath->setText(collection->databaseFilePath);
                     ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
@@ -429,7 +432,7 @@
         changeDatabaseFilePath(newDatabaseFile);
     }
     //----------------------------------------------------------------------
-    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_textChanged(const QString &arg1)
+    void MainWindow::on_Settings_lineEdit_DatabaseFilePath_textChanged()
     {
         ui->Settings_pushButton_ApplyFilepath->setEnabled(true);
     }
@@ -687,23 +690,25 @@
                 msgBox.setWindowTitle("Katalog");
                 msgBox.setText(message);
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-                msgBox.setButtonText(QMessageBox::Yes, tr("Upgrade Now"));
-                msgBox.setButtonText(QMessageBox::No, tr("Choose a Different Folder"));
-                msgBox.setButtonText(QMessageBox::Cancel, tr("Exit Application"));
 
-                int result = msgBox.exec();
+                QPushButton *upgradeButton = msgBox.addButton(tr("Upgrade Now"), QMessageBox::YesRole);
+                upgradeButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogYesButton));
+                QPushButton *folderButton = msgBox.addButton(tr("Choose a Different Folder"), QMessageBox::NoRole);
+                folderButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                QPushButton *exitButton = msgBox.addButton(tr("Exit Application"), QMessageBox::NoRole);
+                exitButton->setIcon(msgBox.style()->standardIcon(QStyle::SP_DialogNoButton));
+                msgBox.exec();
 
-                if (result == QMessageBox::Yes) {
+                if (msgBox.clickedButton() == upgradeButton) {
                     // Trigger migration
                     migrateCollection();
 
-                } else if (result == QMessageBox::No) {
+                } else if (msgBox.clickedButton() == folderButton) {
                     // Select other folder
                     on_Settings_pushButton_SelectFolder_clicked();
                     return;
 
-                } else if (result == QMessageBox::Cancel) {
+                } else if (msgBox.clickedButton() == exitButton) {
                     // Quit app
                     qApp->deleteLater();
                     return;
