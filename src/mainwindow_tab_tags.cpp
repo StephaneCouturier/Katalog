@@ -237,6 +237,7 @@
         tagListModel = new QStringListModel(this);
         tagListModel->setStringList(tTagUniqueNames);
         ui->Tags_listView_ExistingTags->setModel(tagListModel);
+        ui->Tags_listView_ExistingTags->setGridSize(QSize(100, 22));
         ui->Search_comboBox_Tags->setModel(tagListModel);
     }
     //----------------------------------------------------------------------

@@ -547,6 +547,7 @@
         //Standard colors:
             //blue light	39b2e5
             //blue dark		10a2df  0D79A6
+            //blue lightest f1fafd
             //green light	81d41a
             //green dark	43bf0c
             //orange light	ff8000
@@ -668,9 +669,60 @@
         ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
 
-        //Treeviews
-        //ui->Devices_treeView_DeviceList->setStyleSheet()
+        //Change the alternate color of treeview lines
+        ui->Filters_treeView_Devices->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        //Search
+        ui->Search_treeView_FilesFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Search_treeView_CatalogsFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Search_treeView_History->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
 
+        //Devices
+        ui->Devices_treeView_DeviceList->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+
+        //Explore
+        ui->Explore_treeview_Directories->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Explore_treeView_FileList->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        //Create
+        ui->Create_treeView_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Create_treeView_Excluded->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        //Tags
+        ui->Tags_treeview_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Tags_listView_ExistingTags->setStyleSheet(
+            "QListView { alternate-background-color: #f1fafd; }"
+            );
+        ui->Tags_treeView_FolderTags->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        //BackUp
+        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->BackUp_treeView_List1->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
+        ui->BackUp_treeView_List2->setStyleSheet(
+            "QTreeView { alternate-background-color: #f1fafd; }"
+            );
     }
     //----------------------------------------------------------------------
     void MainWindow::loadCustomThemeDark()
@@ -678,6 +730,7 @@
         //Standard colors:
             //blue light	39b2e5
             //blue dark		10a2df  0D79A6
+            //blue alternate 161b1d
             //green light	81d41a
             //green dark	43bf0c
             //orange light	ff8000
@@ -769,6 +822,62 @@
         ui->Search_label_LinkImage21->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage22->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
         ui->Search_label_LinkImage23->setStyleSheet("QLabel { background: url(:/images/link_blue/link-v.png) repeat-y left; } ");
+
+        //Change the alternate color of treeview lines
+        ui->Filters_treeView_Devices->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Search
+        ui->Search_treeView_FilesFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Search_treeView_CatalogsFound->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Search_treeView_History->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Devices
+        ui->Devices_treeView_DeviceList->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+
+        //Explore
+        ui->Explore_treeview_Directories->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Explore_treeView_FileList->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //Create
+        ui->Create_treeView_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Create_treeView_Excluded->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //Tags
+        ui->Tags_treeview_Explorer->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->Tags_listView_ExistingTags->setStyleSheet(
+            "QListView { alternate-background-color: #161b1d; }"
+            );
+        ui->Tags_treeView_FolderTags->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        //BackUp
+        ui->BackUp_tableView_CurrentMappings->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->BackUp_treeView_List1->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
+        ui->BackUp_treeView_List2->setStyleSheet(
+            "QTreeView { alternate-background-color: #161b1d; }"
+            );
 
     }
     //----------------------------------------------------------------------
