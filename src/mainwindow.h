@@ -409,13 +409,13 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_PreloadCatalogs_stateChanged(int arg1);
             void on_Settings_pushButton_ExportToSQLitFile_clicked();
             void on_Settings_pushButton_ApplyFolderpath_clicked();
-            void on_Settings_lineEdit_CollectionFolder_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_CollectionFolder_textChanged();
 
             void on_Settings_pushButton_SelectDatabaseFilePath_clicked();
             void on_Settings_pushButton_EditDatabaseFile_clicked();
             void on_Settings_pushButton_NewDatabaseFile_clicked();
             void on_Settings_pushButton_ApplyFilepath_clicked();
-            void on_Settings_lineEdit_DatabaseFilePath_textChanged(const QString &arg1);
+            void on_Settings_lineEdit_DatabaseFilePath_textChanged();
             void on_Settings_lineEdit_DatabaseFilePath_returnPressed();
 
             void on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1);
@@ -502,9 +502,6 @@ class MainWindow : public QMainWindow
             void on_Create_pushButton_GenerateFromPath_clicked();
             void on_Create_pushButton_CreateCatalog_clicked();
             void on_Create_treeView_Excluded_customContextMenuRequested(const QPoint &pos);
-            //void on_Create_radioButton_SambaDirectory_clicked();
-            //void on_Create_radioButton_MountedDrive_clicked();
-            void on_Create_pushButton_VerifyConnection_clicked();
 
         //Explore
             void on_Explore_splitter_splitterMoved();
@@ -597,7 +594,6 @@ class MainWindow : public QMainWindow
 
         //DEV
             void on_TEST_pushButton_TestMedia_clicked();
-            void on_Create_comboBox_SourceType_currentTextChanged(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H
