@@ -46,7 +46,7 @@
             //     searchFilesStoppable();
             // }
             // else
-                searchFiles();
+                processSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
@@ -55,7 +55,25 @@
             //     searchFilesStoppable();
             // }
             // else
-                searchFiles();
+                processSearch();
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
+        {
+            //Refine the seach with the selection of one of the catalogs that have results
+
+            //Get file from selected row
+            selectedDevice->type= "Catalog";
+            selectedDevice->ID = ui->Search_treeView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
+            selectedDevice->loadDevice("defaultConnection");
+            displaySelectedDeviceName();
+
+            //Seach again but only on the selected catalog
+            // if(collection->databaseMode !="Memory"){
+            //     searchFilesStoppable();
+            // }
+            // else
+            processSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
@@ -120,24 +138,6 @@
             QString selectedFile = selectedFileFolder+"/"+selectedFileName;
             //Open the file (fromLocalFile needed for spaces in file name)
             QDesktopServices::openUrl(QUrl::fromLocalFile(selectedFile));
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
-        {
-            //Refine the seach with the selction of one of the catalogs that have results
-
-            //Get file from selected row
-            selectedDevice->type= "Catalog";
-            selectedDevice->ID = ui->Search_treeView_CatalogsFound->model()->index(index.row(), 1, QModelIndex()).data().toInt();
-            selectedDevice->loadDevice("defaultConnection");
-            displaySelectedDeviceName();
-
-            //Seach again but only on the selected catalog
-            if(collection->databaseMode !="Memory"){
-                searchFilesStoppable();
-            }
-            else
-                searchFiles();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_ShowHideSearchCriteria_clicked()
@@ -778,1098 +778,37 @@
         }
 
     //Methods-----------------------------------------------------------------------
-
         //Search methods
-        void MainWindow::searchFiles()
+        void MainWindow::processSearch()
         {//Run a search of files in each selected catalog based on user inputs
 
             // Start animation while opening
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
-            //Prepare the SEARCH -------------------------------
+            //Get new search criteria from UI
+            getSearchCriteria();
 
-                //Clear the object newSearch and get new search criteria
-                getSearchCriteria();
+            //Run the search
+            newSearch->searchFiles(selectedDevice);
 
-                //Prepare 2 device objects for differences
-                Device *diffDevice1 = new Device;
-                Device *diffDevice2 = new Device;
+            //Send results to the UI
+            displaySearchResults();
 
-            //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
-                //Process the SEARCH in CATALOGS
-                    if (newSearch->searchInCatalogsChecked == true){
-
-                        //For differences, only process the 2 selected catalogs
-                        if (ui->Search_checkBox_Differences->isChecked() == true){
-
-                            //Load diffDevice1 files
-                            diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-                            diffDevice1->loadDevice("defaultConnection");
-
-                            if(diffDevice1->type == "Catalog") {
-                                searchFilesInCatalog(diffDevice1);
-                            }
-                            else{
-                                foreach (const Device::deviceListRow &row, diffDevice1->deviceListTable) {
-                                    if(row.type == "Catalog"){
-                                        Device *device = new Device;
-                                        device->ID = row.ID;
-                                        device->loadDevice("defaultConnection");
-                                        searchFilesInCatalog(device);
-                                    }
-                                }
-                            }
-
-                            //Load diffDevice2 files
-                            diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
-                            diffDevice2->loadDevice("defaultConnection");
-
-                            if(diffDevice2->type == "Catalog") {
-                                searchFilesInCatalog(diffDevice2);
-                            }
-                            else{
-                                foreach (const Device::deviceListRow &row, diffDevice2->deviceListTable) {
-                                    if(row.type == "Catalog"){
-                                        Device *device = new Device;
-                                        device->ID = row.ID;
-                                        device->loadDevice("defaultConnection");
-                                        searchFilesInCatalog(device);
-                                    }
-                                }
-                            }
-                        }
-                        //Otherwise (not a "difference" search), search in the list of catalogs in the selectedDevice
-                        else{
-                            if(selectedDevice->type == "Catalog") {
-                                searchFilesInCatalog(selectedDevice);
-                            }
-                            else{
-                                foreach (const Device::deviceListRow &row, selectedDevice->deviceListTable) {
-                                    if(row.type == "Catalog"){
-                                        Device *device = new Device;
-                                        device->ID = row.ID;
-                                        device->loadDevice("defaultConnection");
-                                        searchFilesInCatalog(device);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                //Process the SEARCH in SELECTED DIRECTORY
-                    else if (newSearch->searchInConnectedChecked == true){
-                            QString sourceDirectory = ui->Filters_lineEdit_SeletedDirectory->text();
-                            searchFilesInDirectory(sourceDirectory);
-                    }
-
-                //Process search results: list of catalogs with results
-                    //Remove duplicates so the catalogs are listed only once, and sort the list
-                    newSearch->deviceFoundIDList.removeDuplicates();
-                    newSearch->deviceFoundIDList.sort();
-
-                    //Keep the catalog file name only
-                    foreach(QString item, newSearch->deviceFoundIDList){
-                            int index = newSearch->deviceFoundIDList.indexOf(item);
-                            QFileInfo fileInfo(item);
-                            newSearch->deviceFoundIDList[index] = fileInfo.baseName();
-                    }
-
-                    //Create model and load to the view
-                    newSearch->deviceFoundModel = new QStandardItemModel;
-                    newSearch->deviceFoundModel->setHorizontalHeaderLabels({ "Catalog with results", "ID" });
-
-                    Device loopDevice;
-                    for (const QString &ID : newSearch->deviceFoundIDList) {
-                        loopDevice.ID = ID.toInt();
-                        loopDevice.loadDevice("defaultConnection");
-                        QList<QStandardItem *> items;
-                        items << new QStandardItem(loopDevice.name);
-                        items << new QStandardItem(QString::number(loopDevice.ID));
-                        newSearch->deviceFoundModel->appendRow(items);
-                    }
-
-                    ui->Search_treeView_CatalogsFound->setModel(newSearch->deviceFoundModel);
-                    ui->Search_treeView_CatalogsFound->hideColumn(1);
-
-                //Process search results: list of files
-
-                    //Prepare query model
-                    QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
-                    // Prepare model to display
-                    FilesView *fileViewModel = new FilesView(this);
-                    fileViewModel->caseSensitive = fileSortCaseSensitive;
-
-                    //Populate model with folders only if this option is selected
-                    if ( newSearch->searchOnFolderCriteria==true and ui->Search_checkBox_ShowFolders->isChecked()==true )
-                    {
-                        QMap<QString, QPair<QString, int>> uniqueFilePaths;
-
-                        for (int i = 0; i < newSearch->filePaths.size(); ++i) {
-                            QString filePath = newSearch->filePaths.at(i);
-                            QString fileCatalog = newSearch->fileCatalogs.at(i);
-                            int fileCatalogID = newSearch->fileCatalogIDs.at(i);
-
-                            if (!uniqueFilePaths.contains(filePath)) {
-                                uniqueFilePaths.insert(filePath, qMakePair(fileCatalog, fileCatalogID));
-                            }
-                        }
-
-                        newSearch->filePaths.clear();
-                        newSearch->fileCatalogs.clear();
-                        newSearch->fileCatalogIDs.clear();
-
-                        for (auto it = uniqueFilePaths.begin(); it != uniqueFilePaths.end(); ++it) {
-                            newSearch->filePaths.append(it.key());
-                            newSearch->fileCatalogs.append(it.value().first);
-                            newSearch->fileCatalogIDs.append(it.value().second);
-                        }
-
-                        newSearch->fileNames.clear();
-                        newSearch->fileSizes.clear();
-                        newSearch->fileDateTimes.clear();
-
-                        for (int i = 0; i < newSearch->filePaths.size(); ++i) {
-                            newSearch->fileNames.append("");
-                            newSearch->fileSizes.append(0);
-                            newSearch->fileDateTimes.append("");
-                        }
-
-                        // Populate model with data
-                        fileViewModel->setSourceModel(newSearch);
-                        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog Name"));
-                        fileViewModel->setHeaderData(5, Qt::Horizontal, tr("Catalog ID"));
-
-                        // Connect model to treeview and display
-                        ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
-                        ui->Search_treeView_FilesFound->header()->hideSection(0);
-                        ui->Search_treeView_FilesFound->header()->hideSection(1);
-                        ui->Search_treeView_FilesFound->header()->hideSection(2);
-
-                        ui->Search_label_FoundTitle->setText(tr("Folders found"));
-                    }
-
-                    //Populate model with files if the folder option is not selected
-                    else
-                    {
-                        // Populate model with data
-                        fileViewModel->setSourceModel(newSearch);
-                        fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                        fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                        fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                        fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                        fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog Name"));
-                        fileViewModel->setHeaderData(5, Qt::Horizontal, tr("Catalog ID"));
-                        if (newSearch->searchInConnectedChecked == true){
-                            fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Search Directory"));
-                        }
-
-                        // Connect model to tree/table view
-                        ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                        ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                        ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                        ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                        ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                        ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                        ui->Search_treeView_FilesFound->header()->resizeSection(4, 140); //Catalog
-                        ui->Search_treeView_FilesFound->header()->resizeSection(5, 100); //CatalogID
-                        ui->Search_treeView_FilesFound->header()->showSection(0);
-                        ui->Search_treeView_FilesFound->header()->showSection(1);
-                        ui->Search_treeView_FilesFound->header()->showSection(2);
-
-                        ui->Search_label_FoundTitle->setText(tr("Files found"));
-                    }
-
-                //Process DUPLICATES -------------------------------
-
-                    //Process if enabled and criteria are provided
-                        if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Duplicates->isChecked() == true
-                             and (     newSearch->searchDuplicatesOnName == true
-                                    or newSearch->searchDuplicatesOnSize == true
-                                    or newSearch->searchDuplicatesOnDate == true )){
-
-							//Load Search results into the database
-                                //clear database
-                                    QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
-                                    deleteQuery.exec("DELETE FROM filetemp");
-
-                                //prepare query to load file info
-                                    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
-                                    QString insertSQL = QLatin1String(R"(
-                                                        INSERT INTO filetemp (
-                                                                        file_name,
-                                                                        file_folder_path,
-                                                                        file_size,
-                                                                        file_date_updated,
-                                                                        file_catalog,
-                                                                        file_catalog_id )
-                                                        VALUES(
-
-                                                                        :file_name,
-                                                                        :file_folder_path,
-                                                                        :file_size,
-                                                                        :file_date_updated,
-                                                                        :file_catalog,
-                                                                        :file_catalog_id )
-                                                                    )");
-                                    insertQuery.prepare(insertSQL);
-
-                                //loop through the result list and populate database
-
-                                    int rows = newSearch->rowCount();
-
-                                    for (int i=0; i<rows; i++) {
-
-                                            //Append data to the database
-                                            insertQuery.bindValue(":file_name",         newSearch->index(i,0).data().toString());
-                                            insertQuery.bindValue(":file_size",         newSearch->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_folder_path",  newSearch->index(i,3).data().toString());
-                                            insertQuery.bindValue(":file_date_updated", newSearch->index(i,2).data().toString());
-                                            insertQuery.bindValue(":file_catalog",      newSearch->index(i,4).data().toString());
-                                            insertQuery.bindValue(":file_catalog_id",   newSearch->index(i,5).data().toString());
-                                            insertQuery.exec();
-                                    }
-
-                            //Prepare duplicate SQL
-                                // Load all files and create model
-                                QString selectSQL;
-
-                                //Generate grouping of fields based on user selection, determining what are duplicates
-                                QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
-
-                                    //Same name
-                                    if(newSearch->searchDuplicatesOnName == true){
-                                        groupingFields = groupingFields + "file_name";
-                                    }
-                                    //Same size
-                                    if(newSearch->searchDuplicatesOnSize == true){
-                                        groupingFields = groupingFields + "||file_size";
-                                    }
-                                    //Same date modified
-                                    if(newSearch->searchDuplicatesOnDate == true){
-                                        groupingFields = groupingFields + "||file_date_updated";
-                                    }
-
-                                    //Remove starting || if any
-                                    if (groupingFields.startsWith("||"))
-                                        groupingFields.remove(0, 2);
-
-                                //Generate SQL based on grouping of fields
-                                selectSQL = QLatin1String(R"(
-                                                SELECT      file_name,
-                                                            file_size,
-                                                            file_date_updated,
-                                                            file_folder_path,
-                                                            file_catalog,
-                                                            file_catalog_id
-                                                FROM filetemp
-                                                WHERE %1 IN
-                                                    (SELECT %1
-                                                    FROM filetemp
-                                                    GROUP BY %1
-                                                    HAVING count(%1)>1)
-                                                ORDER BY %1
-                                            )").arg(groupingFields);
-
-                                //Run Query and load to model
-                                QSqlQuery duplicatesQuery(QSqlDatabase::database("defaultConnection"));
-                                duplicatesQuery.prepare(selectSQL);
-                                duplicatesQuery.exec();
-
-                                //recapture file results for Stats
-                                newSearch->fileNames.clear();
-                                newSearch->fileSizes.clear();
-                                newSearch->filePaths.clear();
-                                newSearch->fileDateTimes.clear();
-                                newSearch->fileCatalogs.clear();
-                                newSearch->fileCatalogIDs.clear();
-
-                                while(duplicatesQuery.next()){
-                                    newSearch->fileNames.append(duplicatesQuery.value(0).toString());
-                                    newSearch->fileSizes.append(duplicatesQuery.value(1).toLongLong());
-                                    newSearch->fileDateTimes.append(duplicatesQuery.value(2).toString());
-                                    newSearch->filePaths.append(duplicatesQuery.value(3).toString());
-                                    newSearch->fileCatalogs.append(duplicatesQuery.value(4).toString());
-                                    newSearch->fileCatalogIDs.append(duplicatesQuery.value(5).toInt());
-                                }
-
-                                //Load results to model
-                                loadCatalogQueryModel->setQuery(std::move(duplicatesQuery));
-
-                                //FilesView *fileViewModel = new FilesView(this);
-                                fileViewModel->setSourceModel(loadCatalogQueryModel);
-
-                                // Connect model to tree/table view
-                                ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                                ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                                ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                                ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                                ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                                ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                                ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
-                                ui->Search_treeView_FilesFound->header()->resizeSection(5, 100); //CatalogID
-
-                                ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
-                                newSearch->filesFoundNumber = fileViewModel->rowCount();
-
-                        }
-
-                //Process DIFFERENCES -------------------------------
-
-                    //Process if enabled and criteria are provided
-                        if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
-                             and (     newSearch->differencesOnName == true
-                                    or newSearch->differencesOnSize == true
-                                    or newSearch->differencesOnDate == true)){
-
-							//Load Search results into the database
-                                //Clear database
-                                    QSqlQuery deleteQuery(QSqlDatabase::database("defaultConnection"));
-                                    deleteQuery.exec("DELETE FROM filetemp");
-
-                                //Prepare query to load file info
-                                    QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
-                                    QString insertSQL = QLatin1String(R"(
-                                                        INSERT INTO filetemp (
-                                                                        file_name,
-                                                                        file_folder_path,
-                                                                        file_size,
-                                                                        file_date_updated,
-                                                                        file_catalog,
-                                                                        file_catalog_id )
-                                                        VALUES(
-
-                                                                        :file_name,
-                                                                        :file_folder_path,
-                                                                        :file_size,
-                                                                        :file_date_updated,
-                                                                        :file_catalog,
-                                                                        :file_catalog_id )
-                                                                    )");
-                                    insertQuery.prepare(insertSQL);
-
-                                //Loop through the result list and populate database
-
-                                    int rows = newSearch->rowCount();
-                                    for (int i=0; i<rows; i++) {
-                                            //Append data to the database
-                                            insertQuery.bindValue(":file_name",         newSearch->index(i,0).data().toString());
-                                            insertQuery.bindValue(":file_size",         newSearch->index(i,1).data().toString());
-                                            insertQuery.bindValue(":file_folder_path",  newSearch->index(i,2).data().toString());
-                                            insertQuery.bindValue(":file_date_updated", newSearch->index(i,3).data().toString());
-                                            insertQuery.bindValue(":file_catalog",      newSearch->index(i,4).data().toString());
-                                            insertQuery.bindValue(":file_catalog_id",   newSearch->index(i,5).data().toString());
-                                            insertQuery.exec();
-                                    }
-
-                            //Prepare difference SQL
-                                // Load all files and create model
-                                QString selectSQL;
-
-                                //Generate grouping of fields based on user selection, determining what are duplicates
-                                QString groupingFieldsDifferences; // this value should be a concatenation of fields, like "fileName||fileSize"
-
-                                    //Same name
-                                    if(newSearch->differencesOnName == true){
-                                        groupingFieldsDifferences += "||file_name";
-                                    }
-                                    //Same size
-                                    if(newSearch->differencesOnSize == true){
-                                        groupingFieldsDifferences += "||file_size";
-                                    }
-                                    //Same date modified
-                                    if(newSearch->differencesOnDate == true){
-                                        groupingFieldsDifferences += "||file_date_updated";
-                                    }
-
-                                    //Remove the || at the start
-                                    if (groupingFieldsDifferences.startsWith("||"))
-                                        groupingFieldsDifferences.remove(0, 2);
-
-                                    // Populate listOfCatalogDeviceIDs1
-                                    QString listOfCatalogDeviceIDs1;
-                                    Device *diffDevice1 = new Device;
-                                    diffDevice1->ID = newSearch->differencesDeviceID1;
-                                    diffDevice1->loadDevice("defaultConnection");
-                                    if(diffDevice1->type =="Catalog") {
-                                        listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(diffDevice1->ID) + ",";
-                                    } else {
-                                        for (const auto& row : diffDevice1->deviceListTable) {
-                                            if (row.type == "Catalog") {
-                                                listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(row.ID) + ",";
-                                            }
-                                        }
-                                    }
-                                    if (listOfCatalogDeviceIDs1.endsWith(","))
-                                        listOfCatalogDeviceIDs1.remove(listOfCatalogDeviceIDs1.length()-1, 1);
-
-                                    // Populate listOfCatalogDeviceIDs2
-                                    QString listOfCatalogDeviceIDs2;
-                                    Device *diffDevice2 = new Device;
-                                    diffDevice2->ID = newSearch->differencesDeviceID2;
-                                    diffDevice2->loadDevice("defaultConnection");
-                                    if(diffDevice2->type =="Catalog") {
-                                        listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(diffDevice2->ID) + ",";
-                                    } else {
-                                        for (const auto& row : diffDevice2->deviceListTable) {
-                                            if (row.type == "Catalog") {
-                                                listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(row.ID) + ",";
-                                            }
-                                        }
-                                    }
-                                    if (listOfCatalogDeviceIDs2.endsWith(","))
-                                        listOfCatalogDeviceIDs2.remove(listOfCatalogDeviceIDs2.length()-1, 1);
-
-                                //Generate SQL based on grouping of fields
-                                    selectSQL = QString(R"(
-                                                    SELECT      file_name,
-                                                                file_size,
-                                                                file_date_updated,
-                                                                file_folder_path,
-                                                                file_catalog,
-                                                                file_catalog_id
-                                                    FROM filetemp
-                                                    WHERE file_catalog_id IN(
-                                                            SELECT device_external_id
-                                                            FROM device
-                                                            WHERE device_id IN(%2)
-                                                            AND device_type ='Catalog'
-                                                    )
-                                                    AND %1 NOT IN(
-                                                        SELECT %1
-                                                        FROM filetemp
-                                                        WHERE file_catalog_id IN(
-                                                            SELECT device_external_id
-                                                            FROM device
-                                                            WHERE device_id IN(%3)
-                                                            AND device_type ='Catalog'
-                                                        )
-                                                    )
-                                                    UNION
-                                                    SELECT      file_name,
-                                                                file_size,
-                                                                file_date_updated,
-                                                                file_folder_path,
-                                                                file_catalog,
-                                                                file_catalog_id
-                                                    FROM filetemp
-                                                    WHERE file_catalog_id IN(
-                                                            SELECT device_external_id
-                                                            FROM device
-                                                            WHERE device_id IN(%3)
-                                                            AND device_type ='Catalog'
-                                                    )
-                                                    AND %1 NOT IN(
-                                                        SELECT %1
-                                                        FROM filetemp
-                                                        WHERE file_catalog_id IN(
-                                                            SELECT device_external_id
-                                                            FROM device
-                                                            WHERE device_id IN(%2)
-                                                            AND device_type ='Catalog'
-                                                        )
-                                                    )
-                                                )").arg(groupingFieldsDifferences,
-                                                         listOfCatalogDeviceIDs1,
-                                                         listOfCatalogDeviceIDs2);
-
-                                 //Prepare the query
-                                QSqlQuery differencesQuery(QSqlDatabase::database("defaultConnection"));
-                                differencesQuery.prepare(selectSQL);
-
-                                //Execute the query
-                                if (!differencesQuery.exec())
-                                    qDebug() << "DEBUG: differencesQuery failed:" << differencesQuery.lastError();
-
-                                //Recapture file results for Stats
-                                newSearch->fileNames.clear();
-                                newSearch->fileSizes.clear();
-                                newSearch->filePaths.clear();
-                                newSearch->fileDateTimes.clear();
-                                newSearch->fileCatalogs.clear();
-                                while(differencesQuery.next()){
-                                    newSearch->fileNames.append(differencesQuery.value(0).toString());
-                                    newSearch->fileSizes.append(differencesQuery.value(1).toLongLong());
-                                    newSearch->fileDateTimes.append(differencesQuery.value(2).toString());
-                                    newSearch->filePaths.append(differencesQuery.value(3).toString());
-                                    newSearch->fileCatalogs.append(differencesQuery.value(4).toString());
-                                    newSearch->fileCatalogIDs.append(differencesQuery.value(5).toInt());
-                                }
-
-                                loadCatalogQueryModel->setQuery(std::move(differencesQuery));
-
-                                //FilesView *fileViewModel = new FilesView(this);
-                                fileViewModel->setSourceModel(loadCatalogQueryModel);
-                                fileViewModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-                                fileViewModel->setHeaderData(1, Qt::Horizontal, tr("Size"));
-                                fileViewModel->setHeaderData(2, Qt::Horizontal, tr("Date"));
-                                fileViewModel->setHeaderData(3, Qt::Horizontal, tr("Folder"));
-                                fileViewModel->setHeaderData(4, Qt::Horizontal, tr("Catalog Name"));
-                                fileViewModel->setHeaderData(5, Qt::Horizontal, tr("Catalog ID"));
-
-                                // Connect model to tree/table view
-                                ui->Search_treeView_FilesFound->setModel(fileViewModel);
-                                ui->Search_treeView_FilesFound->header()->setSectionResizeMode(QHeaderView::Interactive);
-                                ui->Search_treeView_FilesFound->header()->resizeSection(0, 600); //Name
-                                ui->Search_treeView_FilesFound->header()->resizeSection(1, 110); //Size
-                                ui->Search_treeView_FilesFound->header()->resizeSection(2, 140); //Date
-                                ui->Search_treeView_FilesFound->header()->resizeSection(3, 400); //Path
-                                ui->Search_treeView_FilesFound->header()->resizeSection(4, 100); //Catalog
-
-                                // Display count of files
-                                ui->Search_label_FoundTitle->setText(tr("Differences found"));
-
-                        }
-
-                //Files found Statistics
-                    //Reset from previous search
-                        newSearch->filesFoundNumber = 0;
-                        newSearch->filesFoundTotalSize = 0;
-                        newSearch->filesFoundAverageSize = 0;
-                        newSearch->filesFoundMinSize = 0;
-                        newSearch->filesFoundMaxSize = 0;
-                        newSearch->filesFoundMinDate = "";
-                        newSearch->filesFoundMaxDate = "";
-
-                    //Number of files found
-                    newSearch->filesFoundNumber = fileViewModel->rowCount();
-                    ui->Search_label_NumberResults->setText(QString::number(newSearch->filesFoundNumber));
-
-                    //Total size of files found
-                    qint64 sizeItem;
-                    newSearch->filesFoundTotalSize = 0;
-                    foreach (sizeItem, newSearch->fileSizes) {
-                        newSearch->filesFoundTotalSize = newSearch->filesFoundTotalSize + sizeItem;
-                    }
-                    ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(newSearch->filesFoundTotalSize));
-
-                    //Other statistics, covering the case where no results are returned.
-                    if (newSearch->filesFoundNumber !=0){
-                        newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
-                        QList<qint64> fileSizeList = newSearch->fileSizes;
-                        std::sort(fileSizeList.begin(), fileSizeList.end());
-                        newSearch->filesFoundMinSize = fileSizeList.first();
-                        newSearch->filesFoundMaxSize = fileSizeList.last();
-
-                        QList<QString> fileDateList = newSearch->fileDateTimes;
-                        std::sort(fileDateList.begin(), fileDateList.end());
-                        newSearch->filesFoundMinDate = fileDateList.first();
-                        newSearch->filesFoundMaxDate = fileDateList.last();
-
-                        ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
-                    }
-
-            //Save the search criteria to the search history
-            newSearch->insertSearchHistoryToTable("defaultConnection");
-            collection->saveSearchHistoryTableToFile();
-            loadSearchHistoryTableToModel();
-
-            //Stop animation
-            QApplication::restoreOverrideCursor();
-
+            //Adapt display of files found for searchInConnected
             if (newSearch->searchInConnectedChecked == true){
                 ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
                 ui->Search_treeView_FilesFound->header()->hideSection(5);
             }
 
+            //Stop animation
+            QApplication::restoreOverrideCursor();
+
             //Enable Export
             ui->Search_pushButton_ProcessResults->setEnabled(true);
             ui->Search_comboBox_SelectProcess->setEnabled(true);
         }
         //----------------------------------------------------------------------
-        void MainWindow::searchFilesInCatalog(Device *device)
-        {//Run a search of files for the selected Catalog
-            //Prepare Inputs including Regular Expression
-            QFile catalogFile(device->catalog->sourcePath);
-
-            QRegularExpressionMatch match;
-            QRegularExpressionMatch foldermatch;
-
-            //Define how to use the search text
-            if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
-                newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
-            else if(newSearch->selectedTextCriteria == tr("Begins With"))
-                newSearch->regexSearchtext="(^"+newSearch->searchText+")";
-            else if(newSearch->selectedTextCriteria == tr("Any Word"))
-                newSearch->regexSearchtext=newSearch->searchText.replace(" ","|");
-            else if(newSearch->selectedTextCriteria == tr("All Words")){
-                QString searchTextToSplit = newSearch->searchText;
-                QString groupRegEx = "";
-                QRegularExpression lineSplitExp(" ");
-                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-                int numberOfSearchWords = lineFieldList.count();
-                //Build regex group for one word
-                for (int i=0; i<(numberOfSearchWords); i++){
-                    groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
-                }
-                newSearch->regexSearchtext = groupRegEx;
-            }
-            else {
-                newSearch->regexSearchtext="";
-            }
-
-            newSearch->regexPattern = newSearch->regexSearchtext;
-
-            //Prepare the regexFileType for file types
-            if( newSearch->searchOnFileCriteria==true and newSearch->searchOnType ==true and newSearch->selectedFileType !="All"){
-                //Get the list of file extension and join it into one string
-                if(newSearch->selectedFileType =="Audio"){
-                    newSearch->regexFileType = fileType_AudioS.join("|");
-                }
-                if(newSearch->selectedFileType =="Image"){
-                    newSearch->regexFileType = fileType_ImageS.join("|");
-                }
-                if(newSearch->selectedFileType =="Text"){
-                    newSearch->regexFileType = fileType_TextS.join("|");
-                }
-                if(newSearch->selectedFileType =="Video"){
-                    newSearch->regexFileType = fileType_VideoS.join("|");
-                }
-
-                //Replace the *. by .* needed for regex
-                newSearch->regexFileType = newSearch->regexFileType.replace("*.",".*");
-
-                //Add the file type expression to the regex
-                newSearch->regexPattern = newSearch->regexSearchtext  + "(" + newSearch->regexFileType + ")";
-
-            }
-            else
-                newSearch->regexPattern = newSearch->regexSearchtext;
-
-            //Add the words to exclude to the Regular Expression
-            if ( newSearch->selectedSearchExclude !=""){
-
-                //Prepare
-                QString searchTextToSplit = newSearch->selectedSearchExclude;
-                QString excludeGroupRegEx = "";
-                QRegularExpression lineSplitExp(" ");
-                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-                int numberOfSearchWords = lineFieldList.count();
-
-                //Build regex group to exclude all words
-                //Genereate first part = first characters + the first word
-                excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-                //Add more words
-                for (int i=1; i<(numberOfSearchWords); i++){
-                    excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
-                }
-                //last part
-                excludeGroupRegEx = excludeGroupRegEx + "))";
-
-                //Add regex group to exclude to the global regexPattern
-                newSearch->regexPattern = excludeGroupRegEx + newSearch->regexPattern;
-            }
-
-            //Initiate Regular Expression
-            QRegularExpression regex(newSearch->regexPattern);
-            if (newSearch->caseSensitive != true) {
-                regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-            }
-
-            //Load the catalog file contents if not already loaded in memory
-            QMutex tempMutex;
-            bool tempStopRequested = false;
-            if(collection->databaseMode=="Memory"){
-                device->catalog->loadCatalogFileListToTable("defaultConnection", tempMutex, tempStopRequested);
-            }
-
-            //Search loop for all lines in the catalog file
-            //Load the files of the Catalog
-            QSqlQuery getFilesQuery(QSqlDatabase::database("defaultConnection"));
-            QString getFilesQuerySQL = QLatin1String(R"(
-                                            SELECT  file_name,
-                                                    file_folder_path,
-                                                    file_size,
-                                                    file_date_updated
-                                            FROM  file
-                                            WHERE file_catalog_id =:file_catalog_id
-                                        )");
-
-            //Add matching size range
-            if (newSearch->searchOnFileCriteria==true and newSearch->searchOnSize==true){
-                getFilesQuerySQL = getFilesQuerySQL+" AND file_size>=:file_size_min ";
-                getFilesQuerySQL = getFilesQuerySQL+" AND file_size<=:file_size_max ";
-            }
-            //Add matching date range
-            if (newSearch->searchOnFileCriteria==true and newSearch->searchOnDate==true){
-                getFilesQuerySQL = getFilesQuerySQL+" AND file_date_updated>=:file_date_updated_min ";
-                getFilesQuerySQL = getFilesQuerySQL+" AND file_date_updated<=:file_date_updated_max ";
-            }
-            getFilesQuery.prepare(getFilesQuerySQL);
-            getFilesQuery.bindValue(":file_catalog_id", device->externalID);
-            getFilesQuery.bindValue(":file_size_min", newSearch->selectedMinimumSize * newSearch->sizeMultiplierMin);
-            getFilesQuery.bindValue(":file_size_max", newSearch->selectedMaximumSize * newSearch->sizeMultiplierMax);
-            getFilesQuery.bindValue(":file_date_updated_min", newSearch->selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
-            getFilesQuery.bindValue(":file_date_updated_max", newSearch->selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
-            getFilesQuery.exec();
-
-            //File by file, test if the file is matching all search criteria
-            //Loop principle1: stop further verification as soon as a criteria fails to match
-            //Loop principle2: start with fastest criteria, finish with more complex ones (tag, file name)
-            while(getFilesQuery.next()){
-
-                QString   lineFileName       = getFilesQuery.value(0).toString();
-                QString   lineFileFolderPath = getFilesQuery.value(1).toString();
-                QString   lineFileFullPath   = lineFileFolderPath + "/" + lineFileName;
-                bool      fileIsMatchingTag;
-
-                //Continue to the next file if the current file is not matching the tags
-                if (newSearch->searchOnFolderCriteria==true and newSearch->searchOnTags==true and newSearch->selectedTagName!=""){
-
-                    fileIsMatchingTag = false;
-
-                    //Set query to get a list of folder paths matching the selected tag
-                    QSqlQuery queryTag(QSqlDatabase::database("defaultConnection"));
-                    QString queryTagSQL = QLatin1String(R"(
-                                                SELECT path
-                                                FROM tag
-                                                WHERE name=:name
-                            )");
-                    queryTag.prepare(queryTagSQL);
-                    queryTag.bindValue(":name",newSearch->selectedTagName);
-                    queryTag.exec();
-
-                    //Test if the FilePath contains a path from the list of folders matching the selected tag name
-                    // a slash "/" is added at the end of both values to ensure no result from a tag "AB" is returned when a tag "A" is selected
-                    while(queryTag.next()){
-                        if ( (lineFileFolderPath+"/").contains( queryTag.value(0).toString()+"/" )==true){
-                            fileIsMatchingTag = true;
-                            break;
-                        }
-                    }
-
-                    //If the file is not matching any of the paths, process the next file
-                    if ( !fileIsMatchingTag==true ){
-                        continue;}
-                }
-
-                //Finally, verify the text search criteria
-                if (newSearch->searchOnFileName==true){
-                    //Depends on the "Search in" criteria,
-                    //Reduces the abosulte path to the required text string and matches the search text
-                    if(newSearch->selectedSearchIn == tr("File names only"))
-                    {
-                        match = regex.match(lineFileName);
-                    }
-                    else if(newSearch->selectedSearchIn == tr("Folder path only"))
-                    {
-
-                        //Check that the folder name matches the search text
-                        regex.setPattern(newSearch->regexSearchtext);
-                        foldermatch = regex.match(lineFileFolderPath);
-                        //If it does, then check that the file matches the selected file type
-                        if (foldermatch.hasMatch() and newSearch->searchOnType==true){
-                            regex.setPattern(newSearch->regexFileType);
-                            match = regex.match(lineFileName);
-                        }
-                        else
-                            match = foldermatch; //selectedSearchIn == tr("Files and Folder paths")
-                    }
-                    else {
-                        match = regex.match(lineFileFullPath);
-                    }
-                    //If the file is matching the criteria, add it and its catalog to the search results
-                    if (match.hasMatch()){
-                        newSearch->filesFoundList << lineFileFolderPath;
-                        newSearch->deviceFoundIDList.insert(0,QString::number(device->ID));
-
-                        //Populate result lists
-                        newSearch->fileNames.append(lineFileName);
-                        newSearch->filePaths.append(lineFileFolderPath);
-                        newSearch->fileSizes.append(getFilesQuery.value(2).toLongLong());
-                        newSearch->fileDateTimes.append(getFilesQuery.value(3).toString());
-                        newSearch->fileCatalogs.append(device->name);
-                        newSearch->fileCatalogIDs.append(device->externalID);
-                    }
-                }
-                else{
-                    //verify file matches the selected file type
-                    if (newSearch->searchOnType==true){
-                        regex.setPattern(newSearch->regexFileType);
-                    }
-                    match = regex.match(lineFileFolderPath);
-                    if (!match.hasMatch()){
-                        continue;
-                    }
-
-                    //Add the file and its catalog to the results, excluding blank lines
-                    if (lineFileFolderPath !=""){
-                        newSearch->filesFoundList << lineFileFolderPath;
-                        newSearch->deviceFoundIDList.insert(0, QString::number(device->ID));
-
-                        //Populate result lists
-                        newSearch->fileNames.append(lineFileName);
-                        newSearch->filePaths.append(lineFileFolderPath);
-                        newSearch->fileSizes.append(getFilesQuery.value(2).toLongLong());
-                        newSearch->fileDateTimes.append(getFilesQuery.value(3).toString());
-                        newSearch->fileCatalogs.append(device->name);
-                        newSearch->fileCatalogIDs.append(device->externalID);
-                    }
-                }
-            }
-        }
-        //----------------------------------------------------------------------
-
-        void MainWindow::searchFilesInDirectory(const QString &sourceDirectory)
-        {//Run a search of files for the selected Directory
-
-            //Define how to use the search text //COMMON to searchFilesInCatalog
-                if(newSearch->selectedTextCriteria == tr("Exact Phrase"))
-                    newSearch->regexSearchtext=newSearch->searchText; //just search for the extact text entered including spaces, as one text string.
-                else if(newSearch->selectedTextCriteria == tr("Begins With"))
-                    newSearch->regexSearchtext="(^"+newSearch->searchText+")";
-                else if(newSearch->selectedTextCriteria == tr("Any Word"))
-                    newSearch->regexSearchtext=newSearch->searchText.replace(" ","|");
-                else if(newSearch->selectedTextCriteria == tr("All Words")){
-                    QString searchTextToSplit = newSearch->searchText;
-                    QString groupRegEx = "";
-                    QRegularExpression lineSplitExp(" ");
-                    QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-                    int numberOfSearchWords = lineFieldList.count();
-                    //Build regex group for one word
-                    for (int i=0; i<(numberOfSearchWords); i++){
-                        groupRegEx = groupRegEx + "(?=.*" + lineFieldList[i] + ")";
-                    }
-                    newSearch->regexSearchtext = groupRegEx;
-                }
-                else {
-                    newSearch->regexSearchtext="";
-                     }
-
-                newSearch->regexPattern = newSearch->regexSearchtext;
-
-            //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
-            if ( newSearch->searchOnFileCriteria==true and newSearch->selectedFileType !=tr("All")){
-                //Get the list of file extension and join it into one string
-                if(newSearch->selectedFileType ==tr("Audio")){
-                            newSearch->regexFileType = fileType_AudioS.join("|");
-                }
-                if(newSearch->selectedFileType ==tr("Image")){
-                            newSearch->regexFileType = fileType_ImageS.join("|");
-                }
-                if(newSearch->selectedFileType ==tr("Text")){
-                            newSearch->regexFileType = fileType_TextS.join("|");
-                }
-                if(newSearch->selectedFileType ==tr("Video")){
-                            newSearch->regexFileType = fileType_VideoS.join("|");
-                }
-
-                //Replace the *. by .* needed for regex
-                newSearch->regexFileType = newSearch->regexFileType.replace("*.",".*");
-
-                //Add the file type expression to the regex
-                newSearch->regexPattern = newSearch->regexSearchtext  + "(" + newSearch->regexFileType + ")";
-             }
-
-            //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
-            if ( newSearch->selectedSearchExclude !=""){
-
-                //Prepare
-                QString searchTextToSplit = newSearch->selectedSearchExclude;
-                QString excludeGroupRegEx = "";
-                QRegularExpression lineSplitExp(" ");
-                QStringList lineFieldList = searchTextToSplit.split(lineSplitExp);
-                int numberOfSearchWords = lineFieldList.count();
-
-                //Build regex group to exclude all words
-                    //Genereate first part = first characters + the first word
-                    excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-                    //Add more words
-                    for (int i=1; i<(numberOfSearchWords); i++){
-                        excludeGroupRegEx = excludeGroupRegEx + "|" + lineFieldList[i];
-                    }
-                    //Last part
-                    excludeGroupRegEx = excludeGroupRegEx + "))";
-
-                //Add regex group to exclude to the global regexPattern
-                newSearch->regexPattern = excludeGroupRegEx + newSearch->regexPattern;
-            }
-
-            QRegularExpression regex(newSearch->regexPattern, QRegularExpression::CaseInsensitiveOption);
-
-            //Filetypes
-                    //Get the file type for the catalog
-                    QStringList fileTypes;
-
-            //Scan directory and create a list of files
-                QString line;
-                QString reducedLine;
-
-
-            QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
-            while (iterator.hasNext()){
-
-                 //Get file information  (absolute path, size, datetime)
-                QString filePath = iterator.next();
-                QFileInfo fileInfo(filePath);
-                QDateTime fileDate = fileInfo.lastModified();
-
-            line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
-
-            //COMMON to searchFilesInCatalog
-                        QRegularExpressionMatch match;
-                        QRegularExpressionMatch foldermatch;
-                        //QRegularExpressionMatch matchFileType;
-
-                        //Split the line text with tabulations into a list
-                        QRegularExpression     lineSplitExp("\t");
-                        QStringList lineFieldList  = line.split(lineSplitExp);
-                        int         fieldListCount = lineFieldList.count();
-
-                        //Get the file absolute path from this list
-                        QString     lineFilePath   = lineFieldList[0];
-
-                        //Get the FileSize from the list if available
-                        qint64      lineFileSize;
-                        if (fieldListCount == 3){lineFileSize = lineFieldList[1].toLongLong();}
-                        else lineFileSize = 0;
-
-                        //Get the File DateTime from the list if available
-                        QDateTime   lineFileDateTime;
-                        if (fieldListCount == 3){lineFileDateTime = QDateTime::fromString(lineFieldList[2],"yyyy/MM/dd hh:mm:ss");}
-                        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00","yyyy/MM/dd hh:mm:ss");
-
-                    //Exclude catalog metadata lines which are starting with the character <
-                         if (lineFilePath.left(1)=="<"){continue;}
-
-                    //Continue if the file is matching the size range
-                        if (newSearch->searchOnSize==true){
-                            if ( !(     lineFileSize >= newSearch->selectedMinimumSize * newSearch->sizeMultiplierMin
-                                    and lineFileSize <= newSearch->selectedMaximumSize * newSearch->sizeMultiplierMax) ){
-                                        continue;}
-                        }
-
-                    //Continue if the file is matching the date range
-                        if (newSearch->searchOnDate==true){
-                            if ( !(     lineFileDateTime >= newSearch->selectedDateMin
-                                    and lineFileDateTime <= newSearch->selectedDateMax ) ){
-                                        continue;}
-                        }
-
-                    //Continue if the file is matching the tags
-                        if (newSearch->searchOnTags==true){
-
-                            bool fileIsMatchingTag = false;
-
-                            //Set query to get a list of folder paths matching the selected tag
-                            QSqlQuery queryTag(QSqlDatabase::database("defaultConnection"));
-                            QString queryTagSQL = QLatin1String(R"(
-                                                SELECT path
-                                                FROM tag
-                                                WHERE name=:name
-                            )");
-                            queryTag.prepare(queryTagSQL);
-                            queryTag.bindValue(":name",newSearch->selectedTagName);
-                            queryTag.exec();
-
-                            //Test if the FilePath contains a path from the list of folders matching the selected tag name
-                            while(queryTag.next()){
-                                if ( lineFilePath.contains(queryTag.value(0).toString())==true){
-                                    fileIsMatchingTag = true;
-                                    break;
-                                }
-                                //else tagIsMatching==false
-                            }
-
-                            //If the file is not matching any of the paths, process the next file
-                            if ( !fileIsMatchingTag==true ){
-                                    continue;}
-                        }
-
-                    //Finally, verify the text search criteria
-                    if (newSearch->searchOnFileName==true){
-                        //Depending on the "Search in" criteria,
-                        //reduce the abosulte path to the reaquired text string and match the search text
-                        if(newSearch->selectedSearchIn == tr("File names only"))
-                        {
-                            // Extract the file name from the lineFilePath
-                            QFileInfo file(lineFilePath);
-                            reducedLine = file.fileName();
-
-                            match = regex.match(reducedLine);
-                        }
-                        else if(newSearch->selectedSearchIn == tr("Folder path only"))
-                        {
-                            //Keep only the folder name, so all characters left of the last occurence of / in the path.
-                            reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
-
-                            //Check the fodler name matches the search text
-                            regex.setPattern(newSearch->regexSearchtext);
-
-                            foldermatch = regex.match(reducedLine);
-
-                            //if it does, then check that the file matches the selected file type
-                            if (foldermatch.hasMatch()){
-                                regex.setPattern(newSearch->regexFileType);
-
-                                match = regex.match(lineFilePath);
-                            }
-                        }
-                        else {
-                            match = regex.match(lineFilePath);
-                        }
-
-                        //If the file is matching the criteria, add it and its catalog to the search results
-                        //COMMON to searchFilesInCatalog
-                        if (match.hasMatch()){
-
-                            newSearch->filesFoundList << lineFilePath;
-
-                            //COMMON to searchFilesInCatalog
-                            //Retrieve other file info
-                            QFileInfo file(lineFilePath);
-
-                            // Get the fileDateTime from the list if available
-                            QString lineFileDatetime;
-                            if (fieldListCount == 3){
-                                    lineFileDatetime = lineFieldList[2];}
-                            else lineFileDatetime = "";
-
-                            //Populate result lists
-                            newSearch->fileNames.append(file.fileName());
-                            newSearch->fileSizes.append(lineFileSize);
-                            newSearch->fileDateTimes.append(lineFileDatetime);
-                            newSearch->filePaths.append(file.path());
-                            newSearch->fileCatalogs.append(sourceDirectory);
-                            newSearch->fileCatalogIDs.append(0);
-                        }
-                    }
-                    else{
-
-                        //Add the file and its catalog to the results, excluding blank lines
-                        if (lineFilePath !=""){
-                            newSearch->filesFoundList << lineFilePath;
-                            newSearch->deviceFoundIDList.insert(0, sourceDirectory);
-
-                            //Retrieve other file info
-                            QFileInfo file(lineFilePath);
-
-                            // Get the fileDateTime from the list if available
-                            QString lineFileDatetime;
-                            if (fieldListCount == 3){
-                                    lineFileDatetime = lineFieldList[2];}
-                            else lineFileDatetime = "";
-
-                            //Populate result lists
-                            newSearch->fileNames.append(file.fileName());
-                            newSearch->fileSizes.append(lineFileSize);
-                            newSearch->fileDateTimes.append(lineFileDatetime);
-                            newSearch->filePaths.append(file.path());
-                            newSearch->fileCatalogs.append(sourceDirectory);
-                            newSearch->fileCatalogIDs.append(0);
-                        }
-                    }
-            }
-        }
-        //----------------------------------------------------------------------
-
-        //UI methods
         void MainWindow::initiateSearchFields()
         {
             //Add filetype English value additionally to the displayed/translated value
@@ -1956,7 +895,6 @@
             clearSearchResults();
 
             //Clear results and disable export
-            newSearch->filesFoundList.clear();
             ui->Search_pushButton_ProcessResults->setEnabled(false);
             ui->Search_comboBox_SelectProcess->setEnabled(false);
         }
@@ -2029,7 +967,6 @@
                 //Clear the temporary search
                 newSearch = new Search;
 
-                //searchDateTime;
                 newSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
                 newSearch->searchText               = ui->Search_lineEdit_SearchText->text();
                 newSearch->selectedTextCriteria     = ui->Search_comboBox_TextCriteria->currentText();
@@ -2072,6 +1009,13 @@
                 newSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
                 newSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
 
+                newSearch->fileType_AudioS = fileType_AudioS;
+                newSearch->fileType_ImageS = fileType_ImageS;
+                newSearch->fileType_TextS  = fileType_TextS;
+                newSearch->fileType_VideoS = fileType_VideoS;
+
+                newSearch->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+                newSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
@@ -2528,52 +1472,18 @@
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);
             ui->Search_treeView_History->header()->resizeSection(0, 150); //Date
         }
-
+        //--------------------------------------------------------------------------
         void MainWindow::clearSearchResults()
         {
             Catalog *empty = new Catalog(this);
             ui->Search_treeView_FilesFound->setModel(empty);
             QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
-            emptyQStandardItemModel->setHorizontalHeaderLabels({ "Catalog with results", "ID" });
+            emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results"), tr("ID") });
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }
-
         //--------------------------------------------------------------------------
-        //--------------------------------------------------------------------------
-        //Stoppable Search process
-        void MainWindow::searchFilesStoppable(){
-            if (isSearchRunning) {
-                if (searchProcess) {
-                    searchProcess->stop();
-                    searchProcess->wait();
-                    delete searchProcess;
-                    searchProcess = nullptr;
-                }
-                isSearchRunning = false;
-                QApplication::restoreOverrideCursor();
-
-                ui->Search_pushButton_Search->setText("Search");
-                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-                ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-            } else {
-                getSearchCriteria();
-
-                searchProcess = new SearchProcess(this, collection->databaseMode);
-                connect(searchProcess, &SearchProcess::searchCompleted, this, &MainWindow::handleSearchCompleted);
-                connect(searchProcess, &SearchProcess::searchStopped, this, &MainWindow::handleSearchStopped);
-                connect(searchProcess, &SearchProcess::searchResultsReady, this, &MainWindow::updateSearchResults);
-                searchProcess->start();
-                isSearchRunning = true;
-
-                ui->Search_pushButton_Search->setText("Stop");
-                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
-                ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
-            }
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::updateSearchResults()
+        void MainWindow::displaySearchResults()
         {
             //List of catalogs in which results were found
             ui->Search_treeView_CatalogsFound->setModel(newSearch->deviceFoundModel);
@@ -2582,11 +1492,7 @@
             FilesView *fileViewModel = new FilesView(this);
             fileViewModel->caseSensitive = fileSortCaseSensitive;
             fileViewModel->setSourceModel(newSearch);
-
             ui->Search_treeView_FilesFound->setModel(fileViewModel);
-
-            //Update search statistics
-            newSearch->filesFoundNumber = fileViewModel->rowCount();
 
             //Process FOLDER SEARCH
             //Populate model with folders only if this option is selected
@@ -2661,8 +1567,7 @@
                 ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
             }
 
-            //Save the search criteria to the search history
-            newSearch->insertSearchHistoryToTable("defaultConnection");
+            //Save the search history and refresh UI
             collection->saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
 
@@ -2671,6 +1576,39 @@
             ui->Search_comboBox_SelectProcess->setEnabled(true);
 
             QApplication::restoreOverrideCursor();
+        }
+        //----------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //Stoppable Search process
+        void MainWindow::searchFilesStoppable(){
+            if (isSearchRunning) {
+                if (searchProcess) {
+                    searchProcess->stop();
+                    searchProcess->wait();
+                    delete searchProcess;
+                    searchProcess = nullptr;
+                }
+                isSearchRunning = false;
+                QApplication::restoreOverrideCursor();
+
+                ui->Search_pushButton_Search->setText("Search");
+                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+                ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+            } else {
+                getSearchCriteria();
+
+                searchProcess = new SearchProcess(this, collection->databaseMode);
+                connect(searchProcess, &SearchProcess::searchCompleted, this, &MainWindow::handleSearchCompleted);
+                connect(searchProcess, &SearchProcess::searchStopped, this, &MainWindow::handleSearchStopped);
+                connect(searchProcess, &SearchProcess::searchResultsReady, this, &MainWindow::displaySearchResults);
+                searchProcess->start();
+                isSearchRunning = true;
+
+                ui->Search_pushButton_Search->setText("Stop");
+                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+                ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::handleSearchCompleted()
@@ -2701,12 +1639,11 @@
             ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
         }
         //----------------------------------------------------------------------
-
         // Implement the getter methods
         int MainWindow::getDifferencesCatalog1ID() const {
             return ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
         }
-
+        //----------------------------------------------------------------------
         int MainWindow::getDifferencesCatalog2ID() const {
             return ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }

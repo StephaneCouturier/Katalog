@@ -206,11 +206,8 @@ class MainWindow : public QMainWindow
             int lastSearchSortOrder;
 
             void refreshDifferencesCatalogSelection();
-            void searchFiles();
+            void processSearch();
             void searchFilesStoppable();
-            void searchFilesInCatalog(Device *device);
-            //void searchFilesInCatalogNEW(Device *device);
-            void searchFilesInDirectory(const QString &sourceDirectory);
 
             //Search history
             int lastSearchHistorySortSection;
@@ -369,7 +366,7 @@ class MainWindow : public QMainWindow
             void changeDatabaseFilePath(QString newDatabaseFilePath);
 
     public slots:
-            void updateSearchResults();
+            void displaySearchResults();
 
    private slots:
             void handleSearchCompleted();

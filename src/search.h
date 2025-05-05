@@ -32,6 +32,8 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
+#include "src/device.h"
+#include "src/filesview.h"
 #include <QDateTime>
 #include <QStandardItemModel>
 #include <QAbstractTableModel>
@@ -57,11 +59,11 @@ public:
     QString regexSearchtext;
     QString regexFileType;
 
-    //Search Criteria
-    bool searchOnFileName;
-    QString searchText;
-    QString selectedTextCriteria;
-    QString selectedSearchIn;
+    //Search Criteria               //field name in db
+    bool searchOnFileName;          //text_checked
+    QString searchText;             //text_phrase
+    QString selectedTextCriteria;   //text_criteria
+    QString selectedSearchIn;       //text_search_in
     bool caseSensitive;
     QString selectedSearchExclude;
 
@@ -102,6 +104,18 @@ public:
     bool    searchInCatalogsChecked;
     bool    searchInConnectedChecked;
     QString connectedDirectory;
+
+    QStringList fileType_AudioS;
+    QStringList fileType_ImageS;
+    QStringList fileType_TextS;
+    QStringList fileType_VideoS;
+
+    //Search execution
+    Device *diffDevice1 = new Device;
+    Device *diffDevice2 = new Device;
+    void searchFiles(Device *selectedDevice);
+    void searchFilesInCatalog(Device *device);
+    void searchFilesInDirectory(const QString &sourceDirectory);
 
     //Results
     QList<QString> fileNames;
