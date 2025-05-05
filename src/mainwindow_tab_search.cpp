@@ -872,11 +872,11 @@
             ui->Search_dateTimeEdit_Max->setDateTime(QDateTime::fromString("2030-01-01 00:00:00","yyyy-MM-dd hh:mm:ss"));
             ui->Search_comboBox_FileType->setCurrentText(tr("All"));
             ui->Search_checkBox_Duplicates->setChecked(false);
-            ui->Search_checkBox_DuplicatesName->setChecked(false);
+            ui->Search_checkBox_DuplicatesName->setChecked(true);
             ui->Search_checkBox_DuplicatesSize->setChecked(false);
             ui->Search_checkBox_DuplicatesDateModified->setChecked(false);
             ui->Search_checkBox_Differences->setChecked(false);
-            ui->Search_checkBox_DifferencesName->setChecked(false);
+            ui->Search_checkBox_DifferencesName->setChecked(true);
             ui->Search_checkBox_DifferencesSize->setChecked(false);
             ui->Search_checkBox_DifferencesDateModified->setChecked(false);
 
@@ -927,14 +927,18 @@
                 ui->Search_checkBox_Date->setChecked(search->searchOnDate);
                 ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
                 ui->Search_dateTimeEdit_Max->setDateTime(search->selectedDateMax);
+
                 ui->Search_checkBox_Duplicates->setChecked(search->searchOnDuplicates);
                 ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
                 ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
                 ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
                 ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
+
                 ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
                 ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
                 ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
+                ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
+
                 //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
                 for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
                     if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
