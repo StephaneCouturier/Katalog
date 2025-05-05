@@ -927,6 +927,7 @@
            <font>
             <family>Noto Sans</family>
             <pointsize>9</pointsize>
+            <kerning>false</kerning>
            </font>
           </property>
           <property name="styleSheet">
@@ -1014,6 +1015,7 @@
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1099,6 +1101,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -1124,6 +1127,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1202,6 +1206,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1236,6 +1241,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>10</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="clearButtonEnabled">
@@ -1249,6 +1255,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -1277,6 +1284,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1299,6 +1307,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -1333,6 +1342,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1352,6 +1362,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -1386,6 +1397,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1416,6 +1428,7 @@
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout">
@@ -1443,6 +1456,7 @@
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <layout class="QVBoxLayout" name="Search_verticalLayout_FileNameCriteriaMain">
@@ -1570,6 +1584,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -1601,6 +1616,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -1637,6 +1653,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -1709,6 +1726,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -1740,6 +1758,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -1768,6 +1787,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -1880,6 +1900,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -1899,6 +1920,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -1971,6 +1993,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -1996,6 +2019,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="clearButtonEnabled">
@@ -2009,6 +2033,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2078,6 +2103,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -2156,6 +2182,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -2178,6 +2205,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -2202,6 +2230,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2314,6 +2343,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2342,6 +2372,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2373,6 +2404,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="buttonSymbols">
@@ -2404,6 +2436,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -2417,6 +2450,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2451,6 +2485,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2482,6 +2517,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="maximum">
@@ -2510,6 +2546,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -2523,6 +2560,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2588,6 +2626,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2625,6 +2664,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -2675,6 +2715,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2787,6 +2828,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2815,6 +2857,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2846,6 +2889,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="alignment">
@@ -2866,6 +2910,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2900,6 +2945,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -2931,6 +2977,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="alignment">
@@ -2951,6 +2998,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -2973,6 +3021,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -3076,6 +3125,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -3095,6 +3145,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -3126,6 +3177,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -3148,6 +3200,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -3170,6 +3223,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="text">
@@ -3183,6 +3237,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -3300,6 +3355,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="toolTip">
@@ -3319,6 +3375,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="orientation">
@@ -3350,6 +3407,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="text">
@@ -3372,6 +3430,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="text">
@@ -3394,6 +3453,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="text">
@@ -3407,6 +3467,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <property name="orientation">
@@ -3436,6 +3497,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>false</kerning>
                            </font>
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -3494,6 +3556,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>false</kerning>
                               </font>
                              </property>
                              <property name="orientation">
@@ -3537,6 +3600,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>false</kerning>
                               </font>
                              </property>
                              <property name="text">
@@ -3568,6 +3632,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>false</kerning>
                               </font>
                              </property>
                              <property name="toolTip">
@@ -3602,6 +3667,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>false</kerning>
                               </font>
                              </property>
                              <property name="text">
@@ -3633,6 +3699,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>false</kerning>
                               </font>
                              </property>
                              <property name="toolTip">
@@ -3651,6 +3718,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -3723,6 +3791,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -3801,6 +3870,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -3823,6 +3893,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="orientation">
@@ -3847,6 +3918,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -3882,6 +3954,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -3935,6 +4008,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -3954,6 +4028,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -4005,6 +4080,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -4033,6 +4109,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="toolTip">
@@ -4055,6 +4132,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                        </widget>
@@ -4065,6 +4143,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>false</kerning>
                          </font>
                         </property>
                         <property name="orientation">
@@ -4100,6 +4179,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="frameShadow">
@@ -4188,6 +4268,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="orientation">
@@ -4225,6 +4306,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="toolTip">
@@ -4256,6 +4338,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="text">
@@ -4282,6 +4365,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
                       <bold>true</bold>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="text">
@@ -4310,6 +4394,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="text">
@@ -4336,6 +4421,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
                       <bold>true</bold>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="text">
@@ -4352,6 +4438,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="orientation">
@@ -4386,6 +4473,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="toolTip">
@@ -4448,6 +4536,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>false</kerning>
                      </font>
                     </property>
                     <property name="toolTip">
@@ -4482,6 +4571,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -4501,6 +4591,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -4561,6 +4652,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -4678,6 +4770,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -4934,6 +5027,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -4974,6 +5068,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5002,6 +5097,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5030,6 +5126,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5157,6 +5254,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5914,6 +6012,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5937,6 +6036,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5957,6 +6057,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -5994,6 +6095,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -6365,6 +6467,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <font>
                 <family>Noto Sans</family>
                 <pointsize>9</pointsize>
+                <kerning>false</kerning>
                </font>
               </property>
               <property name="frameShadow">
@@ -6458,6 +6561,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -6557,6 +6661,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -6609,6 +6714,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -6711,6 +6817,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <family>Noto Sans</family>
                    <pointsize>9</pointsize>
                    <bold>true</bold>
+                   <kerning>false</kerning>
                   </font>
                  </property>
                  <property name="text">
@@ -6821,6 +6928,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <family>Noto Sans</family>
                    <pointsize>9</pointsize>
                    <bold>true</bold>
+                   <kerning>false</kerning>
                   </font>
                  </property>
                  <property name="text">
@@ -6848,6 +6956,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <family>Noto Sans</family>
                    <pointsize>9</pointsize>
                    <bold>true</bold>
+                   <kerning>false</kerning>
                   </font>
                  </property>
                  <property name="text">
@@ -6912,6 +7021,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -6928,6 +7038,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -6944,6 +7055,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -6971,6 +7083,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="frameShadow">
@@ -7036,6 +7149,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7064,6 +7178,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7092,6 +7207,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7120,6 +7236,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7148,6 +7265,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7200,6 +7318,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7213,6 +7332,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7226,6 +7346,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="locale">
@@ -7244,6 +7365,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7285,6 +7407,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                  </widget>
@@ -7297,6 +7420,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -7330,6 +7454,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7373,6 +7498,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7389,6 +7515,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7405,6 +7532,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -7426,6 +7554,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="frameShadow">
@@ -7445,6 +7574,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7467,6 +7597,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -7488,6 +7619,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                  </widget>
@@ -7504,6 +7636,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
@@ -7531,6 +7664,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -7544,6 +7678,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7566,6 +7701,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -7584,6 +7720,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7612,6 +7749,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
@@ -7639,6 +7777,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7663,6 +7802,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -7691,6 +7831,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
@@ -7719,6 +7860,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -7740,6 +7882,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="orientation">
@@ -7761,6 +7904,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <font>
                 <family>Noto Sans</family>
                 <pointsize>9</pointsize>
+                <kerning>false</kerning>
                </font>
               </property>
               <property name="orientation">
@@ -7774,6 +7918,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                <font>
                 <family>Noto Sans</family>
                 <pointsize>9</pointsize>
+                <kerning>false</kerning>
                </font>
               </property>
               <property name="orientation">
@@ -7803,6 +7948,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7825,6 +7971,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -7841,6 +7988,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -7862,6 +8010,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="frameShadow">
@@ -7887,6 +8036,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -7903,6 +8053,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <item>
@@ -7926,6 +8077,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_5">
@@ -7935,6 +8087,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="orientation">
@@ -7956,6 +8109,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -7969,6 +8123,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="inputMask">
@@ -7985,6 +8140,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="inputMask">
@@ -8001,6 +8157,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8014,6 +8171,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8027,6 +8185,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="inputMask">
@@ -8040,6 +8199,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8053,6 +8213,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="inputMask">
@@ -8074,6 +8235,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -8092,6 +8254,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8105,6 +8268,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8123,6 +8287,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
@@ -8132,6 +8297,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="iconSize">
@@ -8154,6 +8320,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <font>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -8172,6 +8339,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="text">
@@ -8194,6 +8362,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>false</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -8737,6 +8906,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8883,6 +9053,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8906,6 +9077,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8926,6 +9098,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8949,6 +9122,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8972,6 +9146,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -8995,6 +9170,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9032,6 +9208,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9055,6 +9232,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9078,6 +9256,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9101,6 +9280,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9171,6 +9351,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9191,6 +9372,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9207,6 +9389,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9227,6 +9410,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9250,6 +9434,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9266,6 +9451,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                  <font>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9286,6 +9472,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9309,6 +9496,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9479,6 +9667,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>false</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9506,6 +9695,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="lineWidth">
@@ -9561,6 +9751,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>false</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9595,6 +9786,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
@@ -9643,6 +9835,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>true</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -9685,6 +9878,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>true</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -9705,6 +9899,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>false</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -9728,6 +9923,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>false</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -9888,6 +10084,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -9908,6 +10105,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -9932,6 +10130,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -9945,6 +10144,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10072,6 +10272,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10092,6 +10293,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10112,6 +10314,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10136,6 +10339,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10149,6 +10353,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10296,6 +10501,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <family>Noto Sans</family>
                            <pointsize>9</pointsize>
                            <bold>true</bold>
+                           <kerning>false</kerning>
                           </font>
                          </property>
                          <property name="text">
@@ -10326,6 +10532,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <family>Noto Sans</family>
                            <pointsize>9</pointsize>
                            <bold>false</bold>
+                           <kerning>false</kerning>
                           </font>
                          </property>
                          <property name="text">
@@ -10340,6 +10547,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <family>Noto Sans</family>
                            <pointsize>9</pointsize>
                            <bold>false</bold>
+                           <kerning>false</kerning>
                           </font>
                          </property>
                          <property name="text">
@@ -10383,6 +10591,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <family>Noto Sans</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
+                     <kerning>false</kerning>
                     </font>
                    </property>
                    <property name="text">
@@ -10484,6 +10693,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>true</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10514,6 +10724,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10537,6 +10748,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10554,6 +10766,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10567,6 +10780,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10584,6 +10798,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10604,6 +10819,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10624,6 +10840,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10637,6 +10854,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10647,6 +10865,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10657,6 +10876,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <font>
                         <family>Noto Sans</family>
                         <pointsize>8</pointsize>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                      </widget>
@@ -10674,6 +10894,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                         <family>Noto Sans</family>
                         <pointsize>9</pointsize>
                         <bold>false</bold>
+                        <kerning>false</kerning>
                        </font>
                       </property>
                       <property name="text">
@@ -10758,6 +10979,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>false</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -10836,6 +11058,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>false</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -10850,6 +11073,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>false</bold>
+                    <kerning>false</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -10908,6 +11132,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <family>Noto Sans</family>
                   <pointsize>9</pointsize>
                   <bold>true</bold>
+                  <kerning>false</kerning>
                  </font>
                 </property>
                 <property name="text">
