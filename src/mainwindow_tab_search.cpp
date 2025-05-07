@@ -42,20 +42,12 @@
         //Buttons and other changes
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
-            // if(collection->databaseMode !="Memory"){
-            //     searchFilesStoppable();
-            // }
-            // else
-                processSearch();
+            processSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            // if(collection->databaseMode !="Memory"){
-            //     searchFilesStoppable();
-            // }
-            // else
-                processSearch();
+            processSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
@@ -69,10 +61,6 @@
             displaySelectedDeviceName();
 
             //Seach again but only on the selected catalog
-            // if(collection->databaseMode !="Memory"){
-            //     searchFilesStoppable();
-            // }
-            // else
             processSearch();
         }
         //----------------------------------------------------------------------
@@ -782,17 +770,37 @@
         void MainWindow::processSearch()
         {//Run a search of files in each selected catalog based on user inputs
 
-            // Start animation while opening
+            // Start animation
             QApplication::setOverrideCursor(Qt::WaitCursor);
 
             //Get new search criteria from UI
             getSearchCriteria();
 
-            //Run the search
-            newSearch->searchFiles(selectedDevice);
+            if(collection->databaseMode !="Memory" or newSearch->searchInConnectedChecked == true){
+                //Run the stoppable search
+                searchFilesStoppable();
 
-            //Send results to the UI
-            displaySearchResults();
+                //Send results to the UI
+                //displaySearchResults();
+
+                //Adapt display of files found for searchInConnected
+                if (newSearch->searchInConnectedChecked == true){
+                    ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
+                    ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
+                    ui->Search_treeView_FilesFound->header()->hideSection(5);
+                }
+
+                //Enable Export
+                ui->Search_pushButton_ProcessResults->setEnabled(true);
+                ui->Search_comboBox_SelectProcess->setEnabled(true);
+            }
+            else{
+                //Run the search
+                newSearch->searchFiles(selectedDevice);
+
+                //Send results to the UI
+                displaySearchResults();
+            }
 
             //Adapt display of files found for searchInConnected
             if (newSearch->searchInConnectedChecked == true){
@@ -1506,10 +1514,8 @@
                 ui->Search_treeView_FilesFound->header()->hideSection(0); //Name
                 ui->Search_treeView_FilesFound->header()->hideSection(1); //Size
                 ui->Search_treeView_FilesFound->header()->hideSection(2); //Date
-
                 ui->Search_label_FoundTitle->setText(tr("Folders found"));
             }
-
             //else Process REGULAR SEARCH (FILES, DUPLICATES, or DIFFERENCES)
             //Populate model with files if the folder option is not selected
             else
@@ -1570,11 +1576,9 @@
 
                 ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
             }
-
             //Save the search history and refresh UI
             collection->saveSearchHistoryTableToFile();
             loadSearchHistoryTableToModel();
-
             //Enable Export
             ui->Search_pushButton_ProcessResults->setEnabled(true);
             ui->Search_comboBox_SelectProcess->setEnabled(true);
@@ -1593,15 +1597,14 @@
                     searchProcess = nullptr;
                 }
                 isSearchRunning = false;
-                QApplication::restoreOverrideCursor();
 
+                //Reset "Search" button
                 ui->Search_pushButton_Search->setText("Search");
                 ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
                 ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-            } else {
-                getSearchCriteria();
-
+                QApplication::restoreOverrideCursor();
+            }
+            else {
                 searchProcess = new SearchProcess(this, collection->databaseMode);
                 connect(searchProcess, &SearchProcess::searchCompleted, this, &MainWindow::handleSearchCompleted);
                 connect(searchProcess, &SearchProcess::searchStopped, this, &MainWindow::handleSearchStopped);
@@ -1609,6 +1612,7 @@
                 searchProcess->start();
                 isSearchRunning = true;
 
+                //Change "Search" button to "Stop"
                 ui->Search_pushButton_Search->setText("Stop");
                 ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
                 ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");

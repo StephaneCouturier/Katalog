@@ -363,6 +363,9 @@ void SearchProcess::searchFilesInCatalog(const Device *device)
             }
         }
     }
+
+    //Save the search criteria to the search history
+    mainWindow->newSearch->insertSearchHistoryToTable(connectionName);
 }
 
 void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
@@ -623,6 +626,9 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
             }
         }
     }
+
+    //Save the search criteria to the search history
+    mainWindow->newSearch->insertSearchHistoryToTable(connectionName);
 }
 
 void SearchProcess::processSearchResults()
