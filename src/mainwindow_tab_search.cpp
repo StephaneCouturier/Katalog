@@ -911,6 +911,8 @@
         {//Set search values
 
             //Selections
+            ui->Filters_checkBox_SearchInCatalogs->setChecked(search->searchInCatalogsChecked);
+            ui->Filters_checkBox_SearchInConnectedDrives->setChecked(search->searchInConnectedChecked);
             ui->Filters_lineEdit_SeletedDirectory->setText(search->connectedDirectory);
             ui->Filters_label_DisplayStorage->setText(search->selectedStorage);
             ui->Filters_label_DisplayCatalog->setText(search->selectedCatalog);
