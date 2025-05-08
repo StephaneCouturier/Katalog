@@ -1018,12 +1018,33 @@ void SearchProcess::processSearchResults()
     mainWindow->newSearch->filesFoundMinDate = "";
     mainWindow->newSearch->filesFoundMaxDate = "";
 
+
+    //Number of files found
+    mainWindow->newSearch->filesFoundNumber = mainWindow->newSearch->fileNames.count();
+
     //Total size of files found
     qint64 sizeItem;
     mainWindow->newSearch->filesFoundTotalSize = 0;
     foreach (sizeItem, mainWindow->newSearch->fileSizes) {
         mainWindow->newSearch->filesFoundTotalSize = mainWindow->newSearch->filesFoundTotalSize + sizeItem;
     }
+
+    //Other statistics, covering the case where no results are returned.
+    if (mainWindow->newSearch->filesFoundNumber !=0){
+        mainWindow->newSearch->filesFoundAverageSize = mainWindow->newSearch->filesFoundTotalSize / mainWindow->newSearch->filesFoundNumber;
+        QList<qint64> fileSizeList = mainWindow->newSearch->fileSizes;
+        std::sort(fileSizeList.begin(), fileSizeList.end());
+        mainWindow->newSearch->filesFoundMinSize = fileSizeList.first();
+        mainWindow->newSearch->filesFoundMaxSize = fileSizeList.last();
+
+        QList<QString> fileDateList = mainWindow->newSearch->fileDateTimes;
+        std::sort(fileDateList.begin(), fileDateList.end());
+        mainWindow->newSearch->filesFoundMinDate = fileDateList.first();
+        mainWindow->newSearch->filesFoundMaxDate = fileDateList.last();
+    }
+
+    //Save the search criteria to the search history
+    mainWindow->newSearch->insertSearchHistoryToTable("defaultConnection");
 
     // Emit signal when processing is complete
     emit searchResultsReady();
