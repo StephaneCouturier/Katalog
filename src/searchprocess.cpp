@@ -31,14 +31,6 @@ void SearchProcess::run()
         return;
     }
 
-    //Clear search results
-    mainWindow->newSearch->fileNames.clear();
-    mainWindow->newSearch->filePaths.clear();
-    mainWindow->newSearch->fileSizes.clear();
-    mainWindow->newSearch->fileDateTimes.clear();
-    mainWindow->newSearch->fileCatalogs.clear();
-    mainWindow->newSearch->fileCatalogIDs.clear();
-
     //Process the SEARCH in CATALOGS or DIRECTORY ------------------------------
 
         //Prepare the SEARCH -------------------------------
@@ -257,13 +249,8 @@ void SearchProcess::searchFilesInCatalog(const Device *device)
     //File by file, test if the file is matching all search criteria
     //Loop principle1: stop further verification as soon as a criteria fails to match
     //Loop principle2: start with fastest criteria, finish with more complex ones (tag, file name)
-    while(getFilesQuery.next()){
-
-        QMutexLocker locker(&mutex);
-        if (stopRequested) {
-            return;
-        }
-
+    while(getFilesQuery.next()
+           and stopRequested==false){
         QString   lineFileName       = getFilesQuery.value(0).toString();
         QString   lineFileFolderPath = getFilesQuery.value(1).toString();
         QString   lineFileFullPath   = lineFileFolderPath + "/" + lineFileName;
@@ -370,8 +357,7 @@ void SearchProcess::searchFilesInCatalog(const Device *device)
 
 void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
 {
-    // Directory search logic here
-    // This example does not involve database operations
+    //Check Directory exists
     QDir dir(sourceDirectory);
     if (!dir.exists()) {
         qDebug() << "WARNING/ searchFilesInDirectory: Directory does not exist: " << sourceDirectory;
@@ -401,7 +387,6 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
     else {
         mainWindow->newSearch->regexSearchtext="";
     }
-
     mainWindow->newSearch->regexPattern = mainWindow->newSearch->regexSearchtext;
 
     //Prepare the regexFileType for file types //COMMON to searchFilesInCatalog
@@ -428,7 +413,6 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
     }
 
     //Add the words to exclude to the regex //COMMON to searchFilesInCatalog
-
     if ( mainWindow->newSearch->selectedSearchExclude !=""){
 
         //Prepare
@@ -463,7 +447,8 @@ void SearchProcess::searchFilesInDirectory(const QString &sourceDirectory)
     QString reducedLine;
 
     QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files|QDir::Hidden, QDirIterator::Subdirectories);
-    while (iterator.hasNext() and stopRequested==false){
+    while (iterator.hasNext()
+           and stopRequested==false){
 
         //Get file information  (absolute path, size, datetime)
         QString filePath = iterator.next();
