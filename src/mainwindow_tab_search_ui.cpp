@@ -41,13 +41,11 @@
         //Buttons and other changes
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
-            //processSearch();
             launchSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            //processSearch();
             launchSearch();
         }
         //----------------------------------------------------------------------
@@ -62,7 +60,6 @@
             displaySelectedDeviceName();
 
             //Seach again but only on the selected catalog
-            //processSearch();
             launchSearch();
         }
         //----------------------------------------------------------------------

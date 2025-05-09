@@ -223,6 +223,12 @@ void MainWindow::displaySearchResults()
         return;
     }
 
+    // Calculate statistics first
+    currentSearch->calculateStatistics();
+
+    // Process results to populate the catalog model
+    currentSearch->processResults(currentSearch->showFoldersOnly);
+
     // List of catalogs in which results were found
     if (currentSearch->deviceFoundModel) {
         ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);

@@ -225,21 +225,57 @@ void Search::setMultipliers()
 void Search::processResults(bool handleFoldersOnly)
 {
     // Process search results: list of catalogs with results
-    // Remove duplicates so the catalogs are listed only once, and sort the list
-    deviceFoundIDList.removeDuplicates();
-    deviceFoundIDList.sort();
 
-    // Keep the catalog file name only
-    foreach(QString item, deviceFoundIDList) {
-        int index = deviceFoundIDList.indexOf(item);
-        QFileInfo fileInfo(item);
-        deviceFoundIDList[index] = fileInfo.baseName();
-    }
-
-    // Set model headers
+    // Clear and set model headers
+    deviceFoundModel->clear();
     deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results"), QCoreApplication::translate("MainWindow", "ID") });
 
-    // Populate model with folders only if this option is selected
+    // Populate the model with unique catalogs from search results
+    QMap<int, QString> uniqueCatalogs; // Map of catalog IDs to names
+
+    // Extract unique catalogs from results
+    for (int i = 0; i < fileCatalogIDs.size(); ++i) {
+        int catalogID = fileCatalogIDs.at(i);
+        QString catalogName = fileCatalogs.at(i);
+        if (!uniqueCatalogs.contains(catalogID)) {
+            uniqueCatalogs.insert(catalogID, catalogName);
+        }
+    }
+
+    // Add each unique catalog to the model
+    for (auto it = uniqueCatalogs.begin(); it != uniqueCatalogs.end(); ++it) {
+        int catalogID = it.key();
+        QString catalogName = it.value();
+
+        // Query the device table to get the device ID for this catalog
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+            SELECT device_id
+            FROM device
+            WHERE device_external_id = :catalog_id
+            AND device_type = 'Catalog'
+        )");
+        query.prepare(querySQL);
+        query.bindValue(":catalog_id", catalogID);
+        query.exec();
+
+        int deviceID = 0;
+        if (query.next()) {
+            deviceID = query.value(0).toInt();
+        }
+
+        QList<QStandardItem*> rowItems;
+        QStandardItem* nameItem = new QStandardItem(catalogName);
+        QStandardItem* idItem = new QStandardItem();
+
+        // Set the device ID as integer data
+        idItem->setData(deviceID, Qt::DisplayRole);
+
+        rowItems << nameItem << idItem;
+        deviceFoundModel->appendRow(rowItems);
+    }
+
+    // Process folders only if this option is selected
     if (handleFoldersOnly && searchOnFolderCriteria == true && showFoldersOnly == true) {
         QMap<QString, QPair<QString, int>> uniqueFilePaths;
 
