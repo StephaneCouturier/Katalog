@@ -158,6 +158,7 @@ class MainWindow : public QMainWindow
             void hideDevelopmentUIItems();
             bool unsavedChanges;
             void closeEvent (QCloseEvent *event);
+            QTimer* statusBarTimer;
 
             //Application settings
             void loadSettings();

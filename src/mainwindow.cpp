@@ -70,6 +70,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
         selectedTab = 3; //default value for the first launch = Create screen.
 
+        //Set up the statusbar timer
+        statusBarTimer = new QTimer(this);
+        statusBarTimer->setSingleShot(true);
+        connect(statusBarTimer, &QTimer::timeout, this, [this]() {
+            statusBar()->hide();
+        });
+        // Hide status bar initially
+        statusBar()->hide();
+
     //Prepare paths, user setting file, check version
         //Get user home path and application dir path
             QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);

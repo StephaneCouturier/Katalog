@@ -447,8 +447,10 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         }
     }
 
-    // Show status message
-    statusBar()->showMessage(statusMessage);
+    // Show status message with 5 second timeout
+    statusBar()->show();
+    statusBar()->showMessage(statusMessage, 5000);
+    statusBarTimer->start(5000);
 
     // Process events to keep UI responsive
     QCoreApplication::processEvents();
