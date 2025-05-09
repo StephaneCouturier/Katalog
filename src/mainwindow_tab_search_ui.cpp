@@ -407,6 +407,11 @@
             // Create header text
             QString headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
             QString filesProcessedText;
+            headerText += "<br/>"
+                          + tr("Catalogs processed: %1 of %2")
+                                           .arg(currentSearch->currentCatalogIndex)
+                                           .arg(currentSearch->totalCatalogs)
+                          + "<br/>";
 
             // Check if the search was interrupted
             bool wasInterrupted = (currentSearch == searchStoppable &&
