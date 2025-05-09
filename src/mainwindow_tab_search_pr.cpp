@@ -367,61 +367,69 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     }
 
     // Special case for catalog loading started (-2)
-    if (filesProcessed == -2 && currentSearch && dynamic_cast<SearchMemory*>(currentSearch)) {
+    if (filesProcessed == -2) {
         SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
-        statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4")
-                            .arg(searchMemory->currentCatalogIndex)
-                            .arg(searchMemory->totalCatalogs)
-                            .arg(searchMemory->currentCatalogName)
-                            .arg(currentSearch->fileNames.size());
+        if (searchMemory) {
+            statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4")
+            .arg(searchMemory->currentCatalogIndex)
+                .arg(searchMemory->totalCatalogs)
+                .arg(searchMemory->currentCatalogName)
+                .arg(currentSearch->fileNames.size());
 
-        statusBar()->showMessage(statusMessage);
+            statusBar()->showMessage(statusMessage);
+        }
         return;
     }
 
     // Special case for catalog loading progress update (-4)
-    if (filesProcessed == -4 && currentSearch && dynamic_cast<SearchMemory*>(currentSearch)) {
+    if (filesProcessed == -4) {
         SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
-        double percentLoaded = 0;
-        if (searchMemory->currentCatalogTotalFiles > 0) {
-            percentLoaded = (double)searchMemory->currentCatalogFilesLoaded /
-                            searchMemory->currentCatalogTotalFiles * 100.0;
+        if (searchMemory) {
+            double percentLoaded = 0;
+            if (searchMemory->currentCatalogTotalFiles > 0) {
+                percentLoaded = (double)searchMemory->currentCatalogFilesLoaded /
+                                searchMemory->currentCatalogTotalFiles * 100.0;
+            }
+
+            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6")
+                                .arg(searchMemory->currentCatalogIndex)
+                                .arg(searchMemory->totalCatalogs)
+                                .arg(searchMemory->currentCatalogName)
+                                .arg(searchMemory->currentCatalogFilesLoaded)
+                                .arg(QString::number(percentLoaded, 'f', 1))
+                                .arg(currentSearch->fileNames.size());
+
+            statusBar()->showMessage(statusMessage);
+
+            // Process events to keep UI responsive during loading
+            QCoreApplication::processEvents();
         }
-
-        statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6")
-                            .arg(searchMemory->currentCatalogIndex)
-                            .arg(searchMemory->totalCatalogs)
-                            .arg(searchMemory->currentCatalogName)
-                            .arg(searchMemory->currentCatalogFilesLoaded)
-                            .arg(QString::number(percentLoaded, 'f', 1))
-                            .arg(currentSearch->fileNames.size());
-
-        statusBar()->showMessage(statusMessage);
         return;
     }
 
     // Special case for catalog loading finished (-3)
-    if (filesProcessed == -3 && currentSearch) {
-        statusMessage = tr("Loaded Catalog %1 of %2 | Files found: %3 | Processing files...")
-        .arg(dynamic_cast<SearchMemory*>(currentSearch) ?
-                 dynamic_cast<SearchMemory*>(currentSearch)->currentCatalogIndex : 0)
-            .arg(dynamic_cast<SearchMemory*>(currentSearch) ?
-                     dynamic_cast<SearchMemory*>(currentSearch)->totalCatalogs : 0)
-            .arg(currentSearch->fileNames.size());
+    if (filesProcessed == -3) {
+        SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
+        if (searchMemory) {
+            statusMessage = tr("Loaded Catalog %1 of %2 | Files found: %3 | Processing files...")
+            .arg(searchMemory->currentCatalogIndex)
+                .arg(searchMemory->totalCatalogs)
+                .arg(currentSearch->fileNames.size());
 
-        statusBar()->showMessage(statusMessage);
+            statusBar()->showMessage(statusMessage);
+        }
         return;
     }
 
     // Regular progress update
     if (currentSearch) {
-        if (dynamic_cast<SearchMemory*>(currentSearch)) {
-            SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
+        SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
+        if (searchMemory) {
             statusMessage = tr("Catalog %1 of %2 | Files found: %3 | Files processed: %4")
-                                .arg(searchMemory->currentCatalogIndex)
-                                .arg(searchMemory->totalCatalogs)
-                                .arg(currentSearch->fileNames.size())
-                                .arg(filesProcessed);
+            .arg(searchMemory->currentCatalogIndex)
+                .arg(searchMemory->totalCatalogs)
+                .arg(currentSearch->fileNames.size())
+                .arg(filesProcessed);
         } else {
             statusMessage = tr("Files found: %1 | Files processed: %2")
             .arg(currentSearch->fileNames.size())
@@ -432,7 +440,6 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         if (currentSearch->estimatedTotalFiles > 0) {
             int percentComplete = qMin(100,
                                        static_cast<int>((filesProcessed * 100) / currentSearch->estimatedTotalFiles));
-
             statusMessage += tr(" (%1%)").arg(percentComplete);
         }
     }

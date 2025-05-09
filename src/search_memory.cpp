@@ -233,7 +233,6 @@ void SearchMemory::searchFiles(Device *selectedDevice)
 
 void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {
-    // Using special negative progress values to signal different states of the search process, allowing the UI to show appropriate messages.
     // Reset catalog file loading counters
     currentCatalogFilesLoaded = 0;
     currentCatalogTotalFiles = device->totalFileCount;
@@ -246,12 +245,6 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
             [this](int filesLoaded, int totalFiles) {
                 currentCatalogFilesLoaded = filesLoaded;
                 currentCatalogTotalFiles = totalFiles;
-
-                // Calculate overall progress percentage
-                double fileLoadPercent = 0;
-                if (totalFiles > 0) {
-                    fileLoadPercent = (double)filesLoaded / totalFiles * 100.0;
-                }
 
                 // Send a special progress signal with loading info
                 emit searchProgress(-4); // -4 is catalog loading progress update
@@ -295,7 +288,7 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         getFilesQuerySQL = getFilesQuerySQL + " AND file_date_updated<=:file_date_updated_max ";
     }
     getFilesQuery.prepare(getFilesQuerySQL);
-    getFilesQuery.bindValue(":file_catalog_id", device->externalID);
+    getFilesQuery.bindValue(":file_catalog_id", device->catalog->ID);
     getFilesQuery.bindValue(":file_size_min", selectedMinimumSize * sizeMultiplierMin);
     getFilesQuery.bindValue(":file_size_max", selectedMaximumSize * sizeMultiplierMax);
     getFilesQuery.bindValue(":file_date_updated_min", selectedDateMin.toString("yyyy/MM/dd hh:mm:ss"));
@@ -306,7 +299,7 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
     int totalFiles = 0;
     QSqlQuery countQuery(QSqlDatabase::database("defaultConnection"));
     countQuery.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :file_catalog_id");
-    countQuery.bindValue(":file_catalog_id", device->externalID);
+    countQuery.bindValue(":file_catalog_id", device->catalog->ID);
     if (countQuery.exec() && countQuery.next()) {
         totalFiles = countQuery.value(0).toInt();
     }
@@ -318,8 +311,6 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
     // File by file, test if the file is matching all search criteria
     while (getFilesQuery.next() && !stopRequested) {
         // Progress reporting
-
-        // Update progress every 100 files
         batchCount++;
         filesProcessed++;
         // Every 100 files
@@ -398,7 +389,7 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                 fileSizes.append(getFilesQuery.value(2).toLongLong());
                 fileDateTimes.append(getFilesQuery.value(3).toString());
                 fileCatalogs.append(device->name);
-                fileCatalogIDs.append(device->externalID);
+                fileCatalogIDs.append(device->catalog->ID);
             }
         }
         else {
@@ -422,7 +413,7 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                 fileSizes.append(getFilesQuery.value(2).toLongLong());
                 fileDateTimes.append(getFilesQuery.value(3).toString());
                 fileCatalogs.append(device->name);
-                fileCatalogIDs.append(device->externalID);
+                fileCatalogIDs.append(device->catalog->ID);
             }
         }
         // Report progress periodically

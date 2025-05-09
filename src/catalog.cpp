@@ -553,19 +553,20 @@ void Catalog::renameCatalogFile(QString newCatalogName)
 }
 
 void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested)
-{//Load catalog files from file, if latest version is not already in memory
-        if ( dateLoaded < dateUpdated ){
+{
+    //Load catalog files from file, if latest version is not already in memory
+    if ( dateLoaded < dateUpdated ){
 
-            // Count total lines first for progress reporting
-            QFile countFile(filePath);
-            if (countFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                int totalLines = 0;
-                QTextStream countStream(&countFile);
-                while (!countStream.atEnd()) {
-                    countStream.readLine();
-                    totalLines++;
-                }
-                countFile.close();
+        // Count total lines first for progress reporting
+        QFile countFile(filePath);
+        if (countFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            int totalLines = 0;
+            QTextStream countStream(&countFile);
+            while (!countStream.atEnd()) {
+                countStream.readLine();
+                totalLines++;
+            }
+            countFile.close();
 
             //Inputs
             QFile catalogFile(filePath);
@@ -620,6 +621,7 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                                         )");
 
                 //Process each line of the file
+                int linesProcessed = 0;
                 while (true){
                     QMutexLocker locker(&mutex);
                     if (stopRequested) {
@@ -678,7 +680,17 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                     insertFileQuery.bindValue(":file_catalog",     name);
                     insertFileQuery.bindValue(":file_full_path",   lineFilePath);
                     insertFileQuery.exec();
+
+                    // ADD PROGRESS REPORTING HERE
+                    linesProcessed++;
+                    if (linesProcessed % 100 == 0) {
+                        emit loadProgress(linesProcessed, totalLines);
+                        QCoreApplication::processEvents();
+                    }
                 }
+
+                // Final progress update
+                emit loadProgress(linesProcessed, totalLines);
 
                 //Update catalog loaded version
                 QDateTime emptyDateTime = *new QDateTime;
@@ -1239,3 +1251,18 @@ void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
 }
 
 //--------------------------------------------------------------------------
+int Catalog::countFileLines(const QString &filePath)
+{//For counting lines in a file
+    QFile file(filePath);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        int lines = 0;
+        QTextStream in(&file);
+        while (!in.atEnd()) {
+            in.readLine();
+            lines++;
+        }
+        file.close();
+        return lines;
+    }
+    return 0;
+}

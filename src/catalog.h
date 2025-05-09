@@ -121,6 +121,8 @@ public:
                            const QList<QString> &fileDateTimes,
                            const QList<QString> &fileCatalogs);
 
+    int countFileLines(const QString &filePath);
+
 private:
     QStringList fileExtensions;
 
