@@ -128,14 +128,8 @@ class MainWindow : public QMainWindow
         QStringList fileType_VideoS;
         QStringList fileType_TextS;
 
-        // Getter methods
-        int getDifferencesCatalog1ID() const;
-        int getDifferencesCatalog2ID() const;
-
         QSqlError initializeDatabase(const QString &connectionName);
         bool backupMemoryDatabaseToFile(const QString &memoryConnectionName, const QString &filePath);
-        // void checkDatabaseContent(const QString &connectionName);
-        // void copyDataFromGlobalToSearchConnection(const QString &connectionName);
 
         //Settings
         bool fileSortCaseSensitive;
