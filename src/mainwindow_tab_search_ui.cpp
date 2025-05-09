@@ -433,12 +433,6 @@
                 // For complete searches, show total files processed
                 filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
                                          .arg(currentSearch->totalFilesProcessed);
-
-                // Show searched file count if available
-                if (currentSearch->searchInCatalogsChecked && currentSearch->estimatedTotalFiles > 0) {
-                    filesProcessedText += tr("<tr><td>Total searchable files: </td><td><b> %1 </b></td></tr>")
-                    .arg(currentSearch->estimatedTotalFiles);
-                }
             }
 
             // Create the message box with all statistics

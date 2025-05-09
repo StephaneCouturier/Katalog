@@ -199,7 +199,6 @@ class MainWindow : public QMainWindow
         //TAB: Search
             SearchProcess *searchProcess;
             bool isSearchRunning;
-            void updateSearchProgress(int filesProcessed);
             void resetSearchState();
             qint64 lastProcessedFiles = 0;
 
@@ -386,7 +385,7 @@ class MainWindow : public QMainWindow
    private slots:
             void handleSearchCompleted();
             void handleSearchStopped();
-
+            void updateSearchProgress(int filesProcessed);
             // Define a slot to handle the search completed signal
             void onSearchCompleted() {
                 // Perform UI-related operations here

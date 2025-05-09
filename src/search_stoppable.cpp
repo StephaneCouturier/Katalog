@@ -97,6 +97,8 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
 
     // Process the SEARCH in CATALOGS or DIRECTORY
     if (searchInCatalogsChecked) {
+        // Emit progress start
+        emit searchProgress(0);
         // For differences, only process the 2 selected catalogs
         if (searchOnDifferences) {
             // Load diffDevice1 files

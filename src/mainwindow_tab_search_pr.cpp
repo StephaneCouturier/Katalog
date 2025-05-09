@@ -63,10 +63,12 @@ void MainWindow::launchSearch()
         // Create memory search object if not already created
         if (!searchMemory) {
             searchMemory = new SearchMemory(this);
-
-            // Connect progress signal
-            connect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
         }
+
+        // Always connect the signal, whether searchMemory is new or existing
+        // First disconnect any existing connections to avoid duplicates
+        disconnect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+        connect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
 
         // Point the currentSearch to searchMemory for consistent access
         currentSearch = searchMemory;

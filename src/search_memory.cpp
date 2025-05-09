@@ -30,6 +30,7 @@
 *///
 
 #include "search_memory.h"
+#include "qapplication.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QFileInfo>
@@ -119,9 +120,6 @@ void SearchMemory::searchFiles(Device *selectedDevice)
     }
     // Process the SEARCH in SELECTED DIRECTORY
     else if (searchInConnectedChecked == true) {
-        // Emit progress start
-        emit searchProgress(0);
-
         searchFilesInDirectory(connectedDirectory, tempMutex, tempStopRequested);
     }
 
@@ -209,22 +207,19 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         totalFiles = countQuery.value(0).toInt();
     }
 
-    // Add progress variables
-    int filesProcessed = 0;
-
     // Local counter for batch processing
     int batchCount = 0;
+    int filesProcessed = 0;
 
     // File by file, test if the file is matching all search criteria
     while (getFilesQuery.next() && !stopRequested) {
         // Progress reporting
-        // Update batch count
-        batchCount++;
 
+        // Update progress every 100 files
+        batchCount++;
         filesProcessed++;
-        totalFilesProcessed++;
+        // Every 100 files
         if (filesProcessed % 100 == 0 && totalFiles > 0) {
-            filesProcessed = (filesProcessed * 100) / totalFiles;
             emit searchProgress(filesProcessed);
         }
 
@@ -326,15 +321,20 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                 fileCatalogIDs.append(device->externalID);
             }
         }
-        // Report progress every 100 files
+        // Report progress periodically
         if (batchCount >= 100) {
-            updateProgress(batchCount);
+            totalFilesProcessed += batchCount;
+            emit searchProgress(totalFilesProcessed);
+            // Process events to update UI
+            QApplication::processEvents();
             batchCount = 0;
         }
     }
-    // Report any remaining files in the last batch
+    //Report any remaining files in the last batch
     if (batchCount > 0) {
-        updateProgress(batchCount);
+        totalFilesProcessed += batchCount;
+        emit searchProgress(totalFilesProcessed);
+        QApplication::processEvents();
     }
 }
 
