@@ -236,8 +236,9 @@ void MainWindow::displaySearchResults()
     } else {
         qWarning() << "displaySearchResults: deviceFoundModel is null";
         // Create an empty model
-        QStandardItemModel* emptyModel = new QStandardItemModel(this);
-        ui->Search_treeView_CatalogsFound->setModel(emptyModel);
+        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
+        ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
     }
 
     // Configure the files view
@@ -486,7 +487,8 @@ void MainWindow::resetSearchState()
     }
 
     if (ui->Search_treeView_CatalogsFound->model()) {
-        QStandardItemModel* emptyModel = new QStandardItemModel(this);
-        ui->Search_treeView_CatalogsFound->setModel(emptyModel);
+        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
+        ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
     }
 }

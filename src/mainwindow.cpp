@@ -284,6 +284,7 @@ MainWindow::MainWindow(QWidget *parent) :
             Catalog *emptyCatalog = new Catalog;
             ui->Search_treeView_FilesFound->setModel(emptyCatalog);
             QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
+            emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
 
             //Restore last Search values

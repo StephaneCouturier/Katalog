@@ -233,7 +233,7 @@ void Search::processResults(bool handleFoldersOnly)
 
     // Clear and set model headers
     deviceFoundModel->clear();
-    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results"), QCoreApplication::translate("MainWindow", "ID") });
+    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
 
     // Populate the model with unique catalogs from search results
     QMap<int, QString> uniqueCatalogs; // Map of catalog IDs to names
@@ -441,7 +441,7 @@ void Search::clearResults()
     filesFoundList.clear();
     deviceFoundIDList.clear();
     deviceFoundModel->clear();
-    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results"), QCoreApplication::translate("MainWindow", "ID") });
+    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
 
     // Reset statistics
     filesFoundNumber = 0;
