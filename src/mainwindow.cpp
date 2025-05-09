@@ -33,22 +33,29 @@
 
 #include "mainwindow_setup.cpp"
 #include "mainwindow_tab_create.cpp"
-#include "mainwindow_tab_search.cpp"
+#include "mainwindow_tab_search_ui.cpp"
+#include "mainwindow_tab_search_pr.cpp"
 #include "mainwindow_tab_tags.cpp"
-
-#include "searchprocess.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    newSearch(new Search(this)),
+    searchMemory(nullptr),
+    searchStoppable(nullptr),
     ui(new Ui::MainWindow),
     searchProcess(nullptr),
     isSearchRunning(false)
 {
+    // Only create memorySearch initially
+    searchMemory = new SearchMemory(this);
+
+    // Both currentSearch and lastSearch point to searchMemory
+    currentSearch = searchMemory;
+    lastSearch = searchMemory;
+
     //Set current version, release date, and development mode
-        currentVersion  = "2.4";
+        currentVersion  = "2.5";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-04-27";
+        releaseDate     = "2025-05-08";
         developmentMode = false;
 
         //Detect if the theme is light or dark
@@ -166,6 +173,13 @@ MainWindow::MainWindow(QWidget *parent) :
             }
 
     //Load Collection data
+            // Only create searchMemory initially
+            searchMemory = new SearchMemory(this);
+
+            // Both currentSearch and lastSearch point to searchMemory
+            currentSearch = searchMemory;
+            lastSearch = searchMemory;
+
         //Load Collection
             loadCollection();
             selectedDevice->loadDevice("defaultConnection");
@@ -274,7 +288,7 @@ MainWindow::MainWindow(QWidget *parent) :
             query.next();
 
             lastSearch->searchDateTime = query.value(0).toString();
-            lastSearch->loadSearchHistoryCriteria();
+            lastSearch->loadSearchHistoryCriteria("defaultConnection");
             loadSearchCriteria(lastSearch);
 
             //Restore last Search values
@@ -309,12 +323,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    /*
     if (searchProcess) {
         searchProcess->stop();
         searchProcess->wait();
         delete searchProcess;
     }
     delete newSearch; // Ensure newSearch is deleted
+    */
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)

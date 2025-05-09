@@ -416,6 +416,9 @@
             //Reset selected values (to avoid actions on the last selected ones)
             resetSelection();
 
+            // After successfully changing the database file and reloading the collection
+            resetSearchState();
+
             ui->Settings_pushButton_ApplyFilepath->setEnabled(false);
         }
     }
@@ -773,6 +776,9 @@
 
             //Load the collection data from the new database
             loadCollection();
+
+            // After successfully loading the new database
+            resetSearchState();
         }
     }
 

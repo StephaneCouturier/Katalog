@@ -1,7 +1,7 @@
 /*LICENCE
     This file is part of Katalog
 
-    Copyright (C) 2020, the Katalog Development team
+    Copyright (C) 2021, the Katalog Development team
 
     Author: Stephane Couturier (Symbioxy)
 
@@ -22,9 +22,9 @@
 /*FILE DESCRIPTION
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
-// File Name:   search.h
-// Purpose:     Class/model for the search (criteria for running the search of files and folders and results)
-// Description:
+// File Name:   search.cpp
+// Purpose:     header for the search class
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -32,60 +32,55 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "src/device.h"
-#include "src/filesview.h"
-#include <QDateTime>
-#include <QStandardItemModel>
 #include <QAbstractTableModel>
-#include <QCoreApplication>
-#include <QSqlQuery>
-#include <QStringListModel>
+#include <QObject>
+#include <QRegularExpression>
+#include <QDateTime>
+#include <QStringList>
+#include <QMutex>
+#include <QStandardItemModel>
+#include "device.h"
 
 class Search : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    Search(QObject *parent = nullptr);
+    explicit Search(QObject *parent = nullptr);
 
+    // QAbstractTableModel implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    //Search Inputs
-    QString searchDateTime;
+    // Search criteria and configuration
     QString regexPattern;
     QString regexSearchtext;
     QString regexFileType;
-
-    //Search Criteria               //field name in db
-    bool searchOnFileName;          //text_checked
-    QString searchText;             //text_phrase
-    QString selectedTextCriteria;   //text_criteria
-    QString selectedSearchIn;       //text_search_in
+    bool searchOnFileName;
+    QString searchText;
+    QString selectedTextCriteria;
+    QString selectedSearchIn;
     bool caseSensitive;
     QString selectedSearchExclude;
-
     bool searchOnFileCriteria;
     bool searchOnSize;
-    qint64 selectedMinimumSize;
-    qint64 selectedMaximumSize;
+    qint64 selectedMinimumSize = 0;
+    qint64 selectedMaximumSize = 0;
     QString selectedMinSizeUnit;
     QString selectedMaxSizeUnit;
-    qint64  sizeMultiplierMin;
-    qint64  sizeMultiplierMax;
+    qint64 sizeMultiplierMin;
+    qint64 sizeMultiplierMax;
     bool searchOnType;
     QString selectedFileType;
     bool searchOnDate;
     QDateTime selectedDateMin;
     QDateTime selectedDateMax;
-
     bool searchOnDuplicates;
     bool searchDuplicatesOnName;
     bool searchDuplicatesOnSize;
     bool searchDuplicatesOnDate;
-
     bool searchOnDifferences;
     bool differencesOnName;
     bool differencesOnSize;
@@ -93,38 +88,30 @@ public:
     QStringList differencesDevices;
     int differencesDeviceID1;
     int differencesDeviceID2;
-
     bool searchOnFolderCriteria;
     bool showFoldersOnly;
     bool searchOnTags;
     QString selectedTagName;
-
     QString selectedStorage;
     QString selectedCatalog;
-    bool    searchInCatalogsChecked;
-    bool    searchInConnectedChecked;
+    bool searchInCatalogsChecked;
+    bool searchInConnectedChecked;
     QString connectedDirectory;
+    QString searchDateTime;
 
+    // File type lists
     QStringList fileType_AudioS;
     QStringList fileType_ImageS;
     QStringList fileType_TextS;
     QStringList fileType_VideoS;
 
-    //Search execution
-    Device *diffDevice1 = new Device;
-    Device *diffDevice2 = new Device;
-    void searchFiles(Device *selectedDevice);
-    void searchFilesInCatalog(Device *device);
-    void searchFilesInDirectory(const QString &sourceDirectory);
-
-    //Results
+    // Results
     QList<QString> fileNames;
-    QList<qint64>  fileSizes;
+    QList<qint64> fileSizes;
     QList<QString> fileDateTimes;
     QList<QString> filePaths;
     QList<QString> fileCatalogs;
-    QList<int>     fileCatalogIDs;
-
+    QList<int> fileCatalogIDs;
     qint64 filesFoundNumber;
     qint64 filesFoundTotalSize;
     qint64 filesFoundAverageSize;
@@ -132,16 +119,36 @@ public:
     qint64 filesFoundMaxSize;
     QString filesFoundMinDate;
     QString filesFoundMaxDate;
-
     QStringList filesFoundList;
     QStringList deviceFoundIDList;
     QStandardItemModel *deviceFoundModel = new QStandardItemModel;
-    QStringList searchTextList;
 
-    //Methods
-    void loadSearchHistoryCriteria();
+    // Device objects for differences
+    Device *diffDevice1 = nullptr;
+    Device *diffDevice2 = nullptr;
+
+    // Core search functionality
+    void prepareSearchPatterns();
     void setMultipliers();
-    void insertSearchHistoryToTable(QString connectionName);
+    void processResults(bool handleFoldersOnly = true);
+    void calculateStatistics();
+    virtual void processDuplicates(const QString &connectionName);
+    virtual void processDifferences(const QString &connectionName);
+    virtual void saveSearchHistoryToTable(const QString &connectionName);
+
+    void insertSearchHistoryToTable(const QString &connectionName);
+    void loadSearchHistoryCriteria(const QString &connectionName);
+
+    // Abstract methods to be implemented by derived classes
+    virtual void searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested) = 0;
+    virtual void searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested) = 0;
+
+    // Import/Export of search parameters
+    virtual void copyFrom(const Search* other);
+    virtual void clearResults();
+
+signals:
+    void searchProgress(int progress);
 };
 
 #endif // SEARCH_H

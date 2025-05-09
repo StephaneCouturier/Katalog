@@ -85,6 +85,9 @@
 #include "collection.h"
 #include "search.h"
 #include "device.h"
+#include "search_stoppable.h"
+#include "search_memory.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -101,9 +104,19 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
         //Objects
-        Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
+        //Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
         Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
         Collection *collection = new Collection();
+        SearchMemory *searchMemory = new SearchMemory(this);        //SearchMemory *SearchMemory = nullptr;
+        SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
+        SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
+
+        Search *currentSearch = nullptr;
+        SearchStoppable *searchStoppable = nullptr;
+
+        void extracted();
+        void launchSearch();
+        void sendSearchParameters(Search *search);
 
         //FileTypes
         QStringList fileType_Image;
@@ -186,9 +199,10 @@ class MainWindow : public QMainWindow
         //TAB: Search
             SearchProcess *searchProcess;
             bool isSearchRunning;
+            void updateSearchProgress(int filesProcessed);
+            void resetSearchState();
+            qint64 lastProcessedFiles = 0;
 
-            Search *loadSearch = new Search(); //temporary search object used to load criteria from a previous search.
-            Search *lastSearch = new Search(); //temporary search object used to load criteria from the last search.
 
             void resetToDefaultSearchCriteria();
             void clearSearchResults();
@@ -366,6 +380,7 @@ class MainWindow : public QMainWindow
             void changeDatabaseFilePath(QString newDatabaseFilePath);
 
     public slots:
+            //void displaySearchResults();
             void displaySearchResults();
 
    private slots:

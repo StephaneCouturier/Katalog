@@ -79,12 +79,14 @@ SOURCES += \
     src/mainwindow_tab_device.cpp \
     src/mainwindow_tab_explore.cpp \
     src/mainwindow_tab_filters.cpp \
-    src/mainwindow_tab_search.cpp \
+    src/mainwindow_tab_search_pr.cpp \
+    src/mainwindow_tab_search_ui.cpp \
     src/mainwindow_tab_settings.cpp \
     src/mainwindow_tab_statistics.cpp \
     src/mainwindow_tab_tags.cpp \
     src/search.cpp \
-    src/searchprocess.cpp \
+    src/search_memory.cpp \
+    src/search_stoppable.cpp \
     src/storage.cpp \
     src/tag.cpp
 
@@ -103,7 +105,8 @@ HEADERS += \
     src/filesview.h \
     src/mainwindow.h \
     src/search.h \
-    src/searchprocess.h \
+    src/search_memory.h \
+    src/search_stoppable.h \
     src/storage.h \
     src/tag.h \
     src/tag.h

@@ -23,7 +23,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Application: Katalog
 // File Name:   mainwindow_tab_search.cpp
-// Purpose:     methods for the screen SEARCH
+// Purpose:     methods for the screen SEARCH beside the search process
 // Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,6 @@
 #include "ui_mainwindow.h"
 #include "catalog.h"
 #include "filesview.h"
-#include "searchprocess.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------
 
@@ -42,12 +41,14 @@
         //Buttons and other changes
         void MainWindow::on_Search_lineEdit_SearchText_returnPressed()
         {
-            processSearch();
+            //processSearch();
+            launchSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            processSearch();
+            //processSearch();
+            launchSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
@@ -61,7 +62,8 @@
             displaySelectedDeviceName();
 
             //Seach again but only on the selected catalog
-            processSearch();
+            //processSearch();
+            launchSearch();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_PasteFromClipboard_clicked()
@@ -391,36 +393,78 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {//Load and restore the criteria of the selected search history
-            loadSearch = new Search;
+            loadSearch = new SearchMemory;
             loadSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            loadSearch->loadSearchHistoryCriteria();
+            loadSearch->loadSearchHistoryCriteria("defaultConnection");
             loadSearchCriteria(loadSearch);
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_FileFoundMoreStatistics_clicked()
         {
+            // Check if we have a current search object
+            if (!currentSearch) {
+                QMessageBox::warning(this, "Katalog", tr("No search results available."));
+                return;
+            }
+
+            // Create the header text, checking if this was an interrupted search
+            QString headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
+            QString filesProcessedText;
+
+            // Check if the search was interrupted
+            // A search is interrupted if it was using SearchStoppable, it's no longer running, and it was stopped by the user
+            bool wasInterrupted = (currentSearch == searchStoppable &&
+                                   !isSearchRunning &&
+                                   searchStoppable->stopRequested); // We need to add a getter for stopRequested
+
+            if (wasInterrupted) {
+                // This was an interrupted SearchStoppable with partial results
+                headerText += "<i>" + tr("Interrupted Search, incomplete results") + "</i><br/>";
+
+                // Add files processed info
+                if (lastProcessedFiles > 0) {
+                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(lastProcessedFiles);
+
+                    // Only show percentage if we know the total, and for searchincatalog mode
+                    // and if the total file count is greater than 0
+                    if (currentSearch->searchInCatalogsChecked && selectedDevice && selectedDevice->totalFileCount > 0) {
+                        qint64 percentageProcessed = (lastProcessedFiles * 100) / selectedDevice->totalFileCount;
+                        filesProcessedText += tr("<tr><td>Percentage processed: </td><td><b> %1 %</b></td></tr>").arg(QString::number(percentageProcessed));
+                    }
+                }
+            } else {
+                // For complete searches, use the total files in the device as files processed
+                if (currentSearch->searchInCatalogsChecked && selectedDevice && selectedDevice->totalFileCount > 0) {
+                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(selectedDevice->totalFileCount);
+                } else {
+                    // For directory searches or when we don't know the total, use the found files count
+                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(lastProcessedFiles);
+                }
+            }
+
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(tr("<br/><b>Files Found Statistics</b><br/>"
-                              "<table> <tr><td>Files found:  </td><td><b> %1 </b> <br/> </td></tr>"
-                              "<tr><td>Total size:   </td><td><b> %2 </b>  </td></tr>"
-                              "<tr><td>Average size: </td><td><b> %3 </b>  </td></tr>"
-                              "<tr><td>Min size:     </td><td><b> %4 </b>  </td></tr>"
-                              "<tr><td>Max size:     </td><td><b> %5 </b>  <br/></td></tr>"
-                              "<tr><td>Min Date:     </td><td><b> %6 </b>  </td></tr>"
-                              "<tr><td>Max Date:     </td><td><b> %7 </b>  </td></tr>"
+            msgBox.setText(headerText +
+                           tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>").arg(QString::number(currentSearch->filesFoundNumber)) +
+                           filesProcessedText +
+                           tr("<tr></tr>"
+                              "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"                                                                                                                                                                                           "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
+                              "<tr><td>Max size:     </td><td><b> %4 </b>  </td></tr>"
+                              "<tr><td>Average size: </td><td><b> %2 </b>  <br/></td></tr>"
+                              "<tr><td>Min Date:     </td><td><b> %5 </b>  </td></tr>"
+                              "<tr><td>Max Date:     </td><td><b> %6 </b>  </td></tr>"
                               "</table>"
                               ).arg(
-                                   QString::number(newSearch->filesFoundNumber),
-                                   QLocale().formattedDataSize(newSearch->filesFoundTotalSize),
-                                   QLocale().formattedDataSize(newSearch->filesFoundAverageSize),
-                                   QLocale().formattedDataSize(newSearch->filesFoundMinSize),
-                                   QLocale().formattedDataSize(newSearch->filesFoundMaxSize),
-                                   newSearch->filesFoundMinDate,
-                                   newSearch->filesFoundMaxDate));
+                                   QLocale().formattedDataSize(currentSearch->filesFoundTotalSize),
+                                   QLocale().formattedDataSize(currentSearch->filesFoundAverageSize),
+                                   QLocale().formattedDataSize(currentSearch->filesFoundMinSize),
+                                   QLocale().formattedDataSize(currentSearch->filesFoundMaxSize),
+                                   currentSearch->filesFoundMinDate,
+                                   currentSearch->filesFoundMaxDate));
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
+
         //----------------------------------------------------------------------
         void MainWindow::on_SearchTreeViewFilesFoundHeaderSortOrderChanged(){
 
@@ -678,7 +722,7 @@
         //----------------------------------------------------------------------
         void MainWindow::searchContextMoveFileToTrash()
         {
-            if(newSearch->showFoldersOnly==false){
+            if(currentSearch->showFoldersOnly==false){
                 QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
                 QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
                 QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
@@ -720,7 +764,7 @@
         //----------------------------------------------------------------------
         void MainWindow::searchContextDeleteFile()
         {
-            if(newSearch->showFoldersOnly==false){
+            if(currentSearch->showFoldersOnly==false){
                 QModelIndex index=ui->Search_treeView_FilesFound->currentIndex();
                 QString selectedFileName     = ui->Search_treeView_FilesFound->model()->index(index.row(), 0, QModelIndex()).data().toString();
                 QString selectedFileFolder   = ui->Search_treeView_FilesFound->model()->index(index.row(), 3, QModelIndex()).data().toString();
@@ -767,6 +811,7 @@
 
     //Methods-----------------------------------------------------------------------
         //Search methods
+        /*
         void MainWindow::processSearch()
         {//Run a search of files in each selected catalog based on user inputs
 
@@ -776,7 +821,7 @@
             //Get new search criteria from UI
             getSearchCriteria();
 
-            if(collection->databaseMode !="Memory" or newSearch->searchInConnectedChecked == true){
+            if(collection->databaseMode !="Memory" or currentSearch->searchInConnectedChecked == true){
                 //Run the stoppable search
                 searchFilesStoppable();
 
@@ -784,7 +829,7 @@
                 //displaySearchResults();
 
                 //Adapt display of files found for searchInConnected
-                if (newSearch->searchInConnectedChecked == true){
+                if (currentSearch->searchInConnectedChecked == true){
                     ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
                     ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
                     ui->Search_treeView_FilesFound->header()->hideSection(5);
@@ -796,14 +841,14 @@
             }
             else{
                 //Run the search
-                newSearch->searchFiles(selectedDevice);
+                currentSearch->searchFiles(selectedDevice);
 
                 //Send results to the UI
                 displaySearchResults();
             }
 
             //Adapt display of files found for searchInConnected
-            if (newSearch->searchInConnectedChecked == true){
+            if (currentSearch->searchInConnectedChecked == true){
                 ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
                 ui->Search_treeView_FilesFound->header()->hideSection(5);
@@ -816,9 +861,14 @@
             ui->Search_pushButton_ProcessResults->setEnabled(true);
             ui->Search_comboBox_SelectProcess->setEnabled(true);
         }
+        */
         //----------------------------------------------------------------------
         void MainWindow::initiateSearchFields()
         {
+            // if (!currentSearch) {
+            //     currentSearch = new Search(this);
+            // }
+
             //Add filetype English value additionally to the displayed/translated value
             ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
             ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
@@ -851,8 +901,8 @@
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
 
             //Load last search values (from settings file)
-            if (newSearch->selectedMaximumSize ==0)
-                newSearch->selectedMaximumSize = 1000;
+            if (currentSearch->selectedMaximumSize == 0){
+                 currentSearch->selectedMaximumSize = 1000;}
 
             //Populate Differences combo boxes with selected catalogs
             refreshDifferencesCatalogSelection();
@@ -979,57 +1029,57 @@
         {//Get all new criteria
 
                 //Clear the temporary search
-                newSearch = new Search;
+                currentSearch = nullptr;
 
-                newSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
-                newSearch->searchText               = ui->Search_lineEdit_SearchText->text();
-                newSearch->selectedTextCriteria     = ui->Search_comboBox_TextCriteria->currentText();
-                newSearch->selectedSearchIn         = ui->Search_comboBox_SearchIn->currentText();
-                newSearch->caseSensitive            = ui->Search_checkBox_CaseSensitive->isChecked();
-                newSearch->selectedSearchExclude    = ui->Search_lineEdit_Exclude->text();
+                currentSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
+                currentSearch->searchText               = ui->Search_lineEdit_SearchText->text();
+                currentSearch->selectedTextCriteria     = ui->Search_comboBox_TextCriteria->currentText();
+                currentSearch->selectedSearchIn         = ui->Search_comboBox_SearchIn->currentText();
+                currentSearch->caseSensitive            = ui->Search_checkBox_CaseSensitive->isChecked();
+                currentSearch->selectedSearchExclude    = ui->Search_lineEdit_Exclude->text();
 
-                newSearch->searchOnFileCriteria     = ui->Search_checkBox_FileCriteria->isChecked();
-                newSearch->searchOnSize             = ui->Search_checkBox_Size->isChecked();
-                newSearch->selectedMinimumSize      = ui->Search_spinBox_MinimumSize->value();
-                newSearch->selectedMaximumSize      = ui->Search_spinBox_MaximumSize->value();
-                newSearch->selectedMinSizeUnit      = ui->Search_comboBox_MinSizeUnit->currentText();
-                newSearch->selectedMaxSizeUnit      = ui->Search_comboBox_MaxSizeUnit->currentText();
-                newSearch->setMultipliers();
-                newSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
-                newSearch->selectedFileType         = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
-                newSearch->searchOnDate             = ui->Search_checkBox_Date->isChecked();
-                newSearch->selectedDateMin          = ui->Search_dateTimeEdit_Min->dateTime();
-                newSearch->selectedDateMax          = ui->Search_dateTimeEdit_Max->dateTime();
-                newSearch->searchOnDuplicates       = ui->Search_checkBox_Duplicates->isChecked();
-                newSearch->searchDuplicatesOnName   = ui->Search_checkBox_DuplicatesName->isChecked();
-                newSearch->searchDuplicatesOnSize   = ui->Search_checkBox_DuplicatesSize->isChecked();
-                newSearch->searchDuplicatesOnDate   = ui->Search_checkBox_DuplicatesDateModified->isChecked();
-                newSearch->searchOnDifferences      = ui->Search_checkBox_Differences->isChecked();
-                newSearch->differencesOnName        = ui->Search_checkBox_DifferencesName->checkState();
-                newSearch->differencesOnSize        = ui->Search_checkBox_DifferencesSize->checkState();
-                newSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
-                newSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-                newSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
-                newSearch->differencesDevices << QString::number(newSearch->differencesDeviceID1) << QString::number(newSearch->differencesDeviceID2);
+                currentSearch->searchOnFileCriteria     = ui->Search_checkBox_FileCriteria->isChecked();
+                currentSearch->searchOnSize             = ui->Search_checkBox_Size->isChecked();
+                currentSearch->selectedMinimumSize      = ui->Search_spinBox_MinimumSize->value();
+                currentSearch->selectedMaximumSize      = ui->Search_spinBox_MaximumSize->value();
+                currentSearch->selectedMinSizeUnit      = ui->Search_comboBox_MinSizeUnit->currentText();
+                currentSearch->selectedMaxSizeUnit      = ui->Search_comboBox_MaxSizeUnit->currentText();
+                currentSearch->setMultipliers();
+                currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
+                currentSearch->selectedFileType         = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(),Qt::UserRole).toString();
+                currentSearch->searchOnDate             = ui->Search_checkBox_Date->isChecked();
+                currentSearch->selectedDateMin          = ui->Search_dateTimeEdit_Min->dateTime();
+                currentSearch->selectedDateMax          = ui->Search_dateTimeEdit_Max->dateTime();
+                currentSearch->searchOnDuplicates       = ui->Search_checkBox_Duplicates->isChecked();
+                currentSearch->searchDuplicatesOnName   = ui->Search_checkBox_DuplicatesName->isChecked();
+                currentSearch->searchDuplicatesOnSize   = ui->Search_checkBox_DuplicatesSize->isChecked();
+                currentSearch->searchDuplicatesOnDate   = ui->Search_checkBox_DuplicatesDateModified->isChecked();
+                currentSearch->searchOnDifferences      = ui->Search_checkBox_Differences->isChecked();
+                currentSearch->differencesOnName        = ui->Search_checkBox_DifferencesName->checkState();
+                currentSearch->differencesOnSize        = ui->Search_checkBox_DifferencesSize->checkState();
+                currentSearch->differencesOnDate        = ui->Search_checkBox_DifferencesDateModified->checkState();
+                currentSearch->differencesDeviceID1     = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+                currentSearch->differencesDeviceID2     = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+                currentSearch->differencesDevices << QString::number(currentSearch->differencesDeviceID1) << QString::number(currentSearch->differencesDeviceID2);
 
-                newSearch->searchOnFolderCriteria   = ui->Search_checkBox_FolderCriteria->isChecked();
-                newSearch->showFoldersOnly          = ui->Search_checkBox_ShowFolders->isChecked();
-                newSearch->searchOnTags             = ui->Search_checkBox_Tags->isChecked();
-                newSearch->selectedTagName          = ui->Search_comboBox_Tags->currentText();
+                currentSearch->searchOnFolderCriteria   = ui->Search_checkBox_FolderCriteria->isChecked();
+                currentSearch->showFoldersOnly          = ui->Search_checkBox_ShowFolders->isChecked();
+                currentSearch->searchOnTags             = ui->Search_checkBox_Tags->isChecked();
+                currentSearch->selectedTagName          = ui->Search_comboBox_Tags->currentText();
 
-                newSearch->selectedStorage          = ui->Filters_label_DisplayStorage->text();
-                newSearch->selectedCatalog          = ui->Filters_label_DisplayCatalog->text();
-                newSearch->searchInCatalogsChecked  = ui->Filters_checkBox_SearchInCatalogs->isChecked();
-                newSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
-                newSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
+                currentSearch->selectedStorage          = ui->Filters_label_DisplayStorage->text();
+                currentSearch->selectedCatalog          = ui->Filters_label_DisplayCatalog->text();
+                currentSearch->searchInCatalogsChecked  = ui->Filters_checkBox_SearchInCatalogs->isChecked();
+                currentSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
+                currentSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
 
-                newSearch->fileType_AudioS = fileType_AudioS;
-                newSearch->fileType_ImageS = fileType_ImageS;
-                newSearch->fileType_TextS  = fileType_TextS;
-                newSearch->fileType_VideoS = fileType_VideoS;
+                currentSearch->fileType_AudioS = fileType_AudioS;
+                currentSearch->fileType_ImageS = fileType_ImageS;
+                currentSearch->fileType_TextS  = fileType_TextS;
+                currentSearch->fileType_VideoS = fileType_VideoS;
 
-                newSearch->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
-                newSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+                currentSearch->diffDevice1->ID = ui->Search_comboBox_DifferencesDevice1->currentData().toInt();
+                currentSearch->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
         //----------------------------------------------------------------------
         void MainWindow::refreshDifferencesCatalogSelection(){
@@ -1054,9 +1104,9 @@
 
             //Generate list of full file path (directory path + file name)
             QStringList resultsFilesList;
-            for (int i = 0; i < newSearch->fileNames.size(); ++i)
+            for (int i = 0; i < currentSearch->fileNames.size(); ++i)
             {
-                QString fileFullPath = newSearch->filePaths[i] + "/" + newSearch->fileNames[i];
+                QString fileFullPath = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i];
                 resultsFilesList << fileFullPath;
             }
 
@@ -1098,19 +1148,19 @@
             //Move to trash
             else if(selectedProcess==tr("Move to Trash")){
 
-                if(newSearch->showFoldersOnly==false){
+                if(currentSearch->showFoldersOnly==false){
                     QString trashPath;
                     QString fileFullPath;
                     qint64 movedFiles = 0;
                     if (QMessageBox::warning(this,
                                              tr("Confirmation"),
                                              "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
+                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
                                              QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
-                            for (int i = 0; i < newSearch->fileNames.size(); ++i)
+                            for (int i = 0; i < currentSearch->fileNames.size(); ++i)
                             {
-                            fileFullPath = moveFileToTrash(newSearch->filePaths[i] + "/" + newSearch->fileNames[i]);
+                            fileFullPath = moveFileToTrash(currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i]);
                             trashPath = moveFileToTrash(fileFullPath);
                             if(trashPath==""){
                          QMessageBox::information(this,"Katalog",tr("Problem moving file: ")
@@ -1119,7 +1169,7 @@
                             else
                          movedFiles+=1;
                             }
-                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(newSearch->filesFoundNumber)));
+                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(currentSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1137,25 +1187,25 @@
             //Delete
             else if(selectedProcess==tr("Delete")){
 
-                if(newSearch->showFoldersOnly==false){
+                if(currentSearch->showFoldersOnly==false){
                     qint64 deletedFiles = 0;
                     QString result;
 
                     if (QMessageBox::critical(this,
                                               tr("Confirmation"),
                                               "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(newSearch->filesFoundNumber), QLocale().formattedDataSize(newSearch->filesFoundTotalSize)),
+                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
                                               QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
-                        for (int i = 0; i < newSearch->fileNames.size(); ++i)
+                        for (int i = 0; i < currentSearch->fileNames.size(); ++i)
                         {
-                            result = deleteFile(newSearch->filePaths[i] + "/" + newSearch->fileNames[i]);
+                            result = deleteFile(currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i]);
                             if (result!=""){
                                 deletedFiles +=1;
                             }
                             result="";
                         }
-                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(newSearch->filesFoundNumber)));
+                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(currentSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1223,7 +1273,7 @@
                     newDevice->insertDevice();
 
                     //Get inputs and set values of the new Catalog
-                    newDevice->catalog->sourcePath = newSearch->searchDateTime; //passing a date instead of a path, as there is not 1 path for a given search that can be multi-catalog
+                    newDevice->catalog->sourcePath = currentSearch->searchDateTime; //passing a date instead of a path, as there is not 1 path for a given search that can be multi-catalog
                     newDevice->catalog->appVersion = currentVersion;
                     newDevice->catalog->sourcePath = "EXPORT";
                     //Save new catalog
@@ -1279,7 +1329,7 @@
                 //Export search results to file table
                 if ( result ==QMessageBox::Yes){
                     //Export list of files to the "file" table
-                    for (int i = 0; i < newSearch->fileNames.size(); ++i)
+                    for (int i = 0; i < currentSearch->fileNames.size(); ++i)
                     {
                         //Prepare insert query for file
                         QSqlQuery insertFileQuery(QSqlDatabase::database("defaultConnection"));
@@ -1326,18 +1376,18 @@
                         //Insert dirs
                             insertFolderQuery.prepare(insertFolderSQL);
                             insertFolderQuery.bindValue(":folder_catalog_id", newDevice->catalog->ID);
-                            insertFolderQuery.bindValue(":folder_path", newSearch->filePaths[i]);
+                            insertFolderQuery.bindValue(":folder_path", currentSearch->filePaths[i]);
                             insertFolderQuery.exec();
 
                         //Insert files
-                            //QFile file(newSearch->filePaths[i]);
+                            //QFile file(currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
-                            insertFileQuery.bindValue(":file_name",         newSearch->fileNames[i]);
-                            insertFileQuery.bindValue(":file_size",         QString::number(newSearch->fileSizes[i]));
-                            insertFileQuery.bindValue(":file_folder_path",  newSearch->filePaths[i]);
-                            insertFileQuery.bindValue(":file_date_updated", newSearch->fileDateTimes[i]);
-                            insertFileQuery.bindValue(":file_catalog",      newSearch->fileCatalogs[i]);
-                            insertFileQuery.bindValue(":file_full_path",    newSearch->filePaths[i]);
+                            insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
+                            insertFileQuery.bindValue(":file_size",         QString::number(currentSearch->fileSizes[i]));
+                            insertFileQuery.bindValue(":file_folder_path",  currentSearch->filePaths[i]);
+                            insertFileQuery.bindValue(":file_date_updated", currentSearch->fileDateTimes[i]);
+                            insertFileQuery.bindValue(":file_catalog",      currentSearch->fileCatalogs[i]);
+                            insertFileQuery.bindValue(":file_full_path",    currentSearch->filePaths[i]);
                             insertFileQuery.exec();
 
                             //Media File Metadata
@@ -1360,13 +1410,13 @@
                     }
 
                     //Export list of files
-                    for (int i = 0; i < newSearch->fileNames.size(); ++i)
+                    for (int i = 0; i < currentSearch->fileNames.size(); ++i)
                     {
                         //Export to file
-                        QString line = newSearch->filePaths[i] + "/" + newSearch->fileNames[i] + "\t"
-                                       + QString::number(newSearch->fileSizes[i]) + "\t"
-                                       + newSearch->fileDateTimes[i] + "\t"
-                                       + newSearch->fileCatalogs[i];
+                        QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
+                                       + QString::number(currentSearch->fileSizes[i]) + "\t"
+                                       + currentSearch->fileDateTimes[i] + "\t"
+                                       + currentSearch->fileCatalogs[i];
                         stream << line << '\n';
                     }
                 }
@@ -1497,20 +1547,21 @@
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }
         //--------------------------------------------------------------------------
-        void MainWindow::displaySearchResults()
+
+ /*        void MainWindow::displaySearchResults()
         {
             //List of catalogs in which results were found
-            ui->Search_treeView_CatalogsFound->setModel(newSearch->deviceFoundModel);
+            ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
 
             FilesView *fileViewModel = new FilesView(this);
             fileViewModel->caseSensitive = fileSortCaseSensitive;
-            fileViewModel->setSourceModel(newSearch);
+            fileViewModel->setSourceModel(currentSearch);
             ui->Search_treeView_FilesFound->setModel(fileViewModel);
 
             //Process FOLDER SEARCH
             //Populate model with folders only if this option is selected
-            if ( newSearch->searchOnFolderCriteria==true and newSearch->showFoldersOnly==true )
+            if ( currentSearch->searchOnFolderCriteria==true and currentSearch->showFoldersOnly==true )
             {
                 ui->Search_treeView_FilesFound->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents); //Path
                 ui->Search_treeView_FilesFound->header()->hideSection(0); //Name
@@ -1533,19 +1584,19 @@
                 ui->Search_treeView_FilesFound->header()->showSection(2);
 
                 //Process DUPLICATES
-                if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Duplicates->isChecked() == true
-                    and (   newSearch->searchDuplicatesOnName == true
-                         or newSearch->searchDuplicatesOnSize == true
-                         or newSearch->searchDuplicatesOnDate == true )){
+                if ( currentSearch->searchOnFileCriteria == true and ui->Search_checkBox_Duplicates->isChecked() == true
+                    and (   currentSearch->searchDuplicatesOnName == true
+                         or currentSearch->searchDuplicatesOnSize == true
+                         or currentSearch->searchDuplicatesOnDate == true )){
 
                     ui->Search_label_FoundTitle->setText(tr("Duplicates found"));
                 }
 
                 //Process DIFFERENCES -------------------------------
-                else if ( newSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
-                         and (   newSearch->differencesOnName == true
-                              or newSearch->differencesOnSize == true
-                              or newSearch->differencesOnDate == true)){
+                else if ( currentSearch->searchOnFileCriteria == true and ui->Search_checkBox_Differences->isChecked() == true
+                         and (   currentSearch->differencesOnName == true
+                              or currentSearch->differencesOnSize == true
+                              or currentSearch->differencesOnDate == true)){
 
                     ui->Search_label_FoundTitle->setText(tr("Differences found"));
                 }
@@ -1554,27 +1605,27 @@
                     ui->Search_label_FoundTitle->setText(tr("Files found"));
             }
 
-            if (newSearch->searchInConnectedChecked == true){
+            if (currentSearch->searchInConnectedChecked == true){
                 ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
                 ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
                 ui->Search_treeView_FilesFound->header()->hideSection(5);
             }
 
-            ui->Search_label_NumberResults->setText(QString::number(newSearch->filesFoundNumber));
-            ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(newSearch->filesFoundTotalSize));
+            ui->Search_label_NumberResults->setText(QString::number(currentSearch->filesFoundNumber));
+            ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(currentSearch->filesFoundTotalSize));
 
             //Other statistics, covering the case where no results are returned.
-            if (newSearch->filesFoundNumber !=0){
-                newSearch->filesFoundAverageSize = newSearch->filesFoundTotalSize / newSearch->filesFoundNumber;
-                QList<qint64> fileSizeList = newSearch->fileSizes;
+            if (currentSearch->filesFoundNumber !=0){
+                currentSearch->filesFoundAverageSize = currentSearch->filesFoundTotalSize / currentSearch->filesFoundNumber;
+                QList<qint64> fileSizeList = currentSearch->fileSizes;
                 std::sort(fileSizeList.begin(), fileSizeList.end());
-                newSearch->filesFoundMinSize = fileSizeList.first();
-                newSearch->filesFoundMaxSize = fileSizeList.last();
+                currentSearch->filesFoundMinSize = fileSizeList.first();
+                currentSearch->filesFoundMaxSize = fileSizeList.last();
 
-                QList<QString> fileDateList = newSearch->fileDateTimes;
+                QList<QString> fileDateList = currentSearch->fileDateTimes;
                 std::sort(fileDateList.begin(), fileDateList.end());
-                newSearch->filesFoundMinDate = fileDateList.first();
-                newSearch->filesFoundMaxDate = fileDateList.last();
+                currentSearch->filesFoundMinDate = fileDateList.first();
+                currentSearch->filesFoundMaxDate = fileDateList.last();
 
                 ui->Search_pushButton_FileFoundMoreStatistics->setEnabled(true);
             }
@@ -1587,9 +1638,10 @@
 
             QApplication::restoreOverrideCursor();
         }
-        //----------------------------------------------------------------------
+ */       //----------------------------------------------------------------------
     //--------------------------------------------------------------------------
     //Stoppable Search process
+        /*
         void MainWindow::searchFilesStoppable(){
             if (isSearchRunning) {
                 if (searchProcess) {
@@ -1620,34 +1672,8 @@
                 ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
             }
         }
-        //----------------------------------------------------------------------
-        void MainWindow::handleSearchCompleted()
-        {
-            isSearchRunning = false;
-            ui->Search_pushButton_Search->setText("Search");
-            ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-            ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-            //searchProcess->stop();
+        */
 
-            QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-            QString querySQL = QLatin1String(R"(
-                                            SELECT catalog_date_loaded
-                                            FROM catalog
-                                            WHERE catalog_id=:catalog_id
-                                        )");
-            query.prepare(querySQL);
-            query.bindValue(":catalog_id", 2);
-            query.exec();
-            query.next();
-        }
-        //----------------------------------------------------------------------
-        void MainWindow::handleSearchStopped()
-        {
-            isSearchRunning = false;
-            ui->Search_pushButton_Search->setText("Search");
-            ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-            ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-        }
         //----------------------------------------------------------------------
         // Implement the getter methods
         int MainWindow::getDifferencesCatalog1ID() const {
@@ -1657,3 +1683,4 @@
         int MainWindow::getDifferencesCatalog2ID() const {
             return ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
         }
+        //----------------------------------------------------------------------
