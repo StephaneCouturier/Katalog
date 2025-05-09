@@ -1534,7 +1534,7 @@
             Catalog *empty = new Catalog(this);
             ui->Search_treeView_FilesFound->setModel(empty);
             QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
-            emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results"), tr("ID") });
+            emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }

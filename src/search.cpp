@@ -75,6 +75,11 @@ Search::Search(QObject *parent) : QAbstractTableModel(parent)
     // Initialize devices for differences
     diffDevice1 = new Device;
     diffDevice2 = new Device;
+
+    // Initialize catalog tracking
+    currentCatalogIndex = 0;
+    totalCatalogs = 0;
+    currentCatalogName = "";
 }
 
 // QAbstractTableModel implementation

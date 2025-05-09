@@ -37,6 +37,11 @@ SearchStoppable::SearchStoppable(QObject *parent) : Search(parent), stopRequeste
 {
     // Constructor implementation
     connectionName = "dbSearchConnection";
+
+    // Initialize catalog tracking
+    currentCatalogIndex = 0;
+    totalCatalogs = 0;
+    currentCatalogName = "";
 }
 
 SearchStoppable::~SearchStoppable()
@@ -80,6 +85,11 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
     // Clear previous results
     clearResults();
 
+    // Reset catalog tracking
+    currentCatalogIndex = 0;
+    totalCatalogs = 0;
+    currentCatalogName = "";
+
     // Initialize progress tracking
     initializeProgressTracking(selectedDevice);
 
@@ -97,21 +107,71 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
 
     // Process the SEARCH in CATALOGS or DIRECTORY
     if (searchInCatalogsChecked) {
+        // Count total catalogs for progress tracking
+        if (searchOnDifferences) {
+            // For differences, we need to count catalogs in both devices
+            totalCatalogs = 0;
+
+            // Count catalogs in diffDevice1
+            diffDevice1->loadDevice(connectionName);
+            if (diffDevice1->type == "Catalog") {
+                totalCatalogs++;
+            } else {
+                for (const auto& row : diffDevice1->deviceListTable) {
+                    if (row.type == "Catalog") {
+                        totalCatalogs++;
+                    }
+                }
+            }
+
+            // Count catalogs in diffDevice2
+            diffDevice2->loadDevice(connectionName);
+            if (diffDevice2->type == "Catalog") {
+                totalCatalogs++;
+            } else {
+                for (const auto& row : diffDevice2->deviceListTable) {
+                    if (row.type == "Catalog") {
+                        totalCatalogs++;
+                    }
+                }
+            }
+        } else {
+            // Count catalogs in the selected device
+            totalCatalogs = 0;
+            if (selectedDevice->type == "Catalog") {
+                totalCatalogs = 1;
+            } else {
+                for (const auto& row : selectedDevice->deviceListTable) {
+                    if (row.type == "Catalog") {
+                        totalCatalogs++;
+                    }
+                }
+            }
+        }
+
+        // Reset current catalog index
+        currentCatalogIndex = 0;
+
         // Emit progress start
         emit searchProgress(0);
+
         // For differences, only process the 2 selected catalogs
         if (searchOnDifferences) {
             // Load diffDevice1 files
             diffDevice1->loadDevice(connectionName);
 
             if (diffDevice1->type == "Catalog") {
+                currentCatalogIndex++;
+                currentCatalogName = diffDevice1->name;
                 searchFilesInCatalog(diffDevice1, mutex, stopRequested);
             } else {
                 foreach(const Device::deviceListRow & row, diffDevice1->deviceListTable) {
                     if (row.type == "Catalog") {
+                        currentCatalogIndex++;
                         Device *device = new Device;
                         device->ID = row.ID;
                         device->loadDevice(connectionName);
+                        currentCatalogName = device->name;
                         searchFilesInCatalog(device, mutex, stopRequested);
                         delete device;
                     }
@@ -124,13 +184,17 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
                 diffDevice2->loadDevice(connectionName);
 
                 if (diffDevice2->type == "Catalog") {
+                    currentCatalogIndex++;
+                    currentCatalogName = diffDevice2->name;
                     searchFilesInCatalog(diffDevice2, mutex, stopRequested);
                 } else {
                     foreach(const Device::deviceListRow & row, diffDevice2->deviceListTable) {
                         if (row.type == "Catalog") {
+                            currentCatalogIndex++;
                             Device *device = new Device;
                             device->ID = row.ID;
                             device->loadDevice(connectionName);
+                            currentCatalogName = device->name;
                             searchFilesInCatalog(device, mutex, stopRequested);
                             delete device;
                         }
@@ -142,13 +206,17 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
         // Otherwise (not a "difference" search), search in the list of catalogs in the selectedDevice
         else {
             if (selectedDevice->type == "Catalog") {
+                currentCatalogIndex++;
+                currentCatalogName = selectedDevice->name;
                 searchFilesInCatalog(selectedDevice, mutex, stopRequested);
             } else {
                 foreach(const Device::deviceListRow & row, selectedDevice->deviceListTable) {
                     if (row.type == "Catalog") {
+                        currentCatalogIndex++;
                         Device *device = new Device;
                         device->ID = row.ID;
                         device->loadDevice(connectionName);
+                        currentCatalogName = device->name;
                         searchFilesInCatalog(device, mutex, stopRequested);
                         delete device;
                     }
@@ -159,6 +227,10 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
     }
     // Process the SEARCH in SELECTED DIRECTORY
     else if (searchInConnectedChecked) {
+        // For directories, we count it as a single catalog
+        totalCatalogs = 1;
+        currentCatalogIndex = 1;
+        currentCatalogName = connectedDirectory;
         searchFilesInDirectory(connectedDirectory, mutex, stopRequested);
     }
 
@@ -203,6 +275,9 @@ void SearchStoppable::stopSearch()
 
 void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {
+    // Emit signal to indicate catalog loading started
+    emit searchProgress(-2);
+
     // Initialize Regular Expression
     QRegularExpression regex(regexPattern);
     if (caseSensitive != true) {
@@ -247,6 +322,7 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
     int totalFiles = 0;
     // Local counter for batch processing
     int batchCount = 0;
+    emit searchProgress(-3);
 
     // Get total count for progress reporting
     QSqlQuery countQuery(QSqlDatabase::database(connectionName));

@@ -131,6 +131,11 @@ public:
     Device *diffDevice1 = nullptr;
     Device *diffDevice2 = nullptr;
 
+    //For search progress tracking
+    int currentCatalogIndex;
+    int totalCatalogs;
+    QString currentCatalogName;
+
     // Core search functionality
     void prepareSearchPatterns();
     void setMultipliers();

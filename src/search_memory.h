@@ -59,11 +59,8 @@ public:
      * @brief Load search history criteria from database
      */
     void loadSearchHistoryCriteria(const QString &connectionName);
-    int currentCatalogIndex = 0;
-    int totalCatalogs = 0;
     int currentCatalogFilesLoaded = 0;
     int currentCatalogTotalFiles = 0;
-    QString currentCatalogName;
 
 protected:
     /**
