@@ -134,6 +134,9 @@ private:
 
     QThread *workerThread;
 
+signals:
+    void loadProgress(int filesLoaded, int totalFiles);
+
 };
 
 #endif // CATALOG_H

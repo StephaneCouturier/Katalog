@@ -554,11 +554,21 @@ void Catalog::renameCatalogFile(QString newCatalogName)
 
 void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested)
 {//Load catalog files from file, if latest version is not already in memory
-    {
         if ( dateLoaded < dateUpdated ){
+
+            // Count total lines first for progress reporting
+            QFile countFile(filePath);
+            if (countFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                int totalLines = 0;
+                QTextStream countStream(&countFile);
+                while (!countStream.atEnd()) {
+                    countStream.readLine();
+                    totalLines++;
+                }
+                countFile.close();
+
             //Inputs
             QFile catalogFile(filePath);
-
             if (catalogFile.open(QIODevice::ReadOnly|QIODevice::Text)) {
 
                 //Set up a text stream from the file's data
