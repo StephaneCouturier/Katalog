@@ -80,6 +80,9 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
     // Clear previous results
     clearResults();
 
+    // Initialize progress tracking
+    initializeProgressTracking(selectedDevice);
+
     // Ensure we're using the current database connection
     if (!initializeDatabase()) {
         qWarning() << "SearchStoppable: Failed to initialize database connection";
@@ -180,9 +183,8 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
         // Save the search criteria to the search history
         saveSearchHistoryToTable(connectionName);
     }
-
-    // Emit signal for progress completion
-    //emit searchProgress(fileNames.count()); //100
+    // Final progress report - confirm 100% completion
+    emit searchProgress(totalFilesProcessed);
 }
 
 void SearchStoppable::stopSearch()
@@ -241,6 +243,8 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
     // File by file, test if the file is matching all search criteria
     int filesProcessed = 0;
     int totalFiles = 0;
+    // Local counter for batch processing
+    int batchCount = 0;
 
     // Get total count for progress reporting
     QSqlQuery countQuery(QSqlDatabase::database(connectionName));
@@ -258,7 +262,9 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
         bool fileIsMatchingTag;
 
         // Update progress every 100 files
+        batchCount++;
         filesProcessed++;
+        // Every 100 files
         if (filesProcessed % 100 == 0 && totalFiles > 0) {
             emit searchProgress(filesProcessed);
         }
@@ -358,6 +364,15 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
                 fileCatalogIDs.append(device->externalID);
             }
         }
+        // Report progress every 100 files
+        if (batchCount >= 100) {
+            updateProgress(batchCount);
+            batchCount = 0;
+        }
+    }
+    // Report any remaining files in the last batch
+    if (batchCount > 0) {
+        updateProgress(batchCount);
     }
 }
 
@@ -409,8 +424,10 @@ void SearchStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMu
 
         // Update progress periodically
         filesProcessed++;
+        totalFilesProcessed++;
+
         if (filesProcessed % 100 == 0) {
-            emit searchProgress(filesProcessed);
+            emit searchProgress(totalFilesProcessed);
         }
 
         // Line with file info
@@ -567,6 +584,8 @@ void SearchStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMu
             }
         }
     }
+    // Emit signal for progress completion
+    emit searchProgress(filesProcessed);
 }
 
 void SearchStoppable::processDuplicates(const QString &connectionName)

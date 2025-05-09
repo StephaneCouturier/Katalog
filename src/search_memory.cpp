@@ -47,6 +47,9 @@ void SearchMemory::searchFiles(Device *selectedDevice)
     // Clear previous results
     clearResults();
 
+    // Initialize progress tracking
+    initializeProgressTracking(selectedDevice);
+
     // Setup common search patterns
     prepareSearchPatterns();
 
@@ -153,8 +156,7 @@ void SearchMemory::searchFiles(Device *selectedDevice)
     // Save the search criteria to the search history
     saveSearchHistoryToTable("defaultConnection");
 
-    // Final progress report
-    emit searchProgress(100);
+    emit searchProgress(totalFilesProcessed);
 }
 
 void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
@@ -210,13 +212,20 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
     // Add progress variables
     int filesProcessed = 0;
 
+    // Local counter for batch processing
+    int batchCount = 0;
+
     // File by file, test if the file is matching all search criteria
     while (getFilesQuery.next() && !stopRequested) {
-        // Update progress reporting
+        // Progress reporting
+        // Update batch count
+        batchCount++;
+
         filesProcessed++;
+        totalFilesProcessed++;
         if (filesProcessed % 100 == 0 && totalFiles > 0) {
-            int progress = (filesProcessed * 100) / totalFiles;
-            emit searchProgress(progress);
+            filesProcessed = (filesProcessed * 100) / totalFiles;
+            emit searchProgress(filesProcessed);
         }
 
         QString lineFileName = getFilesQuery.value(0).toString();
@@ -317,14 +326,16 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                 fileCatalogIDs.append(device->externalID);
             }
         }
-        // In SearchMemory::searchFilesInCatalog, add:
-        // qDebug() << "Emitting progress:" << progress;
-        // emit searchProgress(progress);
+        // Report progress every 100 files
+        if (batchCount >= 100) {
+            updateProgress(batchCount);
+            batchCount = 0;
+        }
     }
-    // Report 100% when done with this catalog
-    // if (!stopRequested) {
-    //     emit searchProgress(100);
-    // }
+    // Report any remaining files in the last batch
+    if (batchCount > 0) {
+        updateProgress(batchCount);
+    }
 }
 
 void SearchMemory::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)
@@ -546,8 +557,8 @@ void SearchMemory::processDuplicates(const QString &connectionName)
     for (int i = 0; i < rows; i++) {
         // Report progress
         if (i % 100 == 0) {
-            int progress = (i * 100) / rows;
-            emit searchProgress(progress);
+            int filesProcessed = (i * 100) / rows;
+            emit searchProgress(filesProcessed);
         }
         // Append data to the database
         insertQuery.bindValue(":file_name", index(i, 0).data().toString());
@@ -657,8 +668,8 @@ void SearchMemory::processDifferences(const QString &connectionName)
     for (int i = 0; i < rows; i++) {
         // Report progress
         if (i % 100 == 0) {
-            int progress = (i * 100) / rows;
-            emit searchProgress(progress);
+            int filesProcessed = (i * 100) / rows;
+            emit searchProgress(filesProcessed);
         }
         // Append data to the database
         insertQuery.bindValue(":file_name", index(i, 0).data().toString());

@@ -336,69 +336,47 @@ void MainWindow::handleSearchStopped()
     // No need to update the status bar here, the final progress signal (-1) will do that
 }
 
-void MainWindow::updateSearchProgress(int progress)
+void MainWindow::updateSearchProgress(int filesProcessed)
 {
-    // Check if the search is running
-    if (!isSearchRunning && progress != -1) { // Allow -1 to pass through for interrupted searches
-        return;
-    }
+    // Update lastProcessedFiles for statistics
+    lastProcessedFiles = filesProcessed;
 
-    // Update lastProcessedFiles based on progress
-    if (progress > 0 && progress <= 100 && selectedDevice && selectedDevice->totalFileCount > 0) {
-        // For catalog searches, calculate files processed based on percentage
-        lastProcessedFiles = (progress * selectedDevice->totalFileCount) / 100;
-    } else if (progress > 100) {
-        // For directory searches, progress might directly represent the file count
-        lastProcessedFiles = progress;
-    }
-
-    // Build a status message with various pieces of information
+    // Build status message
     QString statusMessage;
 
-    // Special case for interrupted search
-    if (progress == -1) {
+    // Special case for interrupted search (-1)
+    if (filesProcessed == -1) {
         if (currentSearch) {
-            statusMessage = tr("Files found: %1").arg(currentSearch->fileNames.size());
-            statusMessage += tr(" | Files processed: %1").arg(lastProcessedFiles);
-            statusMessage += tr(" | Search interrupted. Displaying partial results.");
+            statusMessage = tr("Search interrupted | Files found: %1 | Files processed: %2")
+            .arg(currentSearch->fileNames.size())
+                .arg(lastProcessedFiles);
         } else {
             statusMessage = tr("Search interrupted. No results available.");
         }
 
-        // Show status message and return
         statusBar()->showMessage(statusMessage, 5000);
         return;
     }
 
     // Regular progress update
-    // First include the count of files found so far
     if (currentSearch) {
-        statusMessage = tr("Files found: %1").arg(currentSearch->fileNames.size());
-        lastProcessedFiles = progress; // Update the tracking variable
-        statusMessage += tr(" | Files processed: %1").arg(progress);
-    }
+        statusMessage = tr("Files found: %1 | Files processed: %2")
+        .arg(currentSearch->fileNames.size())
+            .arg(filesProcessed);
 
-    // Add file processing status
-    if (currentSearch && currentSearch->searchInCatalogsChecked) {
-        // If searching in a catalog, we can show progress percentage
-        if (progress >= 0 && progress <= 100) {
-            // Add the percentage of files processed
-            //statusMessage += tr(" | Progress: %1%").arg(progress);
-            statusMessage += tr(" | Files processed: %1").arg(lastProcessedFiles);
+        // Calculate percentage if we have an estimate
+        if (currentSearch->estimatedTotalFiles > 0) {
+            int percentComplete = qMin(100,
+                                       static_cast<int>((filesProcessed * 100) / currentSearch->estimatedTotalFiles));
 
-            // If we have the device available and it's a catalog search in database mode, show files processed
-            if (selectedDevice && selectedDevice->totalFileCount > 0 && collection->databaseMode != "Memory") {
-                int filesProcessed = (progress * selectedDevice->totalFileCount) / 100;
-                lastProcessedFiles = filesProcessed; // Update the tracking variable
-                statusMessage += tr(" (%1 of %2 files)").arg(filesProcessed).arg(selectedDevice->totalFileCount);
-            }
+            statusMessage += tr(" (%1%)").arg(percentComplete);
         }
     }
 
     // Show status message
     statusBar()->showMessage(statusMessage);
 
-    // Process events to keep UI responsive during search
+    // Process events to keep UI responsive
     QCoreApplication::processEvents();
 }
 

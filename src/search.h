@@ -122,6 +122,10 @@ public:
     QStringList filesFoundList;
     QStringList deviceFoundIDList;
     QStandardItemModel *deviceFoundModel = new QStandardItemModel;
+    qint64 totalFilesProcessed = 0;
+    qint64 estimatedTotalFiles = 0; //for percentage calculation
+    void initializeProgressTracking(Device *selectedDevice);
+    void updateProgress(int increment);
 
     // Device objects for differences
     Device *diffDevice1 = nullptr;
@@ -148,7 +152,7 @@ public:
     virtual void clearResults();
 
 signals:
-    void searchProgress(int progress);
+    void searchProgress(int filesProcessed);
 };
 
 #endif // SEARCH_H

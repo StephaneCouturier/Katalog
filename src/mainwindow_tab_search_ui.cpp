@@ -401,66 +401,67 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_FileFoundMoreStatistics_clicked()
         {
-            // Check if we have a current search object
+            // Check if we have current search results
             if (!currentSearch) {
                 QMessageBox::warning(this, "Katalog", tr("No search results available."));
                 return;
             }
 
-            // Create the header text, checking if this was an interrupted search
+            // Create header text
             QString headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
             QString filesProcessedText;
 
             // Check if the search was interrupted
-            // A search is interrupted if it was using SearchStoppable, it's no longer running, and it was stopped by the user
             bool wasInterrupted = (currentSearch == searchStoppable &&
                                    !isSearchRunning &&
-                                   searchStoppable->stopRequested); // We need to add a getter for stopRequested
+                                   searchStoppable->wasStopRequested());
 
             if (wasInterrupted) {
-                // This was an interrupted SearchStoppable with partial results
                 headerText += "<i>" + tr("Interrupted Search, incomplete results") + "</i><br/>";
 
                 // Add files processed info
-                if (lastProcessedFiles > 0) {
-                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(lastProcessedFiles);
+                filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
+                                         .arg(lastProcessedFiles);
 
-                    // Only show percentage if we know the total, and for searchincatalog mode
-                    // and if the total file count is greater than 0
-                    if (currentSearch->searchInCatalogsChecked && selectedDevice && selectedDevice->totalFileCount > 0) {
-                        qint64 percentageProcessed = (lastProcessedFiles * 100) / selectedDevice->totalFileCount;
-                        filesProcessedText += tr("<tr><td>Percentage processed: </td><td><b> %1 %</b></td></tr>").arg(QString::number(percentageProcessed));
-                    }
+                // Show percentage if we have an estimate
+                if (currentSearch->estimatedTotalFiles > 0) {
+                    int percentProcessed = (lastProcessedFiles * 100) / currentSearch->estimatedTotalFiles;
+                    filesProcessedText += tr("<tr><td>Percentage processed: </td><td><b> %1 %</b></td></tr>")
+                                              .arg(percentProcessed);
                 }
             } else {
-                // For complete searches, use the total files in the device as files processed
-                if (currentSearch->searchInCatalogsChecked && selectedDevice && selectedDevice->totalFileCount > 0) {
-                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(selectedDevice->totalFileCount);
-                } else {
-                    // For directory searches or when we don't know the total, use the found files count
-                    filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>").arg(lastProcessedFiles);
+                // For complete searches, show total files processed
+                filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
+                                         .arg(currentSearch->totalFilesProcessed);
+
+                // Show searched file count if available
+                if (currentSearch->searchInCatalogsChecked && currentSearch->estimatedTotalFiles > 0) {
+                    filesProcessedText += tr("<tr><td>Total searchable files: </td><td><b> %1 </b></td></tr>")
+                    .arg(currentSearch->estimatedTotalFiles);
                 }
             }
 
+            // Create the message box with all statistics
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(headerText +
-                           tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>").arg(QString::number(currentSearch->filesFoundNumber)) +
+                           tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>")
+                               .arg(QString::number(currentSearch->filesFoundNumber)) +
                            filesProcessedText +
                            tr("<tr></tr>"
-                              "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"                                                                                                                                                                                           "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
+                              "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
+                              "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
                               "<tr><td>Max size:     </td><td><b> %4 </b>  </td></tr>"
                               "<tr><td>Average size: </td><td><b> %2 </b>  <br/></td></tr>"
                               "<tr><td>Min Date:     </td><td><b> %5 </b>  </td></tr>"
                               "<tr><td>Max Date:     </td><td><b> %6 </b>  </td></tr>"
-                              "</table>"
-                              ).arg(
-                                   QLocale().formattedDataSize(currentSearch->filesFoundTotalSize),
-                                   QLocale().formattedDataSize(currentSearch->filesFoundAverageSize),
-                                   QLocale().formattedDataSize(currentSearch->filesFoundMinSize),
-                                   QLocale().formattedDataSize(currentSearch->filesFoundMaxSize),
-                                   currentSearch->filesFoundMinDate,
-                                   currentSearch->filesFoundMaxDate));
+                              "</table>")
+                               .arg(QLocale().formattedDataSize(currentSearch->filesFoundTotalSize),
+                                    QLocale().formattedDataSize(currentSearch->filesFoundAverageSize),
+                                    QLocale().formattedDataSize(currentSearch->filesFoundMinSize),
+                                    QLocale().formattedDataSize(currentSearch->filesFoundMaxSize),
+                                    currentSearch->filesFoundMinDate,
+                                    currentSearch->filesFoundMaxDate));
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }

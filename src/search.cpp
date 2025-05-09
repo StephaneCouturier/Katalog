@@ -631,3 +631,35 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         connectedDirectory      = query.value(36).toString();
     }
 }
+
+void Search::initializeProgressTracking(Device *selectedDevice)
+{
+    totalFilesProcessed = 0;
+    estimatedTotalFiles = 0;
+
+    if (searchInCatalogsChecked) {
+        if (selectedDevice->type == "Catalog") {
+            estimatedTotalFiles = selectedDevice->totalFileCount;
+        } else {
+            // Sum up total file counts for all catalogs in the hierarchy
+            foreach(const Device::deviceListRow & row, selectedDevice->deviceListTable) {
+                if (row.type == "Catalog") {
+                    Device *device = new Device;
+                    device->ID = row.ID;
+                    device->loadDevice("defaultConnection");
+                    estimatedTotalFiles += device->totalFileCount;
+                    delete device;
+                }
+            }
+        }
+    }
+
+    // Initialize progress with 0
+    emit searchProgress(0);
+}
+
+void Search::updateProgress(int increment)
+{
+    totalFilesProcessed += increment;
+    emit searchProgress(totalFilesProcessed);
+}
