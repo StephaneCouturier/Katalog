@@ -76,7 +76,8 @@ SOURCES += \
     src/mainwindow_setup.cpp \
     src/mainwindow_tab_backup.cpp \
     src/mainwindow_tab_create.cpp \
-    src/mainwindow_tab_device.cpp \
+    src/mainwindow_tab_device_pr.cpp \
+    src/mainwindow_tab_device_ui.cpp \
     src/mainwindow_tab_explore.cpp \
     src/mainwindow_tab_filters.cpp \
     src/mainwindow_tab_search_pr.cpp \
