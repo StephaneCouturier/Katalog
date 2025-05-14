@@ -133,7 +133,6 @@ void MainWindow::exportToSQLiteFile()
 void MainWindow::exportToMemoryMode()
 {
     if (collection->databaseMode == "File") {
-
         QMessageBox msgBox;
         msgBox.setWindowTitle("Katalog");
 
@@ -149,6 +148,7 @@ void MainWindow::exportToMemoryMode()
         if (selectedExportFolder.isEmpty()) {
             return;
         }
+
         exportFolderPath = selectedExportFolder;
 
         // Create a progress dialog
@@ -156,39 +156,87 @@ void MainWindow::exportToMemoryMode()
         progress.setWindowModality(Qt::WindowModal);
         progress.setValue(0);
 
-        // Set the new collection folder temporarily for export
-        QString originalFolder = collection->folder;
-        collection->folder = exportFolderPath;
-        collection->generateCollectionFilesPaths();
+        try {
+            // Set the new collection folder temporarily for export
+            QString originalFolder = collection->folder;
+            collection->folder = exportFolderPath;
+            collection->generateCollectionFilesPaths();
 
-        // Save original database mode
-        QString originalDatabaseMode = collection->databaseMode;
-        // Temporarily set to Memory mode so the function will run
-        collection->databaseMode = "Memory";
+            // Save original database mode
+            QString originalDatabaseMode = collection->databaseMode;
 
-        // Call the existing function
-        collection->generateCollectionFiles();
-        collection->saveParameterTableToFile();
-        collection->saveDeviceTableToFile();
-        collection->saveStorageTableToFile();
-        collection->saveTagTableToFile();
-        collection->saveMappingTableToFile();
-        collection->saveSearchHistoryTableToFile();
-        collection->saveStatiticsTableToFile();
+            // Temporarily set to Memory mode so the function will run
+            collection->databaseMode = "Memory";
 
-        // Restore original database mode
-        collection->databaseMode = originalDatabaseMode;
+            // Initialize export folder structure
+            progress.setValue(5);
+            progress.setLabelText("Creating collection files...");
+            collection->generateCollectionFiles();
 
-        // Export catalogs lods to indexes (.idx)
-        exportAllCatalogFiles(progress);
+            // Export parameters
+            progress.setValue(10);
+            progress.setLabelText("Exporting parameters...");
+            collection->saveParameterTableToFile();
 
-        // Inform user of successful export
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(tr("Successfully exported database to CSV files.<br/>"
-                          "<br/>Export directory: <br/><b>%1</b><br/>"
-                          "<br/>You can now switch to Memory mode and load this collection.")
-                           .arg(exportFolderPath));
-        msgBox.exec();
+            // Export devices
+            progress.setValue(15);
+            progress.setLabelText("Exporting devices...");
+            collection->saveDeviceTableToFile();
+
+            // Export storage
+            progress.setValue(20);
+            progress.setLabelText("Exporting storage...");
+            collection->saveStorageTableToFile();
+
+            // Export tags
+            progress.setValue(25);
+            progress.setLabelText("Exporting tags...");
+            collection->saveTagTableToFile();
+
+            // Export mappings
+            progress.setValue(30);
+            progress.setLabelText("Exporting device mappings...");
+            collection->saveMappingTableToFile();
+
+            // Export search history
+            progress.setValue(35);
+            progress.setLabelText("Exporting search history...");
+            collection->saveSearchHistoryTableToFile();
+
+            // Export statistics
+            progress.setValue(40);
+            progress.setLabelText("Exporting statistics...");
+            collection->saveStatiticsTableToFile();
+
+            // Export catalogs to idx files (this already has its own progress updates)
+            exportAllCatalogFiles(progress);
+
+            // Restore original settings
+            collection->databaseMode = originalDatabaseMode;
+            collection->folder = originalFolder;
+            collection->generateCollectionFilesPaths();
+
+            // Ensure progress is complete
+            progress.setValue(100);
+
+            // Inform user of successful export
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setText(tr("Successfully exported database to CSV files.<br/>"
+                              "<br/>Export directory: <br/><b>%1</b><br/>"
+                              "<br/>You can now switch to Memory mode and load this collection.")
+                               .arg(exportFolderPath));
+            msgBox.exec();
+        }
+        catch (const std::exception& e) {
+            // Restore original folder and mode on error
+            collection->databaseMode = "File";
+            collection->folder = exportFolderPath;
+            collection->generateCollectionFilesPaths();
+
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText(tr("Export failed: %1").arg(e.what()));
+            msgBox.exec();
+        }
     }
 }
 
