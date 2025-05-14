@@ -188,7 +188,7 @@
                                                               true),
                                  "update");
                 collection->saveDeviceTableToFile();
-                collection->saveStatiticsToFile();
+                collection->saveStatiticsTableToFile();
 
                 loadDevicesView();
             });
@@ -226,7 +226,7 @@
                                                               true),
                                  "update");
                 collection->saveDeviceTableToFile();
-                collection->saveStatiticsToFile();
+                collection->saveStatiticsTableToFile();
 
                 loadDevicesView();
             });

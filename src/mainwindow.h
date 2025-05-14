@@ -373,6 +373,12 @@ class MainWindow : public QMainWindow
             void changeCollectionFolder(QString newDirectory);
             void changeDatabaseFilePath(QString newDatabaseFilePath);
 
+            //Export
+            void exportToMemoryMode();
+            void exportToSQLiteFile();
+            bool exportAllCatalogFiles(QProgressDialog &progress);
+            bool exportSingleCatalogFoldersFile(int catalogId, const QString &filePath);
+
     public slots:
             //void displaySearchResults();
             void displaySearchResults();
@@ -423,6 +429,7 @@ class MainWindow : public QMainWindow
             void on_Settings_pushButton_ApplyFilepath_clicked();
             void on_Settings_lineEdit_DatabaseFilePath_textChanged();
             void on_Settings_lineEdit_DatabaseFilePath_returnPressed();
+            void on_Settings_pushButton_ExportToMemoryMode_clicked();
 
             void on_Settings_lineEdit_DataMode_Hosted_HostName_textChanged(const QString &arg1);
             void on_Settings_lineEdit_DataMode_Hosted_DatabaseName_textChanged(const QString &arg1);

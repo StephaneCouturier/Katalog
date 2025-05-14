@@ -798,7 +798,7 @@ void MainWindow::saveDeviceForm()
             updateNameQuery.exec();
 
             if (collection->databaseMode=="Memory"){
-                collection->saveStatiticsToFile();
+                collection->saveStatiticsTableToFile();
             }
 
             //Update catalogs (database mode)
@@ -938,7 +938,7 @@ void MainWindow::recordAllDeviceStats(QDateTime dateTime)
         loopDevice.loadDevice("defaultConnection");
         loopDevice.saveStatistics(dateTime,"snapshot");
     }
-    collection->saveStatiticsToFile();
+    collection->saveStatiticsTableToFile();
 
     //Refresh
     collection->loadStatisticsDeviceFileToTable();
@@ -2785,7 +2785,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     reportAllUpdates(selectedDevice, globalList, "list");
 
     collection->saveDeviceTableToFile();
-    collection->saveStatiticsToFile();
+    collection->saveStatiticsTableToFile();
 
     loadDevicesView();
 }
@@ -2801,7 +2801,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
                                                 true),
                      "update");
     collection->saveDeviceTableToFile();
-    collection->saveStatiticsToFile();
+    collection->saveStatiticsTableToFile();
 
     loadDevicesView();
     loadStatisticsChart();
@@ -3383,7 +3383,7 @@ void MainWindow::importStatistics()
     query.prepare(querySQL);
     query.exec();
 
-    collection->saveStatiticsToFile();
+    collection->saveStatiticsTableToFile();
 }
 
 void MainWindow::loadStatisticsCatalogFileToTable()
@@ -4142,7 +4142,7 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
 
         //Save data
         collection->saveDeviceTableToFile();
-        collection->saveStatiticsToFile();
+        collection->saveStatiticsTableToFile();
 
         //Report device info after update
         qDebug() << "---";

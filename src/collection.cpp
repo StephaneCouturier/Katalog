@@ -145,9 +145,6 @@ void Collection::generateCollectionFiles()
 
                 newStorageFile.close();
 
-                //Even if empty, load it to the model
-                loadStorageFileToTable();
-
                 return;
             }
         }
@@ -1158,7 +1155,7 @@ void Collection::saveStorageTableToFile()
     }
 }
 //----------------------------------------------------------------------
-void Collection::saveStatiticsToFile()
+void Collection::saveStatiticsTableToFile()
 {
     if(databaseMode=="Memory"){
         //Prepare export file

@@ -28,6 +28,7 @@
   <property name="font">
    <font>
     <family>Noto Sans</family>
+    <kerning>true</kerning>
    </font>
   </property>
   <property name="windowTitle">
@@ -61,6 +62,7 @@
        <font>
         <family>Noto Sans</family>
         <pointsize>9</pointsize>
+        <kerning>true</kerning>
        </font>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -82,6 +84,7 @@
           <font>
            <family>Noto Sans</family>
            <pointsize>9</pointsize>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="orientation">
@@ -110,6 +113,7 @@
           <font>
            <family>Noto Sans</family>
            <pointsize>9</pointsize>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="toolTip">
@@ -135,6 +139,7 @@
           <font>
            <family>Noto Sans</family>
            <pointsize>9</pointsize>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="orientation">
@@ -157,6 +162,7 @@
        <font>
         <family>Noto Sans</family>
         <pointsize>9</pointsize>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="orientation">
@@ -179,6 +185,7 @@
         <font>
          <family>Noto Sans</family>
          <pointsize>9</pointsize>
+         <kerning>true</kerning>
         </font>
        </property>
        <layout class="QGridLayout" name="gridLayout_7">
@@ -200,6 +207,7 @@
            <font>
             <family>Noto Sans</family>
             <pointsize>9</pointsize>
+            <kerning>true</kerning>
            </font>
           </property>
           <property name="styleSheet">
@@ -221,6 +229,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -250,6 +259,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -267,6 +277,7 @@
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>true</bold>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -281,6 +292,7 @@
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>true</bold>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -306,6 +318,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -334,6 +347,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -351,6 +365,7 @@
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
                     <bold>true</bold>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -369,6 +384,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <property name="orientation">
@@ -391,6 +407,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -414,6 +431,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -430,6 +448,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="orientation">
@@ -528,6 +547,7 @@
                 <font>
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="lineWidth">
@@ -558,6 +578,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <property name="text">
@@ -579,6 +600,7 @@
                 <font>
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="lineWidth">
@@ -606,6 +628,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <property name="text">
@@ -625,6 +648,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -648,6 +672,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="text">
@@ -667,6 +692,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
@@ -714,6 +740,7 @@
            <font>
             <family>Noto Sans</family>
             <pointsize>9</pointsize>
+            <kerning>true</kerning>
            </font>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -741,6 +768,7 @@
               <font>
                <family>Noto Sans</family>
                <pointsize>9</pointsize>
+               <kerning>true</kerning>
               </font>
              </property>
              <property name="toolTip">
@@ -769,6 +797,7 @@
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
                  <bold>true</bold>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="text">
@@ -782,6 +811,7 @@
                 <font>
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="orientation">
@@ -813,6 +843,7 @@
                 <font>
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="toolTip">
@@ -847,6 +878,7 @@
                 <font>
                  <family>Noto Sans</family>
                  <pointsize>9</pointsize>
+                 <kerning>true</kerning>
                 </font>
                </property>
                <property name="toolTip">
@@ -871,6 +903,7 @@
            <font>
             <family>Noto Sans</family>
             <pointsize>9</pointsize>
+            <kerning>true</kerning>
            </font>
           </property>
           <property name="orientation">
@@ -894,6 +927,7 @@
         <font>
          <family>Noto Sans</family>
          <pointsize>9</pointsize>
+         <kerning>true</kerning>
         </font>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1048,6 +1082,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="toolTip">
@@ -1079,6 +1114,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -1178,6 +1214,7 @@
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -1510,6 +1547,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -1544,6 +1582,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -1688,6 +1727,7 @@
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -1835,6 +1875,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -1872,6 +1913,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -1955,6 +1997,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -2084,6 +2127,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -2148,6 +2192,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -2284,6 +2329,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -2315,6 +2361,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -2601,6 +2648,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -2769,6 +2817,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -2800,6 +2849,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -3069,6 +3119,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -3100,6 +3151,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -3293,6 +3345,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>true</kerning>
                            </font>
                           </property>
                           <property name="styleSheet">
@@ -3330,6 +3383,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                            <font>
                             <family>Noto Sans</family>
                             <pointsize>9</pointsize>
+                            <kerning>true</kerning>
                            </font>
                           </property>
                           <property name="styleSheet">
@@ -3540,6 +3594,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                               <font>
                                <family>Noto Sans</family>
                                <pointsize>9</pointsize>
+                               <kerning>true</kerning>
                               </font>
                              </property>
                              <property name="styleSheet">
@@ -3772,6 +3827,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -3839,6 +3895,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       <font>
                        <family>Noto Sans</family>
                        <pointsize>9</pointsize>
+                       <kerning>true</kerning>
                       </font>
                      </property>
                      <property name="styleSheet">
@@ -3989,6 +4046,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -4063,6 +4121,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <font>
                           <family>Noto Sans</family>
                           <pointsize>9</pointsize>
+                          <kerning>true</kerning>
                          </font>
                         </property>
                         <property name="styleSheet">
@@ -4211,6 +4270,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>true</kerning>
                      </font>
                     </property>
                     <property name="toolTip">
@@ -4242,6 +4302,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                      <font>
                       <family>Noto Sans</family>
                       <pointsize>9</pointsize>
+                      <kerning>true</kerning>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -4717,6 +4778,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
@@ -4748,6 +4810,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="styleSheet">
@@ -10230,6 +10293,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="icon">
                        <iconset theme="document-new"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="Settings_pushButton_ExportToMemoryMode">
+                      <property name="toolTip">
+                       <string>Export to convert and open the collection in &quot;File&quot; mode.</string>
+                      </property>
+                      <property name="text">
+                       <string>Export to Memory mode (csv)</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="document-export"/>
                       </property>
                      </widget>
                     </item>

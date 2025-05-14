@@ -96,7 +96,7 @@ public:
     //File saving
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
-    void saveStatiticsToFile();
+    void saveStatiticsTableToFile();
     void saveParameterTableToFile();
     void saveSearchHistoryTableToFile();
     void saveTagTableToFile();

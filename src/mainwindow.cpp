@@ -36,6 +36,7 @@
 #include "mainwindow_tab_search_ui.cpp"
 #include "mainwindow_tab_search_pr.cpp"
 #include "mainwindow_tab_tags.cpp"
+#include "mainwindow_tab_settings_exp.cpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -55,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.5";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-05-08";
+        releaseDate     = "2025-05-14";
         developmentMode = false;
 
         //Detect if the theme is light or dark

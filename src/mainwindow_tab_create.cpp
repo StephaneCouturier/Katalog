@@ -345,7 +345,7 @@
                 newDevice->catalog->setDateLoaded(emptyDateTime, "defaultConnection");
 
                 //Save statistics
-                collection->saveStatiticsToFile();
+                collection->saveStatiticsTableToFile();
 
                 //Refresh data and UI
                     //Refresh the catalog list for the combobox of the Search screen

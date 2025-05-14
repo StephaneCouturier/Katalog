@@ -83,6 +83,7 @@ SOURCES += \
     src/mainwindow_tab_search_pr.cpp \
     src/mainwindow_tab_search_ui.cpp \
     src/mainwindow_tab_settings.cpp \
+    src/mainwindow_tab_settings_exp.cpp \
     src/mainwindow_tab_statistics.cpp \
     src/mainwindow_tab_tags.cpp \
     src/search.cpp \

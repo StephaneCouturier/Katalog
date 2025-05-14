@@ -231,7 +231,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              "update");
             //Refresh
             collection->saveDeviceTableToFile();
-            collection->saveStatiticsToFile();
+            collection->saveStatiticsTableToFile();
             loadDevicesView();
         });
 
@@ -301,7 +301,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                                                         true),
                              "list");
             collection->saveDeviceTableToFile();
-            collection->saveStatiticsToFile();
+            collection->saveStatiticsTableToFile();
             loadDevicesView();
         });
 
@@ -354,7 +354,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                                                         true),
                              "update");
             collection->saveDeviceTableToFile();
-            collection->saveStatiticsToFile();
+            collection->saveStatiticsTableToFile();
             loadDevicesView();
         });
 
@@ -460,7 +460,7 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
                      list,
                      "update");
     collection->saveDeviceTableToFile();
-    collection->saveStatiticsToFile();
+    collection->saveStatiticsTableToFile();
     loadDevicesView();
     editDevice();
 }
