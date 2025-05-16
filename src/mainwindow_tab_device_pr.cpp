@@ -133,7 +133,7 @@ void MainWindow::assignCatalogToDevice(Device *catalogDevice, Device *parentDevi
             }
 
             //Reload
-            loadDevicesView();
+            loadDevicesView("");
         }
     }
 }
@@ -198,7 +198,7 @@ void MainWindow::assignStorageToDevice(int storageID,int deviceID)
         }
 
         //Reload
-        loadDevicesView();
+        loadDevicesView("");
     }
 }
 //--------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
             }
 
             //Reload
-            loadDevicesView();
+            loadDevicesView("");
         }
     }
 }
@@ -253,7 +253,7 @@ void MainWindow::deleteDeviceItem()
     //Reload data to models
     updateStorageSelectionStatistics();
     loadDevicesTreeToModel("Filters");
-    loadDevicesView();
+    loadDevicesView("");
     filterFromSelectedDevice();
 }
 //--------------------------------------------------------------------------
@@ -367,7 +367,7 @@ void MainWindow::updateNumbers() {
     activeDevice->updateNumbersFromChildren();
 
     collection->saveDeviceTableToFile();
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::updateAllNumbers()
@@ -375,7 +375,7 @@ void MainWindow::updateAllNumbers()
     activeDevice->updateParentsNumbers();
 
     collection->saveDeviceTableToFile();
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::setDeviceTreeExpandState(bool toggle)
@@ -532,7 +532,7 @@ void MainWindow::addDeviceVirtual()
 
     //Reload
     loadDevicesTreeToModel("Filters");
-    loadDevicesView();
+    loadDevicesView("");
     filterFromSelectedDevice();
     loadParentsList();
 
@@ -563,7 +563,7 @@ void MainWindow::addDeviceStorage(int parentID)
 
     //Reload
     loadDevicesTreeToModel("Filters");
-    loadDevicesView();
+    loadDevicesView("");
     filterFromSelectedDevice();
     loadParentsList();
 
@@ -582,7 +582,7 @@ void MainWindow::addDeviceStorage(int parentID)
     activeDevice->ID = newDevice->ID;
     activeDevice->loadDevice("defaultConnection");
     loadDevicesTreeToModel("Filters");
-    loadDevicesView();
+    loadDevicesView("");
     editDevice();
 }
 //--------------------------------------------------------------------------
@@ -909,7 +909,7 @@ void MainWindow::saveDeviceForm()
     collection->saveDeviceTableToFile();
 
     //Reload
-    loadDevicesView();
+    loadDevicesView("");
     loadStorageList();
 }
 //--------------------------------------------------------------------------
@@ -970,7 +970,7 @@ void MainWindow::updateAllDeviceActive()
 
 //--------------------------------------------------------------------------
 //--- View -----------------------------------------------------------------
-void MainWindow::loadDevicesView(){
+void MainWindow::loadDevicesView(QString sourceTrigger){
     int tempLastDevicesSortSection = lastDevicesSortSection;
     int tempLastDevicesSortOrder   = lastDevicesSortOrder;
 
@@ -987,7 +987,9 @@ void MainWindow::loadDevicesView(){
         ui->Devices_widget_StorageStats->hide();
     }
     else{
-        loadDevicesTreeToModel("Devices");
+        if(sourceTrigger !="Filters"){
+            loadDevicesTreeToModel("Devices");
+        }
         ui->Devices_widget_TreeOptions->show();
         ui->Devices_widget_CatalogStats->hide();
         ui->Devices_widget_StorageStats->hide();
@@ -2787,7 +2789,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
 
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
@@ -2803,7 +2805,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
 
-    loadDevicesView();
+    loadDevicesView("");
     loadStatisticsChart();
 }
 //--------------------------------------------------------------------------
@@ -2910,7 +2912,7 @@ void MainWindow::migrateCollection()
     msgBox.exec();
 
     loadCollection();
-    loadDevicesView();
+    loadDevicesView("");
     loadDevicesTreeToModel("Filters");
     QApplication::restoreOverrideCursor();
     ui->tabWidget->setCurrentIndex(1);

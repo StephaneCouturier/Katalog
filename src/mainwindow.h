@@ -311,7 +311,7 @@ class MainWindow : public QMainWindow
             void unassignPhysicalFromDevice(int deviceID, int deviceParentID);
             void deleteDeviceItem();
 
-            void loadDevicesView();
+            void loadDevicesView(QString sourceTrigger);
             void loadDevicesTreeToModel(QString targetTreeModel);
             void loadDevicesStorageToModel();
             void loadDevicesCatalogToModel();

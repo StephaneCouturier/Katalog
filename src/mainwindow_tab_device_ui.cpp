@@ -42,7 +42,7 @@ void MainWindow::on_Devices_radioButton_DeviceTree_clicked()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Tree");
 
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_radioButton_StorageList_clicked()
@@ -50,7 +50,7 @@ void MainWindow::on_Devices_radioButton_StorageList_clicked()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Storage");
 
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_radioButton_CatalogList_clicked()
@@ -58,7 +58,7 @@ void MainWindow::on_Devices_radioButton_CatalogList_clicked()
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayContents", "Catalogs");
 
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
@@ -77,7 +77,7 @@ void MainWindow::on_Devices_pushButton_InsertRootLevel_clicked()
 
     //Reload
     loadDevicesTreeToModel("Filters");
-    loadDevicesView();
+    loadDevicesView("");
     loadParentsList();
 }
 //--------------------------------------------------------------------------
@@ -147,14 +147,14 @@ void MainWindow::on_Devices_checkBox_DisplayStorage_stateChanged(int arg1)
         ui->Devices_checkBox_DisplayCatalogs->show();
     }
 
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_checkBox_DisplayCatalogs_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayCatalogs", arg1);
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1)
@@ -163,7 +163,7 @@ void MainWindow::on_Devices_checkBox_DisplayPhysicalGroup_stateChanged(int arg1)
     settings.setValue("Devices/DisplayPhysicalGroup", arg1);
     if(arg1==0)
         ui->Devices_checkBox_DisplayVirtualGroups->setChecked(true);
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_checkBox_DisplayVirtualGroups_stateChanged(int arg1)
@@ -172,14 +172,14 @@ void MainWindow::on_Devices_checkBox_DisplayVirtualGroups_stateChanged(int arg1)
     settings.setValue("Devices/DisplayVirtualGroups", arg1);
     if(arg1==0)
         ui->Devices_checkBox_DisplayPhysicalGroup->setChecked(true);
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_checkBox_DisplayFullTable_stateChanged(int arg1)
 {
     QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
     settings.setValue("Devices/DisplayFullDeviceTable", arg1);
-    loadDevicesView();
+    loadDevicesView("");
 }
 //--------------------------------------------------------------------------
 void MainWindow::on_Devices_treeView_DeviceList_clicked(const QModelIndex &index)
@@ -232,7 +232,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             //Refresh
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
-            loadDevicesView();
+            loadDevicesView("");
         });
 
         QAction *menuDeviceAction5 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
@@ -302,7 +302,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              "list");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
-            loadDevicesView();
+            loadDevicesView("");
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -355,7 +355,7 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
                              "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
-            loadDevicesView();
+            loadDevicesView("");
         });
 
         QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-edit-sign"), tr("Edit"), this);
@@ -461,7 +461,7 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
                      "update");
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
-    loadDevicesView();
+    loadDevicesView("");
     editDevice();
 }
 //--------------------------------------------------------------------------

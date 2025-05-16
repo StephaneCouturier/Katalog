@@ -190,7 +190,7 @@
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsTableToFile();
 
-                loadDevicesView();
+                loadDevicesView("");
             });
 
             deviceContextMenu.exec(globalPos);
@@ -228,7 +228,7 @@
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsTableToFile();
 
-                loadDevicesView();
+                loadDevicesView("");
             });
 
             QAction *menuDeviceAction2 = new QAction(QIcon::fromTheme("document-new"), tr("Explore"), this);
@@ -320,7 +320,7 @@
         displaySelectedDeviceName();
 
         //Load matching Catalogs, Storage, and Statistics
-        loadDevicesView();
+        loadDevicesView("Filters");
         updateCatalogsScreenStatistics();
         updateStorageSelectionStatistics();
         loadStorageList();

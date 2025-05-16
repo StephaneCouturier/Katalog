@@ -127,7 +127,7 @@
         //Change tab to show the screen to add a storage
         ui->tabWidget->setCurrentIndex(1); // tab 1 is the Devices tab
         ui->Devices_radioButton_DeviceTree->setChecked(true); // the tree view is required to add a storage
-        loadDevicesView(); // refresh the view
+        loadDevicesView(""); // refresh the view
     }
     //--------------------------------------------------------------------------
     void MainWindow::on_Create_pushButton_GenerateFromPath_clicked()
@@ -320,7 +320,7 @@
             }
 
             //Reload
-            loadDevicesView();
+            loadDevicesView("");
             loadStorageList();
 
         //Launch the scan and cataloging of files, including statistics
@@ -353,7 +353,7 @@
 
                     //Refresh Catalogs list
                     updateAllDeviceActive();
-                    loadDevicesView();
+                    loadDevicesView("");
 
                     //Restore selected catalog
                     ui->Filters_label_DisplayCatalog->setText(newDevice->name);
@@ -363,7 +363,7 @@
                     //Refresh filter tree
                     collection->loadDeviceFileToTable();
                     loadDevicesTreeToModel("Filters");
-                    loadDevicesView();
+                    loadDevicesView("");
 
                     //Change tab to show the result of the catalog creation
                     ui->tabWidget->setCurrentIndex(1); // tab 1 is the Collection tab
@@ -373,7 +373,7 @@
             }
             else{
                 newDevice->deleteDevice(false);
-                loadDevicesView();
+                loadDevicesView("");
             }
     }
     //--------------------------------------------------------------------------
