@@ -28,6 +28,13 @@
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
+/**
+ * @brief The SearchStoppable class
+ * Implementation of Search for SQLite File or Hosted database operation.
+ * NOTE: Because all files are already in the database, this class does NOT need
+ * to load catalog files from disk like SearchMemory does. Progress reporting
+ * should focus on database query execution time instead.
+ */
 
 #ifndef SEARCH_STOPPABLE_H
 #define SEARCH_STOPPABLE_H

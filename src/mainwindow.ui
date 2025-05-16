@@ -474,6 +474,7 @@
                    <font>
                     <family>Noto Sans</family>
                     <pointsize>9</pointsize>
+                    <kerning>true</kerning>
                    </font>
                   </property>
                   <property name="toolTip">
