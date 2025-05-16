@@ -1133,66 +1133,66 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
                 )");
     }
     else if (ui->Devices_checkBox_DisplayPhysicalGroup->isChecked() == false and
-             ui->Devices_checkBox_DisplayVirtualGroups->isChecked() == true) {
+               ui->Devices_checkBox_DisplayVirtualGroups->isChecked() == true) {
 
         querySQL = QLatin1String(R"(
-                    WITH RECURSIVE device_tree AS (
-                      SELECT
-                        device_id,
-                        device_parent_id,
-                        device_name,
-                        device_type,
-                        device_external_id,
-                        device_path,
-                        device_total_file_size,
-                        device_total_file_count,
-                        device_total_space,
-                        device_free_space,
-                        device_active,
-                        device_group_id,
-                        device_date_updated,
-                        0 AS level
-                      FROM device
-                      WHERE device_group_id <> 0
+                WITH RECURSIVE device_tree AS (
+                  SELECT
+                    device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_external_id,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_group_id,
+                    device_date_updated,
+                    0 AS level
+                  FROM device
+                  WHERE device_group_id <> 0
+                  AND device_parent_id = 0
 
-                      UNION ALL
+                  UNION ALL
 
-                      SELECT
-                        child.device_id,
-                        child.device_parent_id,
-                        child.device_name,
-                        child.device_type,
-                        child.device_external_id,
-                        child.device_path,
-                        child.device_total_file_size,
-                        child.device_total_file_count,
-                        child.device_total_space,
-                        child.device_free_space,
-                        child.device_active,
-                        child.device_group_id,
-                        child.device_date_updated,
-                        parent.level + 1 AS level
-                      FROM device_tree parent
-                      JOIN device child ON child.device_parent_id = parent.device_id
-                      WHERE parent.device_id <> 1
-                    )
-                    SELECT DISTINCT
-                        device_id,
-                        device_parent_id,
-                        device_name,
-                        device_type,
-                        device_external_id,
-                        device_path,
-                        device_total_file_size,
-                        device_total_file_count,
-                        device_total_space,
-                        device_free_space,
-                        device_active,
-                        device_group_id,
-                        device_date_updated,
-                        level
-                    FROM device_tree
-                )");
+                  SELECT
+                    child.device_id,
+                    child.device_parent_id,
+                    child.device_name,
+                    child.device_type,
+                    child.device_external_id,
+                    child.device_path,
+                    child.device_total_file_size,
+                    child.device_total_file_count,
+                    child.device_total_space,
+                    child.device_free_space,
+                    child.device_active,
+                    child.device_group_id,
+                    child.device_date_updated,
+                    parent.level + 1 AS level
+                  FROM device_tree parent
+                  JOIN device child ON child.device_parent_id = parent.device_id
+                )
+                SELECT
+                    device_id,
+                    device_parent_id,
+                    device_name,
+                    device_type,
+                    device_external_id,
+                    device_path,
+                    device_total_file_size,
+                    device_total_file_count,
+                    device_total_space,
+                    device_free_space,
+                    device_active,
+                    device_group_id,
+                    device_date_updated,
+                    level
+                FROM device_tree
+            )");
     }
 
     //Add an always true WHERE close to add AND statements after more easily
