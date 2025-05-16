@@ -482,8 +482,9 @@ void MainWindow::resetSearchState()
     // Clear any models or views
     if (ui->Search_treeView_FilesFound->model()) {
         // Create an empty model to replace the existing one
-        QStandardItemModel* emptyModel = new QStandardItemModel(this);
-        ui->Search_treeView_FilesFound->setModel(emptyModel);
+        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Name"), tr("Size"), tr("Date"), tr("Folder"), tr("Catalog Name"), tr("Catalog ID")});
+        ui->Search_treeView_FilesFound->setModel(emptyQStandardItemModel);
     }
 
     if (ui->Search_treeView_CatalogsFound->model()) {
