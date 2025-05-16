@@ -271,10 +271,18 @@ MainWindow::MainWindow(QWidget *parent) :
             QString displayContents = settings.value("Devices/DisplayContents").toString();
             if(displayContents=="Tree")
                 ui->Devices_radioButton_DeviceTree->setChecked(true);
-            if(displayContents=="Storage")
+            else if(displayContents=="Storage")
                 ui->Devices_radioButton_StorageList->setChecked(true);
-            if(displayContents=="Catalogs")
+            else if(displayContents=="Catalogs")
                 ui->Devices_radioButton_CatalogList->setChecked(true);
+
+            // After setting the radio button state:
+            if(ui->Devices_radioButton_DeviceTree->isChecked())
+                loadDevicesView("Tree");
+            else if(ui->Devices_radioButton_StorageList->isChecked())
+                loadDevicesView("Storage");
+            else if(ui->Devices_radioButton_CatalogList->isChecked())
+                loadDevicesView("Catalogs");
 
         //Setup tab: Search
             //Default values
