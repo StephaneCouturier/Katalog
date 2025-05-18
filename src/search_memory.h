@@ -55,10 +55,6 @@ public:
      */
     void searchFiles(Device *selectedDevice);
 
-    /**
-     * @brief Load search history criteria from database
-     */
-    void loadSearchHistoryCriteria(const QString &connectionName);
     int currentCatalogFilesLoaded = 0;
     int currentCatalogTotalFiles = 0;
 
@@ -90,12 +86,6 @@ protected:
      * @param connectionName Database connection name
      */
     void processDifferences(const QString &connectionName) override;
-
-    /**
-     * @brief Save search history to the database
-     * @param connectionName Database connection name
-     */
-    void saveSearchHistoryToTable(const QString &connectionName) override;
 
 };
 

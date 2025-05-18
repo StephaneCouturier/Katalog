@@ -86,6 +86,9 @@ void MainWindow::launchSearch()
         // Display the results
         displaySearchResults();
 
+        //Save search history
+        currentSearch->saveSearchHistoryToTable("defaultConnection");
+
         // Reset the search state when search is complete
         isSearchRunning = false;
 
@@ -134,6 +137,9 @@ void MainWindow::launchSearch()
 
         // Run the search in the main thread
         searchStoppable->searchFiles(selectedDevice);
+
+        //Save search history
+        currentSearch->saveSearchHistoryToTable("defaultConnection");
 
         // If we get here, the search is complete
         handleSearchCompleted();
@@ -432,11 +438,14 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (currentSearch) {
         // If we have catalog information, show it
         if (currentSearch->totalCatalogs > 0) {
-            statusMessage = tr("Catalog %1 of %2 | Files found: %3 | Files processed: %4")
-            .arg(currentSearch->currentCatalogIndex)
-                .arg(currentSearch->totalCatalogs)
-                .arg(currentSearch->fileNames.size())
-                .arg(filesProcessed);
+            if (!ui->Filters_checkBox_SearchInConnectedDrives->isChecked()){
+                statusMessage = tr("Searching in Catalog %1 of %2 | ")
+                                    .arg(currentSearch->currentCatalogIndex)
+                                    .arg(currentSearch->totalCatalogs);
+            }
+            statusMessage += tr("Files found: %1 | Files processed: %2")
+                                 .arg(currentSearch->fileNames.size())
+                                 .arg(filesProcessed);
         } else {
             // Otherwise just show files
             statusMessage = tr("Files found: %1 | Files processed: %2")

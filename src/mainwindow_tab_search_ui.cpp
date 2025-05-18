@@ -862,10 +862,6 @@
         //----------------------------------------------------------------------
         void MainWindow::initiateSearchFields()
         {
-            // if (!currentSearch) {
-            //     currentSearch = new Search(this);
-            // }
-
             //Add filetype English value additionally to the displayed/translated value
             ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
             ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
@@ -964,61 +960,72 @@
             ui->Filters_label_DisplayStorage->setText(search->selectedStorage);
             ui->Filters_label_DisplayCatalog->setText(search->selectedCatalog);
 
-                //File name
-                ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
-                ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
-                ui->Search_lineEdit_SearchText->setText(search->searchText);
-                ui->Search_comboBox_TextCriteria->setCurrentText(search->selectedTextCriteria);
-                ui->Search_comboBox_SearchIn->setCurrentText(search->selectedSearchIn);
-                ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
-                ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
+            //File name
+            ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
+            ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
+            ui->Search_lineEdit_SearchText->setText(search->searchText);
+            ui->Search_comboBox_TextCriteria->setCurrentText(search->selectedTextCriteria);
+            ui->Search_comboBox_SearchIn->setCurrentText(search->selectedSearchIn);
+            ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
+            ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
 
-                //File criteria
-                ui->Search_checkBox_Size->setChecked(search->searchOnSize);
-                ui->Search_spinBox_MinimumSize->setValue(search->selectedMinimumSize);
-                ui->Search_comboBox_MinSizeUnit->setCurrentText(search->selectedMinSizeUnit);
-                ui->Search_spinBox_MaximumSize->setValue(search->selectedMaximumSize);
-                ui->Search_comboBox_MaxSizeUnit->setCurrentText(search->selectedMaxSizeUnit);
-                ui->Search_checkBox_Type->setChecked(search->searchOnType);
-                ui->Search_comboBox_FileType->setCurrentText(tr(search->selectedFileType.toUtf8()));
-                ui->Search_checkBox_Date->setChecked(search->searchOnDate);
-                ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
-                ui->Search_dateTimeEdit_Max->setDateTime(search->selectedDateMax);
+            //File criteria
+            ui->Search_checkBox_Size->setChecked(search->searchOnSize);
+            ui->Search_spinBox_MinimumSize->setValue(search->selectedMinimumSize);
+            ui->Search_comboBox_MinSizeUnit->setCurrentText(search->selectedMinSizeUnit);
+            ui->Search_spinBox_MaximumSize->setValue(search->selectedMaximumSize);
+            ui->Search_comboBox_MaxSizeUnit->setCurrentText(search->selectedMaxSizeUnit);
+            ui->Search_checkBox_Type->setChecked(search->searchOnType);
+            ui->Search_comboBox_FileType->setCurrentText(tr(search->selectedFileType.toUtf8()));
+            ui->Search_checkBox_Date->setChecked(search->searchOnDate);
+            ui->Search_dateTimeEdit_Min->setDateTime(search->selectedDateMin);
+            ui->Search_dateTimeEdit_Max->setDateTime(search->selectedDateMax);
 
-                ui->Search_checkBox_Duplicates->setChecked(search->searchOnDuplicates);
-                ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
-                ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
-                ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
-                ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
+            ui->Search_checkBox_Duplicates->setChecked(search->searchOnDuplicates);
+            ui->Search_checkBox_DuplicatesName->setChecked(search->searchDuplicatesOnName);
+            ui->Search_checkBox_DuplicatesSize->setChecked(search->searchDuplicatesOnSize);
+            ui->Search_checkBox_DuplicatesDateModified->setChecked(search->searchDuplicatesOnDate);
+            ui->Search_checkBox_Differences->setChecked(search->searchOnDifferences);
 
-                ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
-                ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
-                ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
-                ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
+            ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName);
+            ui->Search_checkBox_DifferencesSize->setChecked(search->differencesOnSize);
+            ui->Search_checkBox_DifferencesDateModified->setChecked(search->differencesOnDate);
+            ui->Search_checkBox_DifferencesName->setChecked(search->differencesOnName); //Re-apply the state
 
-                //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
-                for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
-                    if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
-                        ui->Search_comboBox_DifferencesDevice1->setCurrentIndex(i);
-                        break;
-                    }
+            //Select the element in ui->Search_comboBox_DifferencesCatalog1 matching the differencesDeviceID1
+            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice1->count(); i++) {
+                if (ui->Search_comboBox_DifferencesDevice1->itemData(i).toInt() == search->differencesDeviceID1) {
+                    ui->Search_comboBox_DifferencesDevice1->setCurrentIndex(i);
+                    break;
                 }
-                for (int i = 0; i < ui->Search_comboBox_DifferencesDevice2->count(); i++) {
-                    if (ui->Search_comboBox_DifferencesDevice2->itemData(i).toInt() == search->differencesDeviceID2) {
-                        ui->Search_comboBox_DifferencesDevice2->setCurrentIndex(i);
-                        break;
-                    }
+            }
+            for (int i = 0; i < ui->Search_comboBox_DifferencesDevice2->count(); i++) {
+                if (ui->Search_comboBox_DifferencesDevice2->itemData(i).toInt() == search->differencesDeviceID2) {
+                    ui->Search_comboBox_DifferencesDevice2->setCurrentIndex(i);
+                    break;
                 }
-                //ui->Search_comboBox_DifferencesCatalog2->setCurrentText(search->differencesCatalog2);
+            }
 
-                //Folder criteria
-                ui->Search_checkBox_FolderCriteria->setChecked(search->searchOnFolderCriteria);
-                ui->Search_checkBox_ShowFolders->setChecked(search->showFoldersOnly);
-                ui->Search_checkBox_Tags->setChecked(search->searchOnTags);
-                ui->Search_comboBox_Tags->setCurrentText(search->selectedTagName);
+            //Restore the tpye of search (in catalogs or in connected drives
+            if (lastSearch->searchInCatalogsChecked == true){
+                ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
+                ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
+                ui->Filters_lineEdit_SeletedDirectory->setDisabled(true);
+            }
+            else{
+                ui->Filters_checkBox_SearchInCatalogs->setChecked(false);
+                ui->Filters_checkBox_SearchInConnectedDrives->setChecked(true);
+                ui->Filters_lineEdit_SeletedDirectory->setEnabled(true);
+            }
 
-                //Clear previous results (load an empty model)
-                clearSearchResults();
+            //Folder criteria
+            ui->Search_checkBox_FolderCriteria->setChecked(search->searchOnFolderCriteria);
+            ui->Search_checkBox_ShowFolders->setChecked(search->showFoldersOnly);
+            ui->Search_checkBox_Tags->setChecked(search->searchOnTags);
+            ui->Search_comboBox_Tags->setCurrentText(search->selectedTagName);
+
+            //Clear previous results (load an empty model)
+            clearSearchResults();
 
         }
         //----------------------------------------------------------------------

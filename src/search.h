@@ -143,9 +143,7 @@ public:
     void calculateStatistics();
     virtual void processDuplicates(const QString &connectionName);
     virtual void processDifferences(const QString &connectionName);
-    virtual void saveSearchHistoryToTable(const QString &connectionName);
-
-    void insertSearchHistoryToTable(const QString &connectionName);
+    void saveSearchHistoryToTable(const QString &connectionName);
     void loadSearchHistoryCriteria(const QString &connectionName);
 
     // Abstract methods to be implemented by derived classes

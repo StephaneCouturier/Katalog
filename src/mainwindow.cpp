@@ -46,13 +46,6 @@ MainWindow::MainWindow(QWidget *parent) :
     searchProcess(nullptr),
     isSearchRunning(false)
 {
-    // Only create memorySearch initially
-    searchMemory = new SearchMemory(this);
-
-    // Both currentSearch and lastSearch point to searchMemory
-    currentSearch = searchMemory;
-    lastSearch = searchMemory;
-
     //Set current version, release date, and development mode
         currentVersion  = "2.5";
         collection->appVersion = currentVersion;
@@ -168,13 +161,13 @@ MainWindow::MainWindow(QWidget *parent) :
             loadSettings();
 
         //Load custom stylesheet
-            //for windows, pick a windows common font.
+            //For windows, pick a windows common font.
             #ifdef Q_OS_WIN
             ui->tabWidget->setStyleSheet("font-family: calibri; font-size: 16px;");
             ui->splitter_widget_Filters->setStyleSheet("font-family: calibri; font-size: 16px;");
             #endif
 
-            //load custom Katalog stylesheet instead of default theme
+            //Load custom Katalog stylesheet instead of default theme
             if ( themeID == 1 ){
                 loadCustomThemeLight();
             }
@@ -182,10 +175,9 @@ MainWindow::MainWindow(QWidget *parent) :
                 loadCustomThemeDark();
             }
 
-    //Load Collection data
-            // Only create searchMemory initially
+    //Load Collection data           
+            //Create searchMemory initially
             searchMemory = new SearchMemory(this);
-
             // Both currentSearch and lastSearch point to searchMemory
             currentSearch = searchMemory;
             lastSearch = searchMemory;

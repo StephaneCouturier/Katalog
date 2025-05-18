@@ -81,8 +81,6 @@ public:
 
     bool initializeDatabase();
 
-    void loadSearchHistoryCriteria();
-
     bool wasStopRequested() const { return stopRequested; }
 
     /**
@@ -118,12 +116,6 @@ protected:
      * @param connectionName Database connection name
      */
     void processDifferences(const QString &connectionName) override;
-
-    /**
-     * @brief Save search history to the database
-     * @param connectionName Database connection name
-     */
-    void saveSearchHistoryToTable(const QString &connectionName) override;
 
 private:
     /**
