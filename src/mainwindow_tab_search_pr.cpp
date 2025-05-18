@@ -36,7 +36,7 @@
 
 void MainWindow::launchSearch()
 {
-    // Toggle between starting and stopping a search
+    // If a search is running, stop it
     if (isSearchRunning) {
         // If a search is running, stop it
         if (searchStoppable) {
@@ -51,7 +51,7 @@ void MainWindow::launchSearch()
         ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
         QApplication::restoreOverrideCursor();
-        return; // Exit the method early
+        return;
     }
 
     // Starting a new search
@@ -78,7 +78,7 @@ void MainWindow::launchSearch()
 
         // Set the search as running, but DON'T change button appearance for memory mode
         // since it can't be stopped
-        isSearchRunning = true;
+        //isSearchRunning = true;
 
         // Run the search
         searchMemory->searchFiles(selectedDevice);
@@ -405,7 +405,9 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 .arg(QString::number(percentLoaded, 'f', 1))
                                 .arg(currentSearch->fileNames.size());
 
-            statusBar()->showMessage(statusMessage);
+            statusBar()->show();
+            statusBar()->showMessage(statusMessage, 5000);
+            statusBarTimer->start(5000);
             QCoreApplication::processEvents();
         }
         return;
@@ -419,7 +421,9 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                 .arg(currentSearch->totalCatalogs)
                 .arg(currentSearch->fileNames.size());
 
-            statusBar()->showMessage(statusMessage);
+            statusBar()->show();
+            statusBar()->showMessage(statusMessage, 5000);
+            statusBarTimer->start(5000);
         }
         return;
     }
