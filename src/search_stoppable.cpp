@@ -135,7 +135,8 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
                     }
                 }
             }
-        } else {
+        }
+        else {
             // Count catalogs in the selected device
             totalCatalogs = 0;
             if (selectedDevice->type == "Catalog") {
@@ -209,7 +210,8 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
                 currentCatalogIndex++;
                 currentCatalogName = selectedDevice->name;
                 searchFilesInCatalog(selectedDevice, mutex, stopRequested);
-            } else {
+            }
+            else {
                 foreach(const Device::deviceListRow & row, selectedDevice->deviceListTable) {
                     if (row.type == "Catalog") {
                         currentCatalogIndex++;
@@ -254,8 +256,6 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
         // Calculate statistics
         calculateStatistics();
 
-        // Save the search criteria to the search history
-        saveSearchHistoryToTable(connectionName);
     }
     // Final progress report - confirm 100% completion
     emit searchProgress(totalFilesProcessed);

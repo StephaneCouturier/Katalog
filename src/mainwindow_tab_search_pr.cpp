@@ -58,7 +58,7 @@ void MainWindow::launchSearch()
     // Start animation
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For memory mode without searchInConnected, use MemorySearch directly
+    // For memory mode without searchInConnected, use SearchMemory directly
     if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
         // Create memory search object if not already created
         if (!searchMemory) {
@@ -85,9 +85,6 @@ void MainWindow::launchSearch()
 
         // Display the results
         displaySearchResults();
-
-        //Save search history
-        currentSearch->saveSearchHistoryToTable("defaultConnection");
 
         // Reset the search state when search is complete
         isSearchRunning = false;
@@ -138,12 +135,12 @@ void MainWindow::launchSearch()
         // Run the search in the main thread
         searchStoppable->searchFiles(selectedDevice);
 
-        //Save search history
-        currentSearch->saveSearchHistoryToTable("defaultConnection");
-
         // If we get here, the search is complete
         handleSearchCompleted();
     }
+
+    //Save search history
+    currentSearch->saveSearchHistoryToTable("defaultConnection");
 
     // Adapt display of files found for searchInConnected
     if (currentSearch && currentSearch->searchInConnectedChecked == true) {
