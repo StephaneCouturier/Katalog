@@ -423,7 +423,7 @@
 
                 // Add files processed info
                 filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
-                                         .arg(lastProcessedFiles);
+                                         .arg(QLocale().toString(lastProcessedFiles));
 
                 // Show percentage if we have an estimate
                 if (currentSearch->estimatedTotalFiles > 0) {
@@ -434,7 +434,7 @@
             } else {
                 // For complete searches, show total files processed
                 filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
-                                         .arg(currentSearch->totalFilesProcessed);
+                                        .arg(QLocale().toString(currentSearch->totalFilesProcessed));
             }
 
             // Create the message box with all statistics
@@ -442,7 +442,7 @@
             msgBox.setWindowTitle("Katalog");
             msgBox.setText(headerText +
                            tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>")
-                               .arg(QString::number(currentSearch->filesFoundNumber)) +
+                                        .arg(QLocale().toString(currentSearch->filesFoundNumber)) +
                            filesProcessedText +
                            tr("<tr></tr>"
                               "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
@@ -471,8 +471,8 @@
             lastSearchSortSection = searchTreeHeader->sortIndicatorSection();
             lastSearchSortOrder   = searchTreeHeader->sortIndicatorOrder();
 
-            settings.setValue("Search/lastSearchSortSection", QString::number(lastSearchSortSection));
-            settings.setValue("Search/lastSearchSortOrder",   QString::number(lastSearchSortOrder));
+            settings.setValue("Search/lastSearchSortSection", QLocale().toString(lastSearchSortSection));
+            settings.setValue("Search/lastSearchSortOrder",   QLocale().toString(lastSearchSortOrder));
         }
         //----------------------------------------------------------------------
         void MainWindow::on_SearchTreeViewHistoryHeaderSortOrderChanged(){
@@ -483,8 +483,8 @@
             lastSearchHistorySortSection = searchHistoryTreeHeader->sortIndicatorSection();
             lastSearchHistorySortOrder   = searchHistoryTreeHeader->sortIndicatorOrder();
 
-            settings.setValue("Search/lastSearchHistorySortSection", QString::number(lastSearchHistorySortSection));
-            settings.setValue("Search/lastSearchHistorySortOrder",   QString::number(lastSearchHistorySortOrder));
+            settings.setValue("Search/lastSearchHistorySortSection", QLocale().toString(lastSearchHistorySortSection));
+            settings.setValue("Search/lastSearchHistorySortOrder",   QLocale().toString(lastSearchHistorySortOrder));
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_splitter_Results_splitterMoved()
@@ -1159,7 +1159,7 @@
                     if (QMessageBox::warning(this,
                                              tr("Confirmation"),
                                              "<span style='color:orange;font-weight: bold;'>"+tr("MOVE")+"</span><br/>"
-                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QString::number(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
+                                                 +tr("Move all %1 files (%2) from these results to trash?").arg(QLocale().toString(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
                                              QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
                             for (int i = 0; i < currentSearch->fileNames.size(); ++i)
@@ -1173,7 +1173,7 @@
                             else
                          movedFiles+=1;
                             }
-                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QString::number(movedFiles), QString::number(currentSearch->filesFoundNumber)));
+                            QMessageBox::information(this,"Katalog",tr("%1 files were moved to trash, out of %2 files from the results.").arg(QLocale().toString(movedFiles), QLocale().toString(currentSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1198,7 +1198,7 @@
                     if (QMessageBox::critical(this,
                                               tr("Confirmation"),
                                               "<span style='color:red;font-weight: bold;'>"+tr("DELETE")+"</span><br/>"
-                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QString::number(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
+                                              +tr("Delete permanently all %1 files (%2) from these results?").arg(QLocale().toString(currentSearch->filesFoundNumber), QLocale().formattedDataSize(currentSearch->filesFoundTotalSize)),
                                               QMessageBox::Yes|QMessageBox::Cancel)
                         == QMessageBox::Yes) {
                         for (int i = 0; i < currentSearch->fileNames.size(); ++i)
@@ -1209,7 +1209,7 @@
                             }
                             result="";
                         }
-                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QString::number(deletedFiles), QString::number(currentSearch->filesFoundNumber)));
+                        QMessageBox::information(this,"Katalog",tr("%1 files were deleted, out of %2 files from the results.").arg(QLocale().toString(deletedFiles), QLocale().toString(currentSearch->filesFoundNumber)));
                     }
 
                     //Reset process selection to reduce risk of running it by mistake
@@ -1284,7 +1284,7 @@
                     newDevice->catalog->insertCatalog();
                     collection->saveDeviceTableToFile();
 
-                    catalogMetadata.prepend("<catalogID>" + QString::number(newDevice->catalog->ID));
+                    catalogMetadata.prepend("<catalogID>" + QLocale().toString(newDevice->catalog->ID));
                     catalogMetadata.prepend("<catalogAppVersion>");
                     catalogMetadata.prepend("<catalogIncludeMetadata>");
                     catalogMetadata.prepend("<catalogIsFullDevice>");
@@ -1387,7 +1387,7 @@
                             //QFile file(currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_catalog_id",   newDevice->catalog->ID);
                             insertFileQuery.bindValue(":file_name",         currentSearch->fileNames[i]);
-                            insertFileQuery.bindValue(":file_size",         QString::number(currentSearch->fileSizes[i]));
+                            insertFileQuery.bindValue(":file_size",         QLocale().toString(currentSearch->fileSizes[i]));
                             insertFileQuery.bindValue(":file_folder_path",  currentSearch->filePaths[i]);
                             insertFileQuery.bindValue(":file_date_updated", currentSearch->fileDateTimes[i]);
                             insertFileQuery.bindValue(":file_catalog",      currentSearch->fileCatalogs[i]);
@@ -1418,7 +1418,7 @@
                     {
                         //Export to file
                         QString line = currentSearch->filePaths[i] + "/" + currentSearch->fileNames[i] + "\t"
-                                       + QString::number(currentSearch->fileSizes[i]) + "\t"
+                                       + QLocale().toString(currentSearch->fileSizes[i]) + "\t"
                                        + currentSearch->fileDateTimes[i] + "\t"
                                        + currentSearch->fileCatalogs[i];
                         stream << line << '\n';

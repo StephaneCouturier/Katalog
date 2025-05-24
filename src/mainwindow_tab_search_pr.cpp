@@ -54,7 +54,9 @@ void MainWindow::launchSearch()
         return;
     }
 
-    // Starting a new search
+    // Clear the search view before starting a new search
+    resetSearchState();
+
     // Start animation
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -284,7 +286,7 @@ void MainWindow::displaySearchResults()
     }
 
     // Update results count and size display
-    ui->Search_label_NumberResults->setText(QString::number(currentSearch->filesFoundNumber));
+    ui->Search_label_NumberResults->setText(QLocale().toString(currentSearch->filesFoundNumber));
     ui->Search_label_SizeResults->setText(QLocale().formattedDataSize(currentSearch->filesFoundTotalSize));
 
     // Enable/disable the statistics button based on results
@@ -366,8 +368,8 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (filesProcessed == -1) {
         if (currentSearch) {
             statusMessage = tr("Search interrupted | Files found: %1 | Files processed: %2")
-            .arg(currentSearch->fileNames.size())
-                .arg(lastProcessedFiles);
+                                .arg(QLocale().toString(currentSearch->fileNames.size()))
+                                .arg(QLocale().toString(lastProcessedFiles));
         } else {
             statusMessage = tr("Search interrupted. No results available.");
         }
@@ -383,7 +385,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             .arg(currentSearch->currentCatalogIndex)
                 .arg(currentSearch->totalCatalogs)
                 .arg(currentSearch->currentCatalogName)
-                .arg(currentSearch->fileNames.size());
+                .arg(QLocale().toString(currentSearch->fileNames.size()));
 
             statusBar()->showMessage(statusMessage);
         }
@@ -404,9 +406,9 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 .arg(searchMemory->currentCatalogIndex)
                                 .arg(searchMemory->totalCatalogs)
                                 .arg(searchMemory->currentCatalogName)
-                                .arg(searchMemory->currentCatalogFilesLoaded)
+                                .arg(QLocale().toString(searchMemory->currentCatalogFilesLoaded))
                                 .arg(QString::number(percentLoaded, 'f', 1))
-                                .arg(currentSearch->fileNames.size());
+                                .arg(QLocale().toString(currentSearch->fileNames.size()));
 
             statusBar()->show();
             statusBar()->showMessage(statusMessage, 5000);
@@ -422,7 +424,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
             statusMessage = tr("Processing Catalog %1 of %2 | Files found: %3 | Processing files...")
             .arg(currentSearch->currentCatalogIndex)
                 .arg(currentSearch->totalCatalogs)
-                .arg(currentSearch->fileNames.size());
+                .arg(QLocale().toString(currentSearch->fileNames.size()));
 
             statusBar()->show();
             statusBar()->showMessage(statusMessage, 5000);
@@ -441,13 +443,13 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                     .arg(currentSearch->totalCatalogs);
             }
             statusMessage += tr("Files found: %1 | Files processed: %2")
-                                 .arg(currentSearch->fileNames.size())
-                                 .arg(filesProcessed);
+                                 .arg(QLocale().toString(currentSearch->fileNames.size()))
+                                 .arg(QLocale().toString(filesProcessed));
         } else {
             // Otherwise just show files
             statusMessage = tr("Files found: %1 | Files processed: %2")
-                                .arg(currentSearch->fileNames.size())
-                                .arg(filesProcessed);
+                                .arg(QLocale().toString(currentSearch->fileNames.size()))
+                                .arg(QLocale().toString(filesProcessed));
         }
 
         // Calculate percentage if we have an estimate
@@ -480,13 +482,6 @@ void MainWindow::resetSearchState()
     // Reset the current search object
     if (currentSearch) {
         currentSearch->clearResults();
-    }
-
-    // Don't delete dbSearch, just reset its state if it exists
-    if (searchStoppable) {
-        searchStoppable->clearResults();
-        // Reset connection name to force reinitialization next time
-        searchStoppable->connectionName = "";
     }
 
     // Clear any models or views
