@@ -32,7 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "catalog.h"
+#include "core/catalog.h"
 #include "filesview.h"
 #include "exploretreemodel.h"
 #include "exploretreeview.h"

@@ -31,7 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "catalog.h"
+#include "core/catalog.h"
 #include "filesview.h"
 
 //TAB: SEARCH FILES ------------------------------------------------------------

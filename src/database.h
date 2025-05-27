@@ -39,7 +39,7 @@
 
             const auto SQL_CREATE_DEVICE = QLatin1String(R"(
                         CREATE TABLE IF NOT EXISTS device(
-                            device_id                  NUMERIC,
+                            device_id                  NUMERIC PRIMARY KEY,
                             device_parent_id           NUMERIC,
                             device_name                TEXT,
                             device_type                TEXT,

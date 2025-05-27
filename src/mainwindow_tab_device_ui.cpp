@@ -32,7 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
-#include "device.h"
+#include "core/device.h"
 
 //TAB: DEVICES -------------------------------------------------------------
 //--- UI -------------------------------------------------------------------

@@ -83,10 +83,10 @@
 
 //Katalog object classes
 #include "collection.h"
-#include "search.h"
-#include "device.h"
-#include "search_stoppable.h"
-#include "search_memory.h"
+#include "core/search.h"
+#include "core/device.h"
+#include "core/search_stoppable.h"
+#include "core/search_memory.h"
 
 
 QT_BEGIN_NAMESPACE

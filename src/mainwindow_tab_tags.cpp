@@ -31,7 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "tag.h"
+#include "core/tag.h"
 
 //UI------------------------------------------------------------------------
 

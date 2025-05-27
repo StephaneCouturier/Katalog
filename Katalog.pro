@@ -60,9 +60,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/catalog.cpp \
     src/collection.cpp \
-    src/device.cpp \
+    src/core/catalog.cpp \
+    src/core/device.cpp \
+    src/core/search.cpp \
+    src/core/search_memory.cpp \
+    src/core/search_stoppable.cpp \
+    src/core/storage.cpp \
+    src/core/tag.cpp \
     src/devicemappingview.cpp \
     src/devicetreeview.cpp \
     src/directorytreeitem.cpp \
@@ -85,18 +90,18 @@ SOURCES += \
     src/mainwindow_tab_settings.cpp \
     src/mainwindow_tab_settings_exp.cpp \
     src/mainwindow_tab_statistics.cpp \
-    src/mainwindow_tab_tags.cpp \
-    src/search.cpp \
-    src/search_memory.cpp \
-    src/search_stoppable.cpp \
-    src/storage.cpp \
-    src/tag.cpp
+    src/mainwindow_tab_tags.cpp
 
 HEADERS += \
-    src/catalog.h \
     src/collection.h \
+    src/core/catalog.h \
+    src/core/device.h \
+    src/core/search.h \
+    src/core/search_memory.h \
+    src/core/search_stoppable.h \
+    src/core/storage.h \
+    src/core/tag.h \
     src/database.h \
-    src/device.h \
     src/devicemappingview.h \
     src/devicetreeview.h \
     src/directorytreeitem.h \
@@ -105,13 +110,7 @@ HEADERS += \
     src/exploretreemodel.h \
     src/exploretreeview.h \
     src/filesview.h \
-    src/mainwindow.h \
-    src/search.h \
-    src/search_memory.h \
-    src/search_stoppable.h \
-    src/storage.h \
-    src/tag.h \
-    src/tag.h
+    src/mainwindow.h
 
 FORMS += \
     src/mainwindow.ui
