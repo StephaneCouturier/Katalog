@@ -38,7 +38,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
-#include <QMessageBox>
 #include <QCoreApplication>
 #include <QRegularExpression>
 
