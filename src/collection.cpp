@@ -371,13 +371,7 @@ void Collection::loadCatalogFilesToTable()
 
             // Verify that the file can be opened
             if(!catalogFile.open(QIODevice::ReadOnly)) {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                           "No catalog found."
-                                                           ));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.exec();
+                qDebug() << "DEBUG: loadCatalogFilesToTable() / Could not open catalog file:" << catalogFile.errorString();
                 return;
             }
 
@@ -448,19 +442,7 @@ void Collection::loadStorageFileToTable()
         //Test file validity (application breaks between v0.13 and v0.14)
         QString line = textStream.readLine();
         if (line.left(2)!="ID"){
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "A storage.csv file was found, but could not be loaded.\n"
-                                                       "Likely, it was made with an older version of Katalog.\n"
-                                                       "The file can be fixed manually, please visit the wiki page:\n"
-                                                       "<a href='https://github.com/StephaneCouturier/Katalog/wiki/Storage#fixing-for-new-versions'>"
-                                                       "Storage/fixing-for-new-versions</a>"
-                                                       ));
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-
+            qDebug() << "DEBUG: loadStorageFileToTable() / Storage file is not valid, cannot load it to table: " << storageFilePath;
             return;
         }
 
@@ -1077,11 +1059,7 @@ void Collection::saveDeviceTableToFile()
             deviceFile.close();
         }
         else{
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText("DEBUG: Error opening output file:<br/>" + deviceFilePath);
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
+            qDebug() << "DEBUG: saveDeviceTableToFile() / Error opening output file:" << deviceFilePath;
         }
     }
 }
@@ -1455,37 +1433,29 @@ void Collection::saveMappingTableToFile()
 }
 
 //File deleting---------------------------------------------------------
-void Collection::deleteCatalogFile(Device *device) {
+QString Collection::deleteCatalogFile(Device *device) {
     if(databaseMode=="Memory"){
-        //Move file to trash
-        if ( device->catalog->filePath != ""){
-
-            QFile file (device->catalog->filePath);
-            file.moveToTrash();
+        // Move file to trash
+        if (device->catalog->filePath != "") {
+            QFile file(device->catalog->filePath);
+            if (!file.moveToTrash()) {
+                return "DEBUG: deleteCatalogFile() / Failed to move catalog file to trash"
+                       + device->catalog->filePath;
+            }
 
             QString foldersFilePath = device->catalog->filePath;
             foldersFilePath.chop(4);
-            foldersFilePath +=".folders.idx";
-            QFile foldersFile (foldersFilePath);
-            foldersFile.moveToTrash();
-        }
-        else{
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "Select a catalog with a valid path."
-                                                       ));
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
-        }
-        //Clear current entires from the table
-        QSqlQuery queryDelete(QSqlDatabase::database("defaultConnection"));
-        queryDelete.exec("DELETE FROM catalog");
+            foldersFilePath += ".folders.idx";
+            QFile foldersFile(foldersFilePath);
+            foldersFile.moveToTrash(); // Optional: check return value here too
 
-        //refresh catalog lists
-        loadCatalogFilesToTable();
+            return ""; // Empty string indicates success
+        }
+        else {
+            return QCoreApplication::translate("MainWindow","Select a catalog with a valid path.");
+        }
     }
-
+    return ""; // Success for non-Memory mode
 }
 //----------------------------------------------------------------------
 

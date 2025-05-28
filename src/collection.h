@@ -103,7 +103,7 @@ public:
     void saveMappingTableToFile();
 
     //File deleting
-    void deleteCatalogFile(Device *device);
+    QString deleteCatalogFile(Device *device);
 
     //Data management
     void insertPhysicalStorageGroup();

@@ -247,8 +247,16 @@ void MainWindow::deleteDeviceItem()
     //Save data to files
     collection->saveDeviceTableToFile();
     collection->saveStorageTableToFile();
-    if(activeDevice->type =="Catalog")
-        collection->deleteCatalogFile(activeDevice);
+    if(activeDevice->type =="Catalog"){
+        QString result = collection->deleteCatalogFile(activeDevice);
+        if (!result.isEmpty()) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(result);
+            msgBox.setIcon(result.contains("Failed") ? QMessageBox::Warning : QMessageBox::Information);
+            msgBox.exec();
+        }
+    }
 
     //Reload data to models
     updateStorageSelectionStatistics();
