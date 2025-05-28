@@ -32,7 +32,7 @@
 #ifndef COLLECTION_H
 #define COLLECTION_H
 
-#include "core/device.h"
+#include "device.h"
 #include <QAbstractTableModel>
 #include <QFile>
 #include <QSqlQuery>

@@ -60,7 +60,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/collection.cpp \
+    src/core/collection.cpp \
     src/core/catalog.cpp \
     src/core/device.cpp \
     src/core/search.cpp \
@@ -93,7 +93,7 @@ SOURCES += \
     src/mainwindow_tab_tags.cpp
 
 HEADERS += \
-    src/collection.h \
+    src/core/collection.h \
     src/core/catalog.h \
     src/core/device.h \
     src/core/search.h \

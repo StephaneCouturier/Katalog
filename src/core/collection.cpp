@@ -30,7 +30,7 @@
 */
 
 #include "collection.h"
-#include "core/device.h"
+#include "device.h"
 
 //Main attributes--------------------------------------------------------
 void Collection::updateCollectionVersion()

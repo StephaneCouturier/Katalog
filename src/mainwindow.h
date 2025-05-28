@@ -82,7 +82,7 @@
 #include <QtCharts/QLegendMarker>
 
 //Katalog object classes
-#include "collection.h"
+#include "core/collection.h"
 #include "core/search.h"
 #include "core/device.h"
 #include "core/search_stoppable.h"
