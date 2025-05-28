@@ -81,7 +81,7 @@ public:
     void generateCollectionFiles();
 
     //File loading
-    void load();
+    bool load();
     void clearDatabaseData();
     void loadAllCatalogFiles();
     void loadDeviceFileToTable();
@@ -106,7 +106,7 @@ public:
     QString deleteCatalogFile(Device *device);
 
     //Data management
-    void insertPhysicalStorageGroup();
+    bool insertPhysicalStorageGroup();
 
 };
 

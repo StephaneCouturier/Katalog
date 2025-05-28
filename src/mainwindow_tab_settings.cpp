@@ -535,7 +535,11 @@
 //SETTINGS / data methods --------------------------------------------------
     void MainWindow::loadCollection()
     {
-        collection->load();
+        bool defaultsCreated = collection->load();
+
+        if (defaultsCreated) {
+            translateDefaultDevices();
+        }
 
         //Check active status and synch it
         updateAllDeviceActive();
@@ -696,3 +700,46 @@
         }
     }
 
+    //----------------------------------------------------------------------
+    void MainWindow::translateDefaultDevices()
+    {
+        // Update device with ID=1 (Physical Group)
+        Device physicalGroup;
+        physicalGroup.ID = 1;
+        physicalGroup.loadDevice("defaultConnection");
+        physicalGroup.name = tr(" Physical Group");
+        physicalGroup.saveDevice();
+
+        // Update device with ID=2 (Virtual device)
+        Device virtualDevice;
+        virtualDevice.ID = 2;
+        virtualDevice.loadDevice("defaultConnection");
+        virtualDevice.name = tr("Virtual device");
+        virtualDevice.saveDevice();
+
+        // Update default storage device (find the one created by insertPhysicalStorageGroup)
+        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+        QString querySQL = QLatin1String(R"(
+                                SELECT device_id
+                                FROM device
+                                WHERE device_type='Storage'
+                                AND device_name='Local disk'
+                                LIMIT 1
+                            )");
+        query.prepare(querySQL);
+        query.exec();
+
+        if (query.next()) {
+            Device localStorage;
+            localStorage.ID = query.value(0).toInt();
+            localStorage.loadDevice("defaultConnection");
+            localStorage.name = tr("Local disk");
+            localStorage.saveDevice();
+        }
+
+        // Save the updated device data to file (for Memory mode)
+        if (collection->databaseMode == "Memory") {
+            collection->saveDeviceTableToFile();
+            collection->saveStorageTableToFile();
+        }
+    }

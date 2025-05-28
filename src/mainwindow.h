@@ -182,6 +182,9 @@ class MainWindow : public QMainWindow
             Device *catalogDevice  = new Device(); //selected catalog/device from Catalog screen
             Device *exploreDevice  = new Device(); //tempory catalog/device to be use in Exploore screen
 
+            //Collection
+            void translateDefaultDevices();
+
         //Filters panel
             int  filtersTreeExpandState;
             QString selectedConnectedDrivePath;

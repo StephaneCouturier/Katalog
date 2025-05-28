@@ -175,7 +175,7 @@ void Collection::generateCollectionFiles()
 }
 
 //File loading-----------------------------------------------------------
-void Collection::load()
+bool Collection::load()
 {//Load collection
     //Reset key values and clear database in "Memory" mode
     version ="";
@@ -202,7 +202,9 @@ void Collection::load()
     loadMappingFileToTable();
 
     //Add a default storage device, to force any new catalog to have one
-    insertPhysicalStorageGroup();
+    bool defaultsCreated = insertPhysicalStorageGroup();
+
+    return defaultsCreated;
 }
 //----------------------------------------------------------------------
 void Collection::clearDatabaseData()
@@ -1460,7 +1462,7 @@ QString Collection::deleteCatalogFile(Device *device) {
 //----------------------------------------------------------------------
 
 //Data management ------------------------------------------------------
-void Collection::insertPhysicalStorageGroup() {
+bool Collection::insertPhysicalStorageGroup() {
     //Add the default Physical Group and a Virtual sub-device
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
     QString querySQL;
@@ -1473,12 +1475,14 @@ void Collection::insertPhysicalStorageGroup() {
     query.prepare(querySQL);
     query.exec();
     query.next();
+
+    bool defaultsCreated = false;
     int result = query.value(0).toInt();
     if(result == 0){
         Device *newDeviceItem1 = new Device();
         newDeviceItem1->ID = 1;
         newDeviceItem1->parentID = 0;
-        newDeviceItem1->name = QCoreApplication::translate("MainWindow", " Physical Group");
+        newDeviceItem1->name = " Physical Group";
         newDeviceItem1->type = "Virtual";
         newDeviceItem1->externalID = 0;
         newDeviceItem1->groupID = 0;
@@ -1487,11 +1491,13 @@ void Collection::insertPhysicalStorageGroup() {
         Device *newDeviceItem2 = new Device();
         newDeviceItem2->ID = 2;
         newDeviceItem2->parentID = 1;
-        newDeviceItem2->name = QCoreApplication::translate("MainWindow", "Virtual device");
+        newDeviceItem2->name = "Virtual device";
         newDeviceItem2->type = "Virtual";
         newDeviceItem2->externalID = 0;
         newDeviceItem2->groupID = 0;
         newDeviceItem2->insertDevice();
+
+        defaultsCreated = true;
     }
 
     saveDeviceTableToFile();
@@ -1515,7 +1521,7 @@ void Collection::insertPhysicalStorageGroup() {
         if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
             newStorageDevice->parentID = 1;
 
-        newStorageDevice->name = QCoreApplication::translate("MainWindow", "Local disk");
+        newStorageDevice->name = "Local disk";
         newStorageDevice->type = "Storage";
         newStorageDevice->path = "/";
         #ifdef Q_OS_WINDOWS
@@ -1539,5 +1545,6 @@ void Collection::insertPhysicalStorageGroup() {
         saveDeviceTableToFile();
         saveStorageTableToFile();
     }
+    return defaultsCreated;
 }
 //----------------------------------------------------------------------
