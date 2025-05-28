@@ -34,6 +34,13 @@
 #include <QSqlError>
 
 void Device::loadDevice(QString connectionName){
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+
+    // Clear previous results
+    QElapsedTimer stepTimer;
+    stepTimer.start();
+
     QSqlDatabase db = QSqlDatabase::database(connectionName);
     if (!db.isOpen()) {
         qDebug() << "DEBUG: Database is not open.";
@@ -60,6 +67,9 @@ void Device::loadDevice(QString connectionName){
     query.prepare(querySQL);
     query.bindValue(":device_id", ID);
 
+    qDebug() << "      TIMER3: prepare load device query:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
+
     if (query.exec()) {
         if (query.next()) {
             parentID    = query.value(1).toInt();
@@ -81,6 +91,10 @@ void Device::loadDevice(QString connectionName){
         return;
     }
 
+    qDebug() << "      TIMER3: load device query.exec:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
+
+
     //Load storage values
     if(type == "Storage"){
         storage->ID = externalID;
@@ -89,6 +103,8 @@ void Device::loadDevice(QString connectionName){
         storage->totalSpace = totalSpace;
         storage->freeSpace  = freeSpace;
     }
+    qDebug() << "      TIMER3: Load storage values:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
 
     //Load catalog values
     if(type == "Catalog"){
@@ -99,14 +115,23 @@ void Device::loadDevice(QString connectionName){
         catalog->fileCount = totalFileCount;
         catalog->totalFileSize = totalFileSize;
     }
+    qDebug() << "      TIMER3: Load catalog values:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
 
     //Load sub-device list
     loadSubDeviceList(connectionName);
     loadSubDeviceTree(connectionName);
+    qDebug() << "      TIMER3: Load sub-device list:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
 
     //Update states
     verifyHasSubDevice(connectionName);
-    updateActive(connectionName);
+    qDebug() << "      TIMER3: verifyHasSubDevice:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
+    // updateActive(connectionName);
+    // qDebug() << "      TIMER3: updateActive:" << stepTimer.elapsed() << "ms";
+    // stepTimer.restart();
+    //  qDebug() << "      TIMER3: Total search time:" << totalTimer.elapsed() << "ms";
 }
 
 void Device::loadSubDeviceTree(QString connectionName) {

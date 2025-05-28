@@ -29,9 +29,10 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 
-#include "mainwindow.h"
+#include "../mainwindow.h"
 #include "search_stoppable.h"
 #include "qsqlerror.h"
+#include <QElapsedTimer>
 
 SearchStoppable::SearchStoppable(QObject *parent) : Search(parent), stopRequested(false)
 {
@@ -82,6 +83,11 @@ bool SearchStoppable::initializeDatabase()
 
 void SearchStoppable::searchFiles(Device *selectedDevice)
 {
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+    QElapsedTimer stepTimer;
+    stepTimer.start();
+
     // Clear previous results
     clearResults();
 
@@ -101,12 +107,15 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
 
     // Setup common search patterns
     prepareSearchPatterns();
+    qDebug() << "TIMER: Prepare took:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
 
     // Reset stop flag
     stopRequested = false;
 
     // Process the SEARCH in CATALOGS or DIRECTORY
     if (searchInCatalogsChecked) {
+        stepTimer.restart();
         // Count total catalogs for progress tracking
         if (searchOnDifferences) {
             // For differences, we need to count catalogs in both devices
@@ -149,6 +158,8 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
                 }
             }
         }
+        qDebug() << "TIMER: Count total catalogs took:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
 
         // Reset current catalog index
         currentCatalogIndex = 0;
@@ -209,17 +220,27 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
             if (selectedDevice->type == "Catalog") {
                 currentCatalogIndex++;
                 currentCatalogName = selectedDevice->name;
+                qDebug() << "TIMER: reaching searchFilesInCatalog took:" << stepTimer.elapsed() << "ms";
+                stepTimer.restart();
                 searchFilesInCatalog(selectedDevice, mutex, stopRequested);
+                qDebug() << "TIMER: searchFilesInCatalog took:" << stepTimer.elapsed() << "ms";
+                stepTimer.restart();
             }
             else {
                 foreach(const Device::deviceListRow & row, selectedDevice->deviceListTable) {
                     if (row.type == "Catalog") {
                         currentCatalogIndex++;
+                        qDebug() << "TIMER: entering searchFilesInCatalog:" << stepTimer.elapsed() << "ms";
+                        stepTimer.restart();
                         Device *device = new Device;
                         device->ID = row.ID;
                         device->loadDevice(connectionName);
                         currentCatalogName = device->name;
+                        qDebug() << "TIMER: reaching searchFilesInCatalog took:" << stepTimer.elapsed() << "ms";
+                        stepTimer.restart();
                         searchFilesInCatalog(device, mutex, stopRequested);
+                        qDebug() << "TIMER: searchFilesInCatalog took:" << stepTimer.elapsed() << "ms";
+                        stepTimer.restart();
                         delete device;
                     }
                     if (stopRequested) break;
@@ -239,7 +260,11 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
     // If search was not stopped, process results
     if (!stopRequested) {
         // Process search results
+        qDebug() << "TIMER: reaching processResults took:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
         processResults();
+        qDebug() << "TIMER: processResults took:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
 
         // Process DUPLICATES
         if (searchOnFileCriteria && searchOnDuplicates &&
@@ -255,10 +280,12 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
 
         // Calculate statistics
         calculateStatistics();
-
+        qDebug() << "TIMER: calculateStatistics took:" << stepTimer.elapsed() << "ms";
+        stepTimer.restart();
     }
     // Final progress report - confirm 100% completion
     emit searchProgress(totalFilesProcessed);
+    qDebug() << "TIMER: Total search time:" << totalTimer.elapsed() << "ms \n";
 }
 
 void SearchStoppable::stopSearch()
@@ -275,6 +302,12 @@ void SearchStoppable::stopSearch()
 
 void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {
+    QElapsedTimer totalTimer;
+    totalTimer.start();
+
+    QElapsedTimer stepTimer;
+    stepTimer.start();
+
     // Emit signal to indicate catalog loading started
     emit searchProgress(-2);
 
@@ -317,6 +350,9 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
     getFilesQuery.bindValue(":file_date_updated_max", selectedDateMax.toString("yyyy/MM/dd hh:mm:ss"));
     getFilesQuery.exec();
 
+    qDebug() << "   TIMER2: getFilesQuery took:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
+
     // File by file, test if the file is matching all search criteria
     int filesProcessed = 0;
     int totalFiles = 0;
@@ -332,6 +368,8 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
     if (countQuery.next()) {
         totalFiles = countQuery.value(0).toInt();
     }
+    qDebug() << "   TIMER2: countQuery took:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
 
     while (getFilesQuery.next() && !localStopRequested) {
         QString lineFileName = getFilesQuery.value(0).toString();
@@ -448,10 +486,15 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
             batchCount = 0;
         }
     }
+
+    qDebug() << "   TIMER2: getFilesQuery parsing took:" << stepTimer.elapsed() << "ms";
+    stepTimer.restart();
+
     // Report any remaining files in the last batch
     if (batchCount > 0) {
         updateProgress(batchCount);
     }
+     qDebug() << "   TIMER2: Total catalog search time:" << totalTimer.elapsed() << "ms";
 }
 
 void SearchStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)

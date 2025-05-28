@@ -47,6 +47,7 @@ class Search : public QAbstractTableModel
 
 public:
     explicit Search(QObject *parent = nullptr);
+    virtual ~Search() = default;
 
     // QAbstractTableModel implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
