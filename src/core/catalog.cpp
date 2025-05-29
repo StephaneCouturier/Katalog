@@ -1184,70 +1184,69 @@ void Catalog::catalogDirectory(QString databaseMode, QString collectionFolder)
 }
 
 //--------------------------------------------------------------------------
-void Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
-{//Save a catalog's file list to a file
-    if(databaseMode=="Memory"){
-        //Get the file list from this model
-        QStringList filelist = fileListModel->stringList();
-        filePath = collectionFolder +"/"+ name + ".idx";
-
-        //Stream the list to the file
-        QFile fileOut(filePath);
-
-        //Write data
-        if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            for (int i = 0; i < filelist.size(); ++i)
-                stream << filelist.at(i) << '\n';
-        }
-        else {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow","Error opening output file."));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-        }
-        fileOut.close();
+bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
+{
+    if(databaseMode != "Memory") {
+        return true; // Nothing to do for non-Memory mode
     }
+
+    if (!fileListModel) {
+        return false; // No data to save
+    }
+
+    QStringList filelist = fileListModel->stringList();
+    filePath = collectionFolder + "/" + name + ".idx";
+
+    QFile fileOut(filePath);
+    if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
+        return false; // Failed to open file
+    }
+
+    QTextStream stream(&fileOut);
+    for (int i = 0; i < filelist.size(); ++i) {
+        stream << filelist.at(i) << '\n';
+    }
+
+    fileOut.close();
+    return true; // Success
 }
 //--------------------------------------------------------------------------
-void Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
-{//Save a catalog's folders to a new file
-    if(databaseMode=="Memory"){
-        //Get the folder list from database
-        QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-        QString querySQL = QLatin1String(R"(
-                                    SELECT
-                                        folder_catalog_id,
-                                        folder_path
-                                    FROM folder
-                                    WHERE folder_catalog_id=:folder_catalog_id
-                                            )");
-        query.prepare(querySQL);
-        query.bindValue(":folder_catalog_id", ID);
-        query.exec();
-
-        //Stream the list to the file
-        QFile fileOut( collectionFolder +"/"+ name + ".folders.idx" );
-
-        //Write data
-        if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
-            QTextStream stream(&fileOut);
-            while(query.next()){
-                stream << query.value(0).toString() << '\t';
-                stream << query.value(1).toString() << '\n';
-            }
-
-        } else {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow","Error opening output file."));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-            //return EXIT_FAILURE;
-        }
-        fileOut.close();
+bool Catalog::saveFoldersToFile(QString databaseMode, QString collectionFolder)
+{
+    if(databaseMode != "Memory") {
+        return true; // Nothing to do for non-Memory mode
     }
+
+    // Get the folder list from database
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                                SELECT
+                                    folder_catalog_id,
+                                    folder_path
+                                FROM folder
+                                WHERE folder_catalog_id=:folder_catalog_id
+                                        )");
+    query.prepare(querySQL);
+    query.bindValue(":folder_catalog_id", ID);
+    if (!query.exec()) {
+        return false; // Database query failed
+    }
+
+    // Open output file
+    QFile fileOut(collectionFolder + "/" + name + ".folders.idx");
+    if (!fileOut.open(QFile::WriteOnly | QFile::Text)) {
+        return false; // Failed to open file
+    }
+
+    // Write data
+    QTextStream stream(&fileOut);
+    while(query.next()){
+        stream << query.value(0).toString() << '\t';
+        stream << query.value(1).toString() << '\n';
+    }
+
+    fileOut.close();
+    return true; // Success
 }
 
 //--------------------------------------------------------------------------

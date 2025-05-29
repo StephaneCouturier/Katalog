@@ -106,8 +106,8 @@ public:
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
     void updateCatalogFileHeaders(QString databaseMode);
-    void saveCatalogToFile(QString databaseMode, QString collectionFolder);
-    void saveFoldersToFile(QString databaseMode, QString collectionFolder);
+    bool saveCatalogToFile(QString databaseMode, QString collectionFolder);
+    bool saveFoldersToFile(QString databaseMode, QString collectionFolder);
 
     void loadCatalogFileListToTable(QString connectionName, QMutex &mutex, bool &stopRequested);
     void loadFoldersToTable();

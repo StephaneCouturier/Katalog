@@ -88,6 +88,14 @@ private:
     static QMessageBox::StandardButton showConfirmationDialog(const QString& title,
                                                               const QString& text,
                                                               QMessageBox::StandardButtons buttons = QMessageBox::Yes | QMessageBox::Cancel);
+
+    bool saveCatalogToFileWithUI(Catalog* catalog,
+                                 const QString& databaseMode,
+                                 const QString& collectionFolder);
+    bool saveFoldersToFileWithUI(Catalog* catalog,
+                                                   const QString& databaseMode,
+                                                   const QString& collectionFolder);
+    void showFileWriteError();
 };
 
 #endif // MAINWINDOW_UI_WRAPPER_CATALOG_H

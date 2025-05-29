@@ -213,3 +213,40 @@ QMessageBox::StandardButton CatalogUIWrapper::showConfirmationDialog(const QStri
 {
     return showMessageBox(QMessageBox::Question, title, text, buttons);
 }
+
+bool CatalogUIWrapper::saveCatalogToFileWithUI(Catalog* catalog,
+                                               const QString& databaseMode,
+                                               const QString& collectionFolder)
+{
+    bool success = catalog->saveCatalogToFile(databaseMode, collectionFolder);
+
+    if (!success && databaseMode == "Memory") {
+        showFileWriteError();
+        return false;
+    }
+
+    return success;
+}
+
+bool CatalogUIWrapper::saveFoldersToFileWithUI(Catalog* catalog,
+                                               const QString& databaseMode,
+                                               const QString& collectionFolder)
+{
+    bool success = catalog->saveFoldersToFile(databaseMode, collectionFolder);
+
+    if (!success && databaseMode == "Memory") {
+        showFileWriteError();
+        return false;
+    }
+
+    return success;
+}
+
+void CatalogUIWrapper::showFileWriteError()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(QCoreApplication::translate("MainWindow", "Error opening output file."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+}
