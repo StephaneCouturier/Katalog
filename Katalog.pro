@@ -92,7 +92,8 @@ SOURCES += \
     src/mainwindow_tab_statistics.cpp \
     src/mainwindow_tab_tags.cpp \
     src/mainwindow_ui_wrapper_device.cpp \
-    src/mainwindow_ui_wrapper_storage.cpp
+    src/mainwindow_ui_wrapper_storage.cpp \
+    src/core/mainwindow_ui_wrapper_catalog.cpp
 
 HEADERS += \
     src/core/collection.h \
@@ -114,7 +115,8 @@ HEADERS += \
     src/filesview.h \
     src/mainwindow.h \
     src/mainwindow_ui_wrapper_device.h \
-    src/mainwindow_ui_wrapper_storage.h
+    src/mainwindow_ui_wrapper_storage.h \
+    src/core/mainwindow_ui_wrapper_catalog.h
 
 FORMS += \
     src/mainwindow.ui
