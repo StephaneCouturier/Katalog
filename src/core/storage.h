@@ -34,17 +34,40 @@
 
 #include <QStorageInfo>
 #include <QSqlQuery>
-#include <QRegularExpression>
-#include <QSqlQuery>
+#include <QSqlDatabase>
 #include <QVariant>
-#include <QMessageBox>
-#include <QCoreApplication>
+#include <QDateTime>
+#include <QDir>
+
+// Forward declaration to avoid including QCoreApplication
+class QString;
 
 class Storage
 {
-
 public:
+    // Error codes for updateStorageInfo
+    enum ErrorCode {
+        Success = 0,
+        ErrorNoPath = 1,
+        ErrorEmptyDirectory = 2,
+        ErrorCannotGetValues = 3,
+        ErrorNotUpdated = 4
+    };
 
+    // Result structure for updateStorageInfo
+    struct UpdateResult {
+        bool wasUpdated;
+        ErrorCode errorCode;
+        qint64 newUsedSpace;
+        qint64 deltaUsedSpace;
+        qint64 newFreeSpace;
+        qint64 deltaFreeSpace;
+        qint64 newTotalSpace;
+        qint64 deltaTotalSpace;
+        QString errorMessage; // For detailed error information
+    };
+
+    // Data members
     int ID;
     QString name;
     QString type;
@@ -62,12 +85,22 @@ public:
     QString comment3;
     QDateTime dateTimeUpdated;
 
+    // Constructor
+    Storage() : ID(0), totalSpace(0), freeSpace(0) {}
+
+    // Methods
     void generateID();
     void insertStorage();
     void deleteStorage();
     void loadStorage(QString connectionName);
-    QList<qint64> updateStorageInfo(bool reportStorageUpdate);
 
+    // Updated method signature - returns structured result instead of mixed list
+    UpdateResult updateStorageInfo();
+
+private:
+    // Helper methods
+    bool isDirectoryEmpty(const QString &dirPath);
+    bool getStorageInfo();
 };
 
 #endif // STORAGE_H

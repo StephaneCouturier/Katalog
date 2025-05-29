@@ -30,7 +30,6 @@
 */
 
 #include "device.h"
-#include <QApplication>
 #include <QSqlError>
 
 void Device::loadDevice(QString connectionName){
@@ -455,73 +454,6 @@ void Device::getIDFromDeviceName()
     ID = queryIDFromDeviceName.value(0).toInt();
 }
 
-void Device::deleteDevice(bool askConfirmation)
-{
-    verifyHasSubDevice("defaultConnection");
-
-    if ( hasSubDevice == false ){
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            QString impactMessage;
-            int result;
-
-            if (askConfirmation==true){
-
-                if(type=="Storage"){
-                    impactMessage = QCoreApplication::translate("MainWindow","This will remove the device and the storage details.");
-                }
-                msgBox.setText(QCoreApplication::translate("MainWindow", "Do you want to <span style='color: red';>delete</span> this %1 device?"
-                                                                         "<table>"
-                                                                         "<tr><td>ID:   </td><td><b> %2 </td></tr>"
-                                                                         "<tr><td>Name: </td><td><b> %3 </td></tr>"
-                                                                         "<tr><td></td></tr>"
-                                                                         "<tr><td></td><td>%4</td></tr>"
-                                                                         "</table>").arg(type, QString::number(ID), name,impactMessage));
-                msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
-                result = msgBox.exec();
-            }
-            else
-                result = QMessageBox::Yes;
-
-            if ( result == QMessageBox::Yes){
-
-                //Delete selected ID
-                QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-                QString querySQL = QLatin1String(R"(
-                                    DELETE FROM device
-                                    WHERE device_id=:device_id
-                                )");
-                query.prepare(querySQL);
-                query.bindValue(":device_id", ID);
-                query.exec();
-
-                if(type == "Storage"){
-                    storage->ID = externalID;
-                    storage->deleteStorage();
-                }
-            }
-
-        //Delete storage values
-        if(type == "Storage"){
-            storage->deleteStorage();
-        }
-
-        //Delete catalog values
-        if(type == "Catalog"){
-            catalog->deleteCatalog();
-        }
-    }
-    else{
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText(QCoreApplication::translate("MainWindow", "The selected device cannot be deleted as long as it has sub-devices."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-    }
-}
-
 void Device::saveDevice()
 {//Update database with device values
     QSqlQuery query(QSqlDatabase::database("defaultConnection"));
@@ -562,16 +494,30 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                                    QString databaseMode,
                                    bool reportStorageUpdate,
                                    QString collectionFolder,
-                                   bool includeSubDevices)
+                                   bool includeSubDevices,
+                                   const UpdateCallbacks* callbacks)
 {//Update device and related children storage or catalog information where relevant
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    //Prepare
+    // Signal start of update if callback provided
+    if (callbacks && callbacks->onStartUpdate) {
+        callbacks->onStartUpdate();
+    }
+
+    // Prepare
     QList<qint64> deviceUpdatesList;
     Device parentDevice;
     parentDevice.ID = parentID;
     parentDevice.loadDevice("defaultConnection");
     updateActive("defaultConnection");
     dateTimeUpdated = QDateTime::currentDateTime();
+
+    //QApplication::setOverrideCursor(Qt::WaitCursor);
+    //Prepare
+    // QList<qint64> deviceUpdatesList;
+    // Device parentDevice;
+    // parentDevice.ID = parentID;
+    // parentDevice.loadDevice("defaultConnection");
+    // updateActive("defaultConnection");
+    // dateTimeUpdated = QDateTime::currentDateTime();
 
     //Update device and children depending on type
     if (type=="Catalog"){
@@ -602,7 +548,8 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
                                                                      databaseMode,
                                                                      reportStorageUpdate,
                                                                      collectionFolder,
-                                                                     false);
+                                                                     false,
+                                                                     nullptr);
         deviceUpdatesList.append(storageUpdatesList);
 
         //Update related devices (other catalog devices using the same catalog ID)
@@ -693,7 +640,28 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
         }
 
         //Update storage itself
-        QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
+        //QList<qint64> storageUpdates = StorageUIWrapper::updateStorageInfoWithUI(storage, reportStorageUpdate);
+        //QList<qint64> storageUpdates = storage->updateStorageInfo(reportStorageUpdate);
+        Storage::UpdateResult storageResult = storage->updateStorageInfo();
+
+        // Handle UI reporting manually if needed
+        if (!storageResult.wasUpdated && reportStorageUpdate) {
+            // You could either:
+            // 1. Add error handling here, or
+            // 2. Let the caller handle it, or
+            // 3. Pass the error info back somehow
+        }
+
+        // Convert to old format for compatibility with existing code
+        QList<qint64> storageUpdates;
+        if (storageResult.wasUpdated) {
+            storageUpdates << 1 << storageResult.newUsedSpace << storageResult.deltaUsedSpace
+                           << storageResult.newFreeSpace << storageResult.deltaFreeSpace
+                           << storageResult.newTotalSpace << storageResult.deltaTotalSpace;
+        } else {
+            storageUpdates << 0 << 0 << 0 << 0 << 0 << 0 << 0;
+        }
+
         freeSpace  = storageUpdates[3];
         totalSpace = storageUpdates[5];
         saveStatistics(dateTimeUpdated, statiticsRequestSource);
@@ -728,7 +696,11 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     if( deviceUpdatesList.count() == 0)
         deviceUpdatesList<<0;
 
-    QApplication::restoreOverrideCursor();
+    //QApplication::restoreOverrideCursor();
+    // Signal end of update if callback provided
+    if (callbacks && callbacks->onFinishUpdate) {
+        callbacks->onFinishUpdate();
+    }
 
     return deviceUpdatesList;
 }
@@ -897,4 +869,72 @@ void Device::saveStatistics(QDateTime dateTime, QString requestSource)
     querySaveStatistics.bindValue(":record_type", requestSource);
 
     querySaveStatistics.exec();
+}
+
+Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const UpdateCallbacks* callbacks)
+{
+    DeleteOperationResult result;
+    result.needsConfirmation = askConfirmation;
+    result.result = DeleteSuccess;
+
+    verifyHasSubDevice("defaultConnection");
+
+    if (hasSubDevice) {
+        result.result = DeleteHasSubDevices;
+        result.errorMessage = "The selected device cannot be deleted as long as it has sub-devices.";
+        result.needsConfirmation = false;
+        return result;
+    }
+
+    if (askConfirmation) {
+        result.confirmationMessage = QString(
+                                           "Do you want to <span style='color: red';>delete</span> this %1 device?"
+                                            "<table><tr><td>ID:   </td><td><b> %2 </td></tr><tr><td>Name: </td><td><b> %3 </td></tr>"
+                                            "<tr><td></td></tr></table>"
+                                            )
+                                         .arg(type, QString::number(ID), name);
+
+        if (callbacks && callbacks->onConfirmation) {
+            if (!callbacks->onConfirmation(result.confirmationMessage)) {
+                qDebug() << "Device::deleteDevice - User cancelled";
+                result.result = DeleteCancelled;
+                return result;
+            }
+        } else if (askConfirmation) {
+            result.needsConfirmation = true;
+            result.result = DeleteCancelled; // or create a new enum value like DeleteNeedsConfirmation
+            return result;
+        }
+    }
+
+    // Perform the actual deletion
+    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
+    QString querySQL = QLatin1String(R"(
+                        DELETE FROM device
+                        WHERE device_id=:device_id
+                    )");
+    query.prepare(querySQL);
+    query.bindValue(":device_id", ID);
+
+    if (!query.exec()) {
+        qDebug() << "Device::deleteDevice - Database error:" << query.lastError().text();
+        result.result = DeleteError;
+        result.errorMessage = "Database error: " + query.lastError().text();
+        return result;
+    }
+
+    qDebug() << "Device::deleteDevice - Database deletion successful";
+
+    // Delete related data
+    if (type == "Storage") {
+        storage->ID = externalID;
+        storage->deleteStorage();
+    }
+
+    if (type == "Catalog") {
+        catalog->deleteCatalog();
+    }
+
+    result.result = DeleteSuccess;
+    return result;
 }

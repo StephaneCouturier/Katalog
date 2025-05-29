@@ -31,6 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mainwindow_ui_wrapper_device.h"
 
 //FILTERS / Global ---------------------------------------------------------
 
@@ -181,11 +182,12 @@
             connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
                 //reloads catalog to explore at root level
                 reportAllUpdates(selectedDevice,
-                                 selectedDevice->updateDevice("update",
-                                                              collection->databaseMode,
-                                                              false,
-                                                              collection->folder,
-                                                              true),
+                                 DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                                     "update",
+                                                                     collection->databaseMode,
+                                                                     false,
+                                                                     collection->folder,
+                                                                     true),
                                  "update");
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsTableToFile();
@@ -219,11 +221,12 @@
                 //reloads catalog to explore at root level
                 selectedDevice->catalog->appVersion = currentVersion;
                 reportAllUpdates(selectedDevice,
-                                 selectedDevice->updateDevice("update",
-                                                              collection->databaseMode,
-                                                              false,
-                                                              collection->folder,
-                                                              true),
+                                 DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                                     "update",
+                                                                     collection->databaseMode,
+                                                                     false,
+                                                                     collection->folder,
+                                                                     true),
                                  "update");
                 collection->saveDeviceTableToFile();
                 collection->saveStatiticsTableToFile();

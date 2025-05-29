@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
 #include "core/device.h"
+#include "mainwindow_ui_wrapper_device.h"
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -236,7 +237,10 @@ void MainWindow::unassignPhysicalFromDevice(int deviceID, int deviceParentID)
 //--------------------------------------------------------------------------
 void MainWindow::deleteDeviceItem()
 {
-    activeDevice->deleteDevice(true);
+    bool success = DeviceUIWrapper::deleteDeviceWithUI(activeDevice, true);
+    if (!success) {
+        return; // User cancelled or error occurred
+    }
 
     Device parentDevice;
     parentDevice.ID = activeDevice->parentID;
@@ -247,6 +251,8 @@ void MainWindow::deleteDeviceItem()
     //Save data to files
     collection->saveDeviceTableToFile();
     collection->saveStorageTableToFile();
+
+    //Delete the corresponding catalog file in memory mode
     if(activeDevice->type =="Catalog"){
         QString result = collection->deleteCatalogFile(activeDevice);
         if (!result.isEmpty()) {
@@ -2153,11 +2159,12 @@ void MainWindow::saveCatalogChanges()
         if ( updatechoice == QMessageBox::Yes){
             activeDevice->catalog->loadCatalog("defaultConnection");
             reportAllUpdates(activeDevice,
-                             activeDevice->updateDevice("update",
-                                                        collection->databaseMode,
-                                                        true,
-                                                        collection->folder,
-                                                        true),
+                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
                              "update");
         }
     }
@@ -2756,11 +2763,12 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
             loopDevice.loadDevice("defaultConnection");
             loopDevice.catalog->appVersion = currentVersion;
 
-            QList<qint64> list = loopDevice.updateDevice("update",
-                                                         collection->databaseMode,
-                                                         false,
-                                                         collection->folder,
-                                                         true);
+            QList<qint64> list = DeviceUIWrapper::updateDeviceWithUI(&loopDevice,
+                                                                     "update",
+                                                                     collection->databaseMode,
+                                                                     false,
+                                                                     collection->folder,
+                                                                     true);
             if ( showEachCatalogUpdateSummary == true ){
                 reportAllUpdates(&loopDevice, list, "update");
             }
@@ -2804,11 +2812,12 @@ void MainWindow::on_Catalogs_pushButton_UpdateCatalog_clicked()
 {
     activeDevice->catalog->appVersion = currentVersion;
     reportAllUpdates(activeDevice,
-                     activeDevice->updateDevice("update",
-                                                collection->databaseMode,
-                                                false,
-                                                collection->folder,
-                                                true),
+                     DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                         "update",
+                                                         collection->databaseMode,
+                                                         false,
+                                                         collection->folder,
+                                                         true),
                      "update");
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
@@ -4133,19 +4142,21 @@ void MainWindow::cmd_updateCatalog(int deviceId, bool displayReport)
     if(selectedDevice->active==true){
         if(displayReport==true){
             reportAllUpdates(selectedDevice,
-                             selectedDevice->updateDevice("update",
-                                                          collection->databaseMode,
-                                                          true,
-                                                          collection->folder,
-                                                          true),
+                             DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
                              "update");
         }
         else{
-            selectedDevice->updateDevice("update",
-                                         collection->databaseMode,
-                                         true,
-                                         collection->folder,
-                                         true);
+            DeviceUIWrapper::updateDeviceWithUI(selectedDevice,
+                                                "update",
+                                                collection->databaseMode,
+                                                true,
+                                                collection->folder,
+                                                true);
         }
 
         selectedDevice->catalog->appVersion = currentVersion;

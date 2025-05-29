@@ -31,6 +31,12 @@
 
 #include "collection.h"
 #include "device.h"
+#include <QMutex>
+
+Collection::Collection(QObject *parent) : QObject(parent)
+{
+
+}
 
 //Main attributes--------------------------------------------------------
 void Collection::updateCollectionVersion()
@@ -1539,7 +1545,8 @@ bool Collection::insertPhysicalStorageGroup() {
                                        databaseMode,
                                        false,
                                        folder,
-                                       false);
+                                       false,
+                                       nullptr);
 
         //Save data to file
         saveDeviceTableToFile();

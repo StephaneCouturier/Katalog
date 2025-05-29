@@ -33,6 +33,7 @@
 #include "ui_mainwindow.h"
 #include "devicetreeview.h"
 #include "core/device.h"
+#include "mainwindow_ui_wrapper_device.h"
 
 //TAB: DEVICES -------------------------------------------------------------
 //--- UI -------------------------------------------------------------------
@@ -223,11 +224,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
             //Update and report
             activeDevice->catalog->appVersion = currentVersion;
             reportAllUpdates(activeDevice,
-                             activeDevice->updateDevice("update",
-                                                        collection->databaseMode,
-                                                        true,
-                                                        collection->folder,
-                                                        true),
+                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
                              "update");
             //Refresh
             collection->saveDeviceTableToFile();
@@ -294,11 +296,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction1);
         connect(menuDeviceAction1, &QAction::triggered, this, [this, deviceName]() {
             reportAllUpdates(activeDevice,
-                             activeDevice->updateDevice("update",
-                                                        collection->databaseMode,
-                                                        true,
-                                                        collection->folder,
-                                                        true),
+                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
                              "list");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
@@ -347,11 +350,12 @@ void MainWindow::on_Devices_treeView_DeviceList_customContextMenuRequested(const
         deviceContextMenu.addAction(menuDeviceAction3);
         connect(menuDeviceAction3, &QAction::triggered, this, [this, deviceName]() {
             reportAllUpdates(activeDevice,
-                             activeDevice->updateDevice("update",
-                                                        collection->databaseMode,
-                                                        true,
-                                                        collection->folder,
-                                                        true),
+                             DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                                 "update",
+                                                                 collection->databaseMode,
+                                                                 true,
+                                                                 collection->folder,
+                                                                 true),
                              "update");
             collection->saveDeviceTableToFile();
             collection->saveStatiticsTableToFile();
@@ -450,7 +454,8 @@ void MainWindow::on_Storage_pushButton_UpdateStorage_clicked()
     list <<0<<0<<0<<0<<0<<0<<0;
 
     //Update storage and add to the list
-    list += activeDevice->updateDevice("update",
+    list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                "update",
                                                 collection->databaseMode,
                                                 true,
                                                 collection->folder,

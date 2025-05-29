@@ -70,6 +70,30 @@ public:
         bool hasSubDevice;
         bool active;
 
+    //Structures
+        // Error codes for device operations
+        enum DeleteResult {
+            DeleteSuccess = 0,
+            DeleteCancelled = 1,
+            DeleteHasSubDevices = 2,
+            DeleteError = 3
+        };
+
+        // Structure for delete operation result
+        struct DeleteOperationResult {
+            DeleteResult result;
+            QString errorMessage;
+            QString confirmationMessage; // For UI to display confirmation dialog
+            bool needsConfirmation;
+        };
+
+        // Structure for update operation progress callbacks
+        struct UpdateCallbacks {
+            std::function<void()> onStartUpdate;
+            std::function<void()> onFinishUpdate;
+            std::function<bool(const QString&)> onConfirmation; // Returns true if user confirms
+        };
+
     //Methods
         void loadDevice(QString connectionName);
 
@@ -82,21 +106,24 @@ public:
         void getIDFromDeviceName();
         void updateActive(QString connectionName);
 
+        void updateNumbersFromChildren();
+        void updateParentsNumbers();
+        void getCatalogStorageID();
+        void generateDeviceID();
+        void insertDevice();
+        void saveDevice();
+        void saveStatistics(QDateTime dateTime, QString requestSource);
+        void loadSubDeviceTree(QString connectionName);
+
+        DeleteOperationResult deleteDevice(bool askConfirmation = true,
+                                           const UpdateCallbacks* callbacks = nullptr);
+
         QList<qint64> updateDevice(QString statiticsRequestSource,
                                    QString databaseMode,
                                    bool reportStorageUpdate,
                                    QString collectionFolder,
-                                   bool includeSubDevices);
-        void updateNumbersFromChildren();
-        void updateParentsNumbers();
-
-        void getCatalogStorageID();
-        void generateDeviceID();
-        void insertDevice();
-        void deleteDevice(bool askConfirmation);
-        void saveDevice();
-        void saveStatistics(QDateTime dateTime, QString requestSource);
-        void loadSubDeviceTree(QString connectionName);
+                                   bool includeSubDevices,
+                                   const UpdateCallbacks* callbacks = nullptr);
 
 private:
         void loadSubDeviceList(QString connectionName);

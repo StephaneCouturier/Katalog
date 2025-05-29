@@ -41,10 +41,12 @@
 #include <QCoreApplication>
 #include <QRegularExpression>
 
-class Collection
+class Collection : public QObject
 {
+    Q_OBJECT
 
 public:
+    explicit Collection(QObject *parent = nullptr);
 
     //Main attributes
     QString appVersion;

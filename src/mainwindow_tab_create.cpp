@@ -31,6 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mainwindow_ui_wrapper_device.h"
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -325,11 +326,12 @@
 
         //Launch the scan and cataloging of files, including statistics
             bool updateResult = reportAllUpdates(newDevice,
-                                                 newDevice->updateDevice("create",
-                                                                         collection->databaseMode,
-                                                                         false,
-                                                                         collection->folder,
-                                                                         true),
+                                                 DeviceUIWrapper::updateDeviceWithUI(newDevice,
+                                                                                     "update",
+                                                                                     collection->databaseMode,
+                                                                                     false,
+                                                                                     collection->folder,
+                                                                                     true),
                                                  "create");
 
             if (updateResult==true){
@@ -372,7 +374,7 @@
                     ui->Catalogs_pushButton_UpdateCatalog->setEnabled(false);
             }
             else{
-                newDevice->deleteDevice(false);
+                DeviceUIWrapper::deleteDeviceWithUI(newDevice, false);
                 loadDevicesView("");
             }
     }

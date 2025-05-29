@@ -90,7 +90,9 @@ SOURCES += \
     src/mainwindow_tab_settings.cpp \
     src/mainwindow_tab_settings_exp.cpp \
     src/mainwindow_tab_statistics.cpp \
-    src/mainwindow_tab_tags.cpp
+    src/mainwindow_tab_tags.cpp \
+    src/mainwindow_ui_wrapper_device.cpp \
+    src/mainwindow_ui_wrapper_storage.cpp
 
 HEADERS += \
     src/core/collection.h \
@@ -110,7 +112,9 @@ HEADERS += \
     src/exploretreemodel.h \
     src/exploretreeview.h \
     src/filesview.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/mainwindow_ui_wrapper_device.h \
+    src/mainwindow_ui_wrapper_storage.h
 
 FORMS += \
     src/mainwindow.ui
