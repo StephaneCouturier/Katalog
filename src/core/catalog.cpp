@@ -294,53 +294,48 @@ void Catalog::saveCatalog()
     query.exec();
 }
 
-void Catalog::updateCatalogFileHeaders(QString databaseMode)
-{//Write changes to catalog file (update headers only)
-    if(databaseMode=="Memory"){
-        QFile catalogFile(filePath);
-        if(catalogFile.open(QIODevice::ReadWrite | QIODevice::Text))
-        {
-            QString fullFileText;
-            QTextStream textStream(&catalogFile);
+bool Catalog::updateCatalogFileHeaders(QString databaseMode)
+{
+    if(databaseMode != "Memory") {
+        return true; // Nothing to do for non-Memory mode
+    }
 
-            fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
-            fullFileText.append("<catalogFileCount>" + QVariant(fileCount).toString() +"\n");
-            fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
-            fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
-            fullFileText.append("<catalogFileType>" + fileType +"\n");
-            fullFileText.append("<catalogStorage>" + storageName +"\n");
-            fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
-            fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
-            fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
-            fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
-            fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
+    QFile catalogFile(filePath);
+    if(!catalogFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        return false; // Return false to indicate failure
+    }
 
-            while(!textStream.atEnd())
-            {
-                QString line = textStream.readLine();
+    QString fullFileText;
+    QTextStream textStream(&catalogFile);
 
-                //add file data line
-                if( !line.startsWith("<catalog") )
-                {//just pass the line if it is not a header
-                    fullFileText.append(line + "\n");
-                }
-            }
+    // Build the header content
+    fullFileText.append("<catalogSourcePath>" + sourcePath +"\n");
+    fullFileText.append("<catalogFileCount>" + QVariant(fileCount).toString() +"\n");
+    fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
+    fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
+    fullFileText.append("<catalogFileType>" + fileType +"\n");
+    fullFileText.append("<catalogStorage>" + storageName +"\n");
+    fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
+    fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
+    fullFileText.append("<catalogIncludeMetadata>" + QVariant(includeMetadata).toString() +"\n");
+    fullFileText.append("<catalogAppVersion>" + QVariant(appVersion).toString() +"\n");
+    fullFileText.append("<catalogID>" + QVariant(ID).toString() +"\n");
 
-            catalogFile.resize(0);//delete file content
-            textStream << fullFileText;//populate the file with the textStream
-            catalogFile.close();
-        }
-        else {
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                       "Could not open file."
-                                                       ) );
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
+    // Copy existing file data (non-header lines)
+    while(!textStream.atEnd())
+    {
+        QString line = textStream.readLine();
+        if(!line.startsWith("<catalog")) {
+            fullFileText.append(line + "\n");
         }
     }
+
+    // Rewrite the file with updated headers
+    catalogFile.resize(0);
+    textStream << fullFileText;
+    catalogFile.close();
+
+    return true;
 }
 
 QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collectionFolder, bool reportCannotUpdate)

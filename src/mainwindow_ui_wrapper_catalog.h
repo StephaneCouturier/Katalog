@@ -78,6 +78,8 @@ public:
                                      const QString& name,
                                      const QString& sourcePath);
 
+    bool updateCatalogFileHeadersWithUI(Catalog* catalog, const QString& databaseMode);
+
 private:
     // Helper methods
     static QMessageBox::StandardButton showMessageBox(QMessageBox::Icon icon,

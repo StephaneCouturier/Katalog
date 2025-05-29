@@ -105,7 +105,7 @@ public:
 
     void renameCatalog(QString newCatalogName);
     void renameCatalogFile(QString newCatalogName);
-    void updateCatalogFileHeaders(QString databaseMode);
+    bool updateCatalogFileHeaders(QString databaseMode);
     bool saveCatalogToFile(QString databaseMode, QString collectionFolder);
     bool saveFoldersToFile(QString databaseMode, QString collectionFolder);
 

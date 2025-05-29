@@ -250,3 +250,19 @@ void CatalogUIWrapper::showFileWriteError()
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.exec();
 }
+
+bool CatalogUIWrapper::updateCatalogFileHeadersWithUI(Catalog* catalog, const QString& databaseMode)
+{
+    bool success = catalog->updateCatalogFileHeaders(databaseMode);
+
+    if (!success && databaseMode == "Memory") {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Katalog");
+        msgBox.setText(QCoreApplication::translate("MainWindow", "Could not open file."));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.exec();
+        return false;
+    }
+
+    return success;
+}
