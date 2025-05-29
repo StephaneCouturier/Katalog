@@ -339,124 +339,66 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
 }
 
 QList<qint64> Catalog::updateCatalogFiles(QString databaseMode, QString collectionFolder, bool reportCannotUpdate)
-{//Update the files of the catalog and return a list with update information
+{
     QList<qint64> list;
-    getFileExtensions(); //Update the list of file extensions to scan, based on the catalog's file type
+    getFileExtensions(); // Update the list of file extensions to scan
 
-    if(databaseMode=="Memory"){
-        //Check if the update can be done, inform the user otherwise.
-        //Deal with old versions, where necessary info may have not have been available
-        if(filePath == "not recorded" or name == "not recorded" or sourcePath == "not recorded"){
+    qDebug() << "updateCatalogFiles: databaseMode=" << databaseMode << "sourcePath=" << sourcePath;
 
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                "It seems this catalog was not correctly imported or has an old format.<br/>"
-                                "Edit it and make sure it has the following first 2 lines:<br/><br/>"
-                                "<catalogSourcePath>/folderpath<br/>"
-                                "<catalogFileCount>10000<br/><br/>"
-                                "Copy/paste these lines at the begining of the file and modify the values after the >:<br/>"
-                                "- the catalogSourcePath is the folder to catalog the files from.<br/>"
-                                "- the catalogFileCount number does not matter as much, it can be updated.<br/>"));
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
+    // Basic validation - return failure codes instead of showing UI
+    if (databaseMode == "Memory") {
+        // Check for old format issues
+        if (filePath == "not recorded" || name == "not recorded" || sourcePath == "not recorded") {
+            list.append(-3); // Code for old format error
+            list.append(0); list.append(0); list.append(0); list.append(0);
+            return list;
         }
 
-        //Deal with other cases where some input information is missing
-        if(filePath == "" or sourcePath == ""){
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-
-            msgBox.setText(QCoreApplication::translate("MainWindow", "Select a catalog first (some info is missing).<br/> "
-                                                                     "currentCatalogFilePath: %1 <br/>"
-                                                                     "currentCatalogName: %2 <br/> "
-                                                                     "currentCatalogSourcePath: %3").arg(
-                                   filePath, name, sourcePath));
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.exec();
+        // Check for missing input information
+        if (filePath.isEmpty() || sourcePath.isEmpty()) {
+            list.append(-4); // Code for missing info error
+            list.append(0); list.append(0); list.append(0); list.append(0);
+            return list;
         }
     }
 
-    //Capture previous FileCount and TotalFileSize to report the changes after the update
-    qint64 previousFileCount     = fileCount;
+    // Capture previous values for delta calculation
+    qint64 previousFileCount = fileCount;
     qint64 previousTotalFileSize = totalFileSize;
 
-    //If dir exists, catalog the directory (iterator)
-    QDir dir (sourcePath);
-    if (dir.exists() == true){
-
-        ///Warning and choice if the result is 0 files
-        if(dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0)
-        {
-            QApplication::restoreOverrideCursor();
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                            "The source folder does not contain any file.<br/>"
-                                            "This could mean that the source is empty or the device is not mounted to this folder.<br/>"
-                                            "Do you want to save it anyway (the catalog would be empty)?."));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-            int result = msgBox.exec();
-
-            if ( result == QMessageBox::Cancel){
-                list.append(0);//Catalog not updated
-                list.append(0);
-                list.append(0);
-                list.append(0);
-                list.append(0);
-            }
-            else
-                QApplication::setOverrideCursor(Qt::WaitCursor);
+    // Check if directory exists
+    QDir dir(sourcePath);
+    if (dir.exists()) {
+        // Check if directory is empty
+        if (dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0) {
+            list.append(-1); // Code for empty directory (UI can handle user choice)
+            list.append(0); list.append(0); list.append(0); list.append(0);
+            return list;
         }
 
-        //Catalog the directory (iterator)
+        // Directory exists and has content - proceed with cataloging
         catalogDirectory(databaseMode, collectionFolder);
 
-        //Populate list to report changes
-        qint64 newFileCount       = fileCount;
-        qint64 deltaFileCount     = newFileCount - previousFileCount;
-        qint64 newTotalFileSize   = totalFileSize;
+        // Calculate and return results
+        qint64 newFileCount = fileCount;
+        qint64 deltaFileCount = newFileCount - previousFileCount;
+        qint64 newTotalFileSize = totalFileSize;
         qint64 deltaTotalFileSize = newTotalFileSize - previousTotalFileSize;
-        list.append(1);//Catalog updated
+
+        list.append(1); // Success
         list.append(newFileCount);
         list.append(deltaFileCount);
         list.append(newTotalFileSize);
         list.append(deltaTotalFileSize);
     }
     else {
-        if(reportCannotUpdate==true){
-            QApplication::restoreOverrideCursor();
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(QCoreApplication::translate("MainWindow",
-                                                "The catalog <b>%1</b> cannot be updated.<br/>"
-                                                "<br/> The source folder was not found.<br/><b>%2</b><br/>"
-                                                "<br/><br/> Possible reasons:<br/>"
-                                                "    - the device is not connected and mounted,<br/>"
-                                                "    - the source folder was moved or renamed.,<br/>"
-                                                "    - the source folder entered is incorrect.").arg(name,sourcePath));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
-            list.append(0);//Catalog not updated
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            list.append(0);
-        }
-        else{
-            list.append(0);//Catalog not updated
-            list.append(0);
-            list.append(0);
-            list.append(0);
-            list.append(0);
-
-        }
+        // Directory doesn't exist
+        list.append(-2); // Code for directory not found
+        list.append(0); list.append(0); list.append(0); list.append(0);
     }
+    qDebug() << "updateCatalogFiles: returning list with" << list.size() << "elements:" << list;
     return list;
 }
-
 void Catalog::loadCatalog(QString connectionName)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));

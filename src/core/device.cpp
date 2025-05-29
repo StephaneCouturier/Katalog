@@ -510,15 +510,6 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
     updateActive("defaultConnection");
     dateTimeUpdated = QDateTime::currentDateTime();
 
-    //QApplication::setOverrideCursor(Qt::WaitCursor);
-    //Prepare
-    // QList<qint64> deviceUpdatesList;
-    // Device parentDevice;
-    // parentDevice.ID = parentID;
-    // parentDevice.loadDevice("defaultConnection");
-    // updateActive("defaultConnection");
-    // dateTimeUpdated = QDateTime::currentDateTime();
-
     //Update device and children depending on type
     if (type=="Catalog"){
         //Pass device values for messages
@@ -922,8 +913,6 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
         result.errorMessage = "Database error: " + query.lastError().text();
         return result;
     }
-
-    qDebug() << "Device::deleteDevice - Database deletion successful";
 
     // Delete related data
     if (type == "Storage") {

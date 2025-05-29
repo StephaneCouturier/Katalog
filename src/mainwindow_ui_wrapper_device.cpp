@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "mainwindow_ui_wrapper_device.h"
+#include "mainwindow_ui_wrapper_catalog.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QCoreApplication>
@@ -73,7 +74,23 @@ QList<qint64> DeviceUIWrapper::updateDeviceWithUI(Device* device,
                                                   QString collectionFolder,
                                                   bool includeSubDevices)
 {
-    // Create callbacks for UI interactions
+    if (device->type == "Catalog") {
+        // For catalog devices, handle UI interactions first
+        CatalogUIWrapper::UpdateResult catalogResult = CatalogUIWrapper::updateCatalogFilesWithUI(
+            device->catalog, databaseMode, collectionFolder, true);
+
+        if (catalogResult.userCancelled) {
+            // Return empty result indicating failure
+            QList<qint64> result;
+            result << 0 << 0 << 0 << 0 << 0;
+            return result;
+        }
+
+        // If there was an error but user didn't cancel, we still need to call the original method
+        // because it might handle other aspects (parent updates, etc.)
+    }
+
+    // Call the original method which handles the full update logic
     Device::UpdateCallbacks callbacks;
     callbacks.onStartUpdate = []() { showWaitCursor(); };
     callbacks.onFinishUpdate = []() { restoreCursor(); };

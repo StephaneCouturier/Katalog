@@ -59,9 +59,19 @@ public:
 
     // Static methods for UI-involved operations
     static UpdateResult updateCatalogFilesWithUI(Catalog* catalog,
-                                                 const QString& databaseMode,
-                                                 const QString& collectionFolder,
-                                                 bool reportCannotUpdate = true);
+                                          const QString& databaseMode,
+                                          const QString& collectionFolder,
+                                          bool reportCannotUpdate = true);
+
+    bool updateCatalogFileHeadersWithUI(Catalog* catalog, const QString& databaseMode);
+
+    bool saveCatalogToFileWithUI(Catalog* catalog,
+                                 const QString& databaseMode,
+                                 const QString& collectionFolder);
+
+    bool saveFoldersToFileWithUI(Catalog* catalog,
+                                 const QString& databaseMode,
+                                 const QString& collectionFolder);
 
     static ImportValidationResult validateCatalogForImport(Catalog* catalog);
 
@@ -78,8 +88,6 @@ public:
                                      const QString& name,
                                      const QString& sourcePath);
 
-    bool updateCatalogFileHeadersWithUI(Catalog* catalog, const QString& databaseMode);
-
 private:
     // Helper methods
     static QMessageBox::StandardButton showMessageBox(QMessageBox::Icon icon,
@@ -91,12 +99,7 @@ private:
                                                               const QString& text,
                                                               QMessageBox::StandardButtons buttons = QMessageBox::Yes | QMessageBox::Cancel);
 
-    bool saveCatalogToFileWithUI(Catalog* catalog,
-                                 const QString& databaseMode,
-                                 const QString& collectionFolder);
-    bool saveFoldersToFileWithUI(Catalog* catalog,
-                                                   const QString& databaseMode,
-                                                   const QString& collectionFolder);
+
     void showFileWriteError();
 };
 

@@ -41,64 +41,73 @@ CatalogUIWrapper::UpdateResult CatalogUIWrapper::updateCatalogFilesWithUI(
     result.wasUpdated = false;
     result.userCancelled = false;
 
-    // Validate catalog before update
-    ImportValidationResult validation = validateCatalogForImport(catalog);
-    if (!validation.isValid) {
-        result.errorMessage = validation.errorMessage;
-        if (validation.needsUserAction) {
-            showInvalidCatalogError();
-        }
-        return result;
-    }
-
-    // Attempt the update
+    // Call the core business logic
     QList<qint64> updateResults = catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
 
+    // SAFETY CHECK: Make sure we have results
     if (updateResults.isEmpty()) {
         result.errorMessage = "Update failed: No results returned";
         return result;
     }
 
-    // Check if update was successful
-    if (updateResults[0] == 1) {
+    // SAFETY CHECK: Make sure we have at least 5 elements
+    if (updateResults.size() < 5) {
+        result.errorMessage = QString("Update failed: Insufficient results (%1 elements)").arg(updateResults.size());
+        return result;
+    }
+
+    qint64 statusCode = updateResults[0];
+
+    switch (statusCode) {
+    case 1: // Success
         result.wasUpdated = true;
         result.newFileCount = updateResults[1];
         result.deltaFileCount = updateResults[2];
         result.newTotalFileSize = updateResults[3];
         result.deltaTotalFileSize = updateResults[4];
-    } else {
-        // Handle specific failure cases based on catalog's internal logic
-        QDir dir(catalog->sourcePath);
-        if (!dir.exists()) {
-            if (reportCannotUpdate) {
-                if (!confirmCannotUpdateCatalog(catalog->name, catalog->sourcePath)) {
-                    result.userCancelled = true;
-                }
-            }
-            result.errorMessage = QString("Source directory not found: %1").arg(catalog->sourcePath);
+        break;
+
+    case -1: // Empty directory
+        if (confirmEmptyDirectoryAction(catalog->name)) {
+            // User confirmed - force the cataloging to proceed
+            catalog->catalogDirectory(databaseMode, collectionFolder);
+
+            result.wasUpdated = true;
+            result.newFileCount = catalog->fileCount;
+            result.deltaFileCount = catalog->fileCount;
+            result.newTotalFileSize = catalog->totalFileSize;
+            result.deltaTotalFileSize = catalog->totalFileSize;
         } else {
-            // Directory exists but has no files
-            if (dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count() == 0) {
-                if (!confirmEmptyDirectoryAction(catalog->name)) {
-                    result.userCancelled = true;
-                    result.errorMessage = "User cancelled empty directory update";
-                    return result;
-                }
-                // User confirmed, try update again
-                updateResults = catalog->updateCatalogFiles(databaseMode, collectionFolder, false);
-                if (!updateResults.isEmpty() && updateResults[0] == 1) {
-                    result.wasUpdated = true;
-                    result.newFileCount = updateResults[1];
-                    result.deltaFileCount = updateResults[2];
-                    result.newTotalFileSize = updateResults[3];
-                    result.deltaTotalFileSize = updateResults[4];
-                }
-            }
+            result.userCancelled = true;
+            result.errorMessage = "User cancelled empty directory update";
         }
+        break;
+
+    case -2: // Directory not found
+        if (reportCannotUpdate) {
+            confirmCannotUpdateCatalog(catalog->name, catalog->sourcePath);
+        }
+        result.errorMessage = QString("Source directory not found: %1").arg(catalog->sourcePath);
+        break;
+
+    case -3: // Old format error
+        showInvalidCatalogError();
+        result.errorMessage = "Catalog has old format";
+        break;
+
+    case -4: // Missing info error
+        showMissingInfoError(catalog->filePath, catalog->name, catalog->sourcePath);
+        result.errorMessage = "Missing catalog information";
+        break;
+
+    default: // Other failure
+        result.errorMessage = QString("Catalog update failed with code: %1").arg(statusCode);
+        break;
     }
 
     return result;
 }
+
 
 CatalogUIWrapper::ImportValidationResult CatalogUIWrapper::validateCatalogForImport(Catalog* catalog)
 {
