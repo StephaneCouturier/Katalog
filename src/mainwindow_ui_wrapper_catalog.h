@@ -32,7 +32,7 @@
 #ifndef MAINWINDOW_UI_WRAPPER_CATALOG_H
 #define MAINWINDOW_UI_WRAPPER_CATALOG_H
 
-#include "catalog.h"
+#include "core/catalog.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QCoreApplication>
