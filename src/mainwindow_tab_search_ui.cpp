@@ -964,8 +964,9 @@
             ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
             ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
             ui->Search_lineEdit_SearchText->setText(search->searchText);
-            ui->Search_comboBox_TextCriteria->setCurrentText(search->selectedTextCriteria);
-            int comboIndex = currentSearch->mapToComboBoxIndex(search->selectedSearchIn);
+            int textCriteriaIndex = search->mapTextCriteriaToComboBoxIndex(search->selectedTextCriteria);
+            ui->Search_comboBox_TextCriteria->setCurrentIndex(textCriteriaIndex);
+            int comboIndex = currentSearch->mapSearchInToComboBoxIndex(search->selectedSearchIn);
             ui->Search_comboBox_SearchIn->setCurrentIndex(comboIndex);
             ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
             ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
@@ -1035,10 +1036,16 @@
 
                 //Clear the temporary search
                 currentSearch = nullptr;
-
                 currentSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
                 currentSearch->searchText               = ui->Search_lineEdit_SearchText->text();
-                currentSearch->selectedTextCriteria     = ui->Search_comboBox_TextCriteria->currentText();
+                int textCriteriaIndex = ui->Search_comboBox_TextCriteria->currentIndex();
+                switch (textCriteriaIndex) {
+                    case 0: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS; break;
+                    case 1: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_EXACT_PHRASE; break;
+                    case 2: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_BEGINS_WITH; break;
+                    case 3: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_ANY_WORD; break;
+                default: currentSearch->selectedTextCriteria = Search::TEXT_CRITERIA_ALL_WORDS; break;
+                }
                 int searchInIndex = ui->Search_comboBox_SearchIn->currentIndex();
                 switch (searchInIndex) {
                     case 0: currentSearch->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES; break;

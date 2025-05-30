@@ -33,9 +33,21 @@
 #include <algorithm>
 #include <QFileInfo>
 
+// Constants
 const QString Search::SEARCH_IN_FILE_NAMES = "FileNamesOnly";
 const QString Search::SEARCH_IN_FILES_AND_FOLDERS = "FilesAndFolders";
 const QString Search::SEARCH_IN_FOLDER_PATH = "FolderPathOnly";
+
+const QString Search::TEXT_CRITERIA_ALL_WORDS = "AllWords";
+const QString Search::TEXT_CRITERIA_EXACT_PHRASE = "ExactPhrase";
+const QString Search::TEXT_CRITERIA_BEGINS_WITH = "BeginsWith";
+const QString Search::TEXT_CRITERIA_ANY_WORD = "AnyWord";
+
+const QString Search::SIZE_UNIT_BYTES = "Bytes";
+const QString Search::SIZE_UNIT_KIB = "KiB";
+const QString Search::SIZE_UNIT_MIB = "MiB";
+const QString Search::SIZE_UNIT_GIB = "GiB";
+const QString Search::SIZE_UNIT_TIB = "TiB";
 
 Search::Search(QObject *parent) : QAbstractTableModel(parent)
 {
@@ -134,13 +146,13 @@ QVariant Search::headerData(int section, Qt::Orientation orientation, int role) 
 void Search::prepareSearchPatterns()
 {
     // Define how to use the search text
-    if (selectedTextCriteria == QCoreApplication::translate("MainWindow", "Exact Phrase"))
+    if (selectedTextCriteria == TEXT_CRITERIA_EXACT_PHRASE)
         regexSearchtext = searchText; // Just search for the exact text entered including spaces, as one text string
-    else if (selectedTextCriteria == QCoreApplication::translate("MainWindow", "Begins With"))
+    else if (selectedTextCriteria == TEXT_CRITERIA_BEGINS_WITH)
         regexSearchtext = "(^" + searchText + ")";
-    else if (selectedTextCriteria == QCoreApplication::translate("MainWindow", "Any Word"))
+    else if (selectedTextCriteria == TEXT_CRITERIA_ANY_WORD)
         regexSearchtext = searchText.replace(" ", "|");
-    else if (selectedTextCriteria == QCoreApplication::translate("MainWindow", "All Words")) {
+    else if (selectedTextCriteria == TEXT_CRITERIA_ALL_WORDS) {
         QString searchTextToSplit = searchText;
         QString groupRegEx = "";
         QRegularExpression lineSplitExp(" ");
@@ -593,7 +605,8 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
     }
 
     // Convert old translated values to internal constants
-    selectedSearchIn = mapToInternalConstant(selectedSearchIn);
+    selectedSearchIn = mapSearchInToInternal(selectedSearchIn);
+    selectedTextCriteria = mapTextCriteriaToInternal(selectedTextCriteria);
 }
 
 void Search::copyFrom(const Search* other)
@@ -711,7 +724,7 @@ void Search::updateProgress(int increment)
     emit searchProgress(totalFilesProcessed);
 }
 
-QString Search::mapToInternalConstant(const QString& dbValue)
+QString Search::mapSearchInToInternal(const QString& dbValue)
 {
     // Try exact match first (for new values)
     if (dbValue == SEARCH_IN_FILE_NAMES ||
@@ -742,11 +755,11 @@ QString Search::mapToInternalConstant(const QString& dbValue)
     }
 
     // Default fallback
-    qDebug() << "Warning: Unknown search criteria value, using default:" << dbValue;
+    qDebug() << "Warning: Unknown SearchIn value, using default:" << dbValue;
     return SEARCH_IN_FILES_AND_FOLDERS;
 }
 
-int Search::mapToComboBoxIndex(const QString& internalValue)
+int Search::mapSearchInToComboBoxIndex(const QString& internalValue)
 {
     if (internalValue == SEARCH_IN_FILE_NAMES) {
         return 0;
@@ -758,4 +771,68 @@ int Search::mapToComboBoxIndex(const QString& internalValue)
         return 2;
     }
     return 1;
+}
+
+QString Search::mapTextCriteriaToInternal(const QString& dbValue)
+{
+    // Try exact match first (for new internal values)
+    if (dbValue == TEXT_CRITERIA_EXACT_PHRASE ||
+        dbValue == TEXT_CRITERIA_BEGINS_WITH ||
+        dbValue == TEXT_CRITERIA_ANY_WORD ||
+        dbValue == TEXT_CRITERIA_ALL_WORDS) {
+        return dbValue;
+    }
+
+    // Map old translated values - All Words
+    if (dbValue == "All Words"
+        || dbValue == "Tous les Mots"
+        || dbValue == "Alle Worte"
+        || dbValue == "Všechna slova") {
+        return TEXT_CRITERIA_ALL_WORDS;
+    }
+
+    // Map old translated values - Exact Phrase
+    if (dbValue == "Exact Phrase"
+        || dbValue == "Phrase Extacte"
+        || dbValue == "Exakte Formulierung"
+        || dbValue == "Přesná fráze") {
+        return TEXT_CRITERIA_EXACT_PHRASE;
+    }
+
+    // Map old translated values - Begins With
+    if (dbValue == "Begins With"
+        || dbValue == "Commence Par"
+        || dbValue == "Beginnt mit"
+        || dbValue == "Začíná s") {
+        return TEXT_CRITERIA_BEGINS_WITH;
+    }
+
+    // Map old translated values - Any Word
+    if (dbValue == "Any Word"
+        || dbValue == "Un des Mots"
+        || dbValue == "Jedes Wort"
+        || dbValue == "Jakékoli slovo") {
+        return TEXT_CRITERIA_ANY_WORD;
+    }
+
+    // Default fallback
+    qDebug() << "Warning: Unknown text criteria value, using default:" << dbValue;
+    return TEXT_CRITERIA_ALL_WORDS;
+}
+
+int Search::mapTextCriteriaToComboBoxIndex(const QString& internalValue)
+{
+    if (internalValue == TEXT_CRITERIA_ALL_WORDS) {
+        return 0;
+    }
+    if (internalValue == TEXT_CRITERIA_EXACT_PHRASE) {
+        return 1;
+    }
+    if (internalValue == TEXT_CRITERIA_BEGINS_WITH) {
+        return 2;
+    }
+    if (internalValue == TEXT_CRITERIA_ANY_WORD) {
+        return 3;
+    }
+    return 1; // Default to "All Words"
 }
