@@ -313,8 +313,9 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         // Progress reporting
         batchCount++;
         filesProcessed++;
-        // Every 100 files
-        if (filesProcessed % 100 == 0 && totalFiles > 0) {
+
+        // Emit searchProgress using configurable refresh rate
+        if (filesProcessed % progressRefreshRate == 0 && totalFiles > 0) {
             emit searchProgress(filesProcessed);
         }
 
@@ -416,8 +417,8 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                 fileCatalogIDs.append(device->catalog->ID);
             }
         }
-        // Report progress periodically
-        if (batchCount >= 100) {
+        // Report progress periodically using configurable rate
+        if (batchCount >= progressRefreshRate) {
             totalFilesProcessed += batchCount;
             emit searchProgress(totalFilesProcessed);
             // Process events to update UI
@@ -426,199 +427,17 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         }
     }
     //Report any remaining files in the last batch
+    // Report any remaining files in the last batch
     if (batchCount > 0) {
         totalFilesProcessed += batchCount;
         emit searchProgress(totalFilesProcessed);
-        QApplication::processEvents();
     }
 }
 
 void SearchMemory::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)
 {
-/*    // Initialize Regular Expression
-    QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
-
-    // Filetypes
-    // Get the file type for the catalog
-    QStringList fileTypes;
-
-    // Progress tracking variables
-    int filesProcessed = 0;
-
-    // Scan directory and create a list of files
-    QString line;
-    QString reducedLine;
-
-    QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories);
-
-    while (iterator.hasNext() && !stopRequested) {
-        // Get file information (absolute path, size, datetime)
-        QString filePath = iterator.next();
-
-        // Report progress based on files processed
-        filesProcessed++;
-        if (filesProcessed % 100 == 0) {
-            // For directory searches, we don't know the total count,
-            // so just report the number of files processed
-            emit searchProgress(filesProcessed);
-        }
-
-        QFileInfo fileInfo(filePath);
-        QDateTime fileDate = fileInfo.lastModified();
-        line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
-
-        // Split the line text with tabulations into a list
-        QRegularExpression lineSplitExp("\t");
-        QStringList lineFieldList = line.split(lineSplitExp);
-        int fieldListCount = lineFieldList.count();
-
-        // Get the file absolute path from this list
-        QString lineFilePath = lineFieldList[0];
-
-        // Get the FileSize from the list if available
-        qint64 lineFileSize;
-        if (fieldListCount == 3) { lineFileSize = lineFieldList[1].toLongLong(); }
-        else lineFileSize = 0;
-
-        // Get the File DateTime from the list if available
-        QDateTime lineFileDateTime;
-        if (fieldListCount == 3) { lineFileDateTime = QDateTime::fromString(lineFieldList[2], "yyyy/MM/dd hh:mm:ss"); }
-        else lineFileDateTime = QDateTime::fromString("0001/01/01 00:00:00", "yyyy/MM/dd hh:mm:ss");
-
-        // Exclude catalog metadata lines which are starting with the character <
-        if (lineFilePath.left(1) == "<") { continue; }
-
-        // Continue if the file is matching the size range
-        if (searchOnSize == true) {
-            if (!(lineFileSize >= selectedMinimumSize * sizeMultiplierMin
-                  && lineFileSize <= selectedMaximumSize * sizeMultiplierMax)) {
-                continue;
-            }
-        }
-
-        // Continue if the file is matching the date range
-        if (searchOnDate == true) {
-            if (!(lineFileDateTime >= selectedDateMin
-                  && lineFileDateTime <= selectedDateMax)) {
-                continue;
-            }
-        }
-
-        // Continue if the file is matching the tags
-        if (searchOnTags == true) {
-            bool fileIsMatchingTag = false;
-
-            // Set query to get a list of folder paths matching the selected tag
-            QSqlQuery queryTag(QSqlDatabase::database("defaultConnection"));
-            QString queryTagSQL = QLatin1String(R"(
-                                            SELECT path
-                                            FROM tag
-                                            WHERE name=:name
-                        )");
-            queryTag.prepare(queryTagSQL);
-            queryTag.bindValue(":name", selectedTagName);
-            queryTag.exec();
-
-            // Test if the FilePath contains a path from the list of folders matching the selected tag name
-            while (queryTag.next()) {
-                if (lineFilePath.contains(queryTag.value(0).toString()) == true) {
-                    fileIsMatchingTag = true;
-                    break;
-                }
-                // else tagIsMatching==false
-            }
-
-            // If the file is not matching any of the paths, process the next file
-            if (!fileIsMatchingTag == true) {
-                continue;
-            }
-        }
-
-        // Finally, verify the text search criteria
-        QRegularExpressionMatch match;
-        QRegularExpressionMatch foldermatch;
-
-        if (searchOnFileName == true) {
-            // Depending on the "Search in" criteria,
-            // reduce the absolute path to the required text string and match the search text
-            if (selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only")) {
-                // Extract the file name from the lineFilePath
-                QFileInfo file(lineFilePath);
-                reducedLine = file.fileName();
-
-                match = regex.match(reducedLine);
-            }
-            else if (selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only")) {
-                // Keep only the folder name, so all characters left of the last occurrence of / in the path.
-                reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
-
-                // Check the folder name matches the search text
-                regex.setPattern(regexSearchtext);
-                foldermatch = regex.match(reducedLine);
-
-                // If it does, then check that the file matches the selected file type
-                if (foldermatch.hasMatch()) {
-                    regex.setPattern(regexFileType);
-                    match = regex.match(lineFilePath);
-                }
-            }
-            else {
-                match = regex.match(lineFilePath);
-            }
-
-            // If the file is matching the criteria, add it and its catalog to the search results
-            if (match.hasMatch()) {
-                filesFoundList << lineFilePath;
-
-                // Retrieve other file info
-                QFileInfo file(lineFilePath);
-
-                // Get the fileDateTime from the list if available
-                QString lineFileDatetime;
-                if (fieldListCount == 3) {
-                    lineFileDatetime = lineFieldList[2];
-                }
-                else lineFileDatetime = "";
-
-                // Populate result lists
-                fileNames.append(file.fileName());
-                fileSizes.append(lineFileSize);
-                fileDateTimes.append(lineFileDatetime);
-                filePaths.append(file.path());
-                fileCatalogs.append(sourceDirectory);
-                fileCatalogIDs.append(0);
-            }
-        }
-        else {
-            // Add the file and its catalog to the results, excluding blank lines
-            if (lineFilePath != "") {
-                filesFoundList << lineFilePath;
-                deviceFoundIDList.insert(0, sourceDirectory);
-
-                // Retrieve other file info
-                QFileInfo file(lineFilePath);
-
-                // Get the fileDateTime from the list if available
-                QString lineFileDatetime;
-                if (fieldListCount == 3) {
-                    lineFileDatetime = lineFieldList[2];
-                }
-                else lineFileDatetime = "";
-
-                // Populate result lists
-                fileNames.append(file.fileName());
-                fileSizes.append(lineFileSize);
-                fileDateTimes.append(lineFileDatetime);
-                filePaths.append(file.path());
-                fileCatalogs.append(sourceDirectory);
-                fileCatalogIDs.append(0);
-            }
-        }
-    }
-
-    // Final progress report when finished
-    emit searchProgress(filesProcessed);
-*/}
+    // Not a case, searchFilesInDirectory is addressed as a stoppable search.
+}
 
 void SearchMemory::processDuplicates(const QString &connectionName)
 {
@@ -650,8 +469,8 @@ void SearchMemory::processDuplicates(const QString &connectionName)
     // Loop through the result list and populate database
     int rows = rowCount();
     for (int i = 0; i < rows; i++) {
-        // Report progress
-        if (i % 100 == 0) {
+        // Report progress using configurable refresh rate
+        if (i % progressRefreshRate == 0) {
             int filesProcessed = (i * 100) / rows;
             emit searchProgress(filesProcessed);
         }

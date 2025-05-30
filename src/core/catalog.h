@@ -80,6 +80,9 @@ public:
         QStringList excludedFolders;
         QStringListModel *fileListModel;
 
+        //Parameters
+        int catalogRefreshRate = 1000;
+
     //Methods
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

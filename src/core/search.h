@@ -127,6 +127,7 @@ public:
     qint64 estimatedTotalFiles = 0; //for percentage calculation
     void initializeProgressTracking(Device *selectedDevice);
     void updateProgress(int increment);
+    int progressRefreshRate = 1000;
 
     // Device objects for differences
     Device *diffDevice1 = nullptr;

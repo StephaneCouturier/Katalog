@@ -356,7 +356,6 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
     // File by file, test if the file is matching all search criteria
     int filesProcessed = 0;
     int totalFiles = 0;
-    // Local counter for batch processing
     int batchCount = 0;
     emit searchProgress(-3);
 
@@ -380,8 +379,8 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
         // Update progress every 100 files
         batchCount++;
         filesProcessed++;
-        // Every 100 files
-        if (filesProcessed % 100 == 0 && totalFiles > 0) {
+        // Emit searchProgress using configurable refresh rate
+        if (filesProcessed % progressRefreshRate == 0 && totalFiles > 0) {
             emit searchProgress(filesProcessed);
         }
 
@@ -480,8 +479,8 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
                 fileCatalogIDs.append(device->externalID);
             }
         }
-        // Report progress every 100 files
-        if (batchCount >= 100) {
+        // Report progress using configurable refresh rate
+        if (batchCount >= progressRefreshRate) {
             updateProgress(batchCount);
             batchCount = 0;
         }
@@ -547,7 +546,7 @@ void SearchStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMu
         filesProcessed++;
         totalFilesProcessed++;
 
-        if (filesProcessed % 100 == 0) {
+        if (filesProcessed % progressRefreshRate == 0) {
             emit searchProgress(totalFilesProcessed);
         }
 
@@ -739,8 +738,8 @@ void SearchStoppable::processDuplicates(const QString &connectionName)
     // Loop through the result list and populate database
     int rows = rowCount();
     for (int i = 0; i < rows && !stopRequested; i++) {
-        // Emit progress periodically
-        if (i % 100 == 0) {
+        // Emit progress periodically using configurable refresh rate
+        if (i % progressRefreshRate == 0) {
             int progress = (i * 100) / rows;
             emit searchProgress(progress);
         }
@@ -854,8 +853,8 @@ void SearchStoppable::processDifferences(const QString &connectionName)
     // Loop through the result list and populate database
     int rows = rowCount();
     for (int i = 0; i < rows && !stopRequested; i++) {
-        // Emit progress periodically
-        if (i % 100 == 0) {
+        // Emit progress periodically using configurable refresh rate
+        if (i % progressRefreshRate == 0) {
             int progress = (i * 100) / rows;
             emit searchProgress(progress);
         }

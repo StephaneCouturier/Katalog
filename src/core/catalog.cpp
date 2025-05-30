@@ -558,7 +558,9 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                                         )");
 
                 //Process each line of the file
+                // Process each line of the file
                 int linesProcessed = 0;
+
                 while (true){
                     QMutexLocker locker(&mutex);
                     if (stopRequested) {
@@ -618,9 +620,9 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                     insertFileQuery.bindValue(":file_full_path",   lineFilePath);
                     insertFileQuery.exec();
 
-                    // ADD PROGRESS REPORTING HERE
+                    // Progress reporting using configurable rate
                     linesProcessed++;
-                    if (linesProcessed % 100 == 0) {
+                    if (linesProcessed % catalogRefreshRate == 0) {
                         emit loadProgress(linesProcessed, totalLines);
                         QCoreApplication::processEvents();
                     }
