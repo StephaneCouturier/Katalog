@@ -2021,7 +2021,7 @@ void MainWindow::updateStorageSelectionStatistics()
                                         FROM device
                                         WHERE device_type = 'Storage'
                             )");
-    if (    selectedDevice->type  == tr("All") )
+    if (    selectedDevice->type  == "All" )
     {
         //No filtering
     }
