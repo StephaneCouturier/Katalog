@@ -51,11 +51,11 @@ public:
                                             bool reportStorageUpdate,
                                             QString collectionFolder,
                                             bool includeSubDevices);
+    static void showErrorMessage(const QString& message);
 
 private:
     // Helper methods
     static bool showConfirmationDialog(const QString& message);
-    static void showErrorMessage(const QString& message);
     static void showWaitCursor();
     static void restoreCursor();
 };

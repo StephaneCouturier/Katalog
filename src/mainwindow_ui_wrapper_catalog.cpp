@@ -30,6 +30,7 @@
 */
 
 #include "mainwindow_ui_wrapper_catalog.h"
+#include "mainwindow_ui_wrapper_device.h"
 
 CatalogUIWrapper::UpdateResult CatalogUIWrapper::updateCatalogFilesWithUI(
     Catalog* catalog,
@@ -274,4 +275,26 @@ bool CatalogUIWrapper::updateCatalogFileHeadersWithUI(Catalog* catalog, const QS
     }
 
     return success;
+}
+
+bool CatalogUIWrapper::deleteCatalogFileWithUI(Collection* collection, Device* device)
+{
+    Collection::DeleteCatalogResult result = collection->deleteCatalogFile(device);
+
+    switch (result) {
+    case Collection::DeleteSuccess:
+        return true;
+
+    case Collection::DeleteFailedToMoveToTrash:
+        DeviceUIWrapper::showErrorMessage(QString("Failed to move catalog file to trash: %1")
+                                              .arg(device->catalog->filePath));
+        return false;
+
+    case Collection::DeleteInvalidPath:
+        DeviceUIWrapper::showErrorMessage(QCoreApplication::translate("MainWindow",
+                                                                      "Select a catalog with a valid path."));
+        return false;
+    }
+
+    return false;
 }

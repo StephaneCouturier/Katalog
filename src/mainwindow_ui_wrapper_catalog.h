@@ -33,6 +33,7 @@
 #define MAINWINDOW_UI_WRAPPER_CATALOG_H
 
 #include "core/catalog.h"
+#include "core/collection.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QCoreApplication>
@@ -88,6 +89,8 @@ public:
                                      const QString& name,
                                      const QString& sourcePath);
 
+    static bool deleteCatalogFileWithUI(Collection* collection, Device* device);
+
 private:
     // Helper methods
     static QMessageBox::StandardButton showMessageBox(QMessageBox::Icon icon,
@@ -101,6 +104,7 @@ private:
 
 
     void showFileWriteError();
+
 };
 
 #endif // MAINWINDOW_UI_WRAPPER_CATALOG_H

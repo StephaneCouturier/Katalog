@@ -34,6 +34,7 @@
 #include "devicetreeview.h"
 #include "core/device.h"
 #include "mainwindow_ui_wrapper_device.h"
+#include "mainwindow_ui_wrapper_catalog.h"
 
 //--- Methods --------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -254,12 +255,12 @@ void MainWindow::deleteDeviceItem()
 
     //Delete the corresponding catalog file in memory mode
     if(activeDevice->type =="Catalog"){
-        QString result = collection->deleteCatalogFile(activeDevice);
-        if (!result.isEmpty()) {
+        bool success = CatalogUIWrapper::deleteCatalogFileWithUI(collection, activeDevice);
+        if (!success) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(result);
-            msgBox.setIcon(result.contains("Failed") ? QMessageBox::Warning : QMessageBox::Information);
+            msgBox.setText(tr("Deletion failed"));
+            msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }
     }

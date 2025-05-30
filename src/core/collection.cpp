@@ -1441,14 +1441,14 @@ void Collection::saveMappingTableToFile()
 }
 
 //File deleting---------------------------------------------------------
-QString Collection::deleteCatalogFile(Device *device) {
+// In collection.cpp - modify deleteCatalogFile() method:
+Collection::DeleteCatalogResult Collection::deleteCatalogFile(Device *device) {
     if(databaseMode=="Memory"){
         // Move file to trash
         if (device->catalog->filePath != "") {
             QFile file(device->catalog->filePath);
             if (!file.moveToTrash()) {
-                return "DEBUG: deleteCatalogFile() / Failed to move catalog file to trash"
-                       + device->catalog->filePath;
+                return DeleteFailedToMoveToTrash;
             }
 
             QString foldersFilePath = device->catalog->filePath;
@@ -1457,13 +1457,13 @@ QString Collection::deleteCatalogFile(Device *device) {
             QFile foldersFile(foldersFilePath);
             foldersFile.moveToTrash(); // Optional: check return value here too
 
-            return ""; // Empty string indicates success
+            return DeleteSuccess;
         }
         else {
-            return QCoreApplication::translate("MainWindow","Select a catalog with a valid path.");
+            return DeleteInvalidPath;
         }
     }
-    return ""; // Success for non-Memory mode
+    return DeleteSuccess; // Success for non-Memory mode
 }
 //----------------------------------------------------------------------
 

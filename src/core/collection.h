@@ -104,7 +104,13 @@ public:
     void saveMappingTableToFile();
 
     //File deleting
-    QString deleteCatalogFile(Device *device);
+    enum DeleteCatalogResult {
+        DeleteSuccess = 0,
+        DeleteFailedToMoveToTrash = 1,
+        DeleteInvalidPath = 2
+    };
+    //QString deleteCatalogFile(Device *device);
+    DeleteCatalogResult deleteCatalogFile(Device *device);
 
     //Data management
     bool insertPhysicalStorageGroup();
