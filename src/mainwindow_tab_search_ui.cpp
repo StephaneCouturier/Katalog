@@ -974,9 +974,11 @@
             //File criteria
             ui->Search_checkBox_Size->setChecked(search->searchOnSize);
             ui->Search_spinBox_MinimumSize->setValue(search->selectedMinimumSize);
-            ui->Search_comboBox_MinSizeUnit->setCurrentText(search->selectedMinSizeUnit);
             ui->Search_spinBox_MaximumSize->setValue(search->selectedMaximumSize);
-            ui->Search_comboBox_MaxSizeUnit->setCurrentText(search->selectedMaxSizeUnit);
+            int minSizeIndex = search->mapSizeUnitToComboBoxIndex(search->selectedMinSizeUnit);
+            ui->Search_comboBox_MinSizeUnit->setCurrentIndex(minSizeIndex);
+            int maxSizeIndex = search->mapSizeUnitToComboBoxIndex(search->selectedMaxSizeUnit);
+            ui->Search_comboBox_MaxSizeUnit->setCurrentIndex(maxSizeIndex);
             ui->Search_checkBox_Type->setChecked(search->searchOnType);
             ui->Search_comboBox_FileType->setCurrentText(tr(search->selectedFileType.toUtf8()));
             ui->Search_checkBox_Date->setChecked(search->searchOnDate);
@@ -1060,8 +1062,25 @@
                 currentSearch->searchOnSize             = ui->Search_checkBox_Size->isChecked();
                 currentSearch->selectedMinimumSize      = ui->Search_spinBox_MinimumSize->value();
                 currentSearch->selectedMaximumSize      = ui->Search_spinBox_MaximumSize->value();
-                currentSearch->selectedMinSizeUnit      = ui->Search_comboBox_MinSizeUnit->currentText();
-                currentSearch->selectedMaxSizeUnit      = ui->Search_comboBox_MaxSizeUnit->currentText();
+                int minSizeUnitIndex = ui->Search_comboBox_MinSizeUnit->currentIndex();
+                switch (minSizeUnitIndex) {
+                    case 0: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_BYTES; break;
+                    case 1: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_KIB; break;
+                    case 2: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_MIB; break;
+                    case 3: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_GIB; break;
+                    case 4: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_TIB; break;
+                    default: currentSearch->selectedMinSizeUnit = Search::SIZE_UNIT_BYTES; break;
+                }
+
+                int maxSizeUnitIndex = ui->Search_comboBox_MaxSizeUnit->currentIndex();
+                switch (maxSizeUnitIndex) {
+                    case 0: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_BYTES; break;
+                    case 1: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_KIB; break;
+                    case 2: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_MIB; break;
+                    case 3: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_GIB; break;
+                    case 4: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_TIB; break;
+                    default: currentSearch->selectedMaxSizeUnit = Search::SIZE_UNIT_BYTES; break;
+                }
                 currentSearch->setMultipliers();
                 currentSearch->searchOnType             = ui->Search_checkBox_Type->isChecked();
                 currentSearch->selectedFileType         = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(),Qt::UserRole).toString();

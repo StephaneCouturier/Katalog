@@ -224,23 +224,23 @@ void Search::setMultipliers()
 {
     // Define a size multiplier depending on the size unit selected
     sizeMultiplierMin = 1;
-    if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
+    if (selectedMinSizeUnit == SIZE_UNIT_KIB)
         sizeMultiplierMin = sizeMultiplierMin * 1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
+    else if (selectedMinSizeUnit == SIZE_UNIT_MIB)
         sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
+    else if (selectedMinSizeUnit == SIZE_UNIT_GIB)
         sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024;
-    else if (selectedMinSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
+    else if (selectedMinSizeUnit == SIZE_UNIT_TIB)
         sizeMultiplierMin = sizeMultiplierMin * 1024 * 1024 * 1024 * 1024;
 
     sizeMultiplierMax = 1;
-    if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "KiB"))
+    if (selectedMaxSizeUnit == SIZE_UNIT_KIB)
         sizeMultiplierMax = sizeMultiplierMax * 1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "MiB"))
+    else if (selectedMaxSizeUnit == SIZE_UNIT_MIB)
         sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "GiB"))
+    else if (selectedMaxSizeUnit == SIZE_UNIT_GIB)
         sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024;
-    else if (selectedMaxSizeUnit == QCoreApplication::translate("MainWindow", "TiB"))
+    else if (selectedMaxSizeUnit == SIZE_UNIT_TIB)
         sizeMultiplierMax = sizeMultiplierMax * 1024 * 1024 * 1024 * 1024;
 }
 
@@ -607,6 +607,8 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
     // Convert old translated values to internal constants
     selectedSearchIn = mapSearchInToInternal(selectedSearchIn);
     selectedTextCriteria = mapTextCriteriaToInternal(selectedTextCriteria);
+    selectedMinSizeUnit = mapSizeUnitToInternal(selectedMinSizeUnit);
+    selectedMaxSizeUnit = mapSizeUnitToInternal(selectedMaxSizeUnit);
 }
 
 void Search::copyFrom(const Search* other)
@@ -835,4 +837,71 @@ int Search::mapTextCriteriaToComboBoxIndex(const QString& internalValue)
         return 3;
     }
     return 1; // Default to "All Words"
+}
+
+QString Search::mapSizeUnitToInternal(const QString& dbValue)
+{
+    // Try exact match first (for new internal values)
+    if (dbValue == SIZE_UNIT_BYTES ||
+        dbValue == SIZE_UNIT_KIB ||
+        dbValue == SIZE_UNIT_MIB ||
+        dbValue == SIZE_UNIT_GIB ||
+        dbValue == SIZE_UNIT_TIB) {
+        return dbValue;
+    }
+
+    // Map old translated values - Bytes (if applicable)
+    if (dbValue == "Bytes"
+        || dbValue == "Octets"
+        || dbValue == "Bytes"
+        || dbValue == "Bajty") {
+        return SIZE_UNIT_BYTES;
+    }
+
+    // Map old translated values - KiB
+    if (dbValue == "KiB"
+        || dbValue == "Kio"
+        || dbValue == "KiB"
+        || dbValue == "KiB") {
+        return SIZE_UNIT_KIB;
+    }
+
+    // Map old translated values - MiB
+    if (dbValue == "MiB"
+        || dbValue == "Mio"
+        || dbValue == "MiB"
+        || dbValue == "MiB") {
+        return SIZE_UNIT_MIB;
+    }
+
+    // Map old translated values - GiB
+    if (dbValue == "GiB"
+        || dbValue == "Gio"
+        || dbValue == "GiB"
+        || dbValue == "GiB") {
+        return SIZE_UNIT_GIB;
+    }
+
+    // Map old translated values - TiB
+    if (dbValue == "TiB"
+        || dbValue == "Tio"
+        || dbValue == "TiB"
+        || dbValue == "TiB") {
+        return SIZE_UNIT_TIB;
+    }
+
+    // Default fallback
+    qDebug() << "Warning: Unknown size unit value, using default:" << dbValue;
+    return SIZE_UNIT_BYTES;
+}
+
+int Search::mapSizeUnitToComboBoxIndex(const QString& internalValue)
+{
+    if (internalValue == SIZE_UNIT_TIB) return 0;
+    if (internalValue == SIZE_UNIT_GIB) return 1;
+    if (internalValue == SIZE_UNIT_MIB) return 2;
+    if (internalValue == SIZE_UNIT_KIB) return 3;
+    if (internalValue == SIZE_UNIT_BYTES) return 4;
+
+    return 0; // Default to Bytes
 }

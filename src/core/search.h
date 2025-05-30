@@ -60,13 +60,11 @@ public:
     static const QString SEARCH_IN_FILES_AND_FOLDERS;
     static const QString SEARCH_IN_FOLDER_PATH;
 
-    // New constants for text criteria
     static const QString TEXT_CRITERIA_EXACT_PHRASE;
     static const QString TEXT_CRITERIA_BEGINS_WITH;
     static const QString TEXT_CRITERIA_ANY_WORD;
     static const QString TEXT_CRITERIA_ALL_WORDS;
 
-    // New constants for size units
     static const QString SIZE_UNIT_BYTES;
     static const QString SIZE_UNIT_KIB;
     static const QString SIZE_UNIT_MIB;
@@ -180,6 +178,7 @@ public:
     QString mapSizeUnitToInternal(const QString& dbValue);
     int mapSearchInToComboBoxIndex(const QString& internalValue);
     int mapTextCriteriaToComboBoxIndex(const QString& internalValue);
+    int mapSizeUnitToComboBoxIndex(const QString& internalValue);
 
 signals:
     void searchProgress(int filesProcessed);
