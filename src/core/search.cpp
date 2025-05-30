@@ -33,6 +33,10 @@
 #include <algorithm>
 #include <QFileInfo>
 
+const QString Search::SEARCH_IN_FILE_NAMES = "FileNamesOnly";
+const QString Search::SEARCH_IN_FILES_AND_FOLDERS = "FilesAndFolders";
+const QString Search::SEARCH_IN_FOLDER_PATH = "FolderPathOnly";
+
 Search::Search(QObject *parent) : QAbstractTableModel(parent)
 {
     // Initialize with default values
@@ -587,6 +591,9 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         // Calculate multipliers based on loaded units
         setMultipliers();
     }
+
+    // Convert old translated values to internal constants
+    selectedSearchIn = mapToInternalConstant(selectedSearchIn);
 }
 
 void Search::copyFrom(const Search* other)
@@ -702,4 +709,53 @@ void Search::updateProgress(int increment)
 {
     totalFilesProcessed += increment;
     emit searchProgress(totalFilesProcessed);
+}
+
+QString Search::mapToInternalConstant(const QString& dbValue)
+{
+    // Try exact match first (for new values)
+    if (dbValue == SEARCH_IN_FILE_NAMES ||
+        dbValue == SEARCH_IN_FOLDER_PATH ||
+        dbValue == SEARCH_IN_FILES_AND_FOLDERS) {
+        return dbValue;
+    }
+
+    // Map old translated values (add more languages as needed)
+    if (dbValue == "File names only"
+        || dbValue == "Noms de Fichers uniquement"
+        || dbValue == "Nur Dateinamen"
+        || dbValue == "Pouze názvy souborů") {
+        return SEARCH_IN_FILE_NAMES;
+    }
+    // Map old translated values - Files and Folder paths
+    if (dbValue == "File names or Folder paths"
+        || dbValue == "Noms de Fichers ou Chemin des Dossiers"
+        || dbValue == "Dateinamen oder Ordnerpfade"
+        || dbValue == "Názvy souborů nebo cesty ke složkám") {
+        return SEARCH_IN_FILES_AND_FOLDERS;
+    }
+    if (dbValue == "Folder path only"
+        || dbValue == "Chemins des Dossiers uniquement"
+        || dbValue == "Nur Ordnerpfad"
+        || dbValue == "Pouze cesta ke složce") {
+        return SEARCH_IN_FOLDER_PATH;
+    }
+
+    // Default fallback
+    qDebug() << "Warning: Unknown search criteria value, using default:" << dbValue;
+    return SEARCH_IN_FILES_AND_FOLDERS;
+}
+
+int Search::mapToComboBoxIndex(const QString& internalValue)
+{
+    if (internalValue == SEARCH_IN_FILE_NAMES) {
+        return 0;
+    }
+    if (internalValue == SEARCH_IN_FILES_AND_FOLDERS) {
+        return 1;
+    }
+    if (internalValue == SEARCH_IN_FOLDER_PATH) {
+        return 2;
+    }
+    return 1;
 }

@@ -965,7 +965,8 @@
             ui->Search_checkBox_FileName->setChecked(search->searchOnFileName);
             ui->Search_lineEdit_SearchText->setText(search->searchText);
             ui->Search_comboBox_TextCriteria->setCurrentText(search->selectedTextCriteria);
-            ui->Search_comboBox_SearchIn->setCurrentText(search->selectedSearchIn);
+            int comboIndex = currentSearch->mapToComboBoxIndex(search->selectedSearchIn);
+            ui->Search_comboBox_SearchIn->setCurrentIndex(comboIndex);
             ui->Search_checkBox_CaseSensitive->setChecked(search->caseSensitive);
             ui->Search_lineEdit_Exclude->setText(search->selectedSearchExclude);
 
@@ -1038,7 +1039,13 @@
                 currentSearch->searchOnFileName         = ui->Search_checkBox_FileName->isChecked();
                 currentSearch->searchText               = ui->Search_lineEdit_SearchText->text();
                 currentSearch->selectedTextCriteria     = ui->Search_comboBox_TextCriteria->currentText();
-                currentSearch->selectedSearchIn         = ui->Search_comboBox_SearchIn->currentText();
+                int searchInIndex = ui->Search_comboBox_SearchIn->currentIndex();
+                switch (searchInIndex) {
+                    case 0: currentSearch->selectedSearchIn = Search::SEARCH_IN_FILE_NAMES; break;
+                    case 1: currentSearch->selectedSearchIn = Search::SEARCH_IN_FILES_AND_FOLDERS; break;
+                    case 2: currentSearch->selectedSearchIn = Search::SEARCH_IN_FOLDER_PATH; break;
+                    default: currentSearch->selectedSearchIn = Search::SEARCH_IN_FILES_AND_FOLDERS; break;
+                }
                 currentSearch->caseSensitive            = ui->Search_checkBox_CaseSensitive->isChecked();
                 currentSearch->selectedSearchExclude    = ui->Search_lineEdit_Exclude->text();
 

@@ -39,9 +39,6 @@
 #include <QDateTime>
 #include <QDir>
 
-// Forward declaration to avoid including QCoreApplication
-class QString;
-
 class Storage
 {
 public:

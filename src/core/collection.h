@@ -38,7 +38,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
-#include <QCoreApplication>
 #include <QRegularExpression>
 
 class Collection : public QObject

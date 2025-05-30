@@ -624,7 +624,6 @@ void Catalog::loadCatalogFileListToTable(QString connectionName, QMutex &mutex, 
                     linesProcessed++;
                     if (linesProcessed % catalogRefreshRate == 0) {
                         emit loadProgress(linesProcessed, totalLines);
-                        QCoreApplication::processEvents();
                     }
                 }
 

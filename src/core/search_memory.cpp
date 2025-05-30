@@ -36,7 +36,6 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QDirIterator>
-#include <QCoreApplication>
 
 SearchMemory::SearchMemory(QObject *parent) : Search(parent)
 {
@@ -360,10 +359,10 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         if (searchOnFileName == true) {
             // Depends on the "Search in" criteria,
             // Reduces the absolute path to the required text string and matches the search text
-            if (selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only")) {
+            if (selectedSearchIn == Search::SEARCH_IN_FILE_NAMES) {
                 match = regex.match(lineFileName);
             }
-            else if (selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only")) {
+            else if (selectedSearchIn == Search::SEARCH_IN_FOLDER_PATH) {
                 // Check that the folder name matches the search text
                 regex.setPattern(regexSearchtext);
                 foldermatch = regex.match(lineFileFolderPath);
@@ -373,9 +372,9 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
                     match = regex.match(lineFileName);
                 }
                 else
-                    match = foldermatch; // selectedSearchIn == QCoreApplication::translate("MainWindow", "Files and Folder paths")
+                    match = foldermatch;
             }
-            else {
+            else { // Search::SEARCH_IN_FILES_AND_FOLDERS
                 match = regex.match(lineFileFullPath);
             }
 

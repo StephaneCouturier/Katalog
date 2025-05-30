@@ -420,10 +420,10 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
         if (searchOnFileName == true) {
             // Depends on the "Search in" criteria,
             // Reduces the absolute path to the required text string and matches the search text
-            if (selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only")) {
+            if (selectedSearchIn == Search::SEARCH_IN_FILE_NAMES) {
                 match = regex.match(lineFileName);
             }
-            else if (selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only")) {
+            else if (selectedSearchIn == Search::SEARCH_IN_FOLDER_PATH) {
                 // Check that the folder name matches the search text
                 regex.setPattern(regexSearchtext);
                 foldermatch = regex.match(lineFileFolderPath);
@@ -433,9 +433,9 @@ void SearchStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &
                     match = regex.match(lineFileName);
                 }
                 else
-                    match = foldermatch; // selectedSearchIn == QCoreApplication::translate("MainWindow", "Files and Folder paths")
+                    match = foldermatch;
             }
-            else {
+            else { // Search::SEARCH_IN_FILES_AND_FOLDERS
                 match = regex.match(lineFileFullPath);
             }
 
@@ -626,30 +626,29 @@ void SearchStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMu
         if (searchOnFileName == true) {
             // Depending on the "Search in" criteria,
             // reduce the absolute path to the required text string and match the search text
-            if (selectedSearchIn == QCoreApplication::translate("MainWindow", "File names only")) {
+            if (selectedSearchIn == Search::SEARCH_IN_FILE_NAMES) {
                 // Extract the file name from the lineFilePath
                 QFileInfo file(lineFilePath);
                 QString reducedLine = file.fileName();
 
                 match = regex.match(reducedLine);
             }
-            else if (selectedSearchIn == QCoreApplication::translate("MainWindow", "Folder path only")) {
+            else if (selectedSearchIn == Search::SEARCH_IN_FOLDER_PATH) {
                 // Keep only the folder name, so all characters left of the last occurrence of / in the path.
                 QString reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
 
-                // Check the folder name matches the search text
+                // Check that the folder name matches the search text
                 regex.setPattern(regexSearchtext);
                 foldermatch = regex.match(reducedLine);
-
                 // If it does, then check that the file matches the selected file type
                 if (foldermatch.hasMatch() && searchOnType == true) {
                     regex.setPattern(regexFileType);
                     match = regex.match(lineFilePath);
-                } else {
-                    match = foldermatch;
                 }
+                else
+                    match = foldermatch;
             }
-            else {
+            else { // Search::SEARCH_IN_FILES_AND_FOLDERS
                 match = regex.match(lineFilePath);
             }
 

@@ -55,6 +55,11 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+    // Internal constants
+    static const QString SEARCH_IN_FILE_NAMES;
+    static const QString SEARCH_IN_FILES_AND_FOLDERS;
+    static const QString SEARCH_IN_FOLDER_PATH;
+
     // Search criteria and configuration
     QString regexPattern;
     QString regexSearchtext;
@@ -155,6 +160,10 @@ public:
     // Import/Export of search parameters
     virtual void copyFrom(const Search* other);
     virtual void clearResults();
+
+    // TechDebt management
+    QString mapToInternalConstant(const QString& dbValue);
+    int mapToComboBoxIndex(const QString& internalValue);
 
 signals:
     void searchProgress(int filesProcessed);
