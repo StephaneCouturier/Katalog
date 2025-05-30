@@ -185,7 +185,7 @@ void Device::loadSubDeviceList(QString connectionName)
     QString queryLoadSubDeviceListSQL;
 
     //Prepare Query
-    if(type !=QCoreApplication::translate("MainWindow","All")){
+    if(type !="All"){
         queryLoadSubDeviceListSQL  = QLatin1String(R"(
                                     SELECT
                                         device_id, device_type

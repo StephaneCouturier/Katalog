@@ -38,8 +38,6 @@
 #include <QSqlQuery>
 #include <QFileInfo>
 #include <QRegularExpression>
-#include <QMessageBox>
-#include <QCoreApplication>
 #include <QDirIterator>
 #include <QStringListModel>
 

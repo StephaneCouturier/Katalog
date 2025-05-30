@@ -294,7 +294,7 @@
     {
         //Reset selected values
         selectedDevice = new Device();
-        selectedDevice->type = tr("All");
+        selectedDevice->type = "All";
         selectedDevice->ID = 0;
         selectedDevice->loadDevice("defaultConnection");
 
