@@ -236,7 +236,8 @@ void MainWindow::displaySearchResults()
 
     // List of catalogs in which results were found
     if (currentSearch->deviceFoundModel) {
-        ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);
+        currentSearch->deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
+        ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);      
         ui->Search_treeView_CatalogsFound->hideColumn(1);
     } else {
         qWarning() << "displaySearchResults: deviceFoundModel is null";

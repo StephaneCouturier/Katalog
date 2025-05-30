@@ -29,7 +29,6 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "search.h"
-#include <QCoreApplication>
 #include <algorithm>
 #include <QFileInfo>
 
@@ -51,9 +50,6 @@ const QString Search::SIZE_UNIT_TIB = "TiB";
 
 Search::Search(QObject *parent) : QAbstractTableModel(parent)
 {
-    // Initialize with default values
-    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results"), QCoreApplication::translate("MainWindow", "ID") });
-
     // Initialize default search parameters
     searchOnFileName = true;
     caseSensitive = false;
@@ -247,10 +243,7 @@ void Search::setMultipliers()
 void Search::processResults(bool handleFoldersOnly)
 {
     // Process search results: list of catalogs with results
-
-    // Clear and set model headers
     deviceFoundModel->clear();
-    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
 
     // Populate the model with unique catalogs from search results
     QMap<int, QString> uniqueCatalogs; // Map of catalog IDs to names
@@ -682,7 +675,6 @@ void Search::clearResults()
     filesFoundList.clear();
     deviceFoundIDList.clear();
     deviceFoundModel->clear();
-    deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
 
     // Reset statistics
     filesFoundNumber = 0;
