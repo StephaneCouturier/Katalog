@@ -862,6 +862,17 @@
         //----------------------------------------------------------------------
         void MainWindow::initiateSearchFields()
         {
+            // Add internal constants for TextCriteria:
+            ui->Search_comboBox_TextCriteria->setItemData(0, Search::TEXT_CRITERIA_ALL_WORDS,    Qt::UserRole);
+            ui->Search_comboBox_TextCriteria->setItemData(1, Search::TEXT_CRITERIA_EXACT_PHRASE, Qt::UserRole);
+            ui->Search_comboBox_TextCriteria->setItemData(2, Search::TEXT_CRITERIA_BEGINS_WITH,  Qt::UserRole);
+            ui->Search_comboBox_TextCriteria->setItemData(3, Search::TEXT_CRITERIA_ANY_WORD,     Qt::UserRole);
+
+            // Add internal constants for SearchIn:
+            ui->Search_comboBox_SearchIn->setItemData(0, Search::SEARCH_IN_FILE_NAMES,        Qt::UserRole);
+            ui->Search_comboBox_SearchIn->setItemData(1, Search::SEARCH_IN_FILES_AND_FOLDERS, Qt::UserRole);
+            ui->Search_comboBox_SearchIn->setItemData(2, Search::SEARCH_IN_FOLDER_PATH,       Qt::UserRole);
+
             //Add filetype English value additionally to the displayed/translated value
             ui->Search_comboBox_FileType->setItemData(0, "All",   Qt::UserRole);
             ui->Search_comboBox_FileType->setItemData(1, "Audio", Qt::UserRole);
@@ -886,12 +897,22 @@
             ui->Search_comboBox_MinSizeUnit->addItem(tr("MiB"));
             ui->Search_comboBox_MinSizeUnit->addItem(tr("KiB"));
             ui->Search_comboBox_MinSizeUnit->addItem(tr("Bytes"));
+            ui->Search_comboBox_MinSizeUnit->setItemData(0, Search::SIZE_UNIT_TIB,   Qt::UserRole);
+            ui->Search_comboBox_MinSizeUnit->setItemData(1, Search::SIZE_UNIT_GIB,   Qt::UserRole);
+            ui->Search_comboBox_MinSizeUnit->setItemData(2, Search::SIZE_UNIT_MIB,   Qt::UserRole);
+            ui->Search_comboBox_MinSizeUnit->setItemData(3, Search::SIZE_UNIT_KIB,   Qt::UserRole);
+            ui->Search_comboBox_MinSizeUnit->setItemData(4, Search::SIZE_UNIT_BYTES, Qt::UserRole);
 
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("TiB"));
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("GiB"));
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("MiB"));
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("KiB"));
             ui->Search_comboBox_MaxSizeUnit->addItem(tr("Bytes"));
+            ui->Search_comboBox_MaxSizeUnit->setItemData(0, Search::SIZE_UNIT_TIB,   Qt::UserRole);
+            ui->Search_comboBox_MaxSizeUnit->setItemData(1, Search::SIZE_UNIT_GIB,   Qt::UserRole);
+            ui->Search_comboBox_MaxSizeUnit->setItemData(2, Search::SIZE_UNIT_MIB,   Qt::UserRole);
+            ui->Search_comboBox_MaxSizeUnit->setItemData(3, Search::SIZE_UNIT_KIB,   Qt::UserRole);
+            ui->Search_comboBox_MaxSizeUnit->setItemData(4, Search::SIZE_UNIT_BYTES, Qt::UserRole);
 
             //Load last search values (from settings file)
             if (currentSearch->selectedMaximumSize == 0){

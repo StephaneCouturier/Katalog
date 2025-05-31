@@ -162,17 +162,18 @@ void MainWindow::sendSearchParameters(Search *search)
     // Transfer all parameters from UI to the search object
     search->searchOnFileName = ui->Search_checkBox_FileName->isChecked();
     search->searchText = ui->Search_lineEdit_SearchText->text();
-    search->selectedTextCriteria = ui->Search_comboBox_TextCriteria->currentText();
-    search->selectedSearchIn = ui->Search_comboBox_SearchIn->currentText();
-    search->caseSensitive = ui->Search_checkBox_CaseSensitive->isChecked();
+    currentSearch->selectedTextCriteria = ui->Search_comboBox_TextCriteria->itemData(
+                                               ui->Search_comboBox_TextCriteria->currentIndex(), Qt::UserRole).toString();
+    currentSearch->selectedSearchIn = ui->Search_comboBox_SearchIn->itemData(
+                                                                      ui->Search_comboBox_SearchIn->currentIndex(), Qt::UserRole).toString();    search->caseSensitive = ui->Search_checkBox_CaseSensitive->isChecked();
     search->selectedSearchExclude = ui->Search_lineEdit_Exclude->text();
 
     search->searchOnFileCriteria = ui->Search_checkBox_FileCriteria->isChecked();
     search->searchOnSize = ui->Search_checkBox_Size->isChecked();
     search->selectedMinimumSize = ui->Search_spinBox_MinimumSize->value();
     search->selectedMaximumSize = ui->Search_spinBox_MaximumSize->value();
-    search->selectedMinSizeUnit = ui->Search_comboBox_MinSizeUnit->currentText();
-    search->selectedMaxSizeUnit = ui->Search_comboBox_MaxSizeUnit->currentText();
+    search->selectedMinSizeUnit = ui->Search_comboBox_MinSizeUnit->itemData(ui->Search_comboBox_MinSizeUnit->currentIndex(), Qt::UserRole).toString();
+    search->selectedMaxSizeUnit = ui->Search_comboBox_MaxSizeUnit->itemData(ui->Search_comboBox_MaxSizeUnit->currentIndex(), Qt::UserRole).toString();
     search->setMultipliers();
     search->searchOnType = ui->Search_checkBox_Type->isChecked();
     search->selectedFileType = ui->Search_comboBox_FileType->itemData(ui->Search_comboBox_FileType->currentIndex(), Qt::UserRole).toString();
