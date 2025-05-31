@@ -162,9 +162,9 @@ void MainWindow::sendSearchParameters(Search *search)
     // Transfer all parameters from UI to the search object
     search->searchOnFileName = ui->Search_checkBox_FileName->isChecked();
     search->searchText = ui->Search_lineEdit_SearchText->text();
-    currentSearch->selectedTextCriteria = ui->Search_comboBox_TextCriteria->itemData(
+    search->selectedTextCriteria = ui->Search_comboBox_TextCriteria->itemData(
                                                ui->Search_comboBox_TextCriteria->currentIndex(), Qt::UserRole).toString();
-    currentSearch->selectedSearchIn = ui->Search_comboBox_SearchIn->itemData(
+    search->selectedSearchIn = ui->Search_comboBox_SearchIn->itemData(
                                                                       ui->Search_comboBox_SearchIn->currentIndex(), Qt::UserRole).toString();    search->caseSensitive = ui->Search_checkBox_CaseSensitive->isChecked();
     search->selectedSearchExclude = ui->Search_lineEdit_Exclude->text();
 
