@@ -807,59 +807,6 @@
         }
 
     //Methods-----------------------------------------------------------------------
-        //Search methods
-        /*
-        void MainWindow::processSearch()
-        {//Run a search of files in each selected catalog based on user inputs
-
-            // Start animation
-            QApplication::setOverrideCursor(Qt::WaitCursor);
-
-            //Get new search criteria from UI
-            getSearchCriteria();
-
-            if(collection->databaseMode !="Memory" or currentSearch->searchInConnectedChecked == true){
-                //Run the stoppable search
-                searchFilesStoppable();
-
-                //Send results to the UI
-                //displaySearchResults();
-
-                //Adapt display of files found for searchInConnected
-                if (currentSearch->searchInConnectedChecked == true){
-                    ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
-                    ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
-                    ui->Search_treeView_FilesFound->header()->hideSection(5);
-                }
-
-                //Enable Export
-                ui->Search_pushButton_ProcessResults->setEnabled(true);
-                ui->Search_comboBox_SelectProcess->setEnabled(true);
-            }
-            else{
-                //Run the search
-                currentSearch->searchFiles(selectedDevice);
-
-                //Send results to the UI
-                displaySearchResults();
-            }
-
-            //Adapt display of files found for searchInConnected
-            if (currentSearch->searchInConnectedChecked == true){
-                ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
-                ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
-                ui->Search_treeView_FilesFound->header()->hideSection(5);
-            }
-
-            //Stop animation
-            QApplication::restoreOverrideCursor();
-
-            //Enable Export
-            ui->Search_pushButton_ProcessResults->setEnabled(true);
-            ui->Search_comboBox_SelectProcess->setEnabled(true);
-        }
-        */
-        //----------------------------------------------------------------------
         void MainWindow::initiateSearchFields()
         {
             // Add internal constants for TextCriteria:
