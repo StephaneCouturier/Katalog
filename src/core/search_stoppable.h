@@ -87,6 +87,7 @@ public:
      * @brief Indicates if a search has been requested to stop
      */
     bool stopRequested;
+    bool useTimerForDebug = false;
 
 protected:
     /**
