@@ -301,7 +301,7 @@
                 QString userLanguage = QLocale::system().name();
                 settings.setValue("Settings/Language", userLanguage);
 
-                ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
+                ui->Settings_comboBox_Theme->setCurrentIndex(themeID); //Default theme is "Katalog Colors"
 
                 //Get the translate theme name from combobox
                 QString themeName = ui->Settings_comboBox_Theme->currentText();
@@ -418,13 +418,11 @@
             deviceTreeExpandState = settings.value("Devices/deviceTreeExpandState").toInt();
 
             //General settings
-            QString themeText = settings.value("Settings/Theme").toString();
-            if (themeText==""){
+            themeID = settings.value("Settings/Theme").toInt();
+            if (themeID !=0 and themeID !=1){
                 //fallback on default theme
                 themeID=1;
             }
-            else
-                themeID = settings.value("Settings/Theme").toInt();
 
             ui->Settings_checkBox_BiggerIconSize->setChecked(settings.value("Settings/ThemeBiggerIconSize", 0).toBool());
             ui->Settings_checkBox_KeepOneBackUp->setChecked(settings.value("Settings/KeepOneBackUp", true).toBool());

@@ -11057,17 +11057,12 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string extracomment="Best for integration in Plasma, light and dark themes.">Desktop Theme</string>
+                    <string extracomment="Using desktop theme">Desktop Theme</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string extracomment="With custom colors, for desktop light theme.">Katalog Colors (light)</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Katalog Colors (dark)</string>
+                    <string extracomment="With some custom colors, for desktop light or dark theme.">Katalog Colors</string>
                    </property>
                   </item>
                  </widget>

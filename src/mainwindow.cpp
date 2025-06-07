@@ -52,16 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
         releaseDate     = "2025-05-14";
         developmentMode = false;
 
-        //Detect if the theme is light or dark
-        QPalette palette = QApplication::palette();
-        bool isDarkTheme = palette.color(QPalette::Window).value() < 128;
-        if (isDarkTheme) {
-            themeID = 2; //default value for the theme = Katalog Colors (dark).
-        }
-        else {
-            themeID = 1; //default value for the theme = Katalog Colors (light).
-        }
-
+        //Default UI settings
+        themeID = 1; //default theme is Katalog Colors
         selectedTab = 3; //default value for the first launch = Create screen.
 
         //Set up the statusbar timer
@@ -168,14 +160,16 @@ MainWindow::MainWindow(QWidget *parent) :
             #endif
 
             //Load custom Katalog stylesheet instead of default theme
-            if ( themeID == 1 ){
-                loadCustomThemeLight();
-            }
-            else if ( themeID == 2 ){
-                loadCustomThemeDark();
+            if (themeID == 1) {
+                if (QApplication::palette().color(QPalette::Window).lightness() < 128){
+                    loadCustomThemeDark();
+                }
+                else {
+                    loadCustomThemeLight();
+                }
             }
 
-    //Load Collection data           
+    //Load Collection data
             //Create searchMemory initially
             searchMemory = new SearchMemory(this);
             // Both currentSearch and lastSearch point to searchMemory
