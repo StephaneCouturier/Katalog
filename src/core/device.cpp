@@ -559,6 +559,10 @@ QList<qint64> Device::updateDevice(QString statiticsRequestSource,
 
     else if (type=="Storage"){
         //Update device/storage and all its catalogs
+
+        //Update storage path from device for updateStorageInfo()
+        storage->path = path;
+
         //Update catalogs
         if(includeSubDevices==true){
             //Get list of catalogs

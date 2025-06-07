@@ -678,6 +678,7 @@ void MainWindow::saveDeviceForm()
     activeDevice->loadDevice("defaultConnection");
     int previousExternalID = activeDevice->externalID;
     QString previousName = activeDevice->name;
+    QString previousPath = activeDevice->path;
     Device previousParentDevice;
     previousParentDevice.ID = activeDevice->parentID;
     previousParentDevice.loadDevice("defaultConnection");
@@ -755,11 +756,29 @@ void MainWindow::saveDeviceForm()
         }
     }
 
-    //Save device
+    //Save device to database
     activeDevice->groupID = newGroupID;
     activeDevice->totalSpace = ui->Storage_lineEdit_Panel_Total->text().toLongLong();
     activeDevice->freeSpace  = ui->Storage_lineEdit_Panel_Free->text().toLongLong();
     activeDevice->saveDevice();
+    //Update Storage values if path was changed
+    if (activeDevice->path != previousPath){
+        //Prepare a list with 0 for catalog update, as no catalog is updated
+        QList<qint64> list;
+        list <<0<<0<<0<<0<<0<<0<<0;
+
+        //Update storage and add to the list
+        list += DeviceUIWrapper::updateDeviceWithUI(activeDevice,
+                                                    "update",
+                                                    collection->databaseMode,
+                                                    true,
+                                                    collection->folder,
+                                                    false);
+        //Report the change
+        reportAllUpdates(activeDevice,
+                         list,
+                         "update");
+    }
     collection->saveDeviceTableToFile();
 
     //If device is a catalog, save catalog changes
@@ -770,7 +789,7 @@ void MainWindow::saveDeviceForm()
         loadDevicesTreeToModel("Filters");
     }
 
-    //If device is Storage, rename in storage table
+    //If device is Storage, rename in storage table and update device values
     if(activeDevice->type == "Storage"){
 
         QString currentStorageName = activeDevice->name;
@@ -857,8 +876,6 @@ void MainWindow::saveDeviceForm()
                 //Refresh
                 if(collection->databaseMode=="Memory")
                     collection->loadCatalogFilesToTable();
-
-
             }
         }
 

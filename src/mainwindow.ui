@@ -5372,18 +5372,15 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                </item>
                <item>
                 <widget class="QWidget" name="Devices_widget_EditCommon" native="true">
-                 <layout class="QVBoxLayout" name="verticalLayout_22">
+                 <layout class="QGridLayout" name="gridLayout_11">
                   <property name="leftMargin">
                    <number>0</number>
                   </property>
                   <property name="rightMargin">
                    <number>0</number>
                   </property>
-                  <item>
+                  <item row="0" column="0">
                    <layout class="QGridLayout" name="Devices_gridLayout_5">
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="Devices_lineEdit_Path"/>
-                    </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="Devices_label_ItemEditionPath">
                       <property name="minimumSize">
@@ -5397,6 +5394,9 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                      </widget>
                     </item>
+                    <item row="0" column="1">
+                     <widget class="QLineEdit" name="Devices_lineEdit_Path"/>
+                    </item>
                     <item row="0" column="2">
                      <widget class="QPushButton" name="Devices_pushButton_SelectPath">
                       <property name="text">
@@ -5404,6 +5404,19 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                       </property>
                       <property name="icon">
                        <iconset theme="edit-select"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLabel" name="Devices_label_ItemDeviceIDValue_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>The change will be applied only when Saving</string>
                       </property>
                      </widget>
                     </item>
@@ -5544,7 +5557,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <property name="rightMargin">
                    <number>0</number>
                   </property>
-                  <item row="2" column="0">
+                  <item row="1" column="0">
                    <layout class="QGridLayout" name="Devices_gridLayout_21">
                     <item row="0" column="1">
                      <spacer name="Devices_horizontalSpacer_6">
@@ -5687,17 +5700,39 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <widget class="QLineEdit" name="Storage_lineEdit_Panel_Comment3"/>
                       </item>
                       <item row="5" column="0">
-                       <spacer name="Devices_horizontalSpacer_3">
-                        <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
+                       <widget class="QLabel" name="Devices_label_ItemEditionPath_6">
+                        <property name="minimumSize">
                          <size>
-                          <width>40</width>
-                          <height>20</height>
+                          <width>120</width>
+                          <height>0</height>
                          </size>
                         </property>
-                       </spacer>
+                        <property name="text">
+                         <string>Storage fields</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="1">
+                       <widget class="QPushButton" name="Storage_pushButton_UpdateStorage">
+                        <property name="enabled">
+                         <bool>true</bool>
+                        </property>
+                        <property name="toolTip">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog's files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                        <property name="text">
+                         <string>Update</string>
+                        </property>
+                        <property name="icon">
+                         <iconset theme="media-playlist-repeat"/>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>16</width>
+                          <height>16</height>
+                         </size>
+                        </property>
+                       </widget>
                       </item>
                       <item row="6" column="0">
                        <widget class="QLabel" name="Devices_label_TotalSpace">
@@ -5705,9 +5740,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                          <string>Total Space</string>
                         </property>
                        </widget>
-                      </item>
-                      <item row="11" column="1">
-                       <layout class="QHBoxLayout" name="Devices_horizontalLayout_13"/>
                       </item>
                       <item row="6" column="1">
                        <layout class="QHBoxLayout" name="Devices_horizontalLayout_9">
@@ -5935,58 +5967,6 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        </spacer>
                       </item>
                      </layout>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="1" column="0">
-                   <layout class="QHBoxLayout" name="Devices_horizontalLayout_18">
-                    <item>
-                     <widget class="QLabel" name="Devices_label_ItemEditionPath_6">
-                      <property name="minimumSize">
-                       <size>
-                        <width>120</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Storage fields</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="Storage_pushButton_UpdateStorage">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog's files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="text">
-                       <string>Update</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="media-playlist-repeat"/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>16</width>
-                        <height>16</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="Devices_horizontalSpacer_2">
-                      <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
                     </item>
                    </layout>
                   </item>
