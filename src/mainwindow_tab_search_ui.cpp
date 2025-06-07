@@ -405,7 +405,16 @@
             }
 
             // Create header text
-            QString headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
+            QString headerText;
+            // Depending on the search type, we can show either files or folders statistics
+            if (currentSearch->showFoldersOnly) {
+                // Show folders statistics
+                headerText = "<br/><b>" + tr("Folders Found Statistics") + "</b><br/>";
+            } else {
+                // Show files statistics
+                headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
+            }
+
             QString filesProcessedText;
             headerText += "<br/>"
                           + tr("Catalogs processed: %1 of %2")
@@ -437,13 +446,23 @@
                                         .arg(QLocale().toString(currentSearch->totalFilesProcessed));
             }
 
+
+            // Add the statistics for files or folders found
+            if (currentSearch->showFoldersOnly) {
+                // Show folders statistics
+                headerText += tr("<table><tr><td>Folders found:  </td><td><b> %1 </b> </td></tr>")
+                                  .arg(QLocale().toString(currentSearch->filesFoundNumber));
+            } else {
+                // Show files statistics
+                headerText += tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>")
+                                  .arg(QLocale().toString(currentSearch->filesFoundNumber));
+            }
+
             // Create the message box with all statistics
+
             QMessageBox msgBox;
             msgBox.setWindowTitle("Katalog");
-            msgBox.setText(headerText +
-                           tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>")
-                                        .arg(QLocale().toString(currentSearch->filesFoundNumber)) +
-                           filesProcessedText +
+            msgBox.setText(headerText + filesProcessedText +
                            tr("<tr></tr>"
                               "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
                               "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
