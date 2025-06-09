@@ -230,6 +230,8 @@
     //--------------------------------------------------------------------------
     void MainWindow::createCatalog()
     {//Create a new catalog, launch the cataloging and save, and refresh data and UI
+        //Change mouse cursor to wait cursor
+        QApplication::setOverrideCursor(Qt::WaitCursor);
 
         //Check if mandatory inputs are provided
         if (ui->Create_lineEdit_NewCatalogName->text() == ""){
@@ -377,6 +379,8 @@
                 DeviceUIWrapper::deleteDeviceWithUI(newDevice, false);
                 loadDevicesView("");
             }
+        //Change back mouse cursor
+        QApplication::restoreOverrideCursor();
     }
     //--------------------------------------------------------------------------
 
