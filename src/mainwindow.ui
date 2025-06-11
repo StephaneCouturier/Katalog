@@ -736,7 +736,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QWidget" name="splitter_widget_Filters_Hide" native="true">
+         <widget class="QWidget" name="Filters_widget_Hide" native="true">
           <property name="font">
            <font>
             <family>Noto Sans</family>

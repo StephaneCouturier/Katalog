@@ -568,6 +568,9 @@
                 ui->tabWidget->setStyleSheet(tabwidgetStyleSheet);
             }
 
+        //Splitter widget, invisible
+        ui->splitter->setHandleWidth(0);
+
         //Filters widget
         ui->main_widget_ShowFilters->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
@@ -575,7 +578,7 @@
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
          );
 
-        ui->splitter_widget_Filters_Hide->setStyleSheet(
+        ui->Filters_widget_Hide->setStyleSheet(
             "QPushButton           { text-align: left; padding: 5px 4px; margin: 0px; border: 1px solid #ccc; border-radius: 5px;	padding: 5px;} "
             "QPushButton::hover    { background: #39b2e5; color: #fff; border: 1px solid #39b2e5; 	border-radius: 5px;	padding: 5px;}"
             "QPushButton::pressed  { background: #0D79A6; color: #fff; border: 1px solid #10a2df; 	border-radius: 5px;	padding: 5px;}"
