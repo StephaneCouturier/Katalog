@@ -1,0 +1,35 @@
+// Windows Resource File for Katalog
+#include <windows.h>
+
+// Application icon
+IDI_ICON1 ICON "src/images/Katalog_logo_64.ico"
+
+// Version information
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 2,6,0,0
+PRODUCTVERSION 2,6,0,0
+FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+FILEFLAGS 0x0L
+FILEOS VOS__WINDOWS32
+FILETYPE VFT_APP
+FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Katalog Development Team"
+            VALUE "FileDescription", "Katalog - File Catalog Manager"
+            VALUE "FileVersion", "2.6.0.0"
+            VALUE "InternalName", "Katalog"
+            VALUE "LegalCopyright", "Copyright (C) 2020-2025, Katalog Development Team"
+            VALUE "OriginalFilename", "Katalog.exe"
+            VALUE "ProductName", "Katalog"
+            VALUE "ProductVersion", "2.6.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
