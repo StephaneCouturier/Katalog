@@ -1,6 +1,21 @@
 {
     "version": 3,
     "configurePresets": [
+            {
+            "name": "linux-debug-specific_build_dir",
+            "displayName": "Linux Debug",
+            "description": "Debug build for Linux",
+            "generator": "Unix Makefiles",
+            "binaryDir": "/home/shared/Development/Katalog/Build/Katalog2_cmake/build-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
         {
             "name": "windows-debug",
             "displayName": "Windows Debug",

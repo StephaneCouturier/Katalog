@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Katalog VERSION 2.5 LANGUAGES CXX)
+project(Katalog VERSION 2.6 LANGUAGES CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -57,6 +57,9 @@ set(CORE_SOURCES
     src/core/search.cpp
     src/core/search_memory.cpp
     src/core/search_stoppable.cpp
+    src/core/searchjob.cpp
+    src/core/searchjobstoppable.cpp
+    src/core/searchmanager.cpp
     src/core/storage.cpp
     src/core/tag.cpp
 )
@@ -68,6 +71,9 @@ set(CORE_HEADERS
     src/core/search.h
     src/core/search_memory.h
     src/core/search_stoppable.h
+    src/core/searchjob.h
+    src/core/searchjobstoppable.h
+    src/core/searchmanager.h
     src/core/storage.h
     src/core/tag.h
     src/database.h
@@ -157,10 +163,15 @@ target_link_libraries(katalog-core PUBLIC
     Qt6::Widgets # Temporarily needed for QApplication in catalog.cpp
     Qt6::Charts  # Required for QDateTimeAxis used in mainwindow.h
     Qt6::Multimedia  # Required for QMediaPlayer used in mainwindow.h
+    KF6::CoreAddons
+    KF6::I18n
 )
 
 target_include_directories(katalog-core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${KF6CoreAddons_INCLUDE_DIRS}
+    ${KF6I18n_INCLUDE_DIRS}
 )
 
 # Create the main executable with all sources at once
@@ -203,11 +214,16 @@ target_link_libraries(Katalog PRIVATE
     KF6::CoreAddons
     KF6::I18n
 )
+set_target_properties(katalog-core PROPERTIES
+    AUTOMOC_MOC_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}/src"
+)
 
 # Add include directories to help with relative paths
 target_include_directories(Katalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${KF6CoreAddons_INCLUDE_DIRS}
+    ${KF6I18n_INCLUDE_DIRS}
 )
 
 # Platform-specific settings

@@ -31,13 +31,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "mainwindow_setup.cpp"
-#include "mainwindow_tab_create.cpp"
-#include "mainwindow_tab_search_ui.cpp"
-#include "mainwindow_tab_search_pr.cpp"
-#include "mainwindow_tab_tags.cpp"
-#include "mainwindow_tab_settings_exp.cpp"
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     searchMemory(nullptr),
@@ -47,9 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
     isSearchRunning(false)
 {
     //Set current version, release date, and development mode
-        currentVersion  = "2.5";
+        currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-06-07";
+        releaseDate     = "2025-06-12";
         developmentMode = false;
 
         //Default UI settings
@@ -298,6 +291,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //Restore last Search values
             filterFromSelectedDevice();
+
+            //set up search Manager
+            setupSearchManager();
 
         //Setup tab: BackUp
             ui->BackUp_checkBox_DisplayFullTable->setChecked(optionDisplayFullMappingTable);

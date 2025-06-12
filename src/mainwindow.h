@@ -30,7 +30,7 @@
 */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#pragma once
 //QtWidget
 #include <QMainWindow>
 #include <QApplication>
@@ -42,6 +42,7 @@
 #include <QFileDialog>
 #include <QButtonGroup>
 #include <QProgressDialog>
+#include <QStatusBar>
 //QtCore
 #include <QFile>
 #include <QFileInfo>
@@ -87,7 +88,13 @@
 #include "core/device.h"
 #include "core/search_stoppable.h"
 #include "core/search_memory.h"
+#include "core/searchmanager.h"
+#include "core/searchjobstoppable.h"
+#include "core/searchmanager.h"
+#include "core/searchjobstoppable.h"
 
+//KDE KF6
+#include <KFormat>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -104,15 +111,13 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
         //Objects
-        //Search *newSearch  = new Search(); //temporary search object used to handle a new search and its results
-        Device *selectedDevice = new Device(); //selected device from selection panel, used for operations on any screen
-        Collection *collection = new Collection();
-        SearchMemory *searchMemory = new SearchMemory(this);        //SearchMemory *SearchMemory = nullptr;
-        SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
-        SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
-
+        Collection *collection = new Collection(); // Collection object, used to access the collection of devices, catalogs and storage
+        Device *selectedDevice = new Device(); // Selected device from Selection panel, used for operations on any screen
         Search *currentSearch = nullptr;
         SearchStoppable *searchStoppable = nullptr;
+        SearchMemory *searchMemory = new SearchMemory(this);
+        SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
+        SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
 
         void extracted();
         void launchSearch();
@@ -195,6 +200,12 @@ class MainWindow : public QMainWindow
             void displaySelectedDeviceName();
 
         //TAB: Search
+            // Search management (KJob)
+            SearchManager *searchManager = nullptr;
+            SearchJobStoppable *searchJobStoppable = nullptr;
+            void setupSearchManager();
+
+            // Search management (SearchStoppable)
             SearchProcess *searchProcess;
             bool isSearchRunning;
             void resetSearchState();
@@ -387,14 +398,6 @@ class MainWindow : public QMainWindow
             void displaySearchResults();
 
    private slots:
-            void handleSearchCompleted();
-            void handleSearchStopped();
-            void updateSearchProgress(int filesProcessed);
-            // Define a slot to handle the search completed signal
-            void onSearchCompleted() {
-                // Perform UI-related operations here
-            }
-
         //Filters
             void on_Filters_pushButton_Filters_Hide_clicked();
             void on_Filters_pushButton_Filters_Show_clicked();
@@ -452,6 +455,21 @@ class MainWindow : public QMainWindow
             void on_Settings_checkBox_CheckVersion_stateChanged();
 
         //Search
+            // Search manager slots
+            void onSearchManagerStatusChanged();
+            void onSearchCompleted();
+            void onSearchCancelled();
+            void onSearchError(const QString &error);
+
+            void handleSearchCompleted();
+            void handleSearchStopped();
+            void updateSearchProgress(int filesProcessed);
+
+            void launchSearchJobStoppable();
+            void launchSearchMemory();
+            void launchSearchStoppable();
+
+            //UI elements
             void on_Search_pushButton_Search_clicked();
             void on_Search_pushButton_CleanSearchText_clicked();
             void on_Search_pushButton_ResetAll_clicked();
@@ -494,7 +512,7 @@ class MainWindow : public QMainWindow
 
             void setupFileContextMenus();
 
-            //context menu
+            //Context menu
             void searchContextOpenFile();
             void searchContextOpenFolder();
             void searchContextOpenExplore();

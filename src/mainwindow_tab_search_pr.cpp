@@ -34,8 +34,239 @@
 #include "src/filesview.h"
 #include "ui_mainwindow.h"
 
+//----------------------------------------------------------------------
+// Search management
+//----------------------------------------------------------------------
+void MainWindow::launchSearch()
+{// Generic search launch method, using a type of search based on database mode and search type
+
+    qDebug() << "developmentMode, collection->databaseMode:,ui->Filters_checkBox_SearchInConnectedDrives->isChecked() " << developmentMode<<collection->databaseMode<<ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
+
+    qDebug()<<"launchSearch";
+
+    // KFormat format;
+    // qint64 bytes = 1523466678790;
+    // QString formatted = format.formatByteSize(bytes);
+    // qDebug() << "KF6 KFormat test - Bytes:" << bytes << "Formatted:" << formatted;
+    // QMessageBox::information(this, "Katalog", tr("KF6 KFormat test: ") + formatted);
+
+    // Set animation cursor before starting
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // For database mode or searchInConnected, in development mode, use SearchJobStoppable
+    if (developmentMode && collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+        qDebug() << "\n Development mode: using SearchJobStoppable";
+        launchSearchJobStoppable();
+        return;
+    }
+
+    // For memory mode without searchInConnected, use SearchMemory
+    if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+        qDebug() << "\n Using SearchMemory for memory mode";
+        launchSearchMemory();
+    }
+    // For database mode or searchInConnected, use SearchStoppable
+    else {
+        qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
+        launchSearchStoppable();
+    }
+
+    //Save search history
+    currentSearch->saveSearchHistoryToTable("defaultConnection");
+}
+//----------------------------------------------------------------------
+void MainWindow::launchSearchStoppable()
+{
+    // If a search is running, stop it
+    if (isSearchRunning) {
+        // If a search is running, stop it
+        if (searchStoppable) {
+            searchStoppable->stopSearch();
+        }
+
+        isSearchRunning = false;
+
+        // Reset "Search" button
+        ui->Search_pushButton_Search->setText("Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+        QApplication::restoreOverrideCursor();
+        return;
+    }
+
+    // Clear the search view before starting a new search
+    resetSearchState();
+
+    // Create database search object if not already created
+    if (!searchStoppable) {
+        searchStoppable = new SearchStoppable(this);
+
+        // Connect the progress signal
+        connect(searchStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+    }
+
+    // Point the currentSearch to searchStoppable for consistent access
+    currentSearch = searchStoppable;
+
+    // Transfer search parameters from UI to the search object
+    sendSearchParameters(searchStoppable);
+
+    // Set the search as running
+    isSearchRunning = true;
+
+    // Change "Search" button to "Stop" for stoppable searches
+    ui->Search_pushButton_Search->setText("Stop");
+    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
+
+    // Initialize the database
+    if (!searchStoppable->initializeDatabase()) {
+        QMessageBox::warning(this, "Katalog", tr("Failed to initialize database connection."));
+
+        // Reset state if initialization fails
+        isSearchRunning = false;
+        ui->Search_pushButton_Search->setText("Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+        QApplication::restoreOverrideCursor();
+        return;
+    }
+
+    // Run the search in the main thread
+    searchStoppable->searchFiles(selectedDevice);
+
+    // If we get here, the search is complete
+    handleSearchCompleted();
+
+    // Adapt display of files found for searchInConnected
+    if (currentSearch && currentSearch->searchInConnectedChecked == true) {
+        ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
+        ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
+        ui->Search_treeView_FilesFound->header()->hideSection(5);
+    }
+}
+//----------------------------------------------------------------------
+void MainWindow::launchSearchMemory()
+{
+    // Create memory search object if not already created
+    if (!searchMemory) {
+        searchMemory = new SearchMemory(this);
+    }
+
+    // Always connect the signal, whether searchMemory is new or existing
+    // First disconnect any existing connections to avoid duplicates
+    disconnect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+    connect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+
+    // Point the currentSearch to searchMemory for consistent access
+    currentSearch = searchMemory;
+
+    // Transfer search parameters from UI to the search object
+    sendSearchParameters(searchMemory);
+
+    // Set the search as running, but DON'T change button appearance for memory mode
+    // since it can't be stopped
+    //isSearchRunning = true;
+
+    // Run the search
+    searchMemory->searchFiles(selectedDevice);
+
+    // Display the results
+    displaySearchResults();
+
+    // Reset the search state when search is complete
+    isSearchRunning = false;
+
+    // Restore cursor and enable export buttons
+    QApplication::restoreOverrideCursor();
+    ui->Search_pushButton_ProcessResults->setEnabled(true);
+    ui->Search_comboBox_SelectProcess->setEnabled(true);
+}
+//----------------------------------------------------------------------
+void MainWindow::setupSearchManager()
+{
+    // Create search manager
+    searchManager = new SearchManager(this);
+
+    // Connect signals
+    connect(searchManager, &SearchManager::searchRunningChanged,  this, &MainWindow::onSearchManagerStatusChanged);
+    connect(searchManager, &SearchManager::progressChanged,       this, &MainWindow::onSearchManagerStatusChanged);
+    connect(searchManager, &SearchManager::statusChanged,         this, &MainWindow::onSearchManagerStatusChanged);
+    connect(searchManager, &SearchManager::currentCatalogChanged, this, &MainWindow::onSearchManagerStatusChanged);
+    connect(searchManager, &SearchManager::searchCompleted,       this, &MainWindow::onSearchCompleted);
+    connect(searchManager, &SearchManager::searchCancelled,       this, &MainWindow::onSearchCancelled);
+    connect(searchManager, &SearchManager::searchError,           this, &MainWindow::onSearchError);
+
+    connect(searchManager, &SearchManager::searchCompleted, this, [this]() {
+        QApplication::restoreOverrideCursor();
+        displaySearchResults();
+    });
+
+    connect(searchManager, &SearchManager::searchCancelled, this, [this]() {
+        QApplication::restoreOverrideCursor();
+        // Maybe display partial results
+        if (currentSearch && currentSearch->fileNames.size() > 0) {
+            displaySearchResults();
+        }
+    });
+
+    connect(searchManager, &SearchManager::searchError, this, [this](const QString &error) {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(this, "Search Error", error);
+    });
+}
+//----------------------------------------------------------------------
+void MainWindow::launchSearchJobStoppable()
+{
+    if (!searchManager) {
+        qDebug() << "SearchManager not initialized";
+        return;
+    }
+
+    if (searchManager->searchRunning()) {
+        qDebug() << "Stopping current test search";
+        searchManager->stopSearch();
+
+        // Reset "Search" button
+        ui->Search_pushButton_Search->setText("Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+        return;
+    }
+
+    // Clear the search view before starting a new search
+    clearSearchResults();
+
+    // Create a test SearchJobStoppable
+    SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
+    searchJobStoppable->setDatabaseConnection("defaultConnection");
+    currentSearch = searchJobStoppable;
+
+    // Set up basic search parameters
+    sendSearchParameters(searchJobStoppable);
+
+    // Start the search
+    qDebug() << "Starting SearchJobStoppable";
+    searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
+
+    QApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------
+/*
 void MainWindow::launchSearch()
 {
+
+    qDebug()<<"launchSearch";
+
+    KFormat format;
+    qint64 bytes = 1523466678790;
+    QString formatted = format.formatByteSize(bytes);
+    qDebug() << "KF6 KFormat test - Bytes:" << bytes << "Formatted:" << formatted;
+    QMessageBox::information(this, "Katalog", tr("KF6 KFormat test: ") + formatted);
+
     // If a search is running, stop it
     if (isSearchRunning) {
         // If a search is running, stop it
@@ -150,8 +381,11 @@ void MainWindow::launchSearch()
         ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
         ui->Search_treeView_FilesFound->header()->hideSection(5);
     }
-}
 
+}
+*/
+//----------------------------------------------------------------------
+// Send search parameters from UI to the search object
 void MainWindow::sendSearchParameters(Search *search)
 {
     if (!search) return;
@@ -221,7 +455,8 @@ void MainWindow::sendSearchParameters(Search *search)
     }
     search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
 }
-
+//----------------------------------------------------------------------
+// Display the search results in the UI
 void MainWindow::displaySearchResults()
 {
     if (!currentSearch) {
@@ -304,7 +539,7 @@ void MainWindow::displaySearchResults()
 
     QApplication::restoreOverrideCursor();
 }
-
+//----------------------------------------------------------------------
 void MainWindow::handleSearchCompleted()
 {
     // Reset the search button
@@ -324,7 +559,7 @@ void MainWindow::handleSearchCompleted()
     // Stop animation
     QApplication::restoreOverrideCursor();
 }
-
+//----------------------------------------------------------------------
 void MainWindow::handleSearchStopped()
 {
     // Reset the search button
@@ -351,7 +586,7 @@ void MainWindow::handleSearchStopped()
 
     // No need to update the status bar here, the final progress signal (-1) will do that
 }
-
+//----------------------------------------------------------------------
 void MainWindow::updateSearchProgress(int filesProcessed)
 {
     // Update lastProcessedFiles for statistics
@@ -470,7 +705,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // Process events to keep UI responsive
     QCoreApplication::processEvents();
 }
-
+//----------------------------------------------------------------------
 void MainWindow::resetSearchState()
 {
     // Reset any active searches
@@ -500,3 +735,84 @@ void MainWindow::resetSearchState()
         ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
     }
 }
+//----------------------------------------------------------------------
+//----------------------------------------------------------------------
+// Search manager status changes
+void MainWindow::onSearchManagerStatusChanged()
+{
+    if (!searchManager) return;
+
+    // Update status bar
+    QString statusMessage = QString("Search: %1").arg(searchManager->status());
+
+    if (searchManager->searchRunning()) {
+        if (searchManager->progress() > 0) {
+            statusMessage += QString(" (%1%)").arg(searchManager->progress());
+        }
+
+        if (!searchManager->currentCatalog().isEmpty()) {
+            statusMessage += QString(" - %1").arg(searchManager->currentCatalog());
+        }
+    }
+
+    statusBar()->showMessage(statusMessage, 3000);
+    statusBarTimer->start(3000);
+
+    // Update button state
+    bool isRunning = searchManager->searchRunning();
+    if (isRunning) {
+        ui->Search_pushButton_Search->setText("Stop");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
+    } else {
+        ui->Search_pushButton_Search->setText("Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+    }
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchCompleted()
+{
+    qDebug() << "Search completed successfully";
+
+    // Display the results
+    displaySearchResults();
+
+    // Enable export
+    ui->Search_pushButton_ProcessResults->setEnabled(true);
+    ui->Search_comboBox_SelectProcess->setEnabled(true);
+
+    // Save search history
+    if (currentSearch) {
+        currentSearch->saveSearchHistoryToTable("defaultConnection");
+    }
+
+    // Restore cursor
+    QApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchCancelled()
+{
+    qDebug() << "Search was cancelled";
+
+    // Display partial results if any
+    if (currentSearch && currentSearch->fileNames.size() > 0) {
+        displaySearchResults();
+        ui->Search_pushButton_ProcessResults->setEnabled(true);
+        ui->Search_comboBox_SelectProcess->setEnabled(true);
+    }
+
+    // Restore cursor
+    QApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchError(const QString &error)
+{
+    qDebug() << "Search error:" << error;
+
+    QMessageBox::warning(this, "Search Error", error);
+
+    // Restore cursor
+    QApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------

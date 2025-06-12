@@ -46,15 +46,15 @@
         }
 
         //DEV: for future hosted database
-        if(developmentMode == true){
-            if (!QSqlDatabase::drivers().contains("QPSQL")){
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Katalog");
-                msgBox.setText(tr("Unable to load database.<br/>The Postgres driver was not loaded."));
-                msgBox.setIcon(QMessageBox::Critical);
-                msgBox.exec();
-            }
-        }
+        // if(developmentMode == true){
+        //     if (!QSqlDatabase::drivers().contains("QPSQL")){
+        //         QMessageBox msgBox;
+        //         msgBox.setWindowTitle("Katalog");
+        //         msgBox.setText(tr("Unable to load database.<br/>The Postgres driver was not loaded."));
+        //         msgBox.setIcon(QMessageBox::Critical);
+        //         msgBox.exec();
+        //     }
+        // }
 
         // Initialize the database:
         QSqlError err = initializeDatabase("defaultConnection");
