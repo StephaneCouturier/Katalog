@@ -102,7 +102,10 @@ signals:
     void searchCompleted();
     void searchCancelled();
     void searchError(const QString &error);
-
+    void specialProgressUpdate(int specialValue);  // For -1, -2, -3, -4 values
+    void catalogLoadingStarted(const QString &catalogName);
+    void catalogLoadingFinished();
+    void searchInterrupted();
 };
 
 #endif // SEARCHMANAGER_H

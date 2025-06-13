@@ -30,6 +30,8 @@ find_package(Qt6 REQUIRED COMPONENTS
     LinguistTools      # Required for translations
 )
 
+qt_standard_project_setup()
+
 # Find KF6 components
 find_package(KF6CoreAddons REQUIRED)
 find_package(KF6I18n REQUIRED)
@@ -60,6 +62,7 @@ set(CORE_SOURCES
     src/core/searchjob.cpp
     src/core/searchjobstoppable.cpp
     src/core/searchmanager.cpp
+    src/core/searchprogressmanager.cpp
     src/core/storage.cpp
     src/core/tag.cpp
 )
@@ -74,6 +77,7 @@ set(CORE_HEADERS
     src/core/searchjob.h
     src/core/searchjobstoppable.h
     src/core/searchmanager.h
+    src/core/searchprogressmanager.h
     src/core/storage.h
     src/core/tag.h
     src/database.h

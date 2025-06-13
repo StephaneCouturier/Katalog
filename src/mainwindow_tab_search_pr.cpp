@@ -30,7 +30,6 @@
 */
 
 #include "mainwindow.h"
-#include "qstatusbar.h"
 #include "src/filesview.h"
 #include "ui_mainwindow.h"
 
@@ -190,31 +189,36 @@ void MainWindow::setupSearchManager()
     // Create search manager
     searchManager = new SearchManager(this);
 
-    // Connect signals
-    connect(searchManager, &SearchManager::searchRunningChanged,  this, &MainWindow::onSearchManagerStatusChanged);
-    connect(searchManager, &SearchManager::progressChanged,       this, &MainWindow::onSearchManagerStatusChanged);
-    connect(searchManager, &SearchManager::statusChanged,         this, &MainWindow::onSearchManagerStatusChanged);
-    connect(searchManager, &SearchManager::currentCatalogChanged, this, &MainWindow::onSearchManagerStatusChanged);
+    // Create and setup progress manager for status bar updates
+    searchProgressManager = new SearchProgressManager(statusBar(), this);
+    searchProgressManager->connectToSearchManager(searchManager);
+
+    // Connect timer management ONLY to search completion events
+    connect(searchManager, &SearchManager::searchCompleted, this, &MainWindow::startStatusBarTimer);
+    connect(searchManager, &SearchManager::searchCancelled, this, &MainWindow::startStatusBarTimer);
+    connect(searchManager, &SearchManager::searchError, this, [this](const QString &error) {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(this, tr("Search Error"), error);
+        startStatusBarTimer(); // Start timer after error message
+    });
+
+    // Keep existing search lifecycle connections:
     connect(searchManager, &SearchManager::searchCompleted,       this, &MainWindow::onSearchCompleted);
     connect(searchManager, &SearchManager::searchCancelled,       this, &MainWindow::onSearchCancelled);
     connect(searchManager, &SearchManager::searchError,           this, &MainWindow::onSearchError);
 
     connect(searchManager, &SearchManager::searchCompleted, this, [this]() {
         QApplication::restoreOverrideCursor();
-        displaySearchResults();
-    });
-
-    connect(searchManager, &SearchManager::searchCancelled, this, [this]() {
-        QApplication::restoreOverrideCursor();
-        // Maybe display partial results
         if (currentSearch && currentSearch->fileNames.size() > 0) {
             displaySearchResults();
         }
     });
 
-    connect(searchManager, &SearchManager::searchError, this, [this](const QString &error) {
+    connect(searchManager, &SearchManager::searchCancelled, this, [this]() {
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning(this, "Search Error", error);
+        if (currentSearch && currentSearch->fileNames.size() > 0) {
+            displaySearchResults();
+        }
     });
 }
 //----------------------------------------------------------------------
@@ -240,13 +244,28 @@ void MainWindow::launchSearchJobStoppable()
     // Clear the search view before starting a new search
     clearSearchResults();
 
-    // Create a test SearchJobStoppable
+    // Create SearchJobStoppable
     SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
     searchJobStoppable->setDatabaseConnection("defaultConnection");
     currentSearch = searchJobStoppable;
 
+    statusBar()->show();
+    // Update progress manager with current search for file count display
+    searchProgressManager->setCurrentSearch(currentSearch);
+    if (searchProgressManager) {
+        qDebug() << "Manually testing SearchProgressManager...";
+        searchProgressManager->showMessage("TEST: Search starting...", 0);
+    } else {
+        qDebug() << "ERROR: searchProgressManager is null!";
+    }
+
     // Set up basic search parameters
     sendSearchParameters(searchJobStoppable);
+
+    // Update UI for running search
+    ui->Search_pushButton_Search->setText(tr("Stop"));
+    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
 
     // Start the search
     qDebug() << "Starting SearchJobStoppable";
@@ -254,136 +273,13 @@ void MainWindow::launchSearchJobStoppable()
 
     QApplication::restoreOverrideCursor();
 }
-//----------------------------------------------------------------------
-/*
-void MainWindow::launchSearch()
+void MainWindow::startStatusBarTimer()
 {
-
-    qDebug()<<"launchSearch";
-
-    KFormat format;
-    qint64 bytes = 1523466678790;
-    QString formatted = format.formatByteSize(bytes);
-    qDebug() << "KF6 KFormat test - Bytes:" << bytes << "Formatted:" << formatted;
-    QMessageBox::information(this, "Katalog", tr("KF6 KFormat test: ") + formatted);
-
-    // If a search is running, stop it
-    if (isSearchRunning) {
-        // If a search is running, stop it
-        if (searchStoppable) {
-            searchStoppable->stopSearch();
-        }
-
-        isSearchRunning = false;
-
-        // Reset "Search" button
-        ui->Search_pushButton_Search->setText("Search");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-        QApplication::restoreOverrideCursor();
-        return;
+    if (statusBarTimer) {
+        statusBarTimer->start(5000);
     }
-
-    // Clear the search view before starting a new search
-    resetSearchState();
-
-    // Start animation
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    // For memory mode without searchInConnected, use SearchMemory directly
-    if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
-        // Create memory search object if not already created
-        if (!searchMemory) {
-            searchMemory = new SearchMemory(this);
-        }
-
-        // Always connect the signal, whether searchMemory is new or existing
-        // First disconnect any existing connections to avoid duplicates
-        disconnect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-        connect(searchMemory, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-
-        // Point the currentSearch to searchMemory for consistent access
-        currentSearch = searchMemory;
-
-        // Transfer search parameters from UI to the search object
-        sendSearchParameters(searchMemory);
-
-        // Set the search as running, but DON'T change button appearance for memory mode
-        // since it can't be stopped
-        //isSearchRunning = true;
-
-        // Run the search
-        searchMemory->searchFiles(selectedDevice);
-
-        // Display the results
-        displaySearchResults();
-
-        // Reset the search state when search is complete
-        isSearchRunning = false;
-
-        // Restore cursor and enable export buttons
-        QApplication::restoreOverrideCursor();
-        ui->Search_pushButton_ProcessResults->setEnabled(true);
-        ui->Search_comboBox_SelectProcess->setEnabled(true);
-    }
-    // For database mode or searchInConnected, use SearchStoppable for stoppable searches
-    else {
-        // Create database search object if not already created
-        if (!searchStoppable) {
-            searchStoppable = new SearchStoppable(this);
-
-            // Connect the progress signal
-            connect(searchStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-        }
-
-        // Point the currentSearch to searchStoppable for consistent access
-        currentSearch = searchStoppable;
-
-        // Transfer search parameters from UI to the search object
-        sendSearchParameters(searchStoppable);
-
-        // Set the search as running
-        isSearchRunning = true;
-
-        // Change "Search" button to "Stop" for stoppable searches
-        ui->Search_pushButton_Search->setText("Stop");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
-
-        // Initialize the database
-        if (!searchStoppable->initializeDatabase()) {
-            QMessageBox::warning(this, "Katalog", tr("Failed to initialize database connection."));
-
-            // Reset state if initialization fails
-            isSearchRunning = false;
-            ui->Search_pushButton_Search->setText("Search");
-            ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-            ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-            QApplication::restoreOverrideCursor();
-            return;
-        }
-
-        // Run the search in the main thread
-        searchStoppable->searchFiles(selectedDevice);
-
-        // If we get here, the search is complete
-        handleSearchCompleted();
-    }
-
-    //Save search history
-    currentSearch->saveSearchHistoryToTable("defaultConnection");
-
-    // Adapt display of files found for searchInConnected
-    if (currentSearch && currentSearch->searchInConnectedChecked == true) {
-        ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
-        ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
-        ui->Search_treeView_FilesFound->header()->hideSection(5);
-    }
-
 }
-*/
+//----------------------------------------------------------------------
 //----------------------------------------------------------------------
 // Send search parameters from UI to the search object
 void MainWindow::sendSearchParameters(Search *search)
@@ -737,40 +633,6 @@ void MainWindow::resetSearchState()
 }
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
-// Search manager status changes
-void MainWindow::onSearchManagerStatusChanged()
-{
-    if (!searchManager) return;
-
-    // Update status bar
-    QString statusMessage = QString("Search: %1").arg(searchManager->status());
-
-    if (searchManager->searchRunning()) {
-        if (searchManager->progress() > 0) {
-            statusMessage += QString(" (%1%)").arg(searchManager->progress());
-        }
-
-        if (!searchManager->currentCatalog().isEmpty()) {
-            statusMessage += QString(" - %1").arg(searchManager->currentCatalog());
-        }
-    }
-
-    statusBar()->showMessage(statusMessage, 3000);
-    statusBarTimer->start(3000);
-
-    // Update button state
-    bool isRunning = searchManager->searchRunning();
-    if (isRunning) {
-        ui->Search_pushButton_Search->setText("Stop");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
-    } else {
-        ui->Search_pushButton_Search->setText("Search");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-    }
-}
-//----------------------------------------------------------------------
 void MainWindow::onSearchCompleted()
 {
     qDebug() << "Search completed successfully";
@@ -816,3 +678,48 @@ void MainWindow::onSearchError(const QString &error)
     QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
+void MainWindow::updateStatusBarFromSearchManager()
+{
+    if (!searchManager) {
+        statusBar()->showMessage(tr("Ready"));
+        return;
+    }
+
+    QString statusMessage;
+
+    if (searchManager->searchRunning()) {
+        // Build dynamic status message while search is running
+        statusMessage = searchManager->status();
+
+        // Add progress percentage if available
+        if (searchManager->progress() > 0) {
+            statusMessage += QString(" (%1%)").arg(searchManager->progress());
+        }
+
+        // Add current catalog info if available
+        if (!searchManager->currentCatalog().isEmpty()) {
+            statusMessage += QString(" - %1").arg(searchManager->currentCatalog());
+        }
+
+        // Add file count if currentSearch is available
+        if (currentSearch && currentSearch->fileNames.size() > 0) {
+            statusMessage += QString(" | Files found: %1")
+            .arg(QLocale().toString(currentSearch->fileNames.size()));
+        }
+    } else {
+        // Search not running - show final status or ready state
+        if (searchManager->status() == "Ready") {
+            if (currentSearch && currentSearch->fileNames.size() > 0) {
+                statusMessage = tr("Search completed | Files found: %1")
+                .arg(QLocale().toString(currentSearch->fileNames.size()));
+            } else {
+                statusMessage = tr("Ready");
+            }
+        } else {
+            statusMessage = searchManager->status();
+        }
+    }
+
+    // Update the status bar
+    statusBar()->showMessage(statusMessage);
+}

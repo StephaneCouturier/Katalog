@@ -96,9 +96,66 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
     m_currentJob->setSearchJobStoppable(searchEngine);
     m_currentJob->setTargetDevice(targetDevice);
 
-    // Connect job signals
-    connect(m_currentJob, &KJob::result,  this, &SearchManager::onJobResult);
-    //connect(m_currentJob, &KJob::percent, this, &SearchManager::onJobPercent);
+    // Connect job signals with enhanced progress handling
+    connect(m_currentJob, &KJob::result, this, &SearchManager::onJobResult);
+
+    // Enhanced progress connection that handles special values
+    connect(m_currentJob, &SearchJob::searchProgress, this, [this](int filesProcessed) {
+        if (m_currentJob && m_currentJob->getSearchEngine()) {
+            Search* engine = m_currentJob->getSearchEngine();
+
+            // Handle special progress values consistent with updateSearchProgress
+            if (filesProcessed == -1) {
+                setStatus("Search interrupted");
+                emit searchInterrupted();
+                emit specialProgressUpdate(-1);
+                return;
+            }
+
+            if (filesProcessed == -2) {
+                // Catalog loading started
+                setCurrentCatalog(engine->currentCatalogName);
+                setStatus(QString("Loading catalog: %1").arg(engine->currentCatalogName));
+                emit catalogLoadingStarted(engine->currentCatalogName);
+                emit specialProgressUpdate(-2);
+                return;
+            }
+
+            if (filesProcessed == -3) {
+                // Catalog loading finished
+                setStatus("Processing files...");
+                emit catalogLoadingFinished();
+                emit specialProgressUpdate(-3);
+                return;
+            }
+
+            if (filesProcessed == -4) {
+                // Catalog loading progress (SearchMemory specific)
+                emit specialProgressUpdate(-4);
+                return;
+            }
+
+            // Regular progress update
+            if (filesProcessed >= 0 && engine->estimatedTotalFiles > 0) {
+                int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
+                setProgress(percent);
+
+                // Update status with consistent messaging
+                QString statusMsg = "Searching";
+                if (engine->totalCatalogs > 0) {
+                    statusMsg = QString("Searching in Catalog %1 of %2")
+                    .arg(engine->currentCatalogIndex)
+                        .arg(engine->totalCatalogs);
+                }
+                setStatus(statusMsg);
+            }
+        }
+    });
+
+    // Connect catalog-specific signals if available
+    connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
+    connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
+
 
     // With this working connection:
     connect(m_currentJob, &SearchJob::searchProgress, this, [this](int filesProcessed) {

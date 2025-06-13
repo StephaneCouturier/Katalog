@@ -30,6 +30,7 @@
 */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
 #pragma once
 //QtWidget
 #include <QMainWindow>
@@ -92,6 +93,7 @@
 #include "core/searchjobstoppable.h"
 #include "core/searchmanager.h"
 #include "core/searchjobstoppable.h"
+#include "core/searchprogressmanager.h"
 
 //KDE KF6
 #include <KFormat>
@@ -204,13 +206,13 @@ class MainWindow : public QMainWindow
             SearchManager *searchManager = nullptr;
             SearchJobStoppable *searchJobStoppable = nullptr;
             void setupSearchManager();
+            SearchProgressManager *searchProgressManager = nullptr;
 
             // Search management (SearchStoppable)
             SearchProcess *searchProcess;
             bool isSearchRunning;
             void resetSearchState();
             qint64 lastProcessedFiles = 0;
-
 
             void resetToDefaultSearchCriteria();
             void clearSearchResults();
@@ -394,8 +396,8 @@ class MainWindow : public QMainWindow
             bool exportSingleCatalogFoldersFile(int catalogId, const QString &filePath);
 
     public slots:
-            //void displaySearchResults();
             void displaySearchResults();
+            void updateStatusBarFromSearchManager();
 
    private slots:
         //Filters
@@ -456,7 +458,6 @@ class MainWindow : public QMainWindow
 
         //Search
             // Search manager slots
-            void onSearchManagerStatusChanged();
             void onSearchCompleted();
             void onSearchCancelled();
             void onSearchError(const QString &error);
@@ -464,6 +465,7 @@ class MainWindow : public QMainWindow
             void handleSearchCompleted();
             void handleSearchStopped();
             void updateSearchProgress(int filesProcessed);
+            void startStatusBarTimer();
 
             void launchSearchJobStoppable();
             void launchSearchMemory();
