@@ -42,18 +42,20 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For database mode or searchInConnected, in development mode, use SearchJobStoppable
-    if (collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
-        qDebug() << "\n Development mode: using SearchJobStoppable";
-        launchSearchJobStoppable();
-        return;
-    }
-
     // For memory mode without searchInConnected, use SearchMemory
     if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
         qDebug() << "\n Using SearchMemory for memory mode";
         launchSearchMemory();
     }
+
+    // For database mode or searchInConnected, in development mode, use SearchJobStoppable
+    else //if (collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked())
+    {
+        qDebug() << "\n Development mode: using SearchJobStoppable";
+        launchSearchJobStoppable();
+        return;
+    }
+
     // (OBSOLETE) For database mode or searchInConnected, use SearchStoppable
     // else {
     //     qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
