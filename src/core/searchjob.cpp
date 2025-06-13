@@ -176,9 +176,10 @@ void SearchJob::executeSearch()
 //----------------------------------------------------------------------
 bool SearchJob::doKill()
 {
-    qDebug() << "Killing search job...";
+    qDebug() << "=== SearchJob::doKill() called ===";
 
     if (m_executeTimer) {
+        qDebug() << "Stopping execute timer";
         m_executeTimer->stop();
         m_executeTimer->deleteLater();
         m_executeTimer = nullptr;
@@ -186,14 +187,16 @@ bool SearchJob::doKill()
 
     // Stop the search engine
     if (m_searchEngine && m_engineType == JobStoppable) {
+        qDebug() << "Stopping SearchJobStoppable engine";
         SearchJobStoppable* searchJobStoppable = static_cast<SearchJobStoppable*>(m_searchEngine);
         searchJobStoppable->stopSearch();
+        qDebug() << "SearchJobStoppable::stopSearch() called";
     }
-    // Note: SearchMemory cannot be stopped once started
 
     setError(KilledJobError);
     setErrorText("Search was cancelled by user");
 
+    qDebug() << "=== SearchJob::doKill() complete ===";
     return true;
 }
 //----------------------------------------------------------------------

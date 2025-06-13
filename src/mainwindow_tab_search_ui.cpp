@@ -45,7 +45,19 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            launchSearch();
+            qDebug() << "=== Search button clicked ===";
+            qDebug() << "Button text:" << ui->Search_pushButton_Search->text();
+
+            // Set flag to prevent race condition
+            m_searchButtonClickPending = true;
+
+            // Add a small delay to ensure the click is processed after completion
+            QTimer::singleShot(10, this, [this]() {
+                launchSearch();
+                m_searchButtonClickPending = false;
+            });
+
+            qDebug() << "=== Search button click queued ===";
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
@@ -1572,6 +1584,7 @@
         //--------------------------------------------------------------------------
         void MainWindow::resetSearchButton()
         {
+            qDebug() << "resetSearchButton() called";
             ui->Search_pushButton_Search->setText("Search");
             ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
             ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");

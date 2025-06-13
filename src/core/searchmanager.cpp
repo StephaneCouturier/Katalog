@@ -109,7 +109,7 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
                 // Catalog loading started - set catalog name
                 QString catalogName = engine->currentCatalogName;
                 if (!catalogName.isEmpty()) {
-                    setCurrentCatalog(catalogName);
+                    setCurrentCatalogName(catalogName);
                     setStatus(QString("Loading catalog: %1").arg(catalogName));
                 }
                 return;
@@ -134,7 +134,7 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
                 // Update status with catalog info during regular processing
                 QString statusMsg = "Searching";
                 if (!engine->currentCatalogName.isEmpty()) {
-                    setCurrentCatalog(engine->currentCatalogName);
+                    setCurrentCatalogName(engine->currentCatalogName);
                 }
                 setStatus(statusMsg);
             }
@@ -180,6 +180,10 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
 //----------------------------------------------------------------------
 void SearchManager::stopSearch()
 {
+    qDebug() << "=== SearchManager::stopSearch() called ===";
+    qDebug() << "Current job exists:" << (m_currentJob != nullptr);
+    qDebug() << "Search running:" << m_searchRunning;
+
     if (!m_currentJob) {
         qDebug() << "No search to stop!";
         return;
@@ -192,13 +196,14 @@ void SearchManager::stopSearch()
     disconnect(m_currentJob, nullptr, this, nullptr);
 
     // Kill the job
+    qDebug() << "Calling m_currentJob->kill()";
     m_currentJob->kill();
 
     // Force immediate cleanup since result signal might not be emitted
     qDebug() << "Force cleanup after kill...";
     setSearchRunning(false);
     setProgress(0);
-    setCurrentCatalog("");
+    setCurrentCatalogName("");
     m_isPaused = false;
 
     // Clean up immediately
@@ -209,6 +214,7 @@ void SearchManager::stopSearch()
     }
 
     emit searchCancelled();
+    qDebug() << "=== SearchManager::stopSearch() complete ===";
 }
 //----------------------------------------------------------------------
 void SearchManager::pauseSearch()
@@ -263,7 +269,7 @@ void SearchManager::onJobResult(KJob *job)
 
     setSearchRunning(false);
     setProgress(job->error() ? 0 : 100);
-    setCurrentCatalog("");
+    setCurrentCatalogName("");
     m_isPaused = false;
 
     qDebug() << "About to cleanup job...";
@@ -288,7 +294,7 @@ void SearchManager::onJobInfoMessage(KJob *job, const QString &message)
 //----------------------------------------------------------------------
 void SearchManager::onCatalogLoadingStarted(const QString &catalogName)
 {
-    setCurrentCatalog(catalogName);
+    setCurrentCatalogName(catalogName);
     setStatus(QString("Loading catalog: %1").arg(catalogName));
 }
 //----------------------------------------------------------------------
@@ -322,10 +328,10 @@ void SearchManager::setStatus(const QString &status)
     }
 }
 //----------------------------------------------------------------------
-void SearchManager::setCurrentCatalog(const QString &catalog)
+void SearchManager::setCurrentCatalogName(const QString &catalog)
 {
-    if (m_currentCatalog != catalog) {
-        m_currentCatalog = catalog;
+    if (m_currentCatalogName != catalog) {
+        m_currentCatalogName = catalog;
         emit currentCatalogChanged();
     }
 }

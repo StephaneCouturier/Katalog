@@ -216,52 +216,79 @@ void MainWindow::setupSearchManager()
 //----------------------------------------------------------------------
 void MainWindow::launchSearchJobStoppable()
 {
+    qDebug() << "=== launchSearchJobStoppable() called ===";
+
     if (!searchManager) {
-        qDebug() << "SearchManager not initialized";
+        qDebug() << "ERROR: SearchManager not initialized";
         return;
     }
 
-    if (searchManager->searchRunning()) {
-        qDebug() << "Stopping current test search";
-        searchManager->stopSearch();
+    // Check if button shows "Stop" - this means user wants to stop
+    QString buttonText = ui->Search_pushButton_Search->text();
+    bool userWantsToStop = (buttonText == "Stop" || buttonText == tr("Stop"));
 
-        // Reset "Search" button
+    qDebug() << "Button text:" << buttonText;
+    qDebug() << "User wants to stop:" << userWantsToStop;
+    qDebug() << "SearchManager searchRunning():" << searchManager->searchRunning();
+
+    // If user clicked Stop button (regardless of searchManager state)
+    if (userWantsToStop) {
+        qDebug() << "*** STOP LOGIC TRIGGERED (by button text) ***";
+
+        // Stop any running search
+        if (searchManager->searchRunning()) {
+            qDebug() << "Stopping active search via SearchManager";
+            searchManager->stopSearch();
+        } else {
+            qDebug() << "No active search, but user clicked Stop - just reset button";
+        }
+
+        // Always reset button when user clicks Stop
+        qDebug() << "Resetting Search button to green";
         ui->Search_pushButton_Search->setText("Search");
         ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
         ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
 
+        qDebug() << "Stop logic complete - returning early";
         return;
     }
 
+    // If we reach here, user wants to start a new search
+    qDebug() << "*** START LOGIC TRIGGERED ***";
+    qDebug() << "Starting new search";
+
     // Clear the search view before starting a new search
     clearSearchResults();
+
+    // Show status bar for SearchJobStoppable
+    statusBar()->show();
 
     // Create SearchJobStoppable
     SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
     searchJobStoppable->setDatabaseConnection("defaultConnection");
     currentSearch = searchJobStoppable;
 
-    statusBar()->show();
     // Update progress manager with current search for file count display
-    searchProgressManager->setCurrentSearch(currentSearch);
     if (searchProgressManager) {
-        qDebug() << "Manually testing SearchProgressManager...";
-        searchProgressManager->showMessage("TEST: Search starting...", 0);
-    } else {
-        qDebug() << "ERROR: searchProgressManager is null!";
+        searchProgressManager->setCurrentSearch(currentSearch);
     }
 
     // Set up basic search parameters
     sendSearchParameters(searchJobStoppable);
 
     // Update UI for running search
+    qDebug() << "Setting Search button to orange Stop";
     ui->Search_pushButton_Search->setText(tr("Stop"));
     ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
     ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
 
     // Start the search
-    qDebug() << "Starting SearchJobStoppable";
+    qDebug() << "Starting SearchJobStoppable via SearchManager";
     searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
+
+    qDebug() << "SearchManager::startSearchJobStoppable() called";
+    qDebug() << "SearchManager searchRunning() after start:" << searchManager->searchRunning();
+    qDebug() << "=== launchSearchJobStoppable() complete ===";
 }
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
@@ -619,9 +646,24 @@ void MainWindow::resetSearchState()
 //----------------------------------------------------------------------
 void MainWindow::onSearchCompleted()
 {
-    qDebug() << "Search completed successfully";
+    qDebug() << "=== onSearchCompleted() ===";
+    qDebug() << "Button text before reset:" << ui->Search_pushButton_Search->text();
+    qDebug() << "Button click pending:" << m_searchButtonClickPending;
 
-    resetSearchButton();
+    // Don't reset button immediately if user click is pending
+    if (!m_searchButtonClickPending) {
+        resetSearchButton();
+    } else {
+        qDebug() << "Delaying button reset due to pending click";
+        // Set a short timer to reset later
+        QTimer::singleShot(100, this, [this]() {
+            if (!searchManager || !searchManager->searchRunning()) {
+                resetSearchButton();
+            }
+            m_searchButtonClickPending = false;
+        });
+    }
+
     displaySearchResults();
 
     ui->Search_pushButton_ProcessResults->setEnabled(true);
@@ -632,6 +674,9 @@ void MainWindow::onSearchCompleted()
     }
 
     QApplication::restoreOverrideCursor();
+
+    qDebug() << "Button text after reset:" << ui->Search_pushButton_Search->text();
+    qDebug() << "=== onSearchCompleted() complete ===";
 }
 //----------------------------------------------------------------------
 void MainWindow::onSearchCancelled()
@@ -678,8 +723,8 @@ void MainWindow::updateStatusBarFromSearchManager()
         }
 
         // Add current catalog info if available
-        if (!searchManager->currentCatalog().isEmpty()) {
-            statusMessage += QString(" - %1").arg(searchManager->currentCatalog());
+        if (!searchManager->currentCatalogName().isEmpty()) {
+            statusMessage += QString(" - %1").arg(searchManager->currentCatalogName());
         }
 
         // Add file count if currentSearch is available

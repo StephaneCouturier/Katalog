@@ -208,6 +208,7 @@ class MainWindow : public QMainWindow
             void setupSearchManager();
             SearchProgressManager *searchProgressManager = nullptr;
             void resetSearchButton();
+            bool m_searchButtonClickPending = false;
 
             // Search management (SearchStoppable)
             SearchProcess *searchProcess;

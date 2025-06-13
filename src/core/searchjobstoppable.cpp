@@ -53,12 +53,12 @@ SearchJobStoppable::~SearchJobStoppable()
     // Ensure search is stopped
     stopSearch();
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::setDatabaseConnection(const QString &connectionName)
 {
     m_connectionName = connectionName;
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::searchFiles(Device *selectedDevice)
 {
     qDebug() << "SearchJobStoppable::searchFiles() starting";
@@ -231,12 +231,14 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
             }
         }
     } else if (searchInConnectedChecked && shouldContinue()) {
+        qDebug() << "SearchJobStoppable::searchFiles() searching in connected directory:" << connectedDirectory;
         // Search in directory
         totalCatalogs = 1;
         currentCatalogIndex = 1;
         currentCatalogName = connectedDirectory;
         QMutex dummyMutex;
         bool dummyStop = false;
+        qDebug() << "  - Searching in directory:" << connectedDirectory;
         searchFilesInDirectory(connectedDirectory, dummyMutex, dummyStop);
     }
 
@@ -268,27 +270,34 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
         emit searchProgress(totalFilesProcessed);
     }
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::stopSearch()
 {
+    qDebug() << "=== SearchJobStoppable::stopSearch() called ===";
+    qDebug() << "Setting stop flag to 1";
+
     m_stopRequested.storeRelease(1);
 
     // Wake up any paused operations
     if (m_paused.loadAcquire()) {
+        qDebug() << "Waking up paused operation";
         m_paused.storeRelease(0);
     }
-}
 
+    qDebug() << "Stop flag set - shouldContinue() now returns:" << shouldContinue();
+    qDebug() << "=== SearchJobStoppable::stopSearch() complete ===";
+}
+//----------------------------------------------------------------------
 void SearchJobStoppable::pauseSearch()
 {
     m_paused.storeRelease(1);
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::resumeSearch()
 {
     m_paused.storeRelease(0);
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, bool &stopRequested)
 {
     qDebug() << "SearchJobStoppable::searchFilesInCatalog() starting for device:" << device->name;
@@ -443,17 +452,251 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         emit searchProgress(totalFilesProcessed);
     }
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, QMutex &mutex, bool &stopRequested)
 {
-    Q_UNUSED(mutex);
-    Q_UNUSED(stopRequested);
+    qDebug() << "SearchJobStoppable::searchFilesInDirectory starting for:" << sourceDirectory;
 
-    // This implementation is similar to SearchStoppable but cleaned up
-    // For now, we'll keep it simple and just indicate it's not implemented
-    qDebug() << "SearchJobStoppable::searchFilesInDirectory not yet implemented for:" << sourceDirectory;
+    // Use the same pattern as searchFilesInCatalog - get local reference to stopRequested
+    bool &localStopRequested = stopRequested;
+
+    // But ALSO check shouldContinue() since we use atomic variables
+    if (!shouldContinue()) {
+        qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested at start";
+        return;
+    }
+
+    // Check if directory exists
+    QDir dir(sourceDirectory);
+    if (!dir.exists()) {
+        qWarning() << "Warning: Directory does not exist:" << sourceDirectory;
+        return;
+    }
+
+    // Initialize Regular Expression
+    QRegularExpression regex(regexPattern, QRegularExpression::CaseInsensitiveOption);
+    if (caseSensitive == true) {
+        regex.setPatternOptions(QRegularExpression::NoPatternOption);
+    }
+
+    // Filetypes
+    QStringList fileTypes;
+
+    // Scan directory and create a list of files
+    QDirIterator iterator(sourceDirectory, fileTypes, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories);
+
+    // Track both processed files and found files separately
+    int filesProcessedCount = 0;  // All files examined
+    int filesFoundCount = 0;      // Files that match criteria
+    int batchProcessedCount = 0;  // Batch counter for progress reporting
+
+    qDebug() << "SearchJobStoppable::searchFilesInDirectory - starting main loop";
+
+    // Main loop - similar pattern to searchFilesInCatalog but track processing vs finding separately
+    while (iterator.hasNext()) {
+        // EXACT same early stop check as searchFilesInCatalog
+        if (localStopRequested || !shouldContinue()) {
+            qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested in main loop at file" << filesProcessedCount;
+            break; // Use break, not return, like searchFilesInCatalog
+        }
+
+        // Get file information
+        QString filePath = iterator.next();
+        QFileInfo fileInfo(filePath);
+        QDateTime fileDate = fileInfo.lastModified();
+
+        filesProcessedCount++;      // Count ALL files processed
+        batchProcessedCount++;      // Count for batch progress reporting
+
+        // Create line with file info (compatible with catalog format)
+        QString line = fileInfo.absoluteFilePath() + "\t" + QString::number(fileInfo.size()) + "\t" + fileDate.toString("yyyy/MM/dd hh:mm:ss");
+
+        // Split the line text with tabulations into a list
+        QRegularExpression lineSplitExp("\t");
+        QStringList lineFieldList = line.split(lineSplitExp);
+        int fieldListCount = lineFieldList.count();
+
+        // Get the file absolute path from this list
+        QString lineFilePath = lineFieldList[0];
+
+        // Get the FileSize from the list if available
+        qint64 lineFileSize;
+        if (fieldListCount >= 2) {
+            lineFileSize = lineFieldList[1].toLongLong();
+        } else {
+            lineFileSize = fileInfo.size();
+        }
+
+        // Get the File DateTime from the list if available
+        QDateTime lineFileDateTime;
+        if (fieldListCount >= 3) {
+            lineFileDateTime = QDateTime::fromString(lineFieldList[2], "yyyy/MM/dd hh:mm:ss");
+        } else {
+            lineFileDateTime = fileDate;
+        }
+
+        // Exclude catalog metadata lines which start with "<"
+        if (lineFilePath.left(1) == "<") {
+            continue;
+        }
+
+        // Apply size filter
+        if (searchOnSize == true) {
+            if (!(lineFileSize >= selectedMinimumSize * sizeMultiplierMin
+                  && lineFileSize <= selectedMaximumSize * sizeMultiplierMax)) {
+                continue;
+            }
+        }
+
+        // Apply date filter
+        if (searchOnDate == true) {
+            if (!(lineFileDateTime >= selectedDateMin
+                  && lineFileDateTime <= selectedDateMax)) {
+                continue;
+            }
+        }
+
+        // Apply tags filter
+        if (searchOnTags == true) {
+            bool fileIsMatchingTag = false;
+
+            QSqlQuery queryTag(QSqlDatabase::database(m_connectionName));
+            QString queryTagSQL = QLatin1String(R"(
+                SELECT path
+                FROM tag
+                WHERE name=:name
+            )");
+            queryTag.prepare(queryTagSQL);
+            queryTag.bindValue(":name", selectedTagName);
+
+            if (!queryTag.exec()) {
+                qWarning() << "SearchJobStoppable::searchFilesInDirectory - Tag query failed:" << queryTag.lastError().text();
+                continue;
+            }
+
+            while (queryTag.next()) {
+                if (lineFilePath.contains(queryTag.value(0).toString()) == true) {
+                    fileIsMatchingTag = true;
+                    break;
+                }
+            }
+
+            if (!fileIsMatchingTag) {
+                continue;
+            }
+        }
+
+        // Apply filename/text search criteria
+        QRegularExpressionMatch match;
+        QRegularExpressionMatch foldermatch;
+
+        if (searchOnFileName == true) {
+            if (selectedSearchIn == Search::SEARCH_IN_FILE_NAMES) {
+                QFileInfo file(lineFilePath);
+                QString reducedLine = file.fileName();
+                match = regex.match(reducedLine);
+            }
+            else if (selectedSearchIn == Search::SEARCH_IN_FOLDER_PATH) {
+                QString reducedLine = lineFilePath.left(lineFilePath.lastIndexOf("/"));
+                regex.setPattern(regexSearchtext);
+                foldermatch = regex.match(reducedLine);
+
+                if (foldermatch.hasMatch() && searchOnType == true) {
+                    regex.setPattern(regexFileType);
+                    match = regex.match(lineFilePath);
+                } else {
+                    match = foldermatch;
+                }
+            }
+            else { // Search::SEARCH_IN_FILES_AND_FOLDERS
+                match = regex.match(lineFilePath);
+            }
+
+            // If the file is matching the criteria, add it to the search results
+            if (match.hasMatch()) {
+                QMutexLocker locker(&mutex);
+
+                filesFoundList << lineFilePath;
+                QFileInfo file(lineFilePath);
+
+                QString lineFileDatetime;
+                if (fieldListCount >= 3) {
+                    lineFileDatetime = lineFieldList[2];
+                } else {
+                    lineFileDatetime = fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
+
+                fileNames.append(file.fileName());
+                fileSizes.append(lineFileSize);
+                fileDateTimes.append(lineFileDatetime);
+                filePaths.append(file.path());
+                fileCatalogs.append(sourceDirectory);
+                fileCatalogIDs.append(0);
+
+                if (!deviceFoundIDList.contains(sourceDirectory)) {
+                    deviceFoundIDList.append(sourceDirectory);
+                }
+
+                // Count found files separately
+                filesFoundCount++;
+            }
+        }
+        else {
+            // Add all files when not searching on filename
+            if (!lineFilePath.isEmpty()) {
+                QMutexLocker locker(&mutex);
+
+                filesFoundList << lineFilePath;
+                QFileInfo file(lineFilePath);
+
+                QString lineFileDatetime;
+                if (fieldListCount >= 3) {
+                    lineFileDatetime = lineFieldList[2];
+                } else {
+                    lineFileDatetime = fileDate.toString("yyyy/MM/dd hh:mm:ss");
+                }
+
+                fileNames.append(file.fileName());
+                fileSizes.append(lineFileSize);
+                fileDateTimes.append(lineFileDatetime);
+                filePaths.append(file.path());
+                fileCatalogs.append(sourceDirectory);
+                fileCatalogIDs.append(0);
+
+                if (!deviceFoundIDList.contains(sourceDirectory)) {
+                    deviceFoundIDList.append(sourceDirectory);
+                }
+
+                // Count found files separately
+                filesFoundCount++;
+            }
+        }
+
+        // Progress reporting based on FILES PROCESSED (not found)
+        if (batchProcessedCount >= progressRefreshRate) {
+            totalFilesProcessed += batchProcessedCount;  // This now represents files actually processed
+            emit searchProgress(totalFilesProcessed);
+            batchProcessedCount = 0;
+
+            // CRITICAL: Process events to keep UI responsive (same as searchFilesInCatalog)
+            QCoreApplication::processEvents();
+
+            qDebug() << "SearchJobStoppable::searchFilesInDirectory - processed" << totalFilesProcessed << "files, found" << filesFoundCount << "matches";
+        }
+    }
+
+    // Report remaining processed files
+    if (batchProcessedCount > 0) {
+        totalFilesProcessed += batchProcessedCount;
+        emit searchProgress(totalFilesProcessed);
+    }
+
+    qDebug() << "SearchJobStoppable::searchFilesInDirectory completed for:" << sourceDirectory
+             << "- Total files processed:" << totalFilesProcessed
+             << "- Files found:" << filesFoundCount
+             << "- Files in results:" << fileNames.size();
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::processDuplicates(const QString &connectionName)
 {
     if (!shouldContinue()) return;
@@ -462,7 +705,7 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
     // For brevity, keeping the core logic but adding shouldContinue() checks
     Search::processDuplicates(connectionName);
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::processDifferences(const QString &connectionName)
 {
     if (!shouldContinue()) return;
@@ -470,17 +713,17 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     // Implementation similar to SearchStoppable but with stop/pause checks
     Search::processDifferences(connectionName);
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::checkStopAndPause()
 {
     waitIfPaused();
 }
-
+//----------------------------------------------------------------------
 bool SearchJobStoppable::shouldContinue() const
 {
     return !m_stopRequested.loadAcquire();
 }
-
+//----------------------------------------------------------------------
 void SearchJobStoppable::waitIfPaused()
 {
     while (m_paused.loadAcquire() && shouldContinue()) {
@@ -488,3 +731,4 @@ void SearchJobStoppable::waitIfPaused()
         QThread::msleep(100);
     }
 }
+//----------------------------------------------------------------------

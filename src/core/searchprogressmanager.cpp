@@ -66,12 +66,12 @@ void SearchProgressManager::updateFromSearchManager()
 
     if (m_searchManager->searchRunning()) {
         // Build message in SearchStoppable format:
-        // "Searching in catalog catalogname | catalog 2 of 5 | total files found: 13 | total files processed: 20000 (9%)"
+        // "Searching in catalog catalogname | catalog 2 of 5 | Total files found: 13 | Total files processed: 20000 (9%)"
 
         if (m_currentSearch && m_currentSearch->totalCatalogs > 0) {
             // Start with catalog name
-            if (!m_searchManager->currentCatalog().isEmpty()) {
-                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalog());
+            if (!m_searchManager->currentCatalogName().isEmpty()) {
+                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
             } else {
                 message = tr("Searching in catalog");
             }
@@ -82,8 +82,8 @@ void SearchProgressManager::updateFromSearchManager()
                            .arg(m_currentSearch->totalCatalogs);
         } else {
             // Single catalog or no catalog info
-            if (!m_searchManager->currentCatalog().isEmpty()) {
-                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalog());
+            if (!m_searchManager->currentCatalogName().isEmpty()) {
+                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
             } else {
                 message = tr("Searching");
             }
@@ -120,7 +120,7 @@ void SearchProgressManager::updateFromSearchManager()
     } else {
         // Search completed or ready
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            message = tr("Search completed | total files found: %1")
+            message = tr("Search completed | Total files found: %1")
             .arg(QLocale().toString(m_currentSearch->fileNames.size()));
         } else {
             message = m_searchManager->status();
