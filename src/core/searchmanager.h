@@ -52,6 +52,7 @@ class SearchManager : public QObject
     Q_PROPERTY(int progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QString status READ status NOTIFY statusChanged)
     Q_PROPERTY(QString currentCatalog READ currentCatalog NOTIFY currentCatalogChanged)
+    Q_PROPERTY(int filesProcessed READ filesProcessed NOTIFY filesProcessedChanged)
 
 public:
     explicit SearchManager(QObject *parent = nullptr);
@@ -62,6 +63,7 @@ public:
     int progress() const { return m_progress; }
     QString status() const { return m_status; }
     QString currentCatalog() const { return m_currentCatalog; }
+    int filesProcessed() const { return m_filesProcessed; }
 
     // Get the current search results
     Search* getCurrentSearch() const;
@@ -71,7 +73,9 @@ private:
     void setProgress(int progress);
     void setStatus(const QString &status);
     void setCurrentCatalog(const QString &catalog);
+    void setFilesProcessed(int filesProcessed);
     void cleanupJob();
+    int m_filesProcessed = 0;
 
     SearchJob *m_currentJob = nullptr;
     bool m_searchRunning = false;
@@ -99,9 +103,11 @@ signals:
     void progressChanged();
     void statusChanged();
     void currentCatalogChanged();
+    void filesProcessedChanged();
     void searchCompleted();
     void searchCancelled();
     void searchError(const QString &error);
+
     void specialProgressUpdate(int specialValue);  // For -1, -2, -3, -4 values
     void catalogLoadingStarted(const QString &catalogName);
     void catalogLoadingFinished();

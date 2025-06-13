@@ -1569,3 +1569,10 @@
             ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
             ui->Search_treeView_CatalogsFound->hideColumn(1);
         }
+        //--------------------------------------------------------------------------
+        void MainWindow::resetSearchButton()
+        {
+            ui->Search_pushButton_Search->setText("Search");
+            ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+            ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        }

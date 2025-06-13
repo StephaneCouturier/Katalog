@@ -1,3 +1,34 @@
+/*LICENCE
+    This file is part of Katalog
+
+    Copyright (C) 2021, the Katalog Development team
+
+    Author: Stephane Couturier (Symbioxy)
+
+    Katalog is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Katalog is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Katalog; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+/*FILE DESCRIPTION
+/////////////////////////////////////////////////////////////////////////////
+// Application: Katalog
+// File Name:   searchprogressmanager.cpp
+// Purpose:     header for the class that handles search progress reporting
+// Description: https://stephanecouturier.github.io/Katalog/docs/Features/Search
+// Author:      Stephane Couturier
+/////////////////////////////////////////////////////////////////////////////
+*///
+
 #include "searchprogressmanager.h"
 #include "searchmanager.h"
 #include "search.h"
@@ -18,6 +49,8 @@ void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
             this, &SearchProgressManager::updateFromSearchManager);
     connect(searchManager, &SearchManager::searchRunningChanged,
             this, &SearchProgressManager::updateFromSearchManager);
+    connect(searchManager, &SearchManager::filesProcessedChanged,  // ADD THIS
+            this, &SearchProgressManager::updateFromSearchManager);
 }
 
 void SearchProgressManager::setCurrentSearch(Search *currentSearch)
@@ -32,21 +65,47 @@ void SearchProgressManager::updateFromSearchManager()
     QString message;
 
     if (m_searchManager->searchRunning()) {
-        // Build dynamic status while search is running
-        message = m_searchManager->status();
+        // Build message in SearchStoppable format:
+        // "Searching in catalog catalogname | catalog 2 of 5 | total files found: 13 | total files processed: 20000 (9%)"
 
-        if (m_searchManager->progress() > 0) {
-            message += QString(" (%1%)").arg(m_searchManager->progress());
+        if (m_currentSearch && m_currentSearch->totalCatalogs > 0) {
+            // Start with catalog name
+            if (!m_searchManager->currentCatalog().isEmpty()) {
+                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalog());
+            } else {
+                message = tr("Searching in catalog");
+            }
+
+            // Add catalog position
+            message += tr(" | Catalog %1 of %2")
+                           .arg(m_currentSearch->currentCatalogIndex)
+                           .arg(m_currentSearch->totalCatalogs);
+        } else {
+            // Single catalog or no catalog info
+            if (!m_searchManager->currentCatalog().isEmpty()) {
+                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalog());
+            } else {
+                message = tr("Searching");
+            }
         }
 
-        if (!m_searchManager->currentCatalog().isEmpty()) {
-            message += QString(" - %1").arg(m_searchManager->currentCatalog());
-        }
-
-        // Add file count if available
+        // Add total files found
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            message += QString(" | Files found: %1")
+            message += tr(" | Total files found: %1")
             .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+        } else {
+            message += tr(" | Total files found: 0");
+        }
+
+        // Add total files processed with percentage (using actual count from SearchManager)
+        int actualFilesProcessed = m_searchManager->filesProcessed();
+        if (actualFilesProcessed > 0) {
+            message += tr(" | Total files processed: %1")
+            .arg(QLocale().toString(actualFilesProcessed));
+
+            if (m_searchManager->progress() > 0) {
+                message += tr(" (%1%)").arg(m_searchManager->progress());
+            }
         }
 
         // Show status bar without timeout during search
@@ -61,7 +120,7 @@ void SearchProgressManager::updateFromSearchManager()
     } else {
         // Search completed or ready
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            message = tr("Search completed | Files found: %1")
+            message = tr("Search completed | total files found: %1")
             .arg(QLocale().toString(m_currentSearch->fileNames.size()));
         } else {
             message = m_searchManager->status();

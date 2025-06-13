@@ -39,21 +39,11 @@
 void MainWindow::launchSearch()
 {// Generic search launch method, using a type of search based on database mode and search type
 
-    qDebug() << "developmentMode, collection->databaseMode:,ui->Filters_checkBox_SearchInConnectedDrives->isChecked() " << developmentMode<<collection->databaseMode<<ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
-
-    qDebug()<<"launchSearch";
-
-    // KFormat format;
-    // qint64 bytes = 1523466678790;
-    // QString formatted = format.formatByteSize(bytes);
-    // qDebug() << "KF6 KFormat test - Bytes:" << bytes << "Formatted:" << formatted;
-    // QMessageBox::information(this, "Katalog", tr("KF6 KFormat test: ") + formatted);
-
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // For database mode or searchInConnected, in development mode, use SearchJobStoppable
-    if (developmentMode && collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+    if (collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
         qDebug() << "\n Development mode: using SearchJobStoppable";
         launchSearchJobStoppable();
         return;
@@ -64,11 +54,11 @@ void MainWindow::launchSearch()
         qDebug() << "\n Using SearchMemory for memory mode";
         launchSearchMemory();
     }
-    // For database mode or searchInConnected, use SearchStoppable
-    else {
-        qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
-        launchSearchStoppable();
-    }
+    // (OBSOLETE) For database mode or searchInConnected, use SearchStoppable
+    // else {
+    //     qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
+    //     launchSearchStoppable();
+    // }
 
     //Save search history
     currentSearch->saveSearchHistoryToTable("defaultConnection");
@@ -270,8 +260,6 @@ void MainWindow::launchSearchJobStoppable()
     // Start the search
     qDebug() << "Starting SearchJobStoppable";
     searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
-
-    QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
@@ -631,19 +619,16 @@ void MainWindow::onSearchCompleted()
 {
     qDebug() << "Search completed successfully";
 
-    // Display the results
+    resetSearchButton();
     displaySearchResults();
 
-    // Enable export
     ui->Search_pushButton_ProcessResults->setEnabled(true);
     ui->Search_comboBox_SelectProcess->setEnabled(true);
 
-    // Save search history
     if (currentSearch) {
         currentSearch->saveSearchHistoryToTable("defaultConnection");
     }
 
-    // Restore cursor
     QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
@@ -651,14 +636,14 @@ void MainWindow::onSearchCancelled()
 {
     qDebug() << "Search was cancelled";
 
-    // Display partial results if any
+    resetSearchButton();
+
     if (currentSearch && currentSearch->fileNames.size() > 0) {
         displaySearchResults();
         ui->Search_pushButton_ProcessResults->setEnabled(true);
         ui->Search_comboBox_SelectProcess->setEnabled(true);
     }
 
-    // Restore cursor
     QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
@@ -666,9 +651,9 @@ void MainWindow::onSearchError(const QString &error)
 {
     qDebug() << "Search error:" << error;
 
-    QMessageBox::warning(this, "Search Error", error);
+    resetSearchButton();
 
-    // Restore cursor
+    QMessageBox::warning(this, "Search Error", error);
     QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------

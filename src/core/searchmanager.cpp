@@ -104,48 +104,37 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
         if (m_currentJob && m_currentJob->getSearchEngine()) {
             Search* engine = m_currentJob->getSearchEngine();
 
-            // Handle special progress values consistent with updateSearchProgress
-            if (filesProcessed == -1) {
-                setStatus("Search interrupted");
-                emit searchInterrupted();
-                emit specialProgressUpdate(-1);
-                return;
-            }
-
+            // Handle special progress values for catalog loading
             if (filesProcessed == -2) {
-                // Catalog loading started
-                setCurrentCatalog(engine->currentCatalogName);
-                setStatus(QString("Loading catalog: %1").arg(engine->currentCatalogName));
-                emit catalogLoadingStarted(engine->currentCatalogName);
-                emit specialProgressUpdate(-2);
+                // Catalog loading started - set catalog name
+                QString catalogName = engine->currentCatalogName;
+                if (!catalogName.isEmpty()) {
+                    setCurrentCatalog(catalogName);
+                    setStatus(QString("Loading catalog: %1").arg(catalogName));
+                }
                 return;
             }
 
             if (filesProcessed == -3) {
-                // Catalog loading finished
+                // Catalog loading finished - update status
                 setStatus("Processing files...");
-                emit catalogLoadingFinished();
-                emit specialProgressUpdate(-3);
-                return;
-            }
-
-            if (filesProcessed == -4) {
-                // Catalog loading progress (SearchMemory specific)
-                emit specialProgressUpdate(-4);
                 return;
             }
 
             // Regular progress update
-            if (filesProcessed >= 0 && engine->estimatedTotalFiles > 0) {
-                int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
-                setProgress(percent);
+            if (filesProcessed >= 0) {
+                setFilesProcessed(filesProcessed);
 
-                // Update status with consistent messaging
+                if (engine->estimatedTotalFiles > 0) {
+                    int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
+                    qDebug() << "SearchManager progress update:" << percent << "% (" << filesProcessed << "/" << engine->estimatedTotalFiles << ")";
+                    setProgress(percent);
+                }
+
+                // Update status with catalog info during regular processing
                 QString statusMsg = "Searching";
-                if (engine->totalCatalogs > 0) {
-                    statusMsg = QString("Searching in Catalog %1 of %2")
-                    .arg(engine->currentCatalogIndex)
-                        .arg(engine->totalCatalogs);
+                if (!engine->currentCatalogName.isEmpty()) {
+                    setCurrentCatalog(engine->currentCatalogName);
                 }
                 setStatus(statusMsg);
             }
@@ -156,11 +145,16 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
     connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
     connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
 
-
-    // With this working connection:
+    // Enhanced progress connection that captures files processed count
     connect(m_currentJob, &SearchJob::searchProgress, this, [this](int filesProcessed) {
         if (m_currentJob && m_currentJob->getSearchEngine()) {
             Search* engine = m_currentJob->getSearchEngine();
+
+            // Update files processed count
+            if (filesProcessed >= 0) {
+                setFilesProcessed(filesProcessed);
+            }
+
             if (engine->estimatedTotalFiles > 0) {
                 int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
                 qDebug() << "SearchManager progress update:" << percent << "% (" << filesProcessed << "/" << engine->estimatedTotalFiles << ")";
@@ -168,7 +162,6 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
             }
         }
     });
-
     // Note: infoMessage signal may not be available in all KJob versions
     // connect(m_currentJob, &KJob::infoMessage, this, &SearchManager::onJobInfoMessage);
 
@@ -347,3 +340,10 @@ void SearchManager::cleanupJob()
     }
 }
 //----------------------------------------------------------------------
+void SearchManager::setFilesProcessed(int filesProcessed)
+{
+    if (m_filesProcessed != filesProcessed) {
+        m_filesProcessed = filesProcessed;
+        emit filesProcessedChanged();
+    }
+}
