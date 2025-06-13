@@ -465,7 +465,6 @@ class MainWindow : public QMainWindow
             void handleSearchCompleted();
             void handleSearchStopped();
             void updateSearchProgress(int filesProcessed);
-            void startStatusBarTimer();
 
             void launchSearchJobStoppable();
             void launchSearchMemory();

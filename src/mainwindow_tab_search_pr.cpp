@@ -189,18 +189,13 @@ void MainWindow::setupSearchManager()
     // Create search manager
     searchManager = new SearchManager(this);
 
-    // Create and setup progress manager for status bar updates
-    searchProgressManager = new SearchProgressManager(statusBar(), this);
+    // Create progress manager with timer reference
+    searchProgressManager = new SearchProgressManager(statusBar(), statusBarTimer, this);
     searchProgressManager->connectToSearchManager(searchManager);
 
-    // Connect timer management ONLY to search completion events
-    connect(searchManager, &SearchManager::searchCompleted, this, &MainWindow::startStatusBarTimer);
-    connect(searchManager, &SearchManager::searchCancelled, this, &MainWindow::startStatusBarTimer);
-    connect(searchManager, &SearchManager::searchError, this, [this](const QString &error) {
-        QApplication::restoreOverrideCursor();
-        QMessageBox::warning(this, tr("Search Error"), error);
-        startStatusBarTimer(); // Start timer after error message
-    });
+    // Remove old timer connections since SearchProgressManager handles it internally now
+    // connect(searchManager, &SearchManager::searchCompleted, this, &MainWindow::startStatusBarTimer);
+    // connect(searchManager, &SearchManager::searchCancelled, this, &MainWindow::startStatusBarTimer);
 
     // Keep existing search lifecycle connections:
     connect(searchManager, &SearchManager::searchCompleted,       this, &MainWindow::onSearchCompleted);
@@ -219,6 +214,11 @@ void MainWindow::setupSearchManager()
         if (currentSearch && currentSearch->fileNames.size() > 0) {
             displaySearchResults();
         }
+    });
+
+    connect(searchManager, &SearchManager::searchError, this, [this](const QString &error) {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(this, tr("Search Error"), error);
     });
 }
 //----------------------------------------------------------------------
@@ -272,12 +272,6 @@ void MainWindow::launchSearchJobStoppable()
     searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
 
     QApplication::restoreOverrideCursor();
-}
-void MainWindow::startStatusBarTimer()
-{
-    if (statusBarTimer) {
-        statusBarTimer->start(5000);
-    }
 }
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
