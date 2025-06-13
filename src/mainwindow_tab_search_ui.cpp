@@ -433,10 +433,26 @@
                                            .arg(currentSearch->totalCatalogs)
                           + "<br/>";
 
-            // Check if the search was interrupted
-            bool wasInterrupted = (currentSearch == searchStoppable &&
-                                   !isSearchRunning &&
-                                   searchStoppable->wasStopRequested());
+            // Check if the search was interrupted - works with both SearchStoppable and SearchJobStoppable
+            bool wasInterrupted = false;
+
+            // Check if using SearchStoppable (legacy)
+            if (currentSearch == searchStoppable &&
+                !isSearchRunning &&
+                searchStoppable &&
+                searchStoppable->wasStopRequested()) {
+                wasInterrupted = true;
+            }
+            // Check if using SearchJobStoppable (new implementation)
+            else {
+                // Try to cast currentSearch to SearchJobStoppable
+                SearchJobStoppable* currentSearchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
+                if (currentSearchJobStoppable &&
+                    !isSearchRunning &&
+                    currentSearchJobStoppable->wasStopRequested()) {
+                    wasInterrupted = true;
+                }
+            }
 
             if (wasInterrupted) {
                 headerText += "<i>" + tr("Interrupted Search, incomplete results") + "</i><br/>";
@@ -454,7 +470,7 @@
             } else {
                 // For complete searches, show total files processed
                 filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
-                                        .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+                                         .arg(QLocale().toString(currentSearch->totalFilesProcessed));
             }
 
 
