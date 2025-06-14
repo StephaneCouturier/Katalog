@@ -699,11 +699,147 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDuplicates(const QString &connectionName)
 {
+    qDebug() << "SearchJobStoppable::processDuplicates() starting";
+
     if (!shouldContinue()) return;
 
-    // Implementation similar to SearchStoppable but with stop/pause checks
-    // For brevity, keeping the core logic but adding shouldContinue() checks
-    Search::processDuplicates(connectionName);
+    // Clear database
+    QSqlQuery deleteQuery(QSqlDatabase::database(connectionName));
+    deleteQuery.exec("DELETE FROM filetemp");
+
+    if (!shouldContinue()) return;
+
+    // Prepare query to load file info
+    QSqlQuery insertQuery(QSqlDatabase::database(connectionName));
+    QString insertSQL = QLatin1String(R"(
+        INSERT INTO filetemp (
+            file_name,
+            file_folder_path,
+            file_size,
+            file_date_updated,
+            file_catalog,
+            file_catalog_id
+        ) VALUES(
+            :file_name,
+            :file_folder_path,
+            :file_size,
+            :file_date_updated,
+            :file_catalog,
+            :file_catalog_id
+        )
+    )");
+    insertQuery.prepare(insertSQL);
+
+    // Loop through the result list and populate database
+    int rows = rowCount();
+    for (int i = 0; i < rows && shouldContinue(); i++) {
+        // Check for pause/stop periodically and allow UI updates
+        if (i % progressRefreshRate == 0) {
+            checkStopAndPause();
+            if (!shouldContinue()) break;
+
+            int progress = (i * 100) / rows;
+            emit searchProgress(progress);
+        }
+
+        // Append data to the database
+        insertQuery.bindValue(":file_name", index(i, 0).data().toString());
+        insertQuery.bindValue(":file_size", index(i, 1).data().toString());
+        insertQuery.bindValue(":file_folder_path", index(i, 3).data().toString());
+        insertQuery.bindValue(":file_date_updated", index(i, 2).data().toString());
+        insertQuery.bindValue(":file_catalog", index(i, 4).data().toString());
+        insertQuery.bindValue(":file_catalog_id", index(i, 5).data().toString());
+        insertQuery.exec();
+    }
+
+    // If search was stopped, return early
+    if (!shouldContinue()) {
+        qDebug() << "SearchJobStoppable::processDuplicates() stopped during data loading";
+        return;
+    }
+
+    // Prepare duplicate SQL query
+    QString selectSQL;
+
+    // Generate grouping of fields based on user selection, determining what are duplicates
+    QString groupingFields; // this value should be a concatenation of fields, like "fileName||fileSize"
+
+    // Same name
+    if (searchDuplicatesOnName == true) {
+        groupingFields = groupingFields + "file_name";
+    }
+    // Same size
+    if (searchDuplicatesOnSize == true) {
+        groupingFields = groupingFields + "||file_size";
+    }
+    // Same date modified
+    if (searchDuplicatesOnDate == true) {
+        groupingFields = groupingFields + "||file_date_updated";
+    }
+
+    // Remove starting || if any
+    if (groupingFields.startsWith("||"))
+        groupingFields.remove(0, 2);
+
+    if (!shouldContinue()) return;
+
+    // Generate SQL based on grouping of fields
+    selectSQL = QLatin1String(R"(
+        SELECT  file_name,
+                file_size,
+                file_date_updated,
+                file_folder_path,
+                file_catalog,
+                file_catalog_id
+        FROM filetemp
+        WHERE %1 IN
+            (SELECT %1
+            FROM filetemp
+            GROUP BY %1
+            HAVING count(%1)>1)
+        ORDER BY %1
+    )").arg(groupingFields);
+
+    // Run Query and load to model
+    QSqlQuery duplicatesQuery(QSqlDatabase::database(connectionName));
+    duplicatesQuery.prepare(selectSQL);
+    duplicatesQuery.exec();
+
+    if (!shouldContinue()) return;
+
+    // Recapture file results for stats
+    fileNames.clear();
+    fileSizes.clear();
+    filePaths.clear();
+    fileDateTimes.clear();
+    fileCatalogs.clear();
+    fileCatalogIDs.clear();
+
+    int duplicateCount = 0;
+    while (duplicatesQuery.next() && shouldContinue()) {
+        // Check for pause/stop periodically
+        if (duplicateCount % progressRefreshRate == 0) {
+            checkStopAndPause();
+            if (!shouldContinue()) break;
+        }
+
+        fileNames.append(duplicatesQuery.value(0).toString());
+        fileSizes.append(duplicatesQuery.value(1).toLongLong());
+        fileDateTimes.append(duplicatesQuery.value(2).toString());
+        filePaths.append(duplicatesQuery.value(3).toString());
+        fileCatalogs.append(duplicatesQuery.value(4).toString());
+        fileCatalogIDs.append(duplicatesQuery.value(5).toInt());
+
+        duplicateCount++;
+    }
+
+    // Final progress report if completed successfully
+    if (shouldContinue()) {
+        emit searchProgress(100);
+        qDebug() << "SearchJobStoppable::processDuplicates() completed - Found" << duplicateCount << "duplicate entries";
+    } else {
+        qDebug() << "SearchJobStoppable::processDuplicates() stopped during result processing";
+    }
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDifferences(const QString &connectionName)
