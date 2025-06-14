@@ -66,7 +66,7 @@ void SearchProgressManager::updateFromSearchManager()
 
     if (m_searchManager->searchRunning()) {
         // Build message in SearchStoppable format:
-        // "Searching in catalog catalogname | catalog 2 of 5 | Total files found: 13 | Total files processed: 20000 (9%)"
+        // "Searching in catalog catalogname | catalog 2 of 5 | Total files/folders found: 13 | Total files processed: 20000 (9%)"
 
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
             message = tr("Searching in directory %1").arg(m_currentSearch->connectedDirectory);
@@ -100,12 +100,21 @@ void SearchProgressManager::updateFromSearchManager()
             message = tr("Searching");
         }
 
-        // Add total files found
+        // Add total files/folders found - check showFoldersOnly flag
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            message += tr(" | Total files found: %1")
-            .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            if (m_currentSearch->showFoldersOnly) {
+                message += tr(" | Total folders found: %1")
+                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            } else {
+                message += tr(" | Total files found: %1")
+                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            }
         } else {
-            message += tr(" | Total files found: 0");
+            if (m_currentSearch && m_currentSearch->showFoldersOnly) {
+                message += tr(" | Total folders found: 0");
+            } else {
+                message += tr(" | Total files found: 0");
+            }
         }
 
         // Add total files processed with percentage (using actual count from SearchManager)
@@ -131,8 +140,13 @@ void SearchProgressManager::updateFromSearchManager()
     } else {
         // Search completed or ready
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
-            message = tr("Search completed | Total files found: %1")
-            .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            if (m_currentSearch->showFoldersOnly) {
+                message = tr("Search completed | Total folders found: %1")
+                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            } else {
+                message = tr("Search completed | Total files found: %1")
+                .arg(QLocale().toString(m_currentSearch->fileNames.size()));
+            }
         } else {
             message = m_searchManager->status();
         }
@@ -147,7 +161,6 @@ void SearchProgressManager::updateFromSearchManager()
         }
     }
 }
-
 void SearchProgressManager::showMessage(const QString &message, int timeout)
 {
     if (m_statusBar) {

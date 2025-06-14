@@ -427,11 +427,13 @@
             }
 
             QString filesProcessedText;
-            headerText += "<br/>"
-                          + tr("Catalogs processed: %1 of %2")
-                                           .arg(currentSearch->currentCatalogIndex)
-                                           .arg(currentSearch->totalCatalogs)
-                          + "<br/>";
+            if(!currentSearch->showFoldersOnly){
+                headerText += "<br/>"
+                              + tr("Catalogs processed: %1 of %2")
+                                    .arg(currentSearch->currentCatalogIndex)
+                                    .arg(currentSearch->totalCatalogs)
+                              + "<br/>";
+            }
 
             // Check if the search was interrupted - works with both SearchStoppable and SearchJobStoppable
             bool wasInterrupted = (currentSearch &&
@@ -468,11 +470,12 @@
                                   .arg(QLocale().toString(currentSearch->filesFoundNumber));
             }
 
-            // Create the message box with all statistics
+            // Add files processed
+            headerText += filesProcessedText;
 
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Katalog");
-            msgBox.setText(headerText + filesProcessedText +
+            // Add files statistics
+            if(!currentSearch->showFoldersOnly){
+                    headerText +=
                            tr("<tr></tr>"
                               "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
                               "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
@@ -486,7 +489,13 @@
                                     QLocale().formattedDataSize(currentSearch->filesFoundMinSize),
                                     QLocale().formattedDataSize(currentSearch->filesFoundMaxSize),
                                     currentSearch->filesFoundMinDate,
-                                    currentSearch->filesFoundMaxDate));
+                                    currentSearch->filesFoundMaxDate);
+            }
+
+            // Show the message box with statistics
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(headerText);
             msgBox.setIcon(QMessageBox::Information);
             msgBox.exec();
         }
