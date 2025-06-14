@@ -68,25 +68,36 @@ void SearchProgressManager::updateFromSearchManager()
         // Build message in SearchStoppable format:
         // "Searching in catalog catalogname | catalog 2 of 5 | Total files found: 13 | Total files processed: 20000 (9%)"
 
-        if (m_currentSearch && m_currentSearch->totalCatalogs > 0) {
-            // Start with catalog name
-            if (!m_searchManager->currentCatalogName().isEmpty()) {
-                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
-            } else {
-                message = tr("Searching in catalog");
-            }
+        if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
+            message = tr("Searching in directory %1").arg(m_currentSearch->connectedDirectory);
+        }
+        else if (m_currentSearch && m_currentSearch->searchInCatalogsChecked) {
+            // Handle catalog search display
+            if (m_currentSearch->totalCatalogs > 0) {
+                // Start with catalog name
+                if (!m_searchManager->currentCatalogName().isEmpty()) {
+                    message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
+                } else {
+                    message = tr("Searching in catalog");
+                }
 
-            // Add catalog position
-            message += tr(" | Catalog %1 of %2")
-                           .arg(m_currentSearch->currentCatalogIndex)
-                           .arg(m_currentSearch->totalCatalogs);
-        } else {
-            // Single catalog or no catalog info
-            if (!m_searchManager->currentCatalogName().isEmpty()) {
-                message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
+                // Add catalog position if multiple catalogs
+                if (m_currentSearch->totalCatalogs > 1) {
+                    message += tr(" | Catalog %1 of %2")
+                    .arg(m_currentSearch->currentCatalogIndex)
+                        .arg(m_currentSearch->totalCatalogs);
+                }
             } else {
-                message = tr("Searching");
+                // Single catalog or no catalog info
+                if (!m_searchManager->currentCatalogName().isEmpty()) {
+                    message = tr("Searching in catalog %1").arg(m_searchManager->currentCatalogName());
+                } else {
+                    message = tr("Searching");
+                }
             }
+        }
+        else {
+            message = tr("Searching");
         }
 
         // Add total files found
