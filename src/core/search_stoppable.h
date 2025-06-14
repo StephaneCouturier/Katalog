@@ -81,7 +81,7 @@ public:
 
     bool initializeDatabase();
 
-    bool wasStopRequested() const { return stopRequested; }
+    bool wasStopRequested() const override { return stopRequested; }
 
     /**
      * @brief Indicates if a search has been requested to stop

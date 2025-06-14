@@ -80,7 +80,7 @@ public:
     /**
      * @brief Check if search was requested to stop
      */
-    bool wasStopRequested() const { return m_stopRequested.loadAcquire(); }
+    bool wasStopRequested() const override { return m_stopRequested.loadAcquire(); }
 
     /**
      * @brief Check if search is currently paused

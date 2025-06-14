@@ -434,25 +434,9 @@
                           + "<br/>";
 
             // Check if the search was interrupted - works with both SearchStoppable and SearchJobStoppable
-            bool wasInterrupted = false;
-
-            // Check if using SearchStoppable (legacy)
-            if (currentSearch == searchStoppable &&
-                !isSearchRunning &&
-                searchStoppable &&
-                searchStoppable->wasStopRequested()) {
-                wasInterrupted = true;
-            }
-            // Check if using SearchJobStoppable (new implementation)
-            else {
-                // Try to cast currentSearch to SearchJobStoppable
-                SearchJobStoppable* currentSearchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
-                if (currentSearchJobStoppable &&
-                    !isSearchRunning &&
-                    currentSearchJobStoppable->wasStopRequested()) {
-                    wasInterrupted = true;
-                }
-            }
+            bool wasInterrupted = (currentSearch &&
+                                   !isSearchRunning &&
+                                   currentSearch->wasStopRequested());
 
             if (wasInterrupted) {
                 headerText += "<i>" + tr("Interrupted Search, incomplete results") + "</i><br/>";
@@ -472,7 +456,6 @@
                 filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
                                          .arg(QLocale().toString(currentSearch->totalFilesProcessed));
             }
-
 
             // Add the statistics for files or folders found
             if (currentSearch->showFoldersOnly) {

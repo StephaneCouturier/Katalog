@@ -180,6 +180,12 @@ public:
     int mapTextCriteriaToComboBoxIndex(const QString& internalValue);
     int mapSizeUnitToComboBoxIndex(const QString& internalValue);
 
+    /**
+     * @brief Check if search was requested to stop
+     * @return true if stop was requested, false otherwise
+     */
+    virtual bool wasStopRequested() const { return false; }
+
 signals:
     void searchProgress(int filesProcessed);
 };
