@@ -844,10 +844,239 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
 //----------------------------------------------------------------------
 void SearchJobStoppable::processDifferences(const QString &connectionName)
 {
+    qDebug() << "SearchJobStoppable::processDifferences() starting";
+
     if (!shouldContinue()) return;
 
-    // Implementation similar to SearchStoppable but with stop/pause checks
-    Search::processDifferences(connectionName);
+    // Clear database
+    QSqlQuery deleteQuery(QSqlDatabase::database(connectionName));
+    deleteQuery.exec("DELETE FROM filetemp");
+
+    if (!shouldContinue()) return;
+
+    // Prepare query to load file info
+    QSqlQuery insertQuery(QSqlDatabase::database(connectionName));
+    QString insertSQL = QLatin1String(R"(
+        INSERT INTO filetemp (
+            file_name,
+            file_folder_path,
+            file_size,
+            file_date_updated,
+            file_catalog,
+            file_catalog_id
+        ) VALUES(
+            :file_name,
+            :file_folder_path,
+            :file_size,
+            :file_date_updated,
+            :file_catalog,
+            :file_catalog_id
+        )
+    )");
+    insertQuery.prepare(insertSQL);
+
+    // Loop through the result list and populate database
+    int rows = rowCount();
+    for (int i = 0; i < rows && shouldContinue(); i++) {
+        // Check for pause/stop periodically and allow UI updates
+        if (i % progressRefreshRate == 0) {
+            checkStopAndPause();
+            if (!shouldContinue()) break;
+
+            int progress = (i * 100) / rows;
+            emit searchProgress(progress);
+        }
+
+        // Append data to the database
+        insertQuery.bindValue(":file_name", index(i, 0).data().toString());
+        insertQuery.bindValue(":file_size", index(i, 1).data().toString());
+        insertQuery.bindValue(":file_folder_path", index(i, 3).data().toString());
+        insertQuery.bindValue(":file_date_updated", index(i, 2).data().toString());
+        insertQuery.bindValue(":file_catalog", index(i, 4).data().toString());
+        insertQuery.bindValue(":file_catalog_id", index(i, 5).data().toString());
+        insertQuery.exec();
+    }
+
+    // If search was stopped, return early
+    if (!shouldContinue()) {
+        qDebug() << "SearchJobStoppable::processDifferences() stopped during data loading";
+        return;
+    }
+
+    // Prepare difference SQL
+    QString selectSQL;
+
+    // Generate grouping of fields based on user selection, determining what are differences
+    QString groupingFieldsDifferences; // this value should be a concatenation of fields, like "fileName||fileSize"
+
+    // Same name
+    if (differencesOnName == true) {
+        groupingFieldsDifferences += "||file_name";
+    }
+    // Same size
+    if (differencesOnSize == true) {
+        groupingFieldsDifferences += "||file_size";
+    }
+    // Same date modified
+    if (differencesOnDate == true) {
+        groupingFieldsDifferences += "||file_date_updated";
+    }
+
+    // Remove the || at the start
+    if (groupingFieldsDifferences.startsWith("||"))
+        groupingFieldsDifferences.remove(0, 2);
+
+    if (!shouldContinue()) return;
+
+    // Populate listOfCatalogDeviceIDs1
+    QString listOfCatalogDeviceIDs1;
+    diffDevice1->loadDevice(connectionName);
+    if (diffDevice1->type == "Catalog") {
+        listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(diffDevice1->ID) + ",";
+    }
+    else {
+        for (const auto& row : diffDevice1->deviceListTable) {
+            if (!shouldContinue()) break;
+            if (row.type == "Catalog") {
+                listOfCatalogDeviceIDs1 = listOfCatalogDeviceIDs1 + QString::number(row.ID) + ",";
+            }
+        }
+    }
+    if (listOfCatalogDeviceIDs1.endsWith(","))
+        listOfCatalogDeviceIDs1.remove(listOfCatalogDeviceIDs1.length() - 1, 1);
+
+    if (!shouldContinue()) return;
+
+    // Populate listOfCatalogDeviceIDs2
+    QString listOfCatalogDeviceIDs2;
+    diffDevice2->loadDevice(connectionName);
+    if (diffDevice2->type == "Catalog") {
+        listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(diffDevice2->ID) + ",";
+    }
+    else {
+        for (const auto& row : diffDevice2->deviceListTable) {
+            if (!shouldContinue()) break;
+            if (row.type == "Catalog") {
+                listOfCatalogDeviceIDs2 = listOfCatalogDeviceIDs2 + QString::number(row.ID) + ",";
+            }
+        }
+    }
+    if (listOfCatalogDeviceIDs2.endsWith(","))
+        listOfCatalogDeviceIDs2.remove(listOfCatalogDeviceIDs2.length() - 1, 1);
+
+    if (!shouldContinue()) return;
+
+    // Begin transaction for better performance
+    QSqlQuery transactionQuery(QSqlDatabase::database(connectionName));
+    transactionQuery.exec("BEGIN TRANSACTION");
+
+    // Generate SQL based on grouping of fields
+    selectSQL = QString(R"(
+        SELECT  file_name,
+                file_size,
+                file_date_updated,
+                file_folder_path,
+                file_catalog,
+                file_catalog_id
+        FROM filetemp
+        WHERE file_catalog_id IN(
+            SELECT device_external_id
+            FROM device
+            WHERE device_id IN(%2)
+            AND device_type ='Catalog'
+        )
+        AND %1 NOT IN(
+            SELECT %1
+            FROM filetemp
+            WHERE file_catalog_id IN(
+                SELECT device_external_id
+                FROM device
+                WHERE device_id IN(%3)
+                AND device_type ='Catalog'
+            )
+        )
+        UNION
+        SELECT  file_name,
+                file_size,
+                file_date_updated,
+                file_folder_path,
+                file_catalog,
+                file_catalog_id
+        FROM filetemp
+        WHERE file_catalog_id IN(
+            SELECT device_external_id
+            FROM device
+            WHERE device_id IN(%3)
+            AND device_type ='Catalog'
+        )
+        AND %1 NOT IN(
+            SELECT %1
+            FROM filetemp
+            WHERE file_catalog_id IN(
+                SELECT device_external_id
+                FROM device
+                WHERE device_id IN(%2)
+                AND device_type ='Catalog'
+            )
+        )
+    )").arg(groupingFieldsDifferences, listOfCatalogDeviceIDs1, listOfCatalogDeviceIDs2);
+
+    if (!shouldContinue()) {
+        transactionQuery.exec("ROLLBACK");
+        return;
+    }
+
+    // Run Query
+    QSqlQuery differencesQuery(QSqlDatabase::database(connectionName));
+    differencesQuery.prepare(selectSQL);
+
+    if (!differencesQuery.exec()) {
+        qWarning() << "SearchJobStoppable::processDifferences - Query error:" << differencesQuery.lastError().text();
+        transactionQuery.exec("ROLLBACK");
+        return;
+    }
+
+    // Commit transaction
+    transactionQuery.exec("COMMIT");
+
+    if (!shouldContinue()) return;
+
+    // Recapture file results for stats
+    fileNames.clear();
+    fileSizes.clear();
+    filePaths.clear();
+    fileDateTimes.clear();
+    fileCatalogs.clear();
+    fileCatalogIDs.clear();
+
+    int differenceCount = 0;
+    while (differencesQuery.next() && shouldContinue()) {
+        // Check for pause/stop periodically
+        if (differenceCount % progressRefreshRate == 0) {
+            checkStopAndPause();
+            if (!shouldContinue()) break;
+        }
+
+        fileNames.append(differencesQuery.value(0).toString());
+        fileSizes.append(differencesQuery.value(1).toLongLong());
+        fileDateTimes.append(differencesQuery.value(2).toString());
+        filePaths.append(differencesQuery.value(3).toString());
+        fileCatalogs.append(differencesQuery.value(4).toString());
+        fileCatalogIDs.append(differencesQuery.value(5).toInt());
+
+        differenceCount++;
+    }
+
+    // Final progress report if completed successfully
+    if (shouldContinue()) {
+        emit searchProgress(100);
+        qDebug() << "SearchJobStoppable::processDifferences() completed - Found" << differenceCount << "difference entries";
+        qDebug() << "  - Device 1 catalogs:" << listOfCatalogDeviceIDs1;
+        qDebug() << "  - Device 2 catalogs:" << listOfCatalogDeviceIDs2;
+        qDebug() << "  - Grouping fields:" << groupingFieldsDifferences;
+    } else {
+        qDebug() << "SearchJobStoppable::processDifferences() stopped during result processing";
+    }
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::checkStopAndPause()
