@@ -122,7 +122,6 @@ protected:
     void processDifferences(const QString &connectionName) override;
 
 private:
-    void checkStopAndPause();
     bool shouldContinue() const;
     void waitIfPaused();
 

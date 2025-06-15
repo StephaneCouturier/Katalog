@@ -307,7 +307,10 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     Q_UNUSED(mutex);
     Q_UNUSED(stopRequested);
 
-    if (!shouldContinue()) return;
+    if (!shouldContinue()) {
+        qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested at start";
+        return;
+    }
 
     // Emit signal to indicate catalog processing started
     emit searchProgress(-2);
@@ -366,10 +369,23 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     int batchCount = 0;
 
     while (getFilesQuery.next() && shouldContinue()) {
-        waitIfPaused();
-        if (filesProcessed == 0) {
-            qDebug() << "  - Starting to process files from database";
+        // STOP check (existing)
+        if (stopRequested || !shouldContinue()) {
+            qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested in main loop at file" << filesProcessed;
+            break;
         }
+
+        // FIX: Add pause check every N files (simple approach)
+        if (filesProcessed % 100 == 0) {  // Check every 100 files
+            waitIfPaused();  // This will pause if needed
+
+            // After resuming, check if stop was requested while paused
+            if (!shouldContinue()) {
+                qDebug() << "SearchJobStoppable::searchFilesInCatalog - stop requested after pause";
+                break;
+            }
+        }
+
         QString lineFileName = getFilesQuery.value(0).toString();
         QString lineFileFolderPath = getFilesQuery.value(1).toString();
         QString lineFileFullPath = lineFileFolderPath + "/" + lineFileName;
@@ -494,10 +510,21 @@ void SearchJobStoppable::searchFilesInDirectory(const QString &sourceDirectory, 
 
     // Main loop - similar pattern to searchFilesInCatalog but track processing vs finding separately
     while (iterator.hasNext()) {
-        // EXACT same early stop check as searchFilesInCatalog
+        // STOP check (existing)
         if (localStopRequested || !shouldContinue()) {
             qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested in main loop at file" << filesProcessedCount;
-            break; // Use break, not return, like searchFilesInCatalog
+            break;
+        }
+
+        // FIX: Add pause check every N files (simple approach)
+        if (filesProcessedCount % 100 == 0) {  // Check every 100 files
+            waitIfPaused();  // This will pause if needed
+
+            // After resuming, check if stop was requested while paused
+            if (!shouldContinue()) {
+                qDebug() << "SearchJobStoppable::searchFilesInDirectory - stop requested after pause";
+                break;
+            }
         }
 
         // Get file information
@@ -735,7 +762,7 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
     for (int i = 0; i < rows && shouldContinue(); i++) {
         // Check for pause/stop periodically and allow UI updates
         if (i % progressRefreshRate == 0) {
-            checkStopAndPause();
+            waitIfPaused();
             if (!shouldContinue()) break;
 
             int progress = (i * 100) / rows;
@@ -819,7 +846,7 @@ void SearchJobStoppable::processDuplicates(const QString &connectionName)
     while (duplicatesQuery.next() && shouldContinue()) {
         // Check for pause/stop periodically
         if (duplicateCount % progressRefreshRate == 0) {
-            checkStopAndPause();
+            waitIfPaused();
             if (!shouldContinue()) break;
         }
 
@@ -880,7 +907,7 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     for (int i = 0; i < rows && shouldContinue(); i++) {
         // Check for pause/stop periodically and allow UI updates
         if (i % progressRefreshRate == 0) {
-            checkStopAndPause();
+            waitIfPaused();
             if (!shouldContinue()) break;
 
             int progress = (i * 100) / rows;
@@ -1053,7 +1080,7 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     while (differencesQuery.next() && shouldContinue()) {
         // Check for pause/stop periodically
         if (differenceCount % progressRefreshRate == 0) {
-            checkStopAndPause();
+            waitIfPaused();
             if (!shouldContinue()) break;
         }
 
@@ -1077,11 +1104,6 @@ void SearchJobStoppable::processDifferences(const QString &connectionName)
     } else {
         qDebug() << "SearchJobStoppable::processDifferences() stopped during result processing";
     }
-}
-//----------------------------------------------------------------------
-void SearchJobStoppable::checkStopAndPause()
-{
-    waitIfPaused();
 }
 //----------------------------------------------------------------------
 bool SearchJobStoppable::shouldContinue() const
