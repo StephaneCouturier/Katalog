@@ -98,6 +98,7 @@
 
 //KDE KF6
 #include <KFormat>
+#include <KXmlGuiWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -105,7 +106,7 @@ QT_END_NAMESPACE
 
 class SearchProcess;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow //QMainWindow KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -114,13 +115,17 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
         //Objects
-        Collection *collection = new Collection(); // Collection object, used to access the collection of devices, catalogs and storage
-        Device *selectedDevice = new Device(); // Selected device from Selection panel, used for operations on any screen
+        Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
+        Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
         Search *currentSearch = nullptr;
         SearchStoppable *searchStoppable = nullptr;
-        SearchMemory *searchMemory = new SearchMemory(this);
+        SearchMemory *searchMemory = nullptr;
         SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
         SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
+        SearchManager *searchManager = nullptr;
+        SearchProgressManager *searchProgressManager = nullptr;
+        SearchResultsThrottler *searchResultsThrottler = nullptr;
+        SearchProcess *searchProcess  = nullptr;
 
         void extracted();
         void launchSearch();
@@ -204,16 +209,14 @@ class MainWindow : public QMainWindow
 
         //TAB: Search
             // Search management (KJob)
-            SearchManager *searchManager = nullptr;
             SearchJobStoppable *searchJobStoppable = nullptr;
             void setupSearchManager();
-            SearchProgressManager *searchProgressManager = nullptr;
             void resetSearchButton();
             bool m_searchButtonClickPending = false;
 
             // Search management (SearchStoppable)
-            SearchProcess *searchProcess;
-            bool isSearchRunning;
+
+            bool isSearchRunning = false;
             void resetSearchState();
 
             void resetToDefaultSearchCriteria();
@@ -221,7 +224,6 @@ class MainWindow : public QMainWindow
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
             void getSearchCriteria();
-            SearchResultsThrottler *searchResultsThrottler = nullptr;
 
             QString exportSearchResults();
 

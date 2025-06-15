@@ -31,15 +31,27 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    searchMemory(nullptr),
-    searchStoppable(nullptr),
-    ui(new Ui::MainWindow),
-    searchProcess(nullptr),
-    isSearchRunning(false)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+    ui(new Ui::MainWindow) //QMainWindow KXmlGuiWindow
 {
-    //Set current version, release date, and development mode
+    // FIRST: Initialize objects that were set to nullptr in header
+    collection = new Collection();
+    // Initialize objects first
+    qDebug() << "Collection created, pointer:" << collection;
+
+    selectedDevice = new Device();
+    qDebug() << "SelectedDevice created, pointer:" << selectedDevice;
+
+    searchMemory = new SearchMemory(this);
+    loadSearch = new SearchMemory(this);
+
+    // These remain nullptr until needed
+    currentSearch = nullptr;
+    searchStoppable = nullptr;
+    searchManager = nullptr;
+    searchProgressManager = nullptr;
+
+    //Set current version, release date, and development mode       QMainWindow
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
         releaseDate     = "2025-06-15";
@@ -330,15 +342,37 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-    /*
-    if (searchProcess) {
-        searchProcess->stop();
-        searchProcess->wait();
-        delete searchProcess;
+    // Disconnect all signals from search objects to prevent crashes during destruction
+    if (searchMemory) {
+        disconnect(searchMemory, nullptr, this, nullptr);
+        searchMemory = nullptr; // Don't delete - Qt will handle it
     }
-    delete newSearch; // Ensure newSearch is deleted
-    */
+
+    if (loadSearch) {
+        disconnect(loadSearch, nullptr, this, nullptr);
+        loadSearch = nullptr; // Don't delete - Qt will handle it
+    }
+
+    if (searchStoppable) {
+        disconnect(searchStoppable, nullptr, this, nullptr);
+        searchStoppable->stopSearch(); // Stop any operations
+        delete searchStoppable; // This one doesn't have parent, so delete it
+        searchStoppable = nullptr;
+    }
+
+    if (searchManager) {
+        disconnect(searchManager, nullptr, this, nullptr);
+        if (searchManager->searchRunning()) {
+            searchManager->stopSearch();
+        }
+        // searchManager has 'this' as parent, so Qt will delete it
+    }
+
+    // Clean up non-Qt objects
+    delete collection;
+    delete selectedDevice;
+
+    delete ui;
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)

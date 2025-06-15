@@ -43,15 +43,50 @@
             launchSearch();
         }
         //----------------------------------------------------------------------
+        // In mainwindow_tab_search_ui.cpp - modify the search button handler:
+
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
             qDebug() << "=== Search/Pause/Resume button clicked ===";
+
+            // Add defensive checks to prevent crashes
+            if (!collection) {
+                qWarning() << "Collection is null, cannot start search";
+                return;
+            }
+
+            if (!selectedDevice) {
+                qWarning() << "Selected device is null, cannot start search";
+                return;
+            }
+
+            // Ensure searchMemory exists before using it
+            if (!searchMemory) {
+                qDebug() << "Creating searchMemory object";
+                searchMemory = new SearchMemory(this);
+            }
+
+            // Ensure loadSearch exists before using it
+            if (!loadSearch) {
+                qDebug() << "Creating loadSearch object";
+                loadSearch = new SearchMemory(this);
+            }
+
             QString buttonText = ui->Search_pushButton_Search->text();
 
             if (buttonText == tr("Search") || buttonText == "Search") {
                 // IDLE STATE: Start new search
                 qDebug() << "Starting new search";
-                launchSearch();
+
+                try {
+                    launchSearch();
+                } catch (const std::exception& e) {
+                    qWarning() << "Exception in launchSearch():" << e.what();
+                    QApplication::restoreOverrideCursor();
+                } catch (...) {
+                    qWarning() << "Unknown exception in launchSearch()";
+                    QApplication::restoreOverrideCursor();
+                }
             }
             else if (buttonText == tr("Pause") || buttonText == "Pause") {
                 // RUNNING STATE: Pause the search

@@ -35,6 +35,7 @@ qt_standard_project_setup()
 # Find KF6 components
 find_package(KF6CoreAddons REQUIRED)
 find_package(KF6I18n REQUIRED)
+find_package(KF6XmlGui REQUIRED)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
@@ -172,6 +173,7 @@ target_link_libraries(katalog-core PUBLIC
     Qt6::Multimedia  # Required for QMediaPlayer used in mainwindow.h
     KF6::CoreAddons
     KF6::I18n
+    KF6::XmlGui
 )
 
 target_include_directories(katalog-core PUBLIC
@@ -179,6 +181,7 @@ target_include_directories(katalog-core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${KF6CoreAddons_INCLUDE_DIRS}
     ${KF6I18n_INCLUDE_DIRS}
+    ${KF6XmlGui_INCLUDE_DIRS}
 )
 
 # Create the main executable with all sources at once
@@ -220,6 +223,7 @@ target_link_libraries(Katalog PRIVATE
     Qt6::MultimediaWidgets
     KF6::CoreAddons
     KF6::I18n
+    KF6::XmlGui
 )
 set_target_properties(katalog-core PROPERTIES
     AUTOMOC_MOC_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}/src"
@@ -231,6 +235,7 @@ target_include_directories(Katalog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${KF6CoreAddons_INCLUDE_DIRS}
     ${KF6I18n_INCLUDE_DIRS}
+    ${KF6XmlGui_INCLUDE_DIRS}
 )
 
 # Platform-specific settings
