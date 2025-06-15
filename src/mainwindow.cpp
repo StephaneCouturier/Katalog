@@ -86,6 +86,8 @@ MainWindow::MainWindow(QWidget *parent) :
         //Set up the User Interface
             ui->setupUi(this);
 
+            initializeSearchButtons();
+
             if(developmentMode==false){
                 hideDevelopmentUIItems();
             }

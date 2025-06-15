@@ -45,19 +45,38 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
-            qDebug() << "=== Search button clicked ===";
-            qDebug() << "Button text:" << ui->Search_pushButton_Search->text();
+            qDebug() << "=== Search/Pause/Resume button clicked ===";
+            QString buttonText = ui->Search_pushButton_Search->text();
 
-            // Set flag to prevent race condition
-            m_searchButtonClickPending = true;
-
-            // Add a small delay to ensure the click is processed after completion
-            QTimer::singleShot(10, this, [this]() {
+            if (buttonText == tr("Search") || buttonText == "Search") {
+                // IDLE STATE: Start new search
+                qDebug() << "Starting new search";
                 launchSearch();
-                m_searchButtonClickPending = false;
-            });
+            }
+            else if (buttonText == tr("Pause") || buttonText == "Pause") {
+                // RUNNING STATE: Pause the search
+                qDebug() << "Pausing search";
+                pauseCurrentSearch();
+            }
+            else if (buttonText == tr("Resume") || buttonText == "Resume") {
+                // PAUSED STATE: Resume the search
+                qDebug() << "Resuming search";
+                resumeCurrentSearch();
+            }
+        }
+        //----------------------------------------------------------------------
+        void MainWindow::on_Search_pushButton_Stop_clicked()
+        {
+            qDebug() << "=== Stop button clicked ===";
 
-            qDebug() << "=== Search button click queued ===";
+            // Stop any running search
+            if (searchManager && searchManager->searchRunning()) {
+                qDebug() << "Stopping active search via SearchManager";
+                searchManager->stopSearch();
+            } else {
+                qDebug() << "No active search, but user clicked Stop - just reset buttons";
+                setSearchStateIdle();
+            }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)

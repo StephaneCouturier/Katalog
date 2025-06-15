@@ -1452,6 +1452,44 @@
                      </property>
                     </widget>
                    </item>
+                   <item>
+                    <widget class="QPushButton" name="Search_pushButton_Stop">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>110</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Noto Sans</family>
+                       <pointsize>9</pointsize>
+                       <kerning>false</kerning>
+                      </font>
+                     </property>
+                     <property name="toolTip">
+                      <string>Launch the search of files.</string>
+                     </property>
+                     <property name="locale">
+                      <locale language="English" country="UnitedStates"/>
+                     </property>
+                     <property name="text">
+                      <string>Stop</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="QIcon::ThemeIcon::ProcessStop"/>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                 </layout>

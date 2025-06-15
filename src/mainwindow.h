@@ -243,6 +243,14 @@ class MainWindow : public QMainWindow
             QString moveFileToTrash(QString fileFullPath);
             QString deleteFile(QString fileFullPath);
 
+            void pauseCurrentSearch();
+            void resumeCurrentSearch();
+            void setSearchStateIdle();
+            void setSearchStateRunning();
+            void setSearchStatePaused();
+            void initializeSearchButtons();
+            void updateTooltips();
+
         //TAB: Catalogs
             QStringListModel catalogListModel;
             QStringList catalogFileList;
@@ -474,6 +482,7 @@ class MainWindow : public QMainWindow
 
             //UI elements
             void on_Search_pushButton_Search_clicked();
+            void on_Search_pushButton_Stop_clicked();
             void on_Search_pushButton_CleanSearchText_clicked();
             void on_Search_pushButton_ResetAll_clicked();
             void on_Search_pushButton_ProcessResults_clicked();
