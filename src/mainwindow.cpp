@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set current version, release date, and development mode
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-06-12";
+        releaseDate     = "2025-06-15";
         developmentMode = false;
 
         //Default UI settings
@@ -296,6 +296,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //set up search Manager
             setupSearchManager();
+
+            //Set up search throttler
+            searchResultsThrottler = new SearchResultsThrottler(this);
+            connect(searchResultsThrottler, &SearchResultsThrottler::updateDisplay,
+                    this, &MainWindow::displaySearchResults);
 
         //Setup tab: BackUp
             ui->BackUp_checkBox_DisplayFullTable->setChecked(optionDisplayFullMappingTable);

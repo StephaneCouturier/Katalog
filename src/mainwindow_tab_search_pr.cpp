@@ -249,6 +249,10 @@ void MainWindow::launchSearchJobStoppable()
     qDebug() << "Starting SearchJobStoppable via SearchManager";
     searchManager->startSearchJobStoppable(searchJobStoppable, selectedDevice);
 
+    searchResultsThrottler->setCurrentSearch(searchJobStoppable);
+    connect(searchJobStoppable, &Search::searchProgress,
+            searchResultsThrottler, &SearchResultsThrottler::onSearchProgress);
+
     qDebug() << "=== launchSearchJobStoppable() complete ===";
 }
 //----------------------------------------------------------------------

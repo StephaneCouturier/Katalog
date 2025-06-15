@@ -52,20 +52,6 @@ add_definitions(-DQT_DEPRECATED_WARNINGS)
 # add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
 # Core library sources
-set(CORE_SOURCES
-    src/core/collection.cpp
-    src/core/catalog.cpp
-    src/core/device.cpp
-    src/core/search.cpp
-    src/core/search_memory.cpp
-    src/core/search_stoppable.cpp
-    src/core/searchjob.cpp
-    src/core/searchjobstoppable.cpp
-    src/core/searchmanager.cpp
-    src/core/searchprogressmanager.cpp
-    src/core/storage.cpp
-    src/core/tag.cpp
-)
 
 set(CORE_HEADERS
     src/core/collection.h
@@ -78,9 +64,26 @@ set(CORE_HEADERS
     src/core/searchjobstoppable.h
     src/core/searchmanager.h
     src/core/searchprogressmanager.h
+    src/core/searchresultsthrottler.h
     src/core/storage.h
     src/core/tag.h
     src/database.h
+)
+
+set(CORE_SOURCES
+    src/core/collection.cpp
+    src/core/catalog.cpp
+    src/core/device.cpp
+    src/core/search.cpp
+    src/core/search_memory.cpp
+    src/core/search_stoppable.cpp
+    src/core/searchjob.cpp
+    src/core/searchjobstoppable.cpp
+    src/core/searchmanager.cpp
+    src/core/searchprogressmanager.cpp
+    src/core/searchresultsthrottler.cpp
+    src/core/storage.cpp
+    src/core/tag.cpp
 )
 
 # ALL mainwindow implementation files - compile them all separately

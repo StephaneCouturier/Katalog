@@ -94,6 +94,7 @@
 #include "core/searchmanager.h"
 #include "core/searchjobstoppable.h"
 #include "core/searchprogressmanager.h"
+#include "core/searchresultsthrottler.h"
 
 //KDE KF6
 #include <KFormat>
@@ -220,6 +221,7 @@ class MainWindow : public QMainWindow
             void initiateSearchFields();
             void loadSearchCriteria(Search *search);
             void getSearchCriteria();
+            SearchResultsThrottler *searchResultsThrottler = nullptr;
 
             QString exportSearchResults();
 
