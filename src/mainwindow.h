@@ -214,7 +214,6 @@ class MainWindow : public QMainWindow
             SearchProcess *searchProcess;
             bool isSearchRunning;
             void resetSearchState();
-            qint64 lastProcessedFiles = 0;
 
             void resetToDefaultSearchCriteria();
             void clearSearchResults();
@@ -475,6 +474,7 @@ class MainWindow : public QMainWindow
             void handleSearchCompleted();
             void handleSearchStopped();
             void updateSearchProgress(int filesProcessed);
+            void reportSearchStatistics();
 
             void launchSearchJobStoppable();
             void launchSearchMemory();

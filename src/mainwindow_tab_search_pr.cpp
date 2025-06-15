@@ -457,8 +457,10 @@ void MainWindow::handleSearchStopped()
 //----------------------------------------------------------------------
 void MainWindow::updateSearchProgress(int filesProcessed)
 {
-    // Update lastProcessedFiles for statistics
-    lastProcessedFiles = filesProcessed;
+    // Update totalFilesProcessed for statistics
+    if (filesProcessed >= 0) {
+        currentSearch->totalFilesProcessed = filesProcessed;
+    }
 
     // Build status message
     QString statusMessage;
@@ -474,7 +476,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         if (currentSearch) {
             statusMessage = tr("Search interrupted | Files found: %1 | Files processed: %2")
                                 .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                .arg(QLocale().toString(lastProcessedFiles));
+                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
         } else {
             statusMessage = tr("Search interrupted. No results available.");
         }
@@ -572,6 +574,100 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
     // Process events to keep UI responsive
     QCoreApplication::processEvents();
+}
+
+void MainWindow::reportSearchStatistics()
+{
+
+    // Check if we have current search results
+    if (!currentSearch) {
+        QMessageBox::warning(this, "Katalog", tr("No search results available."));
+        return;
+    }
+
+    // Create header text
+    QString headerText;
+    // Depending on the search type, we can show either files or folders statistics
+    if (currentSearch->showFoldersOnly) {
+        // Show folders statistics
+        headerText = "<br/><b>" + tr("Folders Found Statistics") + "</b><br/>";
+    } else {
+        // Show files statistics
+        headerText = "<br/><b>" + tr("Files Found Statistics") + "</b><br/>";
+    }
+
+    QString filesProcessedText;
+    if(!currentSearch->showFoldersOnly){
+        headerText += "<br/>"
+                      + tr("Catalogs processed: %1 of %2")
+                            .arg(currentSearch->currentCatalogIndex)
+                            .arg(currentSearch->totalCatalogs)
+                      + "<br/>";
+    }
+
+    // Check if the search was interrupted - works with both SearchStoppable and SearchJobStoppable
+    bool wasInterrupted = (currentSearch &&
+                           !isSearchRunning &&
+                           currentSearch->wasStopRequested());
+
+    if (wasInterrupted) {
+        headerText += "<i>" + tr("Interrupted Search, incomplete results") + "</i><br/>";
+
+        // Add files processed info
+        filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
+                                 .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+
+        // Show percentage if we have an estimate
+        if (currentSearch->estimatedTotalFiles > 0) {
+            int percentProcessed = (currentSearch->totalFilesProcessed * 100) / currentSearch->estimatedTotalFiles;
+            filesProcessedText += tr("<tr><td>Percentage processed: </td><td><b> %1 %</b></td></tr>")
+                                      .arg(percentProcessed);
+        }
+    } else {
+        // For complete searches, show total files processed
+        filesProcessedText = tr("<tr><td>Files processed: </td><td><b> %1 </b></td></tr>")
+                                 .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+    }
+
+    // Add the statistics for files or folders found
+    if (currentSearch->showFoldersOnly) {
+        // Show folders statistics
+        headerText += tr("<table><tr><td>Folders found:  </td><td><b> %1 </b> </td></tr>")
+                          .arg(QLocale().toString(currentSearch->filesFoundNumber));
+    } else {
+        // Show files statistics
+        headerText += tr("<table><tr><td>Files found:  </td><td><b> %1 </b> </td></tr>")
+                          .arg(QLocale().toString(currentSearch->filesFoundNumber));
+    }
+
+    // Add files processed
+    headerText += filesProcessedText;
+
+    // Add files statistics
+    if(!currentSearch->showFoldersOnly){
+        headerText +=
+            tr("<tr></tr>"
+               "<tr><td>Total size:   </td><td><b> %1 </b>  </td></tr>"
+               "<tr><td>Min size:     </td><td><b> %3 </b>  </td></tr>"
+               "<tr><td>Max size:     </td><td><b> %4 </b>  </td></tr>"
+               "<tr><td>Average size: </td><td><b> %2 </b>  <br/></td></tr>"
+               "<tr><td>Min Date:     </td><td><b> %5 </b>  </td></tr>"
+               "<tr><td>Max Date:     </td><td><b> %6 </b>  </td></tr>"
+               "</table>")
+                .arg(QLocale().formattedDataSize(currentSearch->filesFoundTotalSize),
+                     QLocale().formattedDataSize(currentSearch->filesFoundAverageSize),
+                     QLocale().formattedDataSize(currentSearch->filesFoundMinSize),
+                     QLocale().formattedDataSize(currentSearch->filesFoundMaxSize),
+                     currentSearch->filesFoundMinDate,
+                     currentSearch->filesFoundMaxDate);
+    }
+
+    // Show the message box with statistics
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Katalog");
+    msgBox.setText(headerText);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
 }
 //----------------------------------------------------------------------
 void MainWindow::resetSearchState()

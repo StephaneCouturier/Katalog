@@ -314,8 +314,10 @@ void SearchMemory::searchFilesInCatalog(Device *device, QMutex &mutex, bool &sto
         filesProcessed++;
 
         // Emit searchProgress using configurable refresh rate
-        if (filesProcessed % progressRefreshRate == 0 && totalFiles > 0) {
-            emit searchProgress(filesProcessed);
+        if (batchCount >= progressRefreshRate) {
+            totalFilesProcessed += batchCount;
+            emit searchProgress(totalFilesProcessed);
+            batchCount = 0;
         }
 
         QString lineFileName = getFilesQuery.value(0).toString();
