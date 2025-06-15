@@ -104,39 +104,25 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
         if (m_currentJob && m_currentJob->getSearchEngine()) {
             Search* engine = m_currentJob->getSearchEngine();
 
-            // Handle special progress values for catalog loading
+            // Handle special signals (-2, -3)
             if (filesProcessed == -2) {
-                // Catalog loading started - set catalog name
-                QString catalogName = engine->currentCatalogName;
-                if (!catalogName.isEmpty()) {
-                    setCurrentCatalogName(catalogName);
-                    setStatus(QString("Loading catalog: %1").arg(catalogName));
-                }
+                setCurrentCatalogName(engine->currentCatalogName);
+                setStatus(QString("Loading catalog: %1").arg(engine->currentCatalogName));
                 return;
             }
-
             if (filesProcessed == -3) {
-                // Catalog loading finished - update status
                 setStatus("Processing files...");
                 return;
             }
 
-            // Regular progress update
+            // Regular progress updates (works for both catalog and directory)
             if (filesProcessed >= 0) {
-                setFilesProcessed(filesProcessed);
-
                 if (engine->estimatedTotalFiles > 0) {
                     int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
-                    qDebug() << "SearchManager progress update:" << percent << "% (" << filesProcessed << "/" << engine->estimatedTotalFiles << ")";
                     setProgress(percent);
                 }
-
-                // Update status with catalog info during regular processing
-                QString statusMsg = "Searching";
-                if (!engine->currentCatalogName.isEmpty()) {
-                    setCurrentCatalogName(engine->currentCatalogName);
-                }
-                setStatus(statusMsg);
+                setCurrentCatalogName(engine->currentCatalogName);
+                setStatus(QString("Searching - %1 files processed").arg(filesProcessed));
             }
         }
     });
@@ -144,30 +130,6 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
     // Connect catalog-specific signals if available
     connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
     connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
-
-    // Enhanced progress connection that captures files processed count
-    connect(m_currentJob, &SearchJob::searchProgress, this, [this](int filesProcessed) {
-        if (m_currentJob && m_currentJob->getSearchEngine()) {
-            Search* engine = m_currentJob->getSearchEngine();
-
-            // Update files processed count
-            if (filesProcessed >= 0) {
-                setFilesProcessed(filesProcessed);
-            }
-
-            if (engine->estimatedTotalFiles > 0) {
-                int percent = qMin(100, (filesProcessed * 100) / engine->estimatedTotalFiles);
-                qDebug() << "SearchManager progress update:" << percent << "% (" << filesProcessed << "/" << engine->estimatedTotalFiles << ")";
-                setProgress(percent);
-            }
-        }
-    });
-    // Note: infoMessage signal may not be available in all KJob versions
-    // connect(m_currentJob, &KJob::infoMessage, this, &SearchManager::onJobInfoMessage);
-
-    // Connect search-specific signals
-    //connect(m_currentJob, &SearchJob::catalogLoadingStarted, this, &SearchManager::onCatalogLoadingStarted);
-    //connect(m_currentJob, &SearchJob::catalogLoadingFinished, this, &SearchManager::onCatalogLoadingFinished);
 
     setStatus("Starting search...");
     setSearchRunning(true);
@@ -346,10 +308,3 @@ void SearchManager::cleanupJob()
     }
 }
 //----------------------------------------------------------------------
-void SearchManager::setFilesProcessed(int filesProcessed)
-{
-    if (m_filesProcessed != filesProcessed) {
-        m_filesProcessed = filesProcessed;
-        emit filesProcessedChanged();
-    }
-}

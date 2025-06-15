@@ -456,7 +456,12 @@ void MainWindow::handleSearchStopped()
 }
 //----------------------------------------------------------------------
 void MainWindow::updateSearchProgress(int filesProcessed)
-{
+{    // Special values for different states:
+    // -1: Search interrupted
+    // -2: Catalog loading started
+    // -3: Catalog loading finished, processing files
+    // -4: Catalog loading progress update (only used by SearchMemory)
+
     // Update totalFilesProcessed for statistics
     if (filesProcessed >= 0) {
         currentSearch->totalFilesProcessed = filesProcessed;
@@ -464,12 +469,6 @@ void MainWindow::updateSearchProgress(int filesProcessed)
 
     // Build status message
     QString statusMessage;
-
-    // Special values for different states:
-    // -1: Search interrupted
-    // -2: Catalog loading started
-    // -3: Catalog loading finished, processing files
-    // -4: Catalog loading progress update (only used by SearchMemory)
 
     // Special case for interrupted search (-1)
     if (filesProcessed == -1) {
@@ -488,11 +487,12 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // Special case for catalog loading started (-2)
     if (filesProcessed == -2) {
         if (currentSearch) {
-            statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4")
-            .arg(currentSearch->currentCatalogIndex)
+            statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5")
+                .arg(currentSearch->currentCatalogIndex)
                 .arg(currentSearch->totalCatalogs)
                 .arg(currentSearch->currentCatalogName)
-                .arg(QLocale().toString(currentSearch->fileNames.size()));
+                .arg(QLocale().toString(currentSearch->fileNames.size())
+                .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
 
             statusBar()->showMessage(statusMessage);
         }
@@ -509,13 +509,14 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 searchMemory->currentCatalogTotalFiles * 100.0;
             }
 
-            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6")
+            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
                                 .arg(searchMemory->currentCatalogIndex)
                                 .arg(searchMemory->totalCatalogs)
                                 .arg(searchMemory->currentCatalogName)
                                 .arg(QLocale().toString(searchMemory->currentCatalogFilesLoaded))
                                 .arg(QString::number(percentLoaded, 'f', 1))
-                                .arg(QLocale().toString(currentSearch->fileNames.size()));
+                                .arg(QLocale().toString(currentSearch->fileNames.size())
+                                .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
 
             statusBar()->show();
             statusBar()->showMessage(statusMessage, 5000);

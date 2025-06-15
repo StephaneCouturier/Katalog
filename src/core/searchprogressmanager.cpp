@@ -49,8 +49,6 @@ void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
             this, &SearchProgressManager::updateFromSearchManager);
     connect(searchManager, &SearchManager::searchRunningChanged,
             this, &SearchProgressManager::updateFromSearchManager);
-    connect(searchManager, &SearchManager::filesProcessedChanged,  // ADD THIS
-            this, &SearchProgressManager::updateFromSearchManager);
 }
 
 void SearchProgressManager::setCurrentSearch(Search *currentSearch)
@@ -118,7 +116,7 @@ void SearchProgressManager::updateFromSearchManager()
         }
 
         // Add total files processed with percentage (using actual count from SearchManager)
-        int actualFilesProcessed = m_searchManager->filesProcessed();
+        int actualFilesProcessed = m_currentSearch ? m_currentSearch->totalFilesProcessed : 0;
         if (actualFilesProcessed > 0) {
             message += tr(" | Total files processed: %1")
             .arg(QLocale().toString(actualFilesProcessed));
