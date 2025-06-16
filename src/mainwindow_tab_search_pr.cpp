@@ -850,37 +850,41 @@ void MainWindow::setSearchStatePaused()
 
 void MainWindow::onSearchCompleted()
 {
-    qDebug() << "=== onSearchCompleted() ===";
+    qDebug() << "=== onSearchCompleted() called ===";
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
-    // Reset to idle state (Pause/Resume button becomes Search again)
-    setSearchStateIdle();
-
-    displaySearchResults();
-    ui->Search_pushButton_ProcessResults->setEnabled(true);
-    ui->Search_comboBox_SelectProcess->setEnabled(true);
-
-    if (currentSearch) {
-        currentSearch->saveSearchHistoryToTable("defaultConnection");
-    }
+    // Reset search button state when search completes
+    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
 
     QApplication::restoreOverrideCursor();
-    qDebug() << "=== onSearchCompleted() complete ===";
+
+    if (currentSearch && currentSearch->fileNames.size() > 0) {
+        qDebug() << "Displaying search results...";
+        displaySearchResults();
+        qDebug() << "Search results displayed";
+    } else {
+        qDebug() << "No search results to display";
+    }
+
+    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+    qDebug() << "=== onSearchCompleted() completed ===";
 }
 
 void MainWindow::onSearchCancelled()
 {
-    qDebug() << "Search was cancelled";
+    qDebug() << "=== onSearchCancelled() called ===";
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
-    // Reset to idle state (Pause/Resume button becomes Search again)
-    setSearchStateIdle();
-
-    if (currentSearch && currentSearch->fileNames.size() > 0) {
-        displaySearchResults();
-        ui->Search_pushButton_ProcessResults->setEnabled(true);
-        ui->Search_comboBox_SelectProcess->setEnabled(true);
-    }
+    // Reset search button state when search is cancelled
+    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
 
     QApplication::restoreOverrideCursor();
+
+    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 }
 
 void MainWindow::onSearchError(const QString &error)
@@ -914,4 +918,75 @@ void MainWindow::updateTooltips()
         ui->Search_pushButton_Search->setToolTip(tr("Resume the paused search"));
     }
     ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
+}
+
+// 1. Update your setSearchButtonState method to also manage the Stop button:
+void MainWindow::setSearchButtonState(SearchButtonState state)
+{
+    qDebug() << "Setting search button state from" << static_cast<int>(m_searchButtonState)
+    << "to" << static_cast<int>(state);
+
+    // Safety checks
+    if (!ui) {
+        qDebug() << "ERROR: ui is null in setSearchButtonState";
+        return;
+    }
+
+    if (!ui->Search_pushButton_Search) {
+        qDebug() << "ERROR: Search_pushButton_Search is null in setSearchButtonState";
+        return;
+    }
+
+    if (!ui->Search_pushButton_Stop) {
+        qDebug() << "ERROR: Search_pushButton_Stop is null in setSearchButtonState";
+        return;
+    }
+
+    m_searchButtonState = state;
+
+    switch (state) {
+    case SearchButtonState::Idle:
+        // Search button
+        ui->Search_pushButton_Search->setText("&Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - DISABLE when no search running
+        ui->Search_pushButton_Stop->setEnabled(false);
+
+        isSearchRunning = false;
+        qDebug() << "Button set to IDLE state - Stop button disabled";
+        break;
+
+    case SearchButtonState::Running:
+        // Search button
+        ui->Search_pushButton_Search->setText("&Stop");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - ENABLE when search running
+        ui->Search_pushButton_Stop->setEnabled(true);
+
+        isSearchRunning = true;
+        qDebug() << "Button set to RUNNING state - Stop button enabled";
+        break;
+
+    case SearchButtonState::Paused:
+        // Search button
+        ui->Search_pushButton_Search->setText("&Resume");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-start"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #39b2e5; }");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - KEEP ENABLED when paused (so user can still stop)
+        ui->Search_pushButton_Stop->setEnabled(true);
+
+        qDebug() << "Button set to PAUSED state - Stop button enabled";
+        break;
+    }
+
+    qDebug() << "Search button text:" << ui->Search_pushButton_Search->text();
+    qDebug() << "Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 }

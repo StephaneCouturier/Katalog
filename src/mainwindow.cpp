@@ -31,31 +31,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow) //QMainWindow KXmlGuiWindow
 {
-    // FIRST: Initialize objects that were set to nullptr in header
-    collection = new Collection();
+    qDebug() << "Constructor: Starting";
+
     // Initialize objects first
-    qDebug() << "Collection created, pointer:" << collection;
+    collection = new Collection();
+    qDebug() << "Constructor: Collection created";
 
     selectedDevice = new Device();
-    qDebug() << "SelectedDevice created, pointer:" << selectedDevice;
+    qDebug() << "Constructor: SelectedDevice created";
 
     searchMemory = new SearchMemory(this);
-    loadSearch = new SearchMemory(this);
+    qDebug() << "Constructor: SearchMemory created";
 
-    // These remain nullptr until needed
+    loadSearch = new SearchMemory(this);
+    qDebug() << "Constructor: LoadSearch created";
+
+    // Initialize other pointers
     currentSearch = nullptr;
     searchStoppable = nullptr;
     searchManager = nullptr;
     searchProgressManager = nullptr;
+    searchProcess = nullptr;
+    isSearchRunning = false;
+    qDebug() << "Constructor: Pointers initialized";
 
     //Set current version, release date, and development mode       QMainWindow
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
+        qDebug() << "Constructor: Version info set";
         releaseDate     = "2025-06-15";
         developmentMode = false;
+        qDebug() << "Constructor: Release info set";
 
         //Default UI settings
         themeID = 1; //default theme is Katalog Colors
@@ -93,11 +102,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     //Set up and start database (modes: "Memory", "File", or "Hosted")
         startDatabase();
-
+            qDebug() << "Constructor: About to call setSearchButtonState";
+            //setSearchButtonState(SearchButtonState::Idle);
+            qDebug() << "Constructor: setSearchButtonState completed";
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
+qDebug() << "Constructor: ui->setupUi(this) completed";
 
+            // Test basic UI access
+            qDebug() << "Step 5: Testing UI element access";
+            if (ui->Search_pushButton_Search) {
+                qDebug() << "Step 6: Search button exists";
+                QString currentText = ui->Search_pushButton_Search->text();
+                qDebug() << "Step 7: Current button text:" << currentText;
+
+                // Try simple text change without setSearchButtonState
+                qDebug() << "Step 8: Trying simple text change";
+                ui->Search_pushButton_Search->setText("Test");
+                qDebug() << "Step 9: Text change successful";
+
+                // Try icon change
+                qDebug() << "Step 10: Trying icon change";
+                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+                qDebug() << "Step 11: Icon change successful";
+
+                // Restore original text
+                ui->Search_pushButton_Search->setText("&Search");
+                qDebug() << "Step 12: Text restored";
+            } else {
+                qDebug() << "ERROR: Search button is null!";
+            }
             initializeSearchButtons();
 
             if(developmentMode==false){

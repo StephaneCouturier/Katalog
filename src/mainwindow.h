@@ -106,7 +106,7 @@ QT_END_NAMESPACE
 
 class SearchProcess;
 
-class MainWindow : public QMainWindow //QMainWindow KXmlGuiWindow
+class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -208,6 +208,15 @@ class MainWindow : public QMainWindow //QMainWindow KXmlGuiWindow
             void displaySelectedDeviceName();
 
         //TAB: Search
+            enum class SearchButtonState {
+                Idle,
+                Running,
+                Paused
+            };
+            SearchButtonState m_searchButtonState = SearchButtonState::Idle;
+
+            void setSearchButtonState(SearchButtonState state);
+
             // Search management (KJob)
             SearchJobStoppable *searchJobStoppable = nullptr;
             void setupSearchManager();

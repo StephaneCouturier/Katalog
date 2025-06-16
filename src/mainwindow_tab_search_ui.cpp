@@ -43,66 +43,40 @@
             launchSearch();
         }
         //----------------------------------------------------------------------
-        // In mainwindow_tab_search_ui.cpp - modify the search button handler:
-
         void MainWindow::on_Search_pushButton_Search_clicked()
         {
             qDebug() << "=== Search/Pause/Resume button clicked ===";
+            qDebug() << "Current state:" << static_cast<int>(m_searchButtonState);
 
-            // Add defensive checks to prevent crashes
-            if (!collection) {
-                qWarning() << "Collection is null, cannot start search";
-                return;
-            }
+            switch (m_searchButtonState) {
+            case SearchButtonState::Idle:
+                qDebug() << "Starting search from idle state";
+                m_searchButtonState = SearchButtonState::Running;
+                ui->Search_pushButton_Search->setText("&Pause");
+                launchSearch();
+                break;
 
-            if (!selectedDevice) {
-                qWarning() << "Selected device is null, cannot start search";
-                return;
-            }
-
-            // Ensure searchMemory exists before using it
-            if (!searchMemory) {
-                qDebug() << "Creating searchMemory object";
-                searchMemory = new SearchMemory(this);
-            }
-
-            // Ensure loadSearch exists before using it
-            if (!loadSearch) {
-                qDebug() << "Creating loadSearch object";
-                loadSearch = new SearchMemory(this);
-            }
-
-            QString buttonText = ui->Search_pushButton_Search->text();
-
-            if (buttonText == tr("Search") || buttonText == "Search") {
-                // IDLE STATE: Start new search
-                qDebug() << "Starting new search";
-
-                try {
-                    launchSearch();
-                } catch (const std::exception& e) {
-                    qWarning() << "Exception in launchSearch():" << e.what();
-                    QApplication::restoreOverrideCursor();
-                } catch (...) {
-                    qWarning() << "Unknown exception in launchSearch()";
-                    QApplication::restoreOverrideCursor();
-                }
-            }
-            else if (buttonText == tr("Pause") || buttonText == "Pause") {
-                // RUNNING STATE: Pause the search
+            case SearchButtonState::Running:
                 qDebug() << "Pausing search";
+                m_searchButtonState = SearchButtonState::Paused;
+                ui->Search_pushButton_Search->setText("&Resume");
                 pauseCurrentSearch();
-            }
-            else if (buttonText == tr("Resume") || buttonText == "Resume") {
-                // PAUSED STATE: Resume the search
+                break;
+
+            case SearchButtonState::Paused:
                 qDebug() << "Resuming search";
+                m_searchButtonState = SearchButtonState::Running;
+                ui->Search_pushButton_Search->setText("&Pause");
                 resumeCurrentSearch();
+                break;
             }
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_Stop_clicked()
         {
             qDebug() << "=== Stop button clicked ===";
+            qDebug() << "Before stop - Search button state:" << static_cast<int>(m_searchButtonState);
+            qDebug() << "Before stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
 
             // Stop any running search
             if (searchManager && searchManager->searchRunning()) {
@@ -110,8 +84,11 @@
                 searchManager->stopSearch();
             } else {
                 qDebug() << "No active search, but user clicked Stop - just reset buttons";
-                setSearchStateIdle();
+                setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
             }
+
+            qDebug() << "After stop - Search button state:" << static_cast<int>(m_searchButtonState);
+            qDebug() << "After stop - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_CatalogsFound_clicked(const QModelIndex &index)
