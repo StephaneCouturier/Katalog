@@ -44,8 +44,10 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QApplication::setApplicationName("Katalog");
-    QApplication::setApplicationVersion("2.4");
+    app.setApplicationName("Katalog");
+    app.setApplicationVersion("2.6");
+    app.setOrganizationName("Katalog");
+    app.setOrganizationDomain("stephanecouturier.github.io/Katalog");
 
     //Get language choice and apply translation
         //Get user home path

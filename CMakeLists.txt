@@ -36,6 +36,7 @@ qt_standard_project_setup()
 find_package(KF6CoreAddons REQUIRED)
 find_package(KF6I18n REQUIRED)
 find_package(KF6XmlGui REQUIRED)
+find_package(KF6Config REQUIRED)
 
 # Enable Qt's automatic processing
 set(CMAKE_AUTOMOC ON)
@@ -224,6 +225,7 @@ target_link_libraries(Katalog PRIVATE
     KF6::CoreAddons
     KF6::I18n
     KF6::XmlGui
+    KF6::ConfigCore
 )
 set_target_properties(katalog-core PROPERTIES
     AUTOMOC_MOC_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}/src"
@@ -236,6 +238,7 @@ target_include_directories(Katalog PRIVATE
     ${KF6CoreAddons_INCLUDE_DIRS}
     ${KF6I18n_INCLUDE_DIRS}
     ${KF6XmlGui_INCLUDE_DIRS}
+    ${KF6Config_INCLUDE_DIRS}
 )
 
 # Platform-specific settings

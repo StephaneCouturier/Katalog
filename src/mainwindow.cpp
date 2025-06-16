@@ -34,20 +34,11 @@
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow) //QMainWindow KXmlGuiWindow
 {
-    qDebug() << "Constructor: Starting";
-
     // Initialize objects first
     collection = new Collection();
-    qDebug() << "Constructor: Collection created";
-
     selectedDevice = new Device();
-    qDebug() << "Constructor: SelectedDevice created";
-
     searchMemory = new SearchMemory(this);
-    qDebug() << "Constructor: SearchMemory created";
-
     loadSearch = new SearchMemory(this);
-    qDebug() << "Constructor: LoadSearch created";
 
     // Initialize other pointers
     currentSearch = nullptr;
@@ -56,17 +47,14 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     searchProgressManager = nullptr;
     searchProcess = nullptr;
     isSearchRunning = false;
-    qDebug() << "Constructor: Pointers initialized";
 
-    //Set current version, release date, and development mode       QMainWindow
+    //Set current version, release date, and development mode
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        qDebug() << "Constructor: Version info set";
-        releaseDate     = "2025-06-15";
+        releaseDate     = "2025-06-16";
         developmentMode = false;
-        qDebug() << "Constructor: Release info set";
 
-        //Default UI settings
+    //Default UI settings
         themeID = 1; //default theme is Katalog Colors
         selectedTab = 3; //default value for the first launch = Create screen.
 
@@ -102,38 +90,26 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
     //Set up and start database (modes: "Memory", "File", or "Hosted")
         startDatabase();
-            qDebug() << "Constructor: About to call setSearchButtonState";
-            //setSearchButtonState(SearchButtonState::Idle);
-            qDebug() << "Constructor: setSearchButtonState completed";
+
     //Set up the interface globally
         //Set up the User Interface
             ui->setupUi(this);
-qDebug() << "Constructor: ui->setupUi(this) completed";
 
-            // Test basic UI access
-            qDebug() << "Step 5: Testing UI element access";
-            if (ui->Search_pushButton_Search) {
-                qDebug() << "Step 6: Search button exists";
-                QString currentText = ui->Search_pushButton_Search->text();
-                qDebug() << "Step 7: Current button text:" << currentText;
+            // Restore window size and position
+            setMinimumSize(720, 480);
+            auto config = KSharedConfig::openConfig();
+            KConfigGroup group = config->group("MainWindow");
 
-                // Try simple text change without setSearchButtonState
-                qDebug() << "Step 8: Trying simple text change";
-                ui->Search_pushButton_Search->setText("Test");
-                qDebug() << "Step 9: Text change successful";
+            int savedWidth = group.readEntry("width", 1080);    // Generic key
+            int savedHeight = group.readEntry("height", 720);   // Generic key
+            int savedX = group.readEntry("x", 100);             // Generic key
+            int savedY = group.readEntry("y", 100);             // Generic key
 
-                // Try icon change
-                qDebug() << "Step 10: Trying icon change";
-                ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-                qDebug() << "Step 11: Icon change successful";
-
-                // Restore original text
-                ui->Search_pushButton_Search->setText("&Search");
-                qDebug() << "Step 12: Text restored";
-            } else {
-                qDebug() << "ERROR: Search button is null!";
-            }
-            initializeSearchButtons();
+            QTimer::singleShot(100, this, [this, savedWidth, savedHeight, savedX, savedY]() {
+                resize(savedWidth, savedHeight);
+                move(savedX, savedY);
+                qDebug() << "Window restored to:" << size() << "at position:" << pos();
+            });
 
             if(developmentMode==false){
                 hideDevelopmentUIItems();
@@ -316,6 +292,7 @@ qDebug() << "Constructor: ui->setupUi(this) completed";
             //Default values
             initiateSearchFields();
             resetToDefaultSearchCriteria();
+            initializeSearchButtons();
 
             //Load an empty model to display headers
             Catalog *emptyCatalog = new Catalog;
@@ -377,37 +354,70 @@ qDebug() << "Constructor: ui->setupUi(this) completed";
 
 MainWindow::~MainWindow()
 {
-    // Disconnect all signals from search objects to prevent crashes during destruction
+    qDebug() << "=== MainWindow destructor called ===";
+
+    // 1. Stop any running operations first
+    if (searchManager && searchManager->searchRunning()) {
+        qDebug() << "Stopping running search in destructor";
+        searchManager->stopSearch();
+        // Give it a moment to stop cleanly
+        QApplication::processEvents();
+    }
+
+    // 2. Disconnect all signals from search objects to prevent crashes during destruction
     if (searchMemory) {
         disconnect(searchMemory, nullptr, this, nullptr);
-        searchMemory = nullptr; // Don't delete - Qt will handle it
+        qDebug() << "Disconnected searchMemory signals";
     }
 
     if (loadSearch) {
         disconnect(loadSearch, nullptr, this, nullptr);
-        loadSearch = nullptr; // Don't delete - Qt will handle it
+        qDebug() << "Disconnected loadSearch signals";
     }
 
     if (searchStoppable) {
         disconnect(searchStoppable, nullptr, this, nullptr);
-        searchStoppable->stopSearch(); // Stop any operations
-        delete searchStoppable; // This one doesn't have parent, so delete it
+        if (searchStoppable->wasStopRequested() == false) {
+            searchStoppable->stopSearch();
+        }
+        delete searchStoppable;
         searchStoppable = nullptr;
+        qDebug() << "Cleaned up searchStoppable";
     }
 
     if (searchManager) {
         disconnect(searchManager, nullptr, this, nullptr);
-        if (searchManager->searchRunning()) {
-            searchManager->stopSearch();
-        }
+        qDebug() << "Disconnected searchManager signals";
         // searchManager has 'this' as parent, so Qt will delete it
     }
 
-    // Clean up non-Qt objects
-    delete collection;
-    delete selectedDevice;
+    if (searchProgressManager) {
+        disconnect(searchProgressManager, nullptr, this, nullptr);
+        qDebug() << "Disconnected searchProgressManager signals";
+        // searchProgressManager has 'this' as parent, so Qt will delete it
+    }
 
-    delete ui;
+    // 3. Clean up non-Qt objects (they don't have Qt parents)
+    if (collection) {
+        delete collection;
+        collection = nullptr;
+        qDebug() << "Deleted collection";
+    }
+
+    if (selectedDevice) {
+        delete selectedDevice;
+        selectedDevice = nullptr;
+        qDebug() << "Deleted selectedDevice";
+    }
+
+    // 4. Clean up UI last
+    if (ui) {
+        delete ui;
+        ui = nullptr;
+        qDebug() << "Deleted ui";
+    }
+
+    qDebug() << "=== MainWindow destructor completed ===";
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -437,6 +447,20 @@ void MainWindow::closeEvent (QCloseEvent *event)
             return;
         }
     }
+
+    //Save window size and position
+    auto config = KSharedConfig::openConfig();
+    KConfigGroup group = config->group("MainWindow");
+
+    // Save with generic keys - works on any screen
+    group.writeEntry("width", size().width());
+    group.writeEntry("height", size().height());
+    group.writeEntry("x", pos().x());
+    group.writeEntry("y", pos().y());
+    group.sync();
+
+    qDebug() << "Saved window state:" << size() << "at" << pos();
+    event->accept();
 }
 
 //DEV: Templates

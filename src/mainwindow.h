@@ -99,6 +99,8 @@
 //KDE KF6
 #include <KFormat>
 #include <KXmlGuiWindow>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

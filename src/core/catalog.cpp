@@ -30,7 +30,6 @@
 */
 
 #include "catalog.h"
-#include "search.h"
 
 #include <QApplication>
 #include <QDir>
