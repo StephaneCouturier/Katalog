@@ -741,7 +741,7 @@ void Collection::loadSearchHistoryFileToTable()
                         QStringList fieldList = line.split('\t');
 
                         //add empty values to support the addition of new fields to files from older versions
-                        int  targetFieldsCount = 37;
+                        int  targetFieldsCount = 38;
                         int currentFiledsCount = fieldList.count();
                         int    diffFieldsCount = targetFieldsCount - currentFiledsCount;
                         if(diffFieldsCount !=0){
@@ -789,7 +789,8 @@ void Collection::loadSearchHistoryFileToTable()
                                                     case_sensitive,
                                                     file_type_checked,
                                                     file_criteria_checked,
-                                                    folder_criteria_checked
+                                                    folder_criteria_checked,
+                                                    selected_device_ID_list
                                                     )
                                                 VALUES(
                                                     :date_time,
@@ -828,7 +829,8 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :case_sensitive,
                                                     :file_type_checked,
                                                     :file_criteria_checked,
-                                                    :folder_criteria_checked
+                                                    :folder_criteria_checked,
+                                                    :selected_device_ID_list
                                                     )
                                                 )");
 
@@ -870,6 +872,7 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":file_type_checked",         fieldList[34]);
                         insertQuery.bindValue(":file_criteria_checked",     fieldList[35]);
                         insertQuery.bindValue(":folder_criteria_checked",   fieldList[36]);
+                        insertQuery.bindValue(":selected_device_ID_list",   fieldList[37]);
                         insertQuery.exec();
                     }
             }
@@ -1287,6 +1290,7 @@ void Collection::saveSearchHistoryTableToFile()
                 << "file_type_checked"          << "\t"
                 << "file_criteria_checked"      << "\t"
                 << "folder_criteria_checked"    << "\t"
+                << "selected_device_ID_list"    << "\t"
                 << '\n';
 
             //Get data
@@ -1329,7 +1333,8 @@ void Collection::saveSearchHistoryTableToFile()
                                             differences_catalogs,
                                             file_type_checked,
                                             file_criteria_checked,
-                                            folder_criteria_checked
+                                            folder_criteria_checked,
+                                            selected_device_ID_list
                                         FROM search
                                         ORDER BY date_time DESC
                                        )");

@@ -380,6 +380,14 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     // Save Search to db
     QDateTime nowDateTime = QDateTime::currentDateTime();
     searchDateTime = nowDateTime.toString("yyyy-MM-dd hh:mm:ss");
+    QString deviceListStr = "";
+    if (!selectedDeviceIDList.isEmpty()) {
+        QStringList idStrings;
+        for (int id : std::as_const(selectedDeviceIDList)) {
+            idStrings << QString::number(id);
+        }
+        deviceListStr = idStrings.join(",");
+    }
 
     QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
@@ -419,6 +427,7 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             search_catalog_checked,
             search_directory_checked,
             selected_directory,
+            selected_device_ID_list,
             text_exclude,
             case_sensitive
         ) VALUES(
@@ -457,6 +466,7 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :search_catalog_checked,
             :search_directory_checked,
             :selected_directory,
+            :selected_device_ID_list,
             :text_exclude,
             :case_sensitive
         )
@@ -497,6 +507,7 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":search_catalog_checked", searchInCatalogsChecked);
     query.bindValue(":search_directory_checked", searchInConnectedChecked);
     query.bindValue(":selected_directory", connectedDirectory);
+    query.bindValue(":selected_device_ID_list", deviceListStr);
     query.bindValue(":text_exclude", selectedSearchExclude);
     query.bindValue(":case_sensitive", caseSensitive);
     query.exec();
@@ -544,7 +555,8 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             search_catalog,
             search_catalog_checked,
             search_directory_checked,
-            selected_directory
+            selected_directory,
+            selected_device_ID_list
         FROM search
         WHERE date_time =:date_time
     )");
@@ -593,6 +605,15 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         searchInConnectedChecked = query.value(35).toBool();
         connectedDirectory = query.value(36).toString();
 
+        selectedDeviceIDList.clear();
+        QString deviceListStr = query.value(37).toString(); // Adjust index
+        if (!deviceListStr.isEmpty()) {
+            const QStringList idStrings = deviceListStr.split(",", Qt::SkipEmptyParts);
+            for (const QString& idStr : idStrings) {
+                selectedDeviceIDList.append(idStr.toInt());
+            }
+        }
+        qDebug() << "Loaded selectedDeviceIDs:" << selectedDeviceIDList;
         // Calculate multipliers based on loaded units
         setMultipliers();
     }
@@ -655,6 +676,7 @@ void Search::copyFrom(const Search* other)
     searchInCatalogsChecked = other->searchInCatalogsChecked;
     searchInConnectedChecked = other->searchInConnectedChecked;
     connectedDirectory = other->connectedDirectory;
+    selectedDeviceIDList = other->selectedDeviceIDList;
 
     fileType_AudioS = other->fileType_AudioS;
     fileType_ImageS = other->fileType_ImageS;

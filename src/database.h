@@ -201,6 +201,7 @@
                             search_catalog_checked    NUMERIC,
                             search_directory_checked  NUMERIC,
                             selected_directory        TEXT,
+                            selected_device_ID_list   TEXT,
                             text_exclude              TEXT,
                             case_sensitive            NUMERIC)
             )");

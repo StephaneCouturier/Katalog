@@ -114,6 +114,7 @@ public:
     bool searchInCatalogsChecked;
     bool searchInConnectedChecked;
     QString connectedDirectory;
+    QList<int> selectedDeviceIDList;  //stored in db as comma-separated device IDs ("1,2,3")
     QString searchDateTime;
 
     // File type lists

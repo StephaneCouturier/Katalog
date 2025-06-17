@@ -69,6 +69,8 @@
                 ui->Search_pushButton_Search->setText("&Pause");
                 resumeCurrentSearch();
                 break;
+            case SearchButtonState::Searching:
+                break;
             }
         }
         //----------------------------------------------------------------------
@@ -432,10 +434,34 @@
         //----------------------------------------------------------------------
         void MainWindow::on_Search_treeView_History_activated(const QModelIndex &index)
         {//Load and restore the criteria of the selected search history
-            loadSearch = new SearchMemory;
-            loadSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
-            loadSearch->loadSearchHistoryCriteria("defaultConnection");
-            loadSearchCriteria(loadSearch);
+            // Ensure currentSearch exists
+            if (!currentSearch) {
+                currentSearch = new SearchMemory(this);
+            }
+
+            // Load directly into currentSearch - no temporary object needed!
+            currentSearch->searchDateTime = ui->Search_treeView_History->model()->index(index.row(), 0, QModelIndex()).data().toString();
+            currentSearch->loadSearchHistoryCriteria("defaultConnection");
+
+            // Update UI to reflect the loaded criteria
+            loadSearchCriteria(currentSearch);
+
+            // Restore selected device from search history
+            if (currentSearch->selectedDeviceIDList.isEmpty()) {
+                // No device selection stored, use "All"
+                selectedDevice->ID = 0;
+                selectedDevice->type = "All";
+                selectedDevice->loadDevice("defaultConnection");
+            }
+            else {
+                // Use the first device ID from the list
+                int deviceID = currentSearch->selectedDeviceIDList.first();
+                selectedDevice->ID = deviceID;
+                selectedDevice->loadDevice("defaultConnection");
+            }
+
+            // Update UI device selection
+            filterFromSelectedDevice();
         }
         //----------------------------------------------------------------------
         void MainWindow::on_Search_pushButton_FileFoundMoreStatistics_clicked()
@@ -958,7 +984,7 @@
                 }
             }
 
-            //Restore the tpye of search (in catalogs or in connected drives
+            //Restore the type of search (in catalogs or in connected drives
             if (lastSearch->searchInCatalogsChecked == true){
                 ui->Filters_checkBox_SearchInCatalogs->setChecked(true);
                 ui->Filters_checkBox_SearchInConnectedDrives->setChecked(false);
@@ -1467,7 +1493,8 @@
                                                     search_catalog,
                                                     search_catalog_checked,
                                                     search_directory_checked,
-                                                    selected_directory
+                                                    selected_directory,
+                                                    selected_device_ID_list
                                                 FROM search
                                                 ORDER BY date_time DESC
                                             )");
@@ -1514,6 +1541,7 @@
             queryModel->setHeaderData(34, Qt::Horizontal, tr("Search Catalog selected"));
             queryModel->setHeaderData(35, Qt::Horizontal, tr("Search Directory selected"));
             queryModel->setHeaderData(36, Qt::Horizontal, tr("Selected Directory"));
+            queryModel->setHeaderData(37, Qt::Horizontal, tr("Selected Device ID List"));
 
             QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel(this);
             searchHistoryProxyModel->setSourceModel(queryModel);

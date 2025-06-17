@@ -137,6 +137,8 @@ void MainWindow::launchSearchStoppable()
 //----------------------------------------------------------------------
 void MainWindow::launchSearchMemory()
 {
+    setSearchButtonState(SearchButtonState::Searching);
+
     // Create memory search object if not already created
     if (!searchMemory) {
         searchMemory = new SearchMemory(this);
@@ -153,6 +155,8 @@ void MainWindow::launchSearchMemory()
     // Transfer search parameters from UI to the search object
     sendSearchParameters(searchMemory);
 
+    setSearchButtonState(SearchButtonState::Searching);
+
     // Set the search as running, but DON'T change button appearance for memory mode
     // since it can't be stopped
     //isSearchRunning = true;
@@ -167,9 +171,12 @@ void MainWindow::launchSearchMemory()
     isSearchRunning = false;
 
     // Restore cursor and enable export buttons
-    QApplication::restoreOverrideCursor();
+
     ui->Search_pushButton_ProcessResults->setEnabled(true);
     ui->Search_comboBox_SelectProcess->setEnabled(true);
+
+    setSearchButtonState(SearchButtonState::Idle);
+    QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
 void MainWindow::setupSearchManager()
@@ -322,6 +329,36 @@ void MainWindow::sendSearchParameters(Search *search)
         search->diffDevice2 = new Device;
     }
     search->diffDevice2->ID = ui->Search_comboBox_DifferencesDevice2->currentData().toInt();
+
+    // Populate the selectedDeviceList
+    search->selectedDeviceIDList.clear();
+
+    if (search->searchInCatalogsChecked && selectedDevice) {
+        if (selectedDevice->type == "Catalog") {
+            // Single catalog selected
+            search->selectedDeviceIDList.append(selectedDevice->ID);
+        }
+        else if (selectedDevice->type == "Storage") {
+            // Storage selected - add the storage device ID
+            search->selectedDeviceIDList.append(selectedDevice->ID);
+        }
+        else if (selectedDevice->type == "All" || selectedDevice->ID == 0) {
+            // "All" selected - use 0 as convention
+            search->selectedDeviceIDList.append(0);
+        }
+        else {
+            // Other device types (Virtual, etc.) - add the device ID
+            search->selectedDeviceIDList.append(selectedDevice->ID);
+        }
+    }
+    else if (search->searchInConnectedChecked) {
+        // Directory search - use 0 or could be empty
+        search->selectedDeviceIDList.append(0);
+    }
+    else {
+        // No specific search type - fallback
+        search->selectedDeviceIDList.append(0);
+    }
 }
 //----------------------------------------------------------------------
 // Display the search results in the UI
@@ -953,6 +990,15 @@ void MainWindow::setSearchButtonState(SearchButtonState state)
 
         isSearchRunning = false;
         qDebug() << "Button set to IDLE state - Stop button disabled";
+        break;
+
+    case SearchButtonState::Searching:  // New state for memory mode
+        ui->Search_pushButton_Search->setText(tr("Searching..."));
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        ui->Search_pushButton_Search->setEnabled(false);  // Deactivated during search
+        ui->Search_pushButton_Stop->setEnabled(false);    // No stop for memory mode
+        isSearchRunning = true;
         break;
 
     case SearchButtonState::Running:

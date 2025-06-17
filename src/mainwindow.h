@@ -213,7 +213,8 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
             enum class SearchButtonState {
                 Idle,
                 Running,
-                Paused
+                Paused,
+                Searching
             };
             SearchButtonState m_searchButtonState = SearchButtonState::Idle;
 
