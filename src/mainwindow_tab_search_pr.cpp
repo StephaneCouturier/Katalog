@@ -53,7 +53,6 @@ void MainWindow::launchSearch()
     {
         qDebug() << "\n Development mode: using SearchJobStoppable";
         launchSearchJobStoppable();
-        return;
     }
 
     // (OBSOLETE) For database mode or searchInConnected, use SearchStoppable
@@ -61,9 +60,6 @@ void MainWindow::launchSearch()
     //     qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
     //     launchSearchStoppable();
     // }
-
-    //Save search history
-    currentSearch->saveSearchHistoryToTable("defaultConnection");
 }
 //----------------------------------------------------------------------
 void MainWindow::launchSearchStoppable()

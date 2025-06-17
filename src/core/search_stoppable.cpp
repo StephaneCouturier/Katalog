@@ -273,6 +273,10 @@ void SearchStoppable::searchFiles(Device *selectedDevice)
         calculateStatistics();
         if(useTimerForDebug) qDebug() << "TIMER: calculateStatistics took:" << stepTimer.elapsed() << "ms"; stepTimer.restart();
     }
+
+    // Save the search criteria to the search history
+    saveSearchHistoryToTable("defaultConnection");
+
     // Final progress report - confirm 100% completion
     emit searchProgress(totalFilesProcessed);
     if(useTimerForDebug) qDebug() << "TIMER: Total search time:" << totalTimer.elapsed() << "ms \n";
