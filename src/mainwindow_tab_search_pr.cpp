@@ -42,96 +42,20 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For memory mode without searchInConnected, use SearchMemory
-    if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+    // For memory mode with development flag, use SearchJobStoppable
+    if (collection->databaseMode == "Memory" && developmentMode == true) {
+        qDebug() << "\n Development mode: using SearchJobStoppable for Memory mode";
+        launchSearchJobStoppable();
+    }
+    // For memory mode without development flag, use SearchMemory
+    else if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
         qDebug() << "\n Using SearchMemory for memory mode";
         launchSearchMemory();
     }
-
-    // For database mode or searchInConnected, in development mode, use SearchJobStoppable
-    else //if (collection->databaseMode != "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked())
-    {
-        qDebug() << "\n Development mode: using SearchJobStoppable";
+    // For database mode, use SearchJobStoppable
+    else {
+        qDebug() << "\n Using SearchJobStoppable for database mode";
         launchSearchJobStoppable();
-    }
-
-    // (OBSOLETE) For database mode or searchInConnected, use SearchStoppable
-    // else {
-    //     qDebug() << "\n Using SearchStoppable for database mode or searchInConnected";
-    //     launchSearchStoppable();
-    // }
-}
-//----------------------------------------------------------------------
-void MainWindow::launchSearchStoppable()
-{
-    // If a search is running, stop it
-    if (isSearchRunning) {
-        // If a search is running, stop it
-        if (searchStoppable) {
-            searchStoppable->stopSearch();
-        }
-
-        isSearchRunning = false;
-
-        // Reset "Search" button
-        ui->Search_pushButton_Search->setText("Search");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-        QApplication::restoreOverrideCursor();
-        return;
-    }
-
-    // Clear the search view before starting a new search
-    resetSearchState();
-
-    // Create database search object if not already created
-    if (!searchStoppable) {
-        searchStoppable = new SearchStoppable(this);
-
-        // Connect the progress signal
-        connect(searchStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
-    }
-
-    // Point the currentSearch to searchStoppable for consistent access
-    currentSearch = searchStoppable;
-
-    // Transfer search parameters from UI to the search object
-    sendSearchParameters(searchStoppable);
-
-    // Set the search as running
-    isSearchRunning = true;
-
-    // Change "Search" button to "Stop" for stoppable searches
-    ui->Search_pushButton_Search->setText("Stop");
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
-    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
-
-    // Initialize the database
-    if (!searchStoppable->initializeDatabase()) {
-        QMessageBox::warning(this, "Katalog", tr("Failed to initialize database connection."));
-
-        // Reset state if initialization fails
-        isSearchRunning = false;
-        ui->Search_pushButton_Search->setText("Search");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-        QApplication::restoreOverrideCursor();
-        return;
-    }
-
-    // Run the search in the main thread
-    searchStoppable->searchFiles(selectedDevice);
-
-    // If we get here, the search is complete
-    handleSearchCompleted();
-
-    // Adapt display of files found for searchInConnected
-    if (currentSearch && currentSearch->searchInConnectedChecked == true) {
-        ui->Search_treeView_FilesFound->model()->setHeaderData(4, Qt::Horizontal, tr("Source Directory"));
-        ui->Search_treeView_FilesFound->header()->resizeSection(4, 400);
-        ui->Search_treeView_FilesFound->header()->hideSection(5);
     }
 }
 //----------------------------------------------------------------------
@@ -235,6 +159,13 @@ void MainWindow::launchSearchJobStoppable()
     // Create SearchJobStoppable
     SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
     searchJobStoppable->setDatabaseConnection("defaultConnection");
+
+    // **NEW: Enable memory mode when in development mode and memory mode**
+    if (developmentMode && collection->databaseMode == "Memory") {
+        qDebug() << "Development mode: Enabling memory mode for SearchJobStoppable";
+        searchJobStoppable->setMemoryModeEnabled(true);
+    }
+
     currentSearch = searchJobStoppable;
 
     // Update progress manager with current search for file count display
@@ -244,6 +175,8 @@ void MainWindow::launchSearchJobStoppable()
 
     // Set up basic search parameters
     sendSearchParameters(searchJobStoppable);
+
+    setSearchButtonState(SearchButtonState::Running);  // This will show "Pause" button and enable Stop
 
     // Update UI for running search (Search button becomes Pause)
     setSearchStateRunning();
@@ -643,7 +576,7 @@ void MainWindow::reportSearchStatistics()
                       + "<br/>";
     }
 
-    // Check if the search was interrupted - works with both SearchStoppable and SearchJobStoppable
+    // Check if the search was interrupted - works with SearchJobStoppable
     bool wasInterrupted = (currentSearch &&
                            !isSearchRunning &&
                            currentSearch->wasStopRequested());

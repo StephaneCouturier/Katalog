@@ -31,7 +31,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "database.h"
+#include "core/database.h"
 
 //SETTINGS / GLOBAL -----------------------------------------------------------------
     void MainWindow::on_splitter_splitterMoved()

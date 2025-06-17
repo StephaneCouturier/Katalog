@@ -61,7 +61,6 @@ set(CORE_HEADERS
     src/core/device.h
     src/core/search.h
     src/core/search_memory.h
-    src/core/search_stoppable.h
     src/core/searchjob.h
     src/core/searchjobstoppable.h
     src/core/searchmanager.h
@@ -69,7 +68,7 @@ set(CORE_HEADERS
     src/core/searchresultsthrottler.h
     src/core/storage.h
     src/core/tag.h
-    src/database.h
+    src/core/database.h
 )
 
 set(CORE_SOURCES
@@ -78,7 +77,6 @@ set(CORE_SOURCES
     src/core/device.cpp
     src/core/search.cpp
     src/core/search_memory.cpp
-    src/core/search_stoppable.cpp
     src/core/searchjob.cpp
     src/core/searchjobstoppable.cpp
     src/core/searchmanager.cpp

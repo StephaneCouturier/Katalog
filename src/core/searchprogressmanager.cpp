@@ -63,7 +63,7 @@ void SearchProgressManager::updateFromSearchManager()
     QString message;
 
     if (m_searchManager->searchRunning()) {
-        // Build message in SearchStoppable format:
+        // Build message format:
         // "Searching in catalog catalogname | catalog 2 of 5 | Total files/folders found: 13 | Total files processed: 20000 (9%)"
 
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {

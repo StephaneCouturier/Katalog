@@ -92,6 +92,13 @@ public:
      */
     void setProgressRefreshRate(int rate) { progressRefreshRate = rate; }
 
+    bool memoryModeEnabled = false;
+
+    /**
+     * @brief Enable memory mode (loads CSV files during search)
+     */
+    void setMemoryModeEnabled(bool enabled) { memoryModeEnabled = enabled; }
+
 protected:
     /**
      * @brief Search for files in a catalog

@@ -30,8 +30,8 @@
 */
 
 #include "mainwindow.h"
-#include "database.h"
 #include "ui_mainwindow.h"
+#include "core/database.h"
 
 //Database -----------------------------------------------------------------
     void MainWindow::startDatabase()

@@ -32,7 +32,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
-    ui(new Ui::MainWindow) //QMainWindow KXmlGuiWindow
+    ui(new Ui::MainWindow)
 {
     // Initialize objects first
     collection = new Collection();
@@ -44,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
     // Initialize other pointers
     currentSearch = nullptr;
-    searchStoppable = nullptr;
     searchManager = nullptr;
     searchProgressManager = nullptr;
     searchProcess = nullptr;

@@ -307,6 +307,21 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     qDebug() << "  - Device external ID:" << device->externalID;
     qDebug() << "  - Database connection:" << m_connectionName;
 
+    // **NEW: Add memory mode CSV loading**
+    if (memoryModeEnabled) {
+        qDebug() << "Memory mode: Loading catalog CSV file for" << device->name;
+
+        // Load CSV files into database (same as SearchMemory does)
+        device->catalog->loadCatalogFileListToTable(m_connectionName, mutex, stopRequested);
+
+        if (!shouldContinue()) {
+            qDebug() << "Stop requested during CSV loading";
+            return;
+        }
+
+        qDebug() << "Memory mode: CSV loading complete for" << device->name;
+    }
+
     Q_UNUSED(mutex);
     Q_UNUSED(stopRequested);
 

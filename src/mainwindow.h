@@ -32,6 +32,7 @@
 #define MAINWINDOW_H
 
 #pragma once
+
 //QtWidget
 #include <QMainWindow>
 #include <QApplication>
@@ -87,12 +88,10 @@
 #include "core/collection.h"
 #include "core/search.h"
 #include "core/device.h"
-#include "core/search_stoppable.h"
 #include "core/search_memory.h"
 #include "core/searchmanager.h"
 #include "core/searchjobstoppable.h"
 #include "core/searchmanager.h"
-#include "core/searchjobstoppable.h"
 #include "core/searchprogressmanager.h"
 #include "core/searchresultsthrottler.h"
 
@@ -108,7 +107,7 @@ QT_END_NAMESPACE
 
 class SearchProcess;
 
-class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
+class MainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -120,7 +119,6 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
         Collection *collection = nullptr;   // Collection object, used to access the collection of devices, catalogs and storage
         Device *selectedDevice = nullptr;  // Selected device from Selection panel, used for operations on any screen
         Search *currentSearch = nullptr;
-        SearchStoppable *searchStoppable = nullptr;
         SearchMemory *searchMemory = nullptr;
         SearchMemory *loadSearch = new SearchMemory(this); //temporary search object used to load criteria from a previous search.
         SearchMemory *lastSearch = new SearchMemory(this); //temporary search object used to load criteria from the last search.
@@ -226,8 +224,6 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
             void setupSearchManager();
             void resetSearchButton();
             bool m_searchButtonClickPending = false;
-
-            // Search management (SearchStoppable)
 
             bool isSearchRunning = false;
             void resetSearchState();
@@ -497,7 +493,6 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
 
             void launchSearchJobStoppable();
             void launchSearchMemory();
-            void launchSearchStoppable();
 
             //UI elements
             void on_Search_pushButton_Search_clicked();
