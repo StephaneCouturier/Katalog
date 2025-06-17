@@ -38,22 +38,69 @@ Collection::Collection(QObject *parent) : QObject(parent)
 
 }
 
-//Main attributes--------------------------------------------------------
-void Collection::updateCollectionVersion()
+//Database Schema Version--------------------------------------------------------
+QString Collection::loadDatabaseSchemaVersion()
 {
+    QSqlQuery queryVersion(QSqlDatabase::database("defaultConnection"));
+    QString queryVersionSQL = QLatin1String(R"(
+        SELECT parameter_value1
+        FROM parameter
+        WHERE parameter_type = 'collection'
+        AND parameter_name = 'version'
+    )");
+    queryVersion.prepare(queryVersionSQL);
+    queryVersion.exec();
+
+    if (queryVersion.next()) {
+        qDebug() << "DEBUG: Collection::loadDatabaseSchemaVersion() / Version found:" << queryVersion.value(0).toString();
+        return queryVersion.value(0).toString();
+    }
+    return "0"; // Your logic for missing versions
+}
+//----------------------------------------------------------------------
+void Collection::setDatabaseSchemaVersion()
+{
+    // First try to update existing record
     QSqlQuery queryUpdateVersion(QSqlDatabase::database("defaultConnection"));
     QString queryUpdateVersionSQL = QLatin1String(R"(
                                     UPDATE parameter
-                                    SET parameter_value1 = :parameter_value1
+                                    SET parameter_value1 =:parameter_value1
                                     WHERE parameter_type =:parameter_type
                                     AND parameter_name =:parameter_name
                                 )");
     queryUpdateVersion.prepare(queryUpdateVersionSQL);
     queryUpdateVersion.bindValue(":parameter_name", "version");
     queryUpdateVersion.bindValue(":parameter_type", "collection");
-    queryUpdateVersion.bindValue(":parameter_value1", version);
+    queryUpdateVersion.bindValue(":parameter_value1", dbSchemaVersion);
     queryUpdateVersion.exec();
+
+    // If no rows affected, insert new record
+    if (queryUpdateVersion.numRowsAffected() == 0) {
+        QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
+        QString insertSQL = QLatin1String(R"(
+            INSERT INTO parameter (
+                parameter_name,
+                parameter_type,
+                parameter_value1
+            ) VALUES (
+                :parameter_name,
+                :parameter_type,
+                :parameter_value1
+            )
+        )");
+        insertQuery.prepare(insertSQL);
+        insertQuery.bindValue(":parameter_name", "version");
+        insertQuery.bindValue(":parameter_type", "collection");
+        insertQuery.bindValue(":parameter_value1", dbSchemaVersion);
+        insertQuery.exec();
+    }
+
+    // Save to file if memory mode
+    if (databaseMode == "Memory") {
+        saveParameterTableToFile();
+    }
 }
+//----------------------------------------------------------------------
 
 //File paths and creation -----------------------------------------------
 void Collection::generateCollectionFilesPaths()
@@ -116,7 +163,7 @@ void Collection::generateCollectionFiles()
             insertQuery.prepare(insertSQL);
             insertQuery.bindValue(":parameter_name", "version");
             insertQuery.bindValue(":parameter_type", "collection");
-            insertQuery.bindValue(":parameter_value1", version);
+            insertQuery.bindValue(":parameter_value1", dbSchemaVersion);
             insertQuery.exec();
 
             //Save
@@ -184,15 +231,15 @@ void Collection::generateCollectionFiles()
 bool Collection::load()
 {//Load collection
     //Reset key values and clear database in "Memory" mode
-    version ="";
+    dbSchemaVersion ="";
     clearDatabaseData();
 
     //Check if new collection (the folder would be empty)
     QDir dir(folder);
     dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     if(dir.entryList().isEmpty()){
-        version = appVersion;
-        updateCollectionVersion();
+        dbSchemaVersion = appVersion;
+        setDatabaseSchemaVersion();
     }
 
     //Generate collection files paths and statistics parameters
@@ -705,7 +752,7 @@ void Collection::loadParameterFileToTable()
     queryVersion.exec();
 
     while(queryVersion.next()){
-        version = queryVersion.value(0).toString();
+        dbSchemaVersion = queryVersion.value(0).toString();
     }
 }
 //----------------------------------------------------------------------
@@ -880,7 +927,7 @@ void Collection::loadSearchHistoryFileToTable()
         }
     }
 }
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------
 void Collection::loadTagFileToTable()
 {
     if(databaseMode=="Memory"){
@@ -938,7 +985,7 @@ void Collection::loadTagFileToTable()
         }
     }
 }
-
+//----------------------------------------------------------------------
 void Collection::loadMappingFileToTable()
 {
     if(databaseMode=="Memory"){
@@ -1004,7 +1051,7 @@ void Collection::loadMappingFileToTable()
         mappingFile.close();
     }
 }
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------
 //File saving ----------------------------------------------------------
 void Collection::saveDeviceTableToFile()
 {
@@ -1401,7 +1448,7 @@ void Collection::saveTagTableToFile()
         tagFile.close();
     }
 }
-
+//----------------------------------------------------------------------
 void Collection::saveMappingTableToFile()
 {
     if(databaseMode=="Memory"){
@@ -1444,6 +1491,7 @@ void Collection::saveMappingTableToFile()
         mappingFile.close();
     }
 }
+//----------------------------------------------------------------------
 
 //File deleting---------------------------------------------------------
 // In collection.cpp - modify deleteCatalogFile() method:

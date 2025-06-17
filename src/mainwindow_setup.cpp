@@ -939,4 +939,138 @@
         }
     }
     //----------------------------------------------------------------------
+    void MainWindow::runDatabaseMigrations()
+    {
+        QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
+        qDebug() << "Current database schema version:" << currentSchemaVersion;
+        qDebug() << "App version:" << collection->appVersion;
 
+        // Run migrations sequentially
+        if (currentSchemaVersion < "2.6") {
+            qDebug() << "Running database migration to 2.6...";
+            collection->dbSchemaVersion = "2.6";
+            runDatabaseMigration_2_6();
+            collection->setDatabaseSchemaVersion();
+            qDebug() << "Database migration to 2.6 completed";
+        }
+
+        // Future migrations:
+        // if (currentSchemaVersion < "2.7") {
+        //     runDatabaseMigration_2_7();
+        //     collection->setDatabaseSchemaVersion("2.7");
+        // }
+
+        // Refresh display
+        loadSearchHistoryTableToModel();
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::runDatabaseMigration_2_6()
+    {
+        qDebug() << "=== Database Migration 2.6: Adding selected_device_ID_list to search table ===";
+
+        QSqlQuery q(QSqlDatabase::database("defaultConnection"));
+
+        // Check if column already exists
+        q.exec("PRAGMA table_info(search)");
+        bool hasDeviceIDListColumn = false;
+        while (q.next()) {
+            if (q.value(1).toString() == "selected_device_ID_list") {
+                hasDeviceIDListColumn = true;
+                break;
+            }
+        }
+
+        if (!hasDeviceIDListColumn) {
+            // Add the new column
+            if (!q.exec("ALTER TABLE search ADD COLUMN selected_device_ID_list TEXT")) {
+                qDebug() << "Failed to add selected_device_ID_list column:" << q.lastError().text();
+                return;
+            }
+            qDebug() << "Added selected_device_ID_list column to search table";
+
+            // Migrate existing data
+            migrateExistingSearchDeviceData_2_6();
+        } else {
+            qDebug() << "selected_device_ID_list column already exists, skipping migration";
+        }
+    }
+    //----------------------------------------------------------------------
+    void MainWindow::migrateExistingSearchDeviceData_2_6()
+    {
+        qDebug() << "Migrating existing search history device data...";
+
+        QSqlQuery updateQuery(QSqlDatabase::database("defaultConnection"));
+        QSqlQuery selectQuery(QSqlDatabase::database("defaultConnection"));
+
+        // Get all search records that need migration
+        selectQuery.exec(R"(
+        SELECT date_time, search_catalog, search_storage, search_catalog_checked
+        FROM search
+        WHERE selected_device_ID_list IS NULL OR selected_device_ID_list = ''
+    )");
+
+        while (selectQuery.next()) {
+            QString dateTime = selectQuery.value(0).toString();
+            QString catalogName = selectQuery.value(1).toString();
+            QString storageName = selectQuery.value(2).toString();
+            bool searchInCatalogs = selectQuery.value(3).toBool();
+
+            QString deviceIdList = "";
+
+            if (searchInCatalogs) {
+                // Find device ID by catalog or storage name
+                QSqlQuery deviceQuery(QSqlDatabase::database("defaultConnection"));
+
+                if (catalogName != tr("All") && !catalogName.isEmpty()) {
+                    // Look for specific catalog (only Catalog type)
+                    deviceQuery.prepare(R"(
+                    SELECT device_id FROM device
+                    WHERE device_name = :name AND device_type = 'Catalog'
+                )");
+                    deviceQuery.bindValue(":name", catalogName);
+                }
+                else if (storageName != tr("All") && !storageName.isEmpty()) {
+                    // Look for storage device (only Storage type)
+                    deviceQuery.prepare(R"(
+                    SELECT device_id FROM device
+                    WHERE device_name = :name AND device_type = 'Storage'
+                )");
+                    deviceQuery.bindValue(":name", storageName);
+                }
+                else {
+                    // "All" devices - use device ID 0 as convention
+                    deviceIdList = "0";
+                }
+
+                if (deviceIdList.isEmpty()) {
+                    if (deviceQuery.exec() && deviceQuery.next()) {
+                        deviceIdList = QString::number(deviceQuery.value(0).toInt());
+                    }
+                    else {
+                        // Device not found, use 0 as fallback for "All"
+                        deviceIdList = "0";
+                        qDebug() << "Warning: Could not find device for catalog:" << catalogName << "storage:" << storageName;
+                    }
+                }
+            }
+            else {
+                // Directory search - no specific device, use 0
+                deviceIdList = "0";
+            }
+
+            // Update the record with the device ID
+            updateQuery.prepare(R"(
+            UPDATE search
+            SET selected_device_ID_list = :device_list
+            WHERE date_time = :date_time
+        )");
+            updateQuery.bindValue(":device_list", deviceIdList);
+            updateQuery.bindValue(":date_time", dateTime);
+
+            if (!updateQuery.exec()) {
+                qDebug() << "Failed to update search record:" << updateQuery.lastError().text();
+            }
+        }
+
+        qDebug() << "Search history device data migration completed";
+    }

@@ -48,11 +48,13 @@ public:
     explicit Collection(QObject *parent = nullptr);
 
     //Main attributes
-    QString appVersion;
-    QString version;
+    QString appVersion; //current version of the app
+    QString dbSchemaVersion;
     QString folder;
     QString settingsFilePath;
-    void updateCollectionVersion();
+
+    QString loadDatabaseSchemaVersion();
+    void setDatabaseSchemaVersion();
 
     //Database management
     QString databaseMode;

@@ -2862,7 +2862,7 @@ int MainWindow::countTreeLevels(const QMap<int, QList<int>>& deviceTree, int par
 //--- Migration 1.22 to 2.0
 //--------------------------------------------------------------------------
 //------ Global method -----------------------------------------------
-void MainWindow::migrateCollection()
+void MainWindow::migrateCollectionFromV1toV2()
 {
     // Start animation while opening
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -3838,8 +3838,8 @@ void MainWindow::importExcludeIntoParameter()
         qDebug()<<"failed to open exclude file: "<<excludeFilePath;
 
     //Update collection version and save
-    collection->version = currentVersion;
-    collection->updateCollectionVersion();
+    collection->dbSchemaVersion = currentVersion;
+    collection->setDatabaseSchemaVersion();
     collection->saveParameterTableToFile();
 }
 

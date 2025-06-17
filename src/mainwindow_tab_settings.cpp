@@ -580,10 +580,10 @@
 
         //Verify Collection version and trigger migration or updates
         if(collection->databaseMode=="Memory"){
-            if ( collection->version < collection->appVersion and collection->version < "2.0"){
+            if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion < "2.0"){
                 //Migration 1.x > 2.0
 
-                collection->version = "1.x";
+                collection->dbSchemaVersion = "1.x";
 
                 QString releaseNotesAddress = "https://github.com/StephaneCouturier/Katalog/releases/tag/v" + currentVersion;
                 QString wikiAddress = "https://github.com/StephaneCouturier/Katalog/wiki/Major-release-2.0";
@@ -594,7 +594,7 @@
                 message += "<br/><br/><table><tr><td width=550>";
                 message += tr("This application of 'Katalog' is in version: ") + "<b>" + currentVersion + "</b>";
                 message += "<br/></td></tr><tr><td>";
-                message += tr("Current collection version: ") + QString::fromUtf8("<b>%1</b>").arg(collection->version);
+                message += tr("Current collection version: ") + QString::fromUtf8("<b>%1</b>").arg(collection->dbSchemaVersion);
                 message += "<br/></td></tr><tr><td>";
                 message += tr("Collection folder: ") + QString::fromUtf8("<br/><i>%1</i>").arg(collection->folder);
                 message += "<br/></td></tr><tr><td>";
@@ -622,7 +622,7 @@
 
                 if (msgBox.clickedButton() == upgradeButton) {
                     // Trigger migration
-                    migrateCollection();
+                    migrateCollectionFromV1toV2();
 
                 } else if (msgBox.clickedButton() == folderButton) {
                     // Select other folder
@@ -636,13 +636,13 @@
                 }
             }
 
-            if ( collection->version < collection->appVersion and collection->version >= "2.0"){
+            if ( collection->dbSchemaVersion < collection->appVersion and collection->dbSchemaVersion >= "2.0"){
                 //Apply db or file changes since 2.0
                 //No changes yet.
 
                 //Update collection version
-                collection->version = collection->appVersion;
-                collection->updateCollectionVersion();
+                collection->dbSchemaVersion = collection->appVersion;
+                collection->setDatabaseSchemaVersion();
                 collection->saveParameterTableToFile();
 
                 //Inform
@@ -654,6 +654,11 @@
                 // msgBox.setIcon(QMessageBox::Information);
                 // msgBox.exec();
             }
+        }
+
+        if(collection->databaseMode != "Memory"){
+            qDebug() << "File database mode - checking for migrations";
+            runDatabaseMigrations();
         }
     }
     //----------------------------------------------------------------------

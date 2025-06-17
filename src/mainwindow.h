@@ -191,6 +191,7 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
             void selectDatabaseFilePath();
             void selectNewDatabaseFolderPath();
             void applyDatabaseModeToUI();
+            void migrateExistingSearchDeviceData_2_6();
 
             //Objects
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen
@@ -367,7 +368,7 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
             int countTreeLevels(const QMap<int, QList<int>>& deviceTree, int parentId);
 
             //Migration 1.22 to 2.0
-            void migrateCollection();
+            void migrateCollectionFromV1toV2();
             void importVirtualToDevices();
             void importStorageToDevices();
             void importCatalogsToDevices();
@@ -423,6 +424,8 @@ class MainWindow : public KXmlGuiWindow //QMainWindow KXmlGuiWindow
     public slots:
             void displaySearchResults();
             void updateStatusBarFromSearchManager();
+            void runDatabaseMigrations();
+            void runDatabaseMigration_2_6();
 
    private slots:
         //Filters
