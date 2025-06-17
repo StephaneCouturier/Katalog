@@ -358,7 +358,7 @@ void MainWindow::loadBackUpMappingTable()
     }
 
     //Create an sql model for the table
-    QSqlQueryModel *queryModel = new QSqlQueryModel();
+    QSqlQueryModel *queryModel = new QSqlQueryModel(this);
     queryModel->setQuery(std::move(query));
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("ID"));

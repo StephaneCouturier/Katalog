@@ -626,7 +626,7 @@
         loadCatalogQuery.bindValue(":selected_directory_full_path", exploreSelectedFolderFullPath);
         loadCatalogQuery.exec();
 
-        QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel;
+        QSqlQueryModel *loadCatalogQueryModel = new QSqlQueryModel(this);
         loadCatalogQueryModel->setQuery(std::move(loadCatalogQuery));
 
         FilesView *proxyModel2 = new FilesView(this);

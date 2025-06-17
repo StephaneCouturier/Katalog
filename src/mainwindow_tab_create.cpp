@@ -113,7 +113,7 @@
                 return;
             }
 
-            QSqlQueryModel *model = new QSqlQueryModel;
+            QSqlQueryModel *model = new QSqlQueryModel(this);
             model->setQuery(std::move(queryLoad));
 
             QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
@@ -183,7 +183,7 @@
                 return;
             }
 
-            QSqlQueryModel *model = new QSqlQueryModel;
+            QSqlQueryModel *model = new QSqlQueryModel(this);
             model->setQuery(std::move(queryLoad));
 
             QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);

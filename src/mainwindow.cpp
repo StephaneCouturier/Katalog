@@ -37,8 +37,10 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     // Initialize objects first
     collection = new Collection();
     selectedDevice = new Device();
-    searchMemory = new SearchMemory(this);
-    loadSearch = new SearchMemory(this);
+    //searchMemory = new SearchMemory(this);
+    //loadSearch = new SearchMemory(this);
+    searchMemory = nullptr;
+    loadSearch = nullptr;
 
     // Initialize other pointers
     currentSearch = nullptr;
@@ -295,7 +297,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             initializeSearchButtons();
 
             //Load an empty model to display headers
-            Catalog *emptyCatalog = new Catalog;
+            Catalog *emptyCatalog = new Catalog(this);
             ui->Search_treeView_FilesFound->setModel(emptyCatalog);
             QStandardItemModel *emptyQStandardItemModel = new QStandardItemModel;
             emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
@@ -354,70 +356,9 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
 
 MainWindow::~MainWindow()
 {
-    qDebug() << "=== MainWindow destructor called ===";
-
-    // 1. Stop any running operations first
-    if (searchManager && searchManager->searchRunning()) {
-        qDebug() << "Stopping running search in destructor";
-        searchManager->stopSearch();
-        // Give it a moment to stop cleanly
-        QApplication::processEvents();
-    }
-
-    // 2. Disconnect all signals from search objects to prevent crashes during destruction
-    if (searchMemory) {
-        disconnect(searchMemory, nullptr, this, nullptr);
-        qDebug() << "Disconnected searchMemory signals";
-    }
-
-    if (loadSearch) {
-        disconnect(loadSearch, nullptr, this, nullptr);
-        qDebug() << "Disconnected loadSearch signals";
-    }
-
-    if (searchStoppable) {
-        disconnect(searchStoppable, nullptr, this, nullptr);
-        if (searchStoppable->wasStopRequested() == false) {
-            searchStoppable->stopSearch();
-        }
-        delete searchStoppable;
-        searchStoppable = nullptr;
-        qDebug() << "Cleaned up searchStoppable";
-    }
-
-    if (searchManager) {
-        disconnect(searchManager, nullptr, this, nullptr);
-        qDebug() << "Disconnected searchManager signals";
-        // searchManager has 'this' as parent, so Qt will delete it
-    }
-
-    if (searchProgressManager) {
-        disconnect(searchProgressManager, nullptr, this, nullptr);
-        qDebug() << "Disconnected searchProgressManager signals";
-        // searchProgressManager has 'this' as parent, so Qt will delete it
-    }
-
-    // 3. Clean up non-Qt objects (they don't have Qt parents)
-    if (collection) {
-        delete collection;
-        collection = nullptr;
-        qDebug() << "Deleted collection";
-    }
-
-    if (selectedDevice) {
-        delete selectedDevice;
-        selectedDevice = nullptr;
-        qDebug() << "Deleted selectedDevice";
-    }
-
-    // 4. Clean up UI last
-    if (ui) {
-        delete ui;
-        ui = nullptr;
-        qDebug() << "Deleted ui";
-    }
-
-    qDebug() << "=== MainWindow destructor completed ===";
+    qDebug() << "=== Testing selectedDevice only ===";
+    // delete collection;  // Comment out
+    delete selectedDevice;  // Test this alone
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)

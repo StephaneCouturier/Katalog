@@ -1474,7 +1474,7 @@
             querySearchHistory.prepare(querySearchHistorySQL);
             querySearchHistory.exec();
 
-            QSqlQueryModel *queryModel = new QSqlQueryModel();
+            QSqlQueryModel *queryModel = new QSqlQueryModel(this);
             queryModel->setQuery(std::move(querySearchHistory));
 
             queryModel->setHeaderData( 0, Qt::Horizontal, tr("Date"));
@@ -1515,7 +1515,7 @@
             queryModel->setHeaderData(35, Qt::Horizontal, tr("Search Directory selected"));
             queryModel->setHeaderData(36, Qt::Horizontal, tr("Selected Directory"));
 
-            QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel;
+            QSortFilterProxyModel *searchHistoryProxyModel = new QSortFilterProxyModel(this);
             searchHistoryProxyModel->setSourceModel(queryModel);
             ui->Search_treeView_History->setModel(searchHistoryProxyModel);
             ui->Search_treeView_History->header()->setSectionResizeMode(QHeaderView::Interactive);

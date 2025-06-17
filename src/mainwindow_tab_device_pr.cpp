@@ -1250,7 +1250,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
     query.exec();
 
     //Prepare the tree model: headers
-    QStandardItemModel *devicesTreeModel = new QStandardItemModel();
+    QStandardItemModel *devicesTreeModel = new QStandardItemModel(this);
 
     devicesTreeModel->setHorizontalHeaderLabels({
                                                  tr("Name"),
@@ -1379,7 +1379,7 @@ void MainWindow::loadDevicesTreeToModel(QString targetTreeModel)
         ui->Devices_treeView_DeviceList->expandAll();
     }
     if(targetTreeModel=="Filters" or targetTreeModel=="All"){
-        QStandardItemModel *filtersTreeModel = new QStandardItemModel();
+        QStandardItemModel *filtersTreeModel = new QStandardItemModel(this);
         filtersTreeModel = devicesTreeModel;
         //Load Model to treeview (Filters/Device tree)
         DeviceTreeView *deviceTreeViewForSelectionPanel = new DeviceTreeView(this);
@@ -1474,7 +1474,7 @@ void MainWindow::loadDevicesStorageToModel(){
     loadStorageQuery.exec();
 
     //Prepare the tree model: headers
-    QStandardItemModel *storageTreeModel = new QStandardItemModel();
+    QStandardItemModel *storageTreeModel = new QStandardItemModel(this);
     storageTreeModel->setHorizontalHeaderLabels({
                                                  tr("Name"),
                                                  tr("Device Type"),
@@ -1726,7 +1726,7 @@ void MainWindow::loadDevicesCatalogToModel(){
     loadCatalogQuery.exec();
 
     //Prepare the tree model: headers
-    QStandardItemModel *catalogTreeModel = new QStandardItemModel();
+    QStandardItemModel *catalogTreeModel = new QStandardItemModel(this);
     catalogTreeModel->setHorizontalHeaderLabels({
                                                  tr("Name"),             //0
                                                  tr("Device Type"),      //1
