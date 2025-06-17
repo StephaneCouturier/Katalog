@@ -456,8 +456,22 @@
             else {
                 // Use the first device ID from the list
                 int deviceID = currentSearch->selectedDeviceIDList.first();
-                selectedDevice->ID = deviceID;
-                selectedDevice->loadDevice("defaultConnection");
+
+                // Validate device still exists
+                QSqlQuery checkQuery(QSqlDatabase::database("defaultConnection"));
+                checkQuery.prepare("SELECT device_type FROM device WHERE device_id = :id");
+                checkQuery.bindValue(":id", deviceID);
+
+                if (checkQuery.exec() && checkQuery.next()) {
+                    selectedDevice->ID = deviceID;
+                    selectedDevice->loadDevice("defaultConnection");
+                }
+                else {
+                    qDebug() << "Warning: Device ID" << deviceID << "no longer exists, using 'All'";
+                    selectedDevice->ID = 0;
+                    selectedDevice->type = "All";
+                    selectedDevice->loadDevice("defaultConnection");
+                }
             }
 
             // Update UI device selection
