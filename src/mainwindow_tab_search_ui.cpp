@@ -51,25 +51,22 @@
             switch (m_searchButtonState) {
             case SearchButtonState::Idle:
                 qDebug() << "Starting search from idle state";
-                m_searchButtonState = SearchButtonState::Running;
-                ui->Search_pushButton_Search->setText("&Pause");
-                launchSearch();
+                launchSearch();  // Let launchSearch() handle state updates
                 break;
 
             case SearchButtonState::Running:
                 qDebug() << "Pausing search";
-                m_searchButtonState = SearchButtonState::Paused;
-                ui->Search_pushButton_Search->setText("&Resume");
-                pauseCurrentSearch();
+                pauseCurrentSearch();  // This should call setSearchStatePaused()
                 break;
 
             case SearchButtonState::Paused:
                 qDebug() << "Resuming search";
-                m_searchButtonState = SearchButtonState::Running;
-                ui->Search_pushButton_Search->setText("&Pause");
-                resumeCurrentSearch();
+                resumeCurrentSearch();  // This should call setSearchStateRunning()
                 break;
+
             case SearchButtonState::Searching:
+                // Memory mode - button disabled, nothing to do
+                qDebug() << "Button clicked during memory search (should be disabled)";
                 break;
             }
         }

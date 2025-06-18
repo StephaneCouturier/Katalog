@@ -34,7 +34,7 @@
 #include "src/ui_mainwindow.h"
 
 //----------------------------------------------------------------------
-// Search management
+//--- Search management ------------------------------------------------
 //----------------------------------------------------------------------
 void MainWindow::launchSearch()
 {// Generic search launch method, using a type of search based on database mode and search type
@@ -176,7 +176,7 @@ void MainWindow::launchSearchJobStoppable()
     // Set up basic search parameters
     sendSearchParameters(searchJobStoppable);
 
-    setSearchButtonState(SearchButtonState::Running);  // This will show "Pause" button and enable Stop
+    setSearchButtonState(SearchButtonState::Running);
 
     // Update UI for running search (Search button becomes Pause)
     setSearchStateRunning();
@@ -192,10 +192,8 @@ void MainWindow::launchSearchJobStoppable()
     qDebug() << "=== launchSearchJobStoppable() complete ===";
 }
 //----------------------------------------------------------------------
-//----------------------------------------------------------------------
-// Send search parameters from UI to the search object
 void MainWindow::sendSearchParameters(Search *search)
-{
+{// Send search parameters from UI to the search object
     if (!search) return;
 
     // Clear any existing results
@@ -205,9 +203,9 @@ void MainWindow::sendSearchParameters(Search *search)
     search->searchOnFileName = ui->Search_checkBox_FileName->isChecked();
     search->searchText = ui->Search_lineEdit_SearchText->text();
     search->selectedTextCriteria = ui->Search_comboBox_TextCriteria->itemData(
-                                               ui->Search_comboBox_TextCriteria->currentIndex(), Qt::UserRole).toString();
+                                                                       ui->Search_comboBox_TextCriteria->currentIndex(), Qt::UserRole).toString();
     search->selectedSearchIn = ui->Search_comboBox_SearchIn->itemData(
-                                                                      ui->Search_comboBox_SearchIn->currentIndex(), Qt::UserRole).toString();    search->caseSensitive = ui->Search_checkBox_CaseSensitive->isChecked();
+                                                               ui->Search_comboBox_SearchIn->currentIndex(), Qt::UserRole).toString();    search->caseSensitive = ui->Search_checkBox_CaseSensitive->isChecked();
     search->selectedSearchExclude = ui->Search_lineEdit_Exclude->text();
 
     search->searchOnFileCriteria = ui->Search_checkBox_FileCriteria->isChecked();
@@ -294,7 +292,308 @@ void MainWindow::sendSearchParameters(Search *search)
     }
 }
 //----------------------------------------------------------------------
-// Display the search results in the UI
+//--- States & transitions ---------------------------------------------
+//----------------------------------------------------------------------
+void MainWindow::handleSearchCompleted()
+{
+    // Reset the search button
+    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+    isSearchRunning = false;
+
+    // Display the results
+    displaySearchResults();
+
+    // Enable export
+    ui->Search_pushButton_ProcessResults->setEnabled(true);
+    ui->Search_comboBox_SelectProcess->setEnabled(true);
+
+    // Stop animation
+    QApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------
+void MainWindow::handleSearchStopped()
+{
+    // Reset the search button
+    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+    isSearchRunning = false;
+
+    // Make sure statistics are calculated for partial results
+    if (currentSearch) {
+        currentSearch->calculateStatistics();
+    }
+
+    // Display the results, even though they're partial
+    displaySearchResults();
+
+    // Enable export
+    ui->Search_pushButton_ProcessResults->setEnabled(true);
+    ui->Search_comboBox_SelectProcess->setEnabled(true);
+
+    // Stop animation
+    QApplication::restoreOverrideCursor();
+
+    // No need to update the status bar here, the final progress signal (-1) will do that
+}
+//----------------------------------------------------------------------
+void MainWindow::resetSearchState()
+{
+    // Reset any active searches
+    isSearchRunning = false;
+
+    // Reset the search button
+    ui->Search_pushButton_Search->setText("Search");
+    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+
+    // Reset the current search object
+    if (currentSearch) {
+        currentSearch->clearResults();
+    }
+
+    // Clear any models or views
+    if (ui->Search_treeView_FilesFound->model()) {
+        // Create an empty model to replace the existing one
+        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Name"), tr("Size"), tr("Date"), tr("Folder"), tr("Catalog Name"), tr("Catalog ID")});
+        ui->Search_treeView_FilesFound->setModel(emptyQStandardItemModel);
+    }
+
+    if (ui->Search_treeView_CatalogsFound->model()) {
+        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
+        ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
+    }
+}
+//----------------------------------------------------------------------
+void MainWindow::pauseCurrentSearch()
+{
+    qDebug() << "=== pauseCurrentSearch() called ===";
+
+    if (!currentSearch) {
+        qDebug() << "No current search to pause";
+        return;
+    }
+
+    SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
+    if (!searchJobStoppable) {
+        qDebug() << "Current search doesn't support pause/resume";
+        return;
+    }
+
+    if (!searchManager || !searchManager->searchRunning()) {
+        qDebug() << "Search is not running - resetting to idle";
+        setSearchStateIdle();
+        return;
+    }
+
+    qDebug() << "Calling pauseSearch() on SearchJobStoppable";
+    searchJobStoppable->pauseSearch();
+
+    qDebug() << "Calling setSearchStatePaused()";
+    setSearchStatePaused();
+
+    qDebug() << "State after pause should be:" << static_cast<int>(SearchButtonState::Paused);
+    qDebug() << "Actual state is:" << static_cast<int>(m_searchButtonState);
+}
+//----------------------------------------------------------------------
+void MainWindow::resumeCurrentSearch()
+{
+    if (!currentSearch) {
+        qDebug() << "No current search to resume";
+        return;
+    }
+
+    SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
+    if (!searchJobStoppable) {
+        qDebug() << "Current search doesn't support pause/resume";
+        return;
+    }
+
+    if (!searchManager || !searchManager->searchRunning()) {
+        qDebug() << "Search is not running - resetting to idle";
+        setSearchStateIdle();
+        return;
+    }
+
+    searchJobStoppable->resumeSearch();
+    setSearchStateRunning();
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchCompleted()
+{
+    qDebug() << "=== onSearchCompleted() called ===";
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+
+    // Reset search button state when search completes
+    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
+
+    QApplication::restoreOverrideCursor();
+
+    if (currentSearch && currentSearch->fileNames.size() > 0) {
+        qDebug() << "Displaying search results...";
+        displaySearchResults();
+        qDebug() << "Search results displayed";
+    } else {
+        qDebug() << "No search results to display";
+    }
+
+    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+    qDebug() << "=== onSearchCompleted() completed ===";
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchCancelled()
+{
+    qDebug() << "=== onSearchCancelled() called ===";
+    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+
+    // Reset search button state when search is cancelled
+    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
+
+    QApplication::restoreOverrideCursor();
+
+    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
+    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+}
+//----------------------------------------------------------------------
+void MainWindow::onSearchError(const QString &error)
+{
+    qDebug() << "Search error:" << error;
+
+    // Reset to idle state
+    setSearchStateIdle();
+
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning(this, tr("Search Error"), error);
+}
+//----------------------------------------------------------------------
+//--- Button handling --------------------------------------------------
+//----------------------------------------------------------------------
+void MainWindow::setSearchStateIdle()
+{
+    qDebug() << "Setting search state: IDLE";
+    setSearchButtonState(SearchButtonState::Idle);
+    updateTooltips();
+}
+//----------------------------------------------------------------------
+void MainWindow::setSearchStateRunning()
+{
+    qDebug() << "Setting search state: RUNNING";
+    setSearchButtonState(SearchButtonState::Running);
+    updateTooltips();
+}
+//----------------------------------------------------------------------
+void MainWindow::setSearchStatePaused()
+{
+    qDebug() << "Setting search state: PAUSED";
+    setSearchButtonState(SearchButtonState::Paused);
+    updateTooltips();
+}
+//----------------------------------------------------------------------
+void MainWindow::setSearchButtonState(SearchButtonState state)
+{
+    qDebug() << "Setting search button state from" << static_cast<int>(m_searchButtonState)
+    << "to" << static_cast<int>(state);
+
+    // Safety checks
+    if (!ui) {
+        qDebug() << "ERROR: ui is null in setSearchButtonState";
+        return;
+    }
+
+    if (!ui->Search_pushButton_Search) {
+        qDebug() << "ERROR: Search_pushButton_Search is null in setSearchButtonState";
+        return;
+    }
+
+    if (!ui->Search_pushButton_Stop) {
+        qDebug() << "ERROR: Search_pushButton_Stop is null in setSearchButtonState";
+        return;
+    }
+
+    m_searchButtonState = state;
+
+    switch (state) {
+    case SearchButtonState::Idle:
+        // Search button
+        ui->Search_pushButton_Search->setText("&Search");
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - DISABLE when no search running
+        ui->Search_pushButton_Stop->setEnabled(false);
+
+        isSearchRunning = false;
+        qDebug() << "Button set to IDLE state - Stop button disabled";
+        break;
+
+    case SearchButtonState::Running:
+        // Search button
+        ui->Search_pushButton_Search->setText(tr("Pause"));
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->Search_pushButton_Search->setStyleSheet("");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - ENABLE when search running
+        ui->Search_pushButton_Stop->setEnabled(true);
+
+        isSearchRunning = true;
+        qDebug() << "Button set to RUNNING state - Stop button enabled";
+        break;
+
+    case SearchButtonState::Paused:
+        // Search button
+        ui->Search_pushButton_Search->setText(tr("Resume"));
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-start"));
+        //ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #39b2e5; }");
+        ui->Search_pushButton_Search->setEnabled(true);
+
+        // Stop button - KEEP ENABLED when paused (so user can still stop)
+        ui->Search_pushButton_Stop->setEnabled(true);
+
+        qDebug() << "Button set to PAUSED state - Stop button enabled";
+        break;
+
+    case SearchButtonState::Searching:  // New state for memory mode
+        ui->Search_pushButton_Search->setText(tr("Searching..."));
+        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
+        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
+        ui->Search_pushButton_Search->setEnabled(false);  // Deactivated during search
+        ui->Search_pushButton_Stop->setEnabled(false);    // No stop for memory mode
+        isSearchRunning = true;
+        break;
+
+    }
+
+    qDebug() << "Search button text:" << ui->Search_pushButton_Search->text();
+    qDebug() << "Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
+}
+//----------------------------------------------------------------------
+void MainWindow::updateTooltips()
+{
+    QString buttonText = ui->Search_pushButton_Search->text();
+    if (buttonText == tr("Search") || buttonText == "Search") {
+        ui->Search_pushButton_Search->setToolTip(tr("Start a new search"));
+    } else if (buttonText == tr("Pause") || buttonText == "Pause") {
+        ui->Search_pushButton_Search->setToolTip(tr("Pause the current search"));
+    } else if (buttonText == tr("Resume") || buttonText == "Resume") {
+        ui->Search_pushButton_Search->setToolTip(tr("Resume the paused search"));
+    }
+    ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
+}
+//----------------------------------------------------------------------
+//--- Display results --------------------------------------------------
+//----------------------------------------------------------------------
 void MainWindow::displaySearchResults()
 {
     if (!currentSearch) {
@@ -311,7 +610,7 @@ void MainWindow::displaySearchResults()
     // List of catalogs in which results were found
     if (currentSearch->deviceFoundModel) {
         currentSearch->deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
-        ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);      
+        ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);
         ui->Search_treeView_CatalogsFound->hideColumn(1);
     } else {
         qWarning() << "displaySearchResults: deviceFoundModel is null";
@@ -378,52 +677,7 @@ void MainWindow::displaySearchResults()
     QApplication::restoreOverrideCursor();
 }
 //----------------------------------------------------------------------
-void MainWindow::handleSearchCompleted()
-{
-    // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-    isSearchRunning = false;
-
-    // Display the results
-    displaySearchResults();
-
-    // Enable export
-    ui->Search_pushButton_ProcessResults->setEnabled(true);
-    ui->Search_comboBox_SelectProcess->setEnabled(true);
-
-    // Stop animation
-    QApplication::restoreOverrideCursor();
-}
-//----------------------------------------------------------------------
-void MainWindow::handleSearchStopped()
-{
-    // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-    isSearchRunning = false;
-
-    // Make sure statistics are calculated for partial results
-    if (currentSearch) {
-        currentSearch->calculateStatistics();
-    }
-
-    // Display the results, even though they're partial
-    displaySearchResults();
-
-    // Enable export
-    ui->Search_pushButton_ProcessResults->setEnabled(true);
-    ui->Search_comboBox_SelectProcess->setEnabled(true);
-
-    // Stop animation
-    QApplication::restoreOverrideCursor();
-
-    // No need to update the status bar here, the final progress signal (-1) will do that
-}
+//--- Reporting --------------------------------------------------------
 //----------------------------------------------------------------------
 void MainWindow::updateSearchProgress(int filesProcessed)
 {    // Special values for different states:
@@ -444,8 +698,8 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (filesProcessed == -1) {
         if (currentSearch) {
             statusMessage = tr("Search interrupted | Files found: %1 | Files processed: %2")
-                                .arg(QLocale().toString(currentSearch->fileNames.size()))
-                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+            .arg(QLocale().toString(currentSearch->fileNames.size()))
+                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
         } else {
             statusMessage = tr("Search interrupted. No results available.");
         }
@@ -458,11 +712,11 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     if (filesProcessed == -2) {
         if (currentSearch) {
             statusMessage = tr("Loading Catalog %1 of %2 (%3) | Files found: %4 | Files processed: %5")
-                .arg(currentSearch->currentCatalogIndex)
+            .arg(currentSearch->currentCatalogIndex)
                 .arg(currentSearch->totalCatalogs)
                 .arg(currentSearch->currentCatalogName)
                 .arg(QLocale().toString(currentSearch->fileNames.size())
-                .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
+                         .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
 
             statusBar()->showMessage(statusMessage);
         }
@@ -486,7 +740,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 .arg(QLocale().toString(searchMemory->currentCatalogFilesLoaded))
                                 .arg(QString::number(percentLoaded, 'f', 1))
                                 .arg(QLocale().toString(currentSearch->fileNames.size())
-                                .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
+                                         .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
 
             statusBar()->show();
             statusBar()->showMessage(statusMessage, 5000);
@@ -517,8 +771,8 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         if (currentSearch->totalCatalogs > 0) {
             if (!ui->Filters_checkBox_SearchInConnectedDrives->isChecked()){
                 statusMessage = tr("Searching in Catalog %1 of %2 | ")
-                                    .arg(currentSearch->currentCatalogIndex)
-                                    .arg(currentSearch->totalCatalogs);
+                .arg(currentSearch->currentCatalogIndex)
+                    .arg(currentSearch->totalCatalogs);
             }
             statusMessage += tr("Files found: %1 | Files processed: %2")
                                  .arg(QLocale().toString(currentSearch->fileNames.size()))
@@ -546,7 +800,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // Process events to keep UI responsive
     QCoreApplication::processEvents();
 }
-
+//----------------------------------------------------------------------
 void MainWindow::reportSearchStatistics()
 {
 
@@ -641,37 +895,6 @@ void MainWindow::reportSearchStatistics()
     msgBox.exec();
 }
 //----------------------------------------------------------------------
-void MainWindow::resetSearchState()
-{
-    // Reset any active searches
-    isSearchRunning = false;
-
-    // Reset the search button
-    ui->Search_pushButton_Search->setText("Search");
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-
-    // Reset the current search object
-    if (currentSearch) {
-        currentSearch->clearResults();
-    }
-
-    // Clear any models or views
-    if (ui->Search_treeView_FilesFound->model()) {
-        // Create an empty model to replace the existing one
-        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
-        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Name"), tr("Size"), tr("Date"), tr("Folder"), tr("Catalog Name"), tr("Catalog ID")});
-        ui->Search_treeView_FilesFound->setModel(emptyQStandardItemModel);
-    }
-
-    if (ui->Search_treeView_CatalogsFound->model()) {
-        QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
-        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
-        ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
-    }
-}
-//----------------------------------------------------------------------
-//----------------------------------------------------------------------
 void MainWindow::updateStatusBarFromSearchManager()
 {
     if (!searchManager) {
@@ -717,251 +940,4 @@ void MainWindow::updateStatusBarFromSearchManager()
     // Update the status bar
     statusBar()->showMessage(statusMessage);
 }
-
 //----------------------------------------------------------------------
-void MainWindow::pauseCurrentSearch()
-{
-    if (!currentSearch) {
-        qDebug() << "No current search to pause";
-        return;
-    }
-
-    SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
-    if (!searchJobStoppable) {
-        qDebug() << "Current search doesn't support pause/resume";
-        return;
-    }
-
-    if (!searchManager || !searchManager->searchRunning()) {
-        qDebug() << "Search is not running - resetting to idle";
-        setSearchStateIdle();
-        return;
-    }
-
-    searchJobStoppable->pauseSearch();
-    setSearchStatePaused();
-}
-
-void MainWindow::resumeCurrentSearch()
-{
-    if (!currentSearch) {
-        qDebug() << "No current search to resume";
-        return;
-    }
-
-    SearchJobStoppable* searchJobStoppable = qobject_cast<SearchJobStoppable*>(currentSearch);
-    if (!searchJobStoppable) {
-        qDebug() << "Current search doesn't support pause/resume";
-        return;
-    }
-
-    if (!searchManager || !searchManager->searchRunning()) {
-        qDebug() << "Search is not running - resetting to idle";
-        setSearchStateIdle();
-        return;
-    }
-
-    searchJobStoppable->resumeSearch();
-    setSearchStateRunning();
-}
-
-void MainWindow::setSearchStateIdle()
-{
-    qDebug() << "Setting search state: IDLE";
-
-    // Search button: enabled, shows "Search" (green)
-    ui->Search_pushButton_Search->setText(tr("Search"));
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-    ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }"); // Green
-    ui->Search_pushButton_Search->setEnabled(true);
-
-    // Stop button: disabled
-    ui->Search_pushButton_Stop->setText(tr("Stop"));
-    ui->Search_pushButton_Stop->setIcon(QIcon::fromTheme("process-stop"));
-    ui->Search_pushButton_Stop->setStyleSheet("");
-    ui->Search_pushButton_Stop->setEnabled(false);
-}
-
-void MainWindow::setSearchStateRunning()
-{
-    qDebug() << "Setting search state: RUNNING";
-
-    // Search button: transforms to "Pause" (orange)
-    ui->Search_pushButton_Search->setText(tr("Pause"));
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-pause"));
-    ui->Search_pushButton_Search->setStyleSheet("");
-    ui->Search_pushButton_Search->setEnabled(true);
-
-    // Stop button: enabled (red)
-    ui->Search_pushButton_Stop->setText(tr("Stop"));
-    ui->Search_pushButton_Stop->setIcon(QIcon::fromTheme("process-stop"));
-    ui->Search_pushButton_Stop->setEnabled(true);
-}
-
-void MainWindow::setSearchStatePaused()
-{
-    qDebug() << "Setting search state: PAUSED";
-
-    // Search button: transforms to "Resume" (green)
-    ui->Search_pushButton_Search->setText(tr("Resume"));
-    ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-start"));
-    ui->Search_pushButton_Search->setEnabled(true);
-
-    // Stop button: still enabled (red)
-    ui->Search_pushButton_Stop->setText(tr("Stop"));
-    ui->Search_pushButton_Stop->setIcon(QIcon::fromTheme("process-stop"));
-    ui->Search_pushButton_Search->setStyleSheet("");
-    ui->Search_pushButton_Stop->setEnabled(true);
-}
-
-void MainWindow::onSearchCompleted()
-{
-    qDebug() << "=== onSearchCompleted() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
-    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-
-    // Reset search button state when search completes
-    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
-
-    QApplication::restoreOverrideCursor();
-
-    if (currentSearch && currentSearch->fileNames.size() > 0) {
-        qDebug() << "Displaying search results...";
-        displaySearchResults();
-        qDebug() << "Search results displayed";
-    } else {
-        qDebug() << "No search results to display";
-    }
-
-    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
-    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-    qDebug() << "=== onSearchCompleted() completed ===";
-}
-
-void MainWindow::onSearchCancelled()
-{
-    qDebug() << "=== onSearchCancelled() called ===";
-    qDebug() << "Before reset - Search button state:" << static_cast<int>(m_searchButtonState);
-    qDebug() << "Before reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-
-    // Reset search button state when search is cancelled
-    setSearchButtonState(SearchButtonState::Idle);  // This will disable Stop button
-
-    QApplication::restoreOverrideCursor();
-
-    qDebug() << "After reset - Search button state:" << static_cast<int>(m_searchButtonState);
-    qDebug() << "After reset - Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-}
-
-void MainWindow::onSearchError(const QString &error)
-{
-    qDebug() << "Search error:" << error;
-
-    // Reset to idle state
-    setSearchStateIdle();
-
-    QApplication::restoreOverrideCursor();
-    QMessageBox::warning(this, tr("Search Error"), error);
-}
-
-void MainWindow::initializeSearchButtons()
-{
-    // Set initial state to idle
-    setSearchStateIdle();
-
-    // Add tooltips that change based on state
-    updateTooltips();
-}
-
-void MainWindow::updateTooltips()
-{
-    QString buttonText = ui->Search_pushButton_Search->text();
-    if (buttonText == tr("Search") || buttonText == "Search") {
-        ui->Search_pushButton_Search->setToolTip(tr("Start a new search"));
-    } else if (buttonText == tr("Pause") || buttonText == "Pause") {
-        ui->Search_pushButton_Search->setToolTip(tr("Pause the current search"));
-    } else if (buttonText == tr("Resume") || buttonText == "Resume") {
-        ui->Search_pushButton_Search->setToolTip(tr("Resume the paused search"));
-    }
-    ui->Search_pushButton_Stop->setToolTip(tr("Stop the current search"));
-}
-
-// 1. Update your setSearchButtonState method to also manage the Stop button:
-void MainWindow::setSearchButtonState(SearchButtonState state)
-{
-    qDebug() << "Setting search button state from" << static_cast<int>(m_searchButtonState)
-    << "to" << static_cast<int>(state);
-
-    // Safety checks
-    if (!ui) {
-        qDebug() << "ERROR: ui is null in setSearchButtonState";
-        return;
-    }
-
-    if (!ui->Search_pushButton_Search) {
-        qDebug() << "ERROR: Search_pushButton_Search is null in setSearchButtonState";
-        return;
-    }
-
-    if (!ui->Search_pushButton_Stop) {
-        qDebug() << "ERROR: Search_pushButton_Stop is null in setSearchButtonState";
-        return;
-    }
-
-    m_searchButtonState = state;
-
-    switch (state) {
-    case SearchButtonState::Idle:
-        // Search button
-        ui->Search_pushButton_Search->setText("&Search");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-        ui->Search_pushButton_Search->setEnabled(true);
-
-        // Stop button - DISABLE when no search running
-        ui->Search_pushButton_Stop->setEnabled(false);
-
-        isSearchRunning = false;
-        qDebug() << "Button set to IDLE state - Stop button disabled";
-        break;
-
-    case SearchButtonState::Searching:  // New state for memory mode
-        ui->Search_pushButton_Search->setText(tr("Searching..."));
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("edit-find"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #81d41a; }");
-        ui->Search_pushButton_Search->setEnabled(false);  // Deactivated during search
-        ui->Search_pushButton_Stop->setEnabled(false);    // No stop for memory mode
-        isSearchRunning = true;
-        break;
-
-    case SearchButtonState::Running:
-        // Search button
-        ui->Search_pushButton_Search->setText("&Stop");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("process-stop"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #ff8000; }");
-        ui->Search_pushButton_Search->setEnabled(true);
-
-        // Stop button - ENABLE when search running
-        ui->Search_pushButton_Stop->setEnabled(true);
-
-        isSearchRunning = true;
-        qDebug() << "Button set to RUNNING state - Stop button enabled";
-        break;
-
-    case SearchButtonState::Paused:
-        // Search button
-        ui->Search_pushButton_Search->setText("&Resume");
-        ui->Search_pushButton_Search->setIcon(QIcon::fromTheme("media-playback-start"));
-        ui->Search_pushButton_Search->setStyleSheet("QPushButton{ background-color: #39b2e5; }");
-        ui->Search_pushButton_Search->setEnabled(true);
-
-        // Stop button - KEEP ENABLED when paused (so user can still stop)
-        ui->Search_pushButton_Stop->setEnabled(true);
-
-        qDebug() << "Button set to PAUSED state - Stop button enabled";
-        break;
-    }
-
-    qDebug() << "Search button text:" << ui->Search_pushButton_Search->text();
-    qDebug() << "Stop button enabled:" << ui->Search_pushButton_Stop->isEnabled();
-}

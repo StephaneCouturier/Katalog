@@ -218,6 +218,9 @@ class MainWindow : public KXmlGuiWindow
             SearchButtonState m_searchButtonState = SearchButtonState::Idle;
 
             void setSearchButtonState(SearchButtonState state);
+            void setSearchStateIdle();
+            void setSearchStateRunning();
+            void setSearchStatePaused();
 
             // Search management (KJob)
             SearchJobStoppable *searchJobStoppable = nullptr;
@@ -257,10 +260,7 @@ class MainWindow : public KXmlGuiWindow
 
             void pauseCurrentSearch();
             void resumeCurrentSearch();
-            void setSearchStateIdle();
-            void setSearchStateRunning();
-            void setSearchStatePaused();
-            void initializeSearchButtons();
+
             void updateTooltips();
 
         //TAB: Catalogs

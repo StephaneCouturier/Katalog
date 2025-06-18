@@ -293,7 +293,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             //Default values
             initiateSearchFields();
             resetToDefaultSearchCriteria();
-            initializeSearchButtons();
+            setSearchStateIdle();
 
             //Load an empty model to display headers
             Catalog *emptyCatalog = new Catalog(this);
