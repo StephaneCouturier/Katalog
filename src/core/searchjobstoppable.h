@@ -141,6 +141,7 @@ private:
     mutable QMutex m_pauseMutex;
 
     bool m_csvLoadingStopFlag{false};
+    QAtomicInt m_objectValid{1};
 };
 
 #endif // SEARCHJOBSTOPPABLE_H

@@ -50,8 +50,12 @@ SearchJobStoppable::SearchJobStoppable(QObject *parent)
 
 SearchJobStoppable::~SearchJobStoppable()
 {
-    // Ensure search is stopped
+    qDebug() << "SearchJobStoppable destructor called";
+
+    m_objectValid.storeRelease(0);
     stopSearch();
+
+    qDebug() << "SearchJobStoppable destructor complete";
 }
 //----------------------------------------------------------------------
 void SearchJobStoppable::setDatabaseConnection(const QString &connectionName)
@@ -321,38 +325,50 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
         // Track loading progress (same as SearchMemory)
         emit searchProgress(-2); // Special signal to indicate catalog loading started
 
-        // Reset CSV loading stop flag
-        m_csvLoadingStopFlag = false;
-
-        // Connect to the loadProgress signal to track loading progress AND update stop flag
-        auto progressConnection = connect(device->catalog, &Catalog::loadProgress, this,
-                                          [this](int filesLoaded, int totalFiles) {
-                                              currentCatalogFilesLoaded = filesLoaded;
-                                              currentCatalogTotalFiles = totalFiles;
-
-                                              // ✅ SAFE: Update stop flag during loading (no local variable capture)
-                                              m_csvLoadingStopFlag = !shouldContinue();
-
-                                              // Handle pause requests
-                                              waitIfPaused();
-
-                                              // Check again after potential pause
-                                              m_csvLoadingStopFlag = !shouldContinue();
-
-                                              // Send a special progress signal with loading info (same as SearchMemory)
-                                              emit searchProgress(-4); // -4 is catalog loading progress update
-                                          });
-
+        // ✅ SAFE: Use a simple approach with immediate disconnection on stop
+        bool localStopRequested = false;
         QMutex csvMutex;
+        QMetaObject::Connection progressConnection;
 
-        // Load CSV files into database with stop flag that gets updated during progress
-        device->catalog->loadCatalogFileListToTable(m_connectionName, csvMutex, m_csvLoadingStopFlag);
+        // Connect with immediate access to connection handle for safe disconnection
+        progressConnection = connect(device->catalog, &Catalog::loadProgress, this,
+                                     [this, &localStopRequested, &progressConnection](int filesLoaded, int totalFiles) {
+                                         // STOP CHECK: If stop requested, disconnect immediately and exit
+                                         if (!shouldContinue()) {
+                                             qDebug() << "Stop detected in CSV loading callback - disconnecting";
+                                             QObject::disconnect(progressConnection);
+                                             localStopRequested = true;
+                                             return;
+                                         }
 
-        // Disconnect to prevent memory leaks (same as SearchMemory)
-        disconnect(progressConnection);
+                                         currentCatalogFilesLoaded = filesLoaded;
+                                         currentCatalogTotalFiles = totalFiles;
+
+                                         // Handle pause requests
+                                         waitIfPaused();
+
+                                         // Check again after pause
+                                         if (!shouldContinue()) {
+                                             qDebug() << "Stop detected after pause - disconnecting";
+                                             QObject::disconnect(progressConnection);
+                                             localStopRequested = true;
+                                             return;
+                                         }
+
+                                         // Send progress signal
+                                         emit searchProgress(-4); // -4 is catalog loading progress update
+                                     }, Qt::DirectConnection); // Use DirectConnection for immediate callback
+
+        // Load CSV files into database
+        device->catalog->loadCatalogFileListToTable(m_connectionName, csvMutex, localStopRequested);
+
+        // Ensure disconnection (in case not already disconnected by callback)
+        if (progressConnection) {
+            disconnect(progressConnection);
+        }
 
         // Check if stopped during loading
-        if (!shouldContinue()) {
+        if (!shouldContinue() || localStopRequested) {
             qDebug() << "Stop requested during CSV loading";
             return;
         }
