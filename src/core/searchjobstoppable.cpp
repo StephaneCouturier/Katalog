@@ -1,4 +1,4 @@
-/*LICENCE
+ /*LICENCE
     This file is part of Katalog
 
     Copyright (C) 2021, the Katalog Development team
@@ -281,6 +281,9 @@ void SearchJobStoppable::stopSearch()
 
     m_stopRequested.storeRelease(1);
 
+    //Also stop CSV loading if in progress
+    m_csvLoadingStopFlag = true;
+
     // Wake up any paused operations
     if (m_paused.loadAcquire()) {
         qDebug() << "Waking up paused operation";
@@ -307,21 +310,51 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     qDebug() << "  - Device external ID:" << device->externalID;
     qDebug() << "  - Database connection:" << m_connectionName;
 
-    // **NEW: Add memory mode CSV loading**
+    // Add memory mode CSV loading with proper progress reporting
     if (memoryModeEnabled) {
         qDebug() << "Memory mode: Loading catalog CSV file for" << device->name;
 
-        // Load CSV files into database (same as SearchMemory does)
-        device->catalog->loadCatalogFileListToTable(m_connectionName, mutex, stopRequested);
+        // Reset catalog file loading counters (same as SearchMemory)
+        currentCatalogFilesLoaded = 0;
+        currentCatalogTotalFiles = device->totalFileCount;
 
+        // Track loading progress (same as SearchMemory)
+        emit searchProgress(-2); // Special signal to indicate catalog loading started
+
+        // Connect to the loadProgress signal to track loading progress (same as SearchMemory)
+        connect(device->catalog, &Catalog::loadProgress, this,
+                [this](int filesLoaded, int totalFiles) {
+                    currentCatalogFilesLoaded = filesLoaded;
+                    currentCatalogTotalFiles = totalFiles;
+
+                    // Send a special progress signal with loading info (same as SearchMemory)
+                    emit searchProgress(-4); // -4 is catalog loading progress update
+                    qDebug() << "searchProgress(-4) emitted, Catalog loading progress:" << filesLoaded << "/" << totalFiles;
+                });
+
+        // Create simple local variables for the method call
+        QMutex tempMutex;
+        bool tempStopRequested = false;
+
+        // Load CSV files into database (same as SearchMemory does)
+        device->catalog->loadCatalogFileListToTable(m_connectionName, tempMutex, tempStopRequested);
+
+        // Disconnect to prevent memory leaks (same as SearchMemory)
+        disconnect(device->catalog, &Catalog::loadProgress, this, nullptr);
+
+        // Check if stopped after loading
         if (!shouldContinue()) {
-            qDebug() << "Stop requested during CSV loading";
+            qDebug() << "Stop requested after CSV loading";
             return;
         }
+
+        // Signal that catalog loading is complete (same as SearchMemory)
+        emit searchProgress(-3); // Special signal to indicate catalog loading finished
 
         qDebug() << "Memory mode: CSV loading complete for" << device->name;
     }
 
+    //Rest of method is common for all types of database modes
     Q_UNUSED(mutex);
     Q_UNUSED(stopRequested);
 

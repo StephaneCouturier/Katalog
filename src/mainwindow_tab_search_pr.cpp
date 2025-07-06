@@ -166,6 +166,8 @@ void MainWindow::launchSearchJobStoppable()
         searchJobStoppable->setMemoryModeEnabled(true);
     }
 
+    connect(searchJobStoppable, &Search::searchProgress, this, &MainWindow::updateSearchProgress);
+
     currentSearch = searchJobStoppable;
 
     // Update progress manager with current search for file count display
@@ -723,9 +725,11 @@ void MainWindow::updateSearchProgress(int filesProcessed)
         return;
     }
 
-    // Special case for catalog loading progress update (-4) - only SearchMemory uses this
+    // Special case for catalog loading progress update (-4) - used by both SearchMemory and SearchJobStoppable
     if (filesProcessed == -4) {
         SearchMemory* searchMemory = dynamic_cast<SearchMemory*>(currentSearch);
+        SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(currentSearch);
+
         if (searchMemory) {
             double percentLoaded = 0;
             if (searchMemory->currentCatalogTotalFiles > 0) {
@@ -739,9 +743,27 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 .arg(searchMemory->currentCatalogName)
                                 .arg(QLocale().toString(searchMemory->currentCatalogFilesLoaded))
                                 .arg(QString::number(percentLoaded, 'f', 1))
-                                .arg(QLocale().toString(currentSearch->fileNames.size())
-                                         .arg(QLocale().toString(currentSearch->totalFilesProcessed)));
+                                .arg(QLocale().toString(currentSearch->fileNames.size()))
+                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+        }
+        else if (searchJobStoppable) {
+            double percentLoaded = 0;
+            if (searchJobStoppable->currentCatalogTotalFiles > 0) {
+                percentLoaded = (double)searchJobStoppable->currentCatalogFilesLoaded /
+                                searchJobStoppable->currentCatalogTotalFiles * 100.0;
+            }
 
+            statusMessage = tr("Loading Catalog %1 of %2 (%3) | %4 files loaded (%5%) | Files found: %6 | Files processed: %7")
+                                .arg(searchJobStoppable->currentCatalogIndex)
+                                .arg(searchJobStoppable->totalCatalogs)
+                                .arg(searchJobStoppable->currentCatalogName)
+                                .arg(QLocale().toString(searchJobStoppable->currentCatalogFilesLoaded))
+                                .arg(QString::number(percentLoaded, 'f', 1))
+                                .arg(QLocale().toString(currentSearch->fileNames.size()))
+                                .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+        }
+
+        if (searchMemory || searchJobStoppable) {
             statusBar()->show();
             statusBar()->showMessage(statusMessage, 5000);
             statusBarTimer->start(5000);

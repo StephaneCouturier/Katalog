@@ -92,6 +92,9 @@ public:
      */
     void setProgressRefreshRate(int rate) { progressRefreshRate = rate; }
 
+    int currentCatalogFilesLoaded = 0;
+    int currentCatalogTotalFiles = 0;
+
     bool memoryModeEnabled = false;
 
     /**
@@ -136,6 +139,8 @@ private:
     QAtomicInt m_stopRequested{0};
     QAtomicInt m_paused{0};
     mutable QMutex m_pauseMutex;
+
+    bool m_csvLoadingStopFlag{false};
 };
 
 #endif // SEARCHJOBSTOPPABLE_H

@@ -252,8 +252,8 @@ void SearchJob::onSearchProgress(int filesProcessed)
     }
 
     if (filesProcessed == -4) {
-        // Catalog loading progress (SearchMemory specific)
-        // For now, just ignore this
+        // Catalog loading progress - forward it to MainWindow
+        emit searchProgress(filesProcessed);
         return;
     }
 

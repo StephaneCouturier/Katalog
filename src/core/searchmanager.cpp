@@ -114,7 +114,20 @@ void SearchManager::startSearchJobStoppable(SearchJobStoppable *searchEngine, De
                 setStatus("Processing files...");
                 return;
             }
-
+            // Handle catalog loading progress (-4)
+            if (filesProcessed == -4) {
+                SearchJobStoppable* searchJobStoppable = dynamic_cast<SearchJobStoppable*>(engine);
+                if (searchJobStoppable && searchJobStoppable->currentCatalogTotalFiles > 0) {
+                    double percent = (double)searchJobStoppable->currentCatalogFilesLoaded /
+                                     searchJobStoppable->currentCatalogTotalFiles * 100.0;
+                    setStatus(QString("Loading catalog: %1 | %2/%3 files (%4%)")
+                                  .arg(engine->currentCatalogName)
+                                  .arg(searchJobStoppable->currentCatalogFilesLoaded)
+                                  .arg(searchJobStoppable->currentCatalogTotalFiles)
+                                  .arg(QString::number(percent, 'f', 1)));
+                }
+                return;
+            }
             // Regular progress updates (works for both catalog and directory)
             if (filesProcessed >= 0) {
                 if (engine->estimatedTotalFiles > 0) {
