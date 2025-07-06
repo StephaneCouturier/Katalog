@@ -686,7 +686,7 @@ void MainWindow::updateSearchProgress(int filesProcessed)
     // -1: Search interrupted
     // -2: Catalog loading started
     // -3: Catalog loading finished, processing files
-    // -4: Catalog loading progress update (only used by SearchMemory)
+    // -4: Catalog loading progress update
 
     // Update totalFilesProcessed for statistics
     if (filesProcessed >= 0) {
@@ -761,12 +761,16 @@ void MainWindow::updateSearchProgress(int filesProcessed)
                                 .arg(QString::number(percentLoaded, 'f', 1))
                                 .arg(QLocale().toString(currentSearch->fileNames.size()))
                                 .arg(QLocale().toString(currentSearch->totalFilesProcessed));
+
+            // Append PAUSED status if search is paused
+            if (searchJobStoppable->isPaused()) {
+                statusMessage += tr(" | CATALOG LOADING PAUSED");
+            }
         }
 
         if (searchMemory || searchJobStoppable) {
             statusBar()->show();
-            statusBar()->showMessage(statusMessage, 5000);
-            statusBarTimer->start(5000);
+            statusBar()->showMessage(statusMessage);
             QCoreApplication::processEvents();
         }
         return;

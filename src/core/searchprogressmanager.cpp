@@ -32,6 +32,7 @@
 #include "searchprogressmanager.h"
 #include "searchmanager.h"
 #include "search.h"
+#include "searchjobstoppable.h"
 
 void SearchProgressManager::connectToSearchManager(SearchManager *searchManager)
 {
@@ -63,9 +64,50 @@ void SearchProgressManager::updateFromSearchManager()
     QString message;
 
     if (m_searchManager->searchRunning()) {
-        // Build message format:
-        // "Searching in catalog catalogname | catalog 2 of 5 | Total files/folders found: 13 | Total files processed: 20000 (9%)"
+        SearchJobStoppable* searchJobStoppable = nullptr;
+        if (m_currentSearch) {
+            searchJobStoppable = dynamic_cast<SearchJobStoppable*>(m_currentSearch);
+        }
 
+        // Handle paused state
+        if (searchJobStoppable && searchJobStoppable->isPaused()) {
+            QString currentMessage = m_statusBar->currentMessage();
+
+            // Remove any existing pause indicators first, then add the correct one
+            QString cleanMessage = currentMessage;
+            cleanMessage.remove(tr(" | SEARCH PAUSED"));
+            cleanMessage.remove(tr(" | CATALOG LOADING PAUSED"));
+
+            // Check if we're in catalog loading mode for specific pause message
+            bool isLoadingCatalog = searchJobStoppable->memoryModeEnabled &&
+                                    searchJobStoppable->currentCatalogFilesLoaded > 0 &&
+                                    searchJobStoppable->currentCatalogFilesLoaded < searchJobStoppable->currentCatalogTotalFiles;
+
+            if (isLoadingCatalog) {
+                message = cleanMessage + tr(" | CATALOG LOADING PAUSED");
+            } else {
+                message = cleanMessage + tr(" | SEARCH PAUSED");
+            }
+
+            // Update status bar with NO timeout during search
+            m_statusBar->showMessage(message);
+
+            // Stop any existing timer during search
+            if (m_statusBarTimer) {
+                m_statusBarTimer->stop();
+            }
+
+            return; // Don't rebuild the message
+        }
+
+        // For SearchJobStoppable, let MainWindow::updateSearchProgress handle regular search progress
+        if (searchJobStoppable) {
+            // Only handle special cases for SearchJobStoppable, not regular progress
+            // MainWindow::updateSearchProgress will handle regular search progress with detailed info
+            return; // Don't compete with MainWindow progress reporting
+        }
+
+        // Regular message building for SearchMemory and other cases
         if (m_currentSearch && m_currentSearch->searchInConnectedChecked) {
             message = tr("Searching in directory %1").arg(m_currentSearch->connectedDirectory);
         }
@@ -98,7 +140,7 @@ void SearchProgressManager::updateFromSearchManager()
             message = tr("Searching");
         }
 
-        // Add total files/folders found - check showFoldersOnly flag
+        // Add total files/folders found
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
             if (m_currentSearch->showFoldersOnly) {
                 message += tr(" | Total folders found: %1")
@@ -115,7 +157,7 @@ void SearchProgressManager::updateFromSearchManager()
             }
         }
 
-        // Add total files processed with percentage (using actual count from SearchManager)
+        // Add total files processed with percentage
         int actualFilesProcessed = m_currentSearch ? m_currentSearch->totalFilesProcessed : 0;
         if (actualFilesProcessed > 0) {
             message += tr(" | Total files processed: %1")
@@ -136,7 +178,7 @@ void SearchProgressManager::updateFromSearchManager()
         }
 
     } else {
-        // Search completed or ready
+        // Search completed or ready - existing code unchanged
         if (m_currentSearch && m_currentSearch->fileNames.size() > 0) {
             if (m_currentSearch->showFoldersOnly) {
                 message = tr("Search completed | Total folders found: %1")
@@ -159,6 +201,7 @@ void SearchProgressManager::updateFromSearchManager()
         }
     }
 }
+
 void SearchProgressManager::showMessage(const QString &message, int timeout)
 {
     if (m_statusBar) {

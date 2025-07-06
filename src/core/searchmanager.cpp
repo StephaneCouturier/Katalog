@@ -200,7 +200,6 @@ void SearchManager::pauseSearch()
 
     if (m_currentJob->suspend()) {
         m_isPaused = true;
-        setStatus("Search paused");
         qDebug() << "Search paused";
     }
 }
@@ -213,7 +212,6 @@ void SearchManager::resumeSearch()
 
     if (m_currentJob->resume()) {
         m_isPaused = false;
-        setStatus("Search resumed");
         qDebug() << "Search resumed";
     }
 }
