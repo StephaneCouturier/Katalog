@@ -42,15 +42,15 @@ void MainWindow::launchSearch()
     // Set animation cursor before starting
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // For memory mode with development flag, use SearchJobStoppable
+    // For memory mode with development flag, use SearchMemory (fallback/testing of obsolete code)
     if (collection->databaseMode == "Memory" && developmentMode == true) {
-        qDebug() << "\n Development mode: using SearchJobStoppable for Memory mode";
-        launchSearchJobStoppable();
-    }
-    // For memory mode without development flag, use SearchMemory
-    else if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
-        qDebug() << "\n Using SearchMemory for memory mode";
+        qDebug() << "\n Development mode: using SearchMemory for Memory mode (fallback)";
         launchSearchMemory();
+    }
+    // For memory mode without development flag, use SearchJobStoppable (default)
+    else if (collection->databaseMode == "Memory" && !ui->Filters_checkBox_SearchInConnectedDrives->isChecked()) {
+        qDebug() << "\n Using SearchJobStoppable for memory mode (default)";
+        launchSearchJobStoppable();
     }
     // For database mode, use SearchJobStoppable
     else {
@@ -160,9 +160,9 @@ void MainWindow::launchSearchJobStoppable()
     SearchJobStoppable* searchJobStoppable = new SearchJobStoppable(this);
     searchJobStoppable->setDatabaseConnection("defaultConnection");
 
-    // **NEW: Enable memory mode when in development mode and memory mode**
-    if (developmentMode && collection->databaseMode == "Memory") {
-        qDebug() << "Development mode: Enabling memory mode for SearchJobStoppable";
+    // Enable memory mode when in development mode and memory mode**
+    if (collection->databaseMode == "Memory") {
+        qDebug() << "Memory mode: Enabling memory mode for SearchJobStoppable";
         searchJobStoppable->setMemoryModeEnabled(true);
     }
 
