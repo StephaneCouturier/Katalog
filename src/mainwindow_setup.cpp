@@ -771,6 +771,9 @@
 
             ui->tabWidget->setStyleSheet(styleSheetText);
 
+        //Splitter widget, invisible
+            ui->splitter->setHandleWidth(0);
+
         //Colored buttons
         ui->Search_pushButton_Search->setStyleSheet(
                 "QPushButton           { background-color: #81d41a; } "
