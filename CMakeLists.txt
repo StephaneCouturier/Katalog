@@ -150,6 +150,60 @@ set(TS_FILES
     src/translations/Katalog_cz_CZ.ts
 )
 
+# Make sure LinguistTools is found (should already be in your find_package)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+
+# Set up translations with both lupdate and lrelease support
+if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
+    # Modern Qt6 approach with lupdate support
+    qt6_add_translations(Katalog
+        TS_FILES ${TS_FILES}
+        SOURCES ${MAIN_SOURCES} ${CORE_SOURCES} ${MAIN_HEADERS} ${CORE_HEADERS} ${UI_FILES}
+        LUPDATE_OPTIONS "-extensions" "cpp,h,ui" "-locations" "relative"
+        LRELEASE_OPTIONS "-compress" "-nounfinished"
+    )
+
+    # Create aliases for the auto-generated targets for easier access
+    add_custom_target(update_translations
+        DEPENDS Katalog_lupdate
+        COMMENT "Alias for updating translation files"
+    )
+
+    add_custom_target(translations
+        DEPENDS Katalog_lrelease
+        COMMENT "Alias for compiling translation files"
+    )
+
+else()
+    # Fallback for older Qt6 versions
+    # Create lupdate target manually
+    add_custom_target(update_translations
+        COMMAND Qt6::lupdate ${CMAKE_CURRENT_SOURCE_DIR} -ts ${TS_FILES}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Updating translation files"
+    )
+
+    # Create lrelease target
+    foreach(ts_file ${TS_FILES})
+        get_filename_component(qm_file ${ts_file} NAME_WE)
+        set(qm_file "${CMAKE_CURRENT_BINARY_DIR}/${qm_file}.qm")
+        add_custom_command(OUTPUT ${qm_file}
+            COMMAND Qt6::lrelease ${CMAKE_CURRENT_SOURCE_DIR}/${ts_file} -qm ${qm_file}
+            DEPENDS ${ts_file}
+        )
+        list(APPEND QM_FILES ${qm_file})
+    endforeach()
+    add_custom_target(translations ALL DEPENDS ${QM_FILES})
+    add_dependencies(Katalog translations)
+endif()
+
+# Custom lupdate target for manual control
+add_custom_target(lupdate_manual
+    COMMAND Qt6::lupdate ${MAIN_SOURCES} ${CORE_SOURCES} ${MAIN_HEADERS} ${CORE_HEADERS} ${UI_FILES} -ts ${TS_FILES}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Manually updating translation source files"
+)
+
 # Resource files
 set(QRC_FILES
     src/icons.qrc
@@ -190,24 +244,6 @@ qt6_add_executable(Katalog
     ${UI_FILES}
     ${QRC_FILES}
 )
-
-# Handle translations (conditional based on Qt version)
-if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
-    qt6_add_translations(Katalog TS_FILES ${TS_FILES})
-else()
-    # Fallback for older Qt6 versions
-    foreach(ts_file ${TS_FILES})
-        get_filename_component(qm_file ${ts_file} NAME_WE)
-        set(qm_file "${CMAKE_CURRENT_BINARY_DIR}/${qm_file}.qm")
-        add_custom_command(OUTPUT ${qm_file}
-            COMMAND Qt6::lrelease ${CMAKE_CURRENT_SOURCE_DIR}/${ts_file} -qm ${qm_file}
-            DEPENDS ${ts_file}
-        )
-        list(APPEND QM_FILES ${qm_file})
-    endforeach()
-    add_custom_target(translations ALL DEPENDS ${QM_FILES})
-    add_dependencies(Katalog translations)
-endif()
 
 # Link libraries to the main executable (using keyword signature to match Qt6)
 target_link_libraries(Katalog PRIVATE
