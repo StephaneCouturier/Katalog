@@ -32,265 +32,228 @@
 #define DATABASE_H
 
 #include <QtSql>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlDatabase>
+#include <QString>
 
-//CREATE TABLES -----------------------------------------------------------------
+// Forward declaration
+class Collection;
 
-        // DEVICE  --------------------------------------------------------------
+namespace DatabaseSQL {
+// DEVICE ---------------------------------------------------------------
+const auto SQL_CREATE_DEVICE = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS device(
+                        device_id                 INTEGER,
+                        device_parent_id          INTEGER,
+                        device_name               TEXT,
+                        device_type               TEXT,
+                        device_external_id        INTEGER,
+                        device_path               TEXT,
+                        device_total_file_size    INTEGER,
+                        device_total_file_count   INTEGER,
+                        device_total_space        INTEGER,
+                        device_free_space         INTEGER,
+                        device_active             INTEGER,
+                        device_group_id           INTEGER,
+                        device_date_updated       TEXT,
+                        device_order              INTEGER)
+    )");
 
-            const auto SQL_CREATE_DEVICE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS device(
-                            device_id                  NUMERIC PRIMARY KEY,
-                            device_parent_id           NUMERIC,
-                            device_name                TEXT,
-                            device_type                TEXT,
-                            device_external_id         NUMERIC,
-                            device_path                TEXT,
-                            device_total_file_size     NUMERIC default 0,
-                            device_total_file_count    NUMERIC default 0,
-                            device_total_space         NUMERIC default 0,
-                            device_free_space          NUMERIC default 0,
-                            device_active              NUMERIC,
-                            device_group_id            NUMERIC,
-                            device_date_updated        TEXT,
-                            device_order               NUMERIC)
-            )");
+// STORAGE --------------------------------------------------------------
+const auto SQL_CREATE_STORAGE = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS storage(
+                        storage_id            INTEGER,
+                        storage_name          TEXT,
+                        storage_type          TEXT,
+                        storage_location      TEXT,
+                        storage_path          TEXT,
+                        storage_label         TEXT,
+                        storage_file_system   TEXT,
+                        storage_total_space   NUMERIC,
+                        storage_free_space    NUMERIC,
+                        storage_brand         TEXT,
+                        storage_model         TEXT,
+                        storage_serial_number TEXT,
+                        storage_build_date    TEXT,
+                        storage_comment1      TEXT,
+                        storage_comment2      TEXT,
+                        storage_comment3      TEXT)
+    )");
 
-        // CATALOG --------------------------------------------------------------
+// CATALOG --------------------------------------------------------------
+const auto SQL_CREATE_CATALOG = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS catalog(
+                        catalog_id                INTEGER,
+                        catalog_name              TEXT,
+                        catalog_source_path       TEXT,
+                        catalog_include_hidden    INTEGER,
+                        catalog_file_type         TEXT,
+                        catalog_storage           TEXT,
+                        catalog_include_symlinks  INTEGER,
+                        catalog_include_metadata  INTEGER,
+                        catalog_is_full_device    INTEGER,
+                        catalog_app_version       TEXT,
+                        catalog_file_count        INTEGER,
+                        catalog_total_file_size   INTEGER,
+                        catalog_date_loaded       TEXT,
+                        catalog_date_updated      TEXT)
+    )");
 
-            const auto SQL_CREATE_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS catalog(
-                            catalog_id                    NUMERIC,
-                            catalog_file_path             TEXT,
-                            catalog_name                  TEXT,
-                            catalog_date_updated          TEXT,
-                            catalog_source_path           TEXT,
-                            catalog_file_count            NUMERIC default 0,
-                            catalog_total_file_size       NUMERIC default 0,
-                            catalog_source_path_is_active NUMERIC,
-                            catalog_include_hidden        TEXT,
-                            catalog_file_type             TEXT,
-                            catalog_storage               TEXT,
-                            catalog_include_symblinks     TEXT,
-                            catalog_is_full_device        TEXT,
-                            catalog_date_loaded           TEXT,
-                            catalog_include_metadata      TEXT,
-                            catalog_app_version           TEXT,
-                            PRIMARY KEY("catalog_name"))
-            )");
+// FILE -----------------------------------------------------------------
+const auto SQL_CREATE_FILE = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS file(
+                        file_catalog_id   NUMERIC,
+                        file_name         TEXT,
+                        file_folder_path  TEXT,
+                        file_size         NUMERIC,
+                        file_date_updated TEXT,
+                        file_catalog      TEXT,
+                        file_full_path    TEXT)
+    )");
 
-        // STORAGE --------------------------------------------------------------
+// FILETEMP (one-off requests) ------------------------------------------
+const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS filetemp(
+                        file_catalog_id   NUMERIC,
+                        file_name         TEXT,
+                        file_folder_path  TEXT,
+                        file_size         NUMERIC,
+                        file_date_updated TEXT,
+                        file_catalog      TEXT,
+                        file_full_path    TEXT)
+    )");
 
-            const auto SQL_CREATE_STORAGE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS storage(
-                            storage_id            NUMERIC  primary key default 0,
-                            storage_name          TEXT,
-                            storage_type          TEXT,
-                            storage_location      TEXT,
-                            storage_path          TEXT,
-                            storage_label         TEXT,
-                            storage_file_system   TEXT,
-                            storage_total_space   NUMERIC default 0,
-                            storage_free_space    NUMERIC default 0,
-                            storage_brand         TEXT,
-                            storage_model         TEXT,
-                            storage_serial_number TEXT,
-                            storage_build_date    TEXT,
-                            storage_comment1      TEXT,
-                            storage_comment2      TEXT,
-                            storage_comment3      TEXT)
-            )");
+// FOLDER ---------------------------------------------------------------
+const auto SQL_CREATE_FOLDER = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS folder(
+                        folder_catalog_id  NUMERIC,
+                        folder_path        TEXT,
+                        PRIMARY KEY(folder_catalog_id,folder_path))
+    )");
 
-        // FILE (storing all catalogs files)-------------------------------------
+// METADATA -------------------------------------------------------------
+const auto SQL_CREATE_METADATA = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS metadata(
+                        catalog_name        TEXT,
+                        file_name           TEXT,
+                        file_path           TEXT,
+                        field               TEXT,
+                        value               TEXT)
+    )");
 
-            const auto SQL_CREATE_FILE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS file(
-                            file_catalog_id   NUMERIC,
-                            file_name         TEXT,
-                            file_folder_path  TEXT,
-                            file_size         NUMERIC,
-                            file_date_updated TEXT,
-                            file_catalog      TEXT,
-                            file_full_path    TEXT)
+// STATISTICS -----------------------------------------------------------
+const auto SQL_CREATE_STATISTICS_DEVICE = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS statistics_device(
+                        date_time               TEXT,
+                        device_id               TEXT,
+                        device_name             TEXT,
+                        device_type             TEXT,
+                        device_file_count       NUMERIC,
+                        device_total_file_size  NUMERIC,
+                        device_total_space      NUMERIC,
+                        device_free_space       NUMERIC,
+                        record_type             TEXT)
+    )");
 
-            )");
+// SEARCH ---------------------------------------------------------------
+const auto SQL_CREATE_SEARCH = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS search(
+                        date_time                 TEXT,
+                        text_search               TEXT,
+                        text_criteria             TEXT,
+                        text_search_in            TEXT,
+                        file_type                 TEXT,
+                        file_size_type            TEXT,
+                        file_size_value           TEXT,
+                        folder_criteria           TEXT,
+                        search_catalog            TEXT,
+                        search_catalog_checked    NUMERIC,
+                        search_directory_checked  NUMERIC,
+                        selected_directory        TEXT,
+                        selected_device_ID_list   TEXT,
+                        text_exclude              TEXT,
+                        case_sensitive            NUMERIC)
+    )");
 
-        // FILETEMP (one-off requests) ------------------------------------------
+// TAG ------------------------------------------------------------------
+const auto SQL_CREATE_TAG = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS tag(
+                        ID          INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name		TEXT,
+                        path		TEXT,
+                        type		TEXT,
+                        date_time	TEXT)
+    )");
 
-            const auto SQL_CREATE_FILETEMP = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  filetemp(
-                            file_catalog_id   NUMERIC,
-                            file_name         TEXT,
-                            file_folder_path  TEXT,
-                            file_size         NUMERIC,
-                            file_date_updated TEXT,
-                            file_catalog      TEXT,
-                            file_full_path    TEXT)
-            )");
+// FILE TAG -------------------------------------------------------------
+const auto SQL_CREATE_FILE_TAG = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS file_tag(
+                        file_id     INTEGER,
+                        tag_id      INTEGER,
+                        PRIMARY KEY(file_id, tag_id))
+    )");
 
-        // FOLDER ---------------------------------------------------------------
+// PARAMETER ------------------------------------------------------------
+const auto SQL_CREATE_PARAMETER = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS parameter(
+                        parameter_name      TEXT,
+                        parameter_type      TEXT,
+                        parameter_value1    TEXT,
+                        parameter_value2    TEXT)
+    )");
 
-            const auto SQL_CREATE_FOLDER = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  folder(
-                            folder_catalog_id  NUMERIC,
-                            folder_path        TEXT,
-                            PRIMARY KEY(folder_catalog_id,folder_path))
-            )");
+// SCHEMA ---------------------------------------------------------------
+const auto SQL_CREATE_SCHEMA = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS schema_version(
+                        version     TEXT)
+    )");
 
-        // METADATA -------------------------------------------------------------
+// BACKUP MAPPING -------------------------------------------------------
+const auto SQL_CREATE_BACKUP_MAPPING = QLatin1String(R"(
+        CREATE TABLE IF NOT EXISTS device_mapping(
+                        mapping_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                        mapping_name                TEXT,
+                        mapping_type                TEXT,
+                        mapping_device_source_id    NUMERIC,
+                        mapping_device_target_id    NUMERIC,
+                        mapping_backup_last_date    TEXT,
+                        mapping_backup_last_size    TEXT)
+    )");
+}
 
-            const auto SQL_CREATE_METADATA = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  metadata(
-                            catalog_name        TEXT,
-                            file_name           TEXT,
-                            file_path           TEXT,
-                            field               TEXT,
-                            value               TEXT)
-            )");
+class Database
+{
+public:
+    // Main initialization method - creates connection and sets up database
+    static QSqlError initialize(const QString &connectionName, Collection *collection);
 
-        // STATISTICS -----------------------------------------------------------
+    // Create all database tables
+    static QSqlError createAllTables(const QString &connectionName);
 
-            const auto SQL_CREATE_STATISTICS_DEVICE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_device(
-                            date_time               TEXT,
-                            device_id               TEXT,
-                            device_name             TEXT,
-                            device_type             TEXT,
-                            device_file_count       NUMERIC,
-                            device_total_file_size  NUMERIC,
-                            device_free_space       NUMERIC,
-                            device_total_space      NUMERIC,
-                            record_type             TEXT)
-            )");
+    // Individual table creation methods
+    static QSqlError createDeviceTable(const QString &connectionName);
+    static QSqlError createStorageTable(const QString &connectionName);
+    static QSqlError createCatalogTable(const QString &connectionName);
+    static QSqlError createFileTable(const QString &connectionName);
+    static QSqlError createFileTempTable(const QString &connectionName);
+    static QSqlError createFolderTable(const QString &connectionName);
+    static QSqlError createMetadataTable(const QString &connectionName);
+    static QSqlError createStatisticsTable(const QString &connectionName);
+    static QSqlError createSearchTable(const QString &connectionName);
+    static QSqlError createTagTable(const QString &connectionName);
+    static QSqlError createFileTagTable(const QString &connectionName);
+    static QSqlError createParameterTable(const QString &connectionName);
+    static QSqlError createSchemaTable(const QString &connectionName);
+    static QSqlError createBackupMappingTable(const QString &connectionName);
 
-        // SEARCH ---------------------------------------------------------------
+    // Utility methods
+    static bool tableExists(const QString &connectionName, const QString &tableName);
+    static QStringList listTables(const QString &connectionName);
 
-            const auto SQL_CREATE_SEARCH = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  search(
-                            date_time                 TEXT,
-                            text_checked              NUMERIC,
-                            text_phrase               TEXT,
-                            text_criteria             TEXT,
-                            text_search_in            TEXT,
-                            file_criteria_checked     NUMERIC,
-                            file_type_checked         NUMERIC,
-                            file_type                 TEXT,
-                            file_size_checked         NUMERIC,
-                            file_size_min             NUMERIC,
-                            file_size_min_unit        NUMERIC,
-                            file_size_max             NUMERIC,
-                            file_size_max_unit        NUMERIC,
-                            date_modified_checked     NUMERIC,
-                            date_modified_min         TEXT,
-                            date_modified_max         TEXT,
-                            duplicates_checked        NUMERIC,
-                            duplicates_name           NUMERIC,
-                            duplicates_size           NUMERIC,
-                            duplicates_date_modified  NUMERIC,
-                            differences_checked       NUMERIC,
-                            differences_name          NUMERIC,
-                            differences_size          NUMERIC,
-                            differences_date_modified NUMERIC,
-                            differences_catalogs      TEXT,
-                            folder_criteria_checked   NUMERIC,
-                            show_folders              NUMERIC,
-                            tag_checked               NUMERIC,
-                            tag                       TEXT,
-                            search_location           TEXT,
-                            search_storage            TEXT,
-                            search_catalog            TEXT,
-                            search_catalog_checked    NUMERIC,
-                            search_directory_checked  NUMERIC,
-                            selected_directory        TEXT,
-                            selected_device_ID_list   TEXT,
-                            text_exclude              TEXT,
-                            case_sensitive            NUMERIC)
-            )");
-
-        // TAG ------------------------------------------------------------------
-
-            const auto SQL_CREATE_TAG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  tag(
-                            ID          INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name		TEXT,
-                            path		TEXT,
-                            type		TEXT,
-                            date_time	TEXT)
-            )");
-
-        // EXCLUDE --------------------------------------------------------------
-            const auto SQL_CREATE_PARAMETER = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS parameter(
-                                parameter_name      TEXT,
-                                parameter_type      TEXT,
-                                parameter_value1    TEXT,
-                                parameter_value2    TEXT)
-            )");
-
-        // BACKUP MAPPING -------------------------------------------------------
-
-            const auto SQL_CREATE_BACKUP_MAPPING = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  device_mapping(
-                            mapping_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
-                            mapping_name                TEXT,
-                            mapping_type                TEXT,
-                            mapping_device_source_id    NUMERIC,
-                            mapping_device_target_id    NUMERIC,
-                            mapping_backup_last_date    TEXT,
-                            mapping_backup_last_size    TEXT)
-            )");
-
-
-        // MIGRATION 1.22 to 2.0 ------------------------------------------------
-
-            // STATISTICS -----------------------------------------------------------
-
-            const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_catalog(
-                            date_time               TEXT,
-                            catalog_id              NUMERIC,
-                            catalog_name            TEXT,
-                            catalog_file_count      NUMERIC,
-                            catalog_total_file_size NUMERIC,
-                            record_type             TEXT)
-            )");
-
-            const auto SQL_CREATE_STATISTICS_STORAGE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_storage(
-                            date_time               TEXT,
-                            storage_id              TEXT,
-                            storage_name            TEXT,
-                            storage_free_space      NUMERIC,
-                            storage_total_space     NUMERIC,
-                            record_type             TEXT)
-            )");
-
-            // VIRTUALSTORAGE  ------------------------------------------------------
-
-            const auto SQL_CREATE_VIRTUAL_STORAGE = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage(
-                            virtual_storage_id          NUMERIC,
-                            virtual_storage_parent_id   NUMERIC,
-                            virtual_storage_name        TEXT)
-            )");
-
-            // VIRTUALSTORAGE CATALOG ------------------------------------------------------
-
-            const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
-                            virtual_storage_id      NUMERIC,
-                            catalog_name            TEXT,
-                            directory_path          TEXT)
-            )");
-
-            // DEVICE CATALOG ------------------------------------------------------
-
-            const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS device_catalog(
-                            device_id           NUMERIC,
-                            catalog_name        TEXT,
-                            directory_path      TEXT)
-            )");
-
-//-------------------------------------------------------------------------------
+private:
+    // Helper method to execute SQL with error checking
+    static QSqlError executeSql(const QString &connectionName, const QString &sql);
+};
 
 #endif // DATABASE_H

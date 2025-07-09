@@ -185,7 +185,6 @@ class MainWindow : public KXmlGuiWindow
             void setFileTypes();
 
             //Database
-            void startDatabase();
             void selectDatabaseFilePath();
             void selectNewDatabaseFolderPath();
             void applyDatabaseModeToUI();

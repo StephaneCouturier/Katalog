@@ -274,17 +274,17 @@
                             qDebug()<< db.lastError();
 
                         QSqlQuery q(QSqlDatabase::database("defaultConnection"));
-                        q.exec(SQL_CREATE_DEVICE);
-                        q.exec(SQL_CREATE_CATALOG);
-                        q.exec(SQL_CREATE_STORAGE);
-                        q.exec(SQL_CREATE_FILE);
-                        q.exec(SQL_CREATE_FILETEMP);
-                        q.exec(SQL_CREATE_FOLDER);
-                        q.exec(SQL_CREATE_METADATA);
-                        q.exec(SQL_CREATE_STATISTICS_DEVICE);
-                        q.exec(SQL_CREATE_SEARCH);
-                        q.exec(SQL_CREATE_TAG);
-                        q.exec(SQL_CREATE_PARAMETER);
+                        q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
+                        q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
+                        q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
+                        q.exec(DatabaseSQL::SQL_CREATE_FILE);
+                        q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
+                        q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
+                        q.exec(DatabaseSQL::SQL_CREATE_METADATA);
+                        q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
+                        q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
+                        q.exec(DatabaseSQL::SQL_CREATE_TAG);
+                        q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
                     }
                     fileOut.close();
 
@@ -316,7 +316,7 @@
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            startDatabase();
+            Database::initialize("defaultConnection", collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -383,17 +383,17 @@
                     qDebug()<< db.lastError();
 
                 QSqlQuery q(QSqlDatabase::database("defaultConnection"));
-                q.exec(SQL_CREATE_DEVICE);
-                q.exec(SQL_CREATE_CATALOG);
-                q.exec(SQL_CREATE_STORAGE);
-                q.exec(SQL_CREATE_FILE);
-                q.exec(SQL_CREATE_FILETEMP);
-                q.exec(SQL_CREATE_FOLDER);
-                q.exec(SQL_CREATE_METADATA);
-                q.exec(SQL_CREATE_STATISTICS_DEVICE);
-                q.exec(SQL_CREATE_SEARCH);
-                q.exec(SQL_CREATE_TAG);
-                q.exec(SQL_CREATE_PARAMETER);
+                q.exec(DatabaseSQL::SQL_CREATE_DEVICE);
+                q.exec(DatabaseSQL::SQL_CREATE_CATALOG);
+                q.exec(DatabaseSQL::SQL_CREATE_STORAGE);
+                q.exec(DatabaseSQL::SQL_CREATE_FILE);
+                q.exec(DatabaseSQL::SQL_CREATE_FILETEMP);
+                q.exec(DatabaseSQL::SQL_CREATE_FOLDER);
+                q.exec(DatabaseSQL::SQL_CREATE_METADATA);
+                q.exec(DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
+                q.exec(DatabaseSQL::SQL_CREATE_SEARCH);
+                q.exec(DatabaseSQL::SQL_CREATE_TAG);
+                q.exec(DatabaseSQL::SQL_CREATE_PARAMETER);
             }
             fileOut.close();
 
@@ -415,7 +415,7 @@
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            startDatabase();
+            Database::initialize("defaultConnection", collection);
 
             //Load the collection data from the new database
             loadCollection();
@@ -695,7 +695,7 @@
             QSqlDatabase::removeDatabase(connectionName);
 
             //Open the new database file
-            startDatabase();
+            Database::initialize("defaultConnection", collection);
 
             //Load the collection data from the new database
             loadCollection();

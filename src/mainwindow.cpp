@@ -30,6 +30,7 @@
 */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "core/database.h"
 
 MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     ui(new Ui::MainWindow)
@@ -52,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
     //Set current version, release date, and development mode
         currentVersion  = "2.6";
         collection->appVersion = currentVersion;
-        releaseDate     = "2025-06-16";
+        releaseDate     = "2025-07-09";
         developmentMode = false;
 
     //Default UI settings
@@ -90,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
                 checkVersion();
 
     //Set up and start database (modes: "Memory", "File", or "Hosted")
-        startDatabase();
+        Database::initialize("defaultConnection", collection);
 
     //Set up the interface globally
         //Set up the User Interface
