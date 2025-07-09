@@ -114,6 +114,7 @@ public:
         void saveDevice();
         void saveStatistics(QDateTime dateTime, QString requestSource);
         void loadSubDeviceTree(QString connectionName);
+        void setActiveFromString(const QString& activeStr);
 
         DeleteOperationResult deleteDevice(bool askConfirmation = true,
                                            const UpdateCallbacks* callbacks = nullptr);

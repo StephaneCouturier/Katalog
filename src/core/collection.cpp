@@ -258,6 +258,7 @@ bool Collection::load()
     bool defaultsCreated = insertPhysicalStorageGroup();
 
     return defaultsCreated;
+
 }
 //----------------------------------------------------------------------
 void Collection::clearDatabaseData()
@@ -311,43 +312,44 @@ void Collection::loadAllCatalogFiles()
 void Collection::loadDeviceFileToTable()
 {
     if(databaseMode=="Memory"){
-        //Clear table
+        // Clear table
         QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-        QString querySQL;
-        querySQL = QLatin1String(R"(
-                        DELETE FROM device
-                    )");
+        QString querySQL = QLatin1String(R"(DELETE FROM device)");
         query.prepare(querySQL);
         query.exec();
 
-        //Define storage file and prepare stream
+        // Define storage file and prepare stream
         QFile deviceFile(deviceFilePath);
         QTextStream textStream(&deviceFile);
 
-        //Open file or create it
+        // Open file or create it
         if(!deviceFile.open(QIODevice::ReadOnly)) {
             // Create it, if it does not exist
             QFile newDeviceFile(deviceFilePath);
             newDeviceFile.open(QFile::WriteOnly | QFile::Text);
             QTextStream stream(&newDeviceFile);
-            stream << "ID"            << "\t"
-                   << "Parent ID"     << "\t"
-                   << "Name"          << "\t"
-                   << '\n';
+            stream << "ID\tParent ID\tName\tType\tExternalID\tPath\t"
+                   << "total_file_size\ttotal_file_count\ttotal_space\t"
+                   << "free_space\tactive\tgroupID\tdate updated\torder\n";
             newDeviceFile.close();
         }
 
-        //Load Device device lines to table
+        // Load Device lines to table
         while (true)
         {
             QString line = textStream.readLine();
             if (line.isNull())
                 break;
             else
-                if (line.left(2)!="ID"){//skip the first line with headers
+                if (line.left(2)!="ID"){ // Skip header line
 
-                    //Split the string with tabulation into a list
+                    // Split the string with tabulation into a list
                     QStringList fieldList = line.split('\t');
+                    // Check if the line has enough fields
+                    if (fieldList.size() < 14) {
+                        qDebug() << "DEBUG: Collection::loadDeviceFileToTable() / Invalid line format:" << line;
+                        continue; // Skip this line if it doesn't have enough fields
+                    }
                     QSqlQuery insertQuery(QSqlDatabase::database("defaultConnection"));
                     querySQL = QLatin1String(R"(
                         INSERT INTO device (
@@ -361,6 +363,7 @@ void Collection::loadDeviceFileToTable()
                                         device_total_file_count,
                                         device_total_space,
                                         device_free_space,
+                                        device_active,
                                         device_group_id,
                                         device_date_updated,
                                         device_order )
@@ -375,25 +378,34 @@ void Collection::loadDeviceFileToTable()
                                         :device_total_file_count,
                                         :device_total_space,
                                         :device_free_space,
+                                        :device_active,
                                         :device_group_id,
                                         :device_date_updated,
                                         :device_order )
                     )");
                     insertQuery.prepare(querySQL);
-                    insertQuery.bindValue(":device_id",fieldList[0].toInt());
-                    insertQuery.bindValue(":device_parent_id",fieldList[1]);
-                    insertQuery.bindValue(":device_name",fieldList[2]);
-                    if(fieldList.size()>3){//prevent issues with files created in v1.22
-                        insertQuery.bindValue(":device_type",fieldList[3]);
-                        insertQuery.bindValue(":device_external_id",fieldList[4]);
-                        insertQuery.bindValue(":device_path",fieldList[5]);
-                        insertQuery.bindValue(":device_total_file_size",fieldList[6]);
-                        insertQuery.bindValue(":device_total_file_count",fieldList[7]);
-                        insertQuery.bindValue(":device_total_space",fieldList[8]);
-                        insertQuery.bindValue(":device_free_space",fieldList[9]);
-                        insertQuery.bindValue(":device_group_id",fieldList[11]);
-                        insertQuery.bindValue(":device_date_updated",fieldList[12]);
-                        insertQuery.bindValue(":device_order",fieldList[13]);
+                    insertQuery.bindValue(":device_id", fieldList[0].toInt());
+                    insertQuery.bindValue(":device_parent_id", fieldList[1].toInt());
+                    insertQuery.bindValue(":device_name", fieldList[2]);
+                    if(fieldList.size() > 3){ // Prevent issues with old files
+                        insertQuery.bindValue(":device_type", fieldList[3]);
+                        insertQuery.bindValue(":device_external_id", fieldList[4].toInt());
+                        insertQuery.bindValue(":device_path", fieldList[5]);
+                        insertQuery.bindValue(":device_total_file_size", fieldList[6].toLongLong());
+                        insertQuery.bindValue(":device_total_file_count", fieldList[7].toLongLong());
+                        insertQuery.bindValue(":device_total_space", fieldList[8].toLongLong());
+                        insertQuery.bindValue(":device_free_space", fieldList[9].toLongLong());
+                        if(fieldList.size() > 10) {
+                            // Convert string to boolean properly
+                            bool activeValue = (fieldList[10].toLower() == "true" ||
+                                                fieldList[10] == "1");
+                            insertQuery.bindValue(":device_active", activeValue);
+                        } else {
+                            insertQuery.bindValue(":device_active", false); // Default
+                        }
+                        insertQuery.bindValue(":device_group_id", fieldList[11].toInt());
+                        insertQuery.bindValue(":device_date_updated", fieldList[12]);
+                        insertQuery.bindValue(":device_order", fieldList[13].toInt());
                     }
                     insertQuery.exec();
                 }
@@ -1100,7 +1112,7 @@ void Collection::saveDeviceTableToFile()
                              << "active"     << "\t"
                              << "groupID"    << "\t"
                              << "date updated"    << "\t"
-                             << "order"    << "\t"
+                             << "order"
                              << '\n';
 
             //Iterate the records and generate lines

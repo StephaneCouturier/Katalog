@@ -57,7 +57,9 @@ add_definitions(-DQT_DEPRECATED_WARNINGS)
 
 set(CORE_HEADERS
     src/core/collection.h
+    src/core/commandline.h
     src/core/catalog.h
+    src/core/database.h
     src/core/device.h
     src/core/search.h
     src/core/search_memory.h
@@ -73,7 +75,9 @@ set(CORE_HEADERS
 
 set(CORE_SOURCES
     src/core/collection.cpp
+    src/core/commandline.cpp
     src/core/catalog.cpp
+    src/core/database.cpp
     src/core/device.cpp
     src/core/search.cpp
     src/core/search_memory.cpp
@@ -173,28 +177,6 @@ if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
         DEPENDS Katalog_lrelease
         COMMENT "Alias for compiling translation files"
     )
-
-else()
-    # Fallback for older Qt6 versions
-    # Create lupdate target manually
-    add_custom_target(update_translations
-        COMMAND Qt6::lupdate ${CMAKE_CURRENT_SOURCE_DIR} -ts ${TS_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Updating translation files"
-    )
-
-    # Create lrelease target
-    foreach(ts_file ${TS_FILES})
-        get_filename_component(qm_file ${ts_file} NAME_WE)
-        set(qm_file "${CMAKE_CURRENT_BINARY_DIR}/${qm_file}.qm")
-        add_custom_command(OUTPUT ${qm_file}
-            COMMAND Qt6::lrelease ${CMAKE_CURRENT_SOURCE_DIR}/${ts_file} -qm ${qm_file}
-            DEPENDS ${ts_file}
-        )
-        list(APPEND QM_FILES ${qm_file})
-    endforeach()
-    add_custom_target(translations ALL DEPENDS ${QM_FILES})
-    add_dependencies(Katalog translations)
 endif()
 
 # Custom lupdate target for manual control
@@ -203,6 +185,32 @@ add_custom_target(lupdate_manual
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Manually updating translation source files"
 )
+
+# Optional: Create a target to copy translations manually
+add_custom_target(copy_translations
+    COMMENT "Copy .qm files from build to source directory"
+)
+
+foreach(ts_file ${TS_FILES})
+    get_filename_component(qm_filename ${ts_file} NAME_WE)
+    set(qm_file_build "${CMAKE_CURRENT_BINARY_DIR}/${qm_filename}.qm")
+    set(qm_file_source "${CMAKE_CURRENT_SOURCE_DIR}/src/translations/${qm_filename}.qm")
+
+    add_custom_command(TARGET copy_translations POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${qm_file_build}
+                ${qm_file_source}
+        COMMENT "Copying ${qm_filename}.qm to source directory"
+    )
+endforeach()
+
+#Translation build commands
+    # Update .ts files
+        #cmake --build . --target update_translations
+    # Compile .qm files
+        #cmake --build . --target translations
+    # Copy .qm files to source
+        #cmake --build . --target copy_translations
 
 # Resource files
 set(QRC_FILES

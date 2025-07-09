@@ -40,6 +40,7 @@
 //#endif
 
 #include "mainwindow.h"
+#include "core/commandline.h"
 
 int main(int argc, char *argv[])
 {
@@ -128,106 +129,28 @@ int main(int argc, char *argv[])
         }
 
     //Command line parser
-        QCommandLineParser parser;
-        parser.setApplicationDescription("Katalog is an application to manage catalogs of disks and files.");
-        parser.addHelpOption();
-        parser.addVersionOption();
+        QStringList args = QCoreApplication::arguments();
+        bool hasCommandLineArgs = false;
 
-        // Define command-line options
-        QCommandLineOption reportOption("report", "Display the update summary of each catalog update in a message box.");
-        parser.addOption(reportOption);
-
-        // Define command-line arguments
-        parser.addPositionalArgument("action", "The action to be performed. Choices:\n"
-                                               "  list_catalogs     - List all catalogs (ID, active state, name)\n"
-                                               "  update_catalog    - Update a specific catalog (deviceID)\n"
-                                               "  update_all_active - Update all active catalogs.");
-        parser.addPositionalArgument("deviceID", "Device ID on which the action is performed (required for update_catalog)");
-
-        // Process the command-line arguments
-        parser.process(app);
-
-        // Retrieve the values
-        bool displayReport  = parser.isSet(reportOption);
-        QStringList positionalArguments = parser.positionalArguments();
-        QString action      = positionalArguments.value(0);
-        QString deviceIDStr = positionalArguments.value(1);
-
-        if (!action.isEmpty()) {
-            // Handle the action
-            qDebug() << "";
-            qDebug() << "Action selected:" << action;
-
-            if (action == "update_catalog") {
-                if (deviceIDStr.isEmpty()) {
-                    qWarning() << "Stopped. A device ID is required for update_catalog action.\n";
-                    return 1;
-                }
-                bool deviceIDIsInt;
-                int deviceID = deviceIDStr.toInt(&deviceIDIsInt);
-                if (!deviceIDIsInt) {
-                    qWarning() << "Stopped. The device ID must be an integer.\n";
-                    return 1;
-                }
-                // Create an instance of MainWindow to perform the action
-                MainWindow window;
-                window.cmd_updateCatalog(deviceID, displayReport);
-                // Exit the application after performing the action
-                return 0;
+        for (int i = 1; i < args.size(); ++i) {
+            QString arg = args[i];
+            if (arg == "list_catalogs" || arg == "update_catalog" || arg == "update_all_active" ||
+                arg == "search" || arg == "restart" || arg == "--search" || arg == "-s" ||
+                arg == "--csv" || arg == "--report") {
+                hasCommandLineArgs = true;
+                break;
             }
-            else if (action == "list_catalogs") {
-                // Create an instance of MainWindow to perform the action
-                MainWindow window;
-                window.cmd_listGroup0Catalogs();
-                // Exit the application after performing the action
-                return 0;
-            }
-            else if (action == "update_all_active") {
-                // Create an instance of MainWindow to perform the action
-                MainWindow window;
-                window.cmd_updateAllActive(displayReport);
-                // Exit the application after performing the action
-                return 0;
-            } else if (action == "restart") {
-                // Handle the restart action
-                qDebug() << "Restarting the application...";
+        }
 
-                // Prepare arguments for restarting the application
-                QStringList newArgs;
-                bool skipNext = false;
-                for (const QString &arg : QApplication::arguments()) {
-                    if (skipNext) {
-                        skipNext = false;
-                        continue;
-                    }
-                    if (arg == "--catalogID" || arg == "--report" || arg == "--myoption") {
-                        // Skip the next argument as it is the value for the current option
-                        skipNext = true;
-                    } else if (arg.startsWith("--")) {
-                        // Include other options
-                        newArgs << arg;
-                    } else if (arg.startsWith("-")) {
-                        // Include short options
-                        newArgs << arg;
-                    } else {
-                        // Skip positional arguments (actions)
-                        continue;
-                    }
-                }
+        if (hasCommandLineArgs) {
+            // Command line mode - create command line handler
+            CommandLineHandler cmdHandler;
 
-                // Start the new process
-                QProcess::startDetached(QApplication::applicationFilePath(), newArgs);
-
-                // Exit the current application
-                return 0;
+            int result = cmdHandler.processCommandLine(app);
+            if (result >= 0) {
+                return result; // Exit with command line result
             }
-            else{
-                qDebug() << "Incorrect action requested. \n"
-                            "Valid actions: list_catalogs, update_catalog, update_all_active.\n"
-                            "For more information, use ./Katalog --help";
-                qDebug() << "";
-                return 1;
-            }
+            // If result is -1, fall through to GUI mode
         }
 
         // If no specific action is requested, create and show the main window

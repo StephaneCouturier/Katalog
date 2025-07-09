@@ -920,3 +920,9 @@ Device::DeleteOperationResult Device::deleteDevice(bool askConfirmation, const U
     result.result = DeleteSuccess;
     return result;
 }
+
+void Device::setActiveFromString(const QString& activeStr) {
+    active = (activeStr.toLower() == "true" ||
+              activeStr == "1" ||
+              activeStr.toLower() == "yes");
+}
