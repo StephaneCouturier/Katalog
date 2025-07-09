@@ -269,19 +269,26 @@ bool CommandLineHandler::initializeDatabase()
     // Get user home path for settings
     QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     QString homePath = standardsPaths[0];
+    QString applicationDirPath = QCoreApplication::applicationDirPath();
 
     // Set collection folder path BEFORE loading settings
     if (!collectionPath.isEmpty()) {
         collection->folder = collectionPath;
     }
 
-    // Set collection settings file path
-    collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
+    // Define Settings file path - check for portable mode first (similar to MainWindow)
+    collection->settingsFilePath = applicationDirPath + "/katalog_settings.ini";
+    QFile settingsFile(collection->settingsFilePath);
+    if (!settingsFile.exists()) {
+        // Fall back to default katalog_settings path
+        collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
+    }
 
     // Load from settings only if no command line path was provided
     if (collection->folder.isEmpty()) {
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-        collection->folder = settings.value("Settings/collectionFolder").toString();
+        // FIXED: Changed from "Settings/collectionFolder" to "LastCollectionFolder"
+        collection->folder = settings.value("LastCollectionFolder").toString();
 
         // Use default if not set
         if (collection->folder.isEmpty()) {
@@ -292,6 +299,7 @@ bool CommandLineHandler::initializeDatabase()
     if (verbose) {
         QTextStream stdout_stream(stdout);
         stdout_stream << "Using collection: " << collection->folder << Qt::endl;
+        stdout_stream << "Settings file: " << collection->settingsFilePath << Qt::endl;
     }
 
     // Verify collection exists and has data
