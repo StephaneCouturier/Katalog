@@ -52,6 +52,38 @@ QSqlError Database::initialize(const QString &connectionName, Collection *collec
         return db.lastError();
     }
 
+    // Open the database connection
+    if (!db.open()) {
+        return db.lastError();
+    }
+
+    // ADD THIS: Set SQLite pragmas for consistent behavior
+    if (db.driverName() == "QSQLITE") {
+        QSqlQuery pragmaQuery(db);
+
+        // Set synchronous mode (important for consistency)
+        if (!pragmaQuery.exec("PRAGMA synchronous = NORMAL")) {
+            qDebug() << "Failed to set synchronous pragma:" << pragmaQuery.lastError().text();
+        }
+
+        // Set journal mode (important for memory databases)
+        if (!pragmaQuery.exec("PRAGMA journal_mode = MEMORY")) {
+            qDebug() << "Failed to set journal mode:" << pragmaQuery.lastError().text();
+        }
+
+        // Ensure foreign keys are enabled
+        if (!pragmaQuery.exec("PRAGMA foreign_keys = ON")) {
+            qDebug() << "Failed to enable foreign keys:" << pragmaQuery.lastError().text();
+        }
+
+        // Set temp store to memory for better performance
+        if (!pragmaQuery.exec("PRAGMA temp_store = MEMORY")) {
+            qDebug() << "Failed to set temp store:" << pragmaQuery.lastError().text();
+        }
+
+        qDebug() << "SQLite pragmas set successfully";
+    }
+
     // Create all necessary tables
     QSqlError tableError = createAllTables(connectionName);
     if (tableError.type() != QSqlError::NoError) {
@@ -66,16 +98,16 @@ QSqlError Database::createAllTables(const QString &connectionName)
     QSqlError error;
 
     // Create all tables in order
-    error = createSchemaTable(connectionName);
-    if (error.type() != QSqlError::NoError) return error;
+    // error = createSchemaTable(connectionName);
+    // if (error.type() != QSqlError::NoError) return error;
 
     error = createDeviceTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createStorageTable(connectionName);
+    error = createCatalogTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createCatalogTable(connectionName);
+    error = createStorageTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
     error = createFileTable(connectionName);
@@ -90,7 +122,7 @@ QSqlError Database::createAllTables(const QString &connectionName)
     error = createMetadataTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createStatisticsTable(connectionName);
+    error = createStatisticsDeviceTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
     error = createSearchTable(connectionName);
@@ -99,15 +131,27 @@ QSqlError Database::createAllTables(const QString &connectionName)
     error = createTagTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
-    error = createFileTagTable(connectionName);
-    if (error.type() != QSqlError::NoError) return error;
-
     error = createParameterTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
     error = createBackupMappingTable(connectionName);
     if (error.type() != QSqlError::NoError) return error;
 
+    //Migrate
+    error = createStatisticsCatalogTable(connectionName);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = createStatisticsStorageTable(connectionName);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = createVirtualStorageTable(connectionName);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = createVirtualStorageCatalogTable(connectionName);
+    if (error.type() != QSqlError::NoError) return error;
+
+    error = createDeviceCatalogTable(connectionName);
+    if (error.type() != QSqlError::NoError) return error;
     return QSqlError(); // Success
 }
 
@@ -146,7 +190,7 @@ QSqlError Database::createMetadataTable(const QString &connectionName)
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_METADATA);
 }
 
-QSqlError Database::createStatisticsTable(const QString &connectionName)
+QSqlError Database::createStatisticsDeviceTable(const QString &connectionName)
 {
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_DEVICE);
 }
@@ -161,25 +205,42 @@ QSqlError Database::createTagTable(const QString &connectionName)
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_TAG);
 }
 
-QSqlError Database::createFileTagTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_FILE_TAG);
-}
-
 QSqlError Database::createParameterTable(const QString &connectionName)
 {
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_PARAMETER);
-}
-
-QSqlError Database::createSchemaTable(const QString &connectionName)
-{
-    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_SCHEMA);
 }
 
 QSqlError Database::createBackupMappingTable(const QString &connectionName)
 {
     return executeSql(connectionName, DatabaseSQL::SQL_CREATE_BACKUP_MAPPING);
 }
+
+//Migrate
+QSqlError Database::createStatisticsCatalogTable(const QString &connectionName)
+{
+    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_CATALOG);
+}
+
+QSqlError Database::createStatisticsStorageTable(const QString &connectionName)
+{
+    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_STATISTICS_STORAGE);
+}
+
+QSqlError Database::createVirtualStorageTable(const QString &connectionName)
+{
+    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE);
+}
+
+QSqlError Database::createVirtualStorageCatalogTable(const QString &connectionName)
+{
+    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_VIRTUAL_STORAGE_CATALOG);
+}
+
+QSqlError Database::createDeviceCatalogTable(const QString &connectionName)
+{
+    return executeSql(connectionName, DatabaseSQL::SQL_CREATE_DEVICE_CATALOG);
+}
+
 
 bool Database::tableExists(const QString &connectionName, const QString &tableName)
 {
