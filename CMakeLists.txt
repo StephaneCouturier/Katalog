@@ -70,7 +70,6 @@ set(CORE_HEADERS
     src/core/searchresultsthrottler.h
     src/core/storage.h
     src/core/tag.h
-    src/core/database.h
 )
 
 set(CORE_SOURCES
