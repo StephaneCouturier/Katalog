@@ -647,7 +647,8 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
     search->searchOnTags = false;
 
     // Set selected devices (All devices = deviceIDList from getSelectedDevice())
-    search->selectedDeviceIDList = selectedDevice->deviceIDList;
+    search->selectedDeviceIDList.clear();
+    search->selectedDeviceIDList.append(0);
 
     if (verbose) {
         QTextStream stdout_stream(stdout);
@@ -662,70 +663,15 @@ void CommandLineHandler::sendSearchParametersFromSearchHistory(Search *search)
 
 Device* CommandLineHandler::getSelectedDevice()
 {
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: getSelectedDevice() called" << Qt::endl;
-    }
+    Device *allDevice = new Device();
+    allDevice->ID = 0;
+    allDevice->type = "All";
+    allDevice->name = "All Devices";
 
-    // Query for active catalog devices
-    QSqlQuery query(QSqlDatabase::database("defaultConnection"));
-    QString querySQL = QLatin1String(R"(
-        SELECT device_id, device_type, device_name
-        FROM device
-        WHERE device_type = 'Catalog'
-        AND device_active = 1
-        ORDER BY device_id
-        LIMIT 1
-    )");
+    // THE MISSING CALL - populate deviceListTable
+    allDevice->loadDevice("defaultConnection");
 
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: Looking for first active catalog device" << Qt::endl;
-    }
-
-    query.prepare(querySQL);
-    bool querySuccess = query.exec();
-
-    if (!querySuccess) {
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "DEBUG: Query failed: " << query.lastError().text() << Qt::endl;
-        }
-        return nullptr;
-    }
-
-    if (query.next()) {
-        int deviceId = query.value(0).toInt();
-        QString deviceType = query.value(1).toString();
-        QString deviceName = query.value(2).toString();
-
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "DEBUG: Using first catalog device - ID: " << deviceId
-                          << ", Type: " << deviceType << ", Name: " << deviceName << Qt::endl;
-        }
-
-        // FIXED: Create a real catalog device instead of virtual "All" device
-        Device *catalogDevice = new Device();
-        catalogDevice->ID = deviceId;
-        catalogDevice->loadDevice("defaultConnection");
-
-        if (verbose) {
-            QTextStream stdout_stream(stdout);
-            stdout_stream << "DEBUG: Device loaded - Name: " << catalogDevice->name
-                          << ", Type: " << catalogDevice->type
-                          << ", External ID: " << catalogDevice->externalID << Qt::endl;
-        }
-
-        return catalogDevice;
-    }
-
-    if (verbose) {
-        QTextStream stdout_stream(stdout);
-        stdout_stream << "DEBUG: No active catalog devices found" << Qt::endl;
-    }
-
-    return nullptr;
+    return allDevice;
 }
 
 int CommandLineHandler::cmd_search()
@@ -803,6 +749,7 @@ int CommandLineHandler::cmd_search()
 
     return searchResult;
 }
+
 void CommandLineHandler::onSearchCompleted()
 {
     if (verbose) {
@@ -910,30 +857,60 @@ void CommandLineHandler::outputSearchResultsStdout()
     QTextStream stdout_stream(stdout);
 
     if (currentSearch->filesFoundNumber == 0) {
-        stdout_stream << "No files found." << Qt::endl;
+        stdout_stream << Qt::endl << "No files found." << Qt::endl;
         return;
     }
 
     stdout_stream << Qt::endl << "Search Results:" << Qt::endl;
     stdout_stream << "===============" << Qt::endl;
 
-    // Output first few files as sample
-    int maxDisplay = qMin(10, currentSearch->fileNames.size());
-    for (int i = 0; i < maxDisplay; ++i) {
-        stdout_stream << currentSearch->fileNames[i];
-        if (i < currentSearch->filePaths.size()) {
-            stdout_stream << " (" << currentSearch->filePaths[i] << ")";
-        }
-        stdout_stream << Qt::endl;
-    }
+    // Output ALL files (removed maxDisplay limit)
+    for (int i = 0; i < currentSearch->fileNames.size(); ++i) {
+        QString catalogName = "";
+        QString fileName = "";
+        QString filePath = "";
+        QString fullPath = "";
+        QString fileSize = "";
+        QString fileDate = "";
 
-    if (currentSearch->fileNames.size() > maxDisplay) {
-        stdout_stream << "... and " << (currentSearch->fileNames.size() - maxDisplay) << " more files" << Qt::endl;
+        // Get catalog name
+        if (i < currentSearch->fileCatalogs.size()) {
+            catalogName = currentSearch->fileCatalogs[i];
+        }
+
+        // Get file name
+        if (i < currentSearch->fileNames.size()) {
+            fileName = currentSearch->fileNames[i];
+        }
+
+        // Get file path and construct full path
+        if (i < currentSearch->filePaths.size()) {
+            filePath = currentSearch->filePaths[i];
+            // Construct full path: path + "/" + filename
+            if (filePath.endsWith("/")) {
+                fullPath = filePath + fileName;
+            } else {
+                fullPath = filePath + "/" + fileName;
+            }
+        }
+
+        // Get file size
+        if (i < currentSearch->fileSizes.size()) {
+            fileSize = QString::number(currentSearch->fileSizes[i]);
+        }
+
+        // Get file date
+        if (i < currentSearch->fileDateTimes.size()) {
+            fileDate = currentSearch->fileDateTimes[i];
+        }
+
+        // Output in tab-separated format: catalog_name	file_full_path	size	date
+        stdout_stream << catalogName << "\t" << fullPath << "\t" << fileSize << "\t" << fileDate << Qt::endl;
     }
 
     stdout_stream << Qt::endl;
     stdout_stream << "Total: " << currentSearch->filesFoundNumber << " files, "
-                  << currentSearch->filesFoundTotalSize << " bytes" << Qt::endl;
+                  << currentSearch->filesFoundTotalSize << " bytes" << Qt::endl << Qt::endl;
 }
 
 QString CommandLineHandler::generateTimestamp()
